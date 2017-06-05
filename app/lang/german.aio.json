@@ -1,0 +1,1148 @@
+{
+  "languages": {
+    "en": {
+      "id": 1,
+      "lang": "Englisch"
+    },
+    "de": {
+      "id": 2,
+      "lang": "Deutsch"
+    },
+    "fr": {
+      "id": 3,
+      "lang": "Französisch"
+    },
+    "sp": {
+      "id": 4,
+      "lang": "Spanisch"
+    },
+    "pl": {
+      "id": 5,
+      "lang": "Polnisch"
+    },
+    "trk": {
+      "id": 7,
+      "lang": "Türkisch"
+    },
+    "slv": {
+      "id": 8,
+      "lang": "Slovakisch"
+    },
+    "hu": {
+      "id": 9,
+      "lang": "Ungarisch"
+    }
+  },
+  "helpMsgs": [
+    {
+      "id": 0,
+      "title": "Einleitung",
+      "msg": "<b>Ein Tool zum installieren/deinstallieren für 40+ 'Tweaks' für das Mazda MZD Infotainment System</b> \n Mazda 2 (DJ), Mazda 3 (BM), Mazda 6 (GJ), Mazda CX-3 (DK), Mazda CX-5 (KE), Mazda MX-5 Roadster (ND) und neu 2017 Mazda CX-9 (TC)<br>Fiat Spider, Toyota ScionA<h5><b>Was ist MZD-AIO-TI?</b></h5> Mein guter Freund Siutsch kopiert Dateien aus vielen verschiedenen Tweaks für seine Infotainment-System und dachte, wäre es hilfreich, wenn man wählen könnte, welche Tweaks man installieren oder deinstallieren möchte. Er begann ein CMD-basiertes Programm zu entwickeln, um dies zu erreichen und es funktionierte gut. Er hatte aber bestimmte Grenzen erreicht und es fehlte ein modernes Aussehen. Ich kontaktierte Siutsch und schlug ihm vor, dass wir die AIO-Desktop-App starten, beginnend mit den gleichen Tweaks von AIO v1.5.x, die wir alle kennen und lieben. Ich begann die App 'MZD-AIO-TI' zu erstellen. \n\n###### **Also bitte seien Sie aufmerksam bei der Installation von Tweaks.**  \n\nDiese App wird automatisch aktualisiert. \n\nThis program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.\n\nThis program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the <a href='' onclick='externalLink(`copyleft`)'>Copyleft</a> Under The <a href='http://aio.trevelopment.win/gpl3' data-featherlight='ajax' data-featherlight-loading='<img src=\"files/img/gplv3.png\" alt=\"GPLv3\"><br><b>GNU GPLv3<br>LOADING....</b>'>GNU General Public License</a> for more details.",
+      "t2": "",
+      "msg2": ""
+    },
+    {
+      "id": 1,
+      "title": "Tweaking",
+      "msg": "<h3> Alle Änderungen geschehen auf eigenes Risiko! </h3>\n <b>Bitte beachten sie, dass Sie Ihr Infotainment-System beschädigen oder sperren können, wenn diese Tweaks ausgeführt werden! </b>\n Jeder, der nicht sicher ist, sollte es unterlassen oder jemanden mit Erfahrung fragen. Für Hilfe oder Fragen, besuchen sie das <a href='' onclick=externalLink('mazda3revolution')>Forum</a>.<h5> Ich bin nicht verantwortlich für Schäden, die durch die Benutzung entstehen können.</h5>Das MZD-AIO-TI wurde mit Bedacht entwickelt, daher gibt es 3 Kompatibilitätsstufen: \n\n - <span class='hlpsfty twk-safe'>All</span> - Kompatibel mit allen bekannten Firmwareversionen \n - <span class='hlpsfty twk-warn'>Under58</span> - Nur kompatibel mit Firmware-Versionen kleiner als 58 (ie. 55 & 56).  Wenn die Kompatibilität spezieller ist, dann wird darauf hingewiesen. \n - <span class='hlpsfty twk-development'>Development</span> - Das sind Tweaks, die noch in der Entwicklung sind oder noch nicht funktionieren. <a href='' onclick=\"externalLink('AAIssueFix')\">Android Auto wird vorraussichtlich bald gelb, wenn nicht sogar grün.</a>",
+      "t2": "Kompatible Firmware Versionen:",
+      "msg2": "###### 55.00.650A/753A/760A / 56.00.521A-NA(NA N) \n\n###### 56.00.100A/230A/240B/511A/512A/513C/514A-ADR(4A N) \n\n###### 56.00.100A/230A/511A/512A/513A/513B/513C-EU \n\n###### 56.00.401A/403A-JP | 56.00.100A-CHN \n\n###### 58.00.250A-NA(NA N) / 58.00.251A-ADR(4A N) \n\n59.00.326A/330A/342A/442A/443C-ADR(4A N) \n\n###### 59.00.330A/441A/443A/446A/450A-NA(N NA) \n\n###### 59.00.330A/331A/443C/447A/449A-EU \n\n###### Nur mit Firmware-Versionen >= v55 nutzen. NICHT MIT V30/31/33 BENUTZEN ODER DAS SYSTEM WIRD GESPERRT UND ES BLEIBT BEIM STARTLOGO HÄNGEN!  \n\nUm sicher zu gehen wird AIO-TI ab sofort die Installation automatisch abbrechen falls keine geeignete Firmware gefunden wird. \n\nUm dies zu überbrücken, muss die Datei tweaks.sh direkt bearbeitet werden. Entfernen Sie den Code, der die Firmware-Überprüfung vorbereitet oder fügen sie ihre Version in der Liste der kompatiblen Firmware hinzu.  **DAS GESCHIEHT AUF EIGENES RISIKO!**"
+    },
+    {
+      "id": 2,
+      "title": "Wiederherstellung",
+      "msg": "** Fast alle Tweaks ** können deinstalliert werden, um zum Ursprungszustand zurückzukehren. <div class='w3-padding w3-right w3-third'>Standardhintergrund: <br><br><img style='cursor:pointer' data-featherlight='../background-images/default/default.png' src='../background-images/default/default.png' /></div>\n\n - AIO erstellt Backups aller Dateien, die es modifiziert und verwendet diese Backups beim Zurücksetzen. AIO enthält auch eine Originalversion jeder Datei, nur für den Fall, dass eine der Backup-Dateien fehlt. In zukünftigen Versionen beabsichtige ich, eine Option zum Kopieren und Speichern von Sicherungsdateien deines Systems in AIO als ein Backup einzuschließen, um die Kompatibilität für zukünftige CMD-Versionen sicherzustellen.\n - Im Allgemeinen ist es für alle kompatiblen CMD-Versionen sicher, Deinstallationen von nicht installierten Tweaks auszuführen ABER es gilt zu beachten, dass AIO die Dateien überschreibt, die mit den enthaltenen Backups beteiligt sind, wenn es keine verfügbaren Backups im System findet. Versuchen Sie es also zu vermeiden nicht installierte Tweaks zu deinstallieren.",
+      "t2": "Welche Teile des Systems werden nicht von AIO zurückgesetzt?",
+      "msg2": "<h4><b>MZD-AIO-TI modifiziert einige Dateien im System, die mit dieser App nicht zurückgesetzt werden können.</b></h4> \n\nDiese ersten 3 Dateien sollten nie wiederhergestellt werden, da ein Fehler in einer dieser Dateien zu einem nicht behebbaren Bootloop führen wird.  Sie werden nur geändert, um das System daran zu hindern, einen fälschlichen Neustart durchzuführen und folglich einen Bootloop zu produzieren, weswegen die Wiederherstellung ein hohes Risiko für das System darstellen würde. ** Nur beim Ersten ** durchlauf des Installationsprogramm werden sie gesichert und geändert.\n\n**BITTE DIESE DATEIEN NICHT VERÄNDERN, SONST WIRD IHR SYSTEM BLOCKIERT.**\n\n- /jci/sm/sm.conf (Ebenfalls durch Android Auto Tweak geändert)\n- /jci/opera/opera_home/opera.ini \n- /jci/opera/opera_dir/userjs/fps.js\n\n##### Diese 2 Tweaks können nicht deinstalliert werden, da diese standardmäßig aktiviert sein sollten.\n\n- Wifi (NA Region)\n- SSH_Bringback"
+    },
+    {
+      "id": 3,
+      "title": "Fehlerbehebung",
+      "msg": "Hier sind einige häufige Fehler mit der Möglichkeiten, sie zu vermeiden. \n#### Wenn Sie weiterhin auf Fehler treffen und/oder Systemhänger:\n - Das häufigste Problem ist ein Dateizugriffsfehler: Quelle beschäftigt oder gesperrt.  Dies tritt auf, wenn eine Datei oder ein Verzeichnis nicht geändert werden kann, da sie geöffnet ist oder von einem anderen Programm verwendet wird. Schließen Sie bei der Kompilierung alle Ordner und Dokumente, insbesondere Dateien, die aktiv von MZD-AIO-TI verwendet werden (*zB: '_copy_to_usb'*)\n - <s>Versuchen Sie weniger Tweaks auf einmal zu wählen, zu viele erhöht die Wahrscheinlichkeit für einen unerwarteten Fehler.</s> Jeder einzelne Tweak wurde viele Male getestet, wenn Sie dennoch auf einen Fehler stoßen, melden sie ihn bitte.  \n - Wenn das Installationsprogramm im Auto nicht gestartet wird, versuchen Sie, Ihr USB-Laufwerk als FAT32 neu zu formatieren und stellen Sie sicher, dass alle anderen USB-Geräte getrennt sind. Es hilft Bluetooth aus zu schalten, die NAV SD-Karte sollte drinnen bleiben.",
+      "t2": "Wenn Sie Video-Player Probleme haben",
+      "msg2": " Versuche:\n\n- Speicher die Videos im Ordner mit dem Namen 'Movies'! \n\n- Nutze den H264 video codec und MPEG-4 AAC audio codec in Videos\n\n- Ziehen Sie alle anderen USB-Laufwerke ab, vor allem mit vielen MP3s drauf\n\n- Kopieren Sie nur eine mp3 auf Ihr USB-Laufwerk \n\n- Kopiere nur ein paar Videos auf deinen Stick (du musst sie nicht löschen, umbenennen in * ._ mp4 ist auch OK, damit sie nicht mehr gefunden werden) \n\n- Starten Sie Ihr System neu und versuchen Sie direkt danach ein Video wiederzugeben \n\n- Schließe den Player und starte ihn wieder \n\n- Falls das nicht hilft, wechsel den Audioquelle.\n\n- Manchmal ist hängt das erste Video oder es lässt sich nicht starten aber durch Drücken von 'next' startet manchmal das nächste Video.\n\n- Videoformate: MP4, AVI, FLV, WMV"
+    },
+    {
+      "id": 4,
+      "title": "Mitwirken",
+      "msg": "Obwohl ich diese Benutzeroberfläche erstellt habe sind die wertvolleren Aspekte dieses Projekts die Tweak-Dateien. Communities wie <a href='' onclick=externalLink('mazda3revolution')>Mazda3Revolution Forum</a> und viele Entwickler legten die Grundlagen aus denen diese App gebaut wurde und wird auch weiterhin eine wichtige Rolle in der künftigen Entwicklungen spielen.\n\nWenn Sie einen Tweak beitragen wollen stellen Sie sicher, dass er eingehend getestet wurde.  <br><br>Wenn Sie ein Experte in Javascript oder AngularJS sind, dann fühlen sich frei meinen Code zu bereinigen (ist ein wenig chaotisch ... sorry) oder implementieren sie mehr von der UI 'The Angular Way'<br><br>Das Projekt ist <a href='' onclick='externalLink(`copyleft`)'>Copyleft</a> unter der <a href='http://aio.trevelopment.win/gpl3' data-featherlight='ajax' data-featherlight-loading='<img src=\"files/img/gplv3.png\" alt=\"GPLv3\"><br><b>GNU GPLv3<br>LOADING....</b>'><span class='icon-network'></span> GPLv3.0 License</a><br><br><a href='' onclick='externalLink(`github`)'><span class='icon-github2'></span> Github Repo</a>",
+      "t2": "Probleme",
+      "msg2": "- FW Version 59.xx.xxx Apps werden nicht im Applikationsmenü angezeigt (Speedometer und Video Player) und haben ebenso ein Problem mit dem 'date to statusbar mod' (verweigert eine Installation für betroffenen FW Versionen.) \n- Wenn nicht genügend freier Speicherplatz auf dem USB-Laufwerk vorhanden ist, hängt es sich beim kopieren der Daten auf den USB-Stick auf. Dies kann passieren, wenn Sie die Swapdatei auf ein fast volles Laufwerk kopieren. Ich plane in einer zukünftigen Version das Problem zu beheben und eine Fehlermeldung zu zeigen. \n- Wenn Sie die 'No Background Behind Buttons' Tweak installieren und ein Farbschema installieren, wird es den 'No Background Behind Buttons' Tweak zurücksetzen. Es lässt sich umgehen wenn man nicht beide Tweaks in einer Installation auswählt.\n- Der Google Translator wird versuchen, bestimmte Teile des Codes zu übersetzen, die zu unerwarteten Effekten führen.  Versuchen Sie damit eine Datei zu erstellen um diese in eine der nächsten Versionen aufzunehmen."
+    },
+    {
+      "id": 5,
+      "title": "Tipps & Tricks",
+      "msg": "Ich werde einige Tipps über diese App geben. <br><br><a href='' onclick=externalLink('emulate')>Hier ist eine Anleitung wie man das CMU-System auf einem PC zum laufen bringt.</a><br><br><a href='' onclick=externalLink('cmu-autorun')>CMU-Autorun script for testing and recovery.</a>",
+      "t2": "Technical Talk",
+      "msg2": "Diese Anwendung ist mit <a href='' onclick='externalLink(`Electron`)' title='Electron'>Electron</a> und <a href='' onclick='externalLink(`AngularJS`)' title='AngularJS'>AngularJS</a> erstellt."
+    },
+    {
+      "id": 6,
+      "title": "Hilfe & Einstellungen",
+      "msg": "<h2>Hilfe:</h2> \n<div class='w3-display-topright w3-margin-top'><a href='' id='aio-settings-btn' class='w3-btn' onclick='$(`#helpMenuTop`).toggleClass(`w3-hide`)' data-toggle='tooltip' data-placement='auto' title='MZD-AIO-TI Einstellungen'><span class='icon-tools2'></span></a></div></div><div class='w3-panel'><div class='w3-twothird'>  Anweisungen zum Erstellen von Tweak-Dateien:</div><div class='w3-third w3-medium'><a class='w3-btn' ng-click='startTour()' id='tourBtn'><span class='icon-car2'></span> Einführungstour</a></div></div><div class='w3-panel'><div class='w3-twothird'><p>Wenn Sie auf einen Fehler gestoßen sind <br>oder einen Hänger:</p><p>Oder sie können:</p></div><div class='w3-third w3-medium'><a class='w3-btn' onclick='location.reload()'><span class='icon-refresh'></span> App neuladen</a><a class='w3-btn' onclick='app.relaunch();app.exit()'><span class='icon-rocket3'></span> App neustarten</a></div></div><div class='w3-panel'><div class='w3-twothird'><p>Dir gefällt die App? Spenden ist eine großartige Möglichkeit, etwas Liebe zu zeigen!:</p></div><div class='w3-third w3-medium'><a class='w3-btn' onclick='donate()'><span class='icon-money'></span> Spenden</a></div></div><hr>",
+      "t2": "",
+      "msg2": ""
+    }
+  ],
+  "FAQs": {
+    "title": "FAQ",
+    "msg": "Häufig gestellte Fragen: ",
+    "q1": "Ist AIO kompatibelmit meiner FW Version?",
+    "a1": "Alle kompatiblen FW Versionen unter der Sektion 'Tweaking > Compatible Firmware Versions', links hiervon, gelistet. MZD-AIO-TI liest zu Beginn der Installation die Firmware-Version aus und zeigt wenn sie nicht Kompatibel (oder noch nicht geteste ist) und wird die Installation an diesem Punkt zur Sicherheit abbrechen.",
+    "q2": "Wie lange dauert es bis die Installation beginnt?",
+    "a2": "Normalerweise startet die Installation innerhalb von 30sec bis zu 2 Minuten aber es kann auch bis zu 10 Minuten dauern.",
+    "q3": "Falls etwas schief geht, wie kann ich helfen damit mir geholfen werden kann?",
+    "a3": "Während der Installation/Deinstallation wird ein Protokoll (AIO log.txt & MZD-AIO-TI info.txt) erstellt und einige zusätzliche Dateien auf den USB-Stick kopiert. Erstelle bitte daraus eine ZIP-Datei (komplettes Verzeichnis des USB-Sticks) und sende mir die Datei oder lade es hoch (z.B. GoogleDrive oder ähnlich) und sende mir den Link. Du kannst dir auch <a href='' onclick='externalLink(`thislink`)'>diesen Tweak</a> runter laden, welcher einige Dateien von deinem MZD System auf den USB-Stick kopiert und diese kannst du mir schicken.",
+    "q4": "Muss ich die Tweaks vorher mit AIO 1.x deinstallieren bevor ich ihn wieder installiere?D",
+    "a4": "Nein, du kannst jeden Tweak mit AIO installieren, er muss vorher nicht erst deinstalliert werden. MZD-AIO-TI 2.x nutzt die selben Tweaks wie AIO 1.x, Kompatibilität wurde beachtet.",
+    "q5": "Wie lange dauert die Installation/Deinstallation?",
+    "a5": "Bis zu 10 Minuten falls jeder Tweak ausgewählt wurde (besonders benutzerdefinierte Farben und Speedcam-Patch). Das Backup vom JCI-Ordner dauert alleine ca. 10 Minuten, alles zusammen bis zu 20 Minuten.",
+    "q6": "Was passiert, wenn ich mein System wiederherstellen möchte, aber ich habe die Tweaks vergessen, die ich installiert habe?",
+    "a6": "Deinstallieren von Tweaks ist im Allgemeinen sicher, wenn das Deinstallationsprogramm keine Sicherungskopie findet, wird es die Originaldateien aus dem USB-Laufwerk über die Originaldateien Ihres MZD-Systems kopieren. ABER: DIES IST NICHT FÜR NEUE UND UNBEKANNTE FW-VERSIONEN! Weitere Informationen finden Sie unter 'Reverting' in dieser Hilfe.",
+    "q7": "Ich möchte die Reihenfolge der Audioquellen ändern.",
+    "a7": "Bearbeite: /jci/gui/apps/system/js/systemApp.js in Zeile 624 - 637<br><br><b>* Seien Sie vorsichtig, die letzte Zeile darf nicht mit einem Komma enden, sonst endet es in einer Boot-Schleife! *</b><br> Ich arbeite daran den Tweak zu modifizieren, damit sie ihre eigene Reihenfolge wählen können ohne manuell Dateien zu ändern.",
+    "q8": "Kann ich AIO von einer SD-Karte aus installieren?",
+    "a8": "Nein, der SD-Kartenslot im Auto ist NUR für Navigationskarten. Sie müssen den USB-Anschluss im Auto verwenden, also entweder USB-Stick oder USB-SD-Kartenleser mit Ihrer Karte drin.",
+    "q9": "Wie kann ich das MZD-System neu starten?",
+    "a9": "Drücke NAV+MUTE für 10 Sekunden.",
+    "q10": "Können Sie diesen oder jenen Tweak für uns schreiben?",
+    "a10": "Ich habe viele der bestehenden Tweaks und tweaks.sh als Ganzes verbessert aber ich habe einen Job und die  Entwicklung der GUI für diese App ist eine ziemlich heftige Aufgabe. Ich habe Ideen für zukünftige Tweaks und ich werde Vorschläge entgegen nehmen aber ich kann nichts versprechen. Sie können mich mit dem Kontaktformular unten rechts in der App kontaktieren."
+  },
+  "tourMsgs": [
+    {
+      "id": 0,
+      "msg": "<h1>Willkommen bei MZD-AIO-TI!</h1><br><h3>Mazda All In One Tweaks Installer</h3> Ein Tool zum Installieren/Deinstallieren von 40+ 'Tweaks' für das Mazda MZD Infotainment System."
+    },
+    {
+      "id": 1,
+      "msg": "Das sind die Haupt-'Tweaks'. Man kann bei jedem wählen ob man ihn installieren oder deinstallieren will."
+    },
+    {
+      "id": 2,
+      "msg": "In dieser Seitenleiste werden alle momentan ausgewählten Tweaks aufgelistet. Hier erscheinen zusätzliche Optionen und Sie können auch auf einen beliebigen Eintrag in dieser Liste klicken, um Hilfeinformationen zu erhalten."
+    },
+    {
+      "id": 3,
+      "msg": "Zusätzliche Aktionen wie Backup-JCI-Ordner & WLAN aktivieren (für nordamerikanische Versionen)."
+    },
+    {
+      "id": 4,
+      "msg": "Diese Optionen können durch Auswahl ihrer Standardoptionen wieder in den ursprünglichen Zustand versetzt werden."
+    },
+    {
+      "id": 5,
+      "msg": "Die Menüs haben weitere Hilfethemen und Links zu Ressourcen und Dokumentation."
+    },
+    {
+      "id": 6,
+      "msg": "Wenn alle Tweaks ausgewählt wurden klicken Sie auf diese Schaltfläche um zu kompilieren!"
+    },
+    {
+      "id": 7,
+      "msg": "Kopieren Sie den gesamten Inhalt des Ordners \"_ copy_to_usb\" auf einen leeren, FAT32 formatierten  USB-Stick. Stecken Sie den Stick in den USB-Port des Autos, das Installationsprogramm startet nach einigen Minuten automatisch. Entfernen Sie alle anderen USB-Geräte ausser die NAV-SD-Karte, diese sollte gesteckt bleiben.  Bluetooth und WLAN ausschalten hilft auch. Nach Abschluss der Installation wird das System neu gestartet. Anschließend können Sie den USB-Stick entfernen und Ihre Änderungen werden übernommen."
+    },
+    {
+      "id": 8,
+      "msg": "Für weitere Informationen besuchen Sie <a href='' onclick='externalLink(\"mazdatweaks\")' title='Mazda Tweaks'>MazdaTweaks.com!</a>"
+    }
+  ],
+  "popupMsgs": [
+    {
+      "id": 0,
+      "msg": "Kompiliere... Bitte warten..."
+    },
+    {
+      "id": 1,
+      "msg": "Ort für 'Tweak'-Dateien"
+    },
+    {
+      "id": 2,
+      "msg": "<small>(Für beste Ergebnisse, vor dem Kopieren USB-Laufwerk löschen)</small>"
+    },
+    {
+      "id": 3,
+      "msg": "auf USB-Stick kopieren"
+    },
+    {
+      "id": 4,
+      "msg": "noch nicht"
+    },
+    {
+      "id": 5,
+      "msg": "Öffne USB-Stick"
+    },
+    {
+      "id": 6,
+      "msg": "USB-Stick gefunden"
+    },
+    {
+      "id": 7,
+      "msg": "Dateien auf den USB-Stick kopieren?"
+    },
+    {
+      "id": 8,
+      "msg": "USB-Stick wählen"
+    },
+    {
+      "id": 9,
+      "msg": "Keine USB-Laufwerke gefunden. Den gesamten Inhalt von"
+    },
+    {
+      "id": 10,
+      "msg": "auf einen leeren, FAT32 formatierten USB-Stick kopieren"
+    },
+    {
+      "id": 11,
+      "msg": "Kopiere auf USB-Stick"
+    },
+    {
+      "id": 12,
+      "msg": "Bitte warten"
+    },
+    {
+      "id": 13,
+      "msg": "Entpacke Swapfile nach"
+    },
+    {
+      "id": 14,
+      "msg": "Das dauert ein paar Minuten... bitte warten."
+    },
+    {
+      "id": 15,
+      "msg": "Swapfile ist 1 GB."
+    },
+    {
+      "id": 16,
+      "msg": "Während Sie warten, hier einige Informationen"
+    },
+    {
+      "id": 17,
+      "msg": "Neu beginnen"
+    },
+    {
+      "id": 18,
+      "msg": "AIO Compile Log ansehen"
+    },
+    {
+      "id": 19,
+      "msg": "Beenden"
+    },
+    {
+      "id": 20,
+      "msg": "Erfolgreich!"
+    },
+    {
+      "id": 21,
+      "msg": "_copy_to_usb Ordner nach Kopiervorgang löschen?"
+    }
+  ],
+  "mainOps": {
+    "wifi": {
+      "id": 0,
+      "label": "WLAN aktivieren (NA)",
+      "safetylvl": "safe",
+      "toolTip": "<h5>WLAN </h5>Aktiviert WLAN für Nordamerika"
+    },
+    "backup": {
+      "id": 1,
+      "label": "Backup JCI Ordner",
+      "safetylvl": "safe",
+      "toolTip": "<h5>Backup JCI </h5>Führt eine Sicherung des JCI-Ordners vor der Installation von Tweaks durch."
+    },
+    "background": {
+      "id": 2,
+      "label": "Hintergrundbild",
+      "safetylvl": "safe",
+      "toolTip": "<h5>Hintergrund </h5>Zu einem benutzerdefiniertem Hintergrund wechseln, unterstütze Bildformate sind: jpg, jpeg, und png (beliebige Größe). Hinweis: Wird ein einzelnes Bild gewählt, wird es in 800px x 480px geändert <b>ABER NICHT BESCHNITTEN</b> und als .png gespeichert. Um das Hintergrundbild wieder in Originalgröße zu ändern, 'Default Background' auswählen.",
+      "img": "cic.jpg"
+    },
+    "colors": {
+      "id": 3,
+      "label": "eigene Infotainment-Farben",
+      "safetylvl": "safe",
+      "toolTip": "<h5>eigene Infotainment-Farben: </h5>Ändert die Infotainment-Farben von Rot (Standard) in eine der folgenden Farben:  <ul><li>Blau</li> <li>Grün</li> <li>Orange</li> <li>Pink</li> <li>Lila</li> <li>Silber</li> <li>Gelb</li> <li>Smooth Red </li></ul> <h5>Themen: Themen ersetzen nur die Hauptmenü-Coins.  Wird über ein Farbschema installiert, bleiben die benutzerdefinierten Farben mit dem Thema erhalten. enthaltene Themen:<ul><li>carOS</li> <li>Storm Troopers</li> <li>Poker</li> <li>Mazda Logos</li> <li>schwebendes Logo</li> <li>X-Men</li></ul>  <br>PROTIP: Entferne alle Bilder die nicht geändert werden sollen. Das kann nur ein Ordner sein oder alle Bilder bis auf eines.  ",
+      "toolTip2":"<h5><b>eigene Themen Option:</b> </h5>Nutze jedes beliebige für das MZD Infotainment System erstellte Thema oder erstelle einfach dein eigenes. <br><li>für beliebige Themen: lade und entpacke das Thema</li> <li>Importiere <code>config/jci/</code> aus dem Themen-Ordner in AIO.</li><br>HINWEIS: Hierbei werden nur die .png Dateien für das Thema kopiert<h5><b>für selbst erstellte Themen:</b> </h5> <li><b>Wird keine Thema gewählt:</b> ein Ordner wird hier erstellt: <code>_copy_to_usb/config/color-schemes/theme/jci/</code></li> <li>Nach dem erstellen der Tweaks, kopiere deine Dateien in den erstellten jci Ordner <b>im gleichen Verzeichnis der Bilder, die ersetzt werden sollen.<div class='warning'>WARNUNG: WEN DIESE VARIANTE GEWÄHLT WIRD, ALLES AUS DEM JCI ORDNER WIRD AN DEN SELBEN ORT IM SYSTEM KOPIERT. NUTZE ES MIT VORSICHT.</div>",
+      "img": "carOS.png"
+    },
+    "sshbringback": {
+      "id": 4,
+      "label": "Installiert SSH_bringback",
+      "safetylvl": "safe",
+      "toolTip": "<h5>SSH_bringback </h5>**Entfernen nicht möglich!** Ab FW 56.00.511 hat Mazda den SSH-Zugang entfernt.  Mit SSH_bringback wird es wieder installiert.  Dieser 'Tweak' wird nur installiert wenn die FW 56.00.511 erkannt wird, bei 56.00.230 wird nichts passieren."
+    },
+    "sdcid": {
+      "id": 5,
+      "label": "SD CID",
+      "safetylvl": "safe",
+      "toolTip": "<h5>SD CID </h5>Erhält die CID von der Nav SD-Karte, falls verfügbar."
+    },
+    "backgroundrotator": {
+      "id": 6,
+      "label": "Hintergrund-Rotator",
+      "btntxt": "kombiniere Bilder",
+      "button": "Klicken um Bilder für wechselnden Hintergrund zu kombinieren",
+      "safetylvl": "safe",
+      "toolTip": "<h5>Hintergrund-Rotator Tweak.  </h5>Wechselt durch 10 Hintergründe über 10 Minuten (600 Sekunden - 60 Sekunden pro Hintergrund). Hinweis: Nach der Installation dieses Tweaks kann der Hintergrund mehrmals geändert werden, ohne neu installiert werden zu müssen.  Um wieder zu einem Hintergrund zurückzukehren, den Tweak deinstallieren."
+    },
+    "retain": {
+      "id": 7,
+      "label": "Kopiere Backups",
+      "testlabel":"Teste Backups",
+      "skipconfirm": "Bestätigung überspringen",
+      "safetylvl": "safe",
+      "toolTip": "<h5>Bestätigung überspringen</h5><p>Ermöglicht die Ausführung der Installation, ohne dass zur Bestätigung aufgefordert wird. Hauptsächlich wird dies für die Wiederherstellung verwendet, wenn der Touchscreen nicht reagiert.  </p><h5>Kopiere Backups:</h5> <p> Kopiert Original-Dateien der geänderten Systemdateien, zum aufbewahren. </p><h5>Teste Backups:</h5> <p>Einige 'Tweaks' erstellen während der Installation Kopien vor und nach der Änderung.  Wenn so etwas benötigt wird, werden die Dateien nach your-usb/bakups/test/ kopiert.</p>"
+    },
+    "mainmenu": {
+      "id": 8,
+      "label": "Hauptmenü-Tweaks",
+      "safetylvl": "safe",
+      "toolTip": "<h5>Hauptmenü-Tweaks </h5>   <br><ul><li><h5>Alternative Hauptmenü-Layouts</h5><ul><li><h4>'Star Points' Layout</h4></li>  <li><h4>'Invertiertes' Layout</h4></li></ul></li>  <li><h5>3D Hauptmenü-Beschriftung</h5></li>  <li><h5>verstecke Hauptmenü-Ellipse</h5></li> <li><h5>kleinere Hauptmenü-'Coins'</h5></li></ul>",
+      "img": "Alt-layouts.jpg"
+    },
+    "uistyle": {
+      "id": 9,
+      "label": "Textfarbe",
+      "safetylvl": "safe",
+      "toolTip": "<h4>Text der Benutzeroberfläche</h4> Passt Stil und Textfarbe der Benutzeroberfläche an: <br> <ul><li>Song Titel</li>  <li>Künstler & Album</li>  <li>Radiostation</li>  <li>Listeneinträge & deaktivierte Listeneinträge</li>  <li>Textschatten</li></ul>"
+    },
+    "offscreenbg": {
+      "id": 10,
+      "label": "Ausschaltebildschirm",
+      "btntxt": "Off Screen Default",
+      "safetylvl": "safe",
+      "toolTip": "<h5>Ausschaltebildschirm.  </h5>Hintergrundbild wen \"Display ausschalten & Uhr anzeigen\" in den Einstellungen gewählt wird.  Wird auch beim Ausschalten des Systems gezeigt."
+    }
+  },
+  "menu": {
+    "save": {
+      "menuId": "0",
+      "label": "Speichern",
+      "toolTip": "Speichert aktuelle Einstellungen."
+    },
+    "load": {
+      "menuId": "1",
+      "label": "Laden",
+      "toolTip": "Lädt letzte gepseicherte Einstellungen"
+    },
+    "tour": {
+      "menuId": "2",
+      "label": "Tour",
+      "toolTip": "Einführung in MZD-AIO-TI"
+    },
+    "lastcompilelog": {
+      "menuId": "3",
+      "label": "Letztes Compile Log",
+      "toolTip": "MZD_LOG"
+    },
+    "installall": {
+      "menuId": "4",
+      "label": "Installiere alles",
+      "toolTip": "Installiert alles außer: Android Auto und Castscreen."
+    },
+    "uninstallall": {
+      "menuId": "5",
+      "label": "Deinstalliere alles",
+      "toolTip": "Deinstalliert alle Tweaks."
+    },
+    "resetoptions": {
+      "menuId": "6",
+      "label": "Optionen zurücksetzen",
+      "toolTip": "ausgewählte Optionen zurücksetzen."
+    },
+    "reloadapp": {
+      "menuId": "17",
+      "label": "App neuladen",
+      "toolTip": "App neuladen."
+    },
+    "copytousb": {
+      "menuId": "8",
+      "label": "_copy_to_usb",
+      "toolTip": "Öffne _copy_to_usb Ordner"
+    },
+    "help": {
+      "menuId": "9",
+      "label": "Hilfe",
+      "toolTip": "Tweak-Name anwählen für Hilfe."
+    },
+    "install": {
+      "menuId": "10",
+      "label": "Installieren"
+    },
+    "uninstall": {
+      "menuId": "11",
+      "label": "Deinstallieren"
+    },
+    "languages": {
+      "menuId": "12",
+      "label": "Sprache"
+    },
+    "close": {
+      "menuId": "13",
+      "label": "Schließen"
+    },
+    "clickforhelp": {
+      "menuId": "14",
+      "label": "Klicken für Hilfe"
+    },
+    "tweakstoinstall": {
+      "menuId": "15",
+      "label": "Tweaks zum installieren"
+    },
+    "file": {
+      "menuId": "18",
+      "label": "Datei"
+    },
+    "window": {
+      "menuId": "19",
+      "label": "Fenster"
+    },
+    "download": {
+      "menuId": "20",
+      "label": "Download"
+    },
+    "fullscreen": {
+      "menuId": "20",
+      "label": "Vollbild"
+    },
+    "translator": {
+      "menuId": "21",
+      "label": "Übersetzer"
+    },
+    "dlcolors": {
+      "menuId": "22",
+      "label": "Download Farbschema-Dateien"
+    },
+    "dlspeedcam": {
+      "menuId": "22",
+      "label": "Download Speedcam Patch Dateien"
+    },
+    "helppanel": {
+      "menuId": "23",
+      "label": "Hilfethemen"
+    },
+    "changelog": {
+      "menuId": "24",
+      "label": "Changelog"
+    },
+    "start": {
+      "menuId": "16",
+      "label": "Starte Kompilierung",
+      "toolTip": "<h1>Fertig?</h1> <b>Starte die Kompilierung!</b>"
+    },
+    "centerwindow":{
+      "menuId": "17",
+      "label": "Fenster zentrieren",
+      "toolTip": "Fenstergröße und Position zurücksetzen"
+    }
+  },
+  "imgOps": [
+    {
+      "id": 0,
+      "label": "Verbinde mehrere Bilder für Hintergrundbild"
+    },
+    {
+      "id": 1,
+      "label": "Wähle bis zu 50 Bilder, Auflösung 480px X 800px (jedes Bild wird zu 480x800 geändert). Hintergrund-Rotator wird jedes Bild für  X Sekunden zeigen (Max 300 Sekunden = 5 Minuten pro Bild)."
+    },
+    {
+      "id": 2,
+      "label": "Reihenfolge durch verschieben ändern."
+    },
+    {
+      "id": 3,
+      "label": "gewählte Bilder"
+    },
+    {
+      "id": 4,
+      "label": "Bilder zum verbinden wählen (Jedes wird entpsrechend in der Höhe: 480px, Breite: 800px geändert) oder "
+    },
+    {
+      "id": 5,
+      "label": "nutze ein eigenes kombiniertes Bild (keine Größenänderung)"
+    },
+    {
+      "id": 6,
+      "label": "Das Bild wird den Hintergrund ersetzen."
+    },
+    {
+      "id": 7,
+      "label": "Bild speichern als"
+    },
+    {
+      "id": 8,
+      "label": "Erstelle noch eins"
+    },
+    {
+      "id": 9,
+      "label": "Rechtsklick > speichert eine Kopie von background.png im Download-Ordner."
+    },
+    {
+      "id": 10,
+      "label": "Minuten"
+    },
+    {
+      "id": 11,
+      "label": "Bilder wählen"
+    },
+    {
+      "id": 12,
+      "label": "Bilder"
+    }
+  ],
+  "translatorWindow": [
+    {
+      "label": "Übersetzer"
+    },
+    {
+      "label": "Zurücksetzen"
+    },
+    {
+      "label": "Sprache eingeben (Datei wird gespeichert als"
+    },
+    {
+      "label": "im 'Dokumente' Ordner"
+    },
+    {
+      "label": "Email mit Datei an"
+    },
+    {
+      "label": "Pull Request"
+    },
+    {
+      "label": "laden"
+    },
+    {
+      "label": "Unter 'Dokumente' gespeichert"
+    },
+    {
+      "label": "Im Explorer anzeigen"
+    },
+    {
+      "label": "Datei laden"
+    },
+    {
+      "label": "Dieser Teil wurde zum einfachen übersetzen in verschiedene Sprachen entwickelt."
+    },
+    {
+      "label": "Datei zum bearbeiten öffnen"
+    },
+    {
+      "label": "Sprache eingeben"
+    },
+    {
+      "label": "ZURÜCK"
+    },
+    {
+      "label": "Speichern (unter 'Dokumente')."
+    },
+    {
+      "label": "autom. Speichern"
+    }
+  ],
+  "colors": {
+    "red": {
+      "id": 0,
+      "label": "Rot (Standard)"
+    },
+    "blue": {
+      "id": 1,
+      "label": "Blau"
+    },
+    "green": {
+      "id": 2,
+      "label": "Grün"
+    },
+    "silver": {
+      "id": 3,
+      "label": "Silber"
+    },
+    "pink": {
+      "id": 4,
+      "label": "Pink"
+    },
+    "purple": {
+      "id": 5,
+      "label": "Lila"
+    },
+    "orange": {
+      "id": 6,
+      "label": "Orange"
+    },
+    "yellow": {
+      "id": 7,
+      "label": "Gelb"
+    },
+    "smoothred": {
+      "id": 8,
+      "label": "Smooth Red"
+    },
+    "smoothazure": {
+      "id": 9,
+      "label": "Smooth Azure"
+    },
+    "smoothviolet": {
+      "id": 10,
+      "label": "Smooth Violet"
+    },
+    "caros": {
+      "id": 11,
+      "label": "CarOS"
+    },
+    "stormtroopers": {
+      "id": 12,
+      "label": "Storm Troopers"
+    },
+    "poker": {
+      "id": 13,
+      "label": "Poker"
+    },
+    "mazdalogos": {
+      "id": 14,
+      "label": "Mazda Logos"
+    },
+    "floating": {
+      "id": 15,
+      "label": "Floating Logo"
+    },
+    "xmen": {
+      "id": 16,
+      "label": "X-Men"
+    },
+    "custom": {
+      "id": 17,
+      "label": "Custom Theme"
+    }
+  },
+  "statusbar": {
+    "main": {
+      "id": 0,
+      "label": "entferne Statuszeilen-Hintergrund"
+    },
+    "opacity": {
+      "id": 1,
+      "label": "Deckkraft Statuszeile"
+    },
+    "app": {
+      "id": 2,
+      "label": "App Titel"
+    },
+    "clock": {
+      "id": 3,
+      "label": "Uhr"
+    },
+    "notif": {
+      "id": 4,
+      "label": "Statusbenachrichtigungen"
+    },
+    "d2sbinst": {
+      "id": 5,
+      "label": "Datum in Statuszeile"
+    },
+    "d2sbuninst": {
+      "id": 6,
+      "label": "entferne Datum aus Statuszeile"
+    }
+  },
+  "uistyle": {
+    "body": {
+      "id": 0,
+      "label": "Body Text (Audio Artist & Album)"
+    },
+    "listitem": {
+      "id": 1,
+      "label": "List Item"
+    },
+    "listitemdisabled": {
+      "id": 2,
+      "label": "Disabled List Item"
+    },
+    "title": {
+      "id": 3,
+      "label": "Song Title"
+    },
+    "radio": {
+      "id": 4,
+      "label": "Radio Station"
+    },
+    "ellipse": {
+      "id": 6,
+      "label": "Remove Ellipse"
+    },
+    "shadow": {
+      "id": 8,
+      "label": "Text Shadow"
+    },
+    "minicoins": {
+      "id": 10,
+      "label": "Smaller 'Coins'"
+    },
+    "minifocus": {
+      "id": 11,
+      "label": "Small Focused Coin"
+    },
+    "mainlabel": [
+      {
+        "id": 1,
+        "label": "3D Text"
+      },
+      {
+        "id": 2,
+        "label": "Hide Text"
+      }
+    ],
+    "layout": [
+      {
+        "id": 1,
+        "label": "'Star Points' Layout"
+      },
+      {
+        "id": 2,
+        "label": "'Star Points B' Layout"
+      },
+      {
+        "id": 3,
+        "label": "'Inverted' Layout"
+      },
+      {
+        "id": 4,
+        "label": "'FlatLine' Layout"
+      }
+    ],
+    "nobtnbg":
+    { "id": 1, "label": "Behind Buttons" },
+    "nonpbg":
+    { "id": 2, "label": "Now Playing" },
+    "nolistbg":
+    { "id": 3, "label": "List View" },
+    "nocallbg":
+    { "id": 4, "label": "In Call" },
+    "notextbg":
+    { "id": 5, "label": "Text Messages" }
+  },
+  "speedcamOps": [
+    {
+      "id": 0,
+      "label": "Europa mit mobilen Blitzern"
+    },
+    {
+      "id": 1,
+      "label": "Europa ohne mobile Blitzer"
+    },
+    {
+      "id": 2,
+      "label": "Deutschland mit mobilen Blitzern"
+    },
+    {
+      "id": 3,
+      "label": "Deutschland ohne mobilen Blitzern"
+    },
+    {
+      "id": 4,
+      "label": "Türkei"
+    },
+    {
+      "id": 5,
+      "label": "Nutze eigene speedcam.txt Datei"
+    }
+  ],
+  "disclaimOps": [
+    {
+      "id": 0,
+      "label": "komplett entfernen"
+    },
+    {
+      "id": 1,
+      "label": "reduziere Zeit auf 0.5 Sekunden"
+    }
+  ],
+  "fuelOps": [
+    {
+      "id": 0,
+      "label": "km/l"
+    },
+    {
+      "id": 1,
+      "label": "MPG"
+    }
+  ],
+  "d2sbOps": [
+    {
+      "id": 0,
+      "label": "V1.0"
+    },
+    {
+      "id": 1,
+      "label": "v3.3 (Datum lokalisiert)"
+    },
+    {
+      "id": 2,
+      "label": "V3.3 (dd.mm.)"
+    },
+    {
+      "id": 3,
+      "label": "V3.3 (mm/dd)"
+    }
+  ],
+  "speedoOps": {
+    "lang": {
+      "en": {
+        "id": 0,
+        "label": "Englisch"
+      },
+      "de": {
+        "id": 1,
+        "label": "Deutsch"
+      },
+      "sp": {
+        "id": 2,
+        "label": "Spanisch"
+      },
+      "pl": {
+        "id": 3,
+        "label": "Polnisch"
+      },
+      "sl": {
+        "id": 4,
+        "label": "Slovakisch"
+      },
+      "tk": {
+        "id": 5,
+        "label": "Türkisch"
+      },
+      "fr": {
+        "id": 6,
+        "label": "Französisch"
+      },
+      "it": {
+        "id": 7,
+        "label": "Italienisch"
+      }
+    },
+    "xph": {
+      "mph": {
+        "id": 10,
+        "label": "MPH"
+      },
+      "kmh": {
+        "id": 11,
+        "label": "km/h"
+      }
+    },
+    "sml": {
+      "gps": {
+        "id": 20,
+        "label": "GPS Werte"
+      },
+      "car": {
+        "id": 21,
+        "label": "Fahrzeugwerte"
+      },
+      "none": {
+        "id": 22,
+        "label": "Nicht aktivieren"
+      }
+    },
+    "bg": {
+      "ind": {
+        "id": 30,
+        "label": "individueller Hintergrund"
+      },
+      "orig": {
+        "id": 31,
+        "label": "originaler Hintergrund"
+      }
+    },
+    "mod": {
+      "id": 50,
+      "label": "Speedo Variant By: pnedkov"
+    },
+    "modAlt": {
+      "id": 51,
+      "label": "Start With Analog"
+    },
+    "opac": {
+      "id": 40,
+      "val": "0",
+      "label": "Deckkraft schwarzer Hintergrund? (zum reduzieren der Sichtbarkeit von benutzerdefinierten MZD-Hintergründen) 0.0 (Transparent) - 1.0 (komplett schwarz)"
+    }
+  },
+  "tweakOps": [
+    {
+      "id": 1,
+      "OpName": "Touchscreen während Fahrt aktivieren",
+      "INST": "Den Touchscreen auch während der Fahrt akivieren?",
+      "DEINST": "Den Touchscreen während der Fahrt wieder deaktivieren?",
+      "toolTip": "<h5>Touchscreen </h5>\nErmöglicht die Nutzung des Touchscreens auch während der Fahrt<br>Fix Cluster Compass: Einige Dinge werden während der Fahrt deaktiviert aber der Touchscreen selbst und der Cluster-Kompass funktionieren",
+      "img": "",
+      "safetylvl": "safe",
+      "extraOps": true,
+      "advancedOp": false
+    },
+    {
+      "id": 2,
+      "OpName": "Haftungsausschluss entfernen",
+      "INST": "Haftungsausschluss komplett entfernen?",
+      "DEINST": "Haftungsausschluss-Zeit wieder auf 3.5 Sekunden setzen?",
+      "toolTip": "<h5>keinen Haftungsausschluss </h5>Einblendungszeit des Haftungsausschlusses von 3.5 auf 0.5 Sekunden setzen.",
+      "img": "",
+      "safetylvl": "safe",
+      "extraOps": true,
+      "advancedOp": false
+    },
+    {
+      "id": 3,
+      "OpName": "Sicherheitswarnung der Rückfahrkamera",
+      "INST": "Soll die Sicherheitswarnung der Rückfahrkamera entfernt werden?",
+      "DEINST": "Sicherheitswarnung der Rückfahrkamera wieder einblenden?",
+      "toolTip": "<h5>Sicherheitswarnung der Rückfahrkamera </h5>Entfernung der Sicherheitswarnung am unteren Rand bei aktivierter Rückfahrkamera",
+      "img": "",
+      "safetylvl": "safe",
+      "extraOps": false,
+      "advancedOp": false
+    },
+    {
+      "id": 4,
+      "OpName": "transparente Parksensor-Grafiken",
+      "INST": "transparente Parksensor-Grafiken f. Näherungssensoren installieren",
+      "DEINST": "transparente Parksensor-Grafiken f. Näherungssensoren zurücksetzen?",
+      "toolTip": "<p style=\"\" class=\"\"><b>transparente Parksensor-Grafiken</b>&nbsp;</p><div>für Näherungssensoren.##Bei aktivierter Rückfahrkamera wird oben rechts eine Draufsicht des Fahrzeugs angezeigt.#Die Grafiken werden durch Installation des Tweaks nun transparent angezeigt<br></div>",
+      "img": "semi-transparent_parking-sensors.jpg",
+      "safetylvl": "safe",
+      "extraOps": false,
+      "advancedOp": false
+    },
+    {
+      "id": 5,
+      "OpName": "Schleife für das Hauptmenü",
+      "INST": "Main_menu_loop installieren?",
+      "DEINST": "Main_menu_loop entfernen?",
+      "toolTip": "<p style=\"\" class=\"\"><b><span style=\"font-size: 13px;\">Schleife für das  Hauptmenü</span></b></p><p style=\"\" class=\"\"><span style=\"font-size: 13px; font-weight: normal;\">Man kann nun von links nach rechts springen und umgekehrt.</span></p>",
+      "img": "",
+      "safetylvl": "safe",
+      "extraOps": false,
+      "advancedOp": false
+    },
+    {
+      "id": 6,
+      "OpName": "verbesserte Listenschleife",
+      "INST": "Improved_list_loop (optional shorter_delay_mod) installieren?",
+      "DEINST": "Improved_list_loop u. shorter_delay_loop entfernen?",
+      "toolTip": "<span style=\"font-size: 10.79px;\"><b>Improved_list_loop</b></span><div><span style=\"font-size: 10.79px;\">Schleife für alle Listen und Untermenüs (Musik, Kontakte, usw.).#Man kann von der obersten Position einer Liste nach ganz unten springen und umgekehrt.</span><h5></h5></div>  Jetzt mit der Option Listenschleife zu entfernen.",
+      "img": "",
+      "safetylvl": "safe",
+      "extraOps": true,
+      "advancedOp": false
+    },
+    {
+      "id": 7,
+      "OpName": "kurze Verzögerung-Mod",
+      "INST": "Shorter_delay_mod installieren?",
+      "DEINST": "Entferne shorter_delay_mod",
+      "toolTip": "<h5>kurze Verzögerung-Mod.</h5><h5><span style=\"font-size: 10.79px; font-weight: normal;\">Verringerung der Wartezeit beim seitenweise blättern mit dem Multicommander von 1.5 auf 0.3 Sekunden.</span></h5>",
+      "img": "",
+      "safetylvl": "safe",
+      "extraOps": false,
+      "advancedOp": false
+    },
+    {
+      "id": 8,
+      "OpName": "Media Order Patch & FLAC Support",
+      "INST": "Media_order patch u. FLAC support installieren?",
+      "DEINST": "\"Media_order patch u. FLAC support entfernen?",
+      "toolTip": "<h5>Media Order Patching und FLAC Support </h5>Musik wird nun alphabetisch sortiert und nicht mehr nach Datum mit neusten Einträgen zuerst<div>Support für Audio-Format FLAC <h6>Audio Order Patch & FLAC Support ist nur  kompatibel mit folgenden FW Versionen: </h6><div style='columns:5'>55.00.650A-NA  55.00.753A-NA  55.00.760A-NA  56.00.100A-ADR  56.00.230A-EU  56.00.240B-ADR  56.00.511A-EU  56.00.512A-EU  56.00.521A-NA  58.00.250A-NA  59.00.326A-ADR  59.00.331A-EU  56.00.513C-EU  56.00.513B-EU  56.00.513C-ADR  59.00.330A-ADR   59.00.342A-ADR   59.00.441A-NA  59.00.443C-EU</div></div>",
+      "img": "",
+      "safetylvl": "warning",
+      "extraOps": false,
+      "advancedOp": true
+    },
+    {
+      "id": 9,
+      "OpName": "Anordnung der Audioquellen",
+      "INST": "Die Reihenfolge der Audioquellen sinnvoll anordnen?",
+      "DEINST": "Die Reihenfolge der Audioquellen wieder zurücksetzen?",
+      "toolTip": "<h5>Anordnung der Audioquellen ändern.  </h5> Die Reihenfolge der Audioquellen wird sinnvoll angeordnet:<ui> </ui><li>USB_A</li><ui> </ui><li>USB_B</li><ui> </ui><li>btaudio</li><ui></ui><li>AUX</li><ui></ui><li><p style=\"\" class=\"\">FMRadio</p></li> <li>DAB</li><ui></ui><li>CD</li><ui></ui><li>SatRadio</li><ui></ui><li>AhaRadio</li><ui></ui><li>Pandora</li><ui></ui><li>Stitcher</li><ui>  </ui><li>amradio</li><ui></ui><li>DVD</li><ui> </ui><li>TV</li><ui></ui>",
+
+      "img": "",
+      "safetylvl": "warning",
+      "extraOps": false,
+      "advancedOp": false
+    },
+    {
+      "id": 10,
+      "OpName": "Pause bei Stumm",
+      "INST": "Pause_on_mute installieren?",
+      "DEINST": "Pause_on_mute entfernen?",
+      "toolTip": "<h5>Pause bei Stumm. </h5>  Bei 'Stumm' (Druck auf den Lautstärkebutton) werden abgespielte Medien pausiert.",
+      "img": "",
+      "safetylvl": "safe",
+      "extraOps": false,
+      "advancedOp": false
+    },
+    {
+      "id": 11,
+      "OpName": "Remove Message Reply",
+      "INST": "Entfernt automatische Signatur in Nachrichten",
+      "DEINST": "Setzt automatische Signatur in Nachrichten zurück",
+      "toolTip": "<h5>Remove Message Replies </h5>Entfernt den Text 'Sent from my Mazda Quick Text System' beim beantworten von Nachrichten.",
+      "img": "",
+      "safetylvl": "safe",
+      "extraOps": false,
+      "advancedOp": false
+    },
+    {
+      "id": 12,
+      "OpName": "1 Sek Diag Menu",
+      "INST": "Installiert 1 Sekunden Diagnosemenü",
+      "DEINST": "Entfernt 1 Sek Diag Menu",
+      "toolTip": "<h5>1 Sek Diag Menu </h5>Erlaubt es das Diagnosemnü nach dem anwählen der Uhr in der rechten oberen Ecke des Menüs für die Displayeinstellungen zu öffnen.",
+      "img": "",
+      "safetylvl": "warning",
+      "extraOps": false,
+      "advancedOp": false
+    },
+    {
+      "id": 13,
+      "OpName": "Boot Animation",
+      "INST": "Deaktiviert Startanimation",
+      "DEINST": "Aktiviert Startanimation",
+      "toolTip": "<h5>Startanimation </h5>Die Startanimation wird entfernt.",
+      "img": "",
+      "safetylvl": "safe",
+      "extraOps": true,
+      "advancedOp": false
+    },
+    {
+      "id": 14,
+      "OpName": "Bigger Album Art",
+      "INST": "Installiert größeres Albumcover",
+      "DEINST": "Albumcover auf Original zurücksetzen",
+      "toolTip": "<h5>größeres Albumcover </h5> Es wird ein größeres Albumcover gezeigt.",
+      "img": "",
+      "safetylvl": "safe",
+      "extraOps": false,
+      "advancedOp": false
+    },
+    {
+      "id": 15,
+      "OpName": "Remove Background Overlays",
+      "INST": "Remove the background overlays",
+      "DEINST": "Background behind buttons back to original",
+      "toolTip": "<h5>No Background Behind Buttons </h5> Remove the background behind the buttons and other semi-transparent overlay backgrounds.  Overlays that can be removed: Now Playing, List View, In Call, Text Message View, and Behind Buttons",
+      "img": "NoButtonBackground.jpg",
+      "safetylvl": "safe",
+      "extraOps": true,
+      "advancedOp": false
+    }
+    {
+      "id": 16,
+      "OpName": "Change Blank Album Art Frame",
+      "INST": "Soll der leere Albumcover-Rahmen entfernt werden?",
+      "DEINST": "Den leeren Rahmen für das Albumcover wieder einblenden?",
+      "toolTip": "<h5>Change Blank Album Art Frame </h5>Der leere Albumcover-Rahmen wird entfernt wenn es keinen Eintrag in der Gracenote-Datenbank für den Künstler gibt.##Dafür wird das Bild eines Radios angezeigt, ebenso, wenn es kein Cover im MP3 Tag gibt.<div>Unterstützte Bildformate: jpg, jpeg, und png (beliebige Größe). Hinweis: Das gewählte Bild in 146px x 146px geändert <b>ABER NICHT BESCHNITTEN</b> und in .png umgewandelt</div>",
+      "img": "",
+      "safetylvl": "safe",
+      "extraOps": true,
+      "advancedOp": false
+    },
+    {
+      "id": 17,
+      "OpName": "Videoplayer",
+      "INST": "Installiert den Videoplayer",
+      "DEINST": "entfernt den ideoplayer",
+      "toolTip": "<h5>Videoplayer <span class='icon-video-camera2'></span> </h5> Fügt einen Videoplayer zum Applikationsmenü hinzu.",
+      "img": "",
+      "safetylvl": "safe",
+      "extraOps": true,
+      "advancedOp": false
+    },
+    {
+      "id": 18,
+      "OpName": "Swapfile",
+      "INST": "Erstellt ein swapfile für media player v2",
+      "DEINST": "Entfernt swapfile",
+      "toolTip": "<h5>Swapfile </h5>Die Installation der Swapfile muss auf einem USB-Laufwerk mit Musik und/oder Filmen erfolgen, das im Fahrzeug verbleibt. Die Installationsdateien werden automatisch gelöscht, das Laufwerk kann im laufenden Betrieb nicht mehr entfernt werden, da das System es auch als Speicher verwendet.  USB-Laufwerk nur entfernen, wenn das MZD-System ausgeschaltet ist.",
+      "img": "",
+      "safetylvl": "warning",
+      "extraOps": true,
+      "advancedOp": false
+    },
+    {
+      "id": 19,
+      "OpName": "Speedometer",
+      "INST": "Speedometer by Diginix installieren?",
+      "DEINST": "Speedometer by Diginix entfernen?\"",
+      "toolTip": "<h5>Speedometer mit Kompass als App im Anwendungsmenü</h5><h5><ul><li>unter dem Tacho steht km/h oder mph, je nach Einstellung<br></li> <li>Geschwindigkeitsbereich bis 240 km/h<br></li> <li>Verbrauchswerte</li> <li>Optimierte Grafikbausteine mit neuem Tachozeiger</li> <li>Kleine Tachonadel für Topspeed im analogen Teil<br></li> <li>Das Bild für die Tachoskala hat unterschiedlich lange oder helle Striche für 5, 10 und 20 km/h Sprünge</li> <li>Rechte Tabelle komplett deutsch und Farbe/Größe optimiert</li> <li>Alle Zahlen haben einen leichten Schatten um sich besser vom Hintergrund abzuheben.</li> <li>Fahrtrichtungsabhängig rotierender Kompass zentral um die aktuelle Geschwindigkeit</li> <li>Längen- und Breitengrad in rechter Tabelle</li> <li>Animiertes Overlay in der Statusbar mit GPS Speed und Fahrtrichtung welches in jedem Menü angezeigt werden kann, durch Touch auf die Uhr kann es ein-/ausgeblendet werden</li> <li>Wenn das Navi oder Rückfahrkamera gestartet wird, erscheint es automatisch</li> <li>Für den kleinen Speedo in der Statusbar muss der 'date_to_statusbar' Mod V2.2 mit installiert werden, dieser wird nun also automatisch mit ausgewählt, falls nicht schon geschehen.<br></li></ul></h5><h5></h5>",
+      "img": "mzd_SpeedoCompass.gif",
+      "safetylvl": "safe",
+      "extraOps": true,
+      "advancedOp": false
+    },
+    {
+      "id": 20,
+      "OpName": "Statusbar Tweaks",
+      "INST": "Date_to_statusbar_mod by diginix installieren?",
+      "DEINST": "Date_to_statusbar_mod by diginix entfernen?",
+      "toolTip": "<p style=\"\" class=\"\"><b>Datum in Statusleiste</b></p><p style=\"\" class=\"\">Dauerhaft sichtbares Datum + Icons über der Uhr, auch wenn vom MZD Navi- oder Systemmeldung eingeblendet werden.</p>",
+      "img": "mzd_datum_icons_all.jpg",
+      "safetylvl": "safe",
+      "extraOps": true,
+      "advancedOp": false
+    },
+    {
+      "id": 22,
+      "OpName": "FuelConsumtion Tweak",
+      "INST": "Installiert Fuel Consumption Tweak",
+      "DEINST": "Entfernt Fuel Consumption Tweak",
+      "toolTip": "<h5>Fuel Consumption Tweak. </h5> Zusätzliche Anzeige von  km/l (oder MPG).",
+      "img": "FuelConsumtionTweak.jpg",
+      "safetylvl": "safe",
+      "extraOps": true,
+      "advancedOp": false
+    },
+    {
+      "id": 23,
+      "OpName": "Speedcam patch",
+      "INST": "Installiert Speedcam-Patch",
+      "DEINST": "Entfernt speedcam-patch",
+      "toolTip": "<h5>Speedcam Patch. </h5>Das Navi wird so modifiziert, dass die Datenbank für Blitzer akzeptiert wird.  Man kann anschließend die Datei 'speedcam.txt' auf die Speicherkarte kopieren, die dann importiert wird.    <h6>Speedcam Patch ist nur mit folgenden FW Versionen kompatibel:</h6> <div style='columns:4'>55.00.650A-NA    55.00.753A-NA   55.00.760A-NA   56.00.100A-ADR  56.00.230A-EU  56.00.511A-EU  56.00.512A-EU  56.00.513B-EU  56.00.513C-ADR    56.00.230A-ADR   56.00.240B-ADR    56.00.401A-JP   56.00.521A-NA   58.00.250A-NA    59.00.326A-ADR   59.00.331A-EU</div>",
+      "img": "",
+      "safetylvl": "warning",
+      "extraOps": true,
+      "advancedOp": true
+    },
+    {
+      "id": 24,
+      "OpName": "Castscreen-receiver",
+      "INST": "Installiert Castscreen-Receiver",
+      "DEINST": "Entfernt Castscreen-Receiver",
+      "toolTip": "<h5>Castscreen Receiver. </h5>  Nach der Installation kann der Smartphone-Bildschirm auf dem Infotainment-Display angezeigt werden (Spiegelung).  <ul><li>Es muss die <a href='' onclick='openApkFolder()'>castscreen app</a> auf dem Android-Telefon installiert sein. (castscreen-1.0.apk) Die App befindet sich im Ordner 'config' Ihres USB-Sticks</li><li>Debug-Modus auf dem Smartphone aktivieren</li> <li>Smartphone mit dem USB-Kabel an das Infotainment-System anschließen</li> <li>App starten, Einstellungen: H264, 800x480 @ 160, 1 mbps, 127.0.0.1 eingeben und auf 'input receiver' drücken, anschließend 'Start' in der rechten oberen Ecke.</li></ul>.",
+      "img": "",
+      "safetylvl": "warning",
+      "extraOps": true,
+      "advancedOp": false
+    },
+    {
+      "id": 25,
+      "OpName": "Android Auto Headunit App",
+      "INST": "Installiert Android Auto Headunit App",
+      "DEINST": "Entfernt Android Auto Headunit App",
+      "toolTip": "<h5>Android Car Headunit app.  Android Auto für das Infotainmentsystem. </h5>  <br>1. Android App aus dem Google Play Store installieren<br>2. Telefon mit dem USB-Anschluss verbinden und Telefon mit der CMU koppeln <br>3. Audioeingang auf Bluetooth umschalten. <br>4. AA-Symbol im Applikationsmenü auf der CMU anwählen <br>5. Ein schwarzer Bildschirm mit Credits sollte sich als erstes öffnen <br>6. Android Auto startet anschließend. Sollte das nicht der Fall sein, USB-Anschluss heraus ziehen und erneut starten (oder die Installation überprüfen.) <br>7. 2 Möglichkeiten um AA zu beenden - Trennen des USB-Kabels oder 'Zurück zu Mazda Connect' auf dem letzten Bildschirm mit dem Speedo-Symbol.  <br>8. Sobald die Verbindung getrennt ist, bleibt der schwarze Bildschirm zurück. Zum Schließen die Home-Taste auf dem Mazda-Kommander drücken. Ich musste das machen, weil js Doppelklick nicht funktioniert.  <br>**Was nicht funktioniert:** <br>1. Die Rückfahrkamera bleibt schwarz. <br>2. Voice Control <br>3. Touch drag / Multi Touch <br>4. Google Maps Nachtmodus ist immer an.<h5><b><span class='icon-star-full'></span> Android Auto Patch!: <span class='icon-android'></span><br><span class='icon-gamepad'></span> Kein Bedarf mehr für input_filter (#12) <span class='icon-trophy'></span></b></h5><div class='w3-container w3-border-green'><strong>'Entfernt den input_filter Hintergrundprozess. Er wird nicht mehr benötigt, da der EVIOCGRAB für Eingaben genutzt wird ohne die ganze CMU UI  /dev/uinput Trickserei.' /cc @lmagder <span class='icon-thumbs-up'></span> <span class='icon-thumbs-up'></span></strong></div>",
+      "toolTip2": "<h5>Android Car Headunit app. </h5><a href onclick='externalLink(`AA-app`)'>Install the Android app from google play store: HERE.</a><strong><h5><span class='icon-star-full'></span>v0.99:</h5> <li>Older version, less stable</li> <li>can make bluetooth calls but cannot dial from AA interface (Voice commands/dialing do work)</li><li><em>Do not report bug/issues for this version</em>, they are addressed in later versions.</li><h5>v1.02:</h5><li>More stable/up to date release.</li><li>Automatically connects when phone is connected</li><li>'bluetooth-call bug' redirects bluetooth calls back to phone.</li></strong></div>",
+      "img": "AndroidAuto.jpg",
+      "safetylvl": "safe",
+      "extraOps": true,
+      "advancedOp": false
+    },
+    {
+      "id": 26,
+      "OpName": "USB Audio Mod",
+      "INST": "Install USB Audio Mod",
+      "DEINST": "Remove USB Audio Mod",
+      "toolTip": "<h5>USB Audio Mod. <small>By: Enlsen</small> </h5><b>Patches The USB Audio App With These Mods:   <br><ol><li>Long press (click hold) folders/all songs to play</li><li>Adds new icon for USB root menu on the UMP control</li> <li>Removes \"More like this\" button from UMP control</li><li>Adds folders button to UMP control</li><li>Set folders and song list icons correctly (were switched) on UMP control</li><li>Removes \"/\" character from folder names for list control and title of now playing control</li><li>Adds folder and song icons to the list control</li><li>Adds folder and playlist icons to now playing control</li></ol>",
+      "img": "USBAudioMod.png",
+      "safetylvl": "safe",
+      "extraOps": false,
+      "advancedOp": false
+    }
+  ]
+}

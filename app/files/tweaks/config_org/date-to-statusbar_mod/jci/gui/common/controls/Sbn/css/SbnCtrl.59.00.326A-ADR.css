@@ -1,0 +1,304 @@
+/* CSS Document */
+.SbnCtrl {
+  position: absolute;
+  top: 1px;
+  left: 59px;
+  width: 626px;
+  height: 58px;
+  background-image: url(../images/StatusNotificationBg.png);
+  z-index: 11;
+  font-family: "Tipperary", Arial, Helvetica, sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  font-size: 28px;
+  color: white;
+  line-height: 54px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-align: left;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.SbnCtrlInlineGraphic {
+  vertical-align: middle;
+}
+
+.SbnCtrl_Tick_Mark {
+  position: inherit;
+  top: 12px;
+  width: 4px;
+  height: 32px;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/*
+ * Sbn Styles
+ * /
+ * 
+/* Style01 - Single Text-Only */
+.SbnCtrl_Style01_Text1 {
+  position: absolute;
+  font-family: "Tipperary", Arial, Helvetica, sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  font-size: 35px;
+  line-height: 58px;
+  color: white;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  top: 0px;
+  left: 1px;
+  width: 594px;
+  height: 56px;
+  margin-left: 20px;
+}
+
+/* Style02 - Icon and Text */
+.SbnCtrl_Style02_Image1 {
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  width: 56px;
+  height: 56px;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.SbnCtrl_Style02_Text1 {
+  position: absolute;
+  font-family: "Tipperary", Arial, Helvetica, sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  font-size: 35px;
+  line-height: 58px;
+  color: white;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  top: 0px;
+  left: 56px;
+  width: 548px;
+  height: 56px;
+  margin-left: 10px;
+}
+
+/* Style03 - Audio Volume */
+.SbnCtrl_Style03_Image1 {
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  width: 56px;
+  height: 56px;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+  margin: 0px;
+  padding: 0px;
+}
+
+.SbnCtrl_Style03_Text1 {
+  position: absolute;
+  font-family: "Tipperary", Arial, Helvetica, sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  font-size: 35px;
+  line-height: 58px;
+  color: white;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-align: center;
+  top: 1px;
+  left: 57px;
+  width: 50px;
+  height: 56px;
+}
+
+.SbnCtrl_Style03_Image2 {
+  position: absolute;
+  top: 1px;
+  left: 107px;
+  width: 37px;
+  height: 56px;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.SbnCtrl_Style03_Meter {
+  position: absolute;
+  top: 1px;
+  left: 152px;
+  width: 493px;
+  height: 56px;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+  margin: 0px;
+  padding: 0px;
+}
+
+/* Style04 - Mic Level */
+.SbnCtrl_Style04_Image1 {
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  width: 56px;
+  height: 56px;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+  margin: 0px;
+  padding: 0px;
+}
+
+.SbnCtrl_Style04_Meter {
+  position: absolute;
+  top: 1px;
+  left: 76px;
+  width: 569px;
+  height: 56px;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+  margin: 0px;
+  padding: 0px;
+}
+
+/* Style05 - Navigation */
+.SbnCtrl_Style05_Image1 {
+  float: left;
+  vertical-align: middle;
+  top: 1px;
+  width: 56px;
+  height: 56px;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.SbnCtrl_Style05_Text1 {
+  float: left;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: middle;
+  line-height: 56px;
+  height: 56px;
+}
+
+.SbnCtrl_Style05_Text2 {
+  float: left;
+  padding-left: 5px;
+  padding-right: 5px;
+  line-height: 56px;
+  vertical-align: middle;
+  height: 56px;
+}
+
+.SbnCtrl_Style05_Text3 {
+  vertical-align: middle;
+  margin-left: 5px;
+  padding-right: 10px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* Style06 - Text and Determinate Meter */
+.SbnCtrl_Style06_Text1 {
+  position: absolute;
+  font-family: "Tipperary", Arial, Helvetica, sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  font-size: 35px;
+  line-height: 58px;
+  color: white;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  top: 0px;
+  left: 5px;
+  width: 300px;
+  height: 56px;
+  margin-left: 20px;
+}
+
+.SbnCtrl_Style06_Meter {
+  position: absolute;
+  top: 24px;
+  left: 368px;
+  width: 252px;
+  height: 11px;
+  background-image: url(../images/SBLoadBarBg.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+  margin: 0px;
+  padding: 0px;
+}
+
+.SbnCtrl_Style06_Meter_Highlight {
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  width: 250px;
+  height: 9px;
+  background-image: url(../images/SBLoadBar.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+  margin: 0px;
+  padding: 0px;
+}
+
+/* Style07 - AM/FM Japan */
+.SbnCtrl_Style07_Image1 {
+  float: left;
+  vertical-align: middle;
+  top: 1px;
+  width: 56px;
+  height: 56px;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.SbnCtrl_Style07_Text4 {
+  vertical-align: baseline;
+  font-family: "Tipperary Semibold";
+  font-weight: normal;
+  font-style: normal;
+  font-size: 40px;
+  color: white;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.SbnCtrl_Style07_Text1 {
+  vertical-align: baseline;
+  font-family: "Tipperary Semibold";
+  font-weight: normal;
+  font-style: normal;
+  font-size: 40px;
+  color: white;
+}
+
+.SbnCtrl_Style07_Text2 {
+  vertical-align: baseline;
+  font-family: "Tipperary", Arial, Helvetica, sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  font-size: 21px;
+  color: white;
+}
+
+.SbnCtrl_Style07_Text3 {
+  vertical-align: baseline;
+  font-family: "Tipperary", Arial, Helvetica, sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  font-size: 35px;
+  color: white;
+}

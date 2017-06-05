@@ -1,0 +1,11 @@
+# remove blank album art frame
+show_message "REMOVE BLANK ALBUM ART FRAME ..."
+log_message "====**** INSTALL REMOVE BLANK ALBUM ART FRAME ... ****===="
+
+cp -a "${MYDIR}/config/blank-album-art-frame/jci/gui/common/controls/InCall2/images/NowPlayingImageFrame.png" /jci/gui/common/controls/InCall2/images
+cp -a "${MYDIR}/config/blank-album-art-frame/jci/gui/common/controls/NowPlaying4/images/NowPlayingImageFrame.png" /jci/gui/common/controls/NowPlaying4/images
+cp -a "${MYDIR}/config/blank-album-art-frame/jci/gui/common/images/no_artwork_icon.png" /jci/gui/common/images
+log_message "===              Replaced Blank Album Art              ==="
+
+log_message "===***  END INSTALLATION OF REMOVE BLANK ALBUM ART  ***==="
+log_message " "

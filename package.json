@@ -1,0 +1,182 @@
+{
+  "name": "MZD-AIO-TI",
+  "productName": "MZD All In One Tweaks Installer",
+  "description": "An Installer/Uninstaller for Over 50 System Tweaks for the Mazda MZD Infotainment System.",
+  "version": "2.5.10",
+  "homepage": "http://mazdatweaks.com",
+  "license": "GPL-3.0",
+  "main": "main.js",
+  "author": {
+    "name": "Trevor G Martin",
+    "email": "Trez@mazdatweaks.com",
+    "url": "http://trevelopment.com",
+    "company": "Trevelopment"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/trevelopment/MZD-AIO-TI"
+  },
+  "bugs": {
+    "url": "https://github.com/trevelopment/MZD-AIO-TI/issues"
+  },
+  "engines": {
+    "node": "6.5.x"
+  },
+  "keywords": [
+    "Mazda",
+    "MZD",
+    "Infotainment",
+    "tweaks",
+    "electron",
+    "angular"
+  ],
+  "scripts": {
+    "test": "npm start",
+    "unit": "standard && mocha test/unit --recursive",
+    "integration": "standard && mocha test/integration --recursive",
+    "coverage": "istanbul cover node_modules/.bin/_mocha -- --recursive",
+    "depcheck": "dependency-check app --entry main.js --unused --no-dev",
+    "lint": "standard",
+    "start": "electron ./app/main",
+    "clean:linux": "rimraf releases/linux* release/*.deb release/*.AppImage",
+    "clean:osx": "rimraf releases/mac",
+    "clean:win": "rimraf releases/win*",
+    "clean": "npm run clean:linux && npm run clean:win && npm run clean:osx",
+    "pack:osx": "build --dir --mac",
+    "pack:win": "build --dir --win --x64",
+    "pack:linux": "build --dir --linux --x64",
+    "pack": "build --dir",
+    "prebuild": "node build/target.js",
+    "build:osx": "npm run prebuild && build --mac && npm run postbuild",
+    "build:win": "npm run prebuild && build --win --ia32 --x64 --em.author.name=Trevelopment && npm run postbuild",
+    "build:win64": "npm run prebuild && build --win --x64 --em.author.name=Trevelopment && npm run postbuild",
+    "build:win32": "npm run prebuild && build --win --ia32 --em.author.name=Trevelopment && npm run postbuild",
+    "build:linux": "npm run prebuild && build --linux deb AppImage --x64 && npm run postbuild",
+    "build": "build",
+    "release": "build",
+    "publish": "npm run build:win && npm run release",
+    "postbuild": "node build/target.js --clean",
+    "xinstall": "ncu -u",
+    "postinstall": "install-app-deps",
+    "pack-win": "electron-packager ./app/ MZD-AIO-TI --asar --asar-unpack=protocol-link.html --overwrite --platform=win32 --arch=ia32 --icon=favicon.ico --prune=true --out=out --version-string.CompanyName='Trevelopment' --version-string.FileDescription='MZD-AIO-TI' --version-string.ProductName='MZD-AIO-TI'"
+  },
+  "standard": {
+    "globals": [
+      "$",
+      "angular",
+      "ipc",
+      "describe",
+      "after",
+      "it",
+      "before",
+      "beforeEach",
+      "afterEach",
+      "rm",
+      "cp",
+      "isDev",
+      "app",
+      "path",
+      "fs",
+      "bootbox",
+      "langObj",
+      "persistantData"
+    ],
+    "ignore": [
+      "/app/files/",
+      "/app/mzd/",
+      "/app/gui/",
+      "/app/views/Photojoiner_files/",
+      "/app/",
+      "vendor"
+    ]
+  },
+  "jshintConfig": {
+    "esversion": 6
+  },
+  "build": {
+    "appId": "com.trevelopment.mzd-aio-ti",
+    "productName": "MZD-AIO-TI",
+    "copyright": "© 2017 Trevelopment By Trevor G Martin",
+    "extraResources": [
+      "background-images/**/*",
+      "tools/*"
+    ],
+    "extraFiles": [
+      "background/*.png",
+      "castscreenApp/*.apk"
+    ],
+    "compression": "maximum",
+    "dmg": {
+      "iconSize": 120,
+      "iconTextSize": 14,
+      "contents": [
+        {
+          "x": 128,
+          "y": 170,
+          "type": "link",
+          "path": "/Applications"
+        },
+        {
+          "x": 30,
+          "y": 70,
+          "type": "file"
+        }
+      ]
+    },
+    "mac": {
+      "category": "com.trevelopment.mzd-aio-ti"
+    },
+    "linux": {
+      "category": "Development"
+    },
+    "win": {
+      "target": [
+        "nsis-web",
+        "nsis"
+      ]
+    },
+    "directories": {
+      "output": "releases"
+    },
+    "nsis": {},
+    "publish": {
+      "provider": "bintray",
+      "owner": "trevelopment",
+      "repo": "MZD-AIO-TI",
+      "package": "MZD-Updates",
+      "user": "trevelopment"
+    }
+  },
+  "devDependencies": {
+    "async": "^2",
+    "chai": "^3",
+    "chai-as-promised": "^6",
+    "dependency-check": "^2",
+    "devtron": "^1",
+    "electron": "^1.6.8",
+    "electron-builder": "^17.10.0",
+    "electron-debug": "^1",
+    "electron-is-dev": "^0.1",
+    "istanbul": "^0.4",
+    "mocha": "^3",
+    "rimraf": "^2",
+    "shelljs": "^0.7",
+    "spectron": "^3",
+    "standard": "^10"
+  },
+  "dependencies": {
+    "angular-dragula": "^1.2.8",
+    "appender": "^0.0.2",
+    "async": "^2.1.4",
+    "copy-dir": "^0.3.0",
+    "crlf": "^1.1.0",
+    "drivelist": "^5.0.20",
+    "electron-config": "^1.0.0",
+    "electron-context-menu": "^0.9.0",
+    "electron-image-resize": "^1.2.4",
+    "extract-zip": "^1.6.5",
+    "jquery": "^3.2.1",
+    "mkdirp": "^0.5.1"
+  },
+  "debug": true
+}

@@ -1,0 +1,4 @@
+# No speedcam.txt
+show_message "NO SPEEDCAM.TXT WILL BE COPIED TO SD CARD ..."
+
+log_message "===***  END INSTALLATION OF SPEEDCAM PATCH (WITH NO SPEEDCAM FILE)  ***==="

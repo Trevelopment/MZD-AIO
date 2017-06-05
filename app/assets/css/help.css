@@ -1,0 +1,339 @@
+div#helpDropMenu {
+  margin-top: -16px;
+}
+.accordion.help-messages * {
+  box-sizing:content-box;
+}
+.accordion.help-messages {
+  -webkit-box-shadow: 0px 75px 35px -55px rgba(10, 30, 65, 0.6);
+  -moz-box-shadow: 0px 75px 35px -55px rgba(10, 30, 65, 0.6);
+  box-shadow: 0px 75px 35px -55px rgba(10, 30, 65, 0.6);
+  font-family: Arial, Helvetica, sans-serif;
+  border-color: #000000;
+  border-style: solid;
+  border-width: 11px;
+  border-radius: 5px;
+  margin: 0 auto;
+  height: 500px;
+  width: 755px;
+  text-align: left;
+  line-height: normal;
+  border-top-right-radius: 0px;
+}
+button#helpDropBtn {
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.accordion.help-messages > ul > li,
+.help-messages .accordion-title,
+.help-messages .accordion-content,
+.help-messages .accordion-separator {
+  float: left;
+}
+
+.accordion.help-messages > ul > li {
+  background-color: #1f1f1f;
+  margin-right: -480px;
+  margin-bottom: -0px;
+}
+
+.help-messages .accordion-select:checked ~ .accordion-separator {
+  margin-right: 480px;
+  margin-bottom: 0px;
+}
+
+.help-messages .accordion-title,
+.help-messages .accordion-select  {
+  background-color: #124b00;
+  color: #ffffff;
+  width: 30px;
+  height: 480px;
+  font-size: 22px;
+  letter-spacing: 9px;
+  font-weight: 500;
+  font-family: mazda;
+  -webkit-user-select: none;
+}
+
+.help-messages .accordion-title span {
+  margin-bottom: 15px;
+  margin-left: 20px;
+}
+
+.help-messages .accordion-select:hover ~ .accordion-title,
+.help-messages .accordion-select:checked ~ .accordion-title {
+  background-color: #0b46b0;
+}
+
+.help-messages .accordion-title span  {
+  transform: rotate(-90deg);
+  -o-transform: rotate(-90deg);
+  -moz-transform: rotate(-90deg);
+  -webkit-transform: rotate(-90deg);
+  -ms-writing-mode: lr-bt;
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+  margin-left: 0px;
+  line-height: 30px;
+  font-family: mazda;
+}
+
+.help-messages .accordion-content {
+  background-color: #232323;
+  color: #ffffff;
+  height: 475px;
+  width: 440px;
+  padding: 0 20px;
+  overflow: hidden;
+}
+
+.help-messages .accordion-title,
+.help-messages .accordion-select:checked ~ .accordion-content {
+  margin-right: 2px;
+  margin-bottom: 0px;
+}
+
+/* Do not change following properties, they aren't
+generated automatically and are common for each slider. */
+.accordion {
+  overflow: hidden;
+}
+
+.accordion > ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  width: 101%;
+}
+
+.accordion > ul > li,
+.accordion-title {
+  position: relative;
+}
+
+.accordion-select {
+  cursor: pointer;
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  left: 0;
+  margin: 0;
+  z-index: 1;
+}
+
+.accordion-title span {
+  display: block;
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+  white-space: nowrap;
+}
+
+.accordion-content {
+  position: relative;
+  overflow: auto;
+}
+
+.accordion-separator {
+  transition: margin 0.3s ease 0.1s;
+  -o-transition: margin 0.3s ease 0.1s;
+  -moz-transition: margin 0.3s ease 0.1s;
+  -webkit-transition: margin 0.3s ease 0.1s;
+}
+.help-messages img {
+  max-width: 100%;
+}
+.accordion-content ul {
+  padding: 0px;
+}
+.accordion-content ul li {
+  margin: 8px 0;
+}
+.accordion.help-messages h4 {
+  margin-top: 5px;
+  font-size: 18px;
+  margin-bottom: 0;
+}
+.warnToggler {
+  padding: 5px;
+  text-align:center;
+  margin-bottom: 0;
+}
+/* FAQs */
+#frequentlyaskedquestions{
+  text-align: center;
+}
+.faqs p {
+  margin: 0px;
+}
+.troubleshootingToggler,
+.revertToggler,
+.warnToggler,
+.faqToggler,
+.kiToggler,
+.ttToggler{
+  cursor:pointer;
+  font-weight:600;
+}
+.faqpanel, .faqToggler {
+  padding: 4px;
+  text-align: center;
+  background-color: #444;
+  border: solid 1px #090809;
+  color:#ddd;
+  font-size:13px;
+}
+.faqpanel {
+  height:80px;
+  font-size:14px;
+  padding:10px;
+  color:#fff;
+  text-align: justify;
+  display:none;
+}
+ol {
+  -webkit-padding-start: 15px;
+}
+.help-messages:first-child .accordion-content {
+  overflow-y: auto;
+  text-align: justify;
+  cursor: default;
+}
+.accordion.help-messages .accordion-content [class*='panel'] {
+  max-height: 420px;
+  overflow: auto;
+}
+.warnpanel h3, .warnpanel p, .warnpanel h5 {
+  margin-bottom: 3px;
+}
+[class*='Toggler'] h2 {
+  margin-bottom: 5px;
+  margin-top: 5px;
+}
+.faqs .faqpanel:nth-child(14) {
+  height: 100px;
+}
+.faqs .faqpanel:nth-child(6) {
+  height: 120px;
+}
+.faqToggler:hover p {
+  color: #4dffd7!important;
+}
+.faqToggler:nth-child(11) {
+  font-size: 12px;
+}
+.ttPanel {
+  padding-top: 5px;
+}
+.w3-bottombar[class*=Toggler] {
+  width: 100%;
+  position: absolute;
+  left: 0;
+  bottom: 0px;
+  padding-bottom: 10px;
+  text-align: center;
+}
+.w3-bottombar[class*=Toggler].stick {
+  position:relative;
+  background:none;
+}
+.accordion.help-messages .accordion-content li p {
+  margin-bottom: 0px;
+}
+#custbgOptions .w3-col tr {
+  display: table-caption;
+}
+/* console */
+#debugDiv {
+  max-height: 400px;
+  margin-top: 10px;
+  border:4px groove #009900;
+  overflow: auto;
+  overflow-x: hidden;
+}
+/* settings */
+div#helpMenuTop {
+  top:75px;
+  z-index:100;
+  margin-top:-65px;
+  margin-right:10px;
+  padding:2px;
+  border-radius:8px;
+}
+.accordion-content #aio-settings-btn {
+  margin-right: 70px;
+}
+div#helpDrop {
+  right:655px;
+}
+.accordion-content .w3-third {
+  width: 33.33333%!important;
+}
+.accordion-content .w3-third .w3-btn [class^="icon-"] {
+  position: absolute;
+  left: 6px;
+}
+@media(max-width:850px){
+  .helphints {
+    top: 5px;
+    right: 5px;
+  }
+  .showNav ~.ng-scope header span#openSidePanel {
+    margin-top: 64px;
+    right: -6px;
+  }
+  div#helpDrop {
+    right: 600px;
+    top:35px;
+  }
+  div#helpDropMenu {
+    margin-top: 0;
+  }
+  #custbgOptions.w3-bordered tr {
+    max-height:none;
+    display: block;
+  }
+  .bgrotator td * {
+    /*font-size: 10px;*/
+  }
+}
+/* Scrollbar */
+.faqpanel::-webkit-scrollbar, .accordion-content::-webkit-scrollbar {
+  width: 6px;
+}
+/* Scrollbar Track */
+.faqpanel:hover::-webkit-scrollbar-track, .accordion-content:hover::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 100px 100px 100px rgba(20,100,200,.3);
+  -webkit-border-radius: 0px;
+  border-radius: 0px;
+}
+/* Handle */
+.faqpanel:hover::-webkit-scrollbar-thumb, .accordion-content:hover::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  background: rgba(0,0,0,.7);
+  -webkit-box-shadow: inset 10px 10px 16px rgba(50,225,90,.81);
+  cursor: pointer;
+}
+.accordion-content::-webkit-scrollbar-thumb:hover {
+  background: rgba(250,250,250,.7);
+  -webkit-box-shadow: inset 10px 10px 16px rgba(150,0,190,.81);
+}
+..faqpanel::-webkit-scrollbar-thumb:window-inactive, accordion-content::-webkit-scrollbar-thumb:window-inactive {
+  background: rgba(0,0,0,0.4);
+}
+.faqpanel::-webkit-scrollbar-button:single-button, .accordion-content::-webkit-scrollbar-button:single-button {
+  display:none;
+}
+.accordion-content .w3-panel .w3-twothird {
+  text-align: left;
+}
+h3.featherlight-inner {
+  font-weight: 800;
+}
+img,
+[class*=Toggler] {
+    -webkit-user-select: none;
+}
+.accordion.help-messages .accordion-content .revertpanel {
+    overflow: hidden;
+}

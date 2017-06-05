@@ -1,0 +1,38 @@
+# change background image & common.css to rotate through 10 backgrounds
+show_message "INSTALL BACKGROUND ROTATOR ...\n Background Set To Show ${BG_STEPS} Images\nFor ${BG_SEC_EACH} Seconds Each"
+log_message "======****** INSTALL BACKGROUND ROTATOR ... ********======"
+
+if [ ! -e /jci/gui/common/css/common.css.org ]
+	then
+		cp -a /jci/gui/common/css/common.css /jci/gui/common/css/common.css.org
+		log_message "=== Backup of /jci/gui/common/css/common.css to common.css.org ==="
+fi
+if [ "${KEEPBKUPS}" = 1 ]
+then
+  aio_info \"common.css.org\",
+  cp /jci/gui/common/css/common.css.org "${MYDIR}/bakups/"
+fi
+# cp -a ${MYDIR}/config/BackgroundRotator/jci/gui/common/css/common.css /jci/gui/common/css/
+# Overwriting the common.css file is not needed to accomplish this tweak
+remove_aio_css /jci/gui/common/css/common.css
+cat <<EOT >> /jci/gui/common/css/common.css
+/* MZD-AIO-TI CSS */
+/* Custom Background Animation */
+.CommonBgImg {
+	background-position:0;
+	animation: slide ${BG_SECONDS}s steps(${BG_STEPS},end) infinite;
+}
+/* The Animation */
+@keyframes slide {
+  to {
+    background-position:-${BG_WIDTH}px;
+  }
+}
+/* END AIO CSS */
+EOT
+log_message "===         Background Set To Show ${BG_STEPS}  Images           ==="
+log_message "===                For ${BG_SEC_EACH} Seconds Each            ==="
+log_message "===     Background Animation Added to common.css       ==="
+
+log_message "======*** END INSTALLATION OF BACKGROUND ROTATOR ***======"
+log_message " "

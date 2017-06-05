@@ -1,0 +1,12 @@
+addToAIOList ()
+{
+if ! grep -Fq "${1}" ./aio.json
+then
+  sed -i "s/\}\]/\},\n\  {\n    \"tweakName\": \"${1}\", \"inst\": ${2},\n    \"AIOver\": \"${AIO_VER}\",\n    \"instdate\": \"${AIO_DATE}\"\n  \}\]/" ./aio.json
+else
+  echo "exists"
+  sed -i "s/\"tweakName\": \"${1}\", \"inst\":.*,/\"tweakName\": \"${1}\", \"inst\": ${2},/" ./aio.json
+fi
+}
+
+addToAIOList "shit"

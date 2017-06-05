@@ -1,0 +1,108 @@
+# date_to_statusbar_mod_V1.0 by diginix
+show_message "INSTALL DATE_TO_STATUSBAR MOD V1 BY DIGINIX ..."
+log_message "INSTALL DATE_TO_STATUSBAR MOD V1 BY DIGINIX ..."
+
+statusbar_copy=0
+
+if [ "${CMU_SW_VER}" = "56.00.100A-ADR" ] \
+|| [ "${CMU_SW_VER}" = "56.00.230A-ADR" ] \
+|| [ "${CMU_SW_VER}" = "56.00.240B-ADR" ] \
+|| [ "${CMU_SW_VER}" = "56.00.511A-ADR" ] \
+|| [ "${CMU_SW_VER}" = "56.00.512A-ADR" ] \
+|| [ "${CMU_SW_VER}" = "56.00.513C-ADR" ] \
+|| [ "${CMU_SW_VER}" = "56.00.514A-ADR" ] \
+|| [ "${CMU_SW_VER}" = "56.00.521A-EU" ] \
+|| [ "${CMU_SW_VER}" = "56.00.230A-EU" ] \
+|| [ "${CMU_SW_VER}" = "56.00.210A-EU" ] \
+|| [ "${CMU_SW_VER}" = "56.00.511A-EU" ] \
+|| [ "${CMU_SW_VER}" = "56.00.512A-EU" ] \
+|| [ "${CMU_SW_VER}" = "56.00.513B-EU" ] \
+|| [ "${CMU_SW_VER}" = "56.00.513C-EU" ] \
+|| [ "${CMU_SW_VER}" = "55.00.650A-NA" ] \
+|| [ "${CMU_SW_VER}" = "55.00.753A-NA" ] \
+|| [ "${CMU_SW_VER}" = "55.00.760A-NA" ] \
+|| [ "${CMU_SW_VER}" = "56.00.521A-NA" ] \
+|| [ "${CMU_SW_VER}" = "56.00.401A-JP" ] \
+|| [ "${CMU_SW_VER}" = "56.00.403A-JP" ]
+then
+	statusbar_copy=1
+	log_message "=== FW ${CMU_SW_VER} detected, copy matching files ==="
+fi
+
+if [ "${CMU_SW_VER}" = "59.00.331A-EU" ] \
+|| [ "${CMU_SW_VER}" = "58.00.250A-NA" ] \
+|| [ "${CMU_SW_VER}" = "59.00.330A-NA" ] \
+|| [ "${CMU_SW_VER}" = "59.00.441A-NA" ] \
+|| [ "${CMU_SW_VER}" = "59.00.443A-NA" ] \
+|| [ "${CMU_SW_VER}" = "59.00.330A-EU" ] \
+|| [ "${CMU_SW_VER}" = "59.00.443C-ADR" ] \
+|| [ "${CMU_SW_VER}" = "59.00.326A-ADR" ]
+then
+	statusbar_copy=0
+fi
+
+if [ ! -e /jci/gui/common/controls/Sbn/css/SbnCtrl.css.org ]
+then
+	cp -a /jci/gui/common/controls/Sbn/css/SbnCtrl.css /jci/gui/common/controls/Sbn/css/SbnCtrl.css.org
+	log_message "=== Backup of /jci/gui/common/controls/Sbn/css/SbnCtrl.css to SbnCtrl.css.org ==="
+fi
+if [ ! -e /jci/gui/common/controls/StatusBar/css/StatusBarCtrl.css.org ]
+then
+	cp -a /jci/gui/common/controls/StatusBar/css/StatusBarCtrl.css /jci/gui/common/controls/StatusBar/css/StatusBarCtrl.css.org
+	log_message "=== Backup of /jci/gui/common/controls/StatusBar/css/StatusBarCtrl.css to StatusBarCtrl.css.org ==="
+fi
+if [ ! -e /jci/gui/common/controls/StatusBar/images/StatusBarBg.png.org ]
+then
+	cp -a /jci/gui/common/controls/StatusBar/images/StatusBarBg.png /jci/gui/common/controls/StatusBar/images/StatusBarBg.png.org
+	log_message "=== Backup of /jci/gui/common/controls/StatusBar/images/StatusBarBg.png to StatusBarBg.png.org ==="
+fi
+if [ ! -e /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js.org ]
+then
+	cp -a /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js.org
+	log_message "=== Backup of /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js to StatusBarCtrl.js.org ==="
+fi
+if [ ! -e /jci/gui/common/images/icons/IcnSbRoaming.png.org ]
+then
+	cp -a /jci/gui/common/images/icons/IcnSbRoaming.png /jci/gui/common/images/icons/IcnSbRoaming.png.org
+	log_message "=== Backup of /jci/gui/common/images/icons/IcnSbRoaming.png to IcnSbRoaming.png.org ==="
+fi
+if [ ! -e /jci/gui/framework/js/Utility.js.org ]
+then
+	cp -a /jci/gui/framework/js/Utility.js /jci/gui/framework/js/Utility.js.org
+	log_message "=== Backup of /jci/gui/framework/js/Utility.js to Utility.js.org ==="
+fi
+if [ ${KEEPBKUPS} = "1" ]
+then
+	cp -a /jci/gui/common/controls/Sbn/css/SbnCtrl.css.org "${MYDIR}/bakups/"
+	cp -a /jci/gui/common/controls/StatusBar/css/StatusBarCtrl.css.org "${MYDIR}/bakups/"
+	cp -a /jci/gui/common/controls/StatusBar/images/StatusBarBg.png.org "${MYDIR}/bakups/"
+	cp -a /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js.org "${MYDIR}/bakups/"
+	cp -a /jci/gui/common/images/icons/IcnSbRoaming.png.org "${MYDIR}/bakups/"
+	cp -a /jci/gui/framework/js/Utility.js.org "${MYDIR}/bakups/"
+	aio_info \"SbnCtrl.css.org\",
+	aio_info \"StatusBarCtrl.css.org\",
+	aio_info \"StatusBarBg.png.org\",
+	aio_info \"StatusBarCtrl.js.org\",
+	aio_info \"IcnSbRoaming.png.org\",
+	aio_info \"Utility.js.org\",
+fi
+
+if [ ${statusbar_copy} = "1" ]
+then
+	cp -a ${MYDIR}/config/date-to-statusbar_mod/jci/gui/common/controls/StatusBar/css/StatusBarCtrl.v1.css /jci/gui/common/controls/StatusBar/css/StatusBarCtrl.css
+	log_message "=== Copied /jci/gui/common/controls/StatusBar/css/StatusBarCtrl.css ==="
+	cp -a ${MYDIR}/config/date-to-statusbar_mod/jci/gui/common/controls/StatusBar/js/StatusBarCtrl.v1.js /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js
+	log_message "=== Copied /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js ==="
+	cp -a ${MYDIR}/config/date-to-statusbar_mod/jci/gui/common/images/icons/IcnSbRoaming.v2.png /jci/gui/common/images/icons/IcnSbRoaming.png
+	log_message "=== Copied /jci/gui/common/images/icons/IcnSbRoaming.png ==="
+	cp -a ${MYDIR}/config/date-to-statusbar_mod/jci/gui/framework/js/Utility.v1.js /jci/gui/framework/js/Utility.js
+	log_message "=== Copied /jci/gui/framework/js/Utility.js ==="
+fi
+
+if [ ${statusbar_copy} = "0" ]
+then
+	log_message "=== date_to_statusbar_mod v1 not compatible to your FW, no installation made! ==="
+fi
+
+log_message "END INSTALLATION OF DATE_TO_STATUSBAR_MOD_V1.0 BY DIGINIX"
+log_message " "

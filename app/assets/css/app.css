@@ -1,0 +1,11 @@
+/* Add styles for your app here */
+
+/* Hide printers box by default */
+.printer-list {
+    display: none;
+}
+
+/* Activate printers box, dynamically added by printers.js */
+.printer-list-active {
+    display: initial;
+}

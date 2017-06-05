@@ -1,0 +1,77 @@
+<div style="height:5px;z-index:999998;" class="hideNavHover w3-top"></div>
+<div class="w3-top hideNav" style="z-index:999999;">
+  <ul class="w3-navbar w3-light-grey">
+    <li><a href="../index.html"><span style="font-size:26px" class="icon-home w3-margin"></span></a></li>
+    <li class="w3-dropdown-click">
+      <a id='' onclick="dropDownMenu('file')" href="">File <span class="icon-caret-down"></span></a>
+      <div id="file" class="w3-dropdown-content w3-white w3-card-4">
+        <a href="" onclick="$(this).parent().removeClass('w3-show')" ng-click="saveOps()"><i class="icon-save"></i>Save</a>
+        <a href="" onclick="$(this).parent().removeClass('w3-show')" ng-click="loadOps()"><i class="icon-build"></i>Load</a>
+        <a href="" onclick="window.close()"><i class="icon-close"></i>Close</a>
+      </div>
+    </li>
+    <li class="w3-dropdown-click">
+      <a id='' onclick="dropDownMenu('window')" href="">Window <span class="icon-caret-down"></span></a>
+      <div id="window" class="w3-dropdown-content w3-white w3-card-4">
+        <a href="" onclick="$(this).parent().removeClass('w3-show');toggleFullScreen()"><i class="icon-fullscreen"></i>Fullscreen</a>
+        <a href="" onclick="$(this).parent().removeClass('w3-show')" ng-click="uncheckAll()"><i class="icon-reload"></i>Reset Options</a>
+        <a href="" onclick="location.reload();"><i class="icon-spin"></i>Reload App</a>
+      </div>
+    </li>
+    <li class="w3-dropdown-click">
+      <a id='' onclick="dropDownMenu('downloads')" href="">Downloads <span class="icon-caret-down"></span></a>
+      <div id="downloads" class="w3-dropdown-content w3-white w3-card-4">
+        <a href="" onclick="$(this).parent().removeClass('w3-show');ipc.send('update-downloaded');"><i class="icon-download"></i> Download Update</a>
+        <a href="" class="download" onclick="$(this).parent().removeClass('w3-show');ipc.send('download-aio-files','color-schemes');$(this).hide();"><i class="icon-download"></i> Download Color Scheme Files (105MB)</a>
+        <a href="" onclick="$(this).parent().removeClass('w3-show');ipc.send('download-aio-files','speedcam-patch');$(this).hide();"><i class="icon-download"></i> Download Speedcam Patch Files (200MB)</a>
+      </div>
+    </li>
+    <li class="w3-dropdown-click">
+      <a id='' onclick="dropDownMenu('language')" href="">Language <span class="icon-caret-down"></span></a>
+      <div id="language" class="w3-dropdown-content w3-white w3-card-4">
+        <a href="?lang=english" onclick="$(this).parent().removeClass('w3-show');"><i class="icon-flask"></i> English</a>
+        <a href="?lang=german" onclick="$(this).parent().removeClass('w3-show');"><i class="icon-beaker"></i> German</a>
+        <a href="?lang=spanish" onclick="$(this).parent().removeClass('w3-show');"><i class="icon-spa"></i> Spanish</a>
+        <a href="" onclick="window.location.href=`./views/translate.html`;"><i class="icon-goat"></i> Translator</a>
+      </div>
+    </li>
+    <li class="w3-dropdown-click">
+      <a id='' onclick="dropDownMenu('help')" href="">Help <span class="icon-caret-down"></span></a>
+      <div id="help" class="w3-dropdown-content w3-white w3-card-4">
+        <a href="" onclick="$(this).parent().removeClass('w3-show');externalLink('mazdatweaks')"><i class="icon-help"></i> MazdaTweaks.com</a>
+        <a href="" onclick="$(this).parent().removeClass('w3-show');showNotification('testing','Testing, Testing, 1.. 2.. 3....',5);"><i class="icon-globe2"></i> JSON Translate Web Test</a>
+        <a href="" onclick="$(this).parent().removeClass('w3-show');ipc.send('open-joiner-window');"><i class="icon-cube"></i> Local Json Test</a>
+      </div>
+    </li>
+    <li class="menu-icons menulock" style="width:40px;margin-right:20px;margin-left:-5px" data-toggle="tooltip" data-placement="bottom" title="Lock/Unlock Menu Bar"  onclick="$('.hideNav').toggleClass('showNav');saveMenuLock()">
+      <span class="icon-lock w3-margin"></span>
+    </li>
+    <li class="menu-icons" style="margin: 5px 0px 0px 8px;" data-toggle="tooltip" data-placement="bottom" title="Fullscreen" onclick="toggleFullScreen()">
+      <span class="icon-fullscreen" style="padding: 8px;"></span>
+    </li>
+    <li class="menu-icons w3-hover-spin" style="border-radius:50px;" data-toggle="tooltip" data-placement="bottom" title="Reload App" onclick="location.reload()">
+      <span class="icon-refresh" style="margin:6px"></span>
+    </li>
+  </ul>
+</div>
+<nav class="w3-sidenav w3-black w3-card-2 w3-animate-left w3-text-shadow w3-xlarge w3-card-2" style="display:none;z-index:99999;position:fixed;" id="mySidenav">
+  <a href="javascript:void(0)" onclick="w3_close()" class="w3-hover-red w3-closenav w3-xxlarge"><span class='icon-x'></span></a>
+  <a class="w3-hover-green w3-ripple" href="http://link.trevelopment.com/mazdaatweaks"><span class='icon-home'></span> MazdaTweaks.com</a>
+  <a class="w3-hover-green w3-ripple" title="{{menu.tour.toolTip}}" onclick="w3_close();startTour()"><span class='icon-bus'></span> {{menu.tour.label}}</a>
+  <a class="w3-hover-green w3-ripple" title="{{menu.installall.toolTip}}" onclick="w3_close();" ng-click="instAll()"><span class='icon-list3'></span> {{menu.installall.label}}</a>
+  <a class="w3-hover-green w3-ripple" title="{{menu.uninstallall.toolTip}}" onclick="w3_close();" ng-click="uninstAll()"><span class='icon-ungroup'></span> {{menu.uninstallall.label}}</a>
+  <a class="w3-hover-green w3-ripple" title="{{menu.lastcompilelog.toolTip}}" onclick="w3_close();" href="../../MZD_LOG.htm" data-featherlight="ajax"><span class='icon-document-alt-fill'></span> {{menu.lastcompilelog.label}}</a>
+  <a class="w3-hover-green w3-ripple" title="{{menu.copytousb.toolTip}}" onclick="w3_close();openCopyFolder();"><span class='icon-foelder-open'></span> {{menu.copytousb.label}}</a>
+  <a class="w3-hover-green w3-ripple" title="{{menu.save.toolTip}}" onclick="w3_close();" ng-click="saveOps();"><span class='icon-save2'></span> {{menu.save.label}}</a>
+  <a class="w3-hover-green w3-ripple" title="{{menu.load.toolTip}}" onclick="w3_close();" ng-click="loadOps();"><span class='icon-build'></span> {{menu.load.label}}</a>
+  <a class="w3-hover-green w3-ripple" title="{{menu.resetoptions.toolTip}}" onclick="w3_close();" ng-click="uncheckAll()"><span class='icon-undo'></span> {{menu.resetoptions.label}}</a>
+  <a class="w3-hover-green w3-ripple" title="{{menu.reloadapp.toolTip}}" onclick="location.reload();"><span class='icon-spin w3-spin'></span> {{menu.reloadapp.label}}</a>
+</nav>
+<script>
+  $(function(){
+    $.featherlight.defaults = {persist:true};
+    if{persistantData.get('menuLock')}`) {
+      $('.w3-overlay').addClass('showNav');
+    }
+  })
+</script>

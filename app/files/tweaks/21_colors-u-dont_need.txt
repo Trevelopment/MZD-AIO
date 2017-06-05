@@ -1,0 +1,26 @@
+# remove custom infotainment colors - back to original red scheme, speedometer too
+show_message "REMOVE CUSTOM INFOTAINMENT COLORS (BACK TO RED) ..."
+log_message "REMOVE CUSTOM INFOTAINMENT COLORS (BACK TO RED) ..."
+cp -a ${MYDIR}/config_org/color-schemes/red/jci /
+if [ -d /jci/gui/apps/_speedometer ]
+    then
+		cp -a ${MYDIR}/config_org/color-schemes/speedometer/* /jci/gui/apps/_speedometer/templates/SpeedoMeter/images/
+		log_message "=== Speedometer to red again ==="
+fi
+if [ -e /jci/nng/ux/_skin_jci_bluedemo.zip ]
+    then
+		rm -f /jci/nng/ux/_skin_jci_bluedemo.zip
+		log_message "=== Deleted blue scheme for NAV App too, should be red again ==="
+fi
+
+rm -f /jci/gui/common/images/blue.aio
+rm -f /jci/gui/common/images/green.aio
+rm -f /jci/gui/common/images/orange.aio
+rm -f /jci/gui/common/images/pink.aio
+rm -f /jci/gui/common/images/purple.aio
+rm -f /jci/gui/common/images/silver.aio
+rm -f /jci/gui/common/images/yellow.aio
+log_message "=== Removed custom infotainment colors - back to original red scheme, speedometer too ==="
+
+log_message "END OF REMOVING TO ORIGINAL RED SCHEME"
+log_message " "

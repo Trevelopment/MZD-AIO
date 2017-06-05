@@ -1,0 +1,121 @@
+<!--
+- MZD-AIO-TI
+- By: Trezdog44 - Trevor Martin
+- http://mazdatweaks.com
+- ©2017 Trevelopment
+-
+- Custom Options For Statusbar Tweak
+- Custom Options For Date_To_Statusbar_Mod Tweak
+-
+-->
+<table>
+  <tbody class="w3-col">
+    <tr class="w3-quarter">
+      <td class="">
+        <input id="statusbaruninstall" class="w3-check" style="top:0" type="checkbox" ng-model="user.statusbar.uninst" ng-value="user.statusbar.uninst" />
+      </td>
+      <td>
+        <label for="statusbaruninstall"><strong style="font-size: 12px;">{{menu.uninstall.label}} </strong></label>
+      </td>
+    </tr>
+    <tr class="w3-quarter">
+      <td class="">
+        <a class="w3-btn w3-ripple w3-blue w3-hover-black" href="" onclick="$('#imgframe').click()" data-toggle="tooltip" data-placement="auto bottom" title="Preview Background">
+          <span class="icon-pageview"></span> Preview
+        </a>
+      </td>
+    </tr>
+    <tr class="w3-half" ng-hide="user.statusbar.uninst">
+      <td>
+        <input id="statusbar{{statusbar.main.id}}" class="w3-check" style="top:0" type="checkbox" name="{{statusbar.main.label}}" ng-model="user.statusbar.main" ng-value="user.statusbar.main" />
+      </td>
+      <td>
+        <label for="statusbar{{statusbar.main.id}}"><strong style="font-size: 12px;">{{statusbar.main.label}} </strong> </label>
+      </td>
+    </tr>
+    <tr class="w3-half extraUIRange" ng-hide="user.statusbar.uninst" style="background-color:rgba(0,0,0,{{user.statusbar.opacity}});color:rgb({{200*user.statusbar.opacity}},{{200*user.statusbar.opacity}},{{200*user.statusbar.opacity}});">
+      <td class="">
+        <strong style="">{{statusbar.opacity.label}}: {{user.statusbar.opacity}}</strong>
+      </td>
+    </tr>
+    <tr class="w3-half extraUIRange" ng-hide="user.statusbar.uninst">
+      <td class="">
+        <input id="statusbar{{statusbar.opacity.id}}" type="range" name="{{statusbar.opacity.label}}" ng-model="user.statusbar.opacity" min="0" max="1" step=".1" ng-value="user.statusbar.opacity" />
+      </td>
+    </tr>
+    <tr id="statusbar-app" ng-hide="user.statusbar.uninst" class="w3-hover-pale-blue w3-third">
+      <td>
+        <div class="extraSatusbar">
+          <input id="statusbar{{statusbar.app.id}}" type="color" ng-model="user.statusbar.app" ng-value="user.statusbar.app" />
+        </div>
+      </td>
+      <td>
+        <label for="statusbar{{statusbar.app.id}}" data-toggle="tooltip" data-placement="auto bottom" title="{{statusbar.app.label}}">{{statusbar.app.label}}</label>
+      </td>
+    </tr>
+    <tr id="statusbar-clock" ng-hide="user.statusbar.uninst" class="w3-hover-pale-blue w3-third">
+      <td>
+        <div class="extraSatusbar">
+          <input id="statusbar{{statusbar.clock.id}}" type="color" ng-model="user.statusbar.clock" ng-value="user.statusbar.clock" />
+        </div>
+      </td>
+      <td>
+        <label for="statusbar{{statusbar.clock.id}}" data-toggle="tooltip" data-placement="auto bottom" title="{{statusbar.clock.label}}">{{statusbar.clock.label}}</label>
+      </td>
+    </tr>
+    <tr id="statusbar-notif" ng-hide="user.statusbar.uninst" class="w3-hover-pale-blue w3-third">
+      <td>
+        <div class="extraSatusbar">
+          <input id="statusbar{{statusbar.notif.id}}" type="color" ng-model="user.statusbar.notif" ng-value="user.statusbar.notif" />
+        </div>
+      </td>
+      <td>
+        <label for="statusbar{{statusbar.notif.id}}" data-toggle="tooltip" data-placement="auto bottom" title="{{statusbar.notif.label}}">{{statusbar.notif.label}}</label>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<table>
+  <tbody class="w3-col">
+    <tr class="w3-hover-pale-blue w3-col w3-row w3-twothird">
+      <td style="padding:0 5px;min-width: 70px;">
+      <div class="install-check">
+        <input id="statusbar{{statusbar.d2sbinst.id}}" type="checkbox" name="{{statusbar.d2sbinst.label}}" ng-model="user.statusbar.d2sbinst" ng-value="user.statusbar.d2sbinst"  ng-disabled="user.statusbar.d2sbuninst">
+        <label for="statusbar{{statusbar.d2sbinst.id}}" data-toggle="tooltip" data-placement="auto bottom" title="{{menu.install.label}} {{statusbar.d2sbinst.label}}"></label>
+      </div>
+      <div class="uninstall-check">
+        <input id="statusbar{{statusbar.d2sbuninst.id}}" type="checkbox" name="{{statusbar.d2sbinst.label}}" ng-model="user.statusbar.d2sbuninst" ng-value="user.statusbar.d2sbuninst"  ng-disabled="user.statusbar.d2sbinst">
+        <label for="statusbar{{statusbar.d2sbuninst.id}}" data-toggle="tooltip" data-placement="auto bottom" title="{{statusbar.d2sbuninst.label}}"></label>
+      </div>
+    </td>
+    <td>
+      <label id="label-{{statusbar.d2sbinst.id}}" class="w3-validate" for="statusbar{{statusbar.d2sbinst.id}}" value="statusbar.d2sbinst.label" data-toggle="tooltip" data-placement="auto bottom" data-toggle="tooltip" data-placement="auto bottom" title="{{user.options[20].toolTip}}">{{statusbar.d2sbinst.label}}</label>
+    </td>
+      <!--td>
+        <input id="statusbar{{statusbar.d2sbinst.id}}" class="w3-check" style="top:0" type="checkbox" name="{{statusbar.d2sbinst.label}}" ng-model="user.statusbar.d2sbinst" ng-value="user.statusbar.d2sbinst"  ng-disabled="user.statusbar.d2sbuninst"/>
+      </td>
+      <td>
+        <label for="statusbar{{statusbar.d2sbinst.id}}"><strong style="font-size: 12px;">{{statusbar.d2sbinst.label}} </strong> </label>
+      </td>
+    </tr>
+    <tr class="w3-half">
+      <td class="">
+        <input id="statusbar{{statusbar.d2sbinst.id}}" class="w3-check" style="top:0" type="checkbox" ng-model="user.statusbar.d2sbuninst" ng-value="user.statusbar.d2sbuninst"  ng-disabled="user.statusbar.d2sbinst"/>
+      </td>
+      <td>
+        <label for="statusbar{{statusbar.d2sbinst.id}}"><strong style="font-size: 12px;">{{statusbar.d2sbuninst.label}} </strong></label>
+      </td-->
+    </tr>
+    <tr ng-repeat="option in d2sbOps | filter:twkfltr" class="w3-hover-pale-blue w3-tooltip w3-third" ng-show="user.statusbar.d2sbinst">
+      <td>
+        <div class="d2sb-check extraRadio">
+          <input id="d2sb{{option.id}}" type="radio" name="{{option.label}}" ng-model="user.d2sbOps" ng-value="option.id" ng-disabled="user.d2sbOps.indexOf({{option.id}}) == -1 && user.d2sbOps.length > 0">
+          <label for="d2sb{{option.id}}" data-toggle="tooltip" data-placement="auto bottom" title="{{option.label}}" class="{{option.label}}"></label>
+        </div>
+      </td>
+      <td>
+        <label for="d2sb{{option.id}}" data-toggle="tooltip" data-placement="auto bottom" title="{{option.label}}">{{option.label}}</label>
+      </td>
+    </tr>
+  </tbody>
+</table>

@@ -1,0 +1,366 @@
+timestamp()
+{
+  date +"%D %T"
+}
+get_cmu_sw_version()
+{
+  _ver=$(/bin/grep "^JCI_SW_VER=" /jci/version.ini | /bin/sed 's/^.*_\([^_]*\)\"$/\1/')
+  _patch=$(/bin/grep "^JCI_SW_VER_PATCH=" /jci/version.ini | /bin/sed 's/^.*\"\([^\"]*\)\"$/\1/')
+  _flavor=$(/bin/grep "^JCI_SW_FLAVOR=" /jci/version.ini | /bin/sed 's/^.*_\([^_]*\)\"$/\1/')
+
+  if [ ! -z "${_flavor}" ]; then
+    echo "${_ver}${_patch}-${_flavor}"
+  else
+    echo "${_ver}${_patch}"
+  fi
+}
+log_message()
+{
+  echo "$*" 1>&2
+  echo "$*" >> "${MYDIR}/AIO_log.txt"
+  /bin/fsync "${MYDIR}/AIO_log.txt"
+}
+aio_info()
+{
+  echo "$*" 1>&2
+  echo "$*" >> "${MYDIR}/AIO_info.json"
+  /bin/fsync "${MYDIR}/AIO_info.json"
+}
+remove_aio_css()
+{
+  sed -i "/.. MZD-AIO-TI *${2} *CSS ../,/.. END AIO *${2} *CSS ../d" "${1}"
+  INPUT=${1##*/}
+  log_message "===     Removed ${2} CSS From ${INPUT}     ==="
+}
+remove_aio_js()
+{
+  sed -i "/.. MZD-AIO-TI.${2}.JS ../,/.. END AIO.${2}.JS ../d" "${1}"
+  INPUT=${1##*/}
+  log_message "=== Removed ${2} JavaScript From ${INPUT} ==="
+}
+show_message()
+{
+  sleep 5
+  killall jci-dialog
+  #	log_message "= POPUP: $* "
+  /jci/tools/jci-dialog --info --title="MZD-AIO-TI  v.${AIO_VER}" --text="$*" --no-cancel &
+}
+show_message_OK()
+{
+  sleep 4
+  killall jci-dialog
+  #	log_message "= POPUP: $* "
+  /jci/tools/jci-dialog --confirm --title="MZD-AIO-TI | CONTINUE INSTALLATION?" --text="$*" --ok-label="YES - GO ON" --cancel-label="NO - ABORT"
+  if [ $? != 1 ]
+  then
+    killall jci-dialog
+    return
+  else
+    log_message "INSTALLATION ABORTED"
+    show_message "INSTALLATION ABORTED! PLEASE UNPLUG USB DRIVE"
+    sleep 10
+    killall jci-dialog
+    exit 0
+  fi
+}
+add_app_json()
+# script by vic_bam85
+{
+  # check if entry in additionalApps.json still exists, if so nothing is to do
+  count=$(grep -c '{ "name": "'"${1}"'"' /jci/opera/opera_dir/userjs/additionalApps.json)
+  if [ "$count" = "0" ]
+  then
+    log_message "=== No entry of ${2} found in additionalApps.json, seems to be the first installation ==="
+    mv /jci/opera/opera_dir/userjs/additionalApps.json /jci/opera/opera_dir/userjs/additionalApps.json.old
+    sleep 2
+    # delete last line with "]" from additionalApps.json
+    grep -v "]" /jci/opera/opera_dir/userjs/additionalApps.json.old > /jci/opera/opera_dir/userjs/additionalApps.json
+    sleep 2
+    cp /jci/opera/opera_dir/userjs/additionalApps.json "${MYDIR}/bakups/test/additionalApps${1}-2._delete_last_line.json"
+    # check, if other entrys exists
+    count=$(grep -c '}' /jci/opera/opera_dir/userjs/additionalApps.json)
+    if [ "$count" != "0" ]
+    then
+      # if so, add "," to the end of last line to additionalApps.json
+      echo "$(cat /jci/opera/opera_dir/userjs/additionalApps.json)", > /jci/opera/opera_dir/userjs/additionalApps.json
+      sleep 2
+      cp /jci/opera/opera_dir/userjs/additionalApps.json "${MYDIR}/bakups/test/additionalApps${1}-3._add_comma_to_last_line.json"
+      log_message "=== Found existing entrys in additionalApps.json ==="
+    fi
+    # add app entry and "]" again to last line of additionalApps.json
+    log_message "=== Add ${2} to last line of additionalApps.json ==="
+    echo '{ "name": "'"${1}"'", "label": "'"${2}"'" }' >> /jci/opera/opera_dir/userjs/additionalApps.json
+    sleep 2
+    cp /jci/opera/opera_dir/userjs/additionalApps.json "${MYDIR}/bakups/test/additionalApps${1}-4._add_entry_to_last_line.json"
+    echo "]" >> /jci/opera/opera_dir/userjs/additionalApps.json
+    sleep 2
+    cp /jci/opera/opera_dir/userjs/additionalApps.json "${MYDIR}/bakups/test/additionalApps${1}-5._after.json"
+    rm -f /jci/opera/opera_dir/userjs/additionalApps.json.old
+  else
+    log_message "=== ${2} already exists in additionalApps.json, no modification necessary ==="
+  fi
+}
+remove_app_json()
+# script by vic_bam85
+{
+  # check if app entry in additionalApps.json still exists, if so, then it will be deleted
+  count=$(grep -c '{ "name": "'"${1}"'"' /jci/opera/opera_dir/userjs/additionalApps.json)
+  if [ "$count" -gt "0" ]
+  then
+    log_message "=== ${count} entry(s) of ${1} found in additionalApps.json, app is already installed and will be deleted now ==="
+    mv /jci/opera/opera_dir/userjs/additionalApps.json /jci/opera/opera_dir/userjs/additionalApps.json.old
+    # delete last line with "]" from additionalApps.json
+    grep -v "]" /jci/opera/opera_dir/userjs/additionalApps.json.old > /jci/opera/opera_dir/userjs/additionalApps.json
+    sleep 2
+    cp /jci/opera/opera_dir/userjs/additionalApps.json "${MYDIR}/bakups/test/additionalApps${1}-2._delete_last_line.json"
+    # delete all app entrys from additionalApps.json
+    sed -i "/${1}/d" /jci/opera/opera_dir/userjs/additionalApps.json
+    sleep 2
+    cp /jci/opera/opera_dir/userjs/additionalApps.json "${MYDIR}/bakups/test/additionalApps${1}-3._delete_app_entry.json"
+    json="$(cat /jci/opera/opera_dir/userjs/additionalApps.json)"
+    # check if last sign is comma
+    rownend=$(echo -n $json | tail -c 1)
+    if [ "$rownend" = "," ]
+    then
+      # if so, remove "," from back end
+      echo ${json%,*} > /jci/opera/opera_dir/userjs/additionalApps.json
+      sleep 2
+      log_message "=== Found comma at last line of additionalApps.json and deleted it ==="
+    fi
+    # add "]" again to last line of additionalApps.json
+    echo "]" >> /jci/opera/opera_dir/userjs/additionalApps.json
+    rm -f /jci/opera/opera_dir/userjs/additionalApps.json.old
+    sleep 2
+    cp /jci/opera/opera_dir/userjs/additionalApps.json "${MYDIR}/bakups/test/additionalApps${1}-4._after.json"
+  else
+    log_message "=== ${1} not found in additionalApps.json, no modification necessary ==="
+  fi
+}
+# disable watchdog and allow write access
+echo 1 > /sys/class/gpio/Watchdog\ Disable/value
+mount -o rw,remount /
+
+MYDIR=$(dirname "$(readlink -f "$0")")
+CMU_VER=$(grep "^JCI_SW_VER=" /jci/version.ini | sed 's/^.*_\([^_]*\)\"$/\1/' | cut -d '.' -f 1)
+CMU_SW_VER=$(get_cmu_sw_version)
+rm -f "${MYDIR}/AIO_log.txt"
+rm -f "${MYDIR}/AIO_info.json"
+mkdir -p "${MYDIR}/bakups/test/"
+
+log_message "=========================================================="
+log_message "===============   START LOGGING TWEAKS...  ==============="
+log_message "=============== AIO v.${AIO_VER}  -  ${AIO_DATE} ==============="
+log_message "=============== CMU_SW_VER = ${CMU_SW_VER} ==============="
+#log_message "=============== CMU_VER = ${CMU_VER} ==============="
+log_message ""
+log_message "===============   MYDIR = ${MYDIR}    ==============="
+log_message "==========      DATE = $(timestamp)        =========="
+show_message "==== MZD-AIO-TI  ${AIO_VER} ====="
+
+aio_info '{"info":{'
+aio_info \"CMU_SW_VER\": \"${CMU_SW_VER}\",
+aio_info \"AIO_VER\": \"${AIO_VER}\",
+aio_info \"USB_PATH\": \"${MYDIR}\",
+aio_info \"KEEPBKUPS\": \"${KEEPBKUPS}\"
+aio_info '},'
+# first test, if copy from MZD to usb drive is working to test correct mount point
+cp /jci/sm/sm.conf "${MYDIR}"
+if [ -e "${MYDIR}/sm.conf" ]
+then
+  log_message "=== Copytest to sd card successful, mount point is OK  ==="
+  log_message " "
+  rm -f "${MYDIR}/sm.conf"
+else
+  log_message "=== Copytest to sd card not successful, mount point not found! ==="
+  /jci/tools/jci-dialog --title="ERROR!" --text="Mount point not found, have to reboot again" --ok-label='OK' --no-cancel &
+  sleep 5
+  reboot
+fi
+
+if [ $CMU_VER -lt 55 ]
+then
+  show_message "PLEASE UPDATE YOUR CMU FW TO VERSION 55 OR HIGHER\nYOUR FIRMWARE VERSION ${CMU_SW_VER}\nWOULD HAVE ENDED UP IN AN UNRECOVERABLE BOOTLOOP!\n\nUPDATE TO VERSION 55+ TO USE AIO"
+  mv ${MYDIR}/tweaks.sh ${MYDIR}/_tweaks.sh
+  show_message "INSTALLATION ABORTED REMOVE USB DRIVE NOW" && sleep 5
+  log_message "INSTALLATION ABORTED" && reboot
+  exit 1
+fi
+
+if [ "${CMU_SW_VER}" = "56.00.100A-ADR" ] \
+|| [ "${CMU_SW_VER}" = "56.00.230A-ADR" ] \
+|| [ "${CMU_SW_VER}" = "56.00.240B-ADR" ] \
+|| [ "${CMU_SW_VER}" = "56.00.511A-ADR" ] \
+|| [ "${CMU_SW_VER}" = "56.00.512A-ADR" ] \
+|| [ "${CMU_SW_VER}" = "56.00.513C-ADR" ] \
+|| [ "${CMU_SW_VER}" = "56.00.514A-ADR" ] \
+|| [ "${CMU_SW_VER}" = "55.00.650A-EU" ] \
+|| [ "${CMU_SW_VER}" = "56.00.100A-EU" ] \
+|| [ "${CMU_SW_VER}" = "56.00.230A-EU" ] \
+|| [ "${CMU_SW_VER}" = "56.00.210A-EU" ] \
+|| [ "${CMU_SW_VER}" = "56.00.511A-EU" ] \
+|| [ "${CMU_SW_VER}" = "56.00.512A-EU" ] \
+|| [ "${CMU_SW_VER}" = "56.00.513B-EU" ] \
+|| [ "${CMU_SW_VER}" = "56.00.513C-EU" ] \
+|| [ "${CMU_SW_VER}" = "56.00.521A-EU" ] \
+|| [ "${CMU_SW_VER}" = "55.00.650A-NA" ] \
+|| [ "${CMU_SW_VER}" = "55.00.750B-NA" ] \
+|| [ "${CMU_SW_VER}" = "55.00.753A-NA" ] \
+|| [ "${CMU_SW_VER}" = "55.00.760A-NA" ] \
+|| [ "${CMU_SW_VER}" = "56.00.521A-NA" ] \
+|| [ "${CMU_SW_VER}" = "56.00.100A-CHN" ] \
+|| [ "${CMU_SW_VER}" = "56.00.401A-JP" ] \
+|| [ "${CMU_SW_VER}" = "56.00.403A-JP" ] \
+|| [ "${CMU_VER}" = "55" ] || [ "${CMU_VER}" = "56" ] # Allow all FW v55 & v56
+then
+  if [ ${SKIPCONFIRM} = 1 ]
+  then
+    show_message "MZD-AIO-TI v.${AIO_VER}\nDetected compatible version ${CMU_SW_VER}\nContinuing Installation..."
+    sleep 5
+  else
+    show_message_OK "MZD-AIO-TI v.${AIO_VER}\nDetected compatible version ${CMU_SW_VER}\n\n To continue installation choose YES\n To abort choose NO"
+  fi
+  log_message "======= Detected compatible version ${CMU_SW_VER}  ======="
+  FW_PRE_58=1
+  APP_PATCH_59=1
+  #|| [ "${CMU_SW_VER}" = "58.77.198A-EU" ]
+elif [ "${CMU_SW_VER}" = "58.00.250A-NA" ] \
+|| [ "${CMU_SW_VER}" = "58.00.251A-ADR" ] \
+|| [ "${CMU_SW_VER}" = "59.00.330A-EU" ] \
+|| [ "${CMU_SW_VER}" = "59.00.331A-EU" ] \
+|| [ "${CMU_SW_VER}" = "59.00.443C-EU" ] \
+|| [ "${CMU_SW_VER}" = "59.00.447A-EU" ] \
+|| [ "${CMU_SW_VER}" = "59.00.449A-EU" ] \
+|| [ "${CMU_SW_VER}" = "59.00.330A-NA" ] \
+|| [ "${CMU_SW_VER}" = "59.00.441A-NA" ] \
+|| [ "${CMU_SW_VER}" = "59.00.443A-NA" ] \
+|| [ "${CMU_SW_VER}" = "59.00.446A-NA" ] \
+|| [ "${CMU_SW_VER}" = "59.00.450A-NA" ] \
+|| [ "${CMU_SW_VER}" = "59.00.445A-JP" ] \
+|| [ "${CMU_SW_VER}" = "59.00.449A-ADR" ] \
+|| [ "${CMU_SW_VER}" = "59.00.450A-ADR" ] \
+|| [ "${CMU_SW_VER}" = "59.00.326A-ADR" ] \
+|| [ "${CMU_SW_VER}" = "59.00.330A-ADR" ] \
+|| [ "${CMU_SW_VER}" = "59.00.342A-ADR" ] \
+|| [ "${CMU_SW_VER}" = "59.00.442A-ADR" ] \
+|| [ "${CMU_SW_VER}" = "59.00.443C-ADR" ]
+then
+  if [ ${SKIPCONFIRM} = 1 ]
+  then
+    show_message "MZD-AIO-TI v.${AIO_VER}\nDetected compatible version ${CMU_SW_VER}\nContinuing Installation..."
+    sleep 5
+  else
+    show_message_OK "MZD-AIO-TI v.${AIO_VER}\nDetected compatible version ${CMU_SW_VER}\n\n To continue installation choose YES\n To abort choose NO"
+  fi
+  log_message "======= Detected compatible version ${CMU_SW_VER}  ======="
+  FW_PRE_58=0
+  APP_PATCH_59=0
+else
+  # Removing the comment (#) from the following line will allow MZD-AIO-TI to run with unknown fw versions ** ONLY MODIFY IF YOU KNOW WHAT YOU ARE DOING **
+  # show_message_OK "Detected previously unknown version ${CMU_SW_VER}!\n\n To continue anyway choose YES\n To abort choose NO"
+  FW_PRE_58=2
+  log_message "Detected previously unknown version ${CMU_SW_VER}!"
+  show_message "Sorry, your CMU Version is not compatible with MZD-AIO-TI\nE-mail aio@mazdatweaks.com with your\nCMU version: ${CMU_SW_VER} for more information"
+  sleep 10
+  killall jci-dialog
+  /jci/tools/jci-dialog --3-button-dialog --title="MZD-AIO-TI | BACKUP JCI" --text="SORRY, YOUR CMU VERSION IS NOT COMPATIBLE WITH MZD-AIO-TI\nWOULD YOU LIKE TO MAKE A BACKUP COPY OF YOUR JCI FOLDER\nTO SEND THE DEVELOPER TO TEST FOR COMPATIBILITY?\nCOPY - ALL FILES UNCOMPRESSED (PLEASE ZIP BEFORE SHARING)\nZIP - COMPRESS JCI INTO ZIP FILE (TAKES 3-5 TIMES LONGER)" --ok-label="COPY BKUP" --cancel-label="ZIP BKUP" --button3-label="EXIT"
+  if [ $? = 0 ]
+  then
+    BACKUPDIR=${MYDIR}/JCI-Backup
+    show_message "MAKE FULL BACKUP OF /JCI TO\n ${BACKUPDIR}. \n Please wait... this will take a few minutes ..."
+    log_message "=== FULL BACKUP OF /JCI TO ${BACKUPDIR} .. ==="
+    mkdir -p ${BACKUPDIR}
+    log_message "=== Backup directory ${BACKUPDIR} created  ==="
+    if [ -d ${BACKUPDIR} ]
+    then
+      log_message "=====  Backing up /jci to ${BACKUPDIR}   ====="
+      cp -R /jci ${BACKUPDIR}
+      echo "DATE: $(timestamp)" > ${BACKUPDIR}/jci.txt
+      echo "CMU_VER: ${CMU_SW_VER}" >> ${BACKUPDIR}/jci.txt
+      echo "AIO_VER: ${AIO_VER}" >> ${BACKUPDIR}/jci.txt
+      log_message "JCI BACKUP SUCCESS - SEND TO: TREZ@MAZDATWEAKS.COM SHARE ${BACKUPDIR} WITH GOOGLE DRIVE OR ANOTHER FILE SHARING SERVICE"
+      show_message "JCI BACKUP SUCCESS! ZIP AND SHARE\n${BACKUPDIR}\nON GOOGLE DRIVE OR ANOTHER FILE SHARING SERVICE\nWITH: TREZ@MAZDATWEAKS.COM\nOR UPLOAD TO HTTP://TREVELOPMENT.WIN/JCI-DROPOFF"
+      echo -e "SHARE ZIPPED FILE ${BACKUPDIR}\nON GOOGLE DRIVE OR ANOTHER FILE SHARING SERVICE\nEMAIL: TREZ@MAZDATWEAKS.COM\n\nYOU CAN ALSO UPLOAD TO: HTTP://TREVELOPMENT.WIN/JCI-DROPOFF\n\nCOMPATIBILITY WILL BE CHECKED AND YOUR FW VERSION WILL BE\nADDED TO THE NEXT VERSION OF MZD-AIO-TI\n\nTHANK YOU FOR CONTRIBUTING TO THIS AWESOME PROJECT!" > ${MYDIR}/README.txt
+    else
+      log_message "X=X=*X*= BACKUP DIRECTORY ${BACKUPDIR} DOES NOT EXIST =*X*=X=X"
+      show_message "JCI BACKUP FAILED!."
+    fi
+  elif [ $? = 1 ]
+  then
+    BACKUPZIP=${MYDIR}/JCI-${CMU_SW_VER}.zip
+    show_message "ZIPPING /JCI TO ${BACKUPZIP}. \nPlease wait... this will take a several minutes ...\nWhen backup is complete, share zip file with\nTrez@mazdatweaks.com\nor upload to: http://trevelopment.win/jci-dropoff"
+    log_message "=== ZIPPING BACKUP OF /jci TO ${BACKUPZIP} .. ==="
+    zip -r ${BACKUPZIP} /jci
+    log_message "JCI BACKUP SUCCESS - SEND TO: TREZ@MAZDATWEAKS.COM SHARE ${BACKUPZIP} WITH GOOGLE DRIVE OR ANOTHER FILE SHARING SERVICE"
+    show_message "JCI BACKUP SUCCESS! SHARE\n${BACKUPZIP}\nON GOOGLE DRIVE OR ANOTHER FILE SHARING SERVICE\nWITH: TREZ@MAZDATWEAKS.COM\nOR UPLOAD TO HTTP://TREVELOPMENT.WIN/JCI-DROPOFF"
+    echo -e "SHARE ZIPPED FILE ${BACKUPZIP}\nON GOOGLE DRIVE OR ANOTHER FILE SHARING SERVICE\nEMAIL: TREZ@MAZDATWEAKS.COM\n\nYOU CAN ALSO UPLOAD TO: HTTP://TREVELOPMENT.WIN/JCI-DROPOFF\n\nCOMPATIBILITY WILL BE CHECKED AND YOUR FW VERSION WILL BE\nADDED TO THE NEXT VERSION OF MZD-AIO-TI\n\nTHANK YOU FOR CONTRIBUTING TO THIS AWESOME PROJECT!" > ${MYDIR}/README.txt
+  else
+    log_message "INSTALLATION ABORTED"
+    show_message "INSTALLATION ABORTED"
+  fi
+  sleep 15
+  show_message "YOU MAY UNPLUG USB DRIVE NOW"
+  sleep 15
+  killall jci-dialog
+  # To run unknown FW you need to comment out or remove the following 2 lines
+  mount -o ro,remount /
+  exit 0
+fi
+
+# a window will appear for 4 seconds to show the beginning of installation
+show_message "START OF TWEAK INSTALLATION\nMZD-AIO-TI v.${AIO_VER} By: Trezdog44 & Siutsch\n(This and the following message popup windows\n DO NOT have to be confirmed with OK)\nLets Go!"
+log_message " "
+log_message "======***    BEGIN PRE-INSTALL OPERATIONS ...    ***======"
+
+# disable watchdogs in /jci/sm/sm.conf to avoid boot loops if something goes wrong
+if [ ! -e /jci/sm/sm.conf.org ]
+then
+  cp -a /jci/sm/sm.conf /jci/sm/sm.conf.org
+  log_message "====     Backup of /jci/sm/sm.conf to sm.conf.org     ===="
+else
+  log_message "========== Backup of sm.conf.org already there! =========="
+fi
+sed -i 's/watchdog_enable="true"/watchdog_enable="false"/g' /jci/sm/sm.conf
+sed -i 's|args="-u /jci/gui/index.html"|args="-u /jci/gui/index.html --noWatchdogs"|g' /jci/sm/sm.conf
+log_message "======  Watchdog In sm.conf Permanently Disabled!   ======"
+
+# -- Enable userjs and allow file XMLHttpRequest in /jci/opera/opera_home/opera.ini - backup first - then edit
+if [ ! -e /jci/opera/opera_home/opera.ini.org ]
+then
+  cp -a /jci/opera/opera_home/opera.ini /jci/opera/opera_home/opera.ini.org
+  log_message "=== Backup /jci/opera/opera_home/opera.ini to opera.ini.org ==="
+else
+  log_message "========== Backup of opera.ini already there! ============"
+fi
+sed -i 's/User JavaScript=0/User JavaScript=1/g' /jci/opera/opera_home/opera.ini
+count=$(grep -c "Allow File XMLHttpRequest=" /jci/opera/opera_home/opera.ini)
+skip_opera=$(grep -c "Allow File XMLHttpRequest=1" /jci/opera/opera_home/opera.ini)
+if [ "$skip_opera" = "0" ]
+then
+  if [ "$count" = "0" ]
+  then
+    sed -i '/User JavaScript=.*/a Allow File XMLHttpRequest=1' /jci/opera/opera_home/opera.ini
+  else
+    sed -i 's/Allow File XMLHttpRequest=.*/Allow File XMLHttpRequest=1/g' /jci/opera/opera_home/opera.ini
+  fi
+  log_message "====== Enabled Userjs & Allowed File Xmlhttprequest ======"
+  log_message "==========  In /jci/opera/opera_home/opera.ini  =========="
+else
+  log_message "====== Userjs & File Xmlhttprequest Already Enabled ======"
+fi
+
+# Remove fps.js if still exists
+if [ -e /jci/opera/opera_dir/userjs/fps.js ]
+then
+  mv /jci/opera/opera_dir/userjs/fps.js /jci/opera/opera_dir/userjs/fps.js.org
+  log_message "=== Moved /jci/opera/opera_dir/userjs/fps.js to fps.js.org  ==="
+fi
+log_message "=========***** END PRE-INSTALL OPERATIONS   *****========="
+log_message " "
+log_message "==========****** BEGIN INSTALLING TWEAKS ******==========="
+log_message " "
+
+# start JSON array of backups
+if [ "${KEEPBKUPS}" = 1 ]
+then
+  aio_info '"Backups": ['
+fi

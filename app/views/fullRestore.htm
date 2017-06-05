@@ -1,0 +1,14 @@
+<button id="compileRestore" class="w3-green w3-display-middle w3-btn w3-ripple w3-hover-light-blue" style="letter-spacing:1.4px;" ng-click="startRestoreCompile()"><span class="icon-genius"></span> {{menu.start.label}} <span class="icon-lab2"></span></button>
+<div class="w3-display-middle w3-card-4 w3-container w3-padding-16" id="fullSystemRestore">
+  <span class="w3-display-topright icon-remove w3-hover-text-red w3-hover-black" style="cursor:pointer" ng-click="user.twkfltr = ''"></span>
+  <input type="checkbox" id="fullRestoreChk" class="w3-check" ng-model="user.restore.full"/>
+  <label for="fullRestoreChk"><span class='icon-stop_screen_share'></span> FULL SYSTEM RESTORE</label>
+  <br>
+  <input type="checkbox" id="deleteBackupsChk" class="w3-check" ng-model="user.restore.delBackups" ng-disabled="!user.restore.full"/>
+  <label for="deleteBackupsChk"><span class='icon-caution'></span> DELETE ALL BACKUPS</label>
+</div>
+<div class="w3-display-bottom-middle w3-card-4 w3-container w3-padding" title="FULL SYSTEM RESTORE" id="systemRestoreInfo">
+  <h5>How is this scrip different from checking uninstall for every tweak? </h5> AIO creates a .org backup of each file before modifying if it does not already exist.  This script specifically targets the files that AIO modifies identified by a corresponding .org backup file.  Each modified file found is replaced by the original backup file and the backup is optionally deleted. The script has been optimized to delete all additional app files added by AIO, search for each expected backup file, copy each original file over the modified file, and optionally delete all backup files.
+  <br>All color theme files are also reverted to the default red color scheme.
+  <br>Although it is strongly recommended that backups are kept since they are not a detriment to the system, the option to delete all backups is provided to use at your own risk.
+  <h5>Files that will not be reverted:</h5> For safety, AIO does not re-enable watchdog nor revert the file 'sm.conf'.  This is to prevent your system from ending up in a bootloop.  To revert sm.conf you must write your own script because it is a dangerous thing to do. Files used by SSH Bringback, Enable WIFI Tweak and Opera.ini are also left in their modified states for saftey/recovery reasons.

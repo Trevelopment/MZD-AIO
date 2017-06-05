@@ -1,0 +1,71 @@
+# list_loop_mod
+show_message "INSTALL LIST_LOOP_MOD ..."
+log_message "=========****** INSTALL LIST_LOOP_MOD ... ******=========="
+
+TRACKORDER_LIST=0
+# Compatibility Check
+log_message "=== FW ${CMU_SW_VER} detected, copy matching List2Ctrl.js ==="
+if [ "${CMU_SW_VER}" = "59.00.441A-NA" ] \
+|| [ "${CMU_SW_VER}" = "59.00.443A-NA" ] \
+|| [ "${CMU_SW_VER}" = "59.00.446A-NA" ] \
+|| [ "${CMU_SW_VER}" = "59.00.450A-NA" ] \
+|| [ "${CMU_SW_VER}" = "59.00.445A-JP" ] \
+|| [ "${CMU_SW_VER}" = "59.00.449A-ADR" ] \
+|| [ "${CMU_SW_VER}" = "59.00.450A-ADR" ] \
+|| [ "${CMU_SW_VER}" = "59.00.443C-EU" ] \
+|| [ "${CMU_SW_VER}" = "59.00.447A-EU" ] \
+|| [ "${CMU_SW_VER}" = "59.00.449A-EU" ] \
+|| [ "${CMU_SW_VER}" = "59.00.442A-ADR" ] \
+|| [ "${CMU_SW_VER}" = "59.00.443C-ADR" ]
+then
+	TRACKORDER_LIST=1
+	TRACKORDER_LIST_FILE="59"
+elif [ "${CMU_SW_VER}" = "58.00.250A-NA" ] \
+|| [ "${CMU_SW_VER}" = "58.00.251A-ADR" ]
+then
+	TRACKORDER_LIST=1
+	TRACKORDER_LIST_FILE="58"
+elif [ "${CMU_SW_VER}" = "59.00.326A-ADR" ] \
+|| [ "${CMU_SW_VER}" = "59.00.330A-NA" ] \
+|| [ "${CMU_SW_VER}" = "59.00.330A-EU" ] \
+|| [ "${CMU_SW_VER}" = "59.00.330A-ADR" ] \
+|| [ "${CMU_SW_VER}" = "59.00.342A-ADR" ] \
+|| [ "${CMU_SW_VER}" = "59.00.331A-EU" ]
+then
+	TRACKORDER_LIST=1
+	TRACKORDER_LIST_FILE="59.330"
+fi
+
+# Backups
+if [ ! -e /jci/gui/common/controls/List2/js/List2Ctrl.js.org ]
+then
+	cp -a /jci/gui/common/controls/List2/js/List2Ctrl.js /jci/gui/common/controls/List2/js/List2Ctrl.js.org
+	log_message "=== Backup of /jci/gui/common/controls/List2/js/List2Ctrl.js to List2Ctrl.js.org ==="
+fi
+if [ "${KEEPBKUPS}" = "1" ]
+then
+	cp -a /jci/gui/common/controls/List2/js/List2Ctrl.js.org "${MYDIR}/bakups/"
+	aio_info \"List2Ctrl.js.org\",
+fi
+
+# Compatibility check falls into 4 groups:
+# 59.00.4XX
+# 59.00.3XX
+# 58.00.XXX
+# 55.XX.XXX - 56.XX.XXX
+# If your firmware version falls out of those ranges email the address below
+if [ "${TRACKORDER_LIST}" = "1" ]
+then
+	cp -a "${MYDIR}/config/list-loop/jci/gui/common/controls/List2/js/List2Ctrl.${TRACKORDER_LIST_FILE}.js" /jci/gui/common/controls/List2/js/List2Ctrl.js
+	log_message "=== Copied /jci/gui/common/controls/List2/js/List2Ctrl.js from SD card for ${CMU_SW_VER} ==="
+elif [ "${FW_PRE_58}" = "1" ]
+then
+cp -a "${MYDIR}/config/list-loop/jci/gui/common/controls/List2/js/List2Ctrl.js" /jci/gui/common/controls/List2/js/
+log_message "=== Copied /jci/gui/common/controls/List2/js/List2Ctrl.js from SD card ==="
+else
+	log_message "===         No Compatible List2Ctrl.js found for ${CMU_SW_VER}           ==="
+	log_message "===         E-mail aio@mazdatweaks.com for Compatibility Check         ==="
+fi
+
+log_message "======***** END INSTALLATION OF LIST_LOOP_MOD *****======="
+log_message " "

@@ -1,0 +1,208 @@
+/* CSS Document */
+.StatusBarCtrl {
+  background: url("../images/StatusBarBg.png");
+  background-repeat: no-repeat;
+  color: white;
+  text-decoration: none;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 800px;
+  height: 64px;
+  z-index: 10;
+}
+
+.StatusBarCtrlHomeBtn {
+  position: absolute;
+  display: none;
+  left: 1px;
+  top: 1px;
+  width: 58px;
+  height: 62px;
+  background: url("../../../images/icons/IcnSbHome.png") center center;
+  background-repeat: no-repeat;
+}
+
+.StatusBarCtrlRemoteUIBtn_En {
+  position: absolute;
+  left: 1px;
+  top: 1px;
+  width: 58px;
+  height: 62px;
+  background-repeat: no-repeat;
+}
+
+.StatusBarCtrlRemoteUIBtn_focused {
+  background-image: url(../images/StatusBarRemoteUIBtn_Focus.png);
+}
+
+.StatusBarCtrlRemoteUIBtn_down {
+  background-image: url(../images/StatusBarRemoteUIBtn_Hit.png);
+}
+
+.StatusBarCtrlDivider {
+  position: absolute;
+  display: none;
+  left: 58px;
+  top: 1px;
+  width: 1px;
+  height: 58px;
+  background: url("../images/StatusBar_Divider.png") no-repeat;
+}
+
+.StatusBarCtrlDomainIcon {
+  position: absolute;
+  display: block;
+  left: 59px;
+  top: 1px;
+  width: 58px;
+  height: 62px;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+.StatusBarCtrlAppName {
+  position: absolute;
+  left: 117px;
+  top: 1px;
+  height: 62px;
+  width: 420px;
+  line-height: 62px;
+  font-size: 40px;
+  font-family: "Tipperary Semibold";
+  font-weight: normal;
+  font-style: normal;
+  text-align: left;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  background-repeat: no-repeat;
+  background-position: left center;
+}
+
+.StatusBarCtrlClock {
+  position: absolute;
+  right: 12px;
+  top: 1px;
+  height: 62px;
+  width: 114px;
+  line-height: 62px;
+  font-size: 40px;
+  text-align: right;
+  font-family: "Tipperary", Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  font-style: normal;
+}
+
+/* Note: The Clock Button is an invisible button only used for Diagnostics Entry */
+.StatusBarCtrlClockBtn {
+  position: absolute;
+  height: 62px;
+  width: 114px;
+  right: 1px;
+  top: 1px;
+}
+
+/* Animation classes for Home button. These use keyframes defined in common.css */
+.StatusBarCtrlHideHomeButton {
+  animation: opacFullToZero 0.3s ease-in-out both;
+}
+
+.StatusBarCtrlShowHomeButton {
+  animation: opacZeroToFull 0.3s ease-in-out both;
+}
+
+.StatusBarCtrlIconContainer {
+  text-align: right;
+  height: 29px;
+  margin-right: 115px;
+  margin-left: 537px;
+}
+
+.StatusBarCtrlIcon {
+  display: none;
+  background-repeat: no-repeat;
+  background-position: center center;
+  width: 37px;
+  height: 29px;
+}
+
+.StatusBarCtrl_Hidden {
+  display: none;
+}
+
+@keyframes StatusBarCtrl_keyframes_slideStatusBarIn {
+  0% {
+    top: -64px;
+    opacity: 1;
+  }
+
+  100% {
+    top: 0px;
+    opacity: 1;
+  }
+}
+@keyframes StatusBarCtrl_keyframes_slideStatusBarOut {
+  0% {
+    top: 0px;
+    opacity: 1;
+  }
+
+  100% {
+    top: -64px;
+    opacity: 1;
+  }
+}
+@keyframes StatusBarCtrl_keyframes_fadeStatusBarIn {
+  0% {
+    top: 0px;
+    opacity: 0;
+  }
+
+  100% {
+    top: 0px;
+    opacity: 1;
+  }
+}
+@keyframes StatusBarCtrl_keyframes_fadeStatusBarOut {
+  0% {
+    top: 0px;
+    opacity: 1;
+  }
+
+  100% {
+    top: 0px;
+    opacity: 0;
+  }
+}
+.StatusBarCtrl_Slide_Out {
+  animation-name: StatusBarCtrl_keyframes_slideStatusBarOut;
+  animation-delay: 0ms;
+  animation-duration: 500ms;
+  animation-timing-function: ease-in;
+  animation-fill-mode: both;
+}
+
+.StatusBarCtrl_Slide_In {
+  animation-name: StatusBarCtrl_keyframes_slideStatusBarIn;
+  animation-delay: 0ms;
+  animation-duration: 500ms;
+  animation-timing-function: ease-in;
+  animation-fill-mode: both;
+}
+
+.StatusBarCtrl_Fade_Out {
+  animation-name: StatusBarCtrl_keyframes_fadeStatusBarOut;
+  animation-delay: 0ms;
+  animation-duration: 500ms;
+  animation-timing-function: ease-in;
+  animation-fill-mode: both;
+}
+
+.StatusBarCtrl_Fade_In {
+  animation-name: StatusBarCtrl_keyframes_fadeStatusBarIn;
+  animation-delay: 0ms;
+  animation-duration: 500ms;
+  animation-timing-function: ease-in;
+  animation-fill-mode: both;
+}

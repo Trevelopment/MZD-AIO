@@ -1,0 +1,112 @@
+# restore order of the audio source list
+show_message "RESTORE ORDER OF AUDIO SOURCE LIST TO ORIGINAL ..."
+log_message "=====***  UNINSTALL ORDER OF AUDIO SOURCE LIST ... ***====="
+TRACKORDER_AUDIO=2
+# Compatibility Check
+if [ "${CMU_SW_VER}" = "56.00.100A-ADR" ] \
+|| [ "${CMU_SW_VER}" = "56.00.230A-ADR" ] \
+|| [ "${CMU_SW_VER}" = "56.00.240B-ADR" ] \
+|| [ "${CMU_SW_VER}" = "56.00.511A-ADR" ] \
+|| [ "${CMU_SW_VER}" = "56.00.512A-ADR" ] \
+|| [ "${CMU_SW_VER}" = "56.00.513C-ADR" ] \
+|| [ "${CMU_SW_VER}" = "56.00.514A-ADR" ] \
+|| [ "${CMU_SW_VER}" = "56.00.521A-EU" ] \
+|| [ "${CMU_SW_VER}" = "56.00.100A-CHN" ] \
+|| [ "${CMU_SW_VER}" = "55.00.650A-EU" ] \
+|| [ "${CMU_SW_VER}" = "56.00.100A-EU" ] \
+|| [ "${CMU_SW_VER}" = "56.00.230A-EU" ] \
+|| [ "${CMU_SW_VER}" = "56.00.210A-EU" ] \
+|| [ "${CMU_SW_VER}" = "56.00.511A-EU" ] \
+|| [ "${CMU_SW_VER}" = "56.00.512A-EU" ] \
+|| [ "${CMU_SW_VER}" = "56.00.513B-EU" ] \
+|| [ "${CMU_SW_VER}" = "56.00.513C-EU" ] \
+|| [ "${CMU_SW_VER}" = "55.00.650A-NA" ] \
+|| [ "${CMU_SW_VER}" = "55.00.750B-NA" ] \
+|| [ "${CMU_SW_VER}" = "55.00.753A-NA" ] \
+|| [ "${CMU_SW_VER}" = "55.00.760A-NA" ] \
+|| [ "${CMU_SW_VER}" = "56.00.521A-NA" ] \
+|| [ "${CMU_SW_VER}" = "56.00.401A-JP" ] \
+|| [ "${CMU_SW_VER}" = "56.00.403A-JP" ]
+then
+  TRACKORDER_AUDIO=0
+elif [ "${CMU_SW_VER}" = "58.00.250A-NA" ] \
+|| [ "${CMU_SW_VER}" = "58.00.251A-ADR" ] \
+|| [ "${CMU_SW_VER}" = "59.00.326A-ADR" ]
+then
+  TRACKORDER_AUDIO=1
+  TRACKORDER_AUDIO_FILE=58.00.250A-NA
+  log_message "=== FW ${CMU_SW_VER} detected, copy matching systemApp.js ==="
+elif [ "${CMU_SW_VER}" = "59.00.331A-EU" ] \
+|| [ "${CMU_SW_VER}" = "59.00.330A-NA" ] \
+|| [ "${CMU_SW_VER}" = "59.00.330A-EU" ] \
+|| [ "${CMU_SW_VER}" = "59.00.342A-ADR" ] \
+|| [ "${CMU_SW_VER}" = "59.00.330A-ADR" ]
+then
+  TRACKORDER_AUDIO=1
+  TRACKORDER_AUDIO_FILE=59.00.330
+  log_message "=== FW ${CMU_SW_VER} detected, copy matching systemApp.js ==="
+elif [ "${CMU_SW_VER}" = "59.00.441A-NA" ] \
+|| [ "${CMU_SW_VER}" = "59.00.442A-ADR" ] \
+|| [ "${CMU_SW_VER}" = "59.00.443A-NA" ] \
+|| [ "${CMU_SW_VER}" = "59.00.446A-NA" ] \
+|| [ "${CMU_SW_VER}" = "59.00.450A-NA" ] \
+|| [ "${CMU_SW_VER}" = "59.00.445A-JP" ] \
+|| [ "${CMU_SW_VER}" = "59.00.449A-ADR" ] \
+|| [ "${CMU_SW_VER}" = "59.00.450A-ADR" ] \
+|| [ "${CMU_SW_VER}" = "59.00.443C-EU" ] \
+|| [ "${CMU_SW_VER}" = "59.00.447A-EU" ] \
+|| [ "${CMU_SW_VER}" = "59.00.449A-EU" ] \
+|| [ "${CMU_SW_VER}" = "59.00.443C-ADR" ]
+then
+  TRACKORDER_AUDIO=1
+  TRACKORDER_AUDIO_FILE=59
+  log_message "=== FW ${CMU_SW_VER} detected, copy matching systemApp.js ==="
+fi
+
+if [ ! "${TRACKORDER_AUDIO}" = "2" ]
+then
+  if test -s /jci/gui/apps/system/js/systemApp.js.org
+  then
+    log_message "=== Original systemApp.js is available as backup ==="
+    cp -a /jci/gui/apps/system/js/systemApp.js.org /jci/gui/apps/system/js/systemApp.js
+  else
+    log_message "=== No systemApp.js.org available ==="
+  fi
+
+  # Compatibility check falls into 4 groups:
+  # 59.00.4XX
+  # 59.00.3XX
+  # 58.00.XXX
+  # 55.XX.XXX - 56.XX.XXX
+  if [ -e /jci/gui/apps/system/js/systemApp.js.disclaimer ]
+  then
+    if [ "${TRACKORDER_AUDIO}" = "1" ]
+    then
+      cp -a ${MYDIR}/config_org/audio_order_AND_no_More_Disclaimer/only_no_More_Disclaimer/jci/gui/apps/system/js/systemApp.${TRACKORDER_AUDIO_FILE}.js /jci/gui/apps/system/js/systemApp.js
+      log_message "=== Restored order of audio source list for ${CMU_SW_VER}, disclaimer still gone ==="
+    else
+      cp -a ${MYDIR}/config_org/audio_order_AND_no_More_Disclaimer/only_no_More_Disclaimer/jci/gui/apps/system/js/systemApp.js /jci/gui/apps/system/js/
+      log_message "=== Restored order of audio source list, disclaimer still gone ==="
+    fi
+  else
+    if [ "${TRACKORDER_AUDIO}" = "1" ]
+    then
+      cp -a ${MYDIR}/config_org/audio_order_AND_no_More_Disclaimer/nothing/jci/gui/apps/system/js/systemApp.${TRACKORDER_AUDIO_FILE}.js /jci/gui/apps/system/js/systemApp.js
+      log_message "=== Restored order of audio source list for ${CMU_SW_VER} ==="
+    else
+      cp -a ${MYDIR}/config_org/audio_order_AND_no_More_Disclaimer/nothing/jci/gui/apps/system/js/systemApp.js /jci/gui/apps/system/js/
+      log_message "=== Restored order of audio source list ==="
+    fi
+  fi
+elif test -s /jci/gui/apps/system/js/systemApp.js.org
+then
+  cp -a /jci/gui/apps/system/js/systemApp.js.org /jci/gui/apps/system/js/systemApp.js
+  log_message "=== Restored systemApp.js from backup ==="
+else
+  log_message "=== No Compatible systemApp.js found ==="
+fi
+rm -f /jci/gui/apps/system/js/systemApp.js.audio
+log_message "=== Removed /jci/gui/apps/system/js/systemApp.js.audio ==="
+log_message "=== End restoring order of the audio source list to original ==="
+log_message "====***** END UNINSTALLATION OF AUDIO SOURCE LIST *****===="
+log_message " "

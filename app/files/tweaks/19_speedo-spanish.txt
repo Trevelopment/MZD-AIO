@@ -1,0 +1,4 @@
+# change to spanish version
+show_message "CHANGE SPEEDOMETER TO SPANISH..."
+sed -i 's/var language = "DE";/var language = "ES";/g' /jci/opera/opera_dir/userjs/speedometer-startup.js
+log_message "===      CHANGED SPEEDOMETER TO SPANISH VERSION        ==="

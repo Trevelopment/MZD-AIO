@@ -1,0 +1,56 @@
+{
+  "name": "MZD-AIO-TI",
+  "version": "2.5.10",
+  "productName": "MZD-AIO-TI",
+  "description": "MZD All In One Tweaks Installer",
+  "homepage": "http://mazdatweaks.com",
+  "author": {
+    "name": "Trevelopment",
+    "url": "http://trevelopment.com",
+    "email": "Trez@mazdatweaks.com"
+  },
+  "license": "GPL-3.0",
+  "main": "main.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/trevelopment/MZD-AIO-TI"
+  },
+  "keywords": [
+    "Mazda",
+    "MZD",
+    "Infotainment",
+    "tweaks",
+    "electron",
+    "angular"
+  ],
+  "bugs": {
+    "url": "https://github.com/trevelopment/MZD-AIO-TI/issues",
+    "email": "aio@mazdatweaks.com"
+  },
+  "config": {
+    "url": "index.html"
+  },
+  "dependencies": {
+    "angular-dragula": "^1.2.8",
+    "appender": "^0.0.2",
+    "copy-dir": "^0.3.0",
+    "crlf": "^1.1.0",
+    "devtron": "^1",
+    "drivelist": "^5.0.20",
+    "electron-auto-updater": "^1.0.0",
+    "electron-config": "^1.0.0",
+    "electron-context-menu": "^0.9.0",
+    "electron-debug": "^1",
+    "electron-image-resize": "^1.2.4",
+    "electron-is-dev": "^0.1",
+    "electron-window-state": "^4.1.1",
+    "extract-zip": "^1.6.5",
+    "lodash": "^4",
+    "mkdirp": "^0.5.1",
+    "rimraf": "^2"
+  },
+  "engines": {
+    "node": "6.5.x"
+  },
+  "electronVersion": "1.6.0"
+}

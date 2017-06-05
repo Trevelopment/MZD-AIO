@@ -1,0 +1,10 @@
+# possibly separate this to its own tweak
+show_message "RESTORE LIST BEEP"
+log_message "=======*****    UNINSTALL REMOVE LIST BEEP ...   *****========"
+
+# Modify List2Ctrl.js
+sed -i "s/\/\/  this._beep('Long', 'Multicontroller');/    this._beep('Long', 'Multicontroller');/g" /jci/gui/common/controls/List2/js/List2Ctrl.js
+log_message "=== Modified /jci/gui/common/controls/List2/js/List2Ctrl.js ==="
+
+log_message "====****   END UNINSTALLATION OF REMOVE LIST BEEP    ****====="
+log_message " "

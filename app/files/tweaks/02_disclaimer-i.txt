@@ -1,0 +1,123 @@
+# no-more-disclaimer
+show_message "REMOVE DISCLAIMER ..."
+log_message "=====******    INSTALL NO-MORE-DISCLAIMER ... ******======"
+
+TRACKORDER_DISCLAIMER=2
+# Compatibility Check
+if [ "${CMU_SW_VER}" = "56.00.100A-ADR" ] \
+|| [ "${CMU_SW_VER}" = "56.00.230A-ADR" ] \
+|| [ "${CMU_SW_VER}" = "56.00.240B-ADR" ] \
+|| [ "${CMU_SW_VER}" = "56.00.511A-ADR" ] \
+|| [ "${CMU_SW_VER}" = "56.00.512A-ADR" ] \
+|| [ "${CMU_SW_VER}" = "56.00.513C-ADR" ] \
+|| [ "${CMU_SW_VER}" = "56.00.514A-ADR" ] \
+|| [ "${CMU_SW_VER}" = "56.00.521A-EU" ] \
+|| [ "${CMU_SW_VER}" = "56.00.100A-CHN" ] \
+|| [ "${CMU_SW_VER}" = "55.00.650A-EU" ] \
+|| [ "${CMU_SW_VER}" = "56.00.100A-EU" ] \
+|| [ "${CMU_SW_VER}" = "56.00.230A-EU" ] \
+|| [ "${CMU_SW_VER}" = "56.00.210A-EU" ] \
+|| [ "${CMU_SW_VER}" = "56.00.511A-EU" ] \
+|| [ "${CMU_SW_VER}" = "56.00.512A-EU" ] \
+|| [ "${CMU_SW_VER}" = "56.00.513B-EU" ] \
+|| [ "${CMU_SW_VER}" = "56.00.513C-EU" ] \
+|| [ "${CMU_SW_VER}" = "55.00.650A-NA" ] \
+|| [ "${CMU_SW_VER}" = "55.00.750B-NA" ] \
+|| [ "${CMU_SW_VER}" = "55.00.753A-NA" ] \
+|| [ "${CMU_SW_VER}" = "55.00.760A-NA" ] \
+|| [ "${CMU_SW_VER}" = "56.00.521A-NA" ] \
+|| [ "${CMU_SW_VER}" = "56.00.401A-JP" ] \
+|| [ "${CMU_SW_VER}" = "56.00.403A-JP" ]
+then
+  TRACKORDER_DISCLAIMER=0
+elif [ "${CMU_SW_VER}" = "58.00.250A-NA" ] \
+|| [ "${CMU_SW_VER}" = "58.00.251A-ADR" ] \
+|| [ "${CMU_SW_VER}" = "59.00.326A-ADR" ]
+then
+  TRACKORDER_DISCLAIMER=1
+  TRACKORDER_DISCLAIMER_FILE=58.00.250A-NA
+  log_message "=== FW ${CMU_SW_VER} detected, copy matching systemApp.js ==="
+elif [ "${CMU_SW_VER}" = "59.00.331A-EU" ] \
+|| [ "${CMU_SW_VER}" = "59.00.330A-NA" ] \
+|| [ "${CMU_SW_VER}" = "59.00.330A-EU" ] \
+|| [ "${CMU_SW_VER}" = "59.00.342A-ADR" ] \
+|| [ "${CMU_SW_VER}" = "59.00.330A-ADR" ]
+then
+  TRACKORDER_DISCLAIMER=1
+  TRACKORDER_DISCLAIMER_FILE=59.00.330
+  log_message "=== FW ${CMU_SW_VER} detected, copy matching systemApp.js ==="
+elif [ "${CMU_SW_VER}" = "59.00.441A-NA" ] \
+|| [ "${CMU_SW_VER}" = "59.00.442A-ADR" ] \
+|| [ "${CMU_SW_VER}" = "59.00.443A-NA" ] \
+|| [ "${CMU_SW_VER}" = "59.00.446A-NA" ] \
+|| [ "${CMU_SW_VER}" = "59.00.450A-NA" ] \
+|| [ "${CMU_SW_VER}" = "59.00.445A-JP" ] \
+|| [ "${CMU_SW_VER}" = "59.00.449A-ADR" ] \
+|| [ "${CMU_SW_VER}" = "59.00.450A-ADR" ] \
+|| [ "${CMU_SW_VER}" = "59.00.443C-EU" ] \
+|| [ "${CMU_SW_VER}" = "59.00.447A-EU" ] \
+|| [ "${CMU_SW_VER}" = "59.00.449A-EU" ] \
+|| [ "${CMU_SW_VER}" = "59.00.443C-ADR" ]
+then
+  TRACKORDER_DISCLAIMER=1
+  TRACKORDER_DISCLAIMER_FILE=59
+  log_message "=== FW ${CMU_SW_VER} detected, copy matching systemApp.js ==="
+fi
+
+if [ ! -e /jci/gui/apps/system/js/systemApp.js.org ]
+then
+  cp -a /jci/gui/apps/system/js/systemApp.js /jci/gui/apps/system/js/systemApp.js.org
+  log_message "=== Backup of /jci/gui/apps/system/js/systemApp.js to systemApp.js ==="
+fi
+if  [ "${KEEPBKUPS}" = 1 ]
+then
+  cp -a /jci/gui/apps/system/js/systemApp.js.org "${MYDIR}/bakups/"
+  aio_info \"systemApp.js.org\",
+fi
+
+# Compatibility check falls into 4 groups:
+# 59.00.4XX
+# 59.00.3XX
+# 58.00.XXX
+# 55.XX.XXX - 56.XX.XXX
+# If your firmware version falls out of those ranges email the address below
+if [ ! "${TRACKORDER_DISCLAIMER}" = "2" ]
+then
+  cp -a "${MYDIR}/config/audio_order_AND_no_More_Disclaimer/systemApp.js.disclaimer" /jci/gui/apps/system/js/
+  log_message "=== Added marker 'systemApp.js.disclaimer' for installing 'no-more-disclaimer' ==="
+
+  if [ -e /jci/gui/apps/system/js/systemApp.js.audio ]
+  then
+    if [ "${TRACKORDER_DISCLAIMER}" = "1" ]
+    then
+      cp -a "${MYDIR}/config/audio_order_AND_no_More_Disclaimer/both/jci/gui/apps/system/js/systemApp.${TRACKORDER_DISCLAIMER_FILE}.js" /jci/gui/apps/system/js/systemApp.js
+      log_message "=== Removed Disclaimer for ${CMU_SW_VER}, audio order still changed ==="
+    else
+      cp -a "${MYDIR}/config/audio_order_AND_no_More_Disclaimer/both/jci/gui/apps/system/js/systemApp.js" /jci/gui/apps/system/js/
+      log_message "=== Removed Disclaimer, audio order still changed ==="
+    fi
+  else
+    if [ "${TRACKORDER_DISCLAIMER}" = "1" ]
+    then
+      cp -a "${MYDIR}/config/audio_order_AND_no_More_Disclaimer/only_no_More_Disclaimer/jci/gui/apps/system/js/systemApp.${TRACKORDER_DISCLAIMER_FILE}.js" /jci/gui/apps/system/js/systemApp.js
+      log_message "=== Removed Disclaimer ${CMU_SW_VER} (audio order change was not installed) ==="
+    else
+      cp -a "${MYDIR}/config/audio_order_AND_no_More_Disclaimer/only_no_More_Disclaimer/jci/gui/apps/system/js/systemApp.js" /jci/gui/apps/system/js/
+      log_message "=== Removed Disclaimer (audio order change was not installed) ==="
+    fi
+  fi
+else
+  # 2 Means unknown firmware version if your firmware version is unknown email the address below
+  show_message "=== NO MORE DISCLIMER PATCH HAS NOT BEEN MADE FOR YOUR FW:${CMU_SW_VER}\nPlease Email ${MYDIR}/systemApp.js to aio@mazdatweaks.com  ==="
+  log_message "=== Removed Disclaimer Mod Is Not Compatible With your FW Version ==="
+  log_message "=== Please Use Reduce Disclaimer Time to .5 Seconds Until This Tweaks Is Updated To Support Your Firmware ==="
+  log_message "=== Please Email ${MYDIR}/systemApp.js FW:${CMU_SW_VER} to aio@mazdatweaks.com  ==="
+  cp -a /jci/gui/apps/system/js/systemApp.js "${MYDIR}/"
+fi
+if [ "${TESTBKUPS}" = 1 ]
+then
+  cp -a /jci/gui/apps/system/js/systemApp.js "${MYDIR}/bakups/test/systemApp_after-disclaimer.js"
+fi
+
+log_message "=====**** END INSTALLATION OF NO-MORE-DISCLAIMER ***======"
+log_message " "

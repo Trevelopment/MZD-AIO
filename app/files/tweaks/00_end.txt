@@ -1,0 +1,25 @@
+log_message " "
+sleep 2
+log_message "=============== END OF TWEAKS INSTALLATION ==============="
+show_message "========== END OF TWEAKS INSTALLATION =========="
+if [ "${KEEPBKUPS}" = "1" ]
+then
+  json="$(cat ${MYDIR}/AIO_info.json)"
+  rownend=$(echo -n $json | tail -c 1)
+  if [ "$rownend" = "," ]
+  then
+    # if so, remove "," from back end
+    echo -n ${json%,*} > ${MYDIR}/AIO_info.json
+    sleep 2
+  fi
+  aio_info ']}'
+fi
+# a window will appear before the system reboots automatically
+sleep 3
+killall jci-dialog
+/jci/tools/jci-dialog --info --title="SELECTED AIO TWEAKS APPLIED" --text="THE SYSTEM WILL REBOOT IN A FEW SECONDS!" --no-cancel &
+sleep 10
+killall jci-dialog
+/jci/tools/jci-dialog --info --title="MZD-AIO-TI v.${AIO_VER}" --text="YOU CAN REMOVE THE USB DRIVE NOW\n\nENJOY!" --no-cancel &
+reboot
+killall jci-dialog

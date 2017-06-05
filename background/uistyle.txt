@@ -1,0 +1,6 @@
+UI_STYLE_BODY=#ffffff
+UI_STYLE_LIST=#ffffff
+UI_STYLE_DISABLED=#929497
+UI_STYLE_TITLE=#ffffff
+UI_STYLE_RADIO=#ffffff
+UI_STYLE_SHADOW="text-shadow: 2px 2px .5px #000;"

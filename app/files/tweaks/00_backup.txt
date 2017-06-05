@@ -1,0 +1,33 @@
+# make full backup to SD card
+log_message "======*********   START FULL JCI BACKUP   **********======"
+
+if [ "${ZIPBACKUP}" = "1" ]
+then
+	BACKUPZIP=${MYDIR}/JCI-${CMU_SW_VER}.zip
+	show_message "ZIPPING /JCI TO \n${BACKUPZIP}. \nPlease wait... this will take a several minutes ..."
+	log_message "=== ZIPPING BACKUP OF /JCI TO ${BACKUPZIP} .. ==="
+	zip -r ${BACKUPZIP} /jci
+	show_message "JCI BACKUP ZIP SUCCESS - Wait for tweaks now ..."
+else
+	BACKUPDIR=${MYDIR}/JCI-Backup
+	show_message "MAKE FULL BACKUP OF /JCI TO\n ${BACKUPDIR}. \n Please wait... this will take a few minutes ..."
+	log_message "=== FULL BACKUP OF /JCI TO ${BACKUPDIR} .. ==="
+	mkdir -p ${BACKUPDIR}
+	log_message "=== Backup directory ${BACKUPDIR} created  ==="
+	if [ -d ${BACKUPDIR} ]
+	then
+		log_message "=====  Backing up /jci to ${BACKUPDIR}   ====="
+		cp -R /jci ${BACKUPDIR}
+		echo "DATE: $(timestamp)" > ${BACKUPDIR}/jci.txt
+		echo "CMU_VER: ${CMU_SW_VER}" >> ${BACKUPDIR}/jci.txt
+		echo "AIO_VER: ${AIO_VER}" >> ${BACKUPDIR}/jci.txt
+		show_message "JCI BACKUP SUCCESS - Wait for tweaks now ..."
+	else
+		log_message "X=X=*X*= BACKUP DIRECTORY ${BACKUPDIR} DOES NOT EXIST =*X*=X=X"
+		show_message "JCI BACKUP FAILED! - Wait for tweaks now..."
+	fi
+fi
+
+log_message "========*******    JCI BACKUP SUCCESS!    ********========"
+log_message "__________________________________________________________"
+log_message ""

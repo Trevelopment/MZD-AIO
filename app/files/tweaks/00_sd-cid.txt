@@ -1,0 +1,22 @@
+# Get_CID_Tweak
+log_message "======*******   START GET SD-CARD CID ...     ******======"
+
+if [ -e /mnt/sd_nav/content ]
+then
+  log_message "===                Get SD-Card CID                     ==="
+  cp "${MYDIR}/config/get_sd_cid/cmu_sd_cid_getter_v3" /jci/nng/cmu_sd_cid_getter
+  /bin/fsync /jci/nng/cmu_sd_cid_getter
+  chmod 755 /jci/nng/cmu_sd_cid_getter
+  log_message "===        Copied cmu_sd_cid_getter to /jci/nng/       ==="
+  cd /jci/nng || exit
+  ./cmu_sd_cid_getter /dev/sda1 >>SD_CID.txt
+  cp /jci/nng/SD_CID.txt "${MYDIR}/SD_CID.txt"
+  cp /jci/nng/SD_CID.txt /mnt/sd_nav/SD_CID.txt
+  rm -f /jci/nng/cmu_sd_cid_getter
+  rm -f /jci/nng/SD_CID.txt
+else
+  log_message "===              No SD-Card CID Found                  ==="
+fi
+
+log_message "========******   END GET SD-CARD CID       ******========="
+log_message " "

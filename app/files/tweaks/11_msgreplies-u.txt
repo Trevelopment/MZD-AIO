@@ -1,0 +1,18 @@
+# restore message replies
+show_message "RESTORE MESSAGE REPLIES ..."
+log_message "====****** UNINSTALL REMOVE MESSAGE REPLIES ... ******===="
+
+# Backup Available, we're done!
+if [ -e /jci/settings/configurations/blm_msg-system.xml.org ]
+then
+	cp -a /jci/settings/configurations/blm_msg-system.xml.org /jci/settings/configurations/blm_msg-system.xml
+	log_message "=== Message Replies Restored From Backup blm_msg-system.xml.org ==="
+else
+	# Do you really need this fallback file?
+	# cp -a ${MYDIR}/config_org/message_replies/jci/settings/configurations/blm_msg-system.xml /jci/settings/configurations
+	# log_message "=== Message Replies Restored - Copied blm_msg-system.xml from USB Drive ==="
+	log_message "===       No Backup Of blm_msg-system.xml Found      ==="
+fi
+
+log_message "===*** END UNINSTALLATION OF REMOVE MESSAGE REPLIES ***==="
+log_message " "

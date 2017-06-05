@@ -1,0 +1,45 @@
+# speedcam.txt (Europe with mobile cameras)
+show_message "INSTALL SPEEDCAM.TXT FOR EUROPE \n WITH MOBILE CAMERAS ..."
+log_message "======*****  INSTALL SPEEDCAM.TXT FOR EUROPE WITH MOBILE CAMERAS ...  *****====="
+
+log_message "===        Installing speedcam.txt for europe with mobile cameras            ==="
+# Compatability Check
+if [ ${CMU_SW_VER} = "56.00.100A-ADR" ] \
+|| [ ${CMU_SW_VER} = "56.00.230A-ADR" ] \
+|| [ ${CMU_SW_VER} = "56.00.240B-ADR" ] \
+|| [ ${CMU_SW_VER} = "56.00.513C-ADR" ] \
+|| [ ${CMU_SW_VER} = "59.00.326A-ADR" ] \
+|| [ ${CMU_SW_VER} = "56.00.230A-EU" ] \
+|| [ ${CMU_SW_VER} = "56.00.511A-EU" ] \
+|| [ ${CMU_SW_VER} = "56.00.512A-EU" ] \
+|| [ ${CMU_SW_VER} = "56.00.513B-EU" ] \
+|| [ ${CMU_SW_VER} = "56.00.513C-EU" ] \
+|| [ ${CMU_SW_VER} = "59.00.331A-EU" ] \
+|| [ ${CMU_SW_VER} = "59.00.443C-EU" ] \
+|| [ ${CMU_SW_VER} = "55.00.753A-NA" ] \
+|| [ ${CMU_SW_VER} = "55.00.650A-NA" ] \
+|| [ ${CMU_SW_VER} = "55.00.760A-NA" ] \
+|| [ ${CMU_SW_VER} = "56.00.521A-NA" ] \
+|| [ ${CMU_SW_VER} = "58.00.250A-NA" ] \
+|| [ ${CMU_SW_VER} = "59.00.441A-NA" ] \
+|| [ ${CMU_SW_VER} = "56.00.401A-JP" ]
+	then
+		SPEEDCAM_COPY=1
+fi
+if [ ${SPEEDCAM_COPY} = "1" ]
+		then
+			if [ -d /mnt/sd_nav/content/speedcam ]
+				then
+					cp ${MYDIR}/config/speedcam-patch/speedcam_Europa.txt /mnt/sd_nav/content/speedcam/speedcam.txt
+					/bin/fsync /mnt/sd_nav/content/speedcam/speedcam.txt
+					log_message "=== Copied speedcam_Europa.txt to NAV SD card ==="
+				else
+					log_message "=== No NAV SD card inside! Please copy config/speedcam-patch/speedcam_Europa.txt manually to NAV SD card in folder \content\speedcam as speedcam.txt ==="
+					show_message "No NAV SD card! Copy choosen speedcam.txt manually to NAV SD card"
+			fi
+		else
+			show_message "Your firmware ${CMU_SW_VER} is not compatible. \n\n Speedcam.txt will NOT be copied!"
+fi
+
+log_message "===***** END INSTALLATION OF SPEEDCAM PATCH (EUROPE WITH MOBILE CAMERAS) ****==="
+log_message " "

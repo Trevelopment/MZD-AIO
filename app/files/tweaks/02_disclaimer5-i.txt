@@ -1,0 +1,23 @@
+# reduce disclaimer time
+show_message "REDUCE DISCLAIMER TIME ..."
+log_message "===**  INSTALL REDUCE DISCLAIMER TO 0.5 SECONDS ... ***==="
+
+# Backups
+chmod 755 /jci/gui/apps/system/js/systemApp.js
+if [ ! -e /jci/gui/apps/system/js/systemApp.js.org ]
+then
+	cp -a /jci/gui/apps/system/js/systemApp.js /jci/gui/apps/system/js/systemApp.js.org
+	log_message "===   Backup of /jci/gui/apps/system/js/systemApp.js   ==="
+fi
+if  [ "${KEEPBKUPS}" = 1 ]
+then
+	cp -a /jci/gui/apps/system/js/systemApp.js.org `${MYDIR}/bakups/`
+	aio_info \"systemApp.js.org\",
+fi
+
+# Modify systemApp.js
+sed -i 's/this._disclaimerTime.remaining = 3500/this._disclaimerTime.remaining = 500/g' /jci/gui/apps/system/js/systemApp.js
+log_message "===           Disclaimer Reduced to 0.5 Seconds        ==="
+
+log_message "===*** END INSTALLATION OF DISCLAIMER TO .5 SECONDS ***==="
+log_message " "

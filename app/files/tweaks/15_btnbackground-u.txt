@@ -1,0 +1,29 @@
+# restore button background graphics
+show_message "RESTORE BUTTON BACKGROUND GRAPHICS ..."
+log_message "===***  UNINSTALL NO BUTTON BACKGROUND GRAPHICS ... ***==="
+
+# Restore Backgounds that were changed prior to AIO v2.1
+if test -s /jci/gui/common/controls/Ump3/images/UMP_Bg.png.org
+then
+	rm -f /jci/gui/common/controls/Ump3/images/UMP_Bg.png
+	mv /jci/gui/common/controls/Ump3/images/UMP_Bg.png.org /jci/gui/common/controls/Ump3/images/UMP_Bg.png
+	log_message "=== Restored Original UMP_Bg.png ==="
+	if test -s /jci/gui/common/controls/Ump3/images/UMP_Bg_Arch.png.org
+	then
+		rm -f /jci/gui/common/controls/Ump3/images/UMP_Bg_Arch.png
+		mv /jci/gui/common/controls/Ump3/images/UMP_Bg_Arch.png.org /jci/gui/common/controls/Ump3/images/UMP_Bg_Arch.png
+		log_message "=== Restored Original UMP_Bg_Arch.png ==="
+		if test -s /jci/gui/common/controls/Ump3/images/UMP_Btn_Separator.png.org
+		then
+			rm -f /jci/gui/common/controls/Ump3/images/UMP_Btn_Separator.png
+			mv /jci/gui/common/controls/Ump3/images/UMP_Btn_Separator.png.org /jci/gui/common/controls/Ump3/images/UMP_Btn_Separator.png
+			log_message "=== Restored Original UMP_Btn_Separator.png ==="
+		fi
+	fi
+fi
+# one liner uninstall
+sed -i "/.. MZD-AIO-TI NO-BTN-BG ../,/.. END AIO CSS ../d" /jci/gui/common/controls/Ump3/css/Ump3Ctrl.css
+log_message "===    AIO CSS Removed - Restored Button Background    ==="
+
+log_message "====*** END UNINSTALLATION OF NO BUTTON BACKGROUND ***===="
+log_message " "

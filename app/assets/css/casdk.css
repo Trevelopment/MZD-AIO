@@ -1,0 +1,27 @@
+#options,
+#menuTour,
+#reset-ops-btn,
+#instAll,
+#uninstAll {
+  display: none;
+}
+#sidePanel {
+  width: 96%;
+  min-height: 250px;
+}
+#sidePanel>ul>li {
+  width: 49%;
+  display: inline-block;
+}
+
+@media only screen and (min-width: 1400px) {
+  #sidePanel>ul>li {
+    width: 33%;
+  }
+  #sidePanel>ul>li.extrasMessage.colorScheme {
+    width:100%;
+  }
+  #sidePanel>ul>li.extrasMessage.colorScheme .w3-half.side-colors {
+    width: 16.65%!important;
+  }
+}

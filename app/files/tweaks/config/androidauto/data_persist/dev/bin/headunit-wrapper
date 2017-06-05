@@ -1,0 +1,10 @@
+#!/bin/sh
+
+SCRIPT=$(readlink -f "$0")
+SCRIPTPATH=$(dirname "$SCRIPT")
+
+export LD_LIBRARY_PATH="${SCRIPTPATH}/headunit_libs:/jci/lib:/jci/opera/3rdpartylibs/freetype:/usr/lib/imx-mm/audio-codec:/usr/lib/imx-mm/parser:/data_persist/dev/lib:"
+#override some GST plugins with these
+export GST_PLUGIN_PATH="${SCRIPTPATH}/headunit_libs"
+
+taskset 0xFFFFFFFF "${SCRIPTPATH}/headunit" "$@" 2>&1 | tee /tmp/mnt/data/headunit.log

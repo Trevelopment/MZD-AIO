@@ -1,0 +1,9 @@
+show_message "INSTALL SPEEDOMETER VARIANT BY: PNEDKOV ..."
+log_message "===*** INSTALL SPEEDOMETER VARIANT BY: PNEDKOV ... ***==="
+
+# Copy modded speedo files
+cp -a ${MYDIR}/config/speedometer_mod/jci /
+log_message "===              Speedometer Variant Installed                ==="
+
+log_message "=======***** END INSTALLATION OF SPEEDOMETER VARIANT ******========"
+log_message " "

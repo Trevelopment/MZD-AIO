@@ -1,0 +1,142 @@
+# CASDK Installer Modified For Use With MZD-AIO-TI
+# CASDK By: Flyandi - http://flyandi.github.io/mazda-custom-application-sdk/
+# MZD-AIO-TI By: Trezdog44 - Trevelopment.com
+
+show_message "===***   INSTALLING CASDK   ***==="
+log_message "  "
+log_message "==========****** BEGIN INSTALLING CASDK  ******==========="
+log_message " "
+
+# enable javascript logging
+sed -i 's/Console Error Log Enabled=0/Console Error Log Enabled=1/g' /jci/opera/opera_home/opera.ini
+sed -i 's/Console Error Log=$OPERA_HOME\/error.log/Console Error Log=\/tmp\/root\/casdk-error.log/g' /jci/opera/opera_home/opera.ini
+
+# modify opera storage and move to persistant data
+if [ ! -e /tmp/mnt/data_persist/storage ]
+then
+	mkdir -p /tmp/mnt/data_persist/storage
+	log_message "===              Created Storage Folder                 ==="
+fi
+
+if [ ! -e /jci/opera/opera_home/pstorage/psindex.dat.org ]
+then
+	# check if system file exists
+	if [ -e /jci/opera/opera_home/pstorage/psindex.dat ]
+	then
+		# make a copy
+		cp -a /jci/opera/opera_home/pstorage/psindex.dat /jci/opera/opera_home/pstorage/psindex.dat.org
+	else
+		# create directory
+		mkdir -p /jci/opera/opera_home/pstorage/
+	fi
+	# copy psindex file
+	cp -a ${MYDIR}/casdk/storage/psindex.dat /jci/opera/opera_home/pstorage/
+	log_message "===             Copied psindex.dat file                 ==="
+fi
+
+# install data reader files
+if [ ! -e /jci/casdk ]
+then
+	mkdir -p /jci/casdk
+	cp -a ${MYDIR}/casdk/scripts/* /jci/casdk
+	find /jci/casdk/ -name "vdt*.sh" -exec chmod 755 {} \;
+	log_message "===           Installed data reader files               ==="
+else
+	log_message "===        Data reader files already installed          ==="
+fi
+
+# copy initialization file
+if [ ! -e /jci/scripts/stage_wifi.sh.org ]
+then
+	cp -a /jci/scripts/stage_wifi.sh /jci/scripts/stage_wifi.sh.org
+	cp -a ${MYDIR}/casdk/jci/stage_wifi.sh /jci/scripts/
+	log_message "===       CASDK Entries Added To Stage_wifi.sh          ==="
+elif grep -Fq './jci/casdk/vdtol.sh &' /jci/scripts/stage_wifi.sh
+then
+	log_message "===   CASDK Entries already present in stage_wifi.sh    ==="
+else
+cat <<EOT > /jci/scripts/stage_wifi.sh
+#!/bin/sh
+
+##############################
+#
+# CASDK Data Gathering Script
+#
+##############################
+
+# one time run
+./jci/casdk/vdtol.sh &
+
+# 1s update rate
+watch -n 1 /jci/casdk/vdt1s.sh &
+
+# 60s update rate
+watch -n 60 /jci/casdk/vdt60s.sh &
+
+# 300s update rate
+watch -n 300 /jci/casdk/vdt300s.sh &
+EOT
+	log_message "===       CASDK Entries Added To Stage_wifi.sh          ==="
+	if [ "${SPEEDO}" = "1" ]
+	then
+		echo "" >> /jci/scripts/stage_wifi.sh
+		echo "### Speedometer" >> /jci/scripts/stage_wifi.sh
+		echo "/jci/gui/addon-common/websocketd --port=55554 /jci/gui/apps/_speedometer/sh/speedometer.sh &" >> /jci/scripts/stage_wifi.sh
+
+	fi
+	if [ "${VIDEO}" = "1" ]
+	then
+		echo "" >> /jci/scripts/stage_wifi.sh
+		echo "### Video player" >> /jci/scripts/stage_wifi.sh
+		echo -e "\n/jci/gui/addon-common/websocketd --port=9998 sh &" >> /jci/scripts/stage_wifi.sh
+	fi
+	if [ "${ANDROIDAUTO}" = "1" ]
+	then
+		echo "" >> /jci/scripts/stage_wifi.sh
+		echo "### Android Auto" >> /jci/scripts/stage_wifi.sh
+		echo -e "\nheadunit-wrapper &" >> /jci/scripts/stage_wifi.sh
+	fi
+fi
+
+# sed -i 's/\/jci\/gui\/apps\/_speedometer\/sh\/speedometer.sh/\/jci\/gui\/apps\/custom\/apps\/_speedometer\/sh\/speedometer.sh/g' /jci/scripts/stage_wifi.sh
+# sed -i 's/\"apps\/_speedometer\/js\/speedometer.js\"/\"apps\/custom\/apps\/_speedometer\/js\/speedometer.js\"/g' /jci/opera/opera_dir/userjs/speedometer-startup.js
+# sed -i "s/'apps\/_speedometer\/css\/StatusBarSpeedometer.css'/'apps\/custom\/apps\/_speedometer\/css\/StatusBarSpeedometer.css'/g" /jci/opera/opera_dir/userjs/speedometer-startup.js
+
+chmod 755 /jci/scripts/stage_wifi.sh
+
+# if [ ! -e /jci/opera/opera_dir/userjs/CustomApplicationsProxy.js ]
+# then
+#	 cp -a ${MYDIR}/casdk/proxy/CustomApplicationsProxy.js /jci/opera/opera_dir/userjs/
+#	 log_message "===          Copied CustomApplicstionProxy.js              ==="
+# else
+#	 log_message "===      CustomApplicstionProxy.js Already Exists          ==="
+# fi
+
+# copy proxy & patched additionalApps for native apps
+cp -a ${MYDIR}/casdk/proxy/CustomApplicationsProxy.js /jci/opera/opera_dir/userjs/
+log_message "===          Copied CustomApplicationsProxy.js          ==="
+
+cp -a ${MYDIR}/casdk/proxy/additionalApps.js /jci/opera/opera_dir/userjs/
+log_message "===     Copied AdditionalApps.js patched for CASDK      ==="
+
+log_message " "
+# create custom folder
+if [ ! -e /jci/gui/apps/custom ]
+then
+	mkdir -p /jci/gui/apps/custom
+	log_message "===            Created Custom App Folder                ==="
+
+	# create symlinks to various destinations
+	ln -sf /tmp/mnt/sd_nav/system/js /jci/gui/apps/custom/js
+	ln -sf /tmp/mnt/sd_nav/system/css /jci/gui/apps/custom/css
+	ln -sf /tmp/mnt/sd_nav/system/templates /jci/gui/apps/custom/templates
+	ln -sf /tmp/mnt/sd_nav/system/runtime /jci/gui/apps/custom/runtime
+	ln -sf /tmp/mnt/sd_nav/apps /jci/gui/apps/custom/apps
+	ln -sf /tmp/root /jci/gui/apps/custom/data
+	log_message "===      Created Symlinks To Various Destinations       ==="
+fi
+sleep 5
+killall jci-dialog
+/jci/tools/jci-dialog --title="MZD-AIO-TI+CASDK INSTALLED" --text="The Custom Application Runtime was successfully installed.\n\nThe System will reboot in a few seconds." --no-cancel &
+sleep 10
+reboot

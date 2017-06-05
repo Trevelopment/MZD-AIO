@@ -1,0 +1,7 @@
+if [ ${TESTBKUPS} = "1" ]
+then
+  cp /jci/opera/opera_dir/userjs/speedometer-startup.js ${MYDIR}/bakups/test/
+fi
+
+log_message "===******    END INSTALLATION OF SPEEDOMETER    *****==="
+log_message " "

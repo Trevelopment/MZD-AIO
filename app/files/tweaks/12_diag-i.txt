@@ -1,0 +1,63 @@
+#diagmenu with 1 sec. press at clock in display settings menu, script made by Sumire_Racing_JPN
+show_message "DIAGMENU W. 1 SEC. PRESS AT CLOCK IN DISPLAY SETTINGS MENU"
+log_message "===***   INSTALL DIAGMENU W. 1 SEC. PRESS AT CLOCK IN DISPLAY SETTINGS MENU ...  ***==="
+# Backups
+if [ ! -e /jci/gui/apps/diag/js/diagApp.js.org ]
+then
+	cp -a /jci/gui/apps/diag/diagApp.js /jci/gui/apps/diag/js/diagApp.js.org
+fi
+if [ ! -e /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js.org ]
+then
+	cp -a /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js.org
+fi
+if [ ! -e /jci/gui/common/js/Common.js.org ]
+then
+	cp -a /jci/gui/common/js/Common.js /jci/gui/common/js/Common.js.org
+fi
+if [ "${KEEPBKUPS}" = "1" ]
+then
+	cp /jci/gui/apps/diag/js/diagApp.js.org "${MYDIR}/bakups/"
+	cp /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js.org "${MYDIR}/bakups/"
+	cp /jci/gui/common/js/Common.js.org "${MYDIR}/bakups/"
+fi
+if [ "${TESTBKUPS}" = "1" ]
+then
+	cp /jci/gui/apps/diag/js/diagApp.js "${MYDIR}/bakups/test/diagApp_diagmenu-before.js"
+	cp /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js "${MYDIR}/bakups/test/StatusBarCtrl_diagmenu-before.js"
+	cp /jci/gui/common/js/Common.js "${MYDIR}/bakups/test/Common_diagmenu-before.js"
+	/bin/fsync "${MYDIR}/bakups/test/diagApp_diagmenu-before.js"
+	/bin/fsync "${MYDIR}/bakups/test/StatusBarCtrl_diagmenu-before.js"
+	/bin/fsync "${MYDIR}/bakups/test/Common_diagmenu-before.js"
+fi
+if grep -Fq '"settleTime" : 1000,' /jci/gui/apps/diag/js/diagApp.js
+then
+	echo "exist"
+	log_message "===          Modifications already done to /jci/gui/apps/diag/js/diagApp.js         ==="
+else
+	sed -i 's/"settleTime" : 20000,/"settleTime" : 1000,/g' /jci/gui/apps/diag/js/diagApp.js
+	log_message "===                  Modified /jci/gui/apps/diag/js/diagApp.js                      ==="
+fi
+if grep -Fq '"holdTimeout" : 1000,' /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js
+then
+	echo "exist"
+	log_message "==Modifications already done to /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js="
+else
+	sed -i 's/"holdTimeout" : 5000,/"holdTimeout" : 1000,/g' /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js
+	log_message "===          Modified /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js        ==="
+fi
+if grep -Fq 'framework.sendEventToMmui("syssettings", "SelectDiagnostics"); // Sumire Racing' /jci/gui/common/js/Common.js
+then
+	echo "exist"
+	log_message "===           Modifications already done to /jci/gui/common/js/Common.js            ==="
+else
+	sed -i '/this._diagEntrySequence = 1;/ a\framework.sendEventToMmui("syssettings", "SelectDiagnostics"); // Sumire Racing' /jci/gui/common/js/Common.js
+	log_message "===                      Modified /jci/gui/common/js/Common.js                      ==="
+fi
+if [ "${TESTBKUPS}" = "1" ]
+then
+	cp /jci/gui/apps/diag/js/diagApp.js "${MYDIR}/bakups/test/diagApp_diagmenu-after.js"
+	cp /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js "${MYDIR}/bakups/test/StatusBarCtrl_diagmenu-after.js"
+	cp /jci/gui/common/js/Common.js "${MYDIR}/bakups/test/Common_diagmenu-after.js"
+fi
+log_message "===*** END INSTALLING DIAGMENU W. 1 SEC. PRESS AT CLOCK IN DISPLAY SETTINGS MENU ***==="
+log_message " "

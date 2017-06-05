@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<!--
+/* ************************************************************************** *\
+** ************************************************************************** **
+** MZD-AIO-TI                                                                 **
+** By: Trezdog44 - Trevor Martin                                              **
+** http://mazdatweaks.com                                                     **
+** ©2017 Trevelopment                                                         **
+**                                                                            **
+** An Installer And Uninstaller for 40+ 'Tweaks' 							  **
+** For the Mazda MZD Infotainment System.       						      **
+**                                                                            **
+** contact.html - The contact form.                                           **
+**                                                                            **
+** ************************************************************************** **
+\* ************************************************************************** */
+-->
+<div id="contact-form" class="card card-1">
+	<div>
+		<h1>MZD-AIO-TI Contact Form</h1>
+		<h4>Have a question, suggestion, feedback, or just want to say hi?</h4>
+	</div>
+	<p id="failure">Message Was Not Sent. Try Again..</p>
+	<p id="success">Your message was sent successfully. Thank you!</p>
+
+	<form class="form" action="http://trevelopment.com/mzdmail.php" target="mailform">
+		<div>
+			<label for="name" class="w3-label">
+				<span class="required">Name: *</span>
+				<input class="w3-input" type="text" id="name" name="name" value="" placeholder="Your Name" required="required" tabindex="1" />
+			</label>
+		</div>
+		<div>
+			<label for="email" class="w3-label">
+				<span class="required">Email: *</span>
+				<input class="w3-input" type="email" id="email" name="email" value="" placeholder="Your Email" tabindex="2" required="required" />
+			</label>
+		</div>
+		<div>
+			<label for="subject" class="w3-label">
+				<span>Subject: </span>
+				<select class="w3-select" id="subject" name="subject" tabindex="4">
+					<option value="Feedback">Feedback</option>
+					<option value="Question">Question</option>
+					<option value="Suggestion">Suggestion</option>
+					<option value="General">General</option>
+					<option value="Help">Help</option>
+					<option value="Bug">Bug</option>
+				</select>
+			</label>
+		</div>
+		<div>
+			<label for="message" class="w3-label">
+				<span class="required">Message: *</span>
+				<textarea class="w3-input" id="message" name="message" placeholder="Do you love MZD-AIO-TI?  Have you developed a tweak that should be included?  Did you find a bug?  Type your message here.
+**IF YOU ARE ASKING FOR HELP: Please include FIRMWARE VERSION and what TWEAKS you have INSTALLED in your message to help me dignose and resolve your issue.
+~Trez" tabindex="3" required="required"></textarea>
+			</label>
+		</div>
+		<input class="w3-hide" name="AIOver" value="getAIOver()">
+		<script>var mailform</script>
+		<input class="w3-btn w3-blue w3-hover-green" tabindex="5" type="submit" value="SEND" onclick="var mailform=window.open('','mailform','width=250,height=250,titleBarStyle=hidden');setTimeout(function(){bootbox.alert({message:'Message Sent',size:'small'});$('.featherlight').hide()},5000)"><!-- onclick="submitEmail();$.featherlight.current().close();" -->
+		<div class="realMail">Or you can send an email to <a href="" onclick="shell.openExternal('mailto:aio@mazdatweaks.com?subject=MZD-AIO-TI%20Feedback')">aio@mazdatweaks.com</a></div>
+		<!-- bootbox.alert({message: $('#name').val() $('#email').val() $('#subject').val() $('#message').val()}) -->
+	</form>
+</div>

@@ -1,0 +1,36 @@
+# Enable WIFI
+log_message "========*******   START ENABLE WIFI ...    *******========"
+
+# Backups
+if [ ! -e /jci/gui/apps/syssettings/js/syssettingsApp.js.org ]
+then
+  cp /jci/gui/apps/syssettings/js/syssettingsApp.js /jci/gui/apps/syssettings/js/syssettingsApp.js.org
+fi
+if [ "${KEEPBKUPS}" = 1 ]
+then
+  cp /jci/gui/apps/syssettings/js/syssettingsApp.js.org "${MYDIR}/bakups/"
+  aio_info \"syssettingsApp.js.org\",
+fi
+
+if grep -Fq "(framework.localize.REGIONS['NorthAmerica'])" /jci/gui/apps/syssettings/js/syssettingsApp.js
+then
+  cp /jci/gui/apps/syssettings/js/syssettingsApp.js "${MYDIR}/bakups/test/syssettingsApp_WIFI-before.js"
+  LN=$(grep -n "if((region != (framework.localize.REGIONS\['NorthAmerica'\]) [&|]\{2\} (region != (framework.localize.REGIONS\['Japan'\]))))" /jci/gui/apps/syssettings/js/syssettingsApp.js | cut -d":" -f1)
+  if [ ! -z "$LN" ]; then
+    # sed -i "$LN"'s/NorthAmerica/Japan/' /jci/gui/apps/syssettings/js/syssettingsApp.js
+    # This is a Better way to enable Wifi for all
+    sed -i "/(framework.localize.REGIONS\['NorthAmerica'\]/c\ \t\t\tif(true)" /jci/gui/apps/syssettings/js/syssettingsApp.js
+    log_message "===              Wifi for NA enabled                   ==="
+    show_message "=== Wifi for NA enabled ==="
+  else
+    log_message "===       ERROR: Line For Wifi Fix Not Found           ==="
+  fi
+  cp /jci/gui/apps/syssettings/js/syssettingsApp.js "${MYDIR}/bakups/test/syssettingsApp_WIFI-after.js"
+else
+  echo "exist"
+  log_message "===               Wifi already active                  ==="
+
+fi
+
+log_message "=========******    END ENABLE WIFI         ******========="
+log_message " "

@@ -1,0 +1,79 @@
+<!--
+- MZD-AIO-TI
+- By: Trezdog44 - Trevor Martin
+- http://mazdatweaks.com
+- ©2017 Trevelopment
+-
+- Custom Options For UI Style Tweak
+-
+-->
+<table>
+  <tbody class="w3-col">
+    <tr class="w3-quarter">
+      <td class="">
+        <input id="uistyleuninstall" class="w3-check" style="top:0" type="checkbox" ng-model="user.uistyle.uninst" ng-value="user.uistyle.uninst" />
+      </td>
+      <td>
+        <label for="uistyleuninstall"><strong style="font-size: 12px;">{{menu.uninstall.label}} </strong></label>
+      </td>
+    </tr>
+    <tr id="uistyle-shadow" ng-hide="user.uistyle.uninst" class="w3-hover-pale-blue w3-quarter">
+      <td>
+        <input id="uistyle{{uistyle.shadow.id}}" style="top:0" class="w3-check" type="checkbox" ng-model="user.uistyle.shadow" ng-value="user.uistyle.shadow" />
+      </td>
+      <td>
+        <label for="uistyle{{uistyle.shadow.id}}" data-toggle="tooltip" data-placement="auto bottom" title="{{uistyle.shadow.label}}">{{uistyle.shadow.label}}</label>
+      </td>
+    </tr>
+    <tr id="uistyle-body" ng-hide="user.uistyle.uninst" class="w3-hover-pale-blue w3-half">
+      <td>
+        <div class="extraUIstyle">
+          <input id="uistyle{{uistyle.body.id}}" type="color" ng-model="user.uistyle.body" ng-value="user.uistyle.body" />
+        </div>
+      </td>
+      <td>
+        <label for="uistyle{{uistyle.body.id}}" data-toggle="tooltip" data-placement="auto bottom" title="{{uistyle.body.label}}">{{uistyle.body.label}}</label>
+      </td>
+    </tr>
+    <tr id="uistyle-listitem" ng-hide="user.uistyle.uninst" class="w3-hover-pale-blue w3-half">
+      <td>
+        <div class="extraUIstyle">
+          <input id="uistyle{{uistyle.listitem.id}}" type="color" ng-model="user.uistyle.listitem" ng-value="user.uistyle.listitem" />
+        </div>
+      </td>
+      <td>
+        <label for="uistyle{{uistyle.listitem.id}}" data-toggle="tooltip" data-placement="auto bottom" title="{{uistyle.listitem.label}}">{{uistyle.listitem.label}}</label>
+      </td>
+    </tr>
+    <tr id="uistyle-listitemdisabled" ng-hide="user.uistyle.uninst" class="w3-hover-pale-blue w3-half">
+      <td>
+        <div class="extraUIstyle">
+          <input id="uistyle{{uistyle.listitemdisabled.id}}" type="color" ng-model="user.uistyle.listitemdisabled" ng-value="user.uistyle.listitemdisabled" />
+        </div>
+      </td>
+      <td>
+        <label for="uistyle{{uistyle.listitemdisabled.id}}" data-toggle="tooltip" data-placement="auto bottom" title="{{uistyle.listitemdisabled.label}}">{{uistyle.listitemdisabled.label}}</label>
+      </td>
+    </tr>
+    <tr id="uistyle-title" ng-hide="user.uistyle.uninst" class="w3-hover-pale-blue w3-half">
+      <td>
+        <div class="extraUIstyle">
+          <input id="uistyle{{uistyle.title.id}}" type="color" ng-model="user.uistyle.title" ng-value="user.uistyle.title" />
+        </div>
+      </td>
+      <td>
+        <label for="uistyle{{uistyle.title.id}}" data-toggle="tooltip" data-placement="auto bottom" title="{{uistyle.title.label}}">{{uistyle.title.label}}</label>
+      </td>
+    </tr>
+    <tr id="uistyle-radio" ng-hide="user.uistyle.uninst" class="w3-hover-pale-blue w3-half">
+      <td>
+        <div class="extraUIstyle">
+          <input id="uistyle{{uistyle.radio.id}}" type="color" ng-model="user.uistyle.radio" ng-value="user.uistyle.radio" />
+        </div>
+      </td>
+      <td>
+        <label for="uistyle{{uistyle.radio.id}}" data-toggle="tooltip" data-placement="auto bottom" title="{{uistyle.radio.label}}">{{uistyle.radio.label}}</label>
+      </td>
+    </tr>
+  </tbody>
+</table>

@@ -1,0 +1,30 @@
+# restore background image and common.css to original
+show_message "UNINSTALL BACKGROUND ROTATOR ..."
+log_message "======***    UNINSTALL BACKGROUND ROTATOR ...    ***======"
+
+# one line uninstall
+remove_aio_css /jci/gui/common/css/common.css
+log_message "===    Removed MZD-AIO-TI Custom CSS in common.css     ==="
+
+# Check for leftover code from old bg rotator, if not found moves on.
+if grep -Fq "animation: slide .* infinite" /jci/gui/common/css/common.css
+then
+	log_message "=== Leftover code found Restoring common.css ==="
+	if test -s /jci/gui/common/css/common.css.org
+	then
+		if [ "${KEEPBKUPS}" = 1 ]
+		then
+			cp /jci/gui/common/css/common.css.org "${MYDIR}/bakups/"
+			aio_info \"common.css.org\",
+		fi
+		cp /jci/gui/common/css/common.css.org /jci/gui/common/css/common.css
+		log_message "=== Restored /jci/gui/common/css/common.css from backup ==="
+	else
+		cp -a "${MYDIR}/config_org/BackgroundRotator/jci/gui/common/css/common.css" /jci/gui/common/css
+		log_message "=== No backup available. Restored /jci/gui/common/css/common.css from SD card ==="
+	fi
+fi
+
+log_message "=====*** END UNINSTALLATION OF BACKGROUND ROTATOR ***====="
+log_message " "
+# Background Tweak should be run after this to restore background Image

@@ -1,0 +1,9 @@
+# restore disclaimer time to 3.5 sec.
+show_message "RESTORE DISCLAIMER TO 3.5 SEC. ..."
+log_message "===****** UNINSTALL DISCLAIMER TO .5 SECONDS ... ******==="
+
+sed -i 's/this._disclaimerTime.remaining = 500/this._disclaimerTime.remaining = 3500/g' /jci/gui/apps/system/js/systemApp.js
+log_message "===         Disclaimer Restored to 3.5 Seconds         ==="
+
+log_message "===*** END UNINSTALLATION DISCLAIMER TO 0.5 SECONDS ***==="
+log_message " "

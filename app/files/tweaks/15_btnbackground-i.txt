@@ -1,0 +1,83 @@
+# no button background graphics
+show_message "INSTALL REMOVE BACKGROUND GRAPHICS ..."
+log_message "===****  INSTALL REMOVE BACKGROUND OVERLAY GRAPHICS ... ****==="
+
+# Backups
+if [ ! -e /jci/gui/common/controls/Ump3/css/Ump3Ctrl.css.org ]
+then
+	cp -a /jci/gui/common/controls/Ump3/css/Ump3Ctrl.css /jci/gui/common/controls/Ump3/css/Ump3Ctrl.css.org
+	log_message "=== Backup of /jci/gui/common/controls/Ump3/css/Ump3Ctrl.css to Ump3Ctrl.css.org ==="
+fi
+if [ "${KEEPBKUPS}" = 1 ]
+then
+	cp -a /jci/gui/common/controls/Ump3/css/Ump3Ctrl.css.org "${MYDIR}/bakups/"
+	aio_info \"Ump3Ctrl.js.org\",
+fi
+# Remove CSS that is already been added
+sed -i "/.. MZD-AIO-TI NO-BTN-BG ../,/.. END AIO CSS ../d" /jci/gui/common/controls/Ump3/css/Ump3Ctrl.css
+# Append css
+cat <<EOT >> /jci/gui/common/controls/Ump3/css/Ump3Ctrl.css
+/* MZD-AIO-TI NO-BTN-BG */
+EOT
+
+if [ ${NO_BTN_BG} = 1 ]
+then
+log_message "===           Removed Behind Buttons Background              ==="
+		cat <<EOT >> /jci/gui/common/controls/Ump3/css/Ump3Ctrl.css
+	/* Remove Button Backgrounds */
+	.Ump3CtrlBgArch,
+	.Ump3CtrlBackground,
+	.Ump3CtrlSeparator {
+		background:none;
+	}
+EOT
+fi
+if [ ${NO_NP_BG} = 1 ]
+then
+log_message "===              Removed Now Playing Overlay                 ==="
+		cat <<EOT >> /jci/gui/common/controls/Ump3/css/Ump3Ctrl.css
+	/* Remove Now Playing Background*/
+	.NowPlaying4Ctrl {
+		background:none!important;
+	}
+EOT
+fi
+if [ ${NO_LIST_BG} = 1 ]
+then
+log_message "===               Removed List View Overlay                  ==="
+		cat <<EOT >> /jci/gui/common/controls/Ump3/css/Ump3Ctrl.css
+	/* Remove List Background*/
+	.List2Ctrl {
+		background:none!important;
+	}
+EOT
+fi
+if [ ${NO_CALL_BG} = 1 ]
+then
+log_message "===              Removed In-Call Overlay                     ==="
+		cat <<EOT >> /jci/gui/common/controls/Ump3/css/Ump3Ctrl.css
+	/* Remove In Call Background*/
+	.InCall2ContactActiveBkg,
+	.InCall2InCallBG {
+		background:none!important;
+	}
+EOT
+fi
+if [ ${NO_TEXT_BG} = 1 ]
+then
+log_message "===           Removed Text Message View Overlay              ==="
+		cat <<EOT >> /jci/gui/common/controls/Ump3/css/Ump3Ctrl.css
+	/* Remove In Call Background*/
+	.Messaging2CtrlBackground {
+		background:none!important;
+	}
+EOT
+fi
+
+	cat <<EOT >> /jci/gui/common/controls/Ump3/css/Ump3Ctrl.css
+/* END AIO CSS */
+EOT
+log_message "===                 Modified Ump3Ctrl.css                    ==="
+
+log_message "===***** END INSTALLATION OF REMOVE BACKGROUND OVERLAYS *****==="
+log_message " "

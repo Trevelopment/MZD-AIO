@@ -1,0 +1,816 @@
+/* CSS Document */
+/* Declare variables */
+@keyframes infinite_rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.NowPlaying4Ctrl {
+  position: inherit;
+  top: 0px;
+  left: 0px;
+  width: 800px;
+  height: 416px;
+  background-image: url(../images/NowPlayingBG.png);
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.NowPlaying4CtrlNoBG {
+  background: none;
+}
+
+.NowPlaying4CtrlHidden {
+  display: none;
+}
+
+.NowPlaying4CtrlTitleIconFrame {
+  position: inherit;
+  top: 5px;
+  left: 610px;
+  width: 146px;
+  height: 50px;
+}
+
+.NowPlaying4CtrlTitleIconImage {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin-top: auto;
+  margin-left: auto;
+  margin-right: 0px;
+  margin-bottom: auto;
+  max-width: 146px;
+  max-height: 50px;
+}
+
+.NowPlaying4CtrlHdDisplayFrame {
+  position: inherit;
+  top: 5px;
+  left: 610px;
+  width: 146px;
+  height: 50px;
+}
+
+.NowPlaying4CtrlHdDisplayIconImage {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin-top: auto;
+  margin-left: 0px;
+  margin-right: auto;
+  margin-bottom: auto;
+  max-width: 146px;
+  max-height: 50px;
+}
+
+/*
+ * All properties common for HD substations except left & color
+ */
+.NowPlaying4CtrlHdSubst1 {
+  position: absolute;
+  top: 0px;
+  width: 11px;
+  height: 50px;
+  text-align: center;
+  line-height: 50px;
+  vertical-align: middle;
+  font-family: "Tipperary", Arial, Helvetica, sans-serif;
+  font-size: 21px;
+  color: #999999;
+}
+
+.NowPlaying4CtrlHdSubst2 {
+  position: absolute;
+  top: 0px;
+  width: 11px;
+  height: 50px;
+  text-align: center;
+  line-height: 50px;
+  vertical-align: middle;
+  font-family: "Tipperary", Arial, Helvetica, sans-serif;
+  font-size: 21px;
+  color: #999999;
+}
+
+.NowPlaying4CtrlHdSubst3 {
+  position: absolute;
+  top: 0px;
+  width: 11px;
+  height: 50px;
+  text-align: center;
+  line-height: 50px;
+  vertical-align: middle;
+  font-family: "Tipperary", Arial, Helvetica, sans-serif;
+  font-size: 21px;
+  color: #999999;
+}
+
+.NowPlaying4CtrlHdSubst4 {
+  position: absolute;
+  top: 0px;
+  width: 11px;
+  height: 50px;
+  text-align: center;
+  line-height: 50px;
+  vertical-align: middle;
+  font-family: "Tipperary", Arial, Helvetica, sans-serif;
+  font-size: 21px;
+  color: #999999;
+}
+
+.NowPlaying4CtrlHdSubst5 {
+  position: absolute;
+  top: 0px;
+  width: 11px;
+  height: 50px;
+  text-align: center;
+  line-height: 50px;
+  vertical-align: middle;
+  font-family: "Tipperary", Arial, Helvetica, sans-serif;
+  font-size: 21px;
+  color: #999999;
+}
+
+.NowPlaying4CtrlHdSubst6 {
+  position: absolute;
+  top: 0px;
+  width: 11px;
+  height: 50px;
+  text-align: center;
+  line-height: 50px;
+  vertical-align: middle;
+  font-family: "Tipperary", Arial, Helvetica, sans-serif;
+  font-size: 21px;
+  color: #999999;
+}
+
+.NowPlaying4CtrlHdSubst7 {
+  position: absolute;
+  top: 0px;
+  width: 11px;
+  height: 50px;
+  text-align: center;
+  line-height: 50px;
+  vertical-align: middle;
+  font-family: "Tipperary", Arial, Helvetica, sans-serif;
+  font-size: 21px;
+  color: #999999;
+}
+
+.NowPlaying4CtrlHdSubst8 {
+  position: absolute;
+  top: 0px;
+  width: 11px;
+  height: 50px;
+  text-align: center;
+  line-height: 50px;
+  vertical-align: middle;
+  font-family: "Tipperary", Arial, Helvetica, sans-serif;
+  font-size: 21px;
+  color: #999999;
+}
+
+.NowPlaying4CtrlHdSubst1Active {
+  position: absolute;
+  top: 0px;
+  width: 11px;
+  height: 50px;
+  text-align: center;
+  line-height: 50px;
+  vertical-align: middle;
+  font-family: "Tipperary", Arial, Helvetica, sans-serif;
+  font-size: 21px;
+  color: #f89c1e;
+}
+
+.NowPlaying4CtrlHdSubst2Active {
+  position: absolute;
+  top: 0px;
+  width: 11px;
+  height: 50px;
+  text-align: center;
+  line-height: 50px;
+  vertical-align: middle;
+  font-family: "Tipperary", Arial, Helvetica, sans-serif;
+  font-size: 21px;
+  color: #f89c1e;
+}
+
+.NowPlaying4CtrlHdSubst3Active {
+  position: absolute;
+  top: 0px;
+  width: 11px;
+  height: 50px;
+  text-align: center;
+  line-height: 50px;
+  vertical-align: middle;
+  font-family: "Tipperary", Arial, Helvetica, sans-serif;
+  font-size: 21px;
+  color: #f89c1e;
+}
+
+.NowPlaying4CtrlHdSubst4Active {
+  position: absolute;
+  top: 0px;
+  width: 11px;
+  height: 50px;
+  text-align: center;
+  line-height: 50px;
+  vertical-align: middle;
+  font-family: "Tipperary", Arial, Helvetica, sans-serif;
+  font-size: 21px;
+  color: #f89c1e;
+}
+
+.NowPlaying4CtrlHdSubst5Active {
+  position: absolute;
+  top: 0px;
+  width: 11px;
+  height: 50px;
+  text-align: center;
+  line-height: 50px;
+  vertical-align: middle;
+  font-family: "Tipperary", Arial, Helvetica, sans-serif;
+  font-size: 21px;
+  color: #f89c1e;
+}
+
+.NowPlaying4CtrlHdSubst6Active {
+  position: absolute;
+  top: 0px;
+  width: 11px;
+  height: 50px;
+  text-align: center;
+  line-height: 50px;
+  vertical-align: middle;
+  font-family: "Tipperary", Arial, Helvetica, sans-serif;
+  font-size: 21px;
+  color: #f89c1e;
+}
+
+.NowPlaying4CtrlHdSubst7Active {
+  position: absolute;
+  top: 0px;
+  width: 11px;
+  height: 50px;
+  text-align: center;
+  line-height: 50px;
+  vertical-align: middle;
+  font-family: "Tipperary", Arial, Helvetica, sans-serif;
+  font-size: 21px;
+  color: #f89c1e;
+}
+
+.NowPlaying4CtrlHdSubst8Active {
+  position: absolute;
+  top: 0px;
+  width: 11px;
+  height: 50px;
+  text-align: center;
+  line-height: 50px;
+  vertical-align: middle;
+  font-family: "Tipperary", Arial, Helvetica, sans-serif;
+  font-size: 21px;
+  color: #f89c1e;
+}
+
+.NowPlaying4CtrlTitle {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  position: inherit;
+  top: 15px;
+  left: 80px;
+  width: 524px;
+  height: 50px;
+  text-align: left;
+  vertical-align: middle;
+  font-family: "Tipperary Semibold";
+  font-weight: normal;
+  font-style: normal;
+  font-size: 40px;
+  color: white;
+}
+
+.NowPlaying4CtrlTitleFull {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  position: inherit;
+  top: 15px;
+  left: 80px;
+  width: 676px;
+  height: 50px;
+  text-align: left;
+  vertical-align: middle;
+  font-family: "Tipperary Semibold";
+  font-weight: normal;
+  font-style: normal;
+  font-size: 40px;
+  color: white;
+}
+
+.NowPlaying4CtrlTrackDisplay {
+  position: inherit;
+  top: 21px;
+  left: 604px;
+  width: 152px;
+  height: 30px;
+  text-align: right;
+  vertical-align: middle;
+  font-family: "Tipperary", Arial, Helvetica, sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  font-size: 28px;
+  color: white;
+}
+
+.NowPlaying4CtrlArtworkImageDiv {
+  position: inherit;
+  top: 98px;
+  left: 610px;
+  width: 146px;
+  height: 146px;
+}
+
+.NowPlaying4CtrlArtworkImage {
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  margin: auto;
+  max-width: 146px;
+  max-height: 146px;
+}
+
+.NowPlaying4CtrlArtworkImageBorder {
+  position: inherit;
+  top: 0px;
+  left: 0px;
+  width: 146px;
+  height: 146px;
+  background-image: url(../images/NowPlayingImageFrame.png);
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.NowPlaying4CtrlInfoBox {
+  position: inherit;
+  top: 71px;
+  left: 80px;
+  width: 530px;
+  height: 176px;
+  overflow: hidden;
+}
+
+.NowPlaying4CtrlInfoBoxFull {
+  position: inherit;
+  top: 71px;
+  left: 80px;
+  width: 676px;
+  height: 220px;
+  overflow: hidden;
+}
+
+.NowPlaying4CtrlAudioTitleIconFrame {
+  top: 4px;
+  left: 0px;
+  width: 36px;
+  height: 36px;
+  display: inline-block;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.NowPlaying4CtrlAudioTitle {
+  position: relative;
+  top: 0px;
+  left: 9px;
+  width: 485px;
+  max-height: 86px;
+  overflow: hidden;
+  text-overflow: -o-ellipsis-lastline;
+  font-family: "Tipperary", Arial, Helvetica, sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  font-size: 35px;
+  color: white;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.NowPlaying4CtrlAudioTitleFull {
+  position: relative;
+  top: 0px;
+  left: 9px;
+  width: 631px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-family: "Tipperary", Arial, Helvetica, sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  font-size: 35px;
+  color: white;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.NowPlaying4CtrlAudioTitleStyle3 {
+  position: relative;
+  top: 0px;
+  left: 0px;
+  width: 485px;
+  max-height: 88px;
+  overflow: hidden;
+  text-overflow: -o-ellipsis-lastline;
+  font-family: "Tipperary", Arial, Helvetica, sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  font-size: 35px;
+  color: white;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.NowPlaying4CtrlAudioTitleBlockFrame {
+  left: 0px;
+  width: 530px;
+  height: 176px;
+  display: inline-block;
+  float: left;
+}
+
+.NowPlaying4CtrlAudioTitleBlock {
+  position: relative;
+  top: 0px;
+  left: 9px;
+  width: 485px;
+  max-height: 86px;
+  overflow: hidden;
+  text-overflow: -o-ellipsis-lastline;
+  font-family: "Tipperary", Arial, Helvetica, sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  font-size: 35px;
+  color: white;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.NowPlaying4CtrlSubtitle {
+  position: relative;
+  top: 0px;
+  left: 0px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-family: "Tipperary", Arial, Helvetica, sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  font-size: 35px;
+  width: 676px;
+}
+
+.NowPlaying4CtrlDetailLine1Frame {
+  left: 0px;
+  height: 44px;
+}
+
+.NowPlaying4CtrlDetailLine1IconFrame {
+  top: 4px;
+  left: 0px;
+  width: 36px;
+  height: 36px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.NowPlaying4CtrlDetailLine1 {
+  position: relative;
+  top: -36px;
+  left: 45px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-family: "Tipperary", Arial, Helvetica, sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  font-size: 35px;
+  width: 485px;
+}
+
+.NowPlaying4CtrlDetailLine1Full {
+  position: relative;
+  top: -36px;
+  left: 45px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-family: "Tipperary", Arial, Helvetica, sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  font-size: 35px;
+  width: 631px;
+}
+
+.NowPlaying4CtrlDetailLine1BlockFrame {
+  position: relative;
+  left: 0px;
+  width: 530px;
+  height: 160px;
+}
+
+.NowPlaying4CtrlDetailLine1Block {
+  overflow: hidden;
+  text-overflow: -o-ellipsis-lastline;
+  top: 0px;
+  left: 45px;
+  width: 485px;
+  height: 160px;
+  text-align: left;
+  vertical-align: middle;
+  word-wrap: break-word;
+  font-family: "Tipperary", Arial, Helvetica, sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  font-size: 35px;
+  color: white;
+}
+
+.NowPlaying4CtrlDetailLine2Frame {
+  left: 0px;
+  height: 44px;
+}
+
+.NowPlaying4CtrlDetailLine2IconFrame {
+  top: 4px;
+  left: 0px;
+  width: 36px;
+  height: 36px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.NowPlaying4CtrlDetailLine2 {
+  position: relative;
+  top: -36px;
+  left: 45px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-family: "Tipperary", Arial, Helvetica, sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  font-size: 35px;
+  width: 485px;
+}
+
+.NowPlaying4CtrlDetailLine2Full {
+  position: relative;
+  top: -36px;
+  left: 45px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-family: "Tipperary", Arial, Helvetica, sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  font-size: 35px;
+  width: 631px;
+}
+
+.NowPlaying4CtrlDetailLine3Frame {
+  left: 0px;
+  height: 44px;
+}
+
+.NowPlaying4CtrlDetailLine3IconFrame {
+  top: 4px;
+  left: 0px;
+  width: 36px;
+  height: 36px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.NowPlaying4CtrlDetailLine3 {
+  position: relative;
+  top: -36px;
+  left: 45px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-family: "Tipperary", Arial, Helvetica, sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  font-size: 35px;
+  width: 485px;
+}
+
+.NowPlaying4CtrlDetailLine3Full {
+  position: relative;
+  top: -36px;
+  left: 45px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-family: "Tipperary", Arial, Helvetica, sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  font-size: 35px;
+  width: 631px;
+}
+
+.NowPlaying4CtrlDistanceDirectionIconFrame {
+  position: absolute;
+  top: 248px;
+  left: 79px;
+  width: 36px;
+  height: 36px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.NowPlaying4CtrlDistanceDirection {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  position: absolute;
+  top: 248px;
+  left: 115px;
+  width: 191px;
+  height: 36px;
+  text-align: left;
+  vertical-align: middle;
+  font-family: "Tipperary", Arial, Helvetica, sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  font-size: 28px;
+  color: white;
+}
+
+.NowPlaying4CtrlLoadingImageFrame {
+  position: absolute;
+  top: 5px;
+  left: 610px;
+  width: 146px;
+  height: 50px;
+}
+.NowPlaying4CtrlLoadingImageFrame.loading {
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-image: url(../images/IcnStatBgFunctions_Refreshing_01.png);
+  animation-name: infinite_rotation;
+  animation-duration: 2s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: normal;
+}
+
+.NowPlaying4CtrlUnformattedTextFrame {
+  position: inherit;
+  left: 0px;
+  width: 676px;
+  height: 220px;
+}
+
+.NowPlaying4CtrlUnformattedText {
+  position: relative;
+  top: 0px;
+  left: 0px;
+  width: 676px;
+  height: 180px;
+  font-family: "Tipperary", Arial, Helvetica, sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  font-size: 35px;
+  color: white;
+  overflow: hidden;
+  text-align: left;
+  vertical-align: middle;
+  word-wrap: break-word;
+  text-overflow: -o-ellipsis-lastline;
+}
+
+.NowPlaying4CtrlPhoneNumberIconFrame {
+  position: absolute;
+  top: 248px;
+  left: 306px;
+  width: 36px;
+  height: 36px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.NowPlaying4CtrlPhoneNumber {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  position: absolute;
+  top: 248px;
+  left: 342px;
+  width: 255px;
+  height: 36px;
+  text-align: left;
+  vertical-align: middle;
+  font-family: "Tipperary", Arial, Helvetica, sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  font-size: 28px;
+  color: white;
+}
+
+.NowPlaying4CtrlRatingMeterFrame {
+  position: absolute;
+  top: 247px;
+  left: 610px;
+  width: 146px;
+  height: 29px;
+}
+
+.NowPlaying4CtrlCustomRatingDiv {
+  position: absolute;
+  top: 247px;
+  left: 610px;
+  width: 146px;
+  height: 29px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.NowPlaying4CtrlRmStarHollow {
+  position: absolute;
+  top: 0px;
+  width: 29px;
+  height: 26px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-image: url(../images/AhaStar_Ds.png);
+}
+
+.NowPlaying4CtrlRmStarHalf {
+  position: absolute;
+  top: 0px;
+  width: 29px;
+  height: 26px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-image: url(../images/AhaStar_Half.png);
+}
+
+.NowPlaying4CtrlRmStarFilled {
+  position: absolute;
+  top: 0px;
+  width: 29px;
+  height: 26px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-image: url(../images/AhaStar_En.png);
+}
+
+.NowPlaying4CtrlFreqFragment {
+  vertical-align: baseline;
+  font-family: "Tipperary Semibold";
+  font-weight: normal;
+  font-style: normal;
+  font-size: 40px;
+  color: white;
+}
+
+.NowPlaying4CtrlUnitFragment {
+  vertical-align: baseline;
+  font-family: "Tipperary", Arial, Helvetica, sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  font-size: 21px;
+  color: white;
+}
+
+.NowPlaying4CtrlStationFragment {
+  vertical-align: baseline;
+  font-family: "Tipperary", Arial, Helvetica, sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  font-size: 35px;
+  color: white;
+}
+
+.NowPlaying4CtrlRelayFragment {
+  vertical-align: baseline;
+  font-family: "Tipperary", Arial, Helvetica, sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  font-size: 35px;
+  color: white;
+}

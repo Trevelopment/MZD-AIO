@@ -1,0 +1,81 @@
+/* CSS Document */
+body {
+  /* default text color */
+  color: white;
+  /* default font */
+  font-family: "Tipperary", Arial, Helvetica, sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  /* default direction */
+  direction: ltr;
+  /* default text alignment */
+  text-align: left;
+}
+
+.CommonBgImg {
+  background-image: url("../images/background.png");
+  background-repeat: no-repeat;
+  width: 800px;
+  height: 480px;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  z-index: 0;
+  background-position:0;
+  animation: slide 600s steps(10,end) infinite;
+}
+
+.CommonRightChrome {
+  background: url("../controls/LeftBtn/images/ChromeArcRight.png") no-repeat;
+  position: absolute;
+  width: 37px;
+  height: 416px;
+  top: 64px;
+  left: 766px;
+  z-index: 8;
+}
+
+.CommonNonTransparentDiv {
+  background-color: #FFF;
+  opacity: 0.01;
+  position: absolute;
+  width: 800px;
+  height: 480px;
+  top: 0px;
+  left: 0px;
+  z-index: 0;
+}
+
+/*Keyframe classes for fade animations (W3 Standard) */
+@keyframes opacZeroToFull {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes opacFullToZero {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+/*CSS Animation classes for fade animations*/
+.FadeOut {
+  animation: opacFullToZero 0.3s ease-in-out both;
+}
+
+.FadeIn {
+  animation: opacZeroToFull 0.3s ease-in-out both;
+}
+/*Background switch animation for 10 backgrounds 8000px*/
+@keyframes slide {
+  to {
+    background-position:-8000px;
+  }
+}

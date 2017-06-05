@@ -1,0 +1,174 @@
+# Auto detect text files and perform LF normalization
+
+# Custom for Visual Studio
+*.cs     diff=csharp
+# Thwese Types should always be LF
+*.txt    text eol=lf
+*.sh     text eol=lf
+*.json   text eol=lf
+*.htm    text eol=lf
+*.html   text eol=lf
+*.js     text eol=lf
+*.jsx    text eol=lf
+*.css    text eol=lf
+*.xml    text eol=lf
+
+## SOURCE CODE
+*.bat    text
+*.coffee text
+*.inc    text
+*.ini    text
+*.less   text
+*.php    text
+*.pl     text
+*.py     text
+*.rb     text
+*.sass   text
+*.scm    text
+*.scss   text
+*.sql    text
+*.styl   text
+*.ts     text
+*.xhtml  text
+
+## DOCUMENTATION
+*.markdown   text
+*.md         text
+*.mdwn       text
+*.mdown      text
+*.mkd        text
+*.mkdn       text
+*.mdtxt      text
+*.mdtext     text
+AUTHORS      text
+CHANGELOG    text
+CHANGES      text
+CONTRIBUTING text
+COPYING      text
+INSTALL      text
+license      text
+LICENSE      text
+NEWS         text
+readme       text
+*README*     text
+TODO         text
+
+## TEMPLATES
+*.dot        text
+*.ejs        text
+*.haml       text
+*.handlebars text
+*.hbs        text
+*.hbt        text
+*.jade       text
+*.latte      text
+*.mustache   text
+*.phtml      text
+*.tmpl       text
+
+## LINTERS
+.csslintrc    text
+.eslintrc     text
+.jscsrc       text
+.jshintrc     text
+.jshintignore text
+.stylelintrc  text
+
+## CONFIGS
+*.bowerrc      text
+*.cnf          text
+*.conf         text
+*.config       text
+.editorconfig  text
+.gitattributes text
+.gitconfig     text
+.gitignore     text
+.htaccess      text
+*.npmignore    text
+*.yaml         text
+*.yml          text
+Makefile       text
+makefile       text
+
+## HEROKU
+Procfile       text
+.slugignore    text
+
+## GRAPHICS
+*.ai   binary
+*.bmp  binary
+*.eps  binary
+*.gif  binary
+*.jng  binary
+*.jp2  binary
+*.jpg  binary
+*.jpeg binary
+*.jpx  binary
+*.jxr  binary
+*.pdf  binary
+*.png  binary
+*.psb  binary
+*.psd  binary
+*.svg  text
+*.svgz binary
+*.tif  binary
+*.tiff binary
+*.wbmp binary
+*.webp binary
+*.ico  binary
+*.icns binary
+*.md5  binary
+
+## AUDIO
+*.kar  binary
+*.m4a  binary
+*.mid  binary
+*.midi binary
+*.mp3  binary
+*.ogg  binary
+*.ra   binary
+
+## VIDEO
+*.3gpp binary
+*.3gp  binary
+*.as   binary
+*.asf  binary
+*.asx  binary
+*.fla  binary
+*.flv  binary
+*.m4v  binary
+*.mng  binary
+*.mov  binary
+*.mp4  binary
+*.mpeg binary
+*.mpg  binary
+*.swc  binary
+*.swf  binary
+*.webm binary
+*.ivf  binary
+
+## ARCHIVES
+*.7z  binary
+*.gz  binary
+*.rar binary
+*.tar binary
+*.zip binary
+*.up  binary
+*.apk binary
+
+## FONTS
+*.ttf   binary
+*.eot   binary
+*.otf   binary
+*.woff  binary
+*.woff2 binary
+
+## EXECUTABLES
+*.exe binary
+*.pyc binary
+*.so binary
+websocketd binary
+mksquashfs binary
+adb binary
+headunit binary
+*.so.* binary

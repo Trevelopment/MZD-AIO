@@ -1,0 +1,4 @@
+# change to polish version
+show_message "CHANGE SPEEDOMETER TO POLISH..."
+sed -i 's/var language = "DE";/var language = "PL";/g' /jci/opera/opera_dir/userjs/speedometer-startup.js
+log_message "===        CHANGED SPEEDOMETER TO POLISH VERSION       ==="

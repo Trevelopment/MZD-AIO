@@ -1,0 +1,61 @@
+<!--
+- MZD-AIO-TI
+- By: Trezdog44 - Trevor Martin
+- http://mazdatweaks.com
+- ©2017 Trevelopment
+-
+- Custom Options For Remove Background Overlays Tweak
+-
+-->
+<table>
+  <tbody class="">
+    <!--tr id="remove-all" class="w3-hover-pale-green w3-tooltip w3-third">
+      <td>
+        <input id="remove-all-bgs" style="top:0" class="w3-check" type="checkbox" ng-model="user.rmvallbg" />
+      </td>
+      <td>
+        <label for="remove-all-bgs" data-toggle="tooltip" data-placement="auto bottom" title="Remove All Backgrounds">Remove All</label>
+      </td>
+    </tr-->
+    <tr id="btn-bg" class="w3-hover-pale-green w3-tooltip w3-third">
+      <td>
+        <input id="rmvbg-{{uistyle.nobtnbg.id}}" style="top:0" class="w3-check" type="checkbox" ng-model="user.uistyle.nobtnbg" ng-value="user.uistyle.nobtnbg" />
+      </td>
+      <td>
+        <label for="rmvbg-{{uistyle.nobtnbg.id}}" data-toggle="tooltip" data-placement="auto bottom" title="{{uistyle.nobtnbg.label}}">{{uistyle.nobtnbg.label}}</label>
+      </td>
+    </tr>
+    <tr id="nonpbg" class="w3-hover-pale-green w3-tooltip w3-third">
+      <td>
+        <input id="rmvbg-{{uistyle.nonpbg.id}}" style="top:0" class="w3-check" type="checkbox" ng-model="user.uistyle.nonpbg" ng-value="user.uistyle.nonpbg"/>
+      </td>
+      <td>
+        <label for="rmvbg-{{uistyle.nonpbg.id}}" data-toggle="tooltip" data-placement="auto bottom" title="{{uistyle.nonpbg.label}}">{{uistyle.nonpbg.label}}</label>
+      </td>
+    </tr>
+    <tr id="nolistbg" class="w3-hover-pale-green w3-tooltip w3-third">
+      <td>
+        <input id="rmvbg-{{uistyle.nolistbg.id}}" style="top:0" class="w3-check" type="checkbox" ng-model="user.uistyle.nolistbg" ng-value="user.uistyle.nolistbg"/>
+      </td>
+      <td>
+        <label for="rmvbg-{{uistyle.nolistbg.id}}" data-toggle="tooltip" data-placement="auto bottom" title="{{uistyle.nolistbg.label}}">{{uistyle.nolistbg.label}}</label>
+      </td>
+    </tr>
+    <tr id="nocallbg" ng-hide="user.uistyle.uninstmain" class="w3-hover-pale-green w3-tooltip w3-third">
+      <td>
+        <input id="rmvbg-{{uistyle.nocallbg.id}}" style="top:0" class="w3-check" type="checkbox" ng-model="user.uistyle.nocallbg" ng-value="user.uistyle.nocallbg" ng-checked="user.uistyle.altlayout2"/>
+      </td>
+      <td>
+        <label for="rmvbg-{{uistyle.nocallbg.id}}" data-toggle="tooltip" data-placement="auto bottom" title="{{uistyle.nocallbg.label}}">{{uistyle.nocallbg.label}}</label>
+      </td>
+    </tr>
+    <tr id="notextbg" class="w3-hover-pale-green w3-tooltip w3-third">
+      <td>
+        <input id="rmvbg-{{uistyle.notextbg.id}}" style="top:0" class="w3-check" type="checkbox" ng-model="user.uistyle.notextbg" ng-value="user.uistyle.notextbg"/>
+      </td>
+      <td>
+        <label for="rmvbg-{{uistyle.notextbg.id}}" data-toggle="tooltip" data-placement="auto bottom" title="{{uistyle.notextbg.label}}">{{uistyle.notextbg.label}}</label>
+      </td>
+    </tr>
+  </tbody>
+</table>

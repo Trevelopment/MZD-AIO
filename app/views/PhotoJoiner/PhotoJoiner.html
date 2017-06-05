@@ -1,0 +1,222 @@
+<ng-form id="form1" runat="server">
+  <div id="header" class="header w3-pale-green">
+    <div class="content center">
+      <a href="" onclick="externalLink('mazdatweaks')" title="MazdaTweaks.com" class="name"><h1 id="mzd-title" class="mazda"> MZD-AIO-TI <small><i>v</i>{{appVer}}</small></h1></a>
+      <div class="big3">
+        {{imgOps[0].label}}
+      </div>
+    </div>
+  </div>
+  <div class="content">
+    <div id="Panel1" style="width: 100%;">
+      <div class="w3-center">{{imgOps[1].label}}<br>X = <input type='number' id='bgRotatorSeconds' name='bgRotatorSeconds' value='60' min='10' max='300' step='1'></div>
+      <table width="100%" border="0">
+        <tbody>
+          <tr>
+            <td align="center" valign="middle" height="400">
+              <div style="position:relative; overflow:hidden;">
+                <input type="file" id="selectedFile" multiple="multiple" accept="image/*" style="position:absolute; top:0; left:0;" onchange="selectFiles();">
+              </div>
+              <input type="button" class="btn w3-btn w3-hover-text-green" value="{{imgOps[11].label}}" onclick="ValidateAllowedImages();">
+              <center>
+                <div id="outer-thumbs" style="overflow: auto; width: 1400px;outline:4px dashed #007dad;outline-offset: 2px;margin: 20px 0px 15px 0px;">
+                  <div id="thumbs" class="ui-sortable" style="background-color: rgb(255, 255, 255); padding: 0px;">
+                  </div>
+                </div>
+                <div class="small" id="dragnote" style="display: none;">
+                  {{imgOps[2].label}}
+                </div>
+                <div class="w3-padding w3-center">
+                  <span id="imgCount"></span> {{imgOps[3].label}}.
+                </div>
+              </center>
+              <div class="topgap">
+                <div class="big2">
+                  Style
+                </div>
+                <div style="padding-left: 30px;">
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td valign="middle" align="center" style="padding-right: 10px;">
+                          <div class="style selected" title="Vertical" id="style_1" onclick="changeStyle(1)">
+                            <table cellpadding="0" cellspacing="0">
+                              <tbody>
+                                <tr>
+                                  <td>
+                                    <div class="square">
+                                    </div>
+                                  </td>
+                                  <td>
+                                    <div class="square">
+                                    </div>
+                                  </td>
+                                  <td>
+                                    <div class="square">
+                                    </div>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </td>
+                        <td valign="middle" align="center" style="padding-right: 10px;">
+                          <div class="style" title="Vertical" id="style_2" onclick="changeStyle(2)">
+                            <div class="square">
+                            </div>
+                            <div class="square">
+                            </div>
+                            <div class="square">
+                            </div>
+                          </div>
+                        </td>
+                        <td valign="middle" align="center" style="padding-right: 10px;">
+                          <div class="style" title="Horizontal" id="style_3" onclick="changeStyle(3)">
+                            <table cellpadding="0" cellspacing="0">
+                              <tbody>
+                                <tr>
+                                  <td>
+                                    <div class="square">
+                                    </div>
+                                  </td>
+                                  <td>
+                                    <div class="square">
+                                    </div>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td>
+                                    <div class="square">
+                                    </div>
+                                  </td>
+                                  <td>
+                                    <div class="square">
+                                    </div>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <input type="hidden" id="style" name="style" value="1">
+                </div>
+              </div>
+              <div class="topgap" id="ResizeOptions">
+                <div class="big2">
+                  Resize
+                </div>
+                <div style="padding-left: 30px; margin-top: 10px;">
+                  <table cellpadding="0" cellspacing="0">
+                    <tbody>
+                      <tr>
+                        <td>
+                          <input type="radio" name="resize" value="l"> &nbsp;Resize to the largest image
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <input type="radio" name="resize" value="s" checked="checked"> &nbsp;Resize to the smallest image
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="topgap" id="GridOptions">
+                <div class="big2">
+                  Grid Options
+                </div>
+                <div style="padding-left: 30px; margin-top: 10px;">
+                  <table id="Table1" cellpadding="0" cellspacing="0">
+                    <tbody>
+                      <tr>
+                        <td>
+                          Rows&nbsp;&nbsp;
+                          <input type="text" id="txtRows" size="5" value="2" onchange="changeGridSize()">
+                        </td>
+                        <td>
+                          &nbsp;&nbsp; Columns&nbsp;
+                          <input type="text" id="txtCols" size="5" value="2" onchange="changeGridSize()">
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="topgap">
+                <div class="big2">
+                  Margin
+                </div>
+                <div style="padding-left: 30px; margin-top: 10px;">
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <input type="checkbox" name="margin" id="margin" value="1" style="margin: 0" onclick="colorPicker()"> &nbsp;Margin between images
+                          <input type="text" size="2" value="10" id="marginsize" name="marginsize" onchange="setMargin()"> px
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="small">
+                          Margin you see in the preview is proportional to the thumbnails. Actual margins will be bigger.
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="topgap" id="colorpicker" style="display: none;">
+                <div class="big2">
+                  Fill Color
+                </div>
+                <div style="padding-left: 30px; margin-top: 10px;">
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <input id="color" name="color" size="8" value="#ffffff" style="text-align: center;" maxlength="6">
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div style="margin-top: 0px; display: none;" id="joinbtn">
+                <input type="button" id="btnJoinPhotos" value="Save Backgound" class="big2 btn w3-btn w3-hover-teal w3-hover-text-indigo" onclick="JoinPhotos();writeRotatorVars()">
+              </div>
+              <div style="margin-top: 30px;" id="mintwo" class="big2">
+                {{imgOps[4].label}}<input type="button" id="useAlreadyJoined" value="{{imgOps[5].label}}" class="big2 btn w3-btn w3-hover-teal w3-hover-text-indigo" onclick="ipc.send('bg-no-resize');window.close();">
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div id="Panel2" style="width: 100%; display: none;">
+      <div class="center">
+        <a class="big2" href="" onclick="window.close()">{{menu.close.label}}</a>
+        <br>
+        {{imgOps[6].label}}
+        <br>
+        <br>
+        <img id="imgJoined" width="1400" onerror="$(this).attr('src',app.getPath('userData') + '/background/background.png?' + Math.round(Math.random()*1000,0))" onclick="window.close()" title="{{menu.close.label}} &amp; Preview" style="cursor:pointer">
+        <br>
+        <div id="saveStat"></div>
+        <br>
+        <a href="app.getPath('userData') + /background/background.png" id="imgJoinedLink" class="big2 w3-btn w3-hover-yellow w3-text-pale-green" download="background.png" title="{{imgOps[7].label}}" >
+          {{imgOps[7].label}}
+        </a>
+        <a class="big2 w3-btn w3-hover-brown w3-text-pale-blue" href="" onclick="location.reload()" title="Start Over">{{imgOps[8].label}}</a>
+        <br>
+        <div id="rightClickSaveImage" style="font-weight:700"> {{imgOps[9].label}}</div>
+        <br>
+      </div>
+    </div>
+  </div>
+</div>
+<input type="hidden" id="order" name="order" value="">
+<input type="hidden" id="hdnImageData" name="hdnImageData" value="">
+</ng-form>

@@ -1,0 +1,2 @@
+# Custom infotainment colors
+# change speedometer graphics too, if speedometer is already installed

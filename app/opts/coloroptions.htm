@@ -1,0 +1,44 @@
+<!--
+- MZD-AIO-TI
+- By: Trezdog44 - Trevor Martin
+- http://mazdatweaks.com
+- ©2017 Trevelopment
+-
+- Custom Options For Custom Infotainment Colors And Themes Tweak
+-
+-->
+<tbody class="hasColorFiles w3-col">
+	<tr ng-repeat="(key,option) in colors" class="w3-hover-pale-blue w3-half side-colors">
+		<td>
+			<div class="color-check extraRadio">
+				<input id="color{{option.id}}" type="radio" name="{{option.label}}" ng-model="user.colors" ng-value="option.id">
+				<label for="color{{option.id}}" data-toggle="tooltip" data-placement="auto bottom" title="{{option.label}}" class="{{option.label}}"></label>
+			</div>
+		</td>
+		<td>
+			<label for="color{{option.id}}" data-toggle="tooltip" data-placement="auto bottom" title="{{option.label}}">{{option.label}}
+			</label>
+		</td>
+	</tr>
+	<tr id="customThemeOps" ng-show="user.colors === 17" class="w3-hover-pale-green w3-row w3-col w3-tooltip" style="max-height: none!important;height: auto;">
+		<td class="w3-hover-pale-blue w3-round" style="width:24%!important">
+			<a class="w3-btn w3-ripple w3-grey" href="" onclick="externalLink('MZD-themes')" id="downloadThemes">
+				<span class="icon-download"></span> Download Themes
+			</a>
+		</td>
+		<td class="w3-hover-pale-blue side-colors" style="width:49%!important">
+			<a class="w3-btn w3-ripple w3-teal" href="" onclick="ipc.send('theme-jci')" id="customTheme">
+				<span class="icon-power"></span> Choose Theme
+			</a>
+		</td>
+		<td class="w3-hover-pale-blue w3-tooltip side-colors" style="width:24%!important">
+			<div id="customColorsHelp" class="w3-tag w3-display-middle w3-text" style="right: 0;position: fixed;" ng-bind-html="mainOps.colors.toolTip2"  onclick="$(this).hide()">
+			</div>
+			<span class="icon-info2 w3-large" onclick="$('#customColorsHelp').toggleClass('w3-show').removeClass('w3-hide')" style="cursor:pointer;padding-left:5px;"></span>
+		</td>
+		<td class="w3-col w3-row">
+		<div style="white-space:nowrap" ng-show="user.customTheme">Theme: {{user.customTheme}}
+		</div>
+	</td>
+	</tr>
+</tbody>

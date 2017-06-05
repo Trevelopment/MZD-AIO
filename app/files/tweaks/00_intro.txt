@@ -1,0 +1,13 @@
+#!/bin/sh
+# tweaks.sh - MZD-AIO-TI Version 2.5.10
+# Special thanks to Siutsch for collecting all the tweaks and for the original AIO
+# Thanks to oz_paulb from mazda3revolution.com for these useful methods.
+# For more information visit http://mazdatweaks.com
+# Enjoy, Trezdog44 - Trevelopment.com
+
+# AIO Variables
+
+AIO_VER=2.5.10
+AIO_DATE=2017.05.21
+# Time
+hwclock --hctosys

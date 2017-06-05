@@ -1,0 +1,417 @@
+/* start */
+#speedometerContainer {
+    font-family:Tipperary,verdana;
+    top:0px;
+    right:0;
+    bottom:0;
+    left:0;
+    height:416px;
+    width:800px;
+    position:absolute;
+    overflow: hidden;
+}
+#analog {
+    height: 436px;
+    left: -5px;
+    position: absolute;
+    top: -20px;
+    width: 496px;
+    overflow: hidden;
+}
+#speedometerBG {
+    left: 3px;
+    top: 13px;
+    width: 496px;
+    height: 482px;
+    background: url('../images/bg_analog.png') no-repeat scroll center top transparent;
+    position:absolute;
+    z-index: 100;
+}
+#speedometerDial {
+    left: 110px;
+    top: 113px;
+    width: 278px;
+    height: 241px;
+    background: url('../images/Ticks_Style04_kmh.png') no-repeat scroll 0 0 transparent;
+    background-size: 100% 93.7%;
+    position:absolute;
+    z-index: 101;
+}
+#speedometerDial.mph {
+    background: url('../images/Ticks_Style04_mph.png') no-repeat scroll 0 0 transparent;
+    background-size: 100% 93.7%;
+}
+.topSpeedIndicator {
+    width: 25px;
+    height: 310px;
+    background: url('../images/TopSpeedNeedle.png') no-repeat scroll center center transparent;
+    left: 237px;
+    position: absolute;
+    top: 99px;
+    z-index: 102;
+    transform: rotate(-120deg);
+    transition: transform 1.0s ease-out 0s;
+}
+.gpsCompassBG {
+    position: absolute;
+    left: 139px;
+    top: 143px;
+    width: 220px;
+    height: 220px;
+    background: url('../images/compass_bg_divider.png') no-repeat scroll center center transparent;
+    transform: rotate(0deg);
+    z-index: 104;
+}
+#gpsCompass {
+    position: relative;
+    top: 21px;
+    left: 21px;
+    width: 179px;
+    height: 179px;
+    z-index: 104;
+}
+.speedIndicator {
+    width: 25px;
+    height: 310px;
+    background: url('../images/NeedlePointer.png') no-repeat scroll center center transparent;
+    left: 237px;
+    position: absolute;
+    top: 99px;
+    z-index: 105;
+    transform: rotate(-120deg);
+    transition: transform 0.25s linear 0s;
+}
+#speedometerContainer .vehicleSpeed {
+    position: absolute;
+    left: 139px;
+    top: 143px;
+    width: 220px;
+    height: 220px;
+    background: url('../images/currentSpeed.png') no-repeat scroll center center transparent;
+    color: #FFFFFF;
+    font-size: 40px;
+    line-height: 217px;
+    text-align: center;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);
+    z-index: 105;
+}
+#speedometerContainer .speedUnit {
+    position: absolute;
+    left: 130px;
+    top: 332px;
+    color: #808080;
+    font-size: 12px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+    z-index: 105;
+}
+#gpsCompass * {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    text-align: center;
+    font-size: 20px;
+    color: #DDDDDD;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+    line-height: 20px;
+}
+#gpsCompass .small {
+    width: 30px;
+    font-size: 16px;
+    color: #BBBBBB;
+    line-height: 22px;
+}
+#gpsCompass .North {
+    top: 0px;
+    left: 78px;
+    color: #FFFFFF;
+    transform: rotate(0deg);
+}
+#gpsCompass .NorthEast {
+    top: 24px;
+    left: 128px;
+    transform: rotate(45deg);
+}
+#gpsCompass .East {
+    top: 78px;
+    right: 0px;
+    transform: rotate(90deg);
+}
+#gpsCompass .SouthEast {
+    bottom: 24px;
+    left: 127px;
+    transform: rotate(135deg);
+}
+#gpsCompass .South {
+    bottom: 0px;
+    left: 78px;
+    transform: rotate(180deg);
+}
+#gpsCompass .SouthWest {
+    bottom: 24px;
+    left: 20px;
+    transform: rotate(225deg);
+}
+#gpsCompass .West {
+    top: 78px;
+    left: 0px;
+    transform: rotate(270deg);
+}
+#gpsCompass .NorthWest {
+    top: 24px;
+    left: 20px;
+    transform: rotate(315deg);
+}
+#table_bg {
+    position: absolute;
+    top: 0;
+    right: 10px;
+    width: 313px;
+    height: 420px;
+    background: url('../images/bg_table.png') no-repeat scroll 0 0 transparent;
+}
+#valuetable {
+    position: absolute;
+    right: 34px;
+    top: 27px;
+    width: 245px;
+}
+fieldset {
+    border: 1px solid #444444;
+    border-width: 0px 0px 1px 0px;
+    padding: 2px 0 3px;
+    margin: 0;
+    color: #999999;
+    text-align: right;
+}
+fieldset:last-child {
+    border-color: transparent;
+}
+fieldset legend {
+    color: #BBBBBB;
+    float: left;
+    font-size: 20px;
+    margin-top: 4px;
+    padding: 0px;
+}
+.Drv1AvlFuelEFieldSet legend {
+    margin-top: 2px;
+}
+fieldset legend span{
+    font-size: 16px;
+}
+fieldset div {
+    color: #EEEEEE;
+    margin: 0;
+    font-size: 24px;
+}
+.gpsAltitudeFieldSet {
+    border-color: transparent;
+    padding-bottom: 0px;
+}
+.gpsLatitudeFieldSet div.lat_n {
+    padding-right: 17px;
+    background: url('../images/Lat_N.png') no-repeat scroll right center transparent;
+}
+.gpsLatitudeFieldSet div.lat_s {
+    padding-right: 17px;
+    background: url('../images/Lat_S.png') no-repeat scroll right center transparent;
+}
+.gpsLongitudeFieldSet div.lon_w {
+    padding-right: 17px;
+    background: url('../images/Lon_W.png') no-repeat scroll right center transparent;
+}
+.gpsLongitudeFieldSet div.lon_e {
+    padding-right: 17px;
+    background: url('../images/Lon_E.png') no-repeat scroll right center transparent;
+}
+
+/* German begin */
+.gpsLongitudeFieldSet div.lon_e.de {
+    padding-right: 17px;
+    background: url('../images/Lon_O.png') no-repeat scroll right center transparent;
+}
+/* German end */
+
+/* French begin */
+.gpsLongitudeFieldSet div.lon_w.fr {
+    padding-right: 17px;
+    background: url('../images/Lon_O.png') no-repeat scroll right center transparent;
+}
+/* French end */
+
+/* Turkish begin */
+.gpsLatitudeFieldSet div.lat_n.tr {
+    padding-right: 17px;
+    background: url('../images/Lat_N_K.png') no-repeat scroll right center transparent;
+}
+.gpsLatitudeFieldSet div.lat_s.tr {
+    padding-right: 17px;
+    background: url('../images/Lat_S_G.png') no-repeat scroll right center transparent;
+}
+.gpsLongitudeFieldSet div.lon_w.tr {
+    padding-right: 17px;
+    background: url('../images/Lon_W_B.png') no-repeat scroll right center transparent;
+}
+.gpsLongitudeFieldSet div.lon_e.tr {
+    padding-right: 17px;
+    background: url('../images/Lon_E_D.png') no-repeat scroll right center transparent;
+}
+/* Turkish end */
+
+fieldset div span {
+    color: #BBBBBB;
+    font-size: 16px;
+    padding-right: 4px;
+}
+#textSpeed0, #textSpeed20, #textSpeed40, #textSpeed60, #textSpeed80, #textSpeed100, #textSpeed120, #textSpeed140, #textSpeed160, #textSpeed180, #textSpeed200, #textSpeed220, #textSpeed240 {
+    position: absolute;
+    z-index: 101;
+    color: #CCCCCC;
+    font-size: 25px;
+    text-align: center;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+}
+#textSpeed0 {
+    color: #666666;
+    left: 108px;
+    top: 320px;
+}
+#textSpeed20 {
+    left: 73px;
+    top: 265px;
+}
+#textSpeed40 {
+    left: 73px;
+    top: 209px;
+}
+#textSpeed60 {
+    left: 91px;
+    top: 158px;
+}
+#textSpeed80 {
+    left: 126px;
+    top: 114px;
+}
+#textSpeed100 {
+    left: 165px;
+    top: 84px;
+}
+#textSpeed100.mph {
+    left: 176px;
+    top: 88px;
+}
+#textSpeed120 {
+    left: 226px;
+    top: 74px;
+}
+#textSpeed120.mph {
+    left: 233px;
+    top: 79px;
+}
+#textSpeed140 {
+    left: 286px;
+    top: 84px;
+}
+#textSpeed140.mph {
+    left: 288px;
+    top: 88px;
+}
+#textSpeed160 {
+    left: 341px;
+    top: 114px;
+}
+#textSpeed180 {
+    left: 376px;
+    top: 158px;
+}
+#textSpeed200 {
+    left: 393px;
+    top: 209px;
+}
+#textSpeed220 {
+    left: 393px;
+    top: 265px;
+}
+#textSpeed240 {
+    left: 375px;
+    top: 320px;
+}
+#rpmDial {
+    background: url("../images/engine_speed.png") no-repeat scroll 0 0 transparent;
+    height: 40px;
+    left: 111px;
+    position: absolute;
+    top: 353px;
+    width: 278px;
+    z-index: 101;
+}
+.RPMIndicator,
+.topRPMIndicator {
+    width: 25px;
+    height: 310px;
+    background: url('../images/RPMNeedle.png') no-repeat scroll center center transparent;
+    left: 237px;
+    position: absolute;
+    top: 99px;
+    z-index: 103;
+    transform: rotate(-145deg);
+    transition: transform 0.2s linear 0s;
+}
+.topRPMIndicator {
+    z-index: 102;
+    background: url('../images/TopRPMNeedle.png') no-repeat scroll center center transparent;
+    transition: transform 1.0s ease-out 0s;
+}
+#rpmDial .step {
+    color: #cccccc;
+    font-size: 20px;
+    left: 47px;
+    position: absolute;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+    top: 13px;
+}
+#rpmDial .step.s0 {
+    color: #666666;
+}
+#rpmDial .step.s1 {
+    left: 68px;
+    top: 25px;
+}
+#rpmDial .step.s2 {
+    left: 93px;
+    top: 35px;
+}
+#rpmDial .step.s3 {
+    left: 120px;
+    top: 40px;
+}
+#rpmDial .step.s4 {
+    left: 147px;
+    top: 40px;
+}
+#rpmDial .step.s5 {
+    left: 172px;
+    top: 35px;
+}
+#rpmDial .step.s6 {
+    left: 198px;
+    top: 25px;
+}
+#rpmDial .step.s7 {
+    left: 220px;
+    top: 15px;
+}
+#rpmDial .unit,
+#rpmDial .scale {
+    color: #808080;
+    font-size: 12px;
+    left: 47px;
+    position: absolute;
+    text-align: center;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+    top: 54px;
+}
+#rpmDial .scale {
+    left: 197px;
+}
+/* end */

@@ -1,0 +1,59 @@
+### Update to Waisky2’s addon-all-fixed-auto-install-v2
+- V3.0
+ - Initial
+- V3.2
+ - Removed temperatures that did not work right,
+ -        added trip fuel economy which is based on cmu trip which does not correspond to speedometer trip <yet>,
+ -        changed so all data is rounded which fixed smdb-read speed mismatch to cruse control
+ -        enlarged direction text,
+ -        cleaned up code
+- V3.21
+ - changed metric display to L per 100km
+ -
+ - Changes done by diginix:
+- V3.3
+ - added unit under speedometer for mph or km/h
+ -        replace dot with comma for L per 100km
+ -        optimized speed indicator angles in css
+ -        new graphics for rings, needle pointer, dial image with different layout for steps 5,10,20
+ -        html and css cleanup
+ -        some more layout tuning (e.g. text shadow)
+- V3.4
+  - rotating compass added
+- V3.5
+ -  GPS Heading deleted, Latitude & Longitude added
+- V3.6
+  - added analog top speed indicator
+ -        small animated GPS speed and direction added in statusbar (toggleable with touch on clock)
+- V3.7
+ -  complete new method for data retrieval with websocket
+ -        added GPS Altitude min & max
+ -        added multilingual support (EN,DE,ES)
+ -        added Waisky2’s video player v2
+- V4.0
+ -  integrated as native app in menu
+ -        new statusbar speedo without animation javascript (better performance)
+ -        alternating gps altitude and direction
+- V4.1
+ -  added trip distance
+ -        added language Polish (thanks to sauron2003 from mazda3revolution.com)
+ -        added total fuel efficiency in brackets behind current one
+ -        added selection for fuel efficiency unit in user config
+ -        some layout improvements
+ -        merged some code improvements by vic_bam85
+- V4.2
+ -  added readme.txt
+ -        added language Slovak (thanks to sedrik7 from mazda3revolution.com)
+ -        added language Turkish (thanks to volcano2K from mazda3revolution.com)
+ -        added tachometer for engine speed
+ -        added second idle time if engine is running but car has no speed (opposite to iStop time)
+ -        changed trip distance to 20 meter accuracy (0.02 km)
+ -        fixed statusbar speedo overlapping with message icon if 4 icons are visible (BT,WIFI,BATTERY,MESSAGE)
+- V4.3
+  - added percentage display of both idle times
+ -        added semi transparent background for value table
+ -        added user config for customizing of speedometer background image
+ -        added language French (thanks to drean179 and Regg001 from mazda3revolution.com)
+- V4.4
+ -  added numeric output of top engine speed in right table
+ -        changed statusbar speedometer toggling of gps altitude/direction only active if full size app is closed

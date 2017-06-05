@@ -1,0 +1,29 @@
+# pause on mute
+show_message "INSTALL PAUSE_ON_MUTE ..."
+log_message "=======*******    INSTALL PAUSE_ON_MUTE ... *******======="
+
+# Backups
+if [ ! -e /jci/gui/common/js/Common.js.org ]
+then
+	cp -a /jci/gui/common/js/Common.js /jci/gui/common/js/Common.js.org
+	log_message "=== Backup of /jci/gui/common/js/Common.js to Common.js.org ==="
+fi
+if [ "${KEEPBKUPS}" = 1 ]
+then
+	cp -a /jci/gui/common/js/Common.js.org "${MYDIR}/bakups/"
+	aio_info \"Common.js.org\",
+fi
+
+# Search a specific, unique code snippet to check if modification has already been done
+if grep -Fq 'isMuted ? "Global.Pause" : "Global.Resume"' /jci/gui/common/js/Common.js \
+|| grep -Fq 'AIO Pause on Mute' /jci/gui/common/js/Common.js
+then
+	log_message "=== Pause On Mute Mod is already installed ==="
+else
+	# Add this one line of code that does the magic
+	sed -i '/this._isMutedChanged();/ a\            framework.sendEventToMmui("Common", isMuted ? "Global.Pause" : "Global.Resume"); //AIO Pause on Mute ~Trez' /jci/gui/common/js/Common.js
+	log_message "===      Modified /jci/gui/common/js/Common.js      ==="
+fi
+
+log_message "=====*****  END INSTALLATION OF PAUSE_ON_MUTE  *****======"
+log_message " "

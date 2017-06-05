@@ -1,0 +1,24 @@
+<!--
+- MZD-AIO-TI
+- By: Trezdog44 - Trevor Martin
+- http://mazdatweaks.com
+- ©2017 Trevelopment
+-
+- Custom Options For No More Disclaimer Tweak
+-
+-->
+<table>
+	<tbody class="w3-col">
+		<tr ng-repeat="option in disclaimOps | filter:twkfltr" class="w3-hover-pale-blue w3-tooltip w3-half">
+			<td>
+				<div class="disclaim-check extraRadio">
+					<input id="disclaim{{option.id}}" type="radio" name="{{option.label}}" ng-model="user.disclaimOps" ng-value="option.id" ng-disabled="user.disclaimOps.indexOf({{option.id}}) == -1 && user.disclaimOps.length > 0">
+					<label for="disclaim{{option.id}}" title="{{option.label}}" class="{{option.label}}"></label>
+				</div>
+			</td>
+			<td>
+				<label for="disclaim{{option.id}}" data-toggle="tooltip" data-placement="auto bottom" title="{{option.label}}">{{option.label}}</label>
+			</td>
+		</tr>
+	</tbody>
+</table>

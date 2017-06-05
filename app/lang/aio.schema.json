@@ -1,0 +1,2720 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Language Translate",
+  "type": "object",
+  "format": "grid",
+  "properties": {
+    "languages": {
+      "title":"Languages",
+      "id":"lang",
+      "type": "object",
+      "propertyOrder": 1,
+      "format": "grid",
+      "options": {
+        "collapsed": true
+      },
+      "properties": {
+        "en": {
+          "title": "English",
+          "type": "object",
+          "format": "grid",
+          "options": {
+            "grid_columns": 3
+          },
+          "properties": {
+            "id": {
+              "type": "integer",
+              "options": {
+                "hidden": true
+              }
+            },
+            "lang": {
+              "default": "English",
+              "type": "string"
+            }
+          }
+        },
+        "de": {
+          "title": "German",
+          "type": "object",
+          "format": "grid",
+          "options": {
+            "grid_columns": 3
+          },
+          "properties": {
+            "id": {
+              "type": "integer",
+              "options": {
+                "hidden": true
+              }
+            },
+            "lang": {
+              "default": "German",
+              "type": "string"
+            }
+          }
+        },
+        "fr": {
+          "title": "French",
+          "type": "object",
+          "format": "grid",
+          "options": {
+            "grid_columns": 2
+          },
+          "properties": {
+            "id": {
+              "type": "integer",
+              "options": {
+                "hidden": true
+              }
+            },
+            "lang": {
+              "default": "French",
+              "type": "string"
+            }
+          }
+        },
+        "sp": {
+          "title":"Spanish",
+          "type": "object",
+          "format": "grid",
+          "options": {
+            "grid_columns": 3
+          },
+          "properties": {
+            "id": {
+              "type": "integer",
+              "options": {
+                "hidden": true
+              }
+            },
+            "lang": {
+              "default":"Spanish",
+              "type": "string"
+            }
+          }
+        },
+        "pl": {
+          "title": "Polish",
+          "type": "object",
+          "format": "grid",
+          "options": {
+            "grid_columns": 2
+          },
+          "properties": {
+            "id": {
+              "type": "integer",
+              "options": {
+                "hidden": true
+              }
+            },
+            "lang": {
+              "default": "Polish",
+              "type": "string"
+            }
+          }
+        },
+        "trk": {
+          "title": "Turkish",
+          "type": "object",
+          "format": "grid",
+          "options": {
+            "grid_columns": 2
+          },
+          "properties": {
+            "id": {
+              "type": "integer",
+              "options": {
+                "hidden": true
+              }
+            },
+            "lang": {
+              "default": "Turkish",
+              "type": "string"
+            }
+          }
+        },
+        "slv": {
+          "title": "Slovak",
+          "type": "object",
+          "format": "grid",
+          "options": {
+            "grid_columns": 2
+          },
+          "properties": {
+            "id": {
+              "type": "integer",
+              "options": {
+                "hidden": true
+              }
+            },
+            "lang": {
+              "default": "Slovak",
+              "type": "string"
+            }
+          }
+        },
+        "hu": {
+          "title": "Hungarian",
+          "type": "object",
+          "format": "grid",
+          "options": {
+            "grid_columns": 2
+          },
+          "properties": {
+            "id": {
+              "type": "integer",
+              "options": {
+                "hidden": true
+              },
+              "lang": {
+                "default": "Hungarian",
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "helpMsgs": {
+      "title":"Help Messages",
+      "propertyOrder": 4,
+      "type": "array",
+      "format": "tabs",
+      "options": {
+        "collapsed": true
+      },
+      "items": {
+        "type": "object",
+        "format": "grid",
+        "title": "Help",
+        "headerTemplate": "{{ self.title }} - ({{title}})",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "options": {
+              "hidden": true
+            }
+          },
+          "title": {
+            "title": "Title",
+            "type": "string",
+            "options": {
+              "grid_columns": 4
+            }
+          },
+          "msg": {
+            "title": "Message",
+            "type": "string",
+            "format": "html",
+            "options": {
+              "wysiwyg": true,
+              "grid_columns": 12
+            }
+          },
+          "t2": {
+            "title": "Title2",
+            "type": "string",
+            "options": {
+              "grid_columns": 4
+            }
+          },
+          "msg2": {
+            "title": "Message2",
+            "type": "string",
+            "format": "html",
+            "options": {
+              "wysiwyg": true,
+              "grid_columns": 12
+            }
+          }
+        }
+      }
+    },
+    "FAQs": {
+      "type": "object",
+      "propertyOrder": 5,
+      "title": "FAQs",
+      "format": "grid",
+      "options": {
+        "collapsed": true
+      },
+      "properties": {
+        "title": {
+          "title": "Title",
+          "type": "string"
+        },
+        "msg": {
+          "title": "Title 2",
+          "type": "string"
+        },
+        "q1": {
+          "title": "Question 1",
+          "type": "string",
+          "format": "textarea",
+          "options": {
+            "grid_columns": 6
+          }
+        },
+        "a1": {
+          "title": "Answer 1",
+          "type": "string",
+          "format": "textarea",
+          "options": {
+            "grid_columns": 6
+          }
+        },
+        "q2": {
+          "title": "Question 2",
+          "type": "string",
+          "format": "textarea",
+          "options": {
+            "grid_columns": 6
+          }
+        },
+        "a2": {
+          "title": "Answer 2",
+          "type": "string",
+          "format": "textarea",
+          "options": {
+            "grid_columns": 6
+          }
+        },
+        "q3": {
+          "title": "Question 3",
+          "type": "string",
+          "format": "textarea",
+          "options": {
+            "grid_columns": 6
+          }
+        },
+        "a3": {
+          "title": "Answer 3",
+          "type": "string",
+          "format": "textarea",
+          "options": {
+            "grid_columns": 6
+          }
+        },
+        "q4": {
+          "title": "Question 4",
+          "type": "string",
+          "format": "textarea",
+          "options": {
+            "grid_columns": 6
+          }
+        },
+        "a4": {
+          "title": "Answer 4",
+          "type": "string",
+          "format": "textarea",
+          "options": {
+            "grid_columns": 6
+          }
+        },
+        "q5": {
+          "title": "Question 25",
+          "type": "string",
+          "format": "textarea",
+          "options": {
+            "grid_columns": 6
+          }
+        },
+        "a5": {
+          "title": "Answer 25",
+          "type": "string",
+          "format": "textarea",
+          "options": {
+            "grid_columns": 6
+          }
+        },
+        "q6": {
+          "title": "Question 6",
+          "type": "string",
+          "format": "textarea",
+          "options": {
+            "grid_columns": 6
+          }
+        },
+        "a6": {
+          "title": "Answer 6",
+          "type": "string",
+          "format": "textarea",
+          "options": {
+            "grid_columns": 6
+          }
+        },
+        "q7": {
+          "title": "Question 7",
+          "type": "string",
+          "format": "textarea",
+          "options": {
+            "grid_columns": 6
+          }
+        },
+        "a7": {
+          "title": "Answer 7",
+          "type": "string",
+          "format": "textarea",
+          "options": {
+            "grid_columns": 6
+          }
+        },
+        "q8": {
+          "title": "Question 8",
+          "type": "string",
+          "format": "textarea",
+          "options": {
+            "grid_columns": 6
+          }
+        },
+        "a8": {
+          "title": "Answer 8",
+          "type": "string",
+          "format": "textarea",
+          "options": {
+            "grid_columns": 6
+          }
+        },
+        "q9": {
+          "title": "Question 9",
+          "type": "string",
+          "format": "textarea",
+          "options": {
+            "grid_columns": 6
+          }
+        },
+        "a9": {
+          "title": "Answer 9",
+          "type": "string",
+          "format": "textarea",
+          "options": {
+            "grid_columns": 6
+          }
+        },
+        "q10": {
+          "title": "Question 10",
+          "type": "string",
+          "format": "textarea",
+          "options": {
+            "grid_columns": 6
+          }
+        },
+        "a10": {
+          "title": "Answer 10",
+          "type": "string",
+          "format": "textarea",
+          "options": {
+            "grid_columns": 6
+          }
+        }
+      }
+    },
+    "tourMsgs": {
+      "title":"Tour Messages",
+      "propertyOrder": 8,
+      "type": "array",
+      "format": "tabs",
+      "options": {
+        "collapsed": true
+      },
+      "items": {
+        "type": "object",
+        "format": "grid",
+        "title": "Tour",
+        "headerTemplate": "{{title}}: {{self.msg}}",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "options": {
+              "hidden": true
+            }
+          },
+          "msg": {
+            "type": "string",
+            "format": "html",
+            "options": {
+              "grid_columns": 12,
+              "wysiwyg": true
+            }
+          }
+        }
+      }
+    },
+    "popupMsgs": {
+      "title":"Popup Messages",
+      "propertyOrder": 30,
+      "type": "array",
+      "format": "tabs",
+      "options": {
+        "collapsed": true
+      },
+      "items": {
+        "type": "object",
+        "format": "grid",
+        "title": "Message",
+        "headerTemplate": "{{title}}: {{self.msg}}",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "options": {
+              "hidden": true
+            }
+          },
+          "msg": {
+            "type": "string",
+            "format": "html",
+            "options": {
+              "grid_columns": 12,
+              "wysiwyg": true
+            }
+          }
+        }
+      }
+    },
+    "mainOps": {
+      "title":"Top Row Tweaks",
+      "propertyOrder": 2,
+      "type": "object",
+      "options": {
+        "collapsed": true
+      },
+      "properties": {
+        "wifi": {
+          "type": "object",
+          "format": "grid",
+          "properties": {
+            "id": {
+              "type": "integer",
+              "options": {
+                "hidden": true
+              }
+            },
+            "label": {
+              "type": "string",
+              "options": {"grid_columns": 4}
+            },
+            "safetylvl": {
+              "type": "string",
+              "enum": ["safe","warning","development"],
+              "options": {
+                "hidden": true
+              }
+            },
+            "toolTip": {
+              "type": "string",
+              "format": "html",
+              "options": {
+                "wysiwyg": true,
+                "grid_columns": 8
+              }
+            }
+          }
+        },
+        "backup": {
+          "type": "object",
+          "format": "grid",
+          "properties": {
+            "id": {
+              "type": "integer",
+              "options": {
+                "hidden": true
+              }
+            },
+            "label": {
+              "type": "string",
+              "options": {"grid_columns": 4}
+            },
+            "safetylvl": {
+              "type": "string",
+              "enum": ["safe","warning","development"],
+              "options": {
+                "hidden": true
+              }
+            },
+            "toolTip": {
+              "type": "string",
+              "format": "html",
+              "options": {
+                "wysiwyg": true,
+                "grid_columns": 8
+              }
+            }
+          }
+        },
+        "background": {
+          "type": "object",
+          "format": "grid",
+          "properties": {
+            "id": {
+              "type": "integer",
+              "options": {
+                "hidden": true
+              }
+            },
+            "label": {
+              "type": "string",
+              "options": {"grid_columns": 4}
+            },
+            "safetylvl": {
+              "type": "string",
+              "enum": ["safe","warning","development"],
+              "options": {
+                "hidden": true
+              }
+            },
+            "toolTip": {
+              "type": "string",
+              "format": "html",
+              "options": {
+                "wysiwyg": true,
+                "grid_columns": 8
+              },
+              "img": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "colors": {
+          "type": "object",
+          "format": "grid",
+          "properties": {
+            "id": {
+              "type": "integer",
+              "options": {
+                "hidden": true
+              }
+            },
+            "label": {
+              "type": "string",
+              "options": {"grid_columns": 4}
+            },
+            "safetylvl": {
+              "type": "string",
+              "enum": ["safe","warning","development"],
+              "options": {
+                "hidden": true
+              }
+            },
+            "toolTip": {
+              "type": "string",
+              "format": "html",
+              "options": {
+                "wysiwyg": true,
+                "grid_columns": 8
+              }
+            },
+            "toolTip2": {
+              "type": "string",
+              "format": "html",
+              "options": {
+                "wysiwyg": true,
+                "grid_columns": 8
+              }
+            },
+            "img": {
+              "type": "string"
+            }
+          }
+        },
+        "sshbringback": {
+          "type": "object",
+          "format": "grid",
+          "properties": {
+            "id": {
+              "type": "integer",
+              "options": {
+                "hidden": true
+              }
+            },
+            "label": {
+              "type": "string",
+              "options": {"grid_columns": 4}
+            },
+            "safetylvl": {
+              "type": "string",
+              "enum": ["safe","warning","development"],
+              "options": {
+                "hidden": true
+              }
+            },
+            "toolTip": {
+              "type": "string",
+              "format": "html",
+              "options": {
+                "wysiwyg": true,
+                "grid_columns": 8
+              }
+            }
+          }
+        },
+        "sdcid": {
+          "type": "object",
+          "format": "grid",
+          "properties": {
+            "id": {
+              "type": "integer",
+              "options": {
+                "hidden": true
+              }
+            },
+            "label": {
+              "type": "string",
+              "options": {"grid_columns": 4}
+            },
+            "safetylvl": {
+              "type": "string",
+              "enum": ["safe","warning","development"],
+              "options": {
+                "hidden": true
+              }
+            },
+            "toolTip": {
+              "type": "string",
+              "format": "html",
+              "options": {
+                "wysiwyg": true,
+                "grid_columns": 8
+              }
+            }
+          }
+        },
+        "backgroundrotator": {
+          "type": "object",
+          "format": "grid",
+          "properties": {
+            "id": {
+              "type": "integer",
+              "options": {
+                "hidden": true
+              }
+            },
+            "label": {
+              "type": "string",
+              "options": {"grid_columns": 4}
+            },
+            "btntxt": {
+              "type": "string",
+              "options": {"grid_columns": 4}
+            },
+            "button": {
+              "type": "string",
+              "options": {"grid_columns": 4}
+            },
+            "safetylvl": {
+              "type": "string",
+              "enum": ["safe","warning","development"],
+              "options": {
+                "hidden": true
+              }
+            },
+            "toolTip": {
+              "type": "string",
+              "format": "html",
+              "options": {
+                "wysiwyg": true,
+                "grid_columns": 12
+              }
+            }
+          }
+        },
+        "retain": {
+          "type": "object",
+          "format": "grid",
+          "properties": {
+            "id": {
+              "type": "integer",
+              "options": {
+                "hidden": true
+              }
+            },
+            "label": {
+              "type": "string",
+              "options": {"grid_columns": 4}
+            },
+            "safetylvl": {
+              "type": "string",
+              "enum": ["safe","warning","development"],
+              "options": {
+                "hidden": true
+              }
+            },
+            "toolTip": {
+              "type": "string",
+              "format": "html",
+              "options": {
+                "wysiwyg": true,
+                "grid_columns": 8
+              }
+            }
+          }
+        },
+        "statusbar": {
+          "type": "object",
+          "format": "grid",
+          "properties": {
+            "id": {
+              "type": "integer",
+              "options": {
+                "hidden": true
+              }
+            },
+            "label": {
+              "type": "string",
+              "options": {"grid_columns": 4}
+            },
+            "safetylvl": {
+              "type": "string",
+              "enum": ["safe","warning","development"],
+              "options": {
+                "hidden": true
+              }
+            },
+            "toolTip": {
+              "type": "string",
+              "format": "html",
+              "options": {
+                "wysiwyg": true,
+                "grid_columns": 8
+              }
+            }
+          }
+        },
+        "mainmenu": {
+          "type": "object",
+          "format": "grid",
+          "properties": {
+            "id": {
+              "type": "integer",
+              "options": {
+                "hidden": true
+              }
+            },
+            "label": {
+              "type": "string",
+              "options": {"grid_columns": 4}
+            },
+            "safetylvl": {
+              "type": "string",
+              "enum": ["safe","warning","development"],
+              "options": {
+                "hidden": true
+              }
+            },
+            "toolTip": {
+              "type": "string",
+              "format": "html",
+              "options": {
+                "wysiwyg": true,
+                "grid_columns": 8
+              }
+            },
+            "img": {
+              "type": "string"
+            }
+          }
+        },
+        "uistyle": {
+          "type": "object",
+          "format": "grid",
+          "properties": {
+            "id": {
+              "type": "integer",
+              "options": {
+                "hidden": true
+              }
+            },
+            "label": {
+              "type": "string",
+              "options": {"grid_columns": 4}
+            },
+            "safetylvl": {
+              "type": "string",
+              "enum": ["safe","warning","development"],
+              "options": {
+                "hidden": true
+              }
+            },
+            "toolTip": {
+              "type": "string",
+              "format": "html",
+              "options": {
+                "wysiwyg": true,
+                "grid_columns": 8
+              }
+            }
+          }
+        },
+        "offscreenbg": {
+          "type": "object",
+          "format": "grid",
+          "properties": {
+            "id": {
+              "type": "integer",
+              "options": {
+                "hidden": true
+              }
+            },
+            "label": {
+              "type": "string",
+              "options": {"grid_columns": 4}
+            },
+            "safetylvl": {
+              "type": "string",
+              "enum": ["safe","warning","development"],
+              "options": {
+                "hidden": true
+              }
+            },
+            "toolTip": {
+              "type": "string",
+              "format": "html",
+              "options": {
+                "wysiwyg": true,
+                "grid_columns": 8
+              }
+            },
+            "btntxt": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "menu": {
+      "title":"Menus",
+      "propertyOrder": 7,
+      "type": "object",
+      "format": "grid",
+      "options": {
+        "collapsed": true
+      },
+      "properties": {
+        "save": {
+          "type": "object",
+          "options": {
+            "grid_columns": 3
+          },
+          "format": "grid",
+          "properties": {
+            "menuId": {
+              "type": "string",
+              "options": {
+                "hidden": true
+              }
+            },
+            "label": {
+              "type": "string"
+            },
+            "toolTip": {
+              "type": "string"
+            }
+          }
+        },
+        "load": {
+          "type": "object",
+          "options": {
+            "grid_columns": 3
+          },
+          "format": "grid",
+          "properties": {
+            "menuId": {
+              "type": "string",
+              "options": {
+                "hidden": true
+              }
+            },
+            "label": {
+              "type": "string"
+            },
+            "toolTip": {
+              "type": "string"
+            }
+          }
+        },
+        "tour": {
+          "type": "object",
+          "options": {
+            "grid_columns": 3
+          },
+          "format": "grid",
+          "properties": {
+            "menuId": {
+              "type": "string",
+              "options": {
+                "hidden": true
+              }
+            },
+            "label": {
+              "type": "string"
+            },
+            "toolTip": {
+              "type": "string"
+            }
+          }
+        },
+        "lastcompilelog": {
+          "type": "object",
+          "options": {
+            "grid_columns": 3
+          },
+          "format": "grid",
+          "properties": {
+            "menuId": {
+              "type": "string",
+              "options": {
+                "hidden": true
+              }
+            },
+            "label": {
+              "type": "string"
+            },
+            "toolTip": {
+              "type": "string"
+            }
+          }
+        },
+        "installall": {
+          "type": "object",
+          "options": {
+            "grid_columns": 3
+          },
+          "format": "grid",
+          "properties": {
+            "menuId": {
+              "type": "string",
+              "options": {
+                "hidden": true
+              }
+            },
+            "label": {
+              "type": "string"
+            },
+            "toolTip": {
+              "type": "string"
+            }
+          }
+        },
+        "uninstallall": {
+          "type": "object",
+          "options": {
+            "grid_columns": 3
+          },
+          "format": "grid",
+          "properties": {
+            "menuId": {
+              "type": "string",
+              "options": {
+                "hidden": true
+              }
+            },
+            "label": {
+              "type": "string"
+            },
+            "toolTip": {
+              "type": "string"
+            }
+          }
+        },
+        "resetoptions": {
+          "type": "object",
+          "options": {
+            "grid_columns": 3
+          },
+          "format": "grid",
+          "properties": {
+            "menuId": {
+              "type": "string",
+              "options": {
+                "hidden": true
+              }
+            },
+            "label": {
+              "type": "string"
+            },
+            "toolTip": {
+              "type": "string"
+            }
+          }
+        },
+        "reloadapp": {
+          "type": "object",
+          "options": {
+            "grid_columns": 3
+          },
+          "format": "grid",
+          "properties": {
+            "menuId": {
+              "type": "string",
+              "options": {
+                "hidden": true
+              }
+            },
+            "label": {
+              "type": "string"
+            },
+            "toolTip": {
+              "type": "string"
+            }
+          }
+        },
+        "copytousb": {
+          "type": "object",
+          "options": {
+            "grid_columns": 3
+          },
+          "format": "grid",
+          "properties": {
+            "menuId": {
+              "type": "string",
+              "options": {
+                "hidden": true
+              }
+            },
+            "label": {
+              "type": "string"
+            },
+            "toolTip": {
+              "type": "string"
+            }
+          }
+        },
+        "help": {
+          "type": "object",
+          "options": {
+            "grid_columns": 3
+          },
+          "format": "grid",
+          "properties": {
+            "menuId": {
+              "type": "string",
+              "options": {
+                "hidden": true
+              }
+            },
+            "label": {
+              "type": "string"
+            },
+            "toolTip": {
+              "type": "string"
+            }
+          }
+        },
+        "install": {
+          "type": "object",
+          "options": {
+            "grid_columns": 3
+          },
+          "format": "grid",
+          "properties": {
+            "menuId": {
+              "type": "string",
+              "options": {
+                "hidden": true
+              }
+            },
+            "label": {
+              "type": "string"
+            }
+          }
+        },
+        "uninstall": {
+          "type": "object",
+          "options": {
+            "grid_columns": 3
+          },
+          "format": "grid",
+          "properties": {
+            "menuId": {
+              "type": "string",
+              "options": {
+                "hidden": true
+              }
+            },
+            "label": {
+              "type": "string"
+            }
+          }
+        },
+        "languages": {
+          "type": "object",
+          "options": {
+            "grid_columns": 3
+          },
+          "format": "grid",
+          "properties": {
+            "menuId": {
+              "type": "string",
+              "options": {
+                "hidden": true
+              }
+            },
+            "label": {
+              "type": "string"
+            }
+          }
+        },
+        "close": {
+          "type": "object",
+          "options": {
+            "grid_columns": 3
+          },
+          "format": "grid",
+          "properties": {
+            "menuId": {
+              "type": "string",
+              "options": {
+                "hidden": true
+              }
+            },
+            "label": {
+              "type": "string"
+            }
+          }
+        },
+        "clickforhelp": {
+          "type": "object",
+          "options": {
+            "grid_columns": 3
+          },
+          "format": "grid",
+          "properties": {
+            "menuId": {
+              "type": "string",
+              "options": {
+                "hidden": true
+              }
+            },
+            "label": {
+              "type": "string"
+            }
+          }
+        },
+        "tweakstoinstall": {
+          "type": "object",
+          "options": {
+            "grid_columns": 3
+          },
+          "format": "grid",
+          "properties": {
+            "menuId": {
+              "type": "string",
+              "options": {
+                "hidden": true
+              }
+            },
+            "label": {
+              "type": "string"
+            }
+          }
+        },
+        "file": {
+          "type": "object",
+          "options": {
+            "grid_columns": 3
+          },
+          "format": "grid",
+          "properties": {
+            "menuId": {
+              "type": "string",
+              "options": {
+                "hidden": true
+              }
+            },
+            "label": {
+              "type": "string"
+            }
+          }
+        },
+        "window": {
+          "type": "object",
+          "options": {
+            "grid_columns": 3
+          },
+          "format": "grid",
+          "properties": {
+            "menuId": {
+              "type": "string",
+              "options": {
+                "hidden": true
+              }
+            },
+            "label": {
+              "type": "string"
+            }
+          }
+        },
+        "download": {
+          "type": "object",
+          "options": {
+            "grid_columns": 3
+          },
+          "format": "grid",
+          "properties": {
+            "menuId": {
+              "type": "string",
+              "options": {
+                "hidden": true
+              }
+            },
+            "label": {
+              "type": "string"
+            }
+          }
+        },
+        "fullscreen": {
+          "type": "object",
+          "options": {
+            "grid_columns": 3
+          },
+          "format": "grid",
+          "properties": {
+            "menuId": {
+              "type": "string",
+              "options": {
+                "hidden": true
+              }
+            },
+            "label": {
+              "type": "string"
+            }
+          }
+        },
+        "translator": {
+          "type": "object",
+          "options": {
+            "grid_columns": 3
+          },
+          "format": "grid",
+          "properties": {
+            "menuId": {
+              "type": "string",
+              "options": {
+                "hidden": true
+              }
+            },
+            "label": {
+              "type": "string"
+            }
+          }
+        },
+        "dlcolors": {
+          "type": "object",
+          "options": {
+            "grid_columns": 3
+          },
+          "format": "grid",
+          "properties": {
+            "menuId": {
+              "type": "string",
+              "options": {
+                "hidden": true
+              }
+            },
+            "label": {
+              "type": "string"
+            }
+          }
+        },
+        "dlspeedcam": {
+          "type": "object",
+          "options": {
+            "grid_columns": 3
+          },
+          "format": "grid",
+          "properties": {
+            "menuId": {
+              "type": "string",
+              "options": {
+                "hidden": true
+              }
+            },
+            "label": {
+              "type": "string"
+            }
+          }
+        },
+        "helppanel": {
+          "type": "object",
+          "options": {
+            "grid_columns": 3
+          },
+          "format": "grid",
+          "properties": {
+            "menuId": {
+              "type": "string",
+              "options": {
+                "hidden": true
+              }
+            },
+            "label": {
+              "type": "string"
+            }
+          }
+        },
+        "changelog": {
+          "type": "object",
+          "options": {
+            "grid_columns": 3
+          },
+          "format": "grid",
+          "properties": {
+            "menuId": {
+              "type": "string",
+              "options": {
+                "hidden": true
+              }
+            },
+            "label": {
+              "type": "string",
+              "default": "Changelog"
+            }
+          }
+        },
+        "start": {
+          "type": "object",
+          "options": {
+            "grid_columns": 9
+          },
+          "format": "grid",
+          "properties": {
+            "menuId": {
+              "type": "string",
+              "options": {
+                "hidden": true
+              }
+            },
+            "label": {
+              "type": "string",
+              "options": {
+                "grid_columns": 3
+              }
+            },
+            "toolTip": {
+              "type": "string",
+              "format":"html",
+              "options": {
+                "wysiwyg": true,
+                "grid_columns": 8
+              }
+            }
+          }
+        },
+        "centerwindow": {
+          "type": "object",
+          "options": {
+            "grid_columns": 4
+          },
+          "format": "grid",
+          "properties": {
+            "menuId": {
+              "type": "string",
+              "options": {
+                "hidden": true
+              }
+            },
+            "label": {
+              "type": "string",
+              "options": {
+                "grid_columns": 3
+              }
+            },
+            "toolTip": {
+              "type": "string",
+              "options": {
+                "grid_columns": 9
+              }
+            }
+          }
+        }
+      }
+    },
+    "imgOps": {
+      "title":"Image Joiner Window",
+      "propertyOrder": 20,
+      "type": "array",
+      "format": "tabs",
+      "options": {
+        "collapsed": true
+      },
+      "items": {
+        "type": "object",
+        "headerTemplate": "{{title}}: {{ self.label }}",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "options": {
+              "hidden": true
+            }
+          },
+          "label": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "translatorWindow": {
+      "title":"Translator Window",
+      "propertyOrder": 25,
+      "type": "array",
+      "format": "tabs",
+      "options": {
+        "collapsed": true
+      },
+      "items": {
+        "type": "object",
+        "headerTemplate": "{{title}}: {{ self.label }}",
+        "properties": {
+          "label": {
+            "type": "string"
+          }
+        },
+        "id":{
+          "type": "string",
+          "options": {
+            "hidden": true
+          }
+        }
+      }
+    },
+    "colors": {
+      "title":"Color Options",
+      "propertyOrder": 10,
+      "type": "object",
+      "format": "grid",
+      "options": {
+        "collapsed": true
+      },
+      "properties": {
+        "red": {
+          "type": "object",
+          "format": "grid",
+          "options": {
+            "grid_columns": 3
+          },
+          "properties": {
+            "id": {
+              "type": "integer",
+              "options": {
+                "hidden": true
+              }
+            },
+            "label": {
+              "type": "string"
+            }
+          }
+        },
+        "blue": {
+          "type": "object",
+          "format": "grid",
+          "options": {
+            "grid_columns": 2
+          },
+          "properties": {
+            "id": {
+              "type": "integer",
+              "options": {
+                "hidden": true
+              }
+            },
+            "label": {
+              "type": "string"
+            }
+          }
+        },
+        "green": {
+          "type": "object",
+          "format": "grid",
+          "options": {
+            "grid_columns": 2
+          },
+          "properties": {
+            "id": {
+              "type": "integer",
+              "options": {
+                "hidden": true
+              }
+            },
+            "label": {
+              "type": "string"
+            }
+          }
+        },
+        "silver": {
+          "type": "object",
+          "format": "grid",
+          "options": {
+            "grid_columns": 2
+          },
+          "properties": {
+            "id": {
+              "type": "integer",
+              "options": {
+                "hidden": true
+              }
+            },
+            "label": {
+              "type": "string"
+            }
+          }
+        },
+        "pink": {
+          "type": "object",
+          "format": "grid",
+          "options": {
+            "grid_columns": 2
+          },
+          "properties": {
+            "id": {
+              "type": "integer",
+              "options": {
+                "hidden": true
+              }
+            },
+            "label": {
+              "type": "string"
+            }
+          }
+        },
+        "purple": {
+          "type": "object",
+          "format": "grid",
+          "options": {
+            "grid_columns": 2
+          },
+          "properties": {
+            "id": {
+              "type": "integer",
+              "options": {
+                "hidden": true
+              }
+            },
+            "label": {
+              "type": "string"
+            }
+          }
+        },
+        "orange": {
+          "type": "object",
+          "format": "grid",
+          "options": {
+            "grid_columns": 2
+          },
+          "properties": {
+            "id": {
+              "type": "integer",
+              "options": {
+                "hidden": true
+              }
+            },
+            "label": {
+              "type": "string"
+            }
+          }
+        },
+        "yellow": {
+          "type": "object",
+          "format": "grid",
+          "options": {
+            "grid_columns": 2
+          },
+          "properties": {
+            "id": {
+              "type": "integer",
+              "options": {
+                "hidden": true
+              }
+            },
+            "label": {
+              "type": "string"
+            }
+          }
+        },
+        "caros": {
+          "type": "object",
+          "format": "grid",
+          "options": {
+            "grid_columns": 2
+          },
+          "properties": {
+            "id": {
+              "type": "integer",
+              "options": {
+                "hidden": true
+              }
+            },
+            "label": {
+              "type": "string"
+            }
+          }
+        },
+        "smoothred": {
+          "type": "object",
+          "format": "grid",
+          "options": {
+            "grid_columns": 2
+          },
+          "properties": {
+            "id": {
+              "type": "integer",
+              "options": {
+                "hidden": true
+              }
+            },
+            "label": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "id",
+            "label"
+          ]
+        },
+        "caros": {
+          "type": "object",
+          "format": "grid",
+          "options": {
+            "grid_columns": 2
+          },
+          "properties": {
+            "id": {
+              "type": "integer",
+              "options": {
+                "hidden": true
+              }
+            },
+            "label": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "id",
+            "label"
+          ]
+        },
+        "stormtroopers": {
+          "type": "object",
+          "format": "grid",
+          "options": {
+            "grid_columns": 2
+          },
+          "properties": {
+            "id": {
+              "type": "integer",
+              "options": {
+                "hidden": true
+              }
+            },
+            "label": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "id",
+            "label"
+          ]
+        },
+        "poker": {
+          "type": "object",
+          "format": "grid",
+          "options": {
+            "grid_columns": 2
+          },
+          "properties": {
+            "id": {
+              "type": "integer",
+              "options": {
+                "hidden": true
+              }
+            },
+            "label": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "id",
+            "label"
+          ]
+        },
+        "mazdalogos": {
+          "type": "object",
+          "format": "grid",
+          "options": {
+            "grid_columns": 2
+          },
+          "properties": {
+            "id": {
+              "type": "integer",
+              "options": {
+                "hidden": true
+              }
+            },
+            "label": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "id",
+            "label"
+          ]
+        },
+        "floating": {
+          "type": "object",
+          "format": "grid",
+          "options": {
+            "grid_columns": 2
+          },
+          "properties": {
+            "id": {
+              "type": "integer",
+              "options": {
+                "hidden": true
+              }
+            },
+            "label": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "id",
+            "label"
+          ]
+        },
+        "xmen": {
+          "type": "object",
+          "format": "grid",
+          "options": {
+            "grid_columns": 2
+          },
+          "properties": {
+            "id": {
+              "type": "integer",
+              "options": {
+                "hidden": true
+              }
+            },
+            "label": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "id",
+            "label"
+          ]
+        },
+        "custom": {
+          "type": "object",
+          "format": "grid",
+          "options": {
+            "grid_columns": 2
+          },
+          "properties": {
+            "id": {
+              "type": "integer",
+              "options": {
+                "hidden": true
+              }
+            },
+            "label": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "id",
+            "label"
+          ]
+        }
+      }
+    },
+    "statusbar": {
+      "title": "Statusbar Tweaks",
+      "propertyOrder": 8,
+      "type": "object",
+      "format": "grid",
+      "options": {
+        "collapsed": true
+      },
+      "properties": {
+        "main": {
+          "title": "Hide Statusbar Background",
+          "type": "object",
+          "format": "grid",
+          "options": {
+            "grid_columns": 2
+          },
+          "properties": {
+            "id": {
+              "type": "integer",
+              "options": {
+                "hidden": true
+              }
+            },
+            "label": {
+              "type": "string"
+            }
+          }
+        },
+        "opacity": {
+          "title": "Statusbar Opacity",
+          "type": "object",
+          "format": "grid",
+          "options": {
+            "grid_columns": 2
+          },
+          "properties": {
+            "id": {
+              "type": "integer",
+              "options": {
+                "hidden": true
+              }
+            },
+            "label": {
+              "type": "string"
+            }
+          }
+        },
+        "app": {
+          "title": "App Title",
+          "type": "object",
+          "format": "grid",
+          "options": {
+            "grid_columns": 2
+          },
+          "properties": {
+            "id": {
+              "type": "integer",
+              "options": {
+                "hidden": true
+              }
+            },
+            "label": {
+              "type": "string"
+            }
+          }
+        },
+        "clock": {
+          "title": "Clock & Date",
+          "type": "object",
+          "format": "grid",
+          "options": {
+            "grid_columns": 2
+          },
+          "properties": {
+            "id": {
+              "type": "integer",
+              "options": {
+                "hidden": true
+              }
+            },
+            "label": {
+              "type": "string"
+            }
+          }
+        },
+        "notif": {
+          "title": "Status Notifications",
+          "type": "object",
+          "format": "grid",
+          "options": {
+            "grid_columns": 2
+          },
+          "properties": {
+            "id": {
+              "type": "integer",
+              "options": {
+                "hidden": true
+              }
+            },
+            "label": {
+              "type": "string"
+            }
+          }
+        },
+        "d2sbinst": {
+          "title": "Install Date To Statusbar",
+          "type": "object",
+          "format": "grid",
+          "options": {
+            "grid_columns": 2
+          },
+          "properties": {
+            "id": {
+              "type": "integer",
+              "options": {
+                "hidden": true
+              }
+            },
+            "label": {
+              "type": "string"
+            }
+          }
+        },
+        "d2sbuninst": {
+          "title": "Uninstall Date To Statusbar",
+          "type": "object",
+          "format": "grid",
+          "options": {
+            "grid_columns": 2
+          },
+          "properties": {
+            "id": {
+              "type": "integer",
+              "options": {
+                "hidden": true
+              }
+            },
+            "label": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "uistyle": {
+      "title":"UI Style Tweaks",
+      "type": "object",
+      "format": "grid",
+      "propertyOrder": 5,
+      "options": {
+        "collapsed": true
+      },
+      "properties": {
+        "body": {
+          "title": "Album & Artist (Body Text)",
+          "type": "object",
+          "format": "grid",
+          "options": {
+            "grid_columns": 2
+          },
+          "properties": {
+            "id": {
+              "type": "integer",
+              "options": {
+                "hidden": true
+              }
+            },
+            "label": {
+              "type": "string"
+            }
+          }
+        },
+        "listitem": {
+          "title": "List Item",
+          "type": "object",
+          "format": "grid",
+          "options": {
+            "grid_columns": 2
+          },
+          "properties": {
+            "id": {
+              "type": "integer",
+              "options": {
+                "hidden": true
+              }
+            },
+            "label": {
+              "type": "string"
+            }
+          }
+        },
+        "listitemdisabled": {
+          "title": "Disabled List Item",
+          "type": "object",
+          "format": "grid",
+          "options": {
+            "grid_columns": 2
+          },
+          "properties": {
+            "id": {
+              "type": "integer",
+              "options": {
+                "hidden": true
+              }
+            },
+            "label": {
+              "type": "string"
+            }
+          }
+        },
+        "title": {
+          "title": "Song Title",
+          "type": "object",
+          "format": "grid",
+          "options": {
+            "grid_columns": 2
+          },
+          "properties": {
+            "id": {
+              "type": "integer",
+              "options": {
+                "hidden": true
+              }
+            },
+            "label": {
+              "type": "string"
+            }
+          }
+        },
+        "radio": {
+          "title": "Radio Station",
+          "type": "object",
+          "format": "grid",
+          "options": {
+            "grid_columns": 2
+          },
+          "properties": {
+            "id": {
+              "type": "integer",
+              "options": {
+                "hidden": true
+              }
+            },
+            "label": {
+              "type": "string"
+            }
+          }
+        },
+        "main3d": {
+          "title": "3D Main Menu Text",
+          "type": "object",
+          "format": "grid",
+          "options": {
+            "grid_columns": 2
+          },
+          "properties": {
+            "id": {
+              "type": "integer",
+              "options": {
+                "hidden": true
+              }
+            },
+            "label": {
+              "type": "string"
+            }
+          }
+        },
+        "ellipse": {
+          "title": "Remove Ellipsis",
+          "type": "object",
+          "format": "grid",
+          "options": {
+            "grid_columns": 2
+          },
+          "properties": {
+            "id": {
+              "type": "integer",
+              "options": {
+                "hidden": true
+              }
+            },
+            "label": {
+              "type": "string"
+            }
+          }
+        },
+        "altlayout": {
+          "title": "'Star Points' Layout",
+          "type": "object",
+          "format": "grid",
+          "options": {
+            "grid_columns": 2
+          },
+          "properties": {
+            "id": {
+              "type": "integer",
+              "options": {
+                "hidden": true
+              }
+            },
+            "label": {
+              "type": "string"
+            }
+          }
+        },
+        "shadow": {
+          "title": "Text Shadow",
+          "type": "object",
+          "format": "grid",
+          "options": {
+            "grid_columns": 2
+          },
+          "properties": {
+            "id": {
+              "type": "integer",
+              "options": {
+                "hidden": true
+              }
+            },
+            "label": {
+              "type": "string"
+            }
+          }
+        },
+        "altulayout": {
+          "title": "'Inverted' Layout",
+          "type": "object",
+          "format": "grid",
+          "options": {
+            "grid_columns": 2
+          },
+          "properties": {
+            "id": {
+              "type": "integer",
+              "options": {
+                "hidden": true
+              }
+            },
+            "label": {
+              "type": "string"
+            }
+          }
+        },
+        "minicoins": {
+          "title": "Smaller 'Coins'",
+          "type": "object",
+          "format": "grid",
+          "options": {
+            "grid_columns": 2
+          },
+          "properties": {
+            "id": {
+              "type": "integer",
+              "options": {
+                "hidden": true
+              }
+            },
+            "label": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "speedcamOps": {
+      "title":"Speedcam Options",
+      "propertyOrder": 12,
+      "type": "array",
+      "format": "tabs",
+      "options": {
+        "collapsed": true
+      },
+      "items": {
+        "headerTemplate": "{{ self.label }} - {{ self.id }}",
+        "type": "object",
+        "format": "grid",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "options": {
+              "grid_columns": 2,
+              "hidden": true
+            }
+          },
+          "label": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "disclaimOps": {
+      "title":"Disclaimer Options",
+      "propertyOrder": 11,
+      "type": "array",
+      "format": "tabs",
+      "options": {
+        "collapsed": true
+      },
+      "items": {
+        "headerTemplate": "{{ self.label }} - {{ self.id }}",
+        "type": "object",
+        "format": "grid",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "options": {
+              "grid_columns": 2,
+              "hidden": true
+            }
+          },
+          "label": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "d2sbOps": {
+      "title":"Date to Statusbar Options",
+      "propertyOrder": 14,
+      "type": "array",
+      "format": "tabs",
+      "options": {
+        "collapsed": true
+      },
+      "items": {
+        "headerTemplate": "{{ self.label }} - {{ self.id }}",
+        "type": "object",
+        "format": "grid",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "options": {
+              "grid_columns": 2,
+              "hidden": true
+            }
+          },
+          "label": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "speedoOps": {
+      "title":"Speedometer Options",
+      "propertyOrder": 20,
+      "type": "object",
+      "format": "grid",
+      "options": {
+        "collapsed": true
+      },
+      "properties": {
+        "lang": {
+          "type": "object",
+          "format": "grid",
+          "properties": {
+            "en": {
+              "type": "object",
+              "options": {
+                "grid_columns": 2
+              },
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "options": {
+                    "hidden": true
+                  }
+                },
+                "label": {
+                  "type": "string",
+                  "watch": {
+                    "lang":"languages.en.lang"
+                  },
+                  "template": "{{lang}}"
+                }
+              }
+            },
+            "de": {
+              "type": "object",
+              "options": {
+                "grid_columns": 2
+              },
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "options": {
+                    "hidden": true
+                  }
+                },
+                "label": {
+                  "type": "string",
+                  "watch": {
+                    "lang":"languages.de.lang"
+                  },
+                  "template": "{{lang}}"
+                }
+              }
+            },
+            "sp": {
+              "type": "object",
+              "options": {
+                "grid_columns": 2
+              },
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "options": {
+                    "hidden": true
+                  }
+                },
+                "label": {
+                  "type": "string",
+                  "watch": {
+                    "lang":"languages.sp.lang"
+                  },
+                  "template": "{{lang}}"
+                }
+              }
+            },
+            "pl": {
+              "type": "object",
+              "options": {
+                "grid_columns": 2
+              },
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "options": {
+                    "hidden": true
+                  }
+                },
+                "label": {
+                  "type": "string",
+                  "watch": {
+                    "lang":"languages.pl.lang"
+                  },
+                  "template": "{{lang}}"
+                }
+              }
+            },
+            "sl": {
+              "type": "object",
+              "options": {
+                "grid_columns": 2
+              },
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "options": {
+                    "hidden": true
+                  }
+                },
+                "label": {
+                  "type": "string",
+                  "watch": {
+                    "lang":"languages.slv.lang"
+                  },
+                  "template": "{{lang}}"
+                }
+              }
+            },
+            "tk": {
+              "type": "object",
+              "options": {
+                "grid_columns": 1
+              },
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "options": {
+                    "hidden": true
+                  }
+                },
+                "label": {
+                  "type": "string",
+                  "watch": {
+                    "lang":"languages.trk.lang"
+                  },
+                  "template": "{{lang}}"
+                }
+              }
+            },
+            "fr": {
+              "type": "object",
+              "options": {
+                "grid_columns": 1
+              },
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "options": {
+                    "hidden": true
+                  }
+                },
+                "label": {
+                  "type": "string",
+                  "watch": {
+                    "lang":"languages.fr.lang"
+                  },
+                  "template": "{{lang}}"
+                }
+              }
+            }
+          }
+        },
+        "xph": {
+          "title": "KPH/MPH",
+          "type": "object",
+          "format": "grid",
+          "options": {
+            "grid_columns": 4
+          },
+          "properties": {
+            "mph": {
+              "type": "object",
+              "format": "grid",
+              "options": {
+                "grid_columns": 6
+              },
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "options": {
+                    "hidden": true
+                  }
+                },
+                "label": {
+                  "type": "string"
+                }
+              }
+            },
+            "kmh": {
+              "type": "object",
+              "format": "grid",
+              "options": {
+                "grid_columns": 6
+              },
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "options": {
+                    "hidden": true
+                  }
+                },
+                "label": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "sml": {
+          "title": "Small Speedometer in Statusbar",
+          "type": "object",
+          "format": "grid",
+          "options": {
+            "grid_columns": 8
+          },
+          "properties": {
+            "gps": {
+              "headerTemplate": "{{ self.label }}",
+              "type": "object",
+              "format": "grid",
+              "options": {
+                "grid_columns": 4
+              },
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "options": {
+                    "hidden": true
+                  }
+                },
+                "label": {
+                  "type": "string"
+                }
+              }
+            },
+            "car": {
+              "headerTemplate": "{{ self.label }}",
+              "type": "object",
+              "format": "grid",
+              "options": {
+                "grid_columns": 4
+              },
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "options": {
+                    "hidden": true
+                  }
+                },
+                "label": {
+                  "type": "string"
+                }
+              }
+            },
+            "none": {
+              "headerTemplate": "{{ self.label }}",
+              "type": "object",
+              "format": "grid",
+              "options": {
+                "grid_columns": 4
+              },
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "options": {
+                    "hidden": true
+                  }
+                },
+                "label": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "bg": {
+          "type": "object",
+          "format": "grid",
+          "options": {"grid_columns": 4},
+          "properties": {
+            "ind": {
+              "headerTemplate": "{{ self.label }}",
+              "type": "object",
+              "options": {"grid_columns": 6},
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "options": {
+                    "hidden": true
+                  }
+                },
+                "label": {
+                  "type": "string"
+                }
+              }
+            },
+            "orig": {
+              "headerTemplate": "{{ self.label }}",
+              "type": "object",
+              "options": {"grid_columns": 6},
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "options": {
+                    "hidden": true
+                  }
+                },
+                "label": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "mod": {
+          "title":"Speedo Variant",
+          "type": "object",
+          "format": "grid",
+          "options": {
+            "grid_columns": 8
+          },
+          "properties": {
+            "id": {
+              "type": "integer",
+              "options": {
+                "hidden": true
+              }
+            },
+            "label": {
+              "type": "string"
+            }
+          }
+        },
+        "opac": {
+          "title":"Opacity",
+          "type": "object",
+          "format": "grid",
+          "options": {
+            "grid_columns": 8
+          },
+          "properties": {
+            "id": {
+              "type": "integer",
+              "options": {
+                "hidden": true
+              }
+            },
+            "val": {
+              "type": "string",
+              "options": {
+                "hidden": true
+              }
+            },
+            "label": {
+              "type": "string",
+              "format": "html",
+              "options": {
+                "wysiwyg": true,
+                "grid_columns": 12,
+                "width": "500px"
+              }
+            }
+          }
+        }
+      }
+    },
+    "tweakOps": {
+      "title":"Main Tweaks",
+      "propertyOrder": 3,
+      "options": {
+        "collapsed": true
+      },
+      "type": "array",
+      "items": {
+        "type": "object",
+        "format": "grid",
+        "title": "Tweak",
+        "headerTemplate": "{{ self.OpName }} - ({{title}})",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "options": {
+              "hidden": true
+            }
+          },
+          "OpName": {
+            "title": "Name",
+            "type": "string",
+            "options": {"grid_columns": 4}
+          },
+          "INST": {
+            "title": "Install Message",
+            "type": "string",
+            "options": {"grid_columns": 4}
+          },
+          "DEINST": {
+            "title": "Uninstall Message",
+            "type": "string",
+            "options": {"grid_columns": 4}
+          },
+          "toolTip": {
+            "title": "Help Message",
+            "type": "string",
+            "format": "html",
+            "options": {
+              "wysiwyg": true,
+              "grid_columns": 8
+            }
+          },
+          "img": {
+            "title": "Image",
+            "type": "string"
+          },
+          "safetylvl": {
+            "type": "string",
+            "enum": ["safe","warning","development"],
+            "default": "safe",
+            "options": {
+              "hidden": true
+            }
+          },
+          "extraOps": {
+            "type": "boolean",
+            "options": {
+              "hidden": true
+            }
+          },
+          "advancedOp": {
+            "type": "boolean",
+            "options": {
+              "hidden": true
+            }
+          }
+        },
+        "img": {
+          "type": "string"
+        },
+        "extraOps": {
+          "type": "boolean",
+          "format": "checkbox"
+        },
+        "advancedOp": {
+          "type": "boolean",
+          "format": "checkbox"
+        }
+      }
+    }
+  }
+}

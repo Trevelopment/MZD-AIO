@@ -1,0 +1,59 @@
+# bigger album art
+show_message "BIGGER ALBUM ART ..."
+log_message "======******          INSTALL BIGGER ALBUM ART ...        ******====="
+
+# Backup
+if [ ! -e /jci/gui/common/controls/NowPlaying4/css/NowPlaying4Ctrl.css.org ]
+then
+	cp -a /jci/gui/common/controls/NowPlaying4/css/NowPlaying4Ctrl.css /jci/gui/common/controls/NowPlaying4/css/NowPlaying4Ctrl.css.org
+	log_message "=== Backup of /jci/gui/common/controls/NowPlaying4/css/NowPlaying4Ctrl.css to NowPlaying4Ctrl.css.org ==="
+fi
+if [ ${KEEPBKUPS} = "1" ]
+then
+	cp -a /jci/gui/common/controls/NowPlaying4/css/NowPlaying4Ctrl.css.org "${MYDIR}/bakups/"
+	aio_info \"NowPlaying4Ctrl.css.org\",
+fi
+
+# Copy Images
+cp -a ${MYDIR}/config/bigger-album-art/jci/gui/common/controls/InCall2/images/NowPlayingImageFrame.png /jci/gui/common/controls/InCall2/images
+cp -a ${MYDIR}/config/bigger-album-art/jci/gui/common/controls/NowPlaying4/images/NowPlayingImageFrame.png /jci/gui/common/controls/NowPlaying4/images
+
+# Remove Existing CSS
+remove_aio_css /jci/gui/common/controls/NowPlaying4/css/NowPlaying4Ctrl.css BIGGERALBM
+
+# Add CSS
+cat <<EOT >> /jci/gui/common/controls/NowPlaying4/css/NowPlaying4Ctrl.css
+/* MZD-AIO-TI BIGGERALBM CSS */
+
+/* CSS For Bigger Album Art */
+.NowPlaying4CtrlTitle,
+.NowPlaying4CtrlTitleFull {
+  top: 0px;
+  left: 14px;
+}
+.NowPlaying4CtrlArtworkImageDiv {
+  top: 61px;
+  left: 580px;
+  width: 210px;
+  height: 210px;
+}
+.NowPlaying4CtrlArtworkImage {
+  max-width: 210px;
+  max-height: 210px;
+}
+.NowPlaying4CtrlArtworkImageBorder {
+  width: 210px;
+  height: 210px;
+}
+.NowPlaying4CtrlInfoBox,
+.NowPlaying4CtrlInfoBoxFull {
+  top: 61px;
+  left: 14px;
+}
+
+/* END AIO BIGGERALBM CSS */
+EOT
+log_message "===              CSS Added for Bigger Album Art Tweak             ==="
+
+log_message "======******     END INSTALLATION OF BIGGER ALBUM ART     ******====="
+log_message " "

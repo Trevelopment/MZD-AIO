@@ -1,0 +1,26 @@
+# Remove castscreen receiver
+show_message "REMOVE CASTSCREEN-RECEIVER ..."
+log_message "=====*****  UNINSTALL CASTSCREEN-RECEIVER ...   *****====="
+
+if [ "${TESTBKUPS}" = "1" ]
+then
+  cp /jci/scripts/stage_wifi.sh "${MYDIR}/bakups/test/stage_wifi_castscreen-before.sh"
+fi
+
+rm -f /jci/scripts/wait_adb_arm.sh
+rm -f /jci/scripts/adb
+rm -f /jci/scripts/cs_receiver_arm
+rm -f /jci/scripts/cs_receiver_conn_arm
+rm -f /jci/scripts/mirroring.sh
+rm -f /jci/scripts/stage_wifi.sh.org2
+sed -i '/Castscreen/d' /jci/scripts/stage_wifi.sh
+sed -i '/mirroring.sh/d' /jci/scripts/stage_wifi.sh
+
+if [ "${TESTBKUPS}" = "1" ]
+then
+  cp /jci/scripts/stage_wifi.sh "${MYDIR}/bakups/test/stage_wifi_castscreen-after.sh"
+fi
+log_message "===            Castscreen-Receiver Removed             ==="
+
+log_message "====**** END UNINSTALLATION OF CASTSCREEN-RECEIVER ****==="
+log_message " "

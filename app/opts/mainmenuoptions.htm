@@ -1,0 +1,63 @@
+<!--
+- MZD-AIO-TI
+- By: Trezdog44 - Trevor Martin
+- http://mazdatweaks.com
+- ©2017 Trevelopment
+-
+- Custom Options For Main Menu Tweak
+-
+-->
+<table>
+  <tbody class="">
+    <tr class="w3-half">
+      <td class="">
+        <input id="mainmenuuninstall" class="w3-check" style="top:0" type="checkbox" ng-model="user.uistyle.uninstmain" ng-value="user.uistyle.uninstmain" />
+      </td>
+      <td>
+        <label for="mainmenueuninstall"><strong style="font-size: 12px;">{{menu.uninstall.label}} </strong></label>
+      </td>
+    </tr>
+    <tr id="uistyle-ellipse" ng-hide="user.uistyle.uninstmain" class="w3-hover-pale-green w3-tooltip w3-half">
+      <td>
+        <input id="uistyle{{uistyle.ellipse.id}}" style="top:0" class="w3-check" type="checkbox" ng-model="user.uistyle.ellipse" ng-value="user.uistyle.ellipse" />
+      </td>
+      <td>
+        <label for="uistyle{{uistyle.ellipse.id}}" data-toggle="tooltip" data-placement="auto bottom" title="{{uistyle.ellipse.label}}">{{uistyle.ellipse.label}}</label>
+      </td>
+    </tr>
+    <tr id="uistyle-mainlabel" ng-hide="user.uistyle.uninstmain" class="w3-hover-pale-green w3-tooltip w3-half">
+      <td>
+        <td>
+          <select ng-model="user.uistyle.mainlabel" class="w3-select" ng-options="x.id as x.label for x in uistyle.mainlabel">
+            <option value="" selected="selected" disabled="disabled">--- Main Menu Text ---</option>
+          </select>
+        </td>
+      </td>
+    </tr>
+    <tr id="uistyle-altlayout" ng-hide="user.uistyle.uninstmain" class="w3-hover-pale-green w3-tooltip w3-half">
+      <td>
+        <td>
+          <select ng-model="user.uistyle.layout" class="w3-select" ng-options="x.id as x.label for x in uistyle.layout">
+            <option value="" selected="selected" disabled="disabled">--- Main Menu Layout ---</option>
+          </select>
+        </td>
+      </td>
+    </tr>
+    <tr id="uistyle-minicoins" ng-hide="user.uistyle.uninstmain" class="w3-hover-pale-green w3-tooltip w3-half">
+      <td>
+        <input id="uistyle{{uistyle.minicoins.id}}" style="top:0" class="w3-check" type="checkbox" ng-model="user.uistyle.minicoins" ng-value="user.uistyle.minicoins" ng-checked="user.uistyle.altlayout2"/>
+      </td>
+      <td>
+        <label for="uistyle{{uistyle.minicoins.id}}" data-toggle="tooltip" data-placement="auto bottom" title="{{uistyle.minicoins.label}}">{{uistyle.minicoins.label}}</label>
+      </td>
+    </tr>
+    <tr id="uistyle-minifocus" class="w3-hover-pale-green w3-tooltip w3-half" ng-show="user.uistyle.minicoins">
+      <td>
+        <input id="uistyle{{uistyle.minifocus.id}}" style="top:0" class="w3-check" type="checkbox" ng-model="user.uistyle.minifocus" ng-value="user.uistyle.minifocus"/>
+      </td>
+      <td>
+        <label for="uistyle{{uistyle.minifocus.id}}" data-toggle="tooltip" data-placement="auto bottom" title="{{uistyle.minifocus.label}}">{{uistyle.minifocus.label}}</label>
+      </td>
+    </tr>
+  </tbody>
+</table>

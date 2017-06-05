@@ -1,0 +1,195 @@
+# Speedcam patch
+show_message "INSTALL SPEEDCAM-PATCH ..."
+log_message "======*****              INSTALL SPEEDCAM-PATCH CAMERAS ...           *****====="
+
+DATA_COPY=0
+# Compatibility Check
+if [ ${CMU_SW_VER} = "56.00.100A-ADR" ]
+	then
+		DATA_COPY=1
+		DATA_COPY_FILE=56.00.100A-ADR
+fi
+
+if [ ${CMU_SW_VER} = "59.00.326A-ADR" ]
+	then
+		DATA_COPY=1
+		DATA_COPY_FILE=59.00.326A-ADR
+fi
+
+if [ ${CMU_SW_VER} = "59.00.331A-EU" ]
+	then
+		DATA_COPY=1
+		DATA_COPY_FILE=59.00.331A-EU
+fi
+
+if [ ${CMU_SW_VER} = "59.00.441A-NA" ]
+	then
+		DATA_COPY=1
+		DATA_COPY_FILE=59.00.441A-NA
+fi
+
+if [ ${CMU_SW_VER} = "59.00.443C-EU" ]
+	then
+		DATA_COPY=1
+		DATA_COPY_FILE=59.00.443C-EU
+fi
+
+if [ ${CMU_SW_VER} = "56.00.230A-EU" ] \
+|| [ ${CMU_SW_VER} = "56.00.511A-EU" ] \
+|| [ ${CMU_SW_VER} = "56.00.512A-EU" ] \
+|| [ ${CMU_SW_VER} = "56.00.513B-EU" ] \
+|| [ ${CMU_SW_VER} = "56.00.513C-EU" ] \
+|| [ ${CMU_SW_VER} = "56.00.230A-ADR" ] \
+|| [ ${CMU_SW_VER} = "56.00.240B-ADR" ] \
+|| [ ${CMU_SW_VER} = "56.00.513C-ADR" ] \
+|| [ ${CMU_SW_VER} = "56.00.521A-NA" ]
+	then
+		DATA_COPY=1
+		DATA_COPY_FILE=56.00.513B-EU
+fi
+
+if [ ${CMU_SW_VER} = "55.00.650A-NA" ] \
+|| [ ${CMU_SW_VER} = "55.00.753A-NA" ] \
+|| [ ${CMU_SW_VER} = "55.00.760A-NA" ]
+	then
+		DATA_COPY=1
+		DATA_COPY_FILE=55.00.760A-NA
+fi
+
+if [ ${CMU_SW_VER} = "58.00.250A-NA" ]
+	then
+		DATA_COPY=1
+		DATA_COPY_FILE=58.00.250A-NA
+fi
+
+if [ ${CMU_SW_VER} = "56.00.401A-JP" ]
+	then
+		DATA_COPY=1
+		DATA_COPY_FILE=56.00.401A-JP
+fi
+
+# Copy patched jci-linux_imx6_volans-release
+if [ ! -e /jci/nng/jci-linux_imx6_volans-release.org ]
+	then
+		cp -a /jci/nng/jci-linux_imx6_volans-release /jci/nng/jci-linux_imx6_volans-release.org
+		log_message "=== Backup of jci-linux_imx6_volans-release to jci-linux_imx6_volans-release.org ==="
+	else
+		log_message "===          Backup of jci-linux_imx6_volans-release already there               ==="
+fi
+
+if [ ${DATA_COPY} = "1" ] || [ ${DATA_COPY} = "2" ]
+		then
+			show_message "Your firmware ${CMU_SW_VER} is compatible. \n Speedcam-patch will be installed."
+			rm -f /jci/nng/jci-linux_imx6_volans-release
+			cp -a ${MYDIR}/config/speedcam-patch/jci/nng/jci-linux_imx6_volans-release.org.${DATA_COPY_FILE} /jci/nng/jci-linux_imx6_volans-release
+			log_message "=== Detected ${CMU_SW_VER}: Copied newest and compatible version ${DATA_COPY_FILE} of jci-linux_imx6_volans-release ==="
+		else
+			show_message "Your firmware ${CMU_SW_VER} is not compatible. \n Speedcam-patch will NOT be installed!"
+fi
+
+chmod 755 /jci/nng/jci-linux_imx6_volans-release
+
+# backup data.zip to data.zip.org
+if [ ! -e /jci/nng/data.zip.org ]
+	then
+		cp -a /jci/nng/data.zip /jci/nng/data.zip.org
+		log_message "===      Backup of /jci/nng/data.zip to data.zip.org      ==="
+	else
+		log_message "===            Backup of data.zip already there          ==="
+fi
+
+# copy ready patched data.zip from SD card
+if [ ${DATA_COPY} = "1" ]
+		then
+			rm -f /jci/nng/data.zip
+			cp -a ${MYDIR}/config/speedcam-patch/jci/nng/data.zip.${DATA_COPY_FILE} /jci/nng/data.zip
+			log_message "=== Detected ${CMU_SW_VER}: Copied data.zip from newest FW version ${DATA_COPY_FILE} ==="
+			/bin/fsync /jci/nng/data.zip
+			chmod 755 /jci/nng/data.zip
+fi
+
+# patch data.zip directly
+if [ ${DATA_COPY} = "2" ]
+		then
+			show_message "PATCH DATA.ZIP ...\n (will take some time, be patient ...)"
+			cp -a /jci/nng/data.zip /jci/nng/data.zip.patched
+			log_message "=== Copied data.zip to data.zip.patched"
+			cp /jci/nng/data.zip.org ${MYDIR}/data.org.${CMU_SW_VER}.zip
+			log_message "=== Copied original data.zip.org to USB drive ... ==="
+			mkdir /jci/nng/project_config
+			cp ${MYDIR}/config/speedcam-patch/jci/nng/project_config/igo9.ini /jci/nng/project_config/
+			log_message "=== Copied folder project_config with modified igo9.ini to /jci/nng/ ==="
+			cd /jci/nng
+			zip data.zip.patched project_config/igo9.ini
+			sleep 10
+			log_message "=== Changed modified igo9.ini within data.zip.patched ... ==="
+			rm -f /jci/nng/data.zip
+			mv /jci/nng/data.zip.patched /jci/nng/data.zip
+			rm -fr /jci/nng/project_config
+			log_message "=== END OF DATA.ZIP MODIFICATION ==="
+fi
+
+# check if jci-linux_imx6_volans-release was copied successful
+if [ ${DATA_COPY} = "1" ] || [ ${DATA_COPY} = "2" ]
+	then
+		for I in 1 2 3
+		do
+			status=`md5sum -c ${MYDIR}/config/speedcam-patch/jci/nng/checksum.jci-linux_imx6_volans-release.patched.${CMU_SW_VER}.md5 2>&1 | grep FAILED`
+			if [[ $? -ne 1 ]]
+				then
+					if [[ I -eq 3 ]]
+						then
+							log_message "=== Copying of jci-linux_imx6_volans-release failed. Restoring both original files from backup! ==="
+							mv /jci/nng/jci-linux_imx6_volans-release.org /jci/nng/jci-linux_imx6_volans-release
+							mv /jci/nng/data.zip.org /jci/nng/data.zip
+							sleep 2
+							break
+						else
+							log_message "=== Checksum wrong of jci-linux_imx6_volans-release, try to copy again for ${I}. time from SD card ==="
+							cp -a ${MYDIR}/config/speedcam-patch/jci/nng/jci-linux_imx6_volans-release.${CMU_SW_VER} /jci/nng/jci-linux_imx6_volans-release
+							sleep 4
+						continue
+					fi
+				else
+					log_message "=== Checksum OK of /jci/nng/jci-linux_imx6_volans-release, copy was succesful ==="
+					break
+			fi
+		done
+fi
+
+# check if data.zip was copied successful
+if [ ${DATA_COPY} = "1" ]
+	then
+		for I in 1 2 3
+		do
+			status=`md5sum -c ${MYDIR}/config/speedcam-patch/jci/nng/checksum.data.patched.${DATA_COPY_FILE}.md5 2>&1 | grep FAILED`
+			if [[ $? -ne 1 ]]
+				then
+					if [[ I -eq 3 ]]
+						then
+							log_message "=== Copying of data.zip failed. Restoring both original files from backup! ==="
+							mv /jci/nng/data.zip.org /jci/nng/data.zip
+							mv /jci/nng/jci-linux_imx6_volans-release.org /jci/nng/jci-linux_imx6_volans-release
+							sleep 2
+							break
+						else
+							log_message "=== Checksum wrong of data.zip, try to copy again for ${I}. time from SD card ==="
+							cp -a ${MYDIR}/config/speedcam-patch/jci/nng/data.zip.${DATA_COPY_FILE} /jci/nng/data.zip
+							sleep 4
+						continue
+					fi
+				else
+					log_message "===     Checksum OK of /jci/nng/data.zip, copy was succesful     ==="
+					break
+			fi
+		done
+fi
+
+rm -f /jci/nng/2
+
+# if blue color scheme is active, then change NAV App color to blue too
+if [ -e /jci/gui/common/images/blue.aio ]
+	then
+		cp -a ${MYDIR}/config/speedcam-patch/color/_skin_jci_bluedemo.zip /jci/nng/ux/
+		log_message "=== Change NAV App graphics to blue too, because blue color scheme is active ==="
+fi

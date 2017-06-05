@@ -1,0 +1,869 @@
+/* CSS Document */
+/*
+ * Numerical values that are also used in setting CSS styles programmatically
+ * NOTE: Changing these values requires matching changes in JS source file!
+ */
+/* $CDFEGraphVisibleWidth: 500px; */
+/* Left & right margins */
+/* $CDFEGraphActiveWidth: 533px; */
+/* $CFERGraphVisibleWidth: 500px; */
+/* Left & right margins */
+/* $CFERGraphActiveWidth: 580px; */
+/*
+ * End JS-matching values
+ */
+.FuelConsumptionCtrl {
+  position: absolute;
+  width: 800px;
+  height: 416px;
+  left: -60px;
+  top: 0px;
+  background: url('../images/FuelConsBG.png') center no-repeat;
+}
+
+.FuelConsumptionCtrlHiddenOpacity {
+	
+	opacity: 0;
+}
+
+.UmpPanelDivDisable
+{
+	position: inherit;
+  	top: 0px;
+  	left: 0px;
+	width: 800px; 
+  	height: 100px;
+	background: none;
+	z-index: 10;
+}
+
+.UmpPanelDivEnable
+{
+	position: inherit;
+  	top: 0px;
+  	left: 0px;
+	width: 800px; 
+  	height: 100px;
+	background: none;
+	z-index: 10;
+}
+
+.FuelConsumptionCtrlGraphsArea {
+  margin: 0px;
+  float: left;
+  width: 600px;
+  height: 416px;
+  }
+
+.FuelConsumptionCtrlFuelEfficiencyArea {
+  float: right;
+  width: 148px;
+  height: 420px;
+  }
+
+/********************** Average fuel economy display **********************/
+h2.FuelConsumptionCtrlFuelEfficiencyTitle {
+  position: absolute;
+  top: 160px;
+  left:648px;
+  height:35px;
+  width:148px;
+  top:130px;
+  text-align: left;
+  line-height: 120%;
+  font-family: Tipperary, Arial, Helvetica, sans-serif;
+  font-size: 27px;
+  color: #ffffff; 
+  	overflow:hidden;
+    text-overflow:ellipsis;
+    -o-text-overflow:ellipsis;
+    white-space:nowrap; 
+ }
+
+.FuelConsumptionCtrlFuelEfficiencyThisDrive {
+	
+	position: absolute;
+    top: 165px;
+    left:648px;
+    height:30px;
+	  width:148px;
+	  text-align: left;
+	  line-height: 120%;
+	  font-family: Tipperary, Arial, Helvetica, sans-serif;
+	  font-size: 27px;
+	  color: #ffffff; 
+  	overflow:hidden;
+    text-overflow:ellipsis;
+    -o-text-overflow:ellipsis;
+    white-space:nowrap; 
+}
+
+.FuelConsumptionCtrlFuelEfficiencyValue {
+  position: absolute;
+  left:679px;
+  top: 197px;
+  width: 74px;
+  height:45px;
+  text-align: center;
+  font-family: "Tipperary Semibold", Arial, Helvetica, sans-serif;
+  font-size: 40px;
+  color: #ffffff; 
+  }
+
+.FuelConsumptionCtrlFuelEfficiencyUnit {
+  position:absolute;
+  font-size: 28px; 
+  width:120px;
+  height: 35px;
+  top:238px;
+  left:666px;
+  text-align:right;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	-o-text-overflow: ellipsis;
+	white-space: nowrap;}
+  
+
+.FuelConsumptionCtrlSwitchView {
+  position:absolute;
+  width: 60px;
+  height: 70px;
+  top: 340px;
+  left: 10px;
+  cursor: pointer;
+  background: url("../images/AdjustBtn3_Focus.png") center no-repeat;
+  text-indent: -9999px;}
+
+.FuelConsumptionCtrlSwitchViewDown {
+  position:absolute;
+  width: 60px;
+  height: 70px;
+  top: 340px;
+  left: 10px;
+  cursor: pointer;
+  background: url("../images/AdjustBtn3_Focus.png") center no-repeat;
+  text-indent: -9999px;
+}
+
+/********************** Graph for current drive fuel economy **********************/
+.FuelConsumptionCtrlCDFEGraph {
+  position: absolute;
+  top: 58px;
+  left: 76px;
+  width: 473px;
+  height: 111px;
+  background: url('../images/FuelConsBgBars1.png') center no-repeat;
+ }
+  
+  .FuelConsumptionCtrlCDFEGraphRight {
+  position: absolute;
+  top: 58px;
+  left: 76px;
+  width: 473px;
+  height: 111px; 
+  }
+
+/*.FuelConsumptionCtrlCDFEGraphClipMask {/*
+  position: absolute;
+  top: 1px;
+  left: 240px;
+  width: 230px;
+  height: 109px;
+  overflow: hidden;
+  }*/
+  
+  .FuelConsumptionCtrlCDFEGraphClipMask {
+  position: absolute;
+  top: 1px;
+  left: 237px;
+  width: 234px;
+  height: 109px;
+  overflow: hidden;
+  }
+  
+  .FuelConsumptionCtrlCDFEGraphClipMaskRight {
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  width: 240px;
+  height: 109px;
+  overflow: hidden; 
+ }
+
+.FuelConsumptionCtrlCDFEGraphArea {
+  position: absolute;
+  top: 1px;
+  left:10px;
+  width: 290px;
+  /* include 16th "hidden" bar & spacer for new values */
+  height: 109px;
+    }
+  
+  .FuelConsumptionCtrlCDFEGraphAreaRight {
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  width: 300px;
+  /* include 16th "hidden" bar & spacer for new values */
+  height: 109px;
+    }
+
+
+
+h2.FuelConsumptionCtrlCDFEGraphTitle {
+  position: absolute;
+  left: 0px;
+  top: -39px;
+  width:400px;
+  height:31px;
+  line-height: 30px;
+  font-family: "Tipperary Semibold", Arial, Helvetica, sans-serif;
+  font-size: 28px;
+  color: #ffffff;
+  	overflow:hidden;
+    text-overflow:ellipsis;
+    -o-text-overflow:ellipsis;
+    white-space:nowrap; 
+  }
+
+.FuelConsumptionCtrlCDFEGraphXAxisLabel {
+  position: absolute;
+  top: 115px;
+  left: -5px;
+  width: 473px;
+  text-align: center;
+  color: #fff; 
+  font-size:21px; 
+  font-family: Tipperary, Arial, Helvetica, sans-serif;
+  
+  }
+
+.FuelConsumptionCtrlCDFEGraphYAxisLabel span {
+  position: absolute;
+  top: -10px;
+  left: 478px;
+  width: 48px;
+  color: #fff; 
+  font-size:21px; 
+  font-family: Tipperary, Arial, Helvetica, sans-serif;
+  
+  }
+
+.FuelConsumptionCtrlCDFEBarGraphCore {
+  position: absolute;
+  width: 21px;
+  height: 0px;
+  bottom: -3px;
+  background: url("../images/FuelConsBar_Narrow.png") center repeat-y;
+  background-size: 21px 100%;
+  }
+  
+  .FuelConsumptionCtrlCDFEBarGraphCoreRight {
+  position: absolute;
+  width: 44px;
+  height: 0px;
+  bottom: -3px;
+  background:url("../images/FuelConsBar_wide.png") center repeat-y;
+  background-size: 44px 100%;
+  }
+  
+  .FuelConsumptionCtrlCDFEBarGraphCoreGreenRight {
+  position: absolute;
+  width: 44px;
+  height: 0px;
+  bottom: -3px;
+  background:url("../images/FuelConsBar_wide_green.png") center repeat-y;
+  background-size: 44px 100%;
+  }
+  
+  .FuelConsumptionCtrlCDFEBarGraphCoreCurrent {
+  position: absolute;
+  width: 21px;
+  height: 0px;
+  bottom: -3px;
+  background:url("../images/FuelConsBar_NarrowCurrent.png") center repeat-y;
+  background-size: 21px 100%;
+  }
+
+.FuelConsumptionCtrlCDFEBarGraphCap {
+	width: 21px;
+	height:2px;
+	margin-top: -3px;
+	background: url('../images/FuelConsBarCap_Narrow.png')no-repeat center;
+	background-size: 21px 2px;
+}
+
+.FuelConsumptionCtrlCDFEBarGraphCapRight {
+	width: 44px;
+	height:2px;
+	margin-top: -3px;
+	background: url('../images/FuelConsBarCap_wide.png')no-repeat center;
+	background-size: 44px 2px;
+}
+
+/********************** Graph for cumulative fuel economy **********************/
+.FuelConsumptionCtrlCFERGraph {
+  position: absolute;
+  top: 257px;
+  left: 76px;
+  width: 473px;
+  height: 111px;
+  background: url('../images/FuelConsBgBars2.png') no-repeat;
+  
+  }
+
+.FuelConsumptionCtrlCFERGraphClipMask {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 393px;
+  height: 109px;
+  overflow: hidden;
+  }
+ 
+
+.FuelConsumptionCtrlCFERGraphArea {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 580px;
+  /* include 7th "hidden" bar & spacer for new values */
+  height: 109px;
+}
+
+h2.FuelConsumptionCtrlCFERGraphTitle {
+  position: absolute;
+  width: 400px;
+  left: 0px;
+  top: -39px;
+  line-height: 30px;
+  height:31px;
+  font-family: "Tipperary Semibold", Arial, Helvetica, sans-serif;
+  font-size: 28px;
+  color: #ffffff; 
+  	overflow:hidden;
+    text-overflow:ellipsis;
+    -o-text-overflow:ellipsis;
+    white-space:nowrap; 
+  }
+
+.FuelConsumptionCtrlCFERGraphXAxisLabel {
+  position: absolute;
+  top: 115px;
+  left:0px;
+  width: 473px;
+  font-size:21px; 
+  font-family: Tipperary, Arial, Helvetica, sans-serif;
+  color: #fff; 
+   
+  }
+
+.FuelConsumptionCtrlCFERGraphYAxisLabel span {
+  position: absolute;
+  top: -10px;
+  left: 478px;
+  width: 48px;
+  font-size:21px; 
+  font-family: Tipperary, Arial, Helvetica, sans-serif;
+  color: #fff;
+   }
+
+.FuelConsumptionCtrlCFERBarGraphCore {
+  position: absolute;
+  width: 50px;
+  height: 0px;
+  bottom: -3px;
+  background: url("../images/FuelConsBar_wide.png") center repeat-y;
+  background-size: 44px 100%;
+  }
+
+.FuelConsumptionCtrlCFERBarGraphCoreCurrent {
+  position: absolute;
+  width: 50px;
+  height: 0px;
+  bottom: -3px;
+  background: url("../images/FuelConsBar_WideCurrent.png") center repeat-y;
+  background-size: 44px 100%;
+}
+
+.FuelConsumptionCtrlCFERBarValueCurrent {
+	height: 31px;
+	width:50px;
+	text-align:center;
+	margin-top:-30px;
+	color: #fff;
+	font-size:24px;
+	font-family: Tipperary, Arial, Helvetica, sans-serif;
+	overflow: visible;
+}
+.FuelConsumptionCtrlHidden {
+	display:none;
+}
+
+.FuelConsumptionCtrlCFERBarGraphCap {
+	width: 50px;
+	height:2px;
+	margin-top: -3px;
+	background: url('../images/FuelConsBarCap_wide.png')no-repeat center;
+	background-size: 44px 2px;
+}
+
+.FuelConsumptionCtrlCFERCurrentBarValue {
+	
+	position: absolute;
+	width:50px;
+	height: 0px;
+	bottom: 50px;
+    left: 483px;
+}
+
+.FuelConsumptionCtrlHevCDFEDisc_1 {
+	
+	width:22px;
+	height:13px;
+	
+}
+
+.FuelConsumptionCtrlHevCDFEDisc_2 {
+	width:22px;
+	height:26px;
+}
+
+.FuelConsumptionCtrlHevCDFEDisc_3 {
+	
+	width:22px;
+	height:39px;
+}
+
+.FuelConsumptionCtrlHevCDFEDisc_4 {
+	
+	width:22px;
+	height:52px;
+}
+
+.FuelConsumptionCtrlHevCDFEDisc_5 {
+	width:22px;
+	height:65px;
+}
+
+.FuelConsumptionCtrlHevCDFEDisc_6 {
+	width:21px;
+	height:78px;
+}
+
+.FuelConsumptionCtrlHevCDFEDisc_7 {
+	width:22px;
+	height:91px;
+}
+
+.FuelConsumptionCtrlHevCDFEDisc_8 {
+	width:22px;
+	height:104px;
+}
+
+.FuelConsumptionCtrlHevCDFEDiscBg_Blue {
+	
+	position: relative;
+	background: url('../images/GeneratedEnergy_NarrowPurple.png') center repeat-y;
+	bottom: 0px;
+}
+
+.FuelConsumptionCtrlCDFEBarGraphCoreCurrentGreen {
+
+	position: absolute;
+  width: 21px;
+  height: 0px;
+  bottom: -3px;
+  background:url("../images/FuelConsBar_NarrowGreen.png") center repeat-y;
+  background-size: 21px 100%;
+}
+
+.FuelConsumptionCtrlHevCDFEDiscBg_Green {
+	
+	 position: absolute;
+  width: 21px;
+  height: 0px;
+  bottom: 0px;
+ background: url('../images/GeneratedEnergy_NarrowGreen.png') center bottom repeat-y;
+}
+
+.FuelConsumptionCtrlHevCDFEDiscBg_White {
+	
+	background: url('../images/GeneratedEnergy_NarrowCurrent.png') center repeat-y;
+}
+
+.FuelConsumptionCtrlHevCDFEDiscWide_1 {
+	
+	width:44px;
+	height:13px;
+	
+}
+
+.FuelConsumptionCtrlHevCDFEDiscWide_2 {
+	width:44px;
+	height:26px;
+}
+
+.FuelConsumptionCtrlHevCDFEDiscWide_3 {
+	
+	width:44px;
+	height:39px;
+}
+
+.FuelConsumptionCtrlHevCDFEDiscWide_4 {
+	
+	width:44px;
+	height:52px;
+}
+
+.FuelConsumptionCtrlHevCDFEDiscWide_5 {
+	width:44px;
+	height:65px;
+}
+
+.FuelConsumptionCtrlHevCDFEDiscWide_6 {
+	width:44px;
+	height:78px;
+}
+
+.FuelConsumptionCtrlHevCDFEDiscWide_7 {
+	width:44px;
+	height:91px;
+}
+
+.FuelConsumptionCtrlHevCDFEDiscWide_8 {
+	width:44px;
+	height:104px;
+}
+
+.FuelConsumptionCtrlHevAverageText {
+	
+}
+
+.FuelConsumptionCtrlHevThisDriveText {
+	
+}
+
+.FuelConsumptionCtrlFuelEfficiencyTitleHev{
+  position: absolute;
+  left:648px;
+  height:35px;
+  width:148px;
+  top:67px;
+  text-align: left;
+  line-height: 120%;
+  font-family: Tipperary, Arial, Helvetica, sans-serif;
+  font-size: 27px;
+  color: #ffffff; 
+  	overflow:hidden;
+    text-overflow:ellipsis;
+    -o-text-overflow:ellipsis;
+    white-space:nowrap; 
+
+}
+
+.FuelConsumptionCtrlFuelEfficiencyThisDriveHev {
+	position: absolute;
+  left:648px;
+  height:30px;
+  width:148px;
+  top:102px;
+  text-align: left;
+  line-height: 120%;
+  font-family: Tipperary, Arial, Helvetica, sans-serif;
+  font-size: 27px;
+  color: #ffffff; 
+  	overflow:hidden;
+    text-overflow:ellipsis;
+    -o-text-overflow:ellipsis;
+    white-space:nowrap; 
+}
+.FuelConsumptionCtrlFuelEfficiencyValueHev{
+  position: absolute;
+  left:645px;
+  top: 134px;
+  width: 74px;
+  height:45px;
+  text-align: center;
+  font-family: "Tipperary Semibold", Arial, Helvetica, sans-serif;
+  font-size: 40px;
+  color: #ffffff; 
+  }
+  
+  .FuelConsumptionCtrlFuelEfficiencyHevDivider{
+  position:absolute;
+  top:205px;
+  left:643px;
+  background:url("../images/HEVFuelCons_divider_h2.png");
+  width:146px;
+  height:1px;
+  }
+  
+  .FuelConsumptionCtrlHevOneDriveText {
+  position: absolute;
+  left:648px;
+  height:65px;
+  width:138px;
+  top:241px;
+  text-align: left;
+  line-height: 120%;
+  font-family: Tipperary, Arial, Helvetica, sans-serif;
+  font-size: 27px;
+  color: #ffffff; 
+  	overflow:hidden;
+    text-overflow:ellipsis;
+    -o-text-overflow:ellipsis;
+    white-space:nowrap; 
+}
+
+.FuelConsumptionCtrlHevEVDistanceText {
+  position: absolute;
+  left:648px;
+  height:65px;
+  width:138px;
+  top:271px;
+  text-align: left;
+  line-height: 120%;
+  font-family: Tipperary, Arial, Helvetica, sans-serif;
+  font-size: 26px;
+  color: #ffffff; 
+  	overflow:hidden;
+    text-overflow:ellipsis;
+    -o-text-overflow:ellipsis;
+    white-space:nowrap; 
+}
+
+.FuelConsumptionCtrlHevDistanceValue {
+  position: absolute;
+  top:308px;
+  left:645px;
+  height:45px;
+  width:99px;
+  text-align: right;
+  line-height: 120%;
+  font-family: Tipperary, Arial, Helvetica, sans-serif;
+  font-size: 40px;
+  color: #ffffff; 
+}
+
+.FuelConsumptionCtrlHevDistanceUnit {
+  position: absolute;
+  top:318px;
+  left:745px;
+  height:31px;
+  width:38px;
+  text-align: right;
+  line-height: 120%;
+  font-family: Tipperary, Arial, Helvetica, sans-serif;
+  font-size: 28px;
+  color: #ffffff; 	
+}
+
+.FuelConsumptionCtrlHevPercentValue {
+  position: absolute;
+  top:349px;
+  left:687px;
+  height:31px;
+  width:59px;
+  text-align: center;
+  line-height: 120%;
+  font-family: Tipperary, Arial, Helvetica, sans-serif;
+  font-size: 28px;
+  color: #ffffff;
+}
+
+.FuelConsumptionCtrlCDFEDiscGraph {
+  position: absolute;
+  top: 58px;
+  left: 76px;
+  width: 473px;
+  height: 111px;
+}
+
+/*.FuelConsumptionCtrlCDFEDiscGraphClipMask {/*
+	 position: absolute;
+  	 top: 1px;
+     left: 240px;
+  	 width: 230px;
+     height: 109px;
+     overflow: hidden;
+}*/
+
+.FuelConsumptionCtrlCDFEDiscGraphClipMask {
+	 position: absolute;
+  	 top: 1px;
+     left: 237px;
+  	 width: 234px;
+     height: 109px;
+     overflow: hidden;
+}
+
+.FuelConsumptionCtrlCDFEDiscGraphArea {
+  position: absolute;
+  top: 1px;
+  left:10px;
+  width: 290px;
+  /* include 16th "hidden" bar & spacer for new values */
+  height: 109px;
+}
+
+.FuelConsumptionCtrlHevCDFEBarGraphCore {
+	 position: absolute;
+  width: 21px;
+  height: 0px;
+  bottom: 0px/*-3px*/;
+  background: url("../images/GeneratedEnergy_NarrowPurple.png") center bottom  repeat-y;
+   z-index: 9;
+}
+
+.FuelConsumptionCtrlHevCDFEBarGraphCoreCurrent {
+	position: absolute;
+  width: 21px;
+  height: 0px;
+  bottom: 0px/*-3px*/;
+  background:url("../images/GeneratedEnergy_NarrowCurrent.png")center bottom  repeat-y;
+   z-index: 9;
+}
+
+.FuelConsumptionCtrlCDFEDiscGraphRight {
+  position: absolute;
+  top: 58px;
+  left: 76px;
+  width: 473px;
+  height: 111px; 
+}
+
+.FuelConsumptionCtrlCDFEDiscGraphClipMaskRight {
+	 position: absolute;
+  top: 1px;
+  left: 1px;
+  width: 240px;
+  height: 109px;
+  overflow: hidden; 
+}
+
+
+.FuelConsumptionCtrlCDFEDiscGraphAreaRight {
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  width: 300px;
+  height: 109px;
+}
+
+.FuelConsumptionCtrlHevCDFEDiscGraphCoreRight{
+  position: absolute;
+  width: 44px;
+  height: 0px;
+  bottom: 0px;
+  background: url("../images/GeneratedEnergy_WidePurple.png") center bottom repeat-y;
+  z-index: 9;
+}
+
+.FuelConsumptionCtrlHevCDFEDiscGraphCoreGreenRight{
+  position: absolute;
+  width: 44px;
+  height: 0px;
+  bottom: 0px;
+  background: url("../images/GeneratedEnergy_Wide_Green.png") center bottom repeat-y;
+  z-index: 9;
+}
+
+.FuelConsumptionCtrlCFERBarGraphCurrentMask {
+	
+	position: absolute;
+	width:50px;
+	height: 109px;
+	left:483px;
+	top: 256px;
+	overflow:hidden;
+}
+
+.FuelConsumptionCtrlFuelEfficiencyUnitHev{
+  position:absolute;
+  font-size: 28px; 
+  width:80px;
+  height: 31px;
+  top:146px;
+  left:705px;
+  text-align:right;
+  	overflow:hidden;
+    text-overflow:ellipsis;
+    -o-text-overflow:ellipsis;
+    white-space:nowrap; 
+  } 
+  
+ .FuelConsumptionCtrlOneDiscValue {
+ 	
+ 	position:absolute;
+ 	width: 95px;
+ 	height: 31px;
+ 	left: 461px;
+ 	top: 19px;
+ 	text-align: right;
+ 	line-height: 31px;
+    font-family: Tipperary, Arial, Helvetica, sans-serif;
+    font-size: 28px;
+    color: #ffffff;
+      	overflow:hidden;
+    text-overflow:ellipsis;
+    -o-text-overflow:ellipsis;
+    white-space:nowrap;  	
+ } 
+ 
+ .FuelConsumptionCtrlOneDiscIndicator {
+ 
+ 	position:absolute;
+ 	width: 19px;
+ 	height: 13px;
+ 	background: url('../images/GeneratedEnergy_NarrowCurrent.png') center no-repeat;
+ 	left:437px;
+ 	top:27px; 
+ }
+ 
+ .FuelConsumptionCtrlHalfWayLabel1 {
+ 	
+ 	position:absolute;
+ 	width: 24px;
+ 	height: 24px;
+ 	left: 553px;
+ 	top: 102px;
+ 	text-align: left;
+    font-family: Tipperary, Arial, Helvetica, sans-serif;
+    font-size: 21px;
+    color: #ffffff; 	
+    
+ } 
+ 
+  .FuelConsumptionCtrlHalfWayLabel2 {
+ 	
+ 	position:absolute;
+ 	width: 24px;
+ 	height: 24px;
+ 	left: 553px;
+ 	top: 301px;
+ 	text-align: left;
+    font-family: Tipperary, Arial, Helvetica, sans-serif;
+    font-size: 21px;
+    color: #ffffff;
+ } 
+ 
+ .FuelConsumptionCtrlCDFEBarGraphCoreCurrentGreenHighLighted {
+  position: absolute;
+  width: 21px;
+  height: 0px;
+  bottom: -3px;
+  background:url("../images/FuelConsBar_NarrowGreenCurrent.png") center repeat-y;
+  background-size: 21px 100%;
+  }
+  
+  
+  
+  .FuelConsumptionCtrlHevCDFEBarGraphCoreCurrentGreenHighLighted {
+  position: absolute;
+  width: 21px;
+  height: 0px;
+  bottom: 0px/*-3px*/;
+  background:url("../images/GeneratedEnergy_NarrowGreenCurrent.png")center bottom  repeat-y;
+   z-index: 9;
+}

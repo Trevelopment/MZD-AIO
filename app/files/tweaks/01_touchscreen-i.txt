@@ -1,0 +1,18 @@
+# disable/enable touchscreen mod: enable = mod off, disable = mod on
+show_message "ENABLE TOUCHSCREEN ..."
+log_message "====*** INSTALL REMOVE TOUCHSCREEN RESTRICTION ... ***===="
+
+# Some want to keep the speed restriction to ensure working console compass
+if [ ${KEEP_SPEED_RESTRICT} = "0" ]
+then
+  /jci/scripts/set_speed_restriction_config.sh disable
+else
+  /jci/scripts/set_speed_restriction_config.sh enable
+fi
+
+/jci/scripts/set_lvds_speed_restriction_config.sh disable
+
+log_message "===      Touchscreen Speed Restriction Disabled        ==="
+
+log_message "==**END INSTALLATION OF REMOVE TOUCHSCREEN RESTRICTION**=="
+log_message " "

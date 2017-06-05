@@ -1,0 +1,396 @@
+# MAIN MENU Tweaks
+# Trevelopment By: Trezdog44
+show_message "INSTALL MAIN MENU TWEAKS ..."
+log_message "======*******  INSTALL MAIN MENU TWEAKS ... *******======"
+
+# Always create a backup
+if [ ! -e /jci/gui/apps/system/controls/MainMenu/css/MainMenuCtrl.css.org ]
+then
+  cp -a /jci/gui/apps/system/controls/MainMenu/css/MainMenuCtrl.css /jci/gui/apps/system/controls/MainMenu/css/MainMenuCtrl.css.org
+  log_message "=== Backup of /jci/gui/apps/system/controls/MainMenu/css/MainMenuCtrl.css to MainMenuCtrl.css.org ==="
+fi
+if [ ${KEEPBKUPS} = "1" ]
+then
+  cp -a /jci/gui/apps/system/controls/MainMenu/css/MainMenuCtrl.css.org "${MYDIR}/bakups/"
+  aio_info \"MainMenuCtrl.css.org\",
+fi
+if [ ${TESTBKUPS} = "1" ]
+then
+  cp -a /jci/gui/apps/system/controls/MainMenu/css/MainMenuCtrl.css "${MYDIR}/bakups/test/MainMenuCtrl_before.css"
+fi
+# Remove existing Main Menu CSS and add new CSS to the end of the file
+remove_aio_css /jci/gui/apps/system/controls/MainMenu/css/MainMenuCtrl.css MAINMENU
+log_message "=== Removed any existing MAIN MENU CSS modifications  ==="
+
+cat <<EOT >> /jci/gui/apps/system/controls/MainMenu/css/MainMenuCtrl.css
+/* MZD-AIO-TI MAINMENU CSS */
+EOT
+
+if [ ${UI_STYLE_ELLIPSE} = "1" ]
+then
+  cat <<EOT >> /jci/gui/apps/system/controls/MainMenu/css/MainMenuCtrl.css
+  /* Main Menu Ellipse */
+  .MainMenuCtrlEllipse {
+    background-image: none;
+  }
+EOT
+  log_message "===             Removed Main Menu Ellipse             ==="
+fi
+if [ "${UI_STYLE_ALTLAYOUT}" = "1" ]
+then
+  cat <<EOT >> /jci/gui/apps/system/controls/MainMenu/css/MainMenuCtrl.css
+  /* Alternate Layout Star Points */
+  .MainMenuCtrlComDiv {
+    top: 30px;
+  }
+  .MainMenuCtrlEntDiv {
+    top: 100px;
+  }
+  .MainMenuCtrlNavDiv {
+    top: 100px;
+  }
+  .MainMenuCtrlAppDiv {
+    left: 250px;
+    top: 220px;
+  }
+  .MainMenuCtrlSetDiv {
+    left: 430px;
+    top: 220px;
+  }
+  .MainMenuCtrlAppHighlight {
+    left: 120px;
+    top: 40px;
+  }
+  .MainMenuCtrlComHighlight {
+    top: -100px;
+  }
+  .MainMenuCtrlNavHighlight {
+    top: -70px;
+    left: 380px;
+  }
+  .MainMenuCtrlEntHighlight {
+    top: -70px;
+    left: 45px;
+  }
+  .MainMenuCtrlSetHighlight {
+    left: 300px;
+    top: 40px;
+  }
+  .MainMenuCtrlIconName {
+    top:345px;
+  }
+  .MainMenuCtrl {
+    overflow: visible;
+  }
+  .MainMenuCtrlSetDiv.MainMenuCtrlCoinFocus,
+  .MainMenuCtrlAppDiv.MainMenuCtrlCoinFocus {
+    -o-transform: scale(1.2, 1.2) translate(0px, -20px);
+    transform: scale(1.2, 1.2) translate(0px, -20px);
+  }
+  .MainMenuCtrlComDiv.MainMenuCtrlCoinFocus {
+    -o-transform: scale(1.2, 1.2) translate(0px, 25px);
+    transform: scale(1.2, 1.2) translate(0px, 25px);
+  }
+  .MainMenuCtrlEntDiv.MainMenuCtrlCoinFocus {
+    -o-transform: scale(1.2, 1.2) translate(50px, -25px);
+    transform: scale(1.2, 1.2) translate(50px, -25px);
+  }
+  .MainMenuCtrlNavDiv.MainMenuCtrlCoinFocus {
+    -o-transform: scale(1.2, 1.2) translate(-50px, -25px);
+    transform: scale(1.2, 1.2) translate(-50px, -25px);
+  }
+EOT
+  log_message "=== Added CSS for Alternative Main Menu (Star Points) ==="
+elif [ "${UI_STYLE_ALTLAYOUT}" = "2" ]
+then
+  cat <<EOT >> /jci/gui/apps/system/controls/MainMenu/css/MainMenuCtrl.css
+  /* Alternate Layout Inverted */
+  .MainMenuCtrlComDiv {
+    top: 240px;
+  }
+  .MainMenuCtrlEntDiv {
+    top: 160px;
+  }
+  .MainMenuCtrlNavDiv {
+    top: 160px;
+  }
+  .MainMenuCtrlAppDiv {
+    left: 0;
+    top: 10px;
+  }
+  .MainMenuCtrlSetDiv {
+    top: 10px;
+    left: 675px;
+  }
+  .MainMenuCtrlAppHighlight {
+    top: -110px;
+    left: -100px;
+  }
+  .MainMenuCtrlComHighlight {
+    top: 70px;
+  }
+  .MainMenuCtrlNavHighlight {
+    top: 0px;
+    left: 380px;
+  }
+  .MainMenuCtrlEntHighlight {
+    top: 0px;
+    left: 45px;
+  }
+  .MainMenuCtrlSetHighlight {
+    left: 520px;
+    top: -110px;
+  }
+  .MainMenuCtrlIconName {
+    top:5px;
+  }
+  .MainMenuCtrl {
+    overflow: visible;
+  }
+  .MainMenuCtrlSetDiv.MainMenuCtrlCoinFocus{
+    -o-transform: scale(1.2, 1.2) translate(-20px, 20px);
+    transform: scale(1.2, 1.2) translate(-20px, 20px);
+  }
+  .MainMenuCtrlAppDiv.MainMenuCtrlCoinFocus {
+    -o-transform: scale(1.2, 1.2) translate(20px, 20px);
+    transform: scale(1.2, 1.2) translate(20px, 20px);
+  }
+  .MainMenuCtrlComDiv.MainMenuCtrlCoinFocus {
+    -o-transform: scale(1.2, 1.2) translate(0px, 25px);
+    transform: scale(1.2, 1.2) translate(0px, 25px);
+  }
+  .MainMenuCtrlEntDiv.MainMenuCtrlCoinFocus {
+    -o-transform: scale(1.2, 1.2) translate(50px, -25px);
+    transform: scale(1.2, 1.2) translate(50px, -25px);
+  }
+  .MainMenuCtrlNavDiv.MainMenuCtrlCoinFocus {
+    -o-transform: scale(1.2, 1.2) translate(-50px, -25px);
+    transform: scale(1.2, 1.2) translate(-50px, -25px);
+  }
+  .MainMenuCtrlComDiv.MainMenuCtrlCoinFocus {
+    -o-transform: scale(1.2, 1.2) translate(0px, -10px);
+    transform: scale(1.2, 1.2) translate(0px, -10px);
+  }
+EOT
+  log_message "===   Added CSS for Alternative Main Menu (Inverted)  ==="
+elif [ "${UI_STYLE_ALTLAYOUT}" = "3" ]
+then
+  cat <<EOT >> /jci/gui/apps/system/controls/MainMenu/css/MainMenuCtrl.css
+  /* Alternate Layout Large Star */
+  .MainMenuCtrlComDiv {
+    top: 30px;
+  }
+  .MainMenuCtrlEntDiv {
+    top: 100px;
+  }
+  .MainMenuCtrlNavDiv {
+    top: 100px;
+  }
+  .MainMenuCtrlAppDiv {
+    left: 250px;
+    top: 280px;
+  }
+  .MainMenuCtrlSetDiv {
+    left: 430px;
+    top: 280px;
+  }
+  .MainMenuCtrlAppHighlight {
+    left: 80px;
+    top: 105px;
+  }
+  .MainMenuCtrlComHighlight {
+    top: -122px;
+  }
+  .MainMenuCtrlNavHighlight {
+    top: -80px;
+    left: 470px;
+  }
+  .MainMenuCtrlEntHighlight {
+    top: -80px;
+    left: -30px;
+  }
+  .MainMenuCtrlSetHighlight {
+    left: 350px;
+    top: 90px;
+  }
+  .MainMenuCtrlIconName {
+    top: 200px;
+  }
+  .MainMenuCtrl {
+    overflow: visible;
+  }
+  .MainMenuCtrlAppDiv.MainMenuCtrlCoinFocus {
+    -o-transform: scale(1.2, 1.2) translate(-40px, -15px);
+    transform: scale(1.2, 1.2) translate(-40px, -15px);
+  }
+  .MainMenuCtrlSetDiv.MainMenuCtrlCoinFocus {
+    -o-transform: scale(1.2, 1.2) translate(40px, -15px);
+    transform: scale(1.2, 1.2) translate(40px, -15px);
+  }
+  .MainMenuCtrlComDiv.MainMenuCtrlCoinFocus {
+    -o-transform: scale(1.2, 1.2) translate(0px, -25px);
+    transform: scale(1.2, 1.2) translate(0px, -25px);
+  }
+  .MainMenuCtrlEntDiv.MainMenuCtrlCoinFocus {
+    -o-transform: scale(1.2, 1.2) translate(-25px, -50px);
+    transform: scale(1.2, 1.2) translate(-25px, -50px);
+  }
+  .MainMenuCtrlNavDiv.MainMenuCtrlCoinFocus {
+    -o-transform: scale(1.2, 1.2) translate(25px, -50px);
+    transform: scale(1.2, 1.2) translate(25px, -50px);
+  }
+EOT
+  log_message "=== Added CSS for Alternative Main Menu (Star Points) ==="
+elif [ "${UI_STYLE_ALTLAYOUT}" = "4" ]
+then
+  cat <<EOT >> /jci/gui/apps/system/controls/MainMenu/css/MainMenuCtrl.css
+  /* Alternate Layout Flatline */
+  .MainMenuCtrlComDiv {
+  top: 280px;
+}
+.MainMenuCtrlEntDiv {
+  top: 280px;
+  left:160px;
+}
+.MainMenuCtrlNavDiv {
+  top: 280px;
+  left: 500px
+}
+.MainMenuCtrlAppDiv {
+  left: 15px;
+  top: 295px;
+  transform: scale(1.25, 1.25);
+}
+.MainMenuCtrlSetDiv {
+  top: 295px;
+  left: 670px;
+  transform: scale(1.25, 1.25);
+}
+.MainMenuCtrlAppHighlight {
+  top: 80px;
+  left: -110px;
+}
+.MainMenuCtrlComHighlight {
+  top: 70px;
+}
+.MainMenuCtrlNavHighlight {
+  top: 75px;
+  left: 390px;
+}
+.MainMenuCtrlEntHighlight {
+  top: 75px;
+  left: 50px;
+}
+.MainMenuCtrlSetHighlight {
+  left: 550px;
+  top: 80px;
+}
+.MainMenuCtrlIconName {
+  top:5px;
+}
+.MainMenuCtrl {
+  overflow: visible;
+}
+.MainMenuCtrlSetDiv.MainMenuCtrlCoinFocus{
+  -o-transform: scale(1.4, 1.4) translate(0px, -50px);
+  transform: scale(1.4, 1.4) translate(0px, -50px);
+}
+.MainMenuCtrlAppDiv.MainMenuCtrlCoinFocus {
+  -o-transform: scale(1.4, 1.4) translate(0px, -50px);
+  transform: scale(1.4, 1.4) translate(0px, -50px);
+}
+.MainMenuCtrlComDiv.MainMenuCtrlCoinFocus {
+  -o-transform: scale(1.2, 1.2) translate(0px, -50px);
+  transform: scale(1.2, 1.2) translate(0px, -50px);
+}
+.MainMenuCtrlEntDiv.MainMenuCtrlCoinFocus {
+  -o-transform: scale(1.2, 1.2) translate(0px, -50px);
+  transform: scale(1.2, 1.2) translate(0px, -50px);
+}
+.MainMenuCtrlNavDiv.MainMenuCtrlCoinFocus {
+  -o-transform: scale(1.2, 1.2) translate(0px, -50px);
+  transform: scale(1.2, 1.2) translate(0px, -50px);
+}
+.MainMenuCtrlComDiv.MainMenuCtrlCoinFocus {
+  -o-transform: scale(1.2, 1.2) translate(0px, -60px);
+  transform: scale(1.2, 1.2) translate(0px, -60px);
+}
+EOT
+  log_message "===  Added CSS for Alternative Main Menu (Flatline)   ==="
+fi
+if [ ${UI_STYLE_MINICOINS} = "1" ]
+then
+  cat <<EOT >> /jci/gui/apps/system/controls/MainMenu/css/MainMenuCtrl.css
+  /* Small Main Menu Coins */
+  .MainMenuCtrlAppDiv,
+  .MainMenuCtrlNavDiv,
+  .MainMenuCtrlComDiv,
+  .MainMenuCtrlSetDiv,
+  .MainMenuCtrlEntDiv {
+    -o-transform: scale(.5, .5);
+    transform: scale(.5, .5);
+  }
+EOT
+log_message "===             Added CSS for Small Coins             ==="
+fi
+if [ ${UI_STYLE_MINIFOCUS} = "1" ]
+then
+  cat <<EOT >> /jci/gui/apps/system/controls/MainMenu/css/MainMenuCtrl.css
+  /* Small Main Menu Coins */
+  .MainMenuCtrlAppDiv.MainMenuCtrlCoinFocus,
+  .MainMenuCtrlNavDiv.MainMenuCtrlCoinFocus,
+  .MainMenuCtrlComDiv.MainMenuCtrlCoinFocus,
+  .MainMenuCtrlSetDiv.MainMenuCtrlCoinFocus,
+  .MainMenuCtrlEntDiv.MainMenuCtrlCoinFocus {
+    -o-transform: scale(.5, .5) translate(0px, -10px);
+    transform: scale(.5, .5) translate(0px, -10px);
+  }
+  .MainMenuCtrl .Visible {
+    background-size: 70%;
+    background-position: center 75%;
+  }
+EOT
+log_message "===          Added CSS for Small Focused Coin           ==="
+fi
+if [ ${UI_STYLE_MAIN3D} = "1" ]
+then
+  cat <<EOT >> /jci/gui/apps/system/controls/MainMenu/css/MainMenuCtrl.css
+  /* 3D MAIN MENU TEXT! */
+  .MainMenuCtrlIconName.Visible {
+    text-shadow: 0 1px 0 #ccc,
+    0 2px 0 #c9c9c9,
+    0 3px 0 #bbb,
+    0 4px 0 #b9b9b9,
+    0 5px 0 #aaa,
+    0 6px 1px rgba(0,0,0,.1),
+    0 0 5px rgba(0,0,0,.1),
+    0 1px 3px rgba(0,0,0,.3),
+    0 3px 5px rgba(0,0,0,.2),
+    0 5px 10px rgba(0,0,0,.25),
+    0 10px 10px rgba(0,0,0,.2),
+    0 20px 20px rgba(0,0,0,.15);
+  }
+EOT
+  log_message "===          Added CSS for 3D Main Menu Label         ==="
+elif [ ${UI_STYLE_MAIN3D} = "2" ]
+then
+  cat <<EOT >> /jci/gui/apps/system/controls/MainMenu/css/MainMenuCtrl.css
+  /* HIDE MAIN MENU TEXT! */
+  .MainMenuCtrlIconName.Visible {
+    display:none!important;
+  }
+EOT
+  log_message "===         Added CSS for Hide Main Menu Label        ==="
+fi
+cat <<EOT >> /jci/gui/apps/system/controls/MainMenu/css/MainMenuCtrl.css
+/* END AIO MAINMENU CSS */
+EOT
+log_message "===             Modified  MainMenuCtrl.css            ==="
+
+if [ ${TESTBKUPS} = "1" ]
+then
+  cp -a /jci/gui/apps/system/controls/MainMenu/css/MainMenuCtrl.css "${MYDIR}/bakups/test/MainMenuCtrl_after.css"
+fi
+
+log_message "====***   END INSTALLATION OF MAIN MENU TWEAKS    ***===="
+log_message " "

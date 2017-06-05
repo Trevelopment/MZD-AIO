@@ -1,0 +1,461 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "languages": {
+      "type": "array",
+      "uniqueItems": false,
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "multipleOf": 1,
+            "maximum": 10000,
+            "minimum": 1,
+            "exclusiveMaximum": false,
+            "exclusiveMinimum": false,
+            "default": 8,
+            "id": "id"
+          },
+          "lang": {
+            "type": "string",
+            "minLength": 1,
+            "default": "Slovak",
+            "id": "lang"
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1,
+            "default": "Slovak",
+            "id": "title"
+          }
+        },
+        "id": "7"
+      },
+      "id": "languages"
+    },
+    "helpMsgs": {
+      "type": "array",
+      "uniqueItems": false,
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "multipleOf": 1,
+            "maximum": 10000,
+            "minimum": 1,
+            "exclusiveMaximum": false,
+            "exclusiveMinimum": false,
+            "default": 7,
+            "id": "id"
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1,
+            "default": "Help & Settings",
+            "id": "title"
+          },
+          "msg": {
+            "type": "string",
+            "minLength": 1,
+            "default": "<h2>Help:</h2> \r\n<div class='w3-display-topright w3-margin-top'><a href='' id='aio-settings-btn' class='w3-btn' onclick='$('#helpMenuTop').toggleClass('w3-hide')' data-toggle='tooltip' data-placement='auto' title='MZD-AIO-TI Settings'><span class='icon-tools2'></span></a></div></div><div class='w3-panel'><div class='w3-twothird'>  For instructions on how to generate tweak files:</div><div class='w3-third w3-medium'><a class='w3-btn' ng-click='startTour()'><span class='icon-car2'></span> Take The Tour</a></div></div><div class='w3-panel'><div class='w3-twothird'><p>If you you hit an error <br>or a hang up you can:</p><p>Or you can:</p></div><div class='w3-third w3-medium'><a class='w3-btn' onclick='location.reload()'><span class='icon-refresh'></span> Reload App</a><a class='w3-btn' onclick='app.relaunch();app.exit()'><span class='icon-rocket3'></span> Relaunch App</a></div></div><div class='w3-panel'><div class='w3-twothird'><p>Love this app? Donating is a great way to show some love!:</p></div><div class='w3-third w3-medium'><a class='w3-btn' onclick='donate()'><span class='icon-money'></span> Donate</a></div>",
+            "id": "msg"
+          }
+        },
+        "id": "7"
+      },
+      "id": "helpMsgs"
+    },
+    "tourMsgs": {
+      "type": "array",
+      "uniqueItems": false,
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "multipleOf": 1,
+            "maximum": 10000,
+            "minimum": 1,
+            "exclusiveMaximum": false,
+            "exclusiveMinimum": false,
+            "default": 8,
+            "id": "id"
+          },
+          "msg": {
+            "type": "string",
+            "minLength": 1,
+            "default": "For more information visit <a href='' onclick='externalLink('mazdatweakswin')' title='Mazda Tweaks'>MazdaTweaks.win!</a>",
+            "id": "msg"
+          }
+        },
+        "id": "8"
+      },
+      "id": "tourMsgs"
+    },
+    "mainOps": {
+      "type": "array",
+      "uniqueItems": false,
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "multipleOf": 1,
+            "maximum": 10000,
+            "minimum": 1,
+            "exclusiveMaximum": false,
+            "exclusiveMinimum": false,
+            "default": 9,
+            "id": "id"
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1,
+            "default": "Shorter Delay Mod",
+            "id": "title"
+          },
+          "label": {
+            "type": "string",
+            "minLength": 1,
+            "default": "Shorter Delay Mod",
+            "id": "label"
+          },
+          "toolTip": {
+            "type": "string",
+            "minLength": 1,
+            "default": "<h4>Shorter Delay Mod</h4>Reduces the waiting time switching between pages with the multi commander from 1.5 to 0.3 seconds.",
+            "id": "toolTip"
+          },
+          "safetylvl": {
+            "type": "string",
+            "enum": [
+              "safe",
+              "warning",
+              "development"
+            ],
+            "default": "safe",
+            "id": "safetylvl"
+          }
+        },
+        "id": "9"
+      },
+      "id": "mainOps"
+    },
+    "menu": {
+      "type": "array",
+      "uniqueItems": false,
+      "items": {
+        "type": "object",
+        "properties": {
+          "menuId": {
+            "type": "string",
+            "minLength": 1,
+            "default": "17",
+            "id": "menuId"
+          },
+          "label": {
+            "type": "string",
+            "minLength": 1,
+            "default": "Reload App",
+            "id": "label"
+          },
+          "toolTip": {
+            "type": "string",
+            "minLength": 1,
+            "default": "Reload the app.",
+            "id": "toolTip"
+          }
+        },
+        "id": "17"
+      },
+      "id": "menu"
+    },
+    "imgOps": {
+      "type": "array",
+      "uniqueItems": false,
+      "items": {
+        "type": "object",
+        "properties": {
+          "imgId": {
+            "type": "string",
+            "minLength": 1,
+            "default": "4",
+            "id": "imgId"
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1,
+            "default": "Open Backgrounds Folder.",
+            "id": "title"
+          },
+          "label": {
+            "type": "string",
+            "minLength": 1,
+            "default": "Open Backgrounds Folder.",
+            "id": "label"
+          },
+          "toolTip": {
+            "type": "string",
+            "minLength": 1,
+            "default": "Open The Included Folder Containing Backgrounds",
+            "id": "toolTip"
+          }
+        },
+        "id": "4"
+      },
+      "id": "imgOps"
+    },
+    "colors": {
+      "type": "array",
+      "uniqueItems": false,
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "multipleOf": 1,
+            "maximum": 10000,
+            "minimum": 1,
+            "exclusiveMaximum": false,
+            "exclusiveMinimum": false,
+            "default": 8,
+            "id": "id"
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1,
+            "default": "CarOS",
+            "id": "title"
+          },
+          "label": {
+            "type": "string",
+            "minLength": 1,
+            "default": "CarOS",
+            "id": "label"
+          }
+        },
+        "id": "8"
+      },
+      "id": "colors"
+    },
+    "speedcamOps": {
+      "type": "array",
+      "uniqueItems": false,
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "multipleOf": 1,
+            "maximum": 10000,
+            "minimum": 1,
+            "exclusiveMaximum": false,
+            "exclusiveMinimum": false,
+            "default": 5,
+            "id": "id"
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1,
+            "default": "Use Your Own speedcam.txt file",
+            "id": "title"
+          },
+          "label": {
+            "type": "string",
+            "minLength": 1,
+            "default": "Use Your Own speedcam.txt file",
+            "id": "label"
+          }
+        },
+        "id": "5"
+      },
+      "id": "speedcamOps"
+    },
+    "disclaimOps": {
+      "type": "array",
+      "uniqueItems": false,
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "multipleOf": 1,
+            "maximum": 10000,
+            "minimum": 1,
+            "exclusiveMaximum": false,
+            "exclusiveMinimum": false,
+            "default": 1,
+            "id": "id"
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1,
+            "default": "Reduce Time To 0.5 seconds",
+            "id": "title"
+          },
+          "label": {
+            "type": "string",
+            "minLength": 1,
+            "default": "Reduce Time To 0.5 seconds",
+            "id": "label"
+          }
+        },
+        "id": "1"
+      },
+      "id": "disclaimOps"
+    },
+    "d2sbOps": {
+      "type": "array",
+      "uniqueItems": false,
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "multipleOf": 1,
+            "maximum": 10000,
+            "minimum": 1,
+            "exclusiveMaximum": false,
+            "exclusiveMinimum": false,
+            "default": 3,
+            "id": "id"
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1,
+            "default": "V2.3",
+            "id": "title"
+          },
+          "label": {
+            "type": "string",
+            "minLength": 1,
+            "default": "V2.3",
+            "id": "label"
+          }
+        },
+        "id": "3"
+      },
+      "id": "d2sbOps"
+    },
+    "speedoOps": {
+      "type": "array",
+      "uniqueItems": false,
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "multipleOf": 1,
+            "maximum": 10000,
+            "minimum": 1,
+            "exclusiveMaximum": false,
+            "exclusiveMinimum": false,
+            "default": 40,
+            "id": "id"
+          },
+          "spOp": {
+            "type": "string",
+            "minLength": 1,
+            "default": "opac",
+            "id": "spOp"
+          },
+          "val": {
+            "type": "string",
+            "minLength": 1,
+            "default": "0",
+            "id": "val"
+          },
+          "title": {
+            "type": "string",
+            "minLength": 1,
+            "default": "Black Background Opacity? (To Reduce Visibility of Custom MZD Background Image) 0.0 (Fully Transparent) - 1.0 (Completely Black)",
+            "id": "title"
+          },
+          "label": {
+            "type": "string",
+            "minLength": 1,
+            "default": "Black Background Opacity? (To Reduce Visibility of Custom MZD Background Image) 0.0 (Fully Transparent) - 1.0 (Completely Black)",
+            "id": "label"
+          }
+        },
+        "id": "14"
+      },
+      "id": "speedoOps"
+    },
+    "tweakOps": {
+      "type": "array",
+      "uniqueItems": false,
+      "items": {
+        "type": "object",
+        "properties": {
+          "OpName": {
+            "type": "string",
+            "minLength": 1,
+            "default": "Android Auto Headunit App",
+            "id": "OpName"
+          },
+          "safetylvl": {
+            "type": "string",
+            "enum": [
+              "safe",
+              "warning",
+              "development"
+            ],
+            "default": "development",
+            "id": "safetylvl"
+          },
+          "id": {
+            "type": "integer",
+            "multipleOf": 1,
+            "maximum": 10000,
+            "minimum": 1,
+            "exclusiveMaximum": false,
+            "exclusiveMinimum": false,
+            "default": 25,
+            "id": "id"
+          },
+          "INST": {
+            "type": "string",
+            "minLength": 1,
+            "default": "Install Android Auto Headunit App",
+            "id": "INST"
+          },
+          "DEINST": {
+            "type": "string",
+            "minLength": 1,
+            "default": "Remove Android Auto Headunit App",
+            "id": "DEINST"
+          },
+          "toolTip": {
+            "type": "string",
+            "minLength": 1,
+            "default": "<img src='./files/screenshots/AndroidAuto.jpg' /><h5>Android Car Headunit app.  Android car for the infotainment system. </h5>  <br>1. Install the Android app from google play store:<a href='https://play.google.com/store/apps/details?id=com.google.android.projection.gearhead'>HERE.</a><br>2. Connect the phone to USB and pair the phone bluetooth with the CMU <br>3. Manually switch to Bluetooth Audio Input. <br>4. Click on the AA icon under Applications Menu on the CMU <br>5. A black screen with credits should open up first and input <br>6. Android Auto will then start. If it does not, pull out the USB and start over again (or check the installation.) <br>7. 2 ways to stop AA - Disconnect the USB cable or use the onscreen menu 'Return to Mazda Connect' on last screen with speedo icon..  <br>8. Once disconnected, the back screen will remain. Press Home Button on the Mazda's Commander to close it. I had to do this because js double click wasn't working..  <br>**What does not work:** <br>1. Reverse camera gets blacked out. <br>2. Voice Control <br>3. Touch drag / multi touch <br>4. Google Maps night mode always on.",
+            "id": "toolTip"
+          },
+          "extraOps": {
+            "type": "boolean",
+            "default": true,
+            "id": "extraOps"
+          },
+          "warningMsg": {
+            "type": "string",
+            "minLength": 1,
+            "default": "<span style='color:#ff0000'><b>A T T E N T I O N - Important information:<br><br>DOING A FACTORY RESET AFTER INSTALLING ANDROID AUTO WILL BRICK YOUR SYSTEM!!!! (CAUSES AN UNRECOVERABLE SYSTEM BOOTLOOP AT MAZDA BOOT LOGO!!!)<br><br>SO AVOID A FACTORY RESET OR UNINSTALL AA BEFORE THAT! <br><br>There is unfortunately no chance to get access again on the CMU after doing a factory reset, the wireless settings will also be deleted after a factory reset.</b></span>",
+            "id": "warningMsg"
+          },
+          "advancedOp": {
+            "type": "boolean",
+            "default": true,
+            "id": "advancedOp"
+          }
+        },
+        "id": "23"
+      },
+      "id": "tweakOps"
+    }
+  },
+  "id": "/"
+}

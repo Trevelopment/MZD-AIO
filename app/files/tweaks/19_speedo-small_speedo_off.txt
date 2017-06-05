@@ -1,0 +1,4 @@
+# no small speedometer in statusbar
+show_message "DISABLE SMALL SPEEDOMETER IN STATUSBAR ..."
+sed -i 's/var enableSmallSbSpeedo = true;/var enableSmallSbSpeedo = false;/g' /jci/opera/opera_dir/userjs/speedometer-startup.js
+log_message "===       DISABLE SMALL SPEEDOMETER IN STATUSBAR       ==="

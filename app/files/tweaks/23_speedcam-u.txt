@@ -1,0 +1,167 @@
+# remove speedcam patch and speedcam.txt
+show_message "REMOVE SPEEDCAM PATCH AND SPEEDCAM.TXT ..."
+log_message "===*******      UNINSTALL SPEEDCAM PATCH AND SPEEDCAM.TXT ...    ******==="
+DATA_COPY=0
+# check for FW version
+if [ ${CMU_SW_VER} = "56.00.100A-ADR" ]
+	then
+		DATA_COPY=1
+		DATA_COPY_FILE=56.00.100A-ADR
+fi
+
+if [ ${CMU_SW_VER} = "59.00.326A-ADR" ]
+	then
+		DATA_COPY=1
+		DATA_COPY_FILE=59.00.326A-ADR
+fi
+
+if [ ${CMU_SW_VER} = "59.00.331A-EU" ]
+	then
+		DATA_COPY=1
+		DATA_COPY_FILE=59.00.331A-EU
+fi
+
+if [ ${CMU_SW_VER} = "59.00.441A-NA" ]
+	then
+		DATA_COPY=1
+		DATA_COPY_FILE=59.00.441A-NA
+fi
+
+if [ ${CMU_SW_VER} = "59.00.443C-EU" ]
+	then
+		DATA_COPY=1
+		DATA_COPY_FILE=59.00.443C-EU
+fi
+
+if [ ${CMU_SW_VER} = "56.00.230A-EU" ] \
+|| [ ${CMU_SW_VER} = "56.00.511A-EU" ] \
+|| [ ${CMU_SW_VER} = "56.00.512A-EU" ] \
+|| [ ${CMU_SW_VER} = "56.00.513B-EU" ] \
+|| [ ${CMU_SW_VER} = "56.00.513C-EU" ] \
+|| [ ${CMU_SW_VER} = "56.00.230A-ADR" ] \
+|| [ ${CMU_SW_VER} = "56.00.240B-ADR" ] \
+|| [ ${CMU_SW_VER} = "56.00.513C-ADR" ] \
+|| [ ${CMU_SW_VER} = "56.00.521A-NA" ]
+	then
+		DATA_COPY=1
+		DATA_COPY_FILE=56.00.513B-EU
+fi
+
+if [ ${CMU_SW_VER} = "55.00.650A-NA" ] \
+|| [ ${CMU_SW_VER} = "55.00.753A-NA" ] \
+|| [ ${CMU_SW_VER} = "55.00.760A-NA" ]
+	then
+		DATA_COPY=1
+		DATA_COPY_FILE=55.00.760A-NA
+fi
+
+if [ ${CMU_SW_VER} = "58.00.250A-NA" ]
+	then
+		DATA_COPY=1
+		DATA_COPY_FILE=58.00.250A-NA
+fi
+
+if [ ${CMU_SW_VER} = "56.00.401A-JP" ]
+	then
+		DATA_COPY=1
+		DATA_COPY_FILE=56.00.401A-JP
+fi
+
+DATA_COPY_VER=${CMU_SW_VER}
+log_message "===               === DATA_COPY_FILE = ${DATA_COPY_FILE} ===               ==="
+log_message "===               === DATA_COPY_VER = ${DATA_COPY_VER} ===                 ==="
+
+# restore data.zip back to original
+if test -s /jci/nng/data.zip.org
+then
+	log_message "===             Original data.zip is available as backup             ==="
+	cp -a /jci/nng/data.zip.org /jci/nng/data.zip
+	log_message "===                Renamed data.zip.org back to data.zip               ==="
+else
+	if [ ${DATA_COPY} = "1" ]
+	then
+		log_message "No backup of data.zip available!"
+	fi
+fi
+chmod 755 /jci/nng/data.zip
+log_message "===                   Modified file rights of data.zip                 ==="
+
+# when speedcam-patch will be uninstalled, although it's not installed, to avoid overwriting of original jci-linux_imx6_volans-release by later md5 check
+for I in 1
+do
+	status=`md5sum -c ${MYDIR}/config_org/speedcam-patch/jci/nng/checksum.jci-linux_imx6_volans-release.org.${CMU_SW_VER}.md5 2>&1 | grep FAILED`
+	if [[ $? -ne 1 ]]
+	then
+		echo "wrong"
+		log_message "=== Found patched jci-linux_imx6_volans-release version on your system! ==="
+	else
+		if [ ! -e /jci/nng/jci-linux_imx6_volans-release.org ]
+		then
+			log_message "=== Make backup of your original jci-linux_imx6_volans-release for your FW ${CMU_SW_VER} ==="
+			cp -a /jci/nng/jci-linux_imx6_volans-release /jci/nng/jci-linux_imx6_volans-release.org
+		fi
+		continue
+	fi
+done
+
+# restore jci-linux_imx6_volans-release back to original
+if test -s /jci/nng/jci-linux_imx6_volans-release.org
+then
+	mv /jci/nng/jci-linux_imx6_volans-release.org /jci/nng/jci-linux_imx6_volans-release
+	show_message "RESTORE JCI-LINUX_IMX6_VOLANS-RELEASE BACK TO ORIGINAL"
+	log_message "===    Original jci-linux_imx6_volans-release is available as backup   ==="
+	log_message "=== Renamed jci-linux_imx6_volans-release.org back to jci-linux_imx6_volans-release ==="
+else
+	if [ ${DATA_COPY} = "1" ]
+	then
+		log_message "=== Since no backup of jci-linux_imx6_volans-release.org is available, copied newest and compatible version ${DATA_COPY_FILE} of jci-linux_imx6_volans-release from SD card ==="
+		cp -a ${MYDIR}/config_org/speedcam-patch/jci/nng/jci-linux_imx6_volans-release.org.${DATA_COPY_FILE} /jci/nng/jci-linux_imx6_volans-release
+		DATA_COPY_VER=${DATA_COPY_FILE}
+		/bin/fsync /jci/nng/jci-linux_imx6_volans-release
+		sleep 5
+	fi
+fi
+chmod 755 /jci/nng/jci-linux_imx6_volans-release
+log_message "=== Modified file rights of jci-linux_imx6_volans-release ==="
+
+# check if jci-linux_imx6_volans-release was copied successful
+if [ ${DATA_COPY} = "1" ]
+then
+	for I in 1 2 3
+	do
+		status=`md5sum -c ${MYDIR}/config_org/speedcam-patch/jci/nng/checksum.jci-linux_imx6_volans-release.org.${DATA_COPY_VER}.md5 2>&1 | grep FAILED`
+		if [[ $? -ne 1 ]]
+		then
+			if [[ I -eq 3 ]]
+			then
+				log_message "=== Copying failed. Could not restore original file from backup and from SD card! ==="
+				break
+			else
+				log_message "=== ${I}. Checksum wrong of /jci/nng/jci-linux_imx6_volans-release, try to copy jci-linux_imx6_volans-release again from SD card ==="
+				cp -a ${MYDIR}/config_org/speedcam-patch/jci/nng/jci-linux_imx6_volans-release.org.${DATA_COPY_FILE} /jci/nng/jci-linux_imx6_volans-release
+				sleep 5
+				continue
+			fi
+		else
+			log_message "=== Checksum OK of /jci/nng/jci-linux_imx6_volans-release, copy was succesful ==="
+			break
+		fi
+	done
+fi
+
+rm -f /jci/nng/2
+
+if [ -e /mnt/sd_nav/content/speedcam ]
+then
+	cp /mnt/sd_nav/content/speedcam/speedcam.txt ${MYDIR}
+	log_message "=== Backup speedcam.txt to SD card ==="
+	rm -f /mnt/sd_nav/content/speedcam/speedcam.txt
+	rm -f /mnt/sd_nav/content/speedcam/speedcam.spdb
+	log_message "===        Removed speedcam.txt and speedcam.spdb from SD card         ==="
+else
+	log_message "=== No NAV SD card inside! Please remove speedcam.txt and speedcam.spdb manually from SD card in folder \content\speedcam\  ==="
+	show_message "No NAV SD card! Remove speedcam.* manually\n from SD card in folder \content\speedcam\ "
+fi
+
+log_message "===******* END UNINSTALLATION OF SPEEDCAM PATCH AND SPEEDCAM.TXT  *******==="
+log_message " "

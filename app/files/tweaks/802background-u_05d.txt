@@ -1,0 +1,5 @@
+# restore background image to original
+show_message "RESTORE BACKGROUND IMAGE TO ORIGINAL ..."
+cp -a ${MYDIR}/config_org/background.png /jci/gui/common/images
+log_message "=== RESTORED BACKGROUND IMAGE ==="
+log_message " "

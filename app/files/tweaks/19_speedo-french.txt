@@ -1,0 +1,4 @@
+# change to french version
+show_message "CHANGE SPEEDOMETER TO FRENCH..."
+sed -i 's/var language = "DE";/var language = "FR";/g' /jci/opera/opera_dir/userjs/speedometer-startup.js
+log_message "===       CHANGED SPEEDOMETER TO FRENCH VERSION        ==="

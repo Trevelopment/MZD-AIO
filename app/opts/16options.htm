@@ -1,0 +1,21 @@
+<!--
+- MZD-AIO-TI
+- By: Trezdog44 - Trevor Martin
+- http://mazdatweaks.com
+- ©2017 Trevelopment
+-
+- Custom Options For Blank Album Art
+-
+-->
+<script>
+
+</script>
+<div class="w3-content" style="">
+  <img class="blnk-albm-art" src="../../background/no_artwork_icon.png" style="width:100%;margin: auto;max-width:146px;display:block;">
+  <div id="blnk-albm-img" style="max-width: 146px;display:block;" data-toggle="tooltip" data-placement="auto bottom" title="This Image Will Replace The Blank Album Frame"></div>
+  <div class="w3-row-padding w3-section">
+    <a class="w3-btn w3-third w3-padding" href="" onclick="ipc.send('open-file-blnk-art')">Choose Your Own</a>
+    <a class="w3-btn w3-third w3-padding w3-tooltip" href="" onclick="ipc.send('default-blnk-art')" style="overflow: visible;">Use AIO Default<span class="w3-tag w3-text"  style="position:absolute;left:0;top:35px;width:140px;height:140px;"><img style="margin: 0;max-width: 100%;" src="../background-images/blank-album-art/no_artwork_icon.png" /></span></a>
+    <a class="w3-btn w3-third w3-padding" href="" onclick="ipc.send('transparent-blnk-art')">Transparent</a>
+  </div>
+</div>

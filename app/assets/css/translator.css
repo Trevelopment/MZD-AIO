@@ -1,0 +1,131 @@
+.main {
+  margin-top:85px;
+  margin-bottom: 50px;
+}
+.showNav ~ .main {
+  margin-top: 120px;
+}
+.tabs.list-group.col-md-2 {
+  width: 31.666666%;
+}
+.rows .col-md-10 {
+  width: 68.333333%;
+}
+.list-group-item {
+  border-radius:4px;
+  margin-bottom:1px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.w3-navbar li:first-child {
+  margin:0;
+}
+.w3-navbar li:first-child a {
+  padding: 6px 0px 3px 2px;
+}
+span.icon-arrow-left .w3-tag {
+  letter-spacing: 0;
+}
+span.icon-arrow-left .w3-tag:hover {
+  letter-spacing: 20px;
+}
+textarea.form-control {
+  height: 200px;
+}
+.showNav .main {
+  margin-top: 120px;
+}
+#loadLang {
+  text-transform: capitalize;
+}
+#autosave {
+  color: #00FF00;
+  size: 24px;
+  font-weight: 600;
+}
+input[type=checkbox].w3-check, input[type=radio].w3-radio {
+  width: 24px!important;
+  height: 24px;
+  margin-right: 10px;
+  top: -5px;
+  visibility: visible;
+}
+.w3-black input {
+  background-color: #333;
+}
+.w3-black input#newFileName:focus {
+  background-color: #999;
+  color: #000;
+  font-weight: bolder;
+}
+.w3-black .form-control[disabled] {
+  background-color: #444;
+  max-width: 60px;
+  color: #aaa;
+}
+.w3-black .form-control[disabled]:hover {
+  color: #ff0000;
+}
+.newfile {
+  width: 43.33333%;
+  text-transform: capitalize;
+  padding-top:0!important;
+}
+#cpyBtn {
+  position:absolute;
+  z-index:9999;
+}
+span#SourceMode {
+  position: fixed;
+  bottom: 40px;
+  right: 0;
+}
+left: 200px;
+top: 55px;
+position: fixed;
+@media (max-width:992px){
+  .newfile {
+    width:100%;
+  }
+  .tabs.list-group.col-md-2 {
+    display: initial;
+    width: 100%;
+  }
+  .tabs.list-group.col-md-2 .list-group-item {
+    display: inline-flex;
+    width: 33%;
+    white-space: nowrap;
+    overflow-x: hidden;
+  }
+  .goog-logo-link {
+    font-size: 20px!important;
+  }
+  [data-schemapath*="root.mainOps."] {
+    float: none!important;
+  }
+  [data-schemapath="root.menu"] [class*="col-md-"]:not(.col-md-12),
+  [data-schemapath="root.colors"] [class*="col-md-"]:not(.col-md-12),
+  [data-schemapath="root.languages"] [class*="col-md-"]:not(.col-md-12) {
+    width:50%;
+    float:left;
+  }
+  .rows .col-md-10 {
+    width: 100%;
+  }
+  h1 small {
+    opacity: 0;
+  }
+  /*  .col-md-2,.col-md-3,.col-md-4,.col-md-6 {
+  width: 49%;
+  float:left;
+}
+.col-md-12,.col-md-8 {
+width: 100%;
+float: none;
+}*/
+}
+/*@media(min-width:1000px){
+[data-schemapath*="root.FAQs"].col-md-6 .sceditor-container {
+max-width: 450px;
+}*/

@@ -1,0 +1,8 @@
+# install shorter delay mod by yuikjh
+sed -i 's/autoscrollTier1Timeout :                1500,/autoscrollTier1Timeout :                150,/g' /jci/gui/common/controls/List2/js/List2Ctrl.js
+sed -i 's/autoscrollTier2Timeout :                5000,/autoscrollTier2Timeout :                300,/g' /jci/gui/common/controls/List2/js/List2Ctrl.js
+sed -i 's/autoscrollTier1Interval :               500,/autoscrollTier1Interval :               200,/g' /jci/gui/common/controls/List2/js/List2Ctrl.js
+sed -i 's/autoscrollTier2Interval :               1000,/autoscrollTier2Interval :               300,/g' /jci/gui/common/controls/List2/js/List2Ctrl.js
+log_message "=== MODIFIED DELAY TO  /jci/gui/common/controls/List2/js/List2Ctrl.js ==="
+log_message "END DEINSTALLATION OF SHORTER DELAY MOD"
+log_message " "

@@ -1,0 +1,6 @@
+STATUS_BAR_APP=#ffffff
+STATUS_BAR_CLOCK=#ffffff
+STATUS_BAR_NOTIF=#ffffff
+STATUS_BAR_OPACITY=0
+STATUS_BAR_CTRL="background-image: url('../images/StatusBarBg.png');"
+SBN_CTRL=

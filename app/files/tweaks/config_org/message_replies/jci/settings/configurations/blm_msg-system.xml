@@ -1,0 +1,1235 @@
+﻿<Node key="msg">
+    <Node key="PresetMessages">
+        <Node key="UK_English">
+            <Node key="1" data="String" value="OK"/>
+            <Node key="2" data="String" value="Yes"/>
+            <Node key="3" data="String" value="No"/>
+            <Node key="4" data="String" value="Thanks!"/>
+            <Node key="5" data="String" value="Can’t talk now."/>
+            <Node key="6" data="String" value="Please call me."/>
+            <Node key="7" data="String" value="Call you later."/>
+            <Node key="8" data="String" value="Driving now."/>
+            <Node key="9" data="String" value="Stuck in traffic."/>
+            <Node key="10" data="String" value="Be there in 10 minutes."/>
+            <Node key="11" data="String" value="Be there in 20 minutes."/>
+            <Node key="12" data="String" value="Why?"/>
+            <Node key="13" data="String" value="Where are you?"/>
+            <Node key="14" data="String" value="I need more directions."/>
+            <Node key="15" data="String" value=":-)"/>                            
+        </Node>
+        <Node key="NA_Spanish">
+            <Node key="1" data="String" value="ACEPTAR"/>
+            <Node key="2" data="String" value="Sí"/>
+            <Node key="3" data="String" value="No"/>
+            <Node key="4" data="String" value="¡Gracias!"/>
+            <Node key="5" data="String" value="No puedo hablar ahora."/>
+            <Node key="6" data="String" value="Por favor llámame"/>
+            <Node key="7" data="String" value="Te llamo más tarde"/>
+            <Node key="8" data="String" value="En este momento estoy conduciendo."/>
+            <Node key="9" data="String" value="Atascado en tráfico."/>
+            <Node key="10" data="String" value="Estaré allí en 10 minutos"/>
+            <Node key="11" data="String" value="Estaré allí en 20 minutos"/>
+            <Node key="12" data="String" value="¿Por qué?"/>
+            <Node key="13" data="String" value="¿Dónde estás?"/>
+            <Node key="14" data="String" value="Necesito más indicaciones"/>
+            <Node key="15" data="String" value=":-)"/>                            
+        </Node>
+        <Node key="US_English">
+            <Node key="1" data="String" value="OK"/>
+            <Node key="2" data="String" value="Yes"/>
+            <Node key="3" data="String" value="No"/>
+            <Node key="4" data="String" value="Thanks!"/>
+            <Node key="5" data="String" value="Can’t talk now."/>
+            <Node key="6" data="String" value="Please call me."/>
+            <Node key="7" data="String" value="Call you later."/>
+            <Node key="8" data="String" value="Driving now."/>
+            <Node key="9" data="String" value="Stuck in traffic."/>
+            <Node key="10" data="String" value="Be there in 10 minutes."/>
+            <Node key="11" data="String" value="Be there in 20 minutes."/>
+            <Node key="12" data="String" value="Why?"/>
+            <Node key="13" data="String" value="Where are you?"/>
+            <Node key="14" data="String" value="I need more directions."/>
+            <Node key="15" data="String" value=":-)"/>                            
+        </Node>
+        <Node key="Arabic">
+            <Node key="1" data="String" value="موافق"/>
+            <Node key="2" data="String" value="نعم"/>
+            <Node key="3" data="String" value="لا"/>
+            <Node key="4" data="String" value="شكرًا!"/>
+            <Node key="5" data="String" value="لا يمكنني التحدث الآن."/>
+            <Node key="6" data="String" value="أرجو الاتصال بي."/>
+            <Node key="7" data="String" value="سأتصل بك لاحقًا."/>
+            <Node key="8" data="String" value="أقوم بالقيادة الآن."/>
+            <Node key="9" data="String" value="عالق في الازدحام المروري."/>
+            <Node key="10" data="String" value="احرص على التواجد هناك في خلال 10 دقائق."/>
+            <Node key="11" data="String" value="احرص على التواجد هناك خلال 20 دقيقة."/>
+            <Node key="12" data="String" value="لماذا؟"/>
+            <Node key="13" data="String" value="أين أنت؟"/>
+            <Node key="14" data="String" value="أحتاج مزيد من التعليمات."/>
+            <Node key="15" data="String" value="(-:"/>                            
+        </Node>
+        <Node key="Bulgarian">
+            <Node key="1" data="String" value="OK"/>
+            <Node key="2" data="String" value="Да"/>
+            <Node key="3" data="String" value="Не"/>
+            <Node key="4" data="String" value="Благодаря!"/>
+            <Node key="5" data="String" value="Не мога да говоря в момента."/>
+            <Node key="6" data="String" value="Моля, обадете ми се."/>
+            <Node key="7" data="String" value="Ще се обадя по-късно."/>
+            <Node key="8" data="String" value="В момента шофирам."/>
+            <Node key="9" data="String" value="Попаднах в задръстване."/>
+            <Node key="10" data="String" value="След 10 минути съм там."/>
+            <Node key="11" data="String" value="След 20 минути съм там."/>
+            <Node key="12" data="String" value="Защо?"/>
+            <Node key="13" data="String" value="Къде се намирате?"/>
+            <Node key="14" data="String" value="Имам нужда от повече указания."/>
+            <Node key="15" data="String" value=":-)"/>                            
+        </Node>
+        <Node key="Czech">
+            <Node key="1" data="String" value="OK"/>
+            <Node key="2" data="String" value="Líbí"/>
+            <Node key="3" data="String" value="Nelíbí"/>
+            <Node key="4" data="String" value="Díky!"/>
+            <Node key="5" data="String" value="Teď nemohu mluvit."/>
+            <Node key="6" data="String" value="Zavolejte prosím."/>
+            <Node key="7" data="String" value="Zavolám vám později."/>
+            <Node key="8" data="String" value="Řídím."/>
+            <Node key="9" data="String" value="Uvízl jsem v hustém provozu."/>
+            <Node key="10" data="String" value="Za 10 minut budu na místě."/>
+            <Node key="11" data="String" value="Za 20 minut budu na místě."/>
+            <Node key="12" data="String" value="Proč?"/>
+            <Node key="13" data="String" value="Kde jste?"/>
+            <Node key="14" data="String" value="Potřebuji upřesnění směru."/>
+            <Node key="15" data="String" value=":-)"/>                            
+        </Node>
+        <Node key="Danish">
+            <Node key="1" data="String" value="OK"/>
+            <Node key="2" data="String" value="Ja"/>
+            <Node key="3" data="String" value="Nej"/>
+            <Node key="4" data="String" value="Mange tak!"/>
+            <Node key="5" data="String" value="Kan ikke tale nu."/>
+            <Node key="6" data="String" value="Vær venlig at ringe til mig"/>
+            <Node key="7" data="String" value="Ringer til dig senere."/>
+            <Node key="8" data="String" value="Kører nu."/>
+            <Node key="9" data="String" value="Sidder fast i trafikken"/>
+            <Node key="10" data="String" value="Er der om 10 minutter."/>
+            <Node key="11" data="String" value="Er der om 20 minutter."/>
+            <Node key="12" data="String" value="Hvorfor?"/>
+            <Node key="13" data="String" value="Hvor er du?"/>
+            <Node key="14" data="String" value="Jeg har brug for flere anvisninger."/>
+            <Node key="15" data="String" value=":-)"/>                            
+        </Node>
+        <Node key="German">
+            <Node key="1" data="String" value="OK"/>
+            <Node key="2" data="String" value="Ja"/>
+            <Node key="3" data="String" value="Nein"/>
+            <Node key="4" data="String" value="Danke!"/>
+            <Node key="5" data="String" value="Kann jetzt nicht sprechen."/>
+            <Node key="6" data="String" value="Bitte rufen Sie mich an!"/>
+            <Node key="7" data="String" value="Ich rufe später an."/>
+            <Node key="8" data="String" value="Ich fahre im Moment Auto."/>
+            <Node key="9" data="String" value="Im Verkehr steckengeblieben"/>
+            <Node key="10" data="String" value="Ich bin in 10 Minuten da"/>
+            <Node key="11" data="String" value="Ich bin in 20 Minuten da"/>
+            <Node key="12" data="String" value="Warum?"/>
+            <Node key="13" data="String" value="Wo sind Sie?"/>
+            <Node key="14" data="String" value="Ich benötige nähere Anfahrtsbeschreibungen."/>
+            <Node key="15" data="String" value=":-)"/>                            
+        </Node>
+        <Node key="Greek">
+            <Node key="1" data="String" value="OK"/>
+            <Node key="2" data="String" value="Ναι"/>
+            <Node key="3" data="String" value="Όχι"/>
+            <Node key="4" data="String" value="Ευχαριστώ!"/>
+            <Node key="5" data="String" value="Δεν μπορώ να μιλήσω τώρα."/>
+            <Node key="6" data="String" value="Κάλεσέ με."/>
+            <Node key="7" data="String" value="Θα σας καλέσω αργότερα."/>
+            <Node key="8" data="String" value="Οδήγηση σε εξέλιξη τώρα."/>
+            <Node key="9" data="String" value="Κόλλημα σε κίνηση."/>
+            <Node key="10" data="String" value="Να είστε εκεί σε 10 λεπτά."/>
+            <Node key="11" data="String" value="Να είστε εκεί σε 20 λεπτά."/>
+            <Node key="12" data="String" value="Γιατί;"/>
+            <Node key="13" data="String" value="Πού είστε;"/>
+            <Node key="14" data="String" value="Χρειάζομαι περισσότερες οδηγίες."/>
+            <Node key="15" data="String" value=":-)"/>                            
+        </Node>
+        <Node key="Castilian_Spanish">
+            <Node key="1" data="String" value="ACEPTAR"/>
+            <Node key="2" data="String" value="Sí"/>
+            <Node key="3" data="String" value="No"/>
+            <Node key="4" data="String" value="¡Gracias!"/>
+            <Node key="5" data="String" value="No puedo hablar ahora."/>
+            <Node key="6" data="String" value="Por favor llámame"/>
+            <Node key="7" data="String" value="Te llamo más tarde"/>
+            <Node key="8" data="String" value="En este momento estoy conduciendo."/>
+            <Node key="9" data="String" value="Atascado en tráfico."/>
+            <Node key="10" data="String" value="Estaré allí en 10 minutos"/>
+            <Node key="11" data="String" value="Estaré allí en 20 minutos"/>
+            <Node key="12" data="String" value="¿Por qué?"/>
+            <Node key="13" data="String" value="¿Dónde estás?"/>
+            <Node key="14" data="String" value="Necesito más indicaciones"/>
+            <Node key="15" data="String" value=":-)"/>                            
+        </Node>
+        <Node key="Estonian">
+            <Node key="1" data="String" value="OK"/>
+            <Node key="2" data="String" value="Jah"/>
+            <Node key="3" data="String" value="Ei"/>
+            <Node key="4" data="String" value="Tänud!"/>
+            <Node key="5" data="String" value="Praegu ei saa rääkida."/>
+            <Node key="6" data="String" value="Palun helista mulle."/>
+            <Node key="7" data="String" value="Helistan hiljem."/>
+            <Node key="8" data="String" value="Sõidan."/>
+            <Node key="9" data="String" value="Liiklusummik."/>
+            <Node key="10" data="String" value="Jõuan 10 minuti pärast."/>
+            <Node key="11" data="String" value="Olen 20 min pärast kohal."/>
+            <Node key="12" data="String" value="Miks?"/>
+            <Node key="13" data="String" value="Kus te olete?"/>
+            <Node key="14" data="String" value="Vajan rohkem juhiseid."/>
+            <Node key="15" data="String" value=":-)"/>                            
+        </Node>
+        <Node key="Finnish">
+            <Node key="1" data="String" value="OK"/>
+            <Node key="2" data="String" value="Kyllä"/>
+            <Node key="3" data="String" value="Ei"/>
+            <Node key="4" data="String" value="Kiitos!"/>
+            <Node key="5" data="String" value="En voi puhua juuri nyt."/>
+            <Node key="6" data="String" value="Soittaisitko minulle."/>
+            <Node key="7" data="String" value="Soitan myöhemmin."/>
+            <Node key="8" data="String" value="Ajan autoa."/>
+            <Node key="9" data="String" value="Ruuhkassa."/>
+            <Node key="10" data="String" value="Olen siellä 10 minuutissa."/>
+            <Node key="11" data="String" value="Olen siellä 20 minuutissa."/>
+            <Node key="12" data="String" value="Miksi?"/>
+            <Node key="13" data="String" value="Missä olet?"/>
+            <Node key="14" data="String" value="Tarvitsen lisää ohjeita."/>
+            <Node key="15" data="String" value=":-)"/>                            
+        </Node>
+        <Node key="CN_French">
+            <Node key="1" data="String" value="OK"/>
+            <Node key="2" data="String" value="Oui"/>
+            <Node key="3" data="String" value="Non"/>
+            <Node key="4" data="String" value="Merci !"/>
+            <Node key="5" data="String" value="Je ne peux pas parler pour le moment. "/>
+            <Node key="6" data="String" value="Veuillez m’appeler."/>
+            <Node key="7" data="String" value="Je rappelle plus tard."/>
+            <Node key="8" data="String" value="Je conduis"/>
+            <Node key="9" data="String" value="Coincé dans les embouteillages."/>
+            <Node key="10" data="String" value="De retour dans 10 minutes."/>
+            <Node key="11" data="String" value="De retour dans 20 minutes."/>
+            <Node key="12" data="String" value="Pourquoi ?"/>
+            <Node key="13" data="String" value="Où êtes-vous ?"/>
+            <Node key="14" data="String" value="J'ai besoin d’indications supplémentaires."/>
+            <Node key="15" data="String" value=":-)"/>                            
+        </Node>
+        <Node key="EU_French">
+            <Node key="1" data="String" value="OK"/>
+            <Node key="2" data="String" value="Oui"/>
+            <Node key="3" data="String" value="Non"/>
+            <Node key="4" data="String" value="Merci !"/>
+            <Node key="5" data="String" value="Je ne peux pas parler pour le moment. "/>
+            <Node key="6" data="String" value="Veuillez m’appeler."/>
+            <Node key="7" data="String" value="Je rappelle plus tard."/>
+            <Node key="8" data="String" value="Je conduis"/>
+            <Node key="9" data="String" value="Coincé dans les embouteillages."/>
+            <Node key="10" data="String" value="De retour dans 10 minutes."/>
+            <Node key="11" data="String" value="De retour dans 20 minutes."/>
+            <Node key="12" data="String" value="Pourquoi ?"/>
+            <Node key="13" data="String" value="Où êtes-vous ?"/>
+            <Node key="14" data="String" value="J'ai besoin d’indications supplémentaires."/>
+            <Node key="15" data="String" value=":-)"/>                            
+        </Node>
+        <Node key="Hebrew">
+            <Node key="1" data="String" value="OK"/>
+            <Node key="2" data="String" value="כן"/>
+            <Node key="3" data="String" value="לא"/>
+            <Node key="4" data="String" value="תודה!"/>
+            <Node key="5" data="String" value="אינני יכול לדבר עכשיו"/>
+            <Node key="6" data="String" value="בקשה צלצל אלי"/>
+            <Node key="7" data="String" value="אתקשר יותר מאוחר."/>
+            <Node key="8" data="String" value="נוהג עכשיו."/>
+            <Node key="9" data="String" value="תקוע בפקק."/>
+            <Node key="10" data="String" value="אהיה שם תוך 10 דקות."/>
+            <Node key="11" data="String" value="אהיה שם תוך 20 דקות."/>
+            <Node key="12" data="String" value="למה?"/>
+            <Node key="13" data="String" value="היכן אתה נמצא?"/>
+            <Node key="14" data="String" value="אני זקוק ליותר הכוונה."/>
+            <Node key="15" data="String" value="(-:"/>                            
+        </Node>
+        <Node key="Croatian">
+            <Node key="1" data="String" value="OK"/>
+            <Node key="2" data="String" value="Da"/>
+            <Node key="3" data="String" value="Ne"/>
+            <Node key="4" data="String" value="Hvala!"/>
+            <Node key="5" data="String" value="Sada ne mogu razgovarati."/>
+            <Node key="6" data="String" value="Molim te nazovi me."/>
+            <Node key="7" data="String" value="Nazvat ću te kasnije."/>
+            <Node key="8" data="String" value="Sada vozim."/>
+            <Node key="9" data="String" value="Zapeo u prometu."/>
+            <Node key="10" data="String" value="Budi tamo za 10 minuta."/>
+            <Node key="11" data="String" value="Budi tamo za 20 minuta."/>
+            <Node key="12" data="String" value="Zašto?"/>
+            <Node key="13" data="String" value="Gdje se nalazite?"/>
+            <Node key="14" data="String" value="Potrebno mi je više uputa."/>
+            <Node key="15" data="String" value=":-)"/>                            
+        </Node>
+        <Node key="Hungarian">
+            <Node key="1" data="String" value="OK"/>
+            <Node key="2" data="String" value="Igen "/>
+            <Node key="3" data="String" value="Nem "/>
+            <Node key="4" data="String" value="Köszönöm!"/>
+            <Node key="5" data="String" value="Most nem tudok beszélni."/>
+            <Node key="6" data="String" value="Kérem, hívjon fel."/>
+            <Node key="7" data="String" value="Később telefonálok."/>
+            <Node key="8" data="String" value="Most autót vezetek."/>
+            <Node key="9" data="String" value="Forgalmi dugóba kerültem."/>
+            <Node key="10" data="String" value="10 perc múlva ott leszek."/>
+            <Node key="11" data="String" value="20 perc múlva ott leszek."/>
+            <Node key="12" data="String" value="Miért?"/>
+            <Node key="13" data="String" value="Hol tartózkodik most?"/>
+            <Node key="14" data="String" value="Részletesebb útbaigazítást kérek."/>
+            <Node key="15" data="String" value=":-)"/>                            
+        </Node>
+        <Node key="Indonesian">
+            <Node key="1" data="String" value="OK"/>
+            <Node key="2" data="String" value="Ya"/>
+            <Node key="3" data="String" value="Tidak"/>
+            <Node key="4" data="String" value="Trims!"/>
+            <Node key="5" data="String" value="Tak bisa bicara sekarang."/>
+            <Node key="6" data="String" value="Tolong telepon saya"/>
+            <Node key="7" data="String" value="Nanti saya telepon Anda"/>
+            <Node key="8" data="String" value="Sedang mengemudi"/>
+            <Node key="9" data="String" value="Terjebak kemacetan."/>
+            <Node key="10" data="String" value="Sampai di sana 10 menit lagi."/>
+            <Node key="11" data="String" value="Sampai di sana 20 menit lagi."/>
+            <Node key="12" data="String" value="Kenapa?"/>
+            <Node key="13" data="String" value="Anda di mana?"/>
+            <Node key="14" data="String" value="Saya perlu petunjuk lagi"/>
+            <Node key="15" data="String" value=":-)"/>                            
+        </Node>
+        <Node key="Italian">
+            <Node key="1" data="String" value="OK"/>
+            <Node key="2" data="String" value="Sì"/>
+            <Node key="3" data="String" value="No"/>
+            <Node key="4" data="String" value="Grazie!"/>
+            <Node key="5" data="String" value="Non posso parlare ora."/>
+            <Node key="6" data="String" value="Chiamami, per favore."/>
+            <Node key="7" data="String" value="Ti richiamo dopo."/>
+            <Node key="8" data="String" value="Sto guidando."/>
+            <Node key="9" data="String" value="Bloccato nel traffico."/>
+            <Node key="10" data="String" value="Sarò lì tra 10 minuti."/>
+            <Node key="11" data="String" value="Sarò lì tra 20 minuti."/>
+            <Node key="12" data="String" value="Perché?"/>
+            <Node key="13" data="String" value="Dove sei?"/>
+            <Node key="14" data="String" value="Ho bisogno di altre direzioni."/>
+            <Node key="15" data="String" value=":-)"/>                            
+        </Node>
+        <Node key="Japanese">
+            <Node key="1" data="String" value="OK"/>
+            <Node key="2" data="String" value="はい"/>
+            <Node key="3" data="String" value="いいえ"/>
+            <Node key="4" data="String" value="ありがとうございます。"/>
+            <Node key="5" data="String" value="現在電話できません。"/>
+            <Node key="6" data="String" value="電話してください。"/>
+            <Node key="7" data="String" value="あとでかけ直します。"/>
+            <Node key="8" data="String" value="運転中です。"/>
+            <Node key="9" data="String" value="渋滞に巻き込まれました。"/>
+            <Node key="10" data="String" value="10 分で到着します。"/>
+            <Node key="11" data="String" value="20 分で到着します。"/>
+            <Node key="12" data="String" value="どうして？"/>
+            <Node key="13" data="String" value="どこにいますか？"/>
+            <Node key="14" data="String" value="よくわかりません。"/>
+            <Node key="15" data="String" value="(^_^)"/>                            
+        </Node>
+        <Node key="Lithuanian">
+            <Node key="1" data="String" value="Gerai"/>
+            <Node key="2" data="String" value="Taip"/>
+            <Node key="3" data="String" value="Ne"/>
+            <Node key="4" data="String" value="Ačiū!"/>
+            <Node key="5" data="String" value="Dabar negaliu kalbėti."/>
+            <Node key="6" data="String" value="Paskambink man."/>
+            <Node key="7" data="String" value="Paskambinsiu vėliau."/>
+            <Node key="8" data="String" value="Dabar vairuoju."/>
+            <Node key="9" data="String" value="Įstrigau kamštyje."/>
+            <Node key="10" data="String" value="Būsiu po 10 minučių."/>
+            <Node key="11" data="String" value="Būsiu po 20 minučių."/>
+            <Node key="12" data="String" value="Kodėl?"/>
+            <Node key="13" data="String" value="Kur esi?"/>
+            <Node key="14" data="String" value="Man reikia daugiau krypčių."/>
+            <Node key="15" data="String" value=":-)"/>                            
+        </Node>
+        <Node key="Latvian">
+            <Node key="1" data="String" value="Labi"/>
+            <Node key="2" data="String" value="Jā"/>
+            <Node key="3" data="String" value="Nē"/>
+            <Node key="4" data="String" value="Paldies!"/>
+            <Node key="5" data="String" value="Pašlaik nevaru runāt."/>
+            <Node key="6" data="String" value="Lūdzu, piezvaniet man."/>
+            <Node key="7" data="String" value="Piezvanīšu vēlāk."/>
+            <Node key="8" data="String" value="Tagad brauc."/>
+            <Node key="9" data="String" value="Iestrēdzis satiksmē."/>
+            <Node key="10" data="String" value="Būšu pēc 10 minūtēm."/>
+            <Node key="11" data="String" value="Būšu pēc 20 minūtēm."/>
+            <Node key="12" data="String" value="Kāpēc?"/>
+            <Node key="13" data="String" value="Kur jūs esat?"/>
+            <Node key="14" data="String" value="Man vajag precīzākas norādes."/>
+            <Node key="15" data="String" value=":-)"/>                            
+        </Node>
+        <Node key="Malaysian">
+            <Node key="1" data="String" value="OK"/>
+            <Node key="2" data="String" value="Ya"/>
+            <Node key="3" data="String" value="Tidak"/>
+            <Node key="4" data="String" value="Terima kasih!"/>
+            <Node key="5" data="String" value="Tak boleh bercakap sekarang."/>
+            <Node key="6" data="String" value="Hubungi saya."/>
+            <Node key="7" data="String" value="Hubungi anda kemudian."/>
+            <Node key="8" data="String" value="Sedang memandu."/>
+            <Node key="9" data="String" value="Tersekat dalam kesesakan lalu lintas."/>
+            <Node key="10" data="String" value="Akan sampai dalam 10 minit."/>
+            <Node key="11" data="String" value="Akan sampai dalam 20 minit."/>
+            <Node key="12" data="String" value="Mengapa?"/>
+            <Node key="13" data="String" value="Awak di mana?"/>
+            <Node key="14" data="String" value="Saya memerlukan lagi arah."/>
+            <Node key="15" data="String" value=":-)"/>                            
+        </Node>
+        <Node key="Dutch">
+            <Node key="1" data="String" value="OK"/>
+            <Node key="2" data="String" value="Ja"/>
+            <Node key="3" data="String" value="Nee"/>
+            <Node key="4" data="String" value="Bedankt!"/>
+            <Node key="5" data="String" value="Ik kan nu niet spreken."/>
+            <Node key="6" data="String" value="Bel mij."/>
+            <Node key="7" data="String" value="Ik zal u later bellen."/>
+            <Node key="8" data="String" value="Aan het rijden."/>
+            <Node key="9" data="String" value="Vast in het verkeer."/>
+            <Node key="10" data="String" value="Aankomst over 10 minuten."/>
+            <Node key="11" data="String" value="Aankomst over 20 minuten."/>
+            <Node key="12" data="String" value="Waarom?"/>
+            <Node key="13" data="String" value="Waar bent u?"/>
+            <Node key="14" data="String" value="Ik heb meerdere routebeschrijvingen nodig."/>
+            <Node key="15" data="String" value=":-)"/>                            
+        </Node>
+        <Node key="Norwegian">
+            <Node key="1" data="String" value="OK"/>
+            <Node key="2" data="String" value="Ja"/>
+            <Node key="3" data="String" value="Nei"/>
+            <Node key="4" data="String" value="Takk!"/>
+            <Node key="5" data="String" value="Kan ikke snakke nå."/>
+            <Node key="6" data="String" value="Ring meg."/>
+            <Node key="7" data="String" value="Ringer senere."/>
+            <Node key="8" data="String" value="Kjører nå."/>
+            <Node key="9" data="String" value="Sitter fast i trafikken."/>
+            <Node key="10" data="String" value="Kommer om 10 minutter."/>
+            <Node key="11" data="String" value="Kommer om 20 minutter."/>
+            <Node key="12" data="String" value="Hvorfor?"/>
+            <Node key="13" data="String" value="Hvor er du?"/>
+            <Node key="14" data="String" value="Jeg trenger flere anvisninger."/>
+            <Node key="15" data="String" value=":-)"/>                            
+        </Node>
+        <Node key="Polish">
+            <Node key="1" data="String" value="OK"/>
+            <Node key="2" data="String" value="Tak"/>
+            <Node key="3" data="String" value="Nie"/>
+            <Node key="4" data="String" value="Dziękuję!"/>
+            <Node key="5" data="String" value="Nie mogę rozmawiać."/>
+            <Node key="6" data="String" value="Zadzwoń do mnie."/>
+            <Node key="7" data="String" value="Zadzwoń później"/>
+            <Node key="8" data="String" value="Teraz prowadzę."/>
+            <Node key="9" data="String" value="Stoję w korku."/>
+            <Node key="10" data="String" value="Będę na miejscu za 10 minut."/>
+            <Node key="11" data="String" value="Będę na miejscu za 20 minut."/>
+            <Node key="12" data="String" value="Dlaczego?"/>
+            <Node key="13" data="String" value="Gdzie jesteś?"/>
+            <Node key="14" data="String" value="Potrzebne są dalsze wskazówki."/>
+            <Node key="15" data="String" value=":-)"/>                            
+        </Node>
+        <Node key="EU_Portuguese">
+            <Node key="1" data="String" value="OK"/>
+            <Node key="2" data="String" value="Sim"/>
+            <Node key="3" data="String" value="Não"/>
+            <Node key="4" data="String" value="Obrigado!"/>
+            <Node key="5" data="String" value="Não posso falar agora."/>
+            <Node key="6" data="String" value="Telefona-me."/>
+            <Node key="7" data="String" value="Telefono mais tarde."/>
+            <Node key="8" data="String" value="Estou a conduzir."/>
+            <Node key="9" data="String" value="Parado no trânsito."/>
+            <Node key="10" data="String" value="Chego daqui a 10 minutos."/>
+            <Node key="11" data="String" value="Chego daqui a 20 minutos."/>
+            <Node key="12" data="String" value="Porquê?"/>
+            <Node key="13" data="String" value="Onde estás?"/>
+            <Node key="14" data="String" value="Preciso de mais indicações."/>
+            <Node key="15" data="String" value=":-)"/>                            
+        </Node>
+        <Node key="Romanian">
+            <Node key="1" data="String" value="OK"/>
+            <Node key="2" data="String" value="Da"/>
+            <Node key="3" data="String" value="Nu"/>
+            <Node key="4" data="String" value="Mulţumesc!"/>
+            <Node key="5" data="String" value="Nu pot vorbi acum."/>
+            <Node key="6" data="String" value="Sună-mă."/>
+            <Node key="7" data="String" value="Te sun mai târziu."/>
+            <Node key="8" data="String" value="Conduc."/>
+            <Node key="9" data="String" value="Blocat în trafic."/>
+            <Node key="10" data="String" value="Ajung în 10 minute."/>
+            <Node key="11" data="String" value="Ajung în 20 de minute."/>
+            <Node key="12" data="String" value="De ce?"/>
+            <Node key="13" data="String" value="Unde eşti?"/>
+            <Node key="14" data="String" value="Îmi trebuie mai multe indicaţii."/>
+            <Node key="15" data="String" value=":-)"/>                            
+        </Node>
+        <Node key="Russian">
+            <Node key="1" data="String" value="OK"/>
+            <Node key="2" data="String" value="Да"/>
+            <Node key="3" data="String" value="Нет"/>
+            <Node key="4" data="String" value="Спасибо!"/>
+            <Node key="5" data="String" value="Не могу сейчас разговаривать."/>
+            <Node key="6" data="String" value="Перезвони мне."/>
+            <Node key="7" data="String" value="Перезвоню позже."/>
+            <Node key="8" data="String" value="Я сейчас за рулем."/>
+            <Node key="9" data="String" value="Стою в пробке."/>
+            <Node key="10" data="String" value="Буду через 10 минут."/>
+            <Node key="11" data="String" value="Буду через 20 минут."/>
+            <Node key="12" data="String" value="Почему?"/>
+            <Node key="13" data="String" value="Где вы?"/>
+            <Node key="14" data="String" value="Мне необходимы дополнит. указания."/>
+            <Node key="15" data="String" value=":-)"/>                            
+        </Node>
+        <Node key="Slovakian">
+            <Node key="1" data="String" value="OK"/>
+            <Node key="2" data="String" value="Áno"/>
+            <Node key="3" data="String" value="Nie"/>
+            <Node key="4" data="String" value="Vďaka!"/>
+            <Node key="5" data="String" value="Teraz nemôžem rozprávať."/>
+            <Node key="6" data="String" value="Zavolajte mi, prosím."/>
+            <Node key="7" data="String" value="Zavolám vám neskôr."/>
+            <Node key="8" data="String" value="Teraz šoférujem."/>
+            <Node key="9" data="String" value="V dopravnej zápche."/>
+            <Node key="10" data="String" value="Buďte tam za 10 minút."/>
+            <Node key="11" data="String" value="Buďte tam za 20 minút."/>
+            <Node key="12" data="String" value="Prečo?"/>
+            <Node key="13" data="String" value="Kde ste?"/>
+            <Node key="14" data="String" value="Potrebujem viac inštrukcií."/>
+            <Node key="15" data="String" value=":-)"/>                            
+        </Node>
+        <Node key="Serbian">
+            <Node key="1" data="String" value="U redu"/>
+            <Node key="2" data="String" value="Da"/>
+            <Node key="3" data="String" value="Ne"/>
+            <Node key="4" data="String" value="Hvala!"/>
+            <Node key="5" data="String" value="Ne mogu sada da razgovaram."/>
+            <Node key="6" data="String" value="Pozovite me."/>
+            <Node key="7" data="String" value="Pozvaću te kasnije."/>
+            <Node key="8" data="String" value="Sada vozim."/>
+            <Node key="9" data="String" value="Zaglavljen u saobraćaju."/>
+            <Node key="10" data="String" value="Biću tamo za 10 minuta."/>
+            <Node key="11" data="String" value=" Biću tamo za 20 minuta."/>
+            <Node key="12" data="String" value="Zašto?"/>
+            <Node key="13" data="String" value="Gde ste?"/>
+            <Node key="14" data="String" value=" Potrebno mi je više instrukcija."/>
+            <Node key="15" data="String" value=":-)"/>                            
+        </Node>
+        <Node key="Swedish">
+            <Node key="1" data="String" value="U redu"/>
+            <Node key="2" data="String" value="Ja"/>
+            <Node key="3" data="String" value="Nej"/>
+            <Node key="4" data="String" value="Tack så mycket!"/>
+            <Node key="5" data="String" value="Kan inte prata nu."/>
+            <Node key="6" data="String" value="Ring mig."/>
+            <Node key="7" data="String" value="Ringer upp dig senare."/>
+            <Node key="8" data="String" value="Kör nu."/>
+            <Node key="9" data="String" value="Fast i trafiken."/>
+            <Node key="10" data="String" value="Kommer om 10 minuter."/>
+            <Node key="11" data="String" value="Kommer om 20 minuter."/>
+            <Node key="12" data="String" value="Varför?"/>
+            <Node key="13" data="String" value="Var är du?"/>
+            <Node key="14" data="String" value="Jag behöver mer köranvisningar."/>
+            <Node key="15" data="String" value=":-)"/>                            
+        </Node>
+        <Node key="Thai">
+            <Node key="1" data="String" value="ตกลง"/>
+            <Node key="2" data="String" value="ใช่"/>
+            <Node key="3" data="String" value="ไม่"/>
+            <Node key="4" data="String" value="ขอบคุณ"/>
+            <Node key="5" data="String" value="ไม่สะดวกคุยในตอนนี้"/>
+            <Node key="6" data="String" value="โปรดโทรหาฉัน"/>
+            <Node key="7" data="String" value="โทรหาคุณในภายหลัง"/>
+            <Node key="8" data="String" value="กำลังขับรถอยู่"/>
+            <Node key="9" data="String" value="รถติด"/>
+            <Node key="10" data="String" value="ไปถึงภายใน 10 นาที"/>
+            <Node key="11" data="String" value="ไปถึงภายใน 20 นาที"/>
+            <Node key="12" data="String" value="ทำไม"/>
+            <Node key="13" data="String" value="คุณอยู่ที่ไหน"/>
+            <Node key="14" data="String" value="ฉันต้องการคำแนะนำเส้นทางมากขึ้น"/>
+            <Node key="15" data="String" value=":-)"/>                            
+        </Node>
+        <Node key="Turkish">
+            <Node key="1" data="String" value="U redu"/>
+            <Node key="2" data="String" value="Evet"/>
+            <Node key="3" data="String" value="Hayır"/>
+            <Node key="4" data="String" value="Teşekkürler!"/>
+            <Node key="5" data="String" value="Şu anda konuşamıyorum."/>
+            <Node key="6" data="String" value="Lütfen, ara beni."/>
+            <Node key="7" data="String" value="Daha sonra ara."/>
+            <Node key="8" data="String" value="Şu anda araç kullanıyorum."/>
+            <Node key="9" data="String" value="Trafikte sıkıştım."/>
+            <Node key="10" data="String" value="10 dakika içerisinde orada olacağım."/>
+            <Node key="11" data="String" value="20 dakika içerisinde orada olacağım."/>
+            <Node key="12" data="String" value="Neden?"/>
+            <Node key="13" data="String" value="Neredesin?"/>
+            <Node key="14" data="String" value="Daha fazla yön tarifine ihtiyacım var."/>
+            <Node key="15" data="String" value=":-)"/>                            
+        </Node>
+        <Node key="Chinese_Simplified">
+            <Node key="1" data="String" value="确定"/>
+            <Node key="2" data="String" value="是"/>
+            <Node key="3" data="String" value="否"/>
+            <Node key="4" data="String" value="谢谢！"/>
+            <Node key="5" data="String" value="现在不能讲话。"/>
+            <Node key="6" data="String" value="请给我打电话。"/>
+            <Node key="7" data="String" value="稍后呼叫您。"/>
+            <Node key="8" data="String" value="正在行驶。"/>
+            <Node key="9" data="String" value="堵车。"/>
+            <Node key="10" data="String" value="10分钟内到那儿。"/>
+            <Node key="11" data="String" value="20分钟内到那儿。"/>
+            <Node key="12" data="String" value="为什么？"/>
+            <Node key="13" data="String" value="您在哪儿？"/>
+            <Node key="14" data="String" value="我需要更多指导。"/>
+            <Node key="15" data="String" value=":-)"/>                            
+        </Node>
+        <Node key="Chinese_Traditional">
+            <Node key="1" data="String" value="確定"/>
+            <Node key="2" data="String" value="是"/>
+            <Node key="3" data="String" value="否"/>
+            <Node key="4" data="String" value="謝謝！"/>
+            <Node key="5" data="String" value="現在不能講話。"/>
+            <Node key="6" data="String" value="請給我打電話。"/>
+            <Node key="7" data="String" value="稍後呼叫您。"/>
+            <Node key="8" data="String" value="正在行駛。"/>
+            <Node key="9" data="String" value="堵車。"/>
+            <Node key="10" data="String" value="10分鐘內到那兒。"/>
+            <Node key="11" data="String" value="20分鐘內到那兒。"/>
+            <Node key="12" data="String" value="為什麼？"/>
+            <Node key="13" data="String" value="您在哪兒？"/>
+            <Node key="14" data="String" value="我需要更多指導。"/>
+            <Node key="15" data="String" value=":-)"/>                            
+        </Node>
+        <Node key="AU_English">
+            <Node key="1" data="String" value="OK"/>
+            <Node key="2" data="String" value="Yes"/>
+            <Node key="3" data="String" value="No"/>
+            <Node key="4" data="String" value="Thanks!"/>
+            <Node key="5" data="String" value="Can’t talk now."/>
+            <Node key="6" data="String" value="Please call me."/>
+            <Node key="7" data="String" value="Call you later."/>
+            <Node key="8" data="String" value="Driving now."/>
+            <Node key="9" data="String" value="Stuck in traffic."/>
+            <Node key="10" data="String" value="Be there in 10 minutes."/>
+            <Node key="11" data="String" value="Be there in 20 minutes."/>
+            <Node key="12" data="String" value="Why?"/>
+            <Node key="13" data="String" value="Where are you?"/>
+            <Node key="14" data="String" value="I need more directions."/>
+            <Node key="15" data="String" value=":-)"/>                            
+        </Node>
+        <Node key="ADR_English">
+            <Node key="1" data="String" value="OK"/>
+            <Node key="2" data="String" value="Yes"/>
+            <Node key="3" data="String" value="No"/>
+            <Node key="4" data="String" value="Thanks!"/>
+            <Node key="5" data="String" value="Can’t talk now."/>
+            <Node key="6" data="String" value="Please call me."/>
+            <Node key="7" data="String" value="Call you later."/>
+            <Node key="8" data="String" value="Driving now."/>
+            <Node key="9" data="String" value="Stuck in traffic."/>
+            <Node key="10" data="String" value="Be there in 10 minutes."/>
+            <Node key="11" data="String" value="Be there in 20 minutes."/>
+            <Node key="12" data="String" value="Why?"/>
+            <Node key="13" data="String" value="Where are you?"/>
+            <Node key="14" data="String" value="I need more directions."/>
+            <Node key="15" data="String" value=":-)"/>                            
+        </Node>
+        <Node key="BR_Portuguese">
+            <Node key="1" data="String" value="Ok"/>
+            <Node key="2" data="String" value="Sim"/>
+            <Node key="3" data="String" value="Não"/>
+            <Node key="4" data="String" value="Obrigado!"/>
+            <Node key="5" data="String" value="Não posso falar agora."/>
+            <Node key="6" data="String" value="Por favor, ligue-me de volta."/>
+            <Node key="7" data="String" value="Ligo para você mais tarde."/>
+            <Node key="8" data="String" value="Estou dirigindo neste momento."/>
+            <Node key="9" data="String" value="Estou preso no trânsito."/>
+            <Node key="10" data="String" value="Chegarei ai em 10 minutos."/>
+            <Node key="11" data="String" value="Chegarei ai em 20 minutos."/>
+            <Node key="12" data="String" value="Por quê?"/>
+            <Node key="13" data="String" value="Onde você está?"/>
+            <Node key="14" data="String" value="Preciso de mais orientações."/>
+            <Node key="15" data="String" value=":-)"/>                            
+        </Node>
+        <Node key="Chinese_Mandarin">
+            <Node key="1" data="String" value="确定"/>
+            <Node key="2" data="String" value="是"/>
+            <Node key="3" data="String" value="否"/>
+            <Node key="4" data="String" value="谢谢！"/>
+            <Node key="5" data="String" value="现在不能讲话。"/>
+            <Node key="6" data="String" value="请给我打电话。"/>
+            <Node key="7" data="String" value="稍后呼叫您。"/>
+            <Node key="8" data="String" value="正在行驶。"/>
+            <Node key="9" data="String" value="堵车。"/>
+            <Node key="10" data="String" value="10分钟内到那儿。"/>
+            <Node key="11" data="String" value="20分钟内到那儿。"/>
+            <Node key="12" data="String" value="为什么？"/>
+            <Node key="13" data="String" value="您在哪儿？"/>
+            <Node key="14" data="String" value="我需要更多指导。"/>
+            <Node key="15" data="String" value=":-)"/>             		
+        </Node>
+        <Node key="Chinese_Cantonese">
+            <Node key="1" data="String" value="OK"/>
+            <Node key="2" data="String" value="Yes"/>
+            <Node key="3" data="String" value="No"/>
+            <Node key="4" data="String" value="Thanks!"/>
+            <Node key="5" data="String" value="Can’t talk now."/>
+            <Node key="6" data="String" value="Please call me."/>
+            <Node key="7" data="String" value="Call you later."/>
+            <Node key="8" data="String" value="Driving now."/>
+            <Node key="9" data="String" value="Stuck in traffic."/>
+            <Node key="10" data="String" value="Be there in 10 minutes."/>
+            <Node key="11" data="String" value="Be there in 20 minutes."/>
+            <Node key="12" data="String" value="Why?"/>
+            <Node key="13" data="String" value="Where are you?"/>
+            <Node key="14" data="String" value="I need more directions."/>
+            <Node key="15" data="String" value=":-)"/>
+        </Node>
+        <Node key="Korean">
+            <Node key="1" data="String" value="OK"/>
+            <Node key="2" data="String" value="Yes"/>
+            <Node key="3" data="String" value="No"/>
+            <Node key="4" data="String" value="Thanks!"/>
+            <Node key="5" data="String" value="Can’t talk now."/>
+            <Node key="6" data="String" value="Please call me."/>
+            <Node key="7" data="String" value="Call you later."/>
+            <Node key="8" data="String" value="Driving now."/>
+            <Node key="9" data="String" value="Stuck in traffic."/>
+            <Node key="10" data="String" value="Be there in 10 minutes."/>
+            <Node key="11" data="String" value="Be there in 20 minutes."/>
+            <Node key="12" data="String" value="Why?"/>
+            <Node key="13" data="String" value="Where are you?"/>
+            <Node key="14" data="String" value="I need more directions."/>
+            <Node key="15" data="String" value=":-)"/>
+        </Node>
+        <Node key="Malay">
+            <Node key="1" data="String" value="OK"/>
+            <Node key="2" data="String" value="Yes"/>
+            <Node key="3" data="String" value="No"/>
+            <Node key="4" data="String" value="Thanks!"/>
+            <Node key="5" data="String" value="Can’t talk now."/>
+            <Node key="6" data="String" value="Please call me."/>
+            <Node key="7" data="String" value="Call you later."/>
+            <Node key="8" data="String" value="Driving now."/>
+            <Node key="9" data="String" value="Stuck in traffic."/>
+            <Node key="10" data="String" value="Be there in 10 minutes."/>
+            <Node key="11" data="String" value="Be there in 20 minutes."/>
+            <Node key="12" data="String" value="Why?"/>
+            <Node key="13" data="String" value="Where are you?"/>
+            <Node key="14" data="String" value="I need more directions."/>
+            <Node key="15" data="String" value=":-)"/>
+        </Node>
+        <Node key="HK_Cantonese">
+            <Node key="1" data="String" value="確定"/>
+            <Node key="2" data="String" value="是"/>
+            <Node key="3" data="String" value="否"/>
+            <Node key="4" data="String" value="謝謝！"/>
+            <Node key="5" data="String" value="現在無法交談。"/>
+            <Node key="6" data="String" value="請打電話給我。"/>
+            <Node key="7" data="String" value="稍後打電話給您。"/>
+            <Node key="8" data="String" value="正在駕駛中。"/>
+            <Node key="9" data="String" value="交通堵塞。"/>
+            <Node key="10" data="String" value="10 分鐘內到達。"/>
+            <Node key="11" data="String" value="20 分鐘內到達。"/>
+            <Node key="12" data="String" value="為什麼？"/>
+            <Node key="13" data="String" value="您在哪？"/>
+            <Node key="14" data="String" value="我需要更多指示資訊。"/>
+            <Node key="15" data="String" value=":-)"/>
+        </Node>
+        <Node key="TW_Mandarin">
+            <Node key="1" data="String" value="確定"/>
+            <Node key="2" data="String" value="是"/>
+            <Node key="3" data="String" value="否"/>
+            <Node key="4" data="String" value="謝謝!"/>
+            <Node key="5" data="String" value="無法現在就說。"/>
+            <Node key="6" data="String" value="請打電話給我"/>
+            <Node key="7" data="String" value="稍後致電回覆"/>
+            <Node key="8" data="String" value="現正在開車。"/>
+            <Node key="9" data="String" value="塞車中"/>
+            <Node key="10" data="String" value="預計10分鐘後抵達"/>
+            <Node key="11" data="String" value="預計20分鐘後抵達"/>
+            <Node key="12" data="String" value="為何?"/>
+            <Node key="13" data="String" value="您在哪裡?"/>
+            <Node key="14" data="String" value="我需要更多指引。"/>
+            <Node key="15" data="String" value=":-)"/>
+        </Node>
+    </Node>
+
+    <Node key="MaxMAPConnectionRetryCount" data="U32" value="1"/>
+    <Node key="MaxEmailInboxCount" data="U32" value="20"/>
+    <Node key="MaxSMSInboxCount" data="U32" value="20"/>
+    <Node key="MaxNewEmailNotificationCount" data="U32" value="20"/>
+    <Node key="MaxNewSMSNotificationCount" data="U32" value="20"/>
+    <Node key="MaxEmailSubjectSize" data="U32" value="160"/>
+    <Node key="MaxIncomingEmailBodySize" data="U32" value="1024"/>
+    <!--  MaxOutgoingEmailBodySize is max. message body size in bytes without Message Footer -->
+    <Node key="MaxOutgoingEmailBodySize" data="U32" value="483"/>
+    <Node key="MaxIncomingSMSBodySize" data="U32" value="1024"/>
+    <!--  MaxOutgoingSMSBodySize is max. message body size in bytes with Message Footer -->
+    <Node key="MaxOutgoingSMSBodySize" data="U32" value="140"/>
+    <Node key="TruncateSubject" data="bool" value="true"/>
+    <Node key="TruncateBody" data="bool" value="true"/>
+    <Node key="TTSBreakTimeValueBefore" data="U32" value="1000"/>
+    <Node key="TTSBreakTimeValueAfter" data="U32" value="1500"/>
+    <Node key="TTSClientEmail" data="String" value="TXTMSG"/>
+    <Node key="TTSClientSMS" data="String" value="TXTMSG"/>
+    <Node key="PBSyncOnCachedListing" data="bool" value="true"/>
+    <Node key="UseHealthMonitoring" data="bool" value="true"/>
+
+    <Node key="NewMessageNotificationOptions">
+        <Node key="ProvideSenderPhoto" data="bool" value="false"/>
+    </Node>
+    
+    <Node key="NewMessagesListOptions">
+        <!-- If not specified, default priority value is 0 (least priority). If values match, order is SMS-Email. -->
+        <Node key="TiedSortPriority">
+            <Node key="SMS" data="U16" value="2"/>
+            <Node key="Email" data="U16" value="1"/>
+        </Node>
+    </Node>
+
+    <!-- Timeout Settings -->
+    <Node key="FolderListingTimeout" data="U32" value="100000"/>
+    <Node key="SMSListingTimeout" data="U32" value="150000"/>
+    <Node key="EmailListingTimeout" data="U32" value="180000"/>
+    <Node key="GetMessageBodyTimeout" data="U32" value="40000"/>
+    <Node key="DeleteMessageTimeout" data="U32" value="25000"/>
+    <Node key="SetMessageStatusTimeout" data="U32" value="15000"/>
+    <Node key="SendMessageTimeout" data="U32" value="30000"/>
+    <Node key="StartMessagePlaybackTimeout" data="U32" value="30000"/>
+    <Node key="StopMessagePlaybackTimeout" data="U32" value="30000"/>
+    <Node key="SupportNotificationsTimeout" data="U32" value="3000"/>
+
+    <Node key="AutoDownload">
+        <Node key="SMS" data="bool" value="true"/>
+        <Node key="Email" data="bool" value="true"/>
+    </Node>
+
+    <Node key="MSGNotifications">
+        <Node key="SMS" data="bool" value="true"/>
+        <Node key="Email" data="bool" value="true"/>
+    </Node>
+
+    <Node key="MessageFooterConfig">
+        <Node key="UK_English">
+            <Node key="OutgoingMessage" data="String" value="&#xA;Sent from my &quot;Mazda Quick Text System&quot;"/>
+        </Node>
+        <Node key="US_English">
+            <Node key="OutgoingMessage" data="String" value="&#xA;Sent from my &quot;Mazda Quick Text System&quot;"/>
+        </Node>
+        <Node key="AU_English">
+            <Node key="OutgoingMessage" data="String" value="&#xA;Sent from my &quot;Mazda Quick Text System&quot;"/>
+        </Node>
+        <Node key="CN_French">
+            <Node key="OutgoingMessage" data="String" value="&#xA;Envoyé de mon &quot;Mazda Quick Text System&quot;."/>
+        </Node>
+        <Node key="EU_French">
+            <Node key="OutgoingMessage" data="String" value="&#xA;Envoyé de mon &quot;Mazda Quick Text System&quot;."/>
+        </Node>
+        <Node key="Arabic">
+            <Node key="OutgoingMessage" data="String" value="&#xA;مرسل من &quot;Mazda Quick Text System&quot;"/>
+        </Node>
+        <Node key="Danish">
+            <Node key="OutgoingMessage" data="String" value="&#xA;Sendt fra mit &quot;Mazda Quick Text System&quot;"/>
+        </Node>
+        <Node key="Dutch">
+            <Node key="OutgoingMessage" data="String" value="&#xA;Verzonden vanaf mijn &quot;Mazda Quick Text System&quot;"/>
+        </Node>
+        <Node key="Finnish">
+            <Node key="OutgoingMessage" data="String" value="&#xA;Lähetetty ohjelmalla &quot;Mazda Quick Text System&quot;"/>
+        </Node>
+        <Node key="German">
+            <Node key="OutgoingMessage" data="String" value="&#xA;Vom &quot;Mazda Quick Text System&quot; gesendet"/>
+        </Node>
+        <Node key="Italian">
+            <Node key="OutgoingMessage" data="String" value="&#xA;Inviato dal mio &quot;Mazda Quick Text System&quot;."/>
+        </Node>
+        <Node key="Japanese">
+            <Node key="OutgoingMessage" data="String" value="&#xA;- From Mazda Quick Text System"/>
+        </Node>
+        <Node key="EU_Portuguese">
+            <Node key="OutgoingMessage" data="String" value="&#xA;Enviado do meu &quot;Mazda Quick Text System&quot;"/>
+        </Node>
+        <Node key="Russian">
+            <Node key="OutgoingMessage" data="String" value="&#xA;Отправлено при помощи &quot;Mazda Quick Text System&quot;"/>
+        </Node>
+        <Node key="Castilian_Spanish">
+            <Node key="OutgoingMessage" data="String" value="&#xA;Enviado desde mi &quot;Mazda Quick Text System&quot;"/>
+        </Node>
+        <Node key="NA_Spanish">
+            <Node key="OutgoingMessage" data="String" value="&#xA;Enviado desde mi &quot;Mazda Quick Text System&quot;"/>
+        </Node>
+        <Node key="Swedish">
+            <Node key="OutgoingMessage" data="String" value="&#xA;Skickat från &quot;Mazda Quick Text System&quot;"/>
+        </Node>
+        <Node key="Norwegian">
+            <Node key="OutgoingMessage" data="String" value="&#xA;Sendt fra mitt &quot;Mazda Quick Text System&quot;"/>
+        </Node>
+        <Node key="Czech">
+            <Node key="OutgoingMessage" data="String" value="&#xA;Odesláno z mého &quot;Mazda Quick Text System&quot;"/>
+        </Node>
+        <Node key="Slovakian">
+            <Node key="OutgoingMessage" data="String" value="&#xA;Odoslané z môjho &quot;Mazda Quick Text System&quot;"/>
+        </Node>
+        <Node key="Hungarian">
+            <Node key="OutgoingMessage" data="String" value="&#xA;Mazda Quick Text rendszerből küldve"/>
+        </Node>
+        <Node key="Turkish">
+            <Node key="OutgoingMessage" data="String" value="&#xA;Benim gönderilen &quot;Mazda Quick Text System&quot;"/>
+        </Node>
+        <Node key="Polish">
+            <Node key="OutgoingMessage" data="String" value="&#xA;Wysłane z Mazda Quick Text System"/>
+        </Node>
+        <Node key="Romanian">
+            <Node key="OutgoingMessage" data="String" value="&#xA;Trimis de pe &quot;Mazda Quick Text System&quot;"/>
+        </Node>
+        <Node key="Estonian">
+            <Node key="OutgoingMessage" data="String" value="&#xA;Saadetud süsteemist Mazda Quick Text System"/>
+        </Node>
+        <Node key="Latvian">
+            <Node key="OutgoingMessage" data="String" value="&#xA;Nosūtīts no manas &quot;Mazda Quick Text System&quot;"/>
+        </Node>
+        <Node key="Lithuanian">
+            <Node key="OutgoingMessage" data="String" value="&#xA;Siųsti iš mano „Mazda Quick Text System“ "/>
+        </Node>
+        <Node key="Greek">
+            <Node key="OutgoingMessage" data="String" value="&#xA;Εστάλη από το &quot;Mazda Quick Text System&quot;"/>
+        </Node>
+        <Node key="Croatian">
+            <Node key="OutgoingMessage" data="String" value="&#xA;Poslano putem  &quot;Mazda Quick Text System&quot;"/>
+        </Node>
+        <Node key="Bulgarian">
+            <Node key="OutgoingMessage" data="String" value="&#xA;Изпратено от моята „Mazda Quick Text System“"/>
+        </Node>
+        <Node key="Serbian">
+            <Node key="OutgoingMessage" data="String" value="&#xA;Pošalji iz mog sistema &quot;Mazda Quick Text System&quot;"/>
+        </Node>
+        <Node key="Hebrew">
+            <Node key="OutgoingMessage" data="String" value="&#xA;נשלח מ-&quot;Mazda Quick Text System&quot;"/>
+        </Node>
+        <Node key="Malaysian">
+            <Node key="OutgoingMessage" data="String" value="&#xA;Dihantar dari &quot;Mazda Quick Text System&quot; saya"/>
+        </Node>
+        <Node key="Thai">
+            <Node key="OutgoingMessage" data="String" value="&#xA;ส่งจาก &quot;Mazda Quick Text System&quot; ของฉัน"/>
+        </Node>
+        <Node key="Indonesian">
+            <Node key="OutgoingMessage" data="String" value="&#xA;Dikirim dari &quot;Mazda Quick Text System&quot; saya"/>
+        </Node>
+        <Node key="Chinese_Simplified">
+            <Node key="OutgoingMessage" data="String" value="&#xA;从我的“Mazda Quick Text System”发送"/>
+        </Node>
+        <Node key="Chinese_Traditional">
+            <Node key="OutgoingMessage" data="String" value="&#xA;從我的「Mazda Quick Text System」傳送"/>
+        </Node>
+        <Node key="BR_Portuguese">
+            <Node key="OutgoingMessage" data="String" value="&#xA;Enviado do meu &quot;Sistema de mensagem rápida da Mazda&quot;"/>
+        </Node>
+        <Node key="Chinese_Cantonese">
+            <Node key="OutgoingMessage" data="String" value="&#xA;Sent from my &quot;Mazda Quick Text System&quot;"/>
+        </Node>
+        <Node key="Chinese_Mandarin">
+			<Node key="OutgoingMessage" data="String" value="&#xA;从我的“Mazda Quick Text System”发送"/>            
+        </Node>
+        <Node key="Korean">
+            <Node key="OutgoingMessage" data="String" value="&#xA;Sent from my &quot;Mazda Quick Text System&quot;"/>
+        </Node>
+        <Node key="Malay">
+            <Node key="OutgoingMessage" data="String" value="&#xA;Sent from my &quot;Mazda Quick Text System&quot;"/>
+        </Node>
+        <Node key="ADR_English">
+            <Node key="OutgoingMessage" data="String" value="&#xA;Sent from my &quot;Mazda Quick Text System&quot;"/>
+        </Node>
+        <Node key="HK_Cantonese">
+            <Node key="OutgoingMessage" data="String" value="&#xA;傳送自我的「Mazda 快速文字系統」"/>
+        </Node>
+        <Node key="TW_Mandarin">
+            <Node key="OutgoingMessage" data="String" value="&#xA;從「Mazda Quick Text System」傳送"/>
+        </Node>
+    </Node>
+
+    <Node key="TTSConfig">
+        <Node key="UK_English">
+            <Node key="TTSEmailMessageTag" data="String" value="Message"/>
+            <Node key="TTSEndEmailMessageTag" data="String" value="End of the email"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value="End of the message"/>
+            <Node key="TTSSubjectTag" data="String" value="Subject"/>
+        </Node>
+        <Node key="US_English">
+            <Node key="TTSEmailMessageTag" data="String" value="Message"/>
+            <Node key="TTSEndEmailMessageTag" data="String" value="End of the email"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value="End of the message"/>
+            <Node key="TTSSubjectTag" data="String" value="Subject"/>
+        </Node>
+        <Node key="AU_English">
+            <Node key="TTSEmailMessageTag" data="String" value="Message"/>
+            <Node key="TTSEndEmailMessageTag" data="String" value="End of the Email"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value="End of the message"/>
+            <Node key="TTSSubjectTag" data="String" value="Subject"/>
+        </Node>
+        <Node key="CN_French">
+            <Node key="TTSEmailMessageTag" data="String" value="Message"/>
+            <Node key="TTSEndEmailMessageTag" data="String" value="Fin de l’Email"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value="Fin du message"/>
+            <Node key="TTSSubjectTag" data="String" value="Sujet"/>
+        </Node>
+        <Node key="EU_French">
+            <Node key="TTSEmailMessageTag" data="String" value="Message"/>
+            <Node key="TTSEndEmailMessageTag" data="String" value="Fin de l’Email"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value="Fin du message"/>
+            <Node key="TTSSubjectTag" data="String" value="Sujet"/>
+        </Node>
+        <Node key="Arabic">
+            <Node key="TTSEmailMessageTag" data="String" value="رسالة"/>
+            <Node key="TTSEndEmailMessageTag" data="String" value="نهاية البريد الإلكتروني"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value="نهاية الرسالة"/>
+            <Node key="TTSSubjectTag" data="String" value="الموضوع"/>
+        </Node>
+        <Node key="Danish">
+            <Node key="TTSEmailMessageTag" data="String" value="Besked"/>
+            <Node key="TTSEndEmailMessageTag" data="String" value="Slut på Email"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value="Slut på besked"/>
+            <Node key="TTSSubjectTag" data="String" value="Emne"/>
+        </Node>
+        <Node key="Dutch">
+            <Node key="TTSEmailMessageTag" data="String" value="Bericht"/>
+            <Node key="TTSEndEmailMessageTag" data="String" value="Einde Email"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value="Einde bericht"/>
+            <Node key="TTSSubjectTag" data="String" value="Onderwerp"/>
+        </Node>
+        <Node key="Finnish">
+            <Node key="TTSEmailMessageTag" data="String" value="Viesti"/>
+            <Node key="TTSEndEmailMessageTag" data="String" value="Email loppu"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value="Viestin loppu"/>
+            <Node key="TTSSubjectTag" data="String" value="Aihe"/>
+        </Node>
+        <Node key="German">
+            <Node key="TTSEmailMessageTag" data="String" value="Nachricht"/>
+            <Node key="TTSEndEmailMessageTag" data="String" value="Email-Ende"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value="Nachrichtenende"/>
+            <Node key="TTSSubjectTag" data="String" value="Betreff"/>
+        </Node>
+        <Node key="Italian">
+            <Node key="TTSEmailMessageTag" data="String" value="Messaggio"/>
+            <Node key="TTSEndEmailMessageTag" data="String" value="Fine della Email"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value="Fine del messaggio"/>
+            <Node key="TTSSubjectTag" data="String" value="Oggetto"/>
+        </Node>
+        <Node key="Japanese">
+            <Node key="TTSEmailMessageTag" data="String" value="ホンブン"/>
+            <Node key="TTSEndEmailMessageTag" data="String" value="メッセージ終了"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value="メッセージ終了"/>
+            <Node key="TTSSubjectTag" data="String" value="件名"/>
+        </Node>
+        <Node key="Chinese_Mandarin">
+            <Node key="TTSEmailMessageTag" data="String" value="消息"/>
+            <Node key="TTSEndEmailMessageTag" data="String" value="电子邮件的结尾"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value="消息的结尾"/>
+            <Node key="TTSSubjectTag" data="String" value="主题"/>
+        </Node>
+        <Node key="EU_Portuguese">
+            <Node key="TTSEmailMessageTag" data="String" value="Mensagem"/>
+            <Node key="TTSEndEmailMessageTag" data="String" value="Fim do Email"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value="Fim da mensagem"/>
+            <Node key="TTSSubjectTag" data="String" value="Assunto"/>
+        </Node>
+        <Node key="Russian">
+            <Node key="TTSEmailMessageTag" data="String" value="Сообщение"/>
+            <Node key="TTSEndEmailMessageTag" data="String" value="Конец Email письма"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value="Конец сообщения"/>
+            <Node key="TTSSubjectTag" data="String" value="Тема"/>
+        </Node>
+        <Node key="Castilian_Spanish">
+            <Node key="TTSEmailMessageTag" data="String" value="Mensaje"/>
+            <Node key="TTSEndEmailMessageTag" data="String" value="Fin de Email"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value="Fin del mensaje"/>
+            <Node key="TTSSubjectTag" data="String" value="Asunto"/>
+        </Node>
+        <Node key="NA_Spanish">
+            <Node key="TTSEmailMessageTag" data="String" value="Mensaje"/>
+            <Node key="TTSEndEmailMessageTag" data="String" value="Fin de Email"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value="Fin del mensaje"/>
+            <Node key="TTSSubjectTag" data="String" value="Asunto"/>
+        </Node>
+        <Node key="Swedish">
+            <Node key="TTSEmailMessageTag" data="String" value="Meddelande"/>
+            <Node key="TTSEndEmailMessageTag" data="String" value="Slut på e-post"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value="Slut på meddelande"/>
+            <Node key="TTSSubjectTag" data="String" value="Ämne"/>
+        </Node>
+        <Node key="Norwegian">
+            <Node key="TTSEmailMessageTag" data="String" value="Melding"/>
+            <Node key="TTSEndEmailMessageTag" data="String" value="Slutt på Email"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value="Slutt på melding"/>
+            <Node key="TTSSubjectTag" data="String" value="Emne"/>
+        </Node>
+        <Node key="Czech">
+            <Node key="TTSEmailMessageTag" data="String" value="Zpráva"/>
+            <Node key="TTSEndEmailMessageTag" data="String" value="Konec Email"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value="Konec zprávy"/>
+            <Node key="TTSSubjectTag" data="String" value="Předmět"/>
+        </Node>
+        <Node key="Slovakian">
+            <Node key="TTSEmailMessageTag" data="String" value="Správa"/>
+            <Node key="TTSEndEmailMessageTag" data="String" value="Koniec Email"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value="Koniec správy"/>
+            <Node key="TTSSubjectTag" data="String" value="Predmet"/>
+        </Node>
+        <Node key="Hungarian">
+            <Node key="TTSEmailMessageTag" data="String" value="Üzenet"/>
+            <Node key="TTSEndEmailMessageTag" data="String" value="Email vége"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value="Üzenet vége"/>
+            <Node key="TTSSubjectTag" data="String" value="Tárgy"/>
+        </Node>
+        <Node key="Turkish">
+            <Node key="TTSEmailMessageTag" data="String" value="Mesaj"/>
+            <Node key="TTSEndEmailMessageTag" data="String" value="E-postanın sonu"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value="Mesajın sonu"/>
+            <Node key="TTSSubjectTag" data="String" value="Konu"/>
+        </Node>
+        <Node key="Polish">
+            <Node key="TTSEmailMessageTag" data="String" value="Wiadomość"/>
+            <Node key="TTSEndEmailMessageTag" data="String" value="Koniec wiadomości Email"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value="Koniec wiadomości"/>
+            <Node key="TTSSubjectTag" data="String" value="Temat"/>
+        </Node>
+        <Node key="Romanian">
+            <Node key="TTSEmailMessageTag" data="String" value="Mesaj"/>
+            <Node key="TTSEndEmailMessageTag" data="String" value="Sfârşit Email"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value="Sfârşit mesaj"/>
+            <Node key="TTSSubjectTag" data="String" value="Subiect"/>
+        </Node>
+        <Node key="Estonian">
+            <Node key="TTSEmailMessageTag" data="String" value="Sõnum"/>
+            <Node key="TTSEndEmailMessageTag" data="String" value="Email lõpp"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value="Sõnumi lõpp"/>
+            <Node key="TTSSubjectTag" data="String" value="Teema"/>
+        </Node>
+        <Node key="Latvian">
+            <Node key="TTSEmailMessageTag" data="String" value="Ziņa"/>
+            <Node key="TTSEndEmailMessageTag" data="String" value="Email beigas"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value="Ziņas beigas"/>
+            <Node key="TTSSubjectTag" data="String" value="Tēma"/>
+        </Node>
+        <Node key="Lithuanian">
+            <Node key="TTSEmailMessageTag" data="String" value="Pranešimas"/>
+            <Node key="TTSEndEmailMessageTag" data="String" value="Email pabaiga"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value="Pranešimo pabaiga"/>
+            <Node key="TTSSubjectTag" data="String" value="Tema"/>
+        </Node>
+        <Node key="Greek">
+            <Node key="TTSEmailMessageTag" data="String" value="Μήνυμα"/>
+            <Node key="TTSEndEmailMessageTag" data="String" value="Τέλος του Email"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value="Τέλος του μηνύματος"/>
+            <Node key="TTSSubjectTag" data="String" value="Θέμα"/>
+        </Node>
+        <Node key="Croatian">
+            <Node key="TTSEmailMessageTag" data="String" value="Poruka"/>
+            <Node key="TTSEndEmailMessageTag" data="String" value="Kraj Email-a"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value="Kraj poruke"/>
+            <Node key="TTSSubjectTag" data="String" value="Predmet"/>
+        </Node>
+        <Node key="Bulgarian">
+            <Node key="TTSEmailMessageTag" data="String" value="Съобщение"/>
+            <Node key="TTSEndEmailMessageTag" data="String" value="Край на Email"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value="Край на съобщението"/>
+            <Node key="TTSSubjectTag" data="String" value="Тема"/>
+        </Node>
+        <Node key="Serbian">
+            <Node key="TTSEmailMessageTag" data="String" value="Poruka"/>
+            <Node key="TTSEndEmailMessageTag" data="String" value="Kraj Email"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value="Kraj poruke"/>
+            <Node key="TTSSubjectTag" data="String" value="Predmet"/>
+        </Node>
+        <Node key="Hebrew">
+            <Node key="TTSEmailMessageTag" data="String" value="הודעה"/>
+            <Node key="TTSEndEmailMessageTag" data="String" value="סוף Email"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value="סוף ההודעה"/>
+            <Node key="TTSSubjectTag" data="String" value="נושא"/>
+        </Node>
+        <Node key="BR_Portuguese">
+            <Node key="TTSEmailMessageTag" data="String" value="Mensagem"/>
+            <Node key="TTSEndEmailMessageTag" data="String" value="Fim do e-mail"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value="Fim da mensagem"/>
+            <Node key="TTSSubjectTag" data="String" value="Assunto"/>
+        </Node>
+        <Node key="Malaysian">
+            <Node key="TTSEmailMessageTag" data="String" value="Mesej"/>
+            <Node key="TTSEndEmailMessageTag" data="String" value="E-mel tamat"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value="Mesej tamat"/>
+            <Node key="TTSSubjectTag" data="String" value="Subjek"/>
+        </Node>
+        <Node key="Thai">
+            <Node key="TTSEmailMessageTag" data="String" value="ข้อความ"/>
+            <Node key="TTSEndEmailMessageTag" data="String" value="สิ้นสุดอีเมล"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value="สิ้นสุดข้อความ"/>
+            <Node key="TTSSubjectTag" data="String" value="เรื่อง"/>
+        </Node>
+        <Node key="Indonesian">
+            <Node key="TTSEmailMessageTag" data="String" value="Pesan"/>
+            <Node key="TTSEndEmailMessageTag" data="String" value="Akhir dari Email"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value="Akhir dari pesan"/>
+            <Node key="TTSSubjectTag" data="String" value="Judul"/>
+        </Node>
+        <Node key="Chinese_Cantonese">
+            <Node key="TTSEmailMessageTag" data="String" value="Message"/>
+            <Node key="TTSEndEmailMessageTag" data="String" value="End of the email"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value="End of the message"/>
+            <Node key="TTSSubjectTag" data="String" value="Subject"/>
+        </Node>
+        <Node key="Chinese_Simplified">
+            <Node key="TTSEmailMessageTag" data="String" value="消息"/>
+            <Node key="TTSEndEmailMessageTag" data="String" value="电子邮件的结尾"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value="消息的结尾"/>
+            <Node key="TTSSubjectTag" data="String" value="主题"/>
+        </Node>
+        <Node key="Chinese_Traditional">
+            <Node key="TTSEmailMessageTag" data="String" value="訊息"/>
+            <Node key="TTSEndEmailMessageTag" data="String" value="電子郵件的結尾"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value="訊息的結尾"/>
+            <Node key="TTSSubjectTag" data="String" value="主題"/>
+        </Node>
+        <Node key="Korean">
+            <Node key="TTSEmailMessageTag" data="String" value="Message"/>
+            <Node key="TTSEndEmailMessageTag" data="String" value="End of the email"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value="End of the message"/>
+            <Node key="TTSSubjectTag" data="String" value="Subject"/>
+        </Node>
+        <Node key="Malay">
+            <Node key="TTSEmailMessageTag" data="String" value="Message"/>
+            <Node key="TTSEndEmailMessageTag" data="String" value="End of the email"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value="End of the message"/>
+            <Node key="TTSSubjectTag" data="String" value="Subject"/>
+        </Node>
+        <Node key="ADR_English">
+            <Node key="TTSEmailMessageTag" data="String" value="Message"/>
+            <Node key="TTSEndEmailMessageTag" data="String" value="End of the email"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value="End of the message"/>
+            <Node key="TTSSubjectTag" data="String" value="Subject"/>
+        </Node>
+        <Node key="HK_Cantonese">
+            <Node key="TTSEmailMessageTag" data="String" value="訊息"/>
+            <Node key="TTSEndEmailMessageTag" data="String" value="電子郵件末尾"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value="訊息末尾"/>
+            <Node key="TTSSubjectTag" data="String" value="主題"/>
+        </Node>
+        <Node key="TW_Mandarin">
+            <Node key="TTSEmailMessageTag" data="String" value="訊息"/>
+            <Node key="TTSEndEmailMessageTag" data="String" value="電子郵件結尾"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value="訊息結尾"/>
+            <Node key="TTSSubjectTag" data="String" value="主旨"/>
+        </Node>
+    </Node>
+</Node>

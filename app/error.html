@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Error</title>
+    <link rel="stylesheet" href="assets/css/app.css">
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h3>Something bad happened :-(</h3>
+        <p id="errorMessage">Your error message here</p>
+      </header>
+      <section class="main">
+        <script>
+          require('electron').ipcRenderer.on('app-error', (event, message) => {
+            document.getElementById('errorMessage').innerHTML = message;
+          });
+        </script>
+      </section>
+      <footer></footer>
+    </div>
+  </body>
+</html>
