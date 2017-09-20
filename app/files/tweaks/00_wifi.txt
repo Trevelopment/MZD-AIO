@@ -1,5 +1,5 @@
 # Enable WIFI
-log_message "========*******   START ENABLE WIFI ...    *******========"
+log_message "==========**************** START ENABLE WIFI ... *************==========="
 
 # Backups
 if [ ! -e /jci/gui/apps/syssettings/js/syssettingsApp.js.org ]
@@ -19,18 +19,18 @@ then
   if [ ! -z "$LN" ]; then
     # sed -i "$LN"'s/NorthAmerica/Japan/' /jci/gui/apps/syssettings/js/syssettingsApp.js
     # This is a Better way to enable Wifi for all
-    sed -i "/(framework.localize.REGIONS\['NorthAmerica'\]/c\ \t\t\tif(true)" /jci/gui/apps/syssettings/js/syssettingsApp.js
-    log_message "===              Wifi for NA enabled                   ==="
+    sed -i "/(framework.localize.REGIONS\['NorthAmerica'\]/c\            if(true)" /jci/gui/apps/syssettings/js/syssettingsApp.js
+    log_message "===                      Wifi for NA enabled                          ==="
     show_message "=== Wifi for NA enabled ==="
   else
-    log_message "===       ERROR: Line For Wifi Fix Not Found           ==="
+    log_message "===               ERROR: Line For Wifi Fix Not Found                  ==="
   fi
   cp /jci/gui/apps/syssettings/js/syssettingsApp.js "${MYDIR}/bakups/test/syssettingsApp_WIFI-after.js"
 else
   echo "exist"
-  log_message "===               Wifi already active                  ==="
+  log_message "===                       Wifi already active                         ==="
 
 fi
 
-log_message "=========******    END ENABLE WIFI         ******========="
+log_message "===============************* END ENABLE WIFI *************==============="
 log_message " "

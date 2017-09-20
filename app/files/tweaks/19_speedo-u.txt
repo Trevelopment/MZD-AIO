@@ -1,22 +1,22 @@
 # Remove "Speed-Video-Reboot"
 show_message "REMOVE SPEEDOMETER ..."
-log_message "=======********  UNINSTALL SPEEDOMETER ... ********======="
+log_message "=======***************  UNINSTALL SPEEDOMETER ... ****************======="
 
-log_message "===           kill all WebSocket daemons               ==="
+log_message "===                   kill all WebSocket daemons                      ==="
 pkill websocketd
 if [ "${TESTBKUPS}" = "1" ]
 then
 	cp /jci/scripts/stage_wifi.sh "${MYDIR}/bakups/test/stage_wifi_speedometer-before.sh"
 	cp /jci/opera/opera_dir/userjs/additionalApps.json "${MYDIR}/bakups/test/additionalApps_speedometer-1._before.json"
 fi
-log_message "===         check for 1st line of stage_wifi.sh        ==="
+log_message "===                 check for 1st line of stage_wifi.sh               ==="
 if grep -Fq "#!/bin/sh" /jci/scripts/stage_wifi.sh
 then
 	echo "OK"
-	log_message "===         1st line of stage_wifi.sh is OK            ==="
+	log_message "===                1st line of stage_wifi.sh is OK                    ==="
 else
 	cp -a "${MYDIR}/config_org/speedometer/stage_wifi.sh" /jci/scripts/
-	log_message "===  Missing 1st line of stage_wifi.sh, copied new one ==="
+	log_message "===         Missing 1st line of stage_wifi.sh, copied new one         ==="
 fi
 
 sed -i '/Speedo-Compass-Video_Tweak/d' /jci/scripts/stage_wifi.sh
@@ -53,50 +53,53 @@ sed -i '#mount /dev/sda1#d' /jci/scripts/stage_wifi.sh
 sed -i '/sleep 4/d' /jci/scripts/stage_wifi.sh
 sed -i '/sleep 6/d' /jci/scripts/stage_wifi.sh
 
-
-log_message "=== delete speedometer entry from /jci/opera/opera_dir/userjs/additionalApps.json ==="
-if grep -Fq "_androidauto" /jci/opera/opera_dir/userjs/additionalApps.json
+ADDIT_APPS=0
+if grep -Fq "_aiotweaks" /jci/opera/opera_dir/userjs/additionalApps.json
 then
-	log_message "=== Found androidauto entry in /jci/opera/opera_dir/userjs/additionalApps.json ==="
-	appmenu_androidauto=1
-else
-	log_message "=== No androidauto entry found in /jci/opera/opera_dir/userjs/additionalApps.json ==="
-	appmenu_androidauto=0
+	log_message "===          Found AIOTweaksApp entry in additionalApps.json          ==="
+	ADDIT_APPS=1
+elif grep -Fq "_androidauto" /jci/opera/opera_dir/userjs/additionalApps.json
+then
+	log_message "===          Found androidauto entry in additionalApps.json           ==="
+	ADDIT_APPS=1
+elif grep -Fq "_videoplayer" /jci/opera/opera_dir/userjs/additionalApps.json
+then
+	log_message "===          Found videoplayer entry in additionalApps.json           ==="
+	ADDIT_APPS=1
+elif grep -Fq "_mzdmeter" /jci/opera/opera_dir/userjs/additionalApps.json
+then
+	log_message "===           Found mzd meter entry in additionalApps.json            ==="
+	ADDIT_APPS=1
 fi
-if grep -Fq "_videoplayer" /jci/opera/opera_dir/userjs/additionalApps.json
+if [ ${ADDIT_APPS} = "0" ]
 then
-	log_message "=== Found videoplayer entry in /jci/opera/opera_dir/userjs/additionalApps.json ==="
-	appmenu_videoplayer=1
-else
-	log_message "=== No videoplayer entry found in /jci/opera/opera_dir/userjs/additionalApps.json ==="
-	appmenu_videoplayer=0
-fi
-if [ ${appmenu_androidauto} = "0" ] && [ ${appmenu_videoplayer=1} = "0" ]
-then
-	log_message "=== No more entrys in additionalApps.json, files will be deleted ==="
+	log_message "===    No more entrys in additionalApps.json, files will be deleted   ==="
 	rm -f /jci/opera/opera_dir/userjs/additionalApps.*
 else
+	log_message "===          delete speedometer entry from additionalApps.json        ==="
 	remove_app_json "_speedometer"
 fi
-
-log_message "===               cleanup old versions                 ==="
-if [ ! -d /jci/gui/apps/_videoplayer ]; then
-	rm -fr /jci/gui/addon-common
-	log_message "=== Removed /jci/gui/addon-common because videoplayer isn't installed neither ==="
+### Check for mzdmeter
+if [ -e /jci/gui/apps/_mzdmeter/js/mzdmeter.js ]
+then
+	sed -i "/.. Remove Speed ../,/.. End Speed ../d" /jci/opera/opera_dir/userjs/speedometer-startup.js
+	sed -i 's/var enableSmallSbSpeedo = true;/var enableSmallSbSpeedo = false;/g' /jci/opera/opera_dir/userjs/speedometer-startup.js
+	log_message "===           mzdmeter App found remove speedometer startup           ==="
+else
+  rm -f /jci/opera/opera_dir/userjs/speedometer-startup.js
+	log_message "===                   Removed Speedometer startup                     ==="
 fi
+if [ ! -e /jci/opera/opera_dir/userjs/additionalApps.json ]
+then
+	rm -fr /jci/gui/addon-common
+	log_message "===      Removed /jci/gui/addon-common because no more AIO apps       ==="
+fi
+log_message "===                       cleanup old versions                        ==="
 rm -fr /jci/gui/addon-player
 rm -fr /jci/gui/addon-speedometer
 rm -fr /jci/gui/speedometer
 rm -fr /jci/gui/apps/_speedometer
 rm -f /jci/opera/opera_dir/userjs/addon-startup.js
-rm -f /jci/opera/opera_dir/userjs/mySpeedometer*
-rm -f /jci/opera/opera_dir/userjs/speedometer*
-mv /jci/opera/opera_dir/userjs/fps.js /jci/opera/opera_dir/userjs/fps.js.org
-rm -f /jci/scripts/get-gps-data*
-rm -f /jci/scripts/get-log-data*
-rm -f /jci/scripts/get-vehicle-data-other*
-rm -f /jci/scripts/get-vehicle-gear*
-rm -f /jci/scripts/get-vehicle-speed*
 rm -f /jci/scripts/stage_wifi.sh.bak?
 
 if [ "${TESTBKUPS}" = "1" ]
@@ -104,5 +107,5 @@ then
 	cp /jci/scripts/stage_wifi.sh "${MYDIR}/bakups/test/stage_wifi_speedometer-after.sh"
 fi
 
-log_message "=======***** END UNISTALLATION OF SPEEDOMETER *****======="
+log_message "=======************ END UNISTALLATION OF SPEEDOMETER *************======="
 log_message " "

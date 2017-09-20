@@ -23,7 +23,7 @@
 	<p id="failure">Message Was Not Sent. Try Again..</p>
 	<p id="success">Your message was sent successfully. Thank you!</p>
 
-	<form class="form" action="http://trevelopment.com/mzdmail.php" target="mailform">
+	<form id="form1" class="form" action="https://trevelopment.com/mzdmail.php" method="post" target="mailform">
 		<div>
 			<label for="name" class="w3-label">
 				<span class="required">Name: *</span>
@@ -57,10 +57,41 @@
 ~Trez" tabindex="3" required="required"></textarea>
 			</label>
 		</div>
-		<input class="w3-hide" name="AIOver" value="getAIOver()">
-		<script>var mailform</script>
-		<input class="w3-btn w3-blue w3-hover-green" tabindex="5" type="submit" value="SEND" onclick="var mailform=window.open('','mailform','width=250,height=250,titleBarStyle=hidden');setTimeout(function(){bootbox.alert({message:'Message Sent',size:'small'});$('.featherlight').hide()},5000)"><!-- onclick="submitEmail();$.featherlight.current().close();" -->
-		<div class="realMail">Or you can send an email to <a href="" onclick="shell.openExternal('mailto:aio@mazdatweaks.com?subject=MZD-AIO-TI%20Feedback')">aio@mazdatweaks.com</a></div>
-		<!-- bootbox.alert({message: $('#name').val() $('#email').val() $('#subject').val() $('#message').val()}) -->
+		<input class="w3-hide" name="AIOver" id="AIOver">
+		<script>
+			$(function(){
+				$('#AIOver').val(getAIOver());
+				$('[type="submit"]').click(function(){
+					if (validateForm()) {
+						$('.featherlight').hide();
+					}
+				})
+		})
+		function validateForm()
+		{
+		  "use strict";
+		  var title = $("#name").val();
+		  var err=true;
+		  if (title=="" || title==null) {
+		    $("#name").addClass("validation");
+
+		    var err= false;
+		  } else {  $("#name").removeClass("validation");}
+		  var email = $("#email").val();
+		  if (!(/(.+)@(.+){2,}\.(.+){2,}/.test(email))) {
+		    $("#email").addClass("validation");
+
+		    var err= false;
+		  } else {  $("#email").removeClass("validation"); }
+		  var title = $("#message").val();
+		  if (title=="" || title==null) {
+		    $("#message").addClass("validation");
+		    var err= false;
+		  } else{ $("#message").removeClass("validation"); }
+		  return err;
+		}
+		</script>
+		<input class="w3-btn w3-blue w3-hover-green" tabindex="5" type="submit" id="sendmail" name="sendmail" value="SEND">
+		<div class="realMail">Or you can send an email to <a href="" onclick="shell.openExternal('mailto:aio@mazdatweaks.com?subject=MZD-AIO-TI%20v2.7.0')">aio@mazdatweaks.com</a></div>
 	</form>
 </div>

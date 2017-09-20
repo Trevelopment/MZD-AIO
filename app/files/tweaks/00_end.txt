@@ -1,6 +1,6 @@
 log_message " "
 sleep 2
-log_message "=============== END OF TWEAKS INSTALLATION ==============="
+log_message "======================= END OF TWEAKS INSTALLATION ======================"
 show_message "========== END OF TWEAKS INSTALLATION =========="
 if [ "${KEEPBKUPS}" = "1" ]
 then

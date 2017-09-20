@@ -1,11 +1,11 @@
 # disable/enable touchscreen mod: enable = mod off, disable = mod on
 show_message "DISABLE TOUCHSCREEN ..."
-log_message "===*** UNINSTALL REMOVE TOUCHSCREEN RESTRICTION ... ***==="
+log_message "========****** UNINSTALL REMOVE TOUCHSCREEN RESTRICTION ... ******======="
 
 # Touchscreen settings
 /jci/scripts/set_lvds_speed_restriction_config.sh enable
 /jci/scripts/set_speed_restriction_config.sh enable
-log_message "===       Touchscreen Speed Restriction Enabled        ==="
+log_message "===              Touchscreen Speed Restriction Enabled                ==="
 
-log_message "=**END UNINSTALLATION OF REMOVE TOUCHSCREEN RESTRICTION**="
+log_message "====***** END UNINSTALLATION OF REMOVE TOUCHSCREEN RESTRICTION  *****===="
 log_message " "

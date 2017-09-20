@@ -1,6 +1,6 @@
 {
   "name": "MZD-AIO-TI",
-  "version": "2.5.10",
+  "version": "2.7.0",
   "productName": "MZD-AIO-TI",
   "description": "MZD All In One Tweaks Installer",
   "homepage": "http://mazdatweaks.com",
@@ -13,7 +13,7 @@
   "main": "main.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/trevelopment/MZD-AIO-TI"
+    "url": "https://gitlab.com/Trezdog44/MZD-AIO-TI"
   },
   "keywords": [
     "Mazda",
@@ -24,7 +24,7 @@
     "angular"
   ],
   "bugs": {
-    "url": "https://github.com/trevelopment/MZD-AIO-TI/issues",
+    "url": "https://gitlab/Trezdog44/MZD-AIO-TI/issues",
     "email": "aio@mazdatweaks.com"
   },
   "config": {
@@ -34,15 +34,15 @@
     "angular-dragula": "^1.2.8",
     "appender": "^0.0.2",
     "copy-dir": "^0.3.0",
-    "crlf": "^1.1.0",
+    "crlf": "^1.1.1",
     "devtron": "^1",
-    "drivelist": "^5.0.20",
-    "electron-auto-updater": "^1.0.0",
-    "electron-config": "^1.0.0",
-    "electron-context-menu": "^0.9.0",
+    "drivelist": "5.0.22",
+    "electron-updater": "^2.8.7",
+    "electron-store": "^1.2.0",
+    "electron-context-menu": "^0.9.1",
     "electron-debug": "^1",
     "electron-image-resize": "^1.2.4",
-    "electron-is-dev": "^0.1",
+    "electron-is-dev": "^0.3",
     "electron-window-state": "^4.1.1",
     "extract-zip": "^1.6.5",
     "lodash": "^4",
@@ -52,5 +52,5 @@
   "engines": {
     "node": "6.5.x"
   },
-  "electronVersion": "1.6.0"
+  "electronVersion": "1.6.11"
 }

@@ -15,7 +15,7 @@ const { electron, nativeImage, remote, clipboard, shell } = require('electron')
 const { app, BrowserWindow } = remote
 const fs = require('fs')
 const ipc = require('electron').ipcRenderer
-const Config = require('electron-config')
+const Config = require('electron-store')
 const settings = new Config({'name': 'aio-data'})
 const persistantData = new Config({'name': 'aio-persist'})
 const lastView = new Config({'name': 'aio-last'})
@@ -54,6 +54,9 @@ console.log(file)
 bg-images.push('<img src="file">')
 })
 }) */
+function getBackground () {
+  return `${tempDir}/background.png`
+}
 function saveMenuLock () {
   persistantData.get('menuLock')
   if (!persistantData.has('menuLock')) {
@@ -110,6 +113,44 @@ function openDlFolder () {
 function openDefaultFolder () {
   shell.showItemInFolder(path.normalize(path.join('file://', __dirname, '../background-images/default/defaut.png')))
 }
+function autoHelp () {
+  $.featherlight('views/autoHelp.htm',{closeSpeed:500,variant:'autoHelpBox'})
+}
+function myStance () {
+  ipc.send('reset-window-size')
+  $.featherlight('views/stance.htm',{closeSpeed:2000,variant:'myStance'})
+}
+function announcement() {
+  var anoncmntNum = localStorage.getItem('anoncmnt')
+  $.ajax({
+    url:'https://aio.trevelopment.com/aio.php',
+    method:'GET',
+    data: {
+      'anon': anoncmntNum,
+      'dat': localStorage.getItem('anondat'),
+      'persdata': JSON.stringify(persistantData.store)
+    },
+    error: function() {
+      //file not exists
+      console.log("Nothing Available")
+    },
+    success: function(result) {
+      //file exists
+      $('<div/>').addClass('communicationFile').html(result).appendTo($('#sidePanel'));
+    }
+  });
+}
+function showAnnouncement () {
+  $.featherlight('https://aio.trevelopment.com/aio.php',{closeSpeed:1000,variant:'announcementWindow'})
+}
+function hideAnnouncement (anonNum) {
+  $('.communicationFile').remove()
+  $.featherlight.close()
+  localStorage.setItem('anoncmnt', anonNum)
+}
+function anonData (anonNum) {
+  localStorage.setItem('anondat', anonNum)
+}
 function updateNotes () {
   $.get('views/update.htm', function (data) { $('#changelog').html(data) })
   bootbox.dialog({
@@ -117,19 +158,24 @@ function updateNotes () {
     message: `<div id='changelog'></div><button id='newVerBtn' style='display:none;font-weight:800;' class='w3-btn w3-hover-green w3-hover-text-black w3-display-bottommiddle' onclick='bootbox.hideAll()'>OK</button><br>`,
     className: 'update-info',
     size: 'large',
-    closeButton: false
+    closeButton: true
   })
   setTimeout(function () {
-    //$('.modal-dialog').animate({'margin-top': '40px', 'margin-bottom': '60px'}, 8000)
+    $('.modal-dialog').animate({'margin-top': '40px', 'margin-bottom': '60px'}, 3000)
     $('#newVerBtn').fadeIn(5000)
   }, 2000)
 }
 function firstTimeVisit () {
+  if (!persistantData.has('ver270')) {
+    myStance()
+    persistantData.set('ver270', false)
+    persistantData.delete('message-502')
+    persistantData.delete('message-503')
+  }
   if (visits > 0) {
-    if (!persistantData.has('new-update-first-run') || persistantData.get('new-update-first-run')) {
+    if(!persistantData.get('ver270')) {
       updateNotes()
-      // $('.modal-dialog').animate({"margin-top":"40px","margin-bottom":"60px"},12000)
-      persistantData.set('new-update-first-run', false)
+      persistantData.set('ver270', true)
     }
   } else {
     $('body').prepend('<div id="super-overlay" style="z-index:999999;width:9999px;height:9999px;display:block;position:fixed;background:transparent;"></div>')
@@ -142,7 +188,6 @@ function firstTimeVisit () {
     setTimeout(function () {
       $('#first-time-msg-btn').html(`<button id='newVerBtn' style='display:none' class='w3-btn w3-hover-text-light-blue w3-display-bottommiddle' onclick='bootbox.hideAll()'>OK</button><br>`)
       $('#newVerBtn').fadeIn(10000)
-      persistantData.set('visits', 0)
     }, 20000)
   }
 }
@@ -150,7 +195,7 @@ var helpClick = false
 function helpDropdown () {
   var x = document.getElementById('helpDrop')
   var y = document.getElementById('helpDropBtn')
-  if (x.className.indexOf('w3-show') == -1) {
+  if (x.className.indexOf('w3-show') === -1) {
     x.className += ' w3-show'
     y.innerHTML = "<span class='icon-x'></span>"
     document.getElementById('sidenavOverlay').display = 'block'
@@ -181,7 +226,7 @@ function closeHelpDrop () {
 function dropDownMenu (id) {
   var x = document.getElementById(id)
   var y = $('#' + id)
-  if (x.className.indexOf('w3-show') == -1) {
+  if (x.className.indexOf('w3-show') === -1) {
     $('.w3-dropdown-content').removeClass('w3-show')
     x.className += ' w3-show'
   } else {
@@ -226,6 +271,8 @@ function cleanArray (actual) {
   return newArray
 }
 function donate () {
+  shell.openExternal('http://trevelopment.win/donate')
+  /*
   let donatewin = new remote.BrowserWindow({
     width: 500,
     height: 600,
@@ -239,6 +286,7 @@ function donate () {
   donatewin.on('closed', () => {
     remote.BrowserWindow.fromId(1).focus()
   })
+  */
 }
 // Returns list of USB Drives
 function getUSBDrives () {
@@ -322,6 +370,9 @@ function saveAIOLogHTML () {
   a.href = 'data:text/html,' + document.getElementById('aio-comp-log').innerHTML
   a.click()
 }
+function checkForUpdate (ver) {
+  $.featherlight(`https://aio.trevelopment.com/update.php?ver=270`,{closeSpeed:100,variant:'checkForUpdate'})
+}
 function formatDateCustom (dateFormatType) {
   var currentTime = new Date()
   var dateStr = null
@@ -351,7 +402,7 @@ function getAIOver () {
   return app.getVersion()
 }
 /* setInterval(function(){
-$('#IN8, #UN8').prop('disabled',true)
+$('#IN21, #UN8').prop('disabled',true)
 },1000) */
 function showCompatibility () {
   $(`<div id="compatibilityCheck" class="w3-small w3-padding" style="width:100%;max-width:1200px;margin:auto;background:rgba(0,0,0,.8);color:#fff;">
@@ -362,14 +413,15 @@ function showCompatibility () {
   </header>
   <div class="w3-container">
   <div class="w3-panel w3-center">
-  <H5>ALL TWEAKS ARE COMPATIBLE WITH ALL THESE KNOWN FW VERSIONS:</H5>
+  <H2> **AIO IS COMPATIBLE WITH ALL FW V55, V56, V58, AND V59 UP TO V59.00.502** </H2>
+  <!--H5>ALL TWEAKS HAVE BEEN TESTED ON FW VERSIONS:</H5>
   <div class="all-compat" style="">
   55.00.650A-NA  55.00.750B-NA  55.00.753A-NA  55.00.760A-NA  56.00.100A-ADR  56.00.230A-ADR  56.00.240B-ADR  56.00.511A-ADR  56.00.512A-ADR  56.00.513C-ADR  56.00.514A-ADR  56.00.100A-CHN  56.00.100A-EU  56.00.230A-EU  56.00.511A-EU  56.00.512A-EU  56.00.513B-EU  56.00.513C-EU  56.00.521A-NA  56.00.521A-EU  56.00.401A-JP  59.00.331A-EU  58.00.250A-NA  58.00.251A-ADR  59.00.330A-NA  59.00.441A-NA  59.00.443A-NA  59.00.443C-EU  59.00.330A-EU  59.00.330A-ADR  59.00.342A-ADR  59.00.442A-ADR  59.00.443C-ADR 59.00.446A-NA 59.00.450A-NA 59.00.447A-EU 59.00.449A-EU 59.00.326A-ADR
   </div></div>
   <div class="w3-border w3-border-red w3-col w3-padding">
   Advanced Option <b>Media Order Patch & FLAC Support</b> -
   <div class="all-compat" style="">
-  55.00.650A-NA  55.00.753A-NA  55.00.760A-NA  56.00.100A-ADR  56.00.230A-EU  56.00.240B-ADR  56.00.511A-EU  56.00.512A-EU  56.00.521A-NA  58.00.250A-NA  59.00.326A-ADR  59.00.331A-EU  56.00.513C-EU  56.00.513B-EU  56.00.513C-ADR   59.00.330A-ADR   59.00.342A-ADR   59.00.441A-NA    59.00.443C-EU
+  55.00.650A-NA  55.00.753A-NA  55.00.760A-NA  56.00.100A-ADR  56.00.230A-EU  56.00.240B-ADR  56.00.511A-EU  56.00.512A-EU  56.00.521A-NA  58.00.250A-NA  59.00.326A-ADR  59.00.331A-EU  56.00.513C-EU  56.00.513B-EU  56.00.513C-ADR   59.00.330A-ADR   59.00.342A-ADR   59.00.441A-NA    59.00.443C-EU-->
   </div>
   </div>
   <!--div class="additional-sompat-check">These tweaks have additional compatibility checks for firmware specific files:
@@ -377,17 +429,18 @@ function showCompatibility () {
 }
 $(function () {
   $('.toggleExtra.1').addClass('icon-plus-square').removeClass('icon-minus-square')
+  //$('#IN6').click(function(){$('#UN7').prop('checked',true);$('#UN8').prop('checked',true);})
   setInterval(function () {
     if (!$('#IN23').prop('disabled')) { $('#IN23').prop('disabled', true) }
-    if (!$('#IN8').prop('disabled')){$('#IN8').prop('disabled',true);}
-    if (!$('#IN123').prop('disabled')) { $('#IN123').prop('disabled', true) }
-    if (!$('#IN108').prop('disabled')){$('#IN108').prop('disabled',true);}
-  }, 500)
+    if (!$('#IN21').prop('disabled')){$('#IN21').prop('disabled',true);}
+    //if (!$('#UN23').prop('disabled')) { $('#UN23').prop('disabled', true) }
+    //if (!$('#UN21').prop('disabled')){$('#UN21').prop('disabled',true);}
+  }, 2000)
   setTimeout(function () {
-    $('#IN8').click(function () {
+    $('#IN21').click(function () {
       snackbar('THERE MAY BE ISSUES REGARDING COMPATIBILITY WITH THIS TWEAK. AFTER INSTALLING, YOUR USB PORTS MAY BECOME UNREADABLE TO THE CMU. <h3>DO NOT PREFORM THIS INSTALL UNLESS YOU KNOW HOW TO RECOVER YOUR CMU VIA SSH</h3>')
     })
-    $('#IN8, #IN23, #IN24, #IN25').click(function () {
+    $('#IN21, #IN23, #IN24, #IN25').click(function () {
       if (!$('#sshbringback').prop('checked')) { $('#sshbringback').click() }
       if (!$('#wifi').prop('checked')) { $('#wifi').click() }
     })
@@ -395,9 +448,9 @@ $(function () {
       snackbarstay('These Tweaks are disabled due to DMCA takedown request (Speedcam) or due to unresolved issues (Media Order Patch & FLAC Support)')
       $('.advancedOp, #twkOpsTitle').toggle()
       $('.sidePanel').toggleClass('adv')
-      if ($('#IN8').prop('checked')) { $('#IN8').click() }
+      if ($('#IN21').prop('checked')) { $('#IN21').click() }
       if ($('#IN23').prop('checked')) { $('#IN23').click() }
-      if ($('#IN123').prop('checked')) { $('#IN123').click() }
+      if ($('#UN23').prop('checked')) { $('#UN23').click() }
     })
   }, 1000)
 })

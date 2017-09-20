@@ -1,0 +1,1492 @@
+#markerPoint {
+	left: 384px;
+    top: 266px;
+    width: 530px;
+    height: 416px;
+	background: url('../images/point2.png') no-repeat scroll 0 0;
+    position:absolute;
+    z-index: 100;
+}
+#mzdContainer {
+    font-family:Tipperary,verdana;
+    top:0px;
+    right:0;
+    bottom:0;
+    left:0;
+    height:416px;
+    width:800px;
+    position:relative;
+    background-image: url('../images/mzd_bg.jpg');
+}
+#mzdIndividualLogoDiv {
+	width: 132px;
+    height: 83px;
+    top: 0px;
+    left: 0px;
+    position: absolute;
+}
+.defaultPicture {
+	background: url('../images/mzd_meter_logo_default.png') no-repeat scroll center center transparent;
+}
+.individualPicture {
+	background: url('/jci/gui/apps/_mzdmeter/individuallogo/mzd_meter_individual.png') no-repeat scroll center center transparent;
+}
+
+#rpmLimitAlarmDiv {
+	width: 349px;
+    height: 349px;
+    top: 100px;
+    left: 217px;
+    position: absolute;
+	background: url('../images/engine_limit.png') no-repeat scroll center center transparent;
+	visibility: hidden; /* visible,hidden */
+	z-index: 0;
+}
+.swirlAura {
+	animation-name: swirl_animationaura;
+	animation-duration: 5000ms;
+	animation-iteration-count: infinite;
+	animation-timing-function: linear;
+}
+
+@keyframes swirl_animationaura {
+	0%  {transform: rotate(0deg);}
+    100% {transform: rotate(360deg);} 
+}
+
+#rpmLimitAlarmDiv2 {
+	width: 349px;
+    height: 349px;
+    top: 100px;
+    left: 217px;
+    position: absolute;
+	background: url('../images/engine_limit.png') no-repeat scroll center center transparent;
+	z-index: 1;
+}
+.swirlAura2 {
+	animation-name: swirl_animationaura2;
+	animation-duration: 13000ms;
+	animation-iteration-count: infinite;
+	animation-timing-function: linear;
+}
+
+@keyframes swirl_animationaura2 {
+	0%  {transform: rotate(360deg);}
+    100% {transform: rotate(0deg);} 
+}
+
+
+#mzdMainDiv {
+    width: 800px;
+    height: 416px;
+    top: 0px;
+    left: 0px;
+    position: absolute;
+}
+#mzdMainDiv .txtSpeedUnit {
+    position: relative;
+    left: -4px;
+    top: 168px;
+    color: #999999;
+    font-size: 18px;
+    text-align: center;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+	z-index: 8;
+}
+#mzdMainDiv .txtSpeed {
+    position: absolute;
+    left: 153px;
+    top: 152px;
+    width: 220px;
+    height: 220px;
+    background: url('../images/dial_eye.png') no-repeat scroll center center transparent;
+    color: #FFFFFF;
+    font-size: 40px;
+    line-height: 217px;
+    text-align: center;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);
+    z-index: 9;
+}
+#speedLimitDiv120 {
+    position: absolute;
+    left: 153px;
+    top: 152px;
+    width: 220px;
+    height: 220px;
+    background: url('../images/dial_eye_spdr120.png') no-repeat scroll center center transparent;
+    z-index: 10;
+	visibility: hidden; /* visible,hidden */
+}
+#speedLimit120IndicatorDiv {
+	position: absolute;
+    left: 248px;
+    top: 40px;
+    width: 35px;
+    height: 14px;
+    background: url('../images/120.png') no-repeat scroll center center transparent;
+    z-index: 10;
+	visibility: hidden; /* visible,hidden */
+}
+.speedLimit120IndicatorTransition {
+  transition: all 1s linear;
+  display: block;
+}
+#mzdMainDiv .OutSideRing {
+    position: absolute;
+    left: 153px;
+    top: 152px;
+    width: 220px;
+    height: 220px;
+    background: url('../images/dial_out_ring.png') no-repeat scroll center center transparent;
+    z-index: 6;
+}
+#mzdMainDialBG {
+    left: 130px;
+    top: 13px;
+    width: 530px;
+    height: 416px;
+	background: url('../images/dial_tick.png') no-repeat scroll 0 0;
+    position:absolute;
+    z-index: 3;
+}
+#mzdMainDialBorder {
+    left: 130px;
+    top: 13px;
+    width: 530px;
+    height: 416px;
+	background: url('../images/dial_tick_border.png') no-repeat scroll 0 0;
+    position:absolute;
+    z-index: 15;
+}
+.mzdBGLightAura {
+    left: 110px;
+    top: 130px;
+    width: 496px;
+    height: 416px;
+    background: url('../images/aura_light.png') no-repeat scroll 0 0;
+    position:absolute;
+    z-index: 2;
+}
+.pulseAura {
+	animation-name: pulse_animationaura;
+	animation-duration: 3000ms;
+	transform-origin:0% 0%;
+	animation-iteration-count: infinite;
+	animation-timing-function: linear;
+}
+
+@keyframes pulse_animationaura {
+	0% { transform: scale(1,1) translate(0px,0px);  }
+	30% { transform: scale(1,1) translate(0px,0px); }
+	40% { transform: scale(1.28,1.28) translate(-30px,-30px); }
+	50% { transform: scale(1,1) translate(0px,0px); }
+	60% { transform: scale(1,1) translate(0px,0px); }
+	70% { transform: scale(1.25,1.25) translate(-26px,-26px); }
+	80% { transform: scale(1,1) translate(0px,0px); }
+	100% { transform: scale(1,1) translate(0px,0px); }
+}
+
+#MZDMeterTmplt1 .topRPMNeedle{
+    left: 250px;
+    top: 84px;
+    width: 26px;
+    height: 355px;
+    background: url('../images/top_rpm.png') no-repeat scroll top center transparent;
+    position: absolute;
+    transform: rotate(120deg);
+    transition: transform 0.5s linear 0s;
+	z-index: 4;
+}
+#MZDMeterTmplt1 .topSpeedNeedle{
+    left: 252px;
+    top: -13px;
+    width: 25px;
+    height: 550px;
+    background: url('../images/top_needle.png') no-repeat scroll center center transparent;
+    position: absolute;
+    transform: rotate(120deg);
+    transition: transform 1.0s linear 0s;
+	z-index: 4;
+}
+#MZDMeterTmplt1 .speedNeedle {
+    left: 241px;
+	top: 36px;
+    width: 44px;
+    height: 450px;
+    position: absolute;
+	background: url('../images/speed_needle1.png') no-repeat scroll center center transparent;
+    transform: rotate(-120deg);
+    transition: transform 0.2s linear 0s; /* 0.2 */
+	z-index: 5;
+}
+#MZDMeterTmplt1 .rpmNeedle {
+    left: 241px;
+	top: 112px;
+    width: 42px;
+    height: 300px;
+    position: absolute;
+	background: url('../images/rpm_needle1.png') no-repeat scroll top center transparent;
+    transform: rotate(-120deg);
+    transition: transform 0.2s linear 0s; /* 0.2 */
+	z-index: 7;
+}
+
+#mzdInfoDiv {
+    top: 0px;
+    left: 0px;
+    width: 800px;
+    height: 285px;
+    position: absolute;
+	background: url('../images/info_bg.png') no-repeat scroll center center transparent;
+	z-index: 32;
+}
+#MZDMeterTmplt1 .mzdInfoDiv {
+  transition: all 1s linear;
+  display: block;
+}
+#MZDMeterTmplt1 .hidden {
+  display: none;
+}
+#MZDMeterTmplt1 .visuallyhidden {
+  opacity: 0;
+}
+#segment_1{
+   left: 0px;
+   top: 0px;
+   width: 100%;
+   height: 100%;
+   position: absolute;
+   visibility: visible; /* visible,hidden */
+}
+#segment_2{
+   left: 0px;
+   top: 0px;
+   width: 100%;
+   height: 100%;
+   position: absolute;
+   visibility: hidden; /* visible,hidden */
+}
+
+/* segment 1 */
+#infoPageBtn {
+    top:130px;
+    right:10px;
+    height:40px;
+    width:40px;
+	background: url('../images/next_button.png') no-repeat scroll 0 0;
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+    background-position: 0 0px;
+	position:absolute;
+	z-index: 40;
+}
+#border_infoPageBtn {
+    top:130px;
+    right:10px;
+    height:40px;
+    width:40px;
+	background: url('../images/outter_button.png') no-repeat scroll 0 0;
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+    background-position: 0 0px;
+	position:absolute;
+	z-index: 39;
+}
+#infoPageBtn:active {
+    background-repeat: no-repeat;
+    background-position: 1px 1px;
+	background-size: 95% 95%;
+}
+
+#tripDistFieldSet{
+    left: 10px;
+	top: 10px;
+	width: 250px;
+    position: absolute;
+	font-size: 18px;
+	color: #BBBBBB;
+}
+#tripDistFieldSet .DistUnit{
+    left: 200px;
+	top: 0px;
+    position: absolute;
+	font-size: 18px;
+	color: #BBBBBB;
+}
+#MZDMeterTmplt1 .tripDistance{
+    left: 120px;
+	top: 10px;
+    position: absolute;
+	font-size: 18px;
+	color: #FFD700;
+	text-align: right;
+}
+#costTripFieldSet{
+    left: 10px;
+	top: 40px;
+	width: 250px;
+    position: absolute;
+	font-size: 18px;
+	color: #BBBBBB;
+}
+#costTripFieldSet .CostUnit{
+    left: 200px;
+	top: 0px;
+    position: absolute;
+	font-size: 18px;
+	color: #BBBBBB;
+}
+#MZDMeterTmplt1 .tripMoney{
+    left: 120px;
+	top: 40px;
+    position: absolute;
+	font-size: 18px;
+	color: #FFD700;
+	text-align: left;
+}
+
+#tripTimeA{
+    left: 10px;
+	top: 70px;
+    position: absolute;
+	font-size: 18px;
+	color: #BBBBBB;
+}
+#MZDMeterTmplt1 .tripTimeValue{
+    left: 120px;
+	top: 70px;
+	width: 400px;
+    position: absolute;
+	font-size: 18px;
+	color: #FFD700;
+	text-align: left;
+}
+#idleTimeA{
+    left: 10px;
+	top: 100px;
+    position: absolute;
+	font-size: 18px;
+	color: #BBBBBB;
+}
+#MZDMeterTmplt1 .idleTimeValue{
+    left: 120px;
+	top: 100px;
+	width: 400px;
+    position: absolute;
+	font-size: 18px;
+	color: #FFD700;
+	text-align: left;
+}
+
+#MZDMeterTmplt1 .tripBDistance{
+    left: 30px;
+	top: 0px;
+    position: absolute;
+	font-size: 18px;
+	color: #FF9933;
+	background: url('../images/tripB_bg.png') no-repeat scroll 0 0;
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+    background-position: 0 0px;
+	text-align: left;
+}
+#MZDMeterTmplt1 .tripBMoney{
+    left: 40px;
+	top: 0px;
+    position: absolute;
+	font-size: 18px;
+	color: #FF9933;
+	background: url('../images/tripB_bg.png') no-repeat scroll 0 0;
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+    background-position: 0 0px;
+	text-align: left;
+}
+#MZDMeterTmplt1 .tripTimeBValue{
+    left: 10px;
+	top: 0px;
+    position: relative;
+	font-size: 18px;
+	color: #FF9933;
+	background: url('../images/tripB_bg.png') no-repeat scroll 0 0;
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+    background-position: 0 0px;
+	text-align: left;
+}
+#MZDMeterTmplt1 .idleTimeBValue{
+    left: 10px;
+	top: 0px;
+    position: relative;
+	font-size: 18px;
+	color: #FF9933;
+	background: url('../images/tripB_bg.png') no-repeat scroll 0 0;
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+    background-position: 0 0px;
+	text-align: left;
+}
+
+/* segment 2 */
+#Drv1AvlFuelEFieldSet{
+    left: 600px;
+	top: 10px;
+    position: absolute;
+	font-size: 18px;
+	color: #BBBBBB;
+}
+#MZDMeterTmplt1 .Drv1AvlFuelEValue{
+    right: 20px;
+	top: 10px;
+    position: absolute;
+	font-size: 18px;
+	color: #FFD700;
+	text-align: right;
+}
+
+#bahtPerKmFieldSet{
+    left: 600px;
+	top: 50px;
+    position: absolute;
+	font-size: 18px;
+	color: #BBBBBB;
+}
+#MZDMeterTmplt1 .bahtPerKm{
+    right: 20px;
+	top: 50px;
+    position: absolute;
+	font-size: 18px;
+	color: #FFD700;
+	text-align: right;
+}
+
+#FuelPriceFieldSet{
+    left: 600px;
+	top: 90px;
+    position: absolute;
+	font-size: 18px;
+	color: #BBBBBB;
+}
+#MZDMeterTmplt1 .bathPerLite{
+    right: 20px;
+	top: 90px;
+    position: absolute;
+	font-size: 18px;
+	color: #FFD700;
+	text-align: right;
+}
+#speedTopFieldSet{
+    left: 10px;
+	top: 10px;
+	width: 250px;
+    position: absolute;
+	font-size: 18px;
+	color: #BBBBBB;
+}
+#speedTopFieldSet .DistUnit{
+    left: 180px;
+	top: 0px;
+	width: 250px;
+    position: absolute;
+	font-size: 18px;
+	color: #BBBBBB;
+}
+#MZDMeterTmplt1 .speedTopValue{
+    left: 130px;
+	top: 10px;
+    position: absolute;
+	font-size: 18px;
+	color: #FFD700;
+	text-align: right;
+}
+#gpsLatitude{
+    left: 600px;
+	top: 10px;
+    position: absolute;
+	font-size: 18px;
+	color: #BBBBBB;
+}
+#gpsLongitude{
+    left: 600px;
+	top: 50px;
+    position: absolute;
+	font-size: 18px;
+	color: #BBBBBB;
+}
+#gpsAltitude{
+    left: 600px;
+	top: 90px;
+    position: absolute;
+	font-size: 18px;
+	color: #BBBBBB;
+}
+#MZDMeterTmplt1 .gpsLatitudeValue{
+    right: 20px;
+	top: 10px;
+    position: absolute;
+	font-size: 18px;
+	color: #FFD700;
+	text-align: right;
+}
+#MZDMeterTmplt1 .gpsLongitudeValue{
+    right: 20px;
+	top: 50px;
+    position: absolute;
+	font-size: 18px;
+	color: #FFD700;
+	text-align: right;
+}
+#MZDMeterTmplt1 .gpsAltitudeValue{
+    right: 20px;
+	top: 90px;
+    position: absolute;
+	font-size: 18px;
+	color: #FFD700;
+	text-align: right;
+}
+
+
+#MZDMeterTmplt1 .compassGpsLatV{
+    width: 100%;
+	top: 40px;
+    position: absolute;
+	font-size: 10px;
+	color: #DDDDDD;
+	text-align: center;
+}
+#MZDMeterTmplt1 .compassGpsLongV{
+    width: 100%;
+	top: 77px;
+    position: absolute;
+	font-size: 10px;
+	color: #DDDDDD;
+	text-align: center;
+}
+#MZDMeterTmplt1 .compassDegree{
+    width: 100%;
+	top: 55px;
+    position: absolute;
+	font-size: 15px;
+	color: #DDDDDD;
+	text-align: center;
+}
+#MZDMeterTmplt1 .compassBGInnerDiv {
+    position: absolute;
+    left: 5px;
+    bottom: 10px;
+    width: 128px;
+    height: 128px;
+    background: url('../images/compass_inner.png') no-repeat scroll center center transparent;
+    z-index: 16;
+}
+#MZDMeterTmplt1 .compassBGDiv {
+    position: absolute;
+    left: 4px;
+    bottom: 10px;
+    width: 128px;
+    height: 128px;
+    background: url('../images/compass.png') no-repeat scroll center center transparent;
+    transform: rotate(0deg);
+    z-index: 17;
+}
+#compassDivBorder {
+    position: absolute;
+    left: 5px;
+    bottom: 10px;
+    width: 128px;
+    height: 128px;
+    background: url('../images/compass_border.png') no-repeat scroll center center transparent;
+    z-index: 18;
+}
+
+#gearBorderDiv{
+    position: absolute;
+    left: 65px;
+    top: 40px;
+    width: 135px;
+    height: 230px;
+	background: url('../images/gear_border.png') no-repeat scroll center center transparent;
+    z-index: 20;
+}
+#gearBGDiv{
+    position: absolute;
+    left: 65px;
+    top: 40px;
+    width: 135px;
+    height: 230px;
+    z-index: 19;
+}
+.gearD{
+    background: url('../images/gear_d.png') no-repeat scroll center center transparent;
+}
+.gearN{
+    background: url('../images/gear_n.png') no-repeat scroll center center transparent;
+}
+.gearR{
+    background: url('../images/gear_r.png') no-repeat scroll center center transparent;
+}
+.gearP{
+    background: url('../images/gear_p.png') no-repeat scroll center center transparent;
+}
+
+
+.mzdwheelSetBGDiv {
+  transition: all 1s linear;
+  display: block;
+}
+#mzdwheelSetBGDiv {
+    top: 33px;
+    left: 151px;
+    width: 486px;
+    height: 383px;
+    position: absolute;
+	background: url('../images/back_hide.png') no-repeat scroll center center transparent;
+	z-index: 33;
+}
+#mzdwheelSetDiv {
+    top: -25px;
+    left: 42px;
+    width: 401px;
+    height: 412px;
+    position: absolute;
+	background: url('../images/car_pic.png') no-repeat scroll center center transparent;
+	z-index: 36;
+}
+#wheelSetTireDiv{
+    position: absolute;
+    left: 67px;
+    top: 172px;
+    width: 347px;
+    height: 130px;
+    z-index: 34;
+}
+
+.tireSet{
+    background: url('../images/wheel_set.png') no-repeat scroll center center transparent;
+}
+.tireLeft{
+    background: url('../images/wheel_left.png') no-repeat scroll center center transparent;
+}
+.tireRight{
+    background: url('../images/wheel_right.png') no-repeat scroll center center transparent;
+}
+
+#engineDiv {
+    position: absolute;
+    left: 168px;
+    top: 90px;
+    width: 140px;
+    height: 172px;
+	background: url('../images/engine_hot.png') no-repeat scroll center center transparent;
+	visibility: hidden; 
+    z-index: 35;
+}
+
+.SteeringWheelDiv {
+	position: absolute;
+    right: 102px;
+    top: 94px;
+    width: 70px;
+    height: 70px;
+	background: url('../images/steering_wheel.png') no-repeat scroll center center transparent;
+	transform: rotate(0deg);
+    transition: transform 0.25s linear 0s;
+    z-index: 11;
+}
+#SteeringWheelBGDiv {
+	position: absolute;
+    right: 102px;
+    top: 94px;
+    width: 70px;
+    height: 70px;
+    z-index: 10;
+}
+.SteeringNotDetect {
+	background: url('../images/steering_wheel_bk.png') no-repeat scroll center center transparent;
+}
+.SteeringDetect {
+	background: url('../images/steering_wheel_en.png') no-repeat scroll center center transparent;
+}
+
+
+#guageDivBorder {
+    position: absolute;
+    right: 11px;
+    bottom: 15px;
+    width: 128px;
+    height: 240px;
+    background: url('../images/dial_ring2.png') no-repeat scroll center center transparent;
+    z-index: 28;
+}
+.guageDiv {
+    position: absolute;
+    right: 11px;
+    bottom: 15px;
+    width: 128px;
+    height: 240px;
+    background: url('../images/dial_background.png') no-repeat scroll center center transparent;
+    z-index: 20;
+}
+.IATDial {
+    left: 677px;
+    top: 180px;
+    width: 278px;
+    height: 241px;
+    background: url('../images/temp_dial_tick.png') no-repeat scroll 0 0;
+    background-size: 25% 20%;
+    position:absolute;
+    z-index: 21;
+}
+.IATNeedle {
+    left: 706px;
+    top: 184px;
+    width: 13px;
+    height: 80px;
+    background: url('../images/iat_needle.png') no-repeat scroll 0 0;
+    position:absolute;
+    z-index: 22;
+	transform: rotate(-45deg);
+	transition: transform 1.0s linear 0s;
+}
+.IATCenterDial {
+    left: 701px;
+    top: 213px;
+    width: 21px;
+    height: 21px;
+    background: url('../images/center_dial.png') no-repeat scroll 0 0;
+    position:absolute;
+    z-index: 23;
+}
+
+.EGTDial {
+    left: 680px;
+    top: 295px;
+    width: 278px;
+    height: 241px;
+    background: url('../images/temp_dial_tick.png') no-repeat scroll 0 0;
+    background-size: 32% 26%;
+    position:absolute;
+    z-index: 24;
+}
+.EGTAlarm {
+    left: 670px;
+    top: 280px;
+    width: 109px;
+    height: 109px;
+    background: url('../images/egt_alarm.png') no-repeat scroll 0 0;
+    position:absolute;
+	opacity: 0;
+    z-index: 25;
+}
+.EGTNeedle {
+    left: 709px;
+    top: 300px;
+    width: 30px;
+    height: 100px;
+    background: url('../images/egt_needle.png') no-repeat scroll 0 0;
+    position:absolute;
+    z-index: 26;
+	transform: rotate(-45deg);
+	transition: transform 1.0s linear 0s;
+}
+.EGTCenterDial {
+    left: 713px;
+    top: 340px;
+    width: 21px;
+    height: 21px;
+    background: url('../images/center_dial.png') no-repeat scroll 0 0;
+    position:absolute;
+    z-index: 27;
+}
+#IATBorderRing {
+	left: 661px;
+    top: 162px;
+    width: 102px;
+    height: 102px;
+    background: url('../images/iat_border.png') no-repeat scroll 0 0;
+    position:absolute;
+    z-index: 29;
+}
+#EGTBorderRing {
+	left: 663px;
+    top: 273px;
+    width: 128px;
+    height: 128px;
+    background: url('../images/egt_border.png') no-repeat scroll 0 0;
+    position:absolute;
+    z-index: 31;
+}
+#IATCover {
+	left: 661px;
+    top: 162px;
+    width: 102px;
+    height: 102px;
+    background: url('../images/iat_cover.png') no-repeat scroll 0 0;
+	visibility: hidden;
+    position:absolute;
+    z-index: 30;
+}
+
+
+
+
+#myControlButton {
+    top:365px;
+    left:270px;
+    height:150px;
+    width:400px;
+    position:absolute;
+	z-index: 37;
+}
+#border_button1 {
+    top:0px;
+    left:14px;
+    height:50px;
+    width:50px;
+	background: url('../images/outter_button.png') no-repeat scroll 0 0;
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+    background-position: 0 0px;
+	position:absolute;
+	z-index: 10;
+}
+#border_button2 {
+    top:0px;
+    left:97px;
+    height:50px;
+    width:50px;
+	background: url('../images/outter_button.png') no-repeat scroll 0 0;
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+    background-position: 0 0px;
+	position:absolute;
+	z-index: 10;
+}
+#border_button3 {
+    top:0px;
+    left:180px;
+    height:50px;
+    width:50px;
+	background: url('../images/outter_button.png') no-repeat scroll 0 0;
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+    background-position: 0 0px;
+	position:absolute;
+	z-index: 11;
+}
+#infoBtnDiv {
+    top:0px;
+    left:14px;
+    height:50px;
+    width:50px;
+	background: url('../images/info_button.png') no-repeat scroll 0 0;
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+    background-position: 0 0px;
+	position:absolute;
+	z-index: 12;
+}
+#refreshFuelBtnDiv {
+    top:0px;
+    left:97px;
+    height:50px;
+    width:50px;
+	background: url('../images/setup_button.png') no-repeat scroll 0 0;
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+    background-position: 0 0px;
+	position:absolute;
+	z-index: 13;
+}
+#resetDistanceBtnDiv {
+    top:0px;
+    left:180px;
+    height:50px;
+    width:50px;
+	background: url('../images/wheel_button.png') no-repeat scroll 0 0;
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+    background-position: 0 0px;
+	position:absolute;
+	z-index: 14;
+}
+#infoBtnDiv:active {
+    background-repeat: no-repeat;
+    background-position: 1px 1px;
+	background-size: 95% 95%;
+}
+#refreshFuelBtnDiv:active {
+    background-repeat: no-repeat;
+    background-position: 1px 1px;
+	background-size: 95% 95%;
+}
+#resetDistanceBtnDiv:active {
+    background-repeat: no-repeat;
+    background-position: 1px 1px;
+	background-size: 95% 95%;
+}
+
+
+
+#dialogMainDiv{
+	width: 476px;
+    height: 266px;
+    top: 90px;
+    left: 157px;
+    position: absolute;
+	visibility: hidden; /* visible,hidden */
+	z-index: 38;
+}
+#dialog1MainDiv {
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0px;
+	background: url('../images/dialog_bg.png') no-repeat scroll top right;
+    position: absolute;
+	visibility: hidden; /* visible,hidden */
+	z-index: 1;
+}
+#dialog2MainDiv {
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0px;
+	background: url('../images/dialog_bg2.png') no-repeat scroll top right;
+    position: absolute;
+	visibility: hidden; /* visible,hidden */
+	z-index: 2;
+}
+
+#MZDMeterTmplt1 .messageText {
+    top: 15px;
+	left: 30px;
+    position: absolute;
+	color: #AA3333;
+    font-size: 25px;
+}
+#MZDMeterTmplt1 .monitorText {
+    bottom: 15px;
+	left: 20px;
+    position: absolute;
+	color: #AAAAAA;
+    font-size: 15px;
+}
+#choiceList1 {
+    width: 50%;
+    height: 100px;
+    top: 55px;
+	left: 50px;
+    position: absolute;
+	z-index: 1;
+}
+#choiceList2 {
+    width: 50%;
+    height: 10px;
+    top: 55px;
+	left: 250px;
+    position: absolute;
+	z-index: 2;
+}
+#MZDMeterTmplt1 .display1Dialog2 {
+    top: 65px;
+	left: 123px;
+    width: 100%;
+    height: 60px;
+    position: absolute;
+	z-index: 1;
+}
+#MZDMeterTmplt1 .actionFormField {
+    top: 210px;
+	right: 20px;
+    width: 100%;
+    height: 50px;
+	text-align: right;
+    position: absolute;
+	z-index: 3;
+}
+
+#MZDMeterTmplt1 ul {
+  list-style-type: none;
+  padding: 0;
+  width: 400px;
+}
+
+#MZDMeterTmplt1 li {
+  font: 200 20px/1.5 Helvetica, Verdana, sans-serif;
+}
+
+#MZDMeterTmplt1 li img {
+  float: center;
+}
+#MZDMeterTmplt1 li img:active {
+  float: center;
+  transform: translateY(4px);
+}
+
+#custom_fuel_button {
+    top:00px;
+    right:115px;
+    height:40px;
+    width:270px;
+	background: url('../images/dialog_btn.png') no-repeat scroll 0 0;
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	position:absolute;
+	line-height: 40px;
+	text-align: center;
+	color: #CCCCCC;
+	font-size: 18px;
+	z-index: 10;
+}
+#custom_fuel_button:active {
+    background: url('../images/dialog_btn_active.png') no-repeat scroll 0 0;
+    background-repeat: no-repeat;
+    background-position: 1px 1px;
+	background-size: 99% 99%;
+}
+#ok_button {
+    top:0px;
+    right:115px;
+    height:40px;
+    width:100px;
+	background: url('../images/dialog_btn.png') no-repeat scroll 0 0;
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	position:absolute;
+	line-height: 40px;
+	text-align: center;
+	color: #CCCCCC;
+	font-size: 20px;
+	z-index: 11;
+}
+#ok_button:active {
+    background: url('../images/dialog_btn_active.png') no-repeat scroll 0 0;
+    background-repeat: no-repeat;
+    background-position: 1px 1px;
+	background-size: 99% 99%;
+}
+#MZDMeterTmplt1 .cancle_button {
+    top:0px;
+    right:5px;
+    height:40px;
+    width:100px;
+	background: url('../images/dialog_btn.png') no-repeat scroll 0 0;
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	position:absolute;
+	line-height: 40px;
+	text-align: center;
+	color: #CCCCCC;
+	font-size: 20px;
+	z-index: 12;
+}
+#MZDMeterTmplt1 .cancle_button:active {
+    background: url('../images/dialog_btn_active.png') no-repeat scroll 0 0;
+    background-repeat: no-repeat;
+    background-position: 1px 1px;
+	background-size: 99% 99%;
+}
+
+
+#MZDMeterTmplt1 .actionDialog2Field {
+    top: 120px;
+	left: 112px;
+    width: 100%;
+    height: 90px;
+    position: absolute;
+	z-index: 3;
+}
+.dec_button {
+    background: url('../images/dec.png') no-repeat scroll 0 0;
+    background-repeat: no-repeat;
+    background-position: 1px 1px;
+	background-size: 99% 99%;
+}
+.dec_button:active {
+    background: url('../images/dec_active.png') no-repeat scroll 0 0;
+    background-repeat: no-repeat;
+    background-position: 1px 1px;
+	background-size: 99% 99%;
+}
+.inc_button {
+    background: url('../images/inc.png') no-repeat scroll 0 0;
+    background-repeat: no-repeat;
+    background-position: 1px 1px;
+	background-size: 99% 99%;
+}
+.inc_button:active {
+    background: url('../images/inc_active.png') no-repeat scroll 0 0;
+    background-repeat: no-repeat;
+    background-position: 1px 1px;
+	background-size: 99% 99%;
+}
+
+#B_digit10_inc_button {
+    top:0px;
+    left:1px;
+    height:41px;
+    width:41px;
+	position:absolute;
+	z-index: 9;
+}
+#B_digit10_dec_button {
+    top:40px;
+    left:1px;
+    height:41px;
+    width:41px;
+	position:absolute;
+	z-index: 9;
+}
+#B_digit1_inc_button {
+    top:0px;
+    left:65px;
+    height:41px;
+    width:41px;
+	position:absolute;
+	z-index: 9;
+}
+#B_digit1_dec_button {
+    top:40px;
+    left:65px;
+    height:41px;
+    width:41px;
+	position:absolute;
+	z-index: 9;
+}
+#S_digit1_inc_button {
+    top:0px;
+    left:145px;
+    height:41px;
+    width:41px;
+	position:absolute;
+	z-index: 9;
+}
+#S_digit1_dec_button {
+    top:40px;
+    left:145px;
+    height:41px;
+    width:41px;
+	position:absolute;
+	z-index: 9;
+}
+#S_digit10_inc_button {
+    top:0px;
+    left:210px;
+    height:41px;
+    width:41px;
+	position:absolute;
+	z-index: 9;
+}
+#S_digit10_dec_button {
+    top:40px;
+    left:210px;
+    height:41px;
+    width:41px;
+	position:absolute;
+	z-index: 9;
+}
+
+.fuel_manual_show {
+	color: #AAAAAA;
+    font-size: 40px;
+    text-align: center;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+#B_digit10 {
+    position: absolute;
+    left: 0px;
+}
+#B_digit1 {
+    position: absolute;
+    left: 65px;
+}
+#S_digit1 {
+    position: absolute;
+    left: 145px;
+}
+#S_digit10 {
+    position: absolute;
+    left: 210px;
+}
+
+#dialogWarningDiv {
+    width: 476px;
+    height: 266px;
+    top: 90px;
+    left: 157px;
+    position: absolute;
+	background: url('../images/dialog_warn.png') no-repeat scroll top right;
+	visibility: hidden;
+	z-index: 200;
+}
+#messageBody {
+    top: 65px;
+	left: 15px;
+    width: 90%;
+    height: 280px;
+    position: absolute;
+	color: #CCCCCC;
+    font-size: 20px;
+	text-align: center;
+	text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+	z-index: 1;
+}
+#warning_ok_button {
+    top:0px;
+    right:115px;
+    height:40px;
+    width:100px;
+	background: url('../images/dialog_btn.png') no-repeat scroll 0 0;
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	position:absolute;
+	line-height: 40px;
+	text-align: center;
+	color: #CCCCCC;
+	font-size: 20px;
+	z-index: 15;
+}
+#warning_ok_button:active {
+    background: url('../images/dialog_btn_active.png') no-repeat scroll 0 0;
+    background-repeat: no-repeat;
+    background-position: 1px 1px;
+	background-size: 99% 99%;
+}
+#warning_cancle_button {
+    top:0px;
+    right:5px;
+    height:40px;
+    width:100px;
+	background: url('../images/dialog_btn.png') no-repeat scroll 0 0;
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	position:absolute;
+	line-height: 40px;
+	text-align: center;
+	color: #CCCCCC;
+	font-size: 20px;
+	z-index: 15;
+}
+#warning_cancle_button:active {
+    background: url('../images/dialog_btn_active.png') no-repeat scroll 0 0;
+    background-repeat: no-repeat;
+    background-position: 1px 1px;
+	background-size: 99% 99%;
+}
+
+
+
+
+
+#dialogMainMenuDiv {
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0px;
+	background: url('../images/dialog_warn.png') no-repeat scroll top right;
+    position: absolute;
+	visibility: hidden;
+	z-index: 1;
+}
+#mainmenu_1 {
+    top:0px;
+    left:60px;
+    height:40px;
+    width:300px;
+	background: url('../images/dialog_btn.png') no-repeat scroll 0 0;
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	position:absolute;
+	line-height: 40px;
+	text-align: center;
+	color: #CCCCCC;
+	font-size: 18px;
+	z-index: 10;
+}
+#mainmenu_1:active {
+    background: url('../images/dialog_btn_active.png') no-repeat scroll 0 0;
+    background-repeat: no-repeat;
+    background-position: 1px 1px;
+	background-size: 99% 99%;
+}
+.actionFormField2 {
+    top: 70px;
+	right: 20px;
+    width: 100%;
+    height: 150px;
+	text-align: right;
+    position: absolute;
+	z-index: 3;
+}
+
+#mainmenu_2 {
+    top:50px;
+    left:60px;
+    height:40px;
+    width:300px;
+	background: url('../images/dialog_btn.png') no-repeat scroll 0 0;
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	position:absolute;
+	line-height: 40px;
+	text-align: center;
+	color: #CCCCCC;
+	font-size: 18px;
+	z-index: 10;
+}
+#mainmenu_2:active {
+    background: url('../images/dialog_btn_active.png') no-repeat scroll 0 0;
+    background-repeat: no-repeat;
+    background-position: 1px 1px;
+	background-size: 99% 99%;
+}
+#mainmenu_3div {
+	top:100px;
+    left:60px;
+    height:40px;
+    width:300px;
+	background: url('../images/dialog_btn.png') no-repeat scroll 0 0;
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	position:absolute;
+	z-index: 121;
+}
+#mainmenu_3div:active {
+	background: url('../images/dialog_btn_active.png') no-repeat scroll 0 0;
+    background-repeat: no-repeat;
+    background-position: 1px 1px;
+	background-size: 99% 99%;
+}
+#mainmenu_3{
+    position: absolute;
+    top:0px;
+    left:10px;
+    height:100%;
+    width:100%;
+	line-height: 40px;
+	text-align: center;
+	color: #CCCCCC;
+	font-size: 18px;
+    z-index: 150;
+}
+#MZDMeterTmplt1 .checked{
+    background: url('../images/check.png') no-repeat scroll left center transparent;
+}
+#MZDMeterTmplt1 .uncheck{
+    background: url('../images/uncheck.png') no-repeat scroll left center transparent;
+}
+#dialogRPMDiv{
+	width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0px;
+	background: url('../images/dialog_rpm.png') no-repeat scroll top right;
+    position: absolute;
+	visibility: hidden;
+	z-index: 3;
+}
+#RPM_digit1000_inc_button {
+    top:0px;
+    left:7px;
+    height:41px;
+    width:41px;
+	position:absolute;
+	z-index: 13;
+}
+#RPM_digit1000_dec_button {
+    top:40px;
+    left:7px;
+    height:41px;
+    width:41px;
+	position:absolute;
+	z-index: 13;
+}
+#RPM_digit100_inc_button {
+    top:0px;
+    left:73px;
+    height:41px;
+    width:41px;
+	position:absolute;
+	z-index: 13;
+}
+#RPM_digit100_dec_button {
+    top:40px;
+    left:73px;
+    height:41px;
+    width:41px;
+	position:absolute;
+	z-index: 13;
+}
+#RPM_digit10_inc_button {
+    top:0px;
+    left:138px;
+    height:41px;
+    width:41px;
+	position:absolute;
+	z-index: 13;
+}
+#RPM_digit10_dec_button {
+    top:40px;
+    left:138px;
+    height:41px;
+    width:41px;
+	position:absolute;
+	z-index: 13;
+}
+#RPM_digit1_inc_button {
+    top:0px;
+    left:203px;
+    height:41px;
+    width:41px;
+	position:absolute;
+	z-index: 13;
+}
+#RPM_digit1_dec_button {
+    top:40px;
+    left:203px;
+    height:41px;
+    width:41px;
+	position:absolute;
+	z-index: 13;
+}
+#RPM_digit1000 {
+    position: absolute;
+    left: 5px;
+}
+#RPM_digit100 {
+    position: absolute;
+    left: 71px;
+}
+#RPM_digit10 {
+    position: absolute;
+    left: 138px;
+}
+#RPM_digit1 {
+    position: absolute;
+    left: 203px;
+}
+
+
+#rpm_ok_button {
+    top:0px;
+    right:115px;
+    height:40px;
+    width:100px;
+	background: url('../images/dialog_btn.png') no-repeat scroll 0 0;
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	position:absolute;
+	line-height: 40px;
+	text-align: center;
+	color: #CCCCCC;
+	font-size: 15px;
+	z-index: 15;
+}
+#rpm_ok_button:active {
+    background: url('../images/dialog_btn_active.png') no-repeat scroll 0 0;
+    background-repeat: no-repeat;
+    background-position: 1px 1px;
+	background-size: 99% 99%;
+}

@@ -1,0 +1,36 @@
+/* MZD-AIO-TI USBAUDIOMOD CSS */
+/* CSS For USB Audio Mod */
+.NowPlaying4CtrlTitleIconFrameLeft {
+  position: inherit;
+  top: 15px;
+  left: 15px;
+  width: 50px;
+  height: 50px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.NowPlaying4CtrlTitle,
+.NowPlaying4CtrlTitleFull {
+  top: 15px!important;
+  left: 65px!important;
+}
+.NowPlaying4CtrlArtworkImageDiv {
+  top: 71px;
+  left: 595px;
+  width: 180px;
+  height: 180px;
+}
+.NowPlaying4CtrlArtworkImage {
+  max-width: 180px;
+  max-height: 180px;
+}
+.NowPlaying4CtrlArtworkImageBorder {
+  width: 180px;
+  height: 180px;
+}
+.NowPlaying4CtrlInfoBox,
+.NowPlaying4CtrlInfoBoxFull {
+  top: 71px;
+  left: 14px;
+}
+/* END AIO USBAUDIOMOD CSS */

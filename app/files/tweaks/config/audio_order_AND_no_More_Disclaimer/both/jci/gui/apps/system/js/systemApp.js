@@ -608,8 +608,8 @@ systemApp.prototype._initEntertainmentDataList = function()
     }
 
     items.push(
-        { appData : { appName : '',         isVisible : true,  audioSourceId : 'USB_B',     mmuiEvent : 'SelectUSBB'     }, text1Id : 'UsbAudioB',     disabled : true,   itemStyle : 'style01',   hasCaret: false },
         { appData : { appName : '',         isVisible : true,  audioSourceId : 'USB_A',     mmuiEvent : 'SelectUSBA'     }, text1Id : 'UsbAudioA',     disabled : true,   itemStyle : 'style01',   hasCaret: false },
+        { appData : { appName : '',         isVisible : true,  audioSourceId : 'USB_B',     mmuiEvent : 'SelectUSBB'     }, text1Id : 'UsbAudioB',     disabled : true,   itemStyle : 'style01',   hasCaret: false },
         { appData : { appName : 'auxin',    isVisible : true,  audioSourceId : 'AuxIn',     mmuiEvent : 'SelectAuxIn'    }, text1Id : 'AuxIn',         disabled : true,   itemStyle : 'style01',   hasCaret: false },
         { appData : { appName : 'btaudio',  isVisible : true,  audioSourceId : 'BTAudio',   mmuiEvent : 'SelectBTAudio'  }, text1Id : 'Bluetooth',     disabled : false,  itemStyle : 'style01',   hasCaret: false },
         { appData : { appName : 'fmradio',  isVisible : true,  audioSourceId : 'FMRadio',   mmuiEvent : 'SelectRadioFM'  }, text1Id : 'FmRadio',       disabled : true,   itemStyle : 'style01',   hasCaret: false },

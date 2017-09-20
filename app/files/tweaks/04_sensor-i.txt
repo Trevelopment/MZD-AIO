@@ -1,14 +1,14 @@
 # semi-transparent parking sensor graphics for the proximity sensors
 show_message "INSTALL SEMI-TRANSPARENT PARKING SENSOR GRAPHICS ..."
-log_message "=======*************** INSTALL SEMI-TRANSPARENT PARKING SENSOR GRAPHICS ... ***************======="
+log_message "====****** INSTALL SEMI-TRANSPARENT PARKING SENSOR GRAPHICS ... *****===="
 
 # Copy parking sensor images
 cp -a ${MYDIR}/config/transparent-parking-sensor/jci/nativegui/images/HorizontalSensors/*  /jci/nativegui/images/HorizontalSensors/
-log_message "===                     Copied /jci/nativegui/images/HorizontalSensors/*.png                    ==="
+log_message "===        Copied /jci/nativegui/images/HorizontalSensors/*.png       ==="
 cp -a ${MYDIR}/config/transparent-parking-sensor/jci/nativegui/images/VerticalSensors/*  /jci/nativegui/images/VerticalSensors/
-log_message "===                      Copied /jci/nativegui/images/VerticalSensors/*.png                     ==="
+log_message "===         Copied /jci/nativegui/images/VerticalSensors/*.png        ==="
 cp -a ${MYDIR}/config/transparent-parking-sensor/jci/nativegui/images/MiniView/*  /jci/nativegui/images/MiniView/
-log_message "===                         Copied /jci/nativegui/images/MiniView/*.png                          ==="
+log_message "===            Copied /jci/nativegui/images/MiniView/*.png            ==="
 
-log_message "===*** END INSTALLATION OF SEMI-TRANSPARENT PARKING SENSOR GRAPHICS FOR THE PROXIMITY SENSORS ***==="
+log_message "===*** END INSTALLATION OF SEMITRANSPARENT PARKING SENSOR GRAPHICS ***==="
 log_message " "

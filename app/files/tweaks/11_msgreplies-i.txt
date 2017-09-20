@@ -1,16 +1,21 @@
 # Remove Message Replies
 # To Apply This Tweak You Must Perform A Factory Reset After Installing
 show_message "REMOVE MESSAGE REPLIES ...\n\nNOTE: TO APPLY REMOVE MESSAGE REPLIES TWEAK\nYOU MUST PREFORM 'RESTORE ALL FACTORY SETTINGS'"
-log_message "======****** INSTALL REMOVE MESSAGE REPLIES ... *****====="
+log_message "========************ INSTALL REMOVE MESSAGE REPLIES ... **********======="
 
 if [ ! -e /jci/settings/configurations/blm_msg-system.xml.org ]
 	then
 		cp -a /jci/settings/configurations/blm_msg-system.xml /jci/settings/configurations/blm_msg-system.xml.org
-		log_message "=== Backup of /jci/settings/configurations/blm_msg-system.xml to blm_msg-system.xml.org ==="
+		log_message "===     Backup of /jci/settings/configurations/blm_msg-system.xml     ==="
 fi
 cp -a ${MYDIR}/config/message_replies/jci/settings/configurations/blm_msg-system.xml /jci/settings/configurations
-log_message "=== Copied /jci/settings/configurations/blm_msg-system.xml ==="
+log_message "===       Copied /jci/settings/configurations/blm_msg-system.xml      ==="
 sleep 6
-
-log_message "===**** END INSTALLATION OF REMOVE MESSAGE REPLIES ****==="
+# Remove input_filter to prevent bootloop on factory reset
+if grep -Fq "input_filter" /jci/sm/sm.conf
+then
+	sed -i '/input_filter/ d' /jci/sm/sm.conf
+	log_message "===              Clean obsolete input_filter in sm.conf               ==="
+fi
+log_message "=======******* END INSTALLATION OF REMOVE MESSAGE REPLIES ********======="
 log_message " "

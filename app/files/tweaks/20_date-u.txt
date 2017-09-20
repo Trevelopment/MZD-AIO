@@ -1,56 +1,56 @@
 # remove "Date_to_Statusbar mod by diginix"
 show_message "REMOVE STATUSBAR TWEAKS ..."
-log_message "=======*****    UNINSTALL STATUSBAR TWEAKS ...     ******========"
+log_message "=======*********    UNINSTALL STATUSBAR TWEAKS ...     **********========"
 
-if test -s /jci/gui/common/controls/Sbn/css/SbnCtrl.css.org
+if [ -e /jci/gui/common/controls/Sbn/css/SbnCtrl.css.org ]
 	then
-		cp /jci/gui/common/controls/Sbn/css/SbnCtrl.css.org /jci/gui/common/controls/Sbn/css/SbnCtrl.css
-		log_message "===         Restored backup from SbnCtrl.css.org              ==="
+		cp -a /jci/gui/common/controls/Sbn/css/SbnCtrl.css.org /jci/gui/common/controls/Sbn/css/SbnCtrl.css
+		log_message "===             Restored backup from SbnCtrl.css.org                  ==="
 	else
 		# "cp -a ${MYDIR}/config_org/date-to-statusbar_mod/jci/gui/common/controls/Sbn/css/SbnCtrl.css" /jci/gui/common/controls/Sbn/css/SbnCtrl.css
-		# log_message "=== No backup found, copied original SbnCtrl.css from SD card ==="
-		log_message "===            No backup found for SbnCtrl.css                ==="
+		# log_message "===      No backup found, copied original SbnCtrl.css from SD card    ==="
+		log_message "===                No backup found for SbnCtrl.css                    ==="
 fi
-if test -s /jci/gui/common/controls/StatusBar/css/StatusBarCtrl.css.org
+if [ -e /jci/gui/common/controls/StatusBar/css/StatusBarCtrl.css.org ]
 	then
-		cp /jci/gui/common/controls/StatusBar/css/StatusBarCtrl.css.org /jci/gui/common/controls/StatusBar/css/StatusBarCtrl.css
-		log_message "===       Restored backup from StatusBarCtrl.css.org          ==="
+		cp -a /jci/gui/common/controls/StatusBar/css/StatusBarCtrl.css.org /jci/gui/common/controls/StatusBar/css/StatusBarCtrl.css
+		log_message "===           Restored backup from StatusBarCtrl.css.org              ==="
 	else
 		# cp -a "${MYDIR}/config_org/date-to-statusbar_mod/jci/gui/common/controls/StatusBar/css/StatusBarCtrl.css" /jci/gui/common/controls/StatusBar/css/StatusBarCtrl.css
-		# log_message "=== No backup found, copied original StatusBarCtrl.css from SD card ==="
-		log_message "===          No backup found for StatusBarCtrl.css            ==="
+		# log_message "===    No backup found, copied original StatusBarCtrl.css from SD card    =="
+		log_message "===              No backup found for StatusBarCtrl.css                ==="
 fi
-if test -s /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js.org
+if [ -e /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js.org ]
 	then
-		cp /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js.org /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js
-		log_message "===       Restored backup from StatusBarCtrl.js.org           ==="
+		cp -a /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js.org /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js
+		log_message "===           Restored backup from StatusBarCtrl.js.org               ==="
 	else
-		log_message "=== No backup found, No changes were made to StatusBarCtrl.js ==="
+		log_message "===     No backup found, No changes were made to StatusBarCtrl.js     ==="
 fi
-if test -s /jci/gui/common/controls/StatusBar/images/StatusBarBg.png.org
+if [ -e /jci/gui/common/controls/StatusBar/images/StatusBarBg.png.org ]
 then
-	cp /jci/gui/common/controls/StatusBar/images/StatusBarBg.png.org /jci/gui/common/controls/StatusBar/images/StatusBarBg.png
-	log_message "===         Restored backup from StatusBarBg.png.org          ==="
+	cp -a /jci/gui/common/controls/StatusBar/images/StatusBarBg.png.org /jci/gui/common/controls/StatusBar/images/StatusBarBg.png
+	log_message "===           Restored backup from StatusBarBg.png.org                ==="
 else
 	cp -a "${MYDIR}/config_org/date-to-statusbar_mod/jci/gui/common/controls/StatusBar/images/StatusBarBg.png" /jci/gui/common/controls/StatusBar/images/
-	log_message "===       Copied original StatusBarBg.png from SD card        ==="
+	log_message "===          Copied original StatusBarBg.png from SD card             ==="
 fi
-if test -s /jci/gui/common/images/icons/IcnSbRoaming.png.org
+if [ -e /jci/gui/common/images/icons/IcnSbRoaming.png.org ]
 	then
-		cp /jci/gui/common/images/icons/IcnSbRoaming.png.org /jci/gui/common/images/icons/IcnSbRoaming.png
-		log_message "===        Restored backup from IcnSbRoaming.png.org          ==="
+		cp -a /jci/gui/common/images/icons/IcnSbRoaming.png.org /jci/gui/common/images/icons/IcnSbRoaming.png
+		log_message "===            Restored backup from IcnSbRoaming.png.org              ==="
 	else
 		cp -a "${MYDIR}/config_org/date-to-statusbar_mod/jci/gui/common/images/icons/IcnSbRoaming.png" /jci/gui/common/images/icons/
-		log_message "===      Copied original IcnSbRoaming.png from SD card        ==="
+		log_message "===           Copied original IcnSbRoaming.png from SD card           ==="
 fi
-if test -s /jci/gui/framework/js/Utility.js.org
+if [ -e /jci/gui/framework/js/Utility.js.org ]
 	then
-		cp /jci/gui/framework/js/Utility.js.org /jci/gui/framework/js/Utility.js
-		log_message "===          Restored backup from Utility.js.org              ==="
+		cp -a /jci/gui/framework/js/Utility.js.org /jci/gui/framework/js/Utility.js
+		log_message "===              Restored backup from Utility.js.org                  ==="
 	else
-		log_message "===    No backup found, no changes were made to Utility.js    ==="
+		log_message "===        No backup found, no changes were made to Utility.js        ==="
 fi
 rm -f /jci/gui/common/controls/Sbn/css/SbnCtrl.all.css
 
-log_message "====*****    END UNINSTALLATION OF STATUSBAR TWEAKS     *****===="
+log_message "=======********   END UNINSTALLATION OF STATUSBAR TWEAKS  ********======="
 log_message " "

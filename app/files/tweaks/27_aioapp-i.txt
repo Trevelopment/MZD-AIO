@@ -1,0 +1,79 @@
+#######################################################################
+# AIO Tweaks Headunit App
+# V0.2 By: Trezdog44
+#######################################################################
+show_message "INSTALLING AIO TWEAKS APP ..."
+log_message "=========************   INSTALL AIO TWEAKS APP   *************==========="
+
+if [ "${TESTBKUPS}" = "1" ]
+then
+  cp /jci/scripts/stage_wifi.sh "${MYDIR}/bakups/test/stage_wifi_aio-before.sh"
+  cp /jci/opera/opera_dir/userjs/additionalApps.json "${MYDIR}/bakups/test/additionalApps_aio_before.json"
+fi
+
+### Kills all WebSocket daemons
+pkill websocketd
+
+# Remove previous files
+rm -fr /jci/gui/apps/_aiotweaks/
+
+# Copies the additionalApps.js
+if [ ! -e /jci/opera/opera_dir/userjs/additionalApps.js ]
+then
+	cp -a ${MYDIR}/config/aio-app/jci/opera/opera_dir/userjs/additionalApps.js /jci/opera/opera_dir/userjs/
+	chmod 755 /jci/opera/opera_dir/userjs/additionalApps.js
+  log_message "===                    Copied  additionalApps.js                      ==="
+fi
+
+# It creates its own json file from scratch if the file does not exists
+if [ ! -e /jci/opera/opera_dir/userjs/additionalApps.json ]
+then
+	cp -a ${MYDIR}/config/aio-app/jci/opera/opera_dir/userjs/additionalApps.json /jci/opera/opera_dir/userjs/
+	# echo "[" > /jci/opera/opera_dir/userjs/additionalApps.json
+	# echo "]" >> /jci/opera/opera_dir/userjs/additionalApps.json
+	chmod 755 /jci/opera/opera_dir/userjs/additionalApps.json
+  log_message "===                   Created additionalApps.json                     ==="
+fi
+
+# Copies the content of the addon-common folder
+cp -a ${MYDIR}/config/aio-app/jci/gui/addon-common/ /jci/gui/
+chmod 755 -R /jci/gui/addon-common/
+log_message "===                    Copied addon-common folder                     ==="
+
+sed -i '/AIO/d' /jci/scripts/stage_wifi.sh
+sed -i '/--port=9997/d' /jci/scripts/stage_wifi.sh
+sed -i '/--passenv/d' /jci/scripts/stage_wifi.sh
+
+echo -e '\n\n\n### AIO Tweaks App' >> /jci/scripts/stage_wifi.sh
+echo -e '\n/jci/gui/addon-common/websocketd --passenv $(env | grep XDG_ | sed "s/=.*$//g" | tr "\\n" ",")PATH,SHELL --port=9997 sh &' >> /jci/scripts/stage_wifi.sh
+chmod 755 /jci/scripts/stage_wifi.sh
+
+# delete empty lines
+sed -i '/^ *$/ d' /jci/scripts/stage_wifi.sh
+sed -i '/#!/ a\ ' /jci/scripts/stage_wifi.sh
+log_message "===           Set Websocketd for AIO in Stage_wifi.sh                 ==="
+
+
+# Call to the function to populate the json
+add_app_json "_aiotweaks" "AIO Tweaks"
+
+cp -a ${MYDIR}/config/aio-app/jci/opera/opera_dir/userjs/aio-startup.js /jci/opera/opera_dir/userjs/
+cp -a ${MYDIR}/config/aio-app/jci/gui/apps/* /jci/gui/apps/
+cp -a ${MYDIR}/config/aio-app/data_persist/* /tmp/mnt/data_persist/
+chmod 755 -R /jci/gui/apps/_aiotweaks/
+chmod 755 -R /tmp/mnt/data_persist/dev/system_restore/
+chmod 755 /jci/scripts/jci-fw.sh
+chmod 755 /jci/scripts/jci-wifiap.sh
+log_message "===                  Copied Files For AIO Tweak App                   ==="
+
+# patch systemApp.js if needed for v59+ app list
+if ! grep -Fq "_aiotweaks" /jci/gui/apps/system/js/systemApp.js && [ ${APP_PATCH_59} -eq 0 ]
+then
+  APP_PATCH_59=1
+  cp ${MYDIR}/config/patch59/systemApp.js /jci/gui/apps/system/js/
+  log_message "===                  Applied App List Patch For V59+                  ==="
+fi
+
+
+log_message "======********** END INSTALLATION OF AIO TWEAKS APP **************======="
+log_message " "

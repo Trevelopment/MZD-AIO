@@ -3,7 +3,7 @@
 # MZD-AIO-TI By: Trezdog44 - Trevelopment.com
 
 show_message "===****** UNINSTALLING CASDK ******==="
-log_message "==========****** BEGIN UNINSTALLING CASDK ******==========="
+log_message "==========************ BEGIN UNINSTALLING CASDK ************==========="
 log_message " "
 
 # reset storage

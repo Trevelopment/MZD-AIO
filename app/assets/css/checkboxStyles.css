@@ -667,6 +667,9 @@ input[type=color]::-webkit-color-swatch {
 	font-size: 21px;
 	min-width: 20px;
 }
+#sidePanel .aa-side [class*="icon-star"]:before {
+	font-size: 18px;
+}
 #sidePanel label {
 	text-align: left;
 	text-overflow: ellipsis;

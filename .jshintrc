@@ -1,0 +1,38 @@
+{
+	"boss": true,
+	"curly": true,
+	"eqeqeq": true,
+	"eqnull": true,
+	"expr": true,
+	"immed": true,
+	"noarg": true,
+	"quotmark": false,
+	"undef": true,
+	"unused": true,
+	"sub": true,
+	"latedef": false,
+	"esversion": 6,
+	"asi": true,
+	"unused": false,
+	"lastsemic": true,
+	"jquery": true,
+	"node": true,
+
+	"globals": {
+		"$": true,
+		"window": true,
+		"document": true,
+		"angular": true,
+		"langObj": true,
+		"JSON": true,
+		"app": true,
+		"persistantData": true,
+		"bootbox": true,
+		"ipc": true,
+		"settings": true,
+		"define": true,
+		"module": true,
+		"require": true,
+		"console": true
+	}
+}

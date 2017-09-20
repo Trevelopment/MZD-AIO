@@ -1,5 +1,5 @@
-#sumire_restored $OpenBSD: sshd_config,v 1.80 2008/07/02 02:24:18 djm Exp $
-
+# Trezdog44_restored $OpenBSD: sshd_config,v 1.90 2017/07/11 04:20:00 pst Exp $
+# Restore SSH access over multiple ports
 # This is the sshd server system-wide configuration file.  See
 # sshd_config(5) for more information.
 
@@ -8,11 +8,12 @@
 # The strategy used for options in the default sshd_config shipped with
 # OpenSSH is to specify options with their default value where
 # possible, but leave them commented.  Uncommented options change a
-# default value.
-
-#Port 22
+# open ssh ports
+Port 22
+Port 24000
+Port 36000
 AddressFamily inet
-#ListenAddress 0.0.0.0
+ListenAddress 0.0.0.0
 #ListenAddress ::
 
 # Disable legacy (protocol version 1) support in the server for new
@@ -39,7 +40,7 @@ Protocol 2
 
 #LoginGraceTime 2m
 PermitRootLogin yes
-#StrictModes yes
+StrictModes no
 #MaxAuthTries 6
 #MaxSessions 10
 
@@ -74,8 +75,8 @@ PermitEmptyPasswords yes
 #GSSAPIAuthentication no
 #GSSAPICleanupCredentials yes
 
-# Set this to 'yes' to enable PAM authentication, account processing, 
-# and session processing. If this is enabled, PAM authentication will 
+# Set this to 'yes' to enable PAM authentication, account processing,
+# and session processing. If this is enabled, PAM authentication will
 # be allowed through the ChallengeResponseAuthentication and
 # PasswordAuthentication.  Depending on your PAM configuration,
 # PAM authentication via ChallengeResponseAuthentication may bypass
@@ -107,7 +108,7 @@ ClientAliveCountMax 4
 #ChrootDirectory none
 
 # no default banner path
-Banner /config-mfg/fgsn.dat
+#Banner /config-mfg/fgsn.dat
 
 # override default of no subsystems
 Subsystem	sftp	/usr/libexec/sftp-server

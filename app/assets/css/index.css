@@ -92,14 +92,14 @@ i[class*="icon-"] {
 	border-bottom: 1px solid #000;
 	top: 0;
 	box-shadow: 0px 2px 5px 2.2px rgba(100, 100, 100, 0.30);
-	zoom: document;
+	zoom: 1;
 }
 header,
 footer,
 #header,
 .w3-sidenav,
 .w3-navbar {
-	zoom: document;
+	zoom: 1;
 }
 .w3-navbar * {
 	font-family: Verdana,sans-serif;
@@ -108,7 +108,7 @@ footer,
 	width:100%;
 }
 .showNav ~.ng-scope .w3-container.mainContainer .twkfltr {
-	top: 55px;
+	top: 50px;
 }
 .showNav ~.ng-scope div#header,
 .showNav ~.ng-scope #notices,
@@ -116,7 +116,7 @@ footer,
 .showNav ~.ng-scope header span#openNav,
 .showNav ~.ng-scope header span#openSidePanel,
 .showNav ~.ng-scope .w3-container.mainContainer {
-	margin-top: 35px;
+	margin-top: 30px;
 }
 .showNav ~ nav#mySidenav {
 	top: 25px;
@@ -246,7 +246,7 @@ nav#mySidenav {
 	top: 0;
 }
 #header {
-	zoom:document;
+	zoom: 1;
 	position:fixed;
 	top:0;
 	height:80px;
@@ -299,6 +299,15 @@ header h1 button {
 	width:450px;
 	max-width:50%;
 }
+div#fullSystemRestore ~ #helpDrop {
+	top: 300px;
+	z-index: 55555;
+	margin: auto;
+	left: 25%;
+}
+#fullSystemRestore ~ #helpDrop #helpDropMenu {
+	margin-bottom:100px;
+}
 .helpmsg {
 	padding: 5px;
 }
@@ -347,6 +356,14 @@ span.test-panel-toggle,
 	right: 0;
 	left: 0;
 	margin: auto;
+}
+.copyleft {
+	font-weight:500
+}
+.copyleft .symbol {
+	display:inline-block;
+	transform: rotate(180deg);
+	font-size: 21px;
 }
 footer .contact-form {
 	right: 10px;
@@ -463,6 +480,9 @@ input[type=checkbox] {
 .w3-table th {
 	text-align: center!important;
 	margin: 0px!important;
+}
+#options tr:last-child {
+	/*width: 100%;*/
 }
 .w3-text {
 	position: fixed;
@@ -604,8 +624,11 @@ nav#mySidenav span[class^="icon-"] {
 	width: 39.5%;
 	margin-left: 2%;
 	font-size: 0.8em;
-	min-height: 440px;
+	min-height: 480px;
 	margin-top:0;
+}
+.sidePanel .w3-btn {
+	text-overflow:ellipsis;
 }
 .sidePanel.adv {
 	min-height: 480px;
@@ -732,15 +755,12 @@ width: 100%;
 .bootbox-form .checkbox input[type=radio] {
 	visibility: visible;
 }
+textarea.bootbox-input-textarea.form-control {
+	min-height: 105px;
+}
 .introjs-hint {
 	z-index:99999;
 	top: 550px!important;
-}
-button.btn.btn-danger {
-	width: 33%;
-}
-button.btn.btn-success {
-	width: 66%;
 }
 #progBar {
 	white-space: nowrap;
@@ -802,6 +822,9 @@ div#helpMenuTop, div#helpMenuTop .w3-third {
 	visibility: visible;
 	margin-right: 10px;
 }
+.finishedMessage .modal-dialog {
+	max-width: 450px;
+}
 .tooltip > .tooltip-inner {
 	max-width:100%!important;
 	padding: 5px;
@@ -855,6 +878,12 @@ label.w3-validate + .tooltip > .tooltip-inner {
 	width: 800px!important;
 }
 /* DARK MODE */
+.w3-black  .w3-dropdown-content a {
+	color: #000;
+}
+.w3-black #helpMenuTop a {
+	color: #fff;
+}
 .w3-black h1 small:not([class*="icon"]) {
 	color: #ccc;
 }
@@ -890,6 +919,10 @@ body.w3-black {
 .w3-black a {
 	color: #fff;
 }
+.w3-black  .w3-dropdown-content .accordion.help-messages a,
+.w3-black .accordion-content .w3-panel .w3-btn {
+	color: #fff;
+}
 .tweak-inst-title {
 	font-family: "stencil";
 }
@@ -920,7 +953,7 @@ body.w3-black {
 .bootbox div#tweak-install-list:hover li {
 	text-shadow: 0 0 0 #fff;
 }
-.bootbox div#tweak-install-list ::selection {
+.bootbox div#tweak-install-list::selection {
 	text-shadow: none;
 	color: #ff4fc8;
 	background: #000;
@@ -934,11 +967,41 @@ body.w3-black {
 }
 .modal-content,.bootbox-body {
 	color:#000;
+	user-select: none;
+	cursor: default;
 }
+.bootbox-confirm .modal-footer {
+	text-align: right;
+}
+.modal-footer button {
+	font-size: 18px;
+}
+.copytoUSB1 .modal-footer button,
+.bootbox-confirm .modal-footer button {
+	min-width: 35%;
+}
+.copytoUSBMulti .modal-footer button {
+	min-width: 25%;
+}
+.bootbox-confirm .modal-footer button.btn.btn-danger,
+button.btn.btn-danger {
+	min-width: 33%;
+}
+.bootbox-confirm .modal-footer button.btn.btn-success,
+button.btn.btn-success {
+	width: 66%;
+}
+.compFinishBox,
+.confirmAutorunCompile .modal-footer,
+.bootbox-alert .modal-footer,
 .modal-dialog.modal-sm,
 .confirmCompile .modal-title,
 .modal-sm .modal-footer {
 	text-align: center;
+}
+.compFinishBox .modal-footer button,
+.bootbox-alert .modal-footer button[data-bb-handler="ok"] {
+	width: 100%;
 }
 .modal-dialog.modal-sm {
 	font-weight: 900;
@@ -947,8 +1010,12 @@ body.w3-black {
 .bootbox-body .w3-center h3 button {
 	letter-spacing:2.4px;
 	font-weight:600;
-	width: 350px;
+	min-width: 350px;
 	text-overflow: ellipsis;
+}
+.compFinishBox .bootbox-body {
+	font-weight: bold;
+	font-size: 18px;
 }
 .icon-cog3:before {
 	content: "\e913";
@@ -1047,14 +1114,14 @@ a:active {
 ::-webkit-scrollbar-track,
 ::-webkit-scrollbar-thumb:window-inactive {
 	color: transparent;
-	zoom: reset;
+	zoom: 1;
 }
 
 .featherlight .featherlight-content:hover::-webkit-scrollbar-track,
 ::-webkit-scrollbar-track:hover {
 	-webkit-box-shadow: inset 2px 0px 10px rgba(0,0,0,.5);
 	-webkit-border-radius: 0px;
-	border-radius: 8px;
+	border-radius: 0px;
 }
 ::-webkit-scrollbar-thumb:window-inactive:hover {
 	background: rgba(255,0,0,.61);
@@ -1063,8 +1130,8 @@ a:active {
 /* Handle */
 .featherlight .featherlight-content:hover::-webkit-scrollbar-thumb,
 ::-webkit-scrollbar-thumb:hover {
-	-webkit-border-radius: 20px;
-	border-radius: 8px;
+	/*-webkit-border-radius: 20px;
+	border-radius: 8px;*/
 	background: rgba(20,50,150,.81);
 	-webkit-box-shadow: inset 0px 0px 8px 1px rgba(0, 255, 204,.8);
 	cursor: pointer;
@@ -1084,7 +1151,7 @@ textarea::-webkit-scrollbar-button:single-button {
 }
 .showNav::-webkit-scrollbar-button:single-button:start {
 	display: block;
-	height: 115px;
+	height: 110px;
 	background: linear-gradient(#f1f1f1 38px,#000 38px,#009688 39px);
 	box-shadow: 0px 3px 5px 1px rgba(100, 100, 100, 0.70);
 }
@@ -1130,6 +1197,10 @@ div#thumbs::-webkit-scrollbar-thumb:hover {
 .featherlight-content::-webkit-scrollbar-button:single-button,
 div#thumbs::-webkit-scrollbar-button:single-button {
 	display:none;
+}
+.aio-help::-webkit-scrollbar-button:single-button:start,
+.aio-help::-webkit-scrollbar-button:single-button:end{
+	display:none
 }
 div#thumbs {
 	cursor: pointer;
@@ -1189,8 +1260,12 @@ input:focus {
 .w3-half.extraUIRange {
 	width: 49.999%!important;
 }
-.w3-half.side-colors {
+.side-colors {
 	width:49.987%!important
+}
+#customThemeOps {
+	max-height: none;
+	height: auto;
 }
 .modal small {
 	color: #000;
@@ -1297,6 +1372,20 @@ a.w3-btn:focus {
 	left: 0;
 	margin: auto;
 }
+tr#uistyle-mainlabel td,
+tr#uistyle-altlayout td {
+	width: 500px;
+}
+tr#uistyle-mainlabel td input[type="color"] {
+	display:none;
+	width: 24%;
+}
+tr#uistyle-mainlabel.color td select {
+	width:72%;
+}
+tr#uistyle-mainlabel.color td input[type="color"] {
+	display:inline;
+}
 /* @media Queries */
 @media only screen and (min-width: 801px) {
 	div#sidePanel {
@@ -1358,7 +1447,7 @@ a.w3-btn:focus {
 			z-index: 99500;
 		}
 		.twkfltr input {
-			width: 150px!important;
+			width: 25px!important;
 			background: transparent;
 			transition: 2s ease-in 2s;
 		}
@@ -1379,17 +1468,47 @@ a.w3-btn:focus {
 				font-size: 16px;
 			}
 			#mainOptions, #options, .sidePanel {
-				letter-spacing: 1.5px;
+				letter-spacing: 1.1px;
+			}
+			.sidePanel .communicationFile {
+				letter-spacing: normal;
 			}
 			.sidePanel {
 				width:49%;
 				min-height: 479px;
 			}
-			#sidePanel>ul>li {
-			}
 			#sidePanel td {
 				padding: 6px;
 				vertical-align: -webkit-baseline-middle;;
+			}
+			@media only screen and (min-width: 1800px) {
+				.w3-half.uistyle {
+					width: 33.333%
+				}
+				.w3-quarter.uistyle {
+					width: 16.6666666%;
+				}
+				.w3-half.mainmenuoptions,
+				.w3-half.side-colors {
+					width: 24.999%!important;
+				}
+				.w3-col.mainmenuoptions {
+					width:49.999%;
+				}
+				.bgrotator.w3-half {
+					width: 30%;
+					white-space: nowrap;
+				}
+				.bgrotator-button.w3-half {
+					width: 20%;
+				}
+				tr#customThemeOps {
+					max-width:50%;
+					max-height:40px!important;
+				}
+				#custOptions15 .w3-third {
+					width: 20%;
+				}
 			}
 		}
 	}
@@ -1448,6 +1567,10 @@ a.w3-btn:focus {
 	}
 	#options tr:last-child {
 		padding-bottom: 3px;
+	}
+	#update-available {
+		width: 1px;
+		white-space: nowrap;
 	}
 	@media (max-width:1050px) {
 		.w3-twothird,
@@ -1582,11 +1705,11 @@ a.w3-btn:focus {
 	border-bottom: 1px dashed #499aff;
 }
 a#update-available {
-    white-space: nowrap;
-    max-width: 1px;
+	white-space: nowrap;
+	max-width: 1px;
 }
-.w3-navbar li a#update-available:hover {
-    background-color: #f1f1f2;
+.w3-navbar li#update-available:hover {
+	background-color: #f1f1f2;
 }
 div#changelog td {
 	border: 2px dotted #000;
@@ -1651,4 +1774,145 @@ a.handle:active {
 }
 .featherlight .featherlight-close-icon:hover {
 	background: rgba(255,255,255,.8);
+}
+.featherlight.myStance .featherlight-content {
+	max-width: 90%;
+}
+.featherlight.myStance h1.featherlight-inner {
+	white-space:normal;
+	font-size: 1.6rem;
+}
+.featherlight.myStance h2.featherlight-inner {
+	text-align: center;
+	font-size: 1.2rem;
+}
+.featherlight.myStance h3.featherlight-inner {
+	text-align: center;
+	font-size: 1.1rem;
+}
+.featherlight.myStance h4.featherlight-inner {
+	text-align: justify;
+	font-size: 1rem;
+}
+.featherlight.myStance p.featherlight-inner {
+	text-align: justify;
+}
+.featherlight.myStance a {
+	color: #00006b;
+	text-decoration:underline;
+}
+.featherlight.myStance b.featherlight-inner {
+	display: initial;
+}
+.featherlight.myStance {
+	user-select:none;
+}
+.featherlight.autoHelpBox .featherlight-content {
+	width: 80%;
+	max-width: 800px;
+}
+#autoHelp {
+  margin-top: 125px;
+  min-width: 600px;
+}
+.featherlight.autoHelpBox .featherlight-content #autoHelp {
+	margin-top: 0;
+}
+span.icon-star.featherlight-inner {
+	display: inline;
+}
+.confirmAutorunCompile label {
+	font-size: 20px;
+	font-weight: 500;
+}
+.wifiSSIDprompt .modal-footer button,
+.confirmAutorunCompile .modal-footer button {
+	width: 49%;
+}
+.bootbox-form .checkbox input[type=checkbox] {
+	margin-right: 10px;
+}
+#autoHelp div {
+	margin-bottom: 21px;
+}
+#sidePanel .w3-select {
+	padding: 6px 0;
+}
+input#checkAutorun {
+	top: 6px;
+}
+label.w3-label.checkAutorun {
+	outline: 2px dashed #0e2763;
+	outline-offset: 4px;
+}
+a.autorunHelp {
+	position: absolute;
+	top: 112px;
+	right: 50px;
+	z-index: 1000;
+	font-size: 36px;
+}
+#header .w3-label {
+	letter-spacing: normal;
+	color: #000000;
+	font-size: 20px;
+	vertical-align: middle;
+}
+input#id7Recovery {
+	top:4px;
+}
+.id7Recovery.w3-dropdown-content{
+	min-width: 190px;
+}
+.id7Recovery .w3-label {
+	top: -10px;
+}
+.mazda .id7Recovery {
+	text-transform: none;
+}
+.aio-help {
+	max-height:500px;
+	overflow-y: scroll;
+}
+.featherlight-content .anonCloseBtn,
+#sidePanel a.anonCloseBtn {
+	float: right;
+	font-size: 40px;
+	line-height: 40px;
+	border: none;
+}
+#sidePanel div#anonce {
+	border: 2px dashed;
+	padding: 20px;
+	outline-offset: -10px;
+	outline: 2px dotted #ff0000;
+}
+.featherlight-content .anonCloseBtn {
+	display: none;
+}
+button.btn.btn-default[data-bb-handler="cancel"] {
+	background-color:#ff8e8e;
+	border-color:#ff0000;
+}
+button.btn.btn-default[data-bb-handler="cancel"]:hover {
+	color: #fff;
+	background-color: #88302c;
+	border-color: #600eff;
+}
+button.btn.btn-primary[data-bb-handler="confirm"] {
+	border-color:#000;
+}
+button.btn.btn-primary[data-bb-handler="confirm"]:hover {
+	background-color: #009464;
+	color: #000;
+	border-color: #fbff03;
+}
+label.w3-label.checkAutorun {
+	position: absolute;
+	top: 125px;
+	right: 15px;
+	font-size: 20px;
+	color: #000;
+	text-align: center;
+	z-index: 99;
 }

@@ -1,17 +1,17 @@
 # add spwap file for media player
 show_message "ADD SWAP FILE TO USB DRIVE ..."
-log_message "=========******   INSTALL SWAP FILE ...  ******==========="
+log_message "=========**************   INSTALL SWAP FILE ...  *************==========="
 
-log_message "===          Adding Swap File To USB Drive             ==="
+log_message "===                  Adding Swap File To USB Drive                    ==="
 cat /proc/meminfo >> "${MYDIR}/AIO_log.txt"
 mount -o rw,remount ${MYDIR}
 mv ${MYDIR}/config/swapfile/swapfile ${MYDIR}
 sleep 3
 mkswap ${MYDIR}/swapfile
 swapon ${MYDIR}/swapfile
-log_message "===           Swapfile added to USB drive              ==="
+log_message "===                   Swapfile added to USB drive                     ==="
 cat /proc/meminfo >> "${MYDIR}/AIO_log.txt"
-log_message "=== Add commands for speedometer and media player to stage_wifi.sh ==="
+log_message "===   Add commands for speedometer and media player to stage_wifi.sh  ==="
 # add commands for speedometer and media player to stage_wifi.sh
 cp /jci/scripts/stage_wifi.sh ${MYDIR}/bakups/test/stage_wifi_swap-before.sh
 # first delete all
@@ -31,14 +31,14 @@ sed -i '/ break/d' /jci/scripts/stage_wifi.sh
 sed -i '/	fi/d' /jci/scripts/stage_wifi.sh
 sed -i '/ fi/d' /jci/scripts/stage_wifi.sh
 sed -i '/done/d' /jci/scripts/stage_wifi.sh
-log_message "=== First deleted modifications from /jci/scripts/stage_wifi.sh ==="
+log_message "===    First deleted modifications from /jci/scripts/stage_wifi.sh    ==="
 
 # add commands for swap file to stage_wifi.sh
-log_message "===      Add commands for swap file to stage_wifi.sh   ==="
+log_message "===             Add commands for swap file to stage_wifi.sh           ==="
 if grep -Fq 'for USB in a b c d e' /jci/scripts/stage_wifi.sh
 then
 	echo "exist"
-	log_message "=== Modifications for swapfile already exists in /jci/scripts/stage_wifi.sh ==="
+	log_message "=== Modifications for swapfile already in /jci/scripts/stage_wifi.sh  ==="
 else
 	echo '### find swap file for media player v2' >> /jci/scripts/stage_wifi.sh
 	echo '	sleep 5' >> /jci/scripts/stage_wifi.sh
@@ -56,11 +56,11 @@ else
 	echo '	done' >> /jci/scripts/stage_wifi.sh
 	sleep 1
 	sed -i '/find swap file for media player v2/ i\ ' /jci/scripts/stage_wifi.sh
-	log_message "=== Modifications for swapfile added to /jci/scripts/stage_wifi.sh ==="
+	log_message "===  Modifications for swapfile added to /jci/scripts/stage_wifi.sh   ==="
 fi
 cp /jci/scripts/stage_wifi.sh ${MYDIR}/bakups/test/stage_wifi_swap-after.sh
-log_message "===           Swap File Added To USB Drive             ==="
-log_message "===               Deleting Tweak Files                 ==="
+log_message "===                   Swap File Added To USB Drive                    ==="
+log_message "===                       Deleting Tweak Files                        ==="
 rm -fr ${MYDIR}/config
 rm -fr ${MYDIR}/config_org
 rm -f ${MYDIR}/cmu_dataretrieval.up
@@ -69,5 +69,5 @@ rm -f ${MYDIR}/jci-autoupdate
 rm -f ${MYDIR}/tweaks.sh
 rm -fr ${MYDIR}/VehDataPull
 
-log_message "======******* END INSTALLATION OF SWAP FILE ********======"
+log_message "===========********** END INSTALLATION OF SWAP FILE **********==========="
 log_message " "

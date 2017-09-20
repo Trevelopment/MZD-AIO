@@ -1,17 +1,17 @@
 # FuelConsumptionTweak
 show_message "UNINSTALL USB AUDIO MOD ..."
-log_message "=====******  UNINSTALL USB AUDIO MOD ... *****====="
+log_message "==========*************  UNINSTALL USB AUDIO MOD ... ************=========="
 
 # Backups
 if [ -e /jci/gui/common/controls/NowPlaying4/js/NowPlaying4Ctrl.js.org ]
 then
 	cp -a /jci/gui/common/controls/NowPlaying4/js/NowPlaying4Ctrl.js.org /jci/gui/common/controls/NowPlaying4/js/NowPlaying4Ctrl.js
-	log_message "=== /jci/gui/common/controls/NowPlaying4/js/NowPlaying4Ctrl.js Restored from backup  ==="
+	log_message "===              NowPlaying4Ctrl.js Restored from backup              ==="
 fi
 if [ -e /jci/gui/apps/usbaudio/js/usbaudioApp.js.org ]
 then
 	cp -a /jci/gui/apps/usbaudio/js/usbaudioApp.js.org /jci/gui/apps/usbaudio/js/usbaudioApp.js
-	log_message "=== /jci/gui/apps/usbaudio/js/usbaudioApp.js Restored from backup                    ==="
+	log_message "===    /jci/gui/apps/usbaudio/js/usbaudioApp.js Restored from backup  ==="
 fi
 
 # Remove CSS
@@ -19,15 +19,15 @@ remove_aio_css /jci/gui/common/controls/NowPlaying4/css/NowPlaying4Ctrl.css USBA
 
 rm -f /jci/gui/common/images/icons/IcnUmpUSBMenu_Ds.png
 rm -f /jci/gui/common/images/icons/IcnUmpUSBMenu_En.png
-log_message "===             Deleted USB icon images                            ==="
+log_message "===                      Deleted USB icon images                      ==="
 
 if [ "${KEEPBKUPS}" = "1" ]
 then
 	cp /jci/gui/common/controls/NowPlaying4/js/NowPlaying4Ctrl.js. "${MYDIR}/bakups/"
 	cp /jci/gui/common/controls/NowPlaying4/css/NowPlaying4Ctrl.css "${MYDIR}/bakups/"
 	cp /jci/gui/apps/usbaudio/js/usbaudioApp.js "${MYDIR}/bakups/"
-	log_message "===            Copied Backup Files to ${MYDIR}/bakups/             ==="
+	log_message "===              Copied Backup Files to ${MYDIR}/bakups/              ==="
 fi
 
-log_message "===****         END UNINSTALLATION OF USB AUDIO MOD            ****==="
+log_message "===******         END UNINSTALLATION OF USB AUDIO MOD            *******==="
 log_message " "

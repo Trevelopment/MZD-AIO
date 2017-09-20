@@ -33,7 +33,7 @@ _videoplayerApp.prototype.appInit = function()
 
     //Context table
     //@formatter:off
-	
+
     this._contextTable = {
         "Start": { // initial context must be called "Start"
             "sbName": "Video Player",
@@ -58,7 +58,7 @@ _videoplayerApp.prototype.appInit = function()
  */
 _videoplayerApp.prototype._StartContextReady = function ()
 {
-    // do anything you want here
+  framework.common.setSbDomainIcon("apps/_videoplayer/templates/VideoPlayer/images/icon.png");
 };
 
 /**

@@ -1,0 +1,7 @@
+<div id="autoHelp">
+  <div id="id7Help"><b>ID7_recovery scripts -</b> A collection of autorun scripts by id7, made for recovering from a catastrophic event that results in the loss of SSH access and/or the ability to install tweaks with MZD-AIO-TI.  Install recovery pack BEFORE updating firmware and it will automatically detect and restore SSH access if it is lost for any reason.
+  </div>
+  <div id="autoWifiHelp"><b>Auto WiFi AP -</b> Starts the WiFi AP on boot runs a DHCP server. You <b>MUST CHANGE VALUES 'YourSSID' and 'YourSSIDPassword' to run the wifi app!</b>  The app will not start if the values are not changed.  <br />Parameters of AP: 801.11G, channel=9, WPA2, AES is fixed but can be modified at line ~40 of jci-wifiap.sh<br>CMU IP: 192.168.53.1  open SSH ports 22, 24000, 36000 </div>
+  <div id="autoADB"><b>Auto ADB -</b> Starts SSH over ADB via port 2222.  You must use an Android device with 'Android Debugging' enabled in 'Developer Options' to make this SSH connection over USB or WiFi. Over USB connect using shell command SSH --host=localhost --port=2222 or SSH client localhost:2222 (or 127.0.0.1:2222)</div>
+  <div id="dryrun"><b>Dryrun Script -</b> This script is used to test and confirm the autorun installation is working properly.  It is recommended to use this after installing autorun for the first time.  This script (run.sh) can be used by itself or it can be moved to an SD card or another USB drive to test after the installation is complete.</div>
+</div>

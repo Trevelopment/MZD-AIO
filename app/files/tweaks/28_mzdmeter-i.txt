@@ -1,0 +1,77 @@
+#######################################################################
+# MZD Meter v1.007
+#######################################################################
+show_message "INSTALLING MZD METER ..."
+log_message "=========***************   INSTALL MZD METER   ***************==========="
+
+if [ "${TESTBKUPS}" = "1" ]
+then
+  cp /jci/scripts/stage_wifi.sh "${MYDIR}/bakups/test/stage_wifi_mzd-before.sh"
+  cp /jci/opera/opera_dir/userjs/additionalApps.json "${MYDIR}/bakups/test/additionalApps_mzd_before.json"
+fi
+
+### Kills all WebSocket daemons
+pkill websocketd
+
+# Remove previous files
+rm -fr /jci/gui/apps/_mzdmeter/ /paa/
+
+# Copies the additionalApps.js
+if [ ! -e /jci/opera/opera_dir/userjs/additionalApps.js ]
+then
+	cp -a ${MYDIR}/config/mzdmeter/jci/opera/opera_dir/userjs/additionalApps.js /jci/opera/opera_dir/userjs/
+	chmod 755 /jci/opera/opera_dir/userjs/additionalApps.js
+  log_message "===                     Copied additionalApps.js                      ==="
+fi
+
+# It creates its own json file from scratch if the file does not exists
+if [ ! -e /jci/opera/opera_dir/userjs/additionalApps.json ]
+then
+	# cp -a ${MYDIR}/config/mzdmeter/jci/opera/opera_dir/userjs/additionalApps.json /jci/opera/opera_dir/userjs/
+	echo "[" > /jci/opera/opera_dir/userjs/additionalApps.json
+	echo "]" >> /jci/opera/opera_dir/userjs/additionalApps.json
+	chmod 755 /jci/opera/opera_dir/userjs/additionalApps.json
+  log_message "===                   Created additionalApps.json                     ==="
+fi
+# Add startup file check for speedometer app too
+if [ -e /jci/gui/apps/_speedometer/js/speedometer.js ]
+then
+  cp -a ${MYDIR}/config/mzdmeter/jci/opera/opera_dir/userjs/speedometer-startup.js /jci/opera/opera_dir/userjs/
+  log_message "===              Speedometer installed copied startup file            ==="
+else
+  cp -a ${MYDIR}/config/mzdmeter/jci/opera/opera_dir/userjs/mzdmeter-startup.js /jci/opera/opera_dir/userjs/speedometer-startup.js
+  log_message "===                   Copied mzdmeter startup file                    ==="
+fi
+# Copies the content of the addon-common folder
+cp -a ${MYDIR}/config/mzdmeter/jci/gui/addon-common/ /jci/gui/
+chmod 755 -R /jci/gui/addon-common/
+log_message "===                     Copied addon-common folder                    ==="
+
+count=$(grep -c 'mzdmonitor.sh' /jci/scripts/stage_wifi.sh)
+if [ "$count" = "0" ]
+then
+	echo -e '\n\n\n### MZD Meter' >> /jci/scripts/stage_wifi.sh
+	echo -e '\nwatch /jci/gui/apps/_mzdmeter/sh/mzdmonitor.sh &' >> /jci/scripts/stage_wifi.sh
+	chmod 755 /jci/scripts/stage_wifi.sh
+  log_message "===                      Modified Stage_wifi.sh                       ==="
+fi
+
+# Call to the function to populate the json
+add_app_json "_mzdmeter" "MZD Meter"
+
+cp -a ${MYDIR}/config/mzdmeter/jci/gui/apps/* /jci/gui/apps/
+chmod 755 -R /jci/gui/apps/_mzdmeter/
+
+cp -a ${MYDIR}/config/mzdmeter/paa /
+chmod 755 -R /paa/
+
+# patch systemApp.js if needed for v59+ app list
+if ! grep -Fq "_mzdmeter" /jci/gui/apps/system/js/systemApp.js && [ ${APP_PATCH_59} = 0 ]
+then
+  APP_PATCH_59=1
+  cp ${MYDIR}/config/patch59/systemApp.js /jci/gui/apps/system/js/
+  log_message "===                   Applied App List Patch For V59+                 ==="
+fi
+
+log_message "======************* END INSTALLATION OF MZD METER APP ************======="
+log_message " "

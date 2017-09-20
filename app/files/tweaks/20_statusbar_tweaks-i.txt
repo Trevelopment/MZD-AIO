@@ -4,18 +4,18 @@
 # the uninstall would then just find the commented section and remove it
 # No files are replaced and CSS files are safe to modify without fear of system damage
 show_message "INSTALL STATUSBAR COLOR TWEAKS ..."
-log_message "======***   INSTALL STATUSBAR COLOR TWEAKS ...  ***======"
+log_message "============****** INSTALL STATUSBAR COLOR TWEAKS ...  ********=========="
 
 # Always create a Backup
 if [ ! -e /jci/gui/common/controls/StatusBar/css/StatusBarCtrl.css.org ]
 then
 	cp -a /jci/gui/common/controls/StatusBar/css/StatusBarCtrl.css /jci/gui/common/controls/StatusBar/css/StatusBarCtrl.css.org
-	log_message "=== Backup of /jci/gui/common/controls/StatusBar/css/StatusBarCtrl.css to StatusBarCtrl.css.org ==="
+	log_message "=== Backup   /jci/gui/common/controls/StatusBar/css/StatusBarCtrl.css ==="
 fi
 if [ ! -e /jci/gui/common/controls/Sbn/css/SbnCtrl.css.org ]
 then
 	cp -a /jci/gui/common/controls/Sbn/css/SbnCtrl.css /jci/gui/common/controls/Sbn/css/SbnCtrl.css.org
-	log_message "=== Backup of /jci/gui/common/controls/Sbn/css/SbnCtrl.css to SbnCtrl.css.org ==="
+	log_message "===       Backup of /jci/gui/common/controls/Sbn/css/SbnCtrl.css      ==="
 fi
 if [ ${KEEPBKUPS} = "1" ]
 then
@@ -68,7 +68,7 @@ EOT
 }
 /* END AIO CSS */
 EOT
-log_message "===         CSS Added for Statusbar tweaks            ==="
+log_message "===                  CSS Added for Statusbar tweaks                   ==="
 
-log_message "===*** END INSTALLATION OF STATUSBAR COLOR TWEAKS  ***==="
+log_message "=========****** END INSTALLATION OF STATUSBAR COLOR TWEAKS *******======="
 log_message " "

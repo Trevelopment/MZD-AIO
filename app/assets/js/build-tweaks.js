@@ -59,7 +59,6 @@ function buildTweakFile (user) {
   AIO_LOG += `- Tweak Files Location: ${tmpdir}\r\n`
   AIO_LOG_HTML += `<li><b>Tweak Files Location: ${tmpdir}</b></li>`
   /* Attach Hints */
-  // $('body').append(`<div class="w3-display-middle" data-hint="Hint: You can change the location of the _copy_to _usb folder by right-clicking the MZD-AIO-TI tray icon." data-hintPosition="top-middle" data-position="bottom-middle-aligned"></div><div class="w3-display-right" data-hint="Hint: After installing the Background Rotator Tweak, you can change your joined background multiple times without reinstalling. Changing back to a single background without uninstalling Background Rotator will show the background for 1 minute, then black for the other 9 minutes." data-hintPosition="top-left" data-position="bottom-right-aligned"  style="right:15%"></div><div class="w3-display-left" data-hint="Hint: Insert a USB Drive before the build finishes to copy directly to USB." data-hintPosition="top-right" data-position="bottom-left-aligned" style="left:15%"></div>`)
   /* Building Dialog */
   bootbox.dialog({
     message: `<div style='text-align:center;'>${langObj.popupMsgs[0].msg}<br><div id='userLogView' style='text-align:center;' ></div><br><img class='loader' src='./files/img/load-1.gif' alt='...' /></div><div id='copy-loc'>${langObj.popupMsgs[1].msg}: ${tmpdir}<span class="w3-close icon-x w3-right" onclick="$(this).parent().hide()"></span></div>`,
@@ -79,6 +78,11 @@ function buildTweakFile (user) {
       return
     }
   }
+  /* Autorun Script Installer */
+  if (user.autorun.installer) {
+    buildAutorunInstaller(user)
+    return
+  }
   try {
     mkdirp.sync(`${tmpdir}/config/`)
     mkdirp.sync(`${tmpdir}/config_org/`)
@@ -88,10 +92,12 @@ function buildTweakFile (user) {
     finishedMessage()
     return
   }
+  /* Full System Restore Script */
   if (user.restore.full) {
-    fullSystemRestore()
+    fullSystemRestore(user)
     return
   }
+  /* CASDK Installer */
   if (user.casdk.inst || user.casdk.uninst) {
     buildCASDK(user)
     return
@@ -100,10 +106,10 @@ function buildTweakFile (user) {
   if (user.mainOps.indexOf(1) !== -1) {
     addTweak('00_backup.txt')
   }
-  if (user.mainOps.indexOf(0) !== -1 || user.options.indexOf(8) !== -1) {
+  if (user.mainOps.indexOf(0) !== -1 || user.options.indexOf(21) !== -1) {
     addTweak('00_wifi.txt')
   }
-  if (user.mainOps.indexOf(4) !== -1 || user.options.indexOf(8) !== -1) {
+  if (user.mainOps.indexOf(4) !== -1 || user.options.indexOf(21) !== -1) {
     addTweak('00_sshbringback.txt')
     addTweakDir('ssh_bringback', true)
   }
@@ -111,79 +117,10 @@ function buildTweakFile (user) {
     mkdirp.sync(`${tmpdir}/config/blank-album-art-frame/jci/gui/common/images/`)
     addTweakDir('blank-album-art-frame', true)
   }
-  if (user.options.indexOf(123) !== -1) {
-    addTweak('23_speedcam-u.txt')
-    copydir(`${extradir}/org`, `${tmpdir}/config_org/speedcam-patch`, function (err) {
-      if (err) {
-        aioLog(`File Copy Error: Speedcam Patch`, `Speedcam Patch`)
-      } else {
-        aioLog(`Files for Uninstall Speedcam Patch copied successfully!`)
-      }
-    })
-  }
-  /* if (user.options.indexOf(23) !== -1) {  // Put this higher to give more time to copy. it needs to be patched as well
-    if (!fs.existsSync(`${extradir}/speedcam-patch/`)) {
-      window.alert('Please Download Speed Cam Patch Files Before Compiling')
-      bootbox.hideAll()
-      return
-    } else {
-      if (!fs.existsSync(`${extradir}/speedcam-patch/jci/nng/jci-linux_imx6_volans-release.org.59.00.443C-EU`)) {
-        aioLog('Preparing Speedcam Files For Patching')
-        copydir(`${builddir}/config/speedcam-patch`, `${extradir}/speedcam-patch`, function (err) {
-          if (err) { aioLog(err, err) }
-          copydir(`${builddir}/config_org/speedcam-patch`, `${extradir}/org/speedcam-patch`, function (err) {
-            if (err) { aioLog(err, err) }
-            speedcamPatch(user)
-          })
-        })
-      } else {
-        speedcamPatch(user)
-      }
-    }
-  } else {
-    speedcamIsPatched(user)
-  } */
-  speedcamIsPatched(user)
+  checkForColorScheme(user)
 }
-/* function speedcamPatch (user) {
-  aioLog('Preparing Speedcam Files For Patching')
-  copydir(`${extradir}/speedcam-patch/`, `./resources/speedcam-patch/`, function (err) {
-    if (err) { aioLog(err, err) }
-    copydir(`${extradir}/org/`, `./resources/org/`, function (err) {
-      if (err) { aioLog(err, err) }
-      aioLog('Patching Speedcam Files')
-      speedcamPatchFlag = true
-      const spawn = require('child_process').spawn
-      var patchTool = `cd resources/tools/ && NNG_Patch.bat`
-      const bat = spawn('cmd.exe', ['/c', patchTool])
-
-      bat.stdout.on('data', (data) => {
-        var strdata = String.fromCharCode.apply(null, data)
-        aioLog(strdata)
-      })
-
-      bat.stderr.on('data', (data) => {
-        var strdata = `${String.fromCharCode().apply(null, data)}<br />Error Patching Speedcam Files`
-        aioLog(strdata, strdata)
-      })
-
-      bat.on('exit', (code) => {
-        if (`${code}` === 0) {
-          aioLog('Speedcam Files Patched Successfully ') // 0: Successful
-        } else {
-          aioLog(`Speedcam Patch Exit Code: ${code}`)
-        }
-        fs.rename(`./resources/speedcam-patch`, `${tmpdir}/config/speedcam-patch`) // Move Patched Files to tmpdir
-        //fs.rename(`./resources/MZD_PATCH_LOG.txt`, `${tmpdir}`) // Move MZD Patch Log File to tmpdir
-        speedcamIsPatched(user)
-      })
-    })
-  })
-}
-*/
-
 /* Check For Color Scheme Tweak */
-function speedcamIsPatched (user) {
+function checkForColorScheme (user) {
   if (user.mainOps.indexOf(3) !== -1) {
     if (user.colors > 16) {
       customTheme(themeColor, user)
@@ -223,6 +160,18 @@ function setTheme (color, user) {
   extract(`${builddir}/config/themes/${color}.zip`, {dir: `${tmpdir}/config/color-schemes/theme/`}, function (err) {
     if (err) { aioLog(err, err) }
     aioLog(`${color} Theme Folder Unzipped & Added.`)
+    if (!user.useColorBG) {
+      if (fs.existsSync(`${tmpdir}/config/color-schemes/theme/jci/gui/common/images/background.png`)) {
+        fs.unlinkSync(`${tmpdir}/config/color-schemes/theme/jci/gui/common/images/background.png`)
+      }
+      aioLog('Removed Theme Background')
+    }
+    if (fs.existsSync(`${tmpdir}/config/color-schemes/theme/jci/gui/common/images/no_artwork_icon.png`)) {
+      fs.unlinkSync(`${tmpdir}/config/color-schemes/theme/jci/gui/common/images/no_artwork_icon.png`)
+    }
+    if (fs.existsSync(`${tmpdir}/config/color-schemes/theme/jci/gui/apps/system/controls/OffScreen/images/OffScreenBackground.png`)) {
+      fs.unlinkSync(`${tmpdir}/config/color-schemes/theme/jci/gui/apps/system/controls/OffScreen/images/OffScreenBackground.png`)
+    }
     buildTweak(user)
   })
 }
@@ -245,6 +194,12 @@ function setColor (color, user) {
         fs.unlinkSync(`${tmpdir}/config/color-schemes/${color}/jci/gui/common/images/background.png`)
       }
       aioLog('Removed Color Scheme Background')
+    }
+    if (fs.existsSync(`${tmpdir}/config/color-schemes/${color}/jci/gui/apps/system/controls/OffScreen/images/OffScreenBackground.png`)) {
+      fs.unlinkSync(`${tmpdir}/config/color-schemes/${color}/jci/gui/apps/system/controls/OffScreen/images/OffScreenBackground.png`)
+    }
+    if (fs.existsSync(`${tmpdir}/config/color-schemes/${color}/jci/gui/common/images/no_artwork_icon.png`)) {
+      fs.unlinkSync(`${tmpdir}/config/color-schemes/${color}/jci/gui/common/images/no_artwork_icon.png`)
     }
     buildTweak(user)
   })
@@ -278,13 +233,10 @@ function buildTweak (user) {
     addTweakDir('list-loop', false)
   }
   if (user.options.indexOf(107) !== -1) {
-    if (user.options.indexOf(106) === -1) {
-      addTweak('07_shorterdelay-u.txt')
-    }
+    addTweak('07_shorterdelay-u.txt')
   }
   if (user.options.indexOf(108) !== -1) {
-    addTweak('08_orderflac-u.txt')
-    addTweakDir('media-order-patching', false)
+    addTweak('08_sysbeep-u.txt')
   }
   if (user.options.indexOf(109) !== -1) {
     addTweak('09_audioorder-u.txt')
@@ -340,9 +292,19 @@ function buildTweak (user) {
     addTweak('25_androidauto-u.txt')
     addTweakDir('androidauto', false)
   }
+  if (user.options.indexOf(121) !== -1) {
+    addTweak('08_orderflac-u.txt')
+    addTweakDir('media-order-patching', false)
+  }
   if (user.options.indexOf(126) !== -1) {
     addTweak('26_usbaudiomod-u.txt')
     addTweakDir('USBAudioMod', false)
+  }
+  if (user.options.indexOf(127) !== -1) {
+    addTweak('27_aioapp-u.txt')
+  }
+  if (user.mzdmeter.uninst) {
+    addTweak('28_mzdmeter-u.txt')
   }
   if (user.mainOps.indexOf(106) !== -1) {
     addTweak('00_bgrotator-u.txt')
@@ -398,8 +360,7 @@ function buildTweak (user) {
     addTweak('07_listbeep-i.txt')
   }
   if (user.options.indexOf(8) !== -1) {
-    addTweak('08_orderflac-i.txt')
-    addTweakDir('media-order-patching', true)
+    addTweak('08_sysbeep-i.txt')
   }
   if (user.options.indexOf(9) !== -1) {
     addTweak('09_audioorder-i.txt')
@@ -451,37 +412,17 @@ function buildTweak (user) {
       addTweakDir('speedometer_mod', true)
     }
   }
-  /* SPEEDCAM PATCH IS REMOVED DUE TO DMCA TAKEDOWN
-  if (user.options.indexOf(23) !== -1) {
-    addTweak('23_speedcam-i.txt')
-    if (user.speedcamOps === 0) {
-      addTweak('23_speedcam-a.txt')
-    } else if (user.speedcamOps === 1) {
-      addTweak('23_speedcam-b.txt')
-    } else if (user.speedcamOps === 2) {
-      addTweak('23_speedcam-c.txt')
-    } else if (user.speedcamOps === 3) {
-      addTweak('23_speedcam-e.txt')
-    } else if (user.speedcamOps === 4) {
-      addTweak('23_speedcam-f.txt')
-    } else if (user.speedcamOps === 5) {
-      addTweak('23_speedcam-g.txt')
-    }
-  }*/
+  if (user.options.indexOf(21) !== -1) {
+    addTweak('08_orderflac-i.txt')
+    addTweakDir('media-order-patching', true)
+  }
   if (user.options.indexOf(24) !== -1) {
     addTweak('24_castscreen-i.txt')
     addTweakDir('castscreen-receiver', true)
   }
   if (user.options.indexOf(25) !== -1) {
-    if (user.aaVer === 0) {
-      addTweak('25_androidauto-v99-i.txt')
-      addTweakDir('androidauto-v99', true)
-      fs.createReadStream(`${builddir}/config/androidauto-v99/AA99-README.txt`).pipe(fs.createWriteStream(`${tmpdir}/AA99-README.txt`))
-    } else {
-      addTweak('25_androidauto-i.txt')
-      addTweakDir('androidauto', true)
-    }
-    addTweakDir('androidauto', false)
+    addTweak('25_androidauto-i.txt')
+    addTweakDir('androidauto', true)
   }
   if (user.options.indexOf(11) !== -1) {
     addTweak('11_msgreplies-i.txt')
@@ -509,6 +450,14 @@ function buildTweak (user) {
   if (user.options.indexOf(17) !== -1) {
     addTweak('17_videoplayer-i.txt')
     addTweakDir('videoplayer', true)
+  }
+  if (user.options.indexOf(27) !== -1) {
+    addTweak('27_aioapp-i.txt')
+    addTweakDir('aio-app', true)
+  }
+  if (user.mzdmeter.inst) {
+    addTweak('28_mzdmeter-i.txt')
+    addTweakDir('mzdmeter', true)
   }
   /*  TODO: Fuel Consumptoion Tweak - Think of a better way to pick MPG or Km/L (Like a variable) */
   if (user.options.indexOf(22) !== -1) {
@@ -541,6 +490,7 @@ function buildTweak (user) {
       addTweak('20_statusbar_tweaks-i.txt')
     }
   }
+
   if (user.uistyle.uninst) {
     addTweak('20_uistyle-u.txt')
   } else if (user.mainOps.indexOf(9) !== -1) {
@@ -550,6 +500,7 @@ function buildTweak (user) {
     addTweak('20_mainmenu-u.txt')
   } else if (user.mainOps.indexOf(8) !== -1) {
     addTweak('20_mainmenu-i.txt')
+    addTweakDir('MainMenuTweaks', true)
   }
   if (user.options.indexOf(16) !== -1) {
     var outStr = fs.createWriteStream(`${tmpdir}/config/blank-album-art-frame/jci/gui/common/images/no_artwork_icon.png`)
@@ -594,7 +545,7 @@ function buildTweak (user) {
     addTweak('00_sd-cid.txt')
     addTweakDir('get_sd_cid', true)
   }
-  if (user.options.indexOf(19) !== -1 || user.options.indexOf(17) !== -1 || user.options.indexOf(25) !== -1) {
+  if (user.options.indexOf(19) !== -1 || user.options.indexOf(17) !== -1 || user.options.indexOf(25) !== -1 || user.options.indexOf(27) !== -1 || user.options.indexOf(28) !== -1) {
     addTweakDir('bin', true)
     addTweakDir('patch59', true)
   }
@@ -607,7 +558,7 @@ function buildTweak (user) {
   // Finish with the end script
   addTweak('00_end.txt')
   // Add root files to tmp and write tweaks.sh
-  addRootFiles()
+  addRootFiles(user.dataDump)
   writeTweaksFile()
 }
 // function to add each tweak to the array
@@ -632,7 +583,7 @@ function tweakVariables (user) {
   var bak = `KEEPBKUPS=`
   bak += (user.backups.org) ? `1\n` : `0\n`
   bak += `TESTBKUPS=`
-  bak += (user.backups.org) ? `1\n` : `0\n`
+  bak += (user.backups.test) ? `1\n` : `0\n`
   bak += `SKIPCONFIRM=`
   bak += (user.backups.skipconfirm) ? `1\n` : `0\n`
   bak += `ZIPBACKUP=`
@@ -720,10 +671,11 @@ function tweakVariables (user) {
     mmenu += (user.uistyle.minicoins) ? `1\n` : `0\n`
     mmenu += `UI_STYLE_MINIFOCUS=`
     mmenu += (user.uistyle.minifocus) ? `1\n` : `0\n`
-    mmenu += `UI_STYLE_MAIN3D=`
-    mmenu += `${user.uistyle.mainlabel}\n`
-    mmenu += `UI_STYLE_ALTLAYOUT=`
-    mmenu += `${user.uistyle.layout}\n`
+    mmenu += `UI_STYLE_NOGLOW=`
+    mmenu += (user.uistyle.hideglow) ? `1\n` : `0\n`
+    mmenu += `UI_STYLE_ALTLAYOUT=${user.uistyle.layout}\n`
+    mmenu += `UI_STYLE_MAIN3D=${user.uistyle.mainlabel}\n`
+    mmenu += `UI_STYLE_LABELCOLOR=${user.uistyle.labelcolor}\n`
     fs.writeFileSync(`${varDir}/mainmenu.txt`, mmenu)
     tweaks2write.push(`${varDir}/mainmenu.txt`)
   }
@@ -737,6 +689,14 @@ function tweakVariables (user) {
     ui += (user.uistyle.shadow) ? `"text-shadow: 2px 2px .5px #000;"\n` : `\n`
     fs.writeFileSync(`${varDir}/uistyle.txt`, ui)
     tweaks2write.push(`${varDir}/uistyle.txt`)
+  }
+  if (user.options.indexOf(14) !== -1) {
+    var noalbmart = `NOALBM=`
+    noalbmart += (user.uistyle.noalbm) ? `1\n` : `0\n`
+    noalbmart += `FULLTITLES=`
+    noalbmart += (user.uistyle.fulltitles) ? `1\n` : `0\n`
+    fs.writeFileSync(`${varDir}/bgralbmart.txt`, noalbmart)
+    tweaks2write.push(`${varDir}/bgralbmart.txt`)
   }
   if (user.options.indexOf(15) !== -1) {
     var transbg = `NO_BTN_BG=`
@@ -765,7 +725,10 @@ function tweakVariables (user) {
     tweaks2write.push(`${varDir}/statusbar-color.txt`)
   }
   if (user.options.indexOf(19) !== -1 && user.speedoOps.bg.id === 30) {
-    fs.writeFileSync(`${varDir}/bgopacity.txt`, `OPACITY=${user.speedoOps.opac}\n`)
+    var sops = `OPACITY=${user.speedoOps.opac}\n`
+    sops += `SPEEDCOLOR=`
+    sops += (user.speedoOps.color !== null) ? `${user.speedoOps.color}\n` : `0\n`
+    fs.writeFileSync(`${varDir}/bgopacity.txt`, sops)
     tweaks2write.push(`${varDir}/bgopacity.txt`)
   }
 }
@@ -833,15 +796,25 @@ function addTweakDir (twk, inst) {
   }
 }
 // Function copys root files
-function addRootFiles () {
+function addRootFiles (dataDump) {
   try {
     copydir(`${approot}/files/tweaks/root`, `${tmpdir}`, function (err) {
       if (err) {
         errFlag = true
         aioLog('ERROR COPYING ROOT FILES', err)
-        throw (err)
       } else {
-        aioLog('Root files copied successfully!')
+        if (dataDump) {
+          copydir(`${tmpdir}/data`, `${tmpdir}`, function (err) {
+            if (err) { errFlag = true }
+            else {
+              rimraf.sync(`${tmpdir}/data`)
+              aioLog('Root files copied successfully!')
+            }
+          })
+        } else {
+          rimraf.sync(`${tmpdir}/data`)
+          aioLog('Root files copied successfully!')
+        }
       }
     })
   } catch (e) {
@@ -870,11 +843,11 @@ function printAIOlog () {
     filesComplete = false
     opsComplete = false
     fs.writeFile(`${tmpdir}/${logFileName}.md`, AIO_LOG, {flag: 'w'}, (err) => {
-      if (err) throw err
-      console.log('AIO log saved!')
+      if (err) { console.log('AIO Could Not Be Saved') }
+      else { console.log('AIO log saved!') }
       fs.writeFile(path.resolve(path.join(`${approot}`, `../../${logFileName}.htm`)), AIO_LOG_HTML, {flag: 'w'}, (err) => {
-        if (err) throw err
-        console.log('AIO log saved! (HTML version)')
+        if (err) { console.log('HTML Log Cannot Be Saved') }
+        else { console.log('AIO log saved! (HTML version)') }
         bootbox.hideAll()
         if (!errFlag) {
           usbDrives()
@@ -931,7 +904,7 @@ function usbDrives () {
       var usbuttons = ''
       for (var j = 0; j < usb.length; j++) {
         lst += `<h4> ${usb[j].mp} ${usb[j].desc} `
-        lst += `<button class="w3-round-large w3-btn w3-ripple w3-hover-green w3-medium" title='${langObj.popupMsgs[5].msg} ${usb[j].mp}' onclick="shell.showItemInFolder('${usb[j].mp}')"></span><span class="icon-usb2"></span> ${langObj.popupMsgs[5].msg} ${usb[j].mp}</button></h4>`
+        lst += `<button class="w3-round w3-btn w3-ripple w3-hover-indigo w3-border w3-hover-border-pink w3-large" title='${langObj.popupMsgs[5].msg} ${usb[j].mp}' onclick="shell.showItemInFolder('${usb[j].mp}')"></span><span class="icon-usb2"></span> ${langObj.popupMsgs[5].msg} ${usb[j].mp}</button></h4>`
         appendAIOlog(`<li style='color:#005182'>Found USB Drive #${j + 1} - ${usb[j].mp} ${usb[j].desc}</li>`)
       }
       lst += `<h5><b>${langObj.popupMsgs[8].msg}:</b></h5>${langObj.popupMsgs[2].msg}`
@@ -941,6 +914,7 @@ function usbDrives () {
         title: lst,
         inputType: 'select',
         inputOptions: usbDriveLst,
+        className: 'copytoUSBMulti',
         buttons: {
           confirm: {
             label: `<span class='icon-usb'></span> ${langObj.popupMsgs[3].msg}`
@@ -966,11 +940,12 @@ function usbDrives () {
         appendAIOlog(`<li style='color:#005182'>USB Drive - ${usb[k].mp} ${usb[k].desc}</li>`)
       }
       lst += `<b>${langObj.popupMsgs[7].msg} ${usb[0].mp.replace(':', '')}?</b><br>${langObj.popupMsgs[2].msg}`
-      lst += `<button class="w3-round-xlarge w3-grey w3-btn w3-ripple w3-hover-blue w3-large w3-display-bottomleft" style="margin-bottom: -50px;margin-left: 10px;" title='${langObj.popupMsgs[5].msg}' onclick="shell.showItemInFolder('${usb[0].mp}')"></span><span class="icon-usb3"></span> ${langObj.popupMsgs[5].msg}</button>`
+      lst += `<button class="w3-large w3-blue-grey w3-btn w3-ripple w3-hover-teal w3-border w3-border-orange w3-large w3-display-bottomleft" style="margin-bottom: -55px;margin-left: 10px;" title='${langObj.popupMsgs[5].msg}' onclick="shell.showItemInFolder('${usb[0].mp}')"></span><span class="icon-usb3"></span> ${langObj.popupMsgs[5].msg}</button>`
       lst += `<label class="delCopyLabel w3-display-bottomright"><input type="checkbox" id="rmCpDirCheck" class="w3-check">${langObj.popupMsgs[21].msg}</label>`
       bootbox.confirm({
         title: `Copy files to USB drive?`,
         message: lst,
+        className: 'copytoUSB1',
         buttons: {
           confirm: {
             label: `<span class='icon-usb'></span> ${langObj.popupMsgs[3].msg}`
@@ -997,7 +972,8 @@ function noUsbDrive () {
   bootbox.hideAll()
   bootbox.alert({
     title: `<h2>Compilation Finished!</h2>`,
-    message: `${langObj.popupMsgs[9].msg} ${tmpdir} ${langObj.popupMsgs[10].msg}. <br><button href='' class='w3-round w3-black w3-btn w3-ripple nousbbutton' title='Copy These Files To A Blank USB Drive' onclick='openCopyFolder()'>${langObj.menu.copytousb.toolTip}</button>`,
+    className: `compFinishBox`,
+    message: `${langObj.popupMsgs[9].msg} ${tmpdir} ${langObj.popupMsgs[10].msg}. <br><button href='' class='w3-large w3-center w3-black w3-btn w3-ripple nousbbutton' title='Copy These Files To A Blank USB Drive' onclick='openCopyFolder()'>${langObj.menu.copytousb.toolTip}</button>`,
     callback: function () { finishedMessage() }
   })
   appendAIOlog(`<li style='color:#4a0dab'>To Install Tweak Files: Copy Entire Contents of "_copy_to_usb" Onto USB Drive.</li><li style='color:#1a0dab'>Location:<a href='' onclick='openCopyFolder()'><u> ${tmpdir}</u></a></li>`)
@@ -1005,6 +981,7 @@ function noUsbDrive () {
 function copyToUSB (mp) {
   var copyingUSB = bootbox.dialog({
     message: `<div class='w3-center'><h3>${langObj.popupMsgs[11].msg} ${mp}...  ${langObj.popupMsgs[12].msg}...</h3><br><div id='userLogView' style='text-align:center;' ></div><br><img class='loader' src='./files/img/load-0.gif' alt='...' /></div>`,
+    className: 'copyingtoUSB',
     closeButton: false
   })
   try {
@@ -1081,11 +1058,11 @@ function unzipSwapfile (dest) {
     }
   }
 }
-var strtOver = `<button class="w3-round-xlarge w3-btn w3-ripple w3-large w3-hover-white w3-border-black" onclick="location.reload()"><span class="icon-space-shuttle"></span>     ${langObj.popupMsgs[17].msg}</button>`
-var viewLog = `<button class="w3-round-xlarge w3-indigo w3-btn w3-ripple w3-hover-cyan w3-large w3-border-black view-log" title='Compile Log' onclick="$('#opn-mzd-log').click()"><span class='icon-star-full'></span>   ${langObj.popupMsgs[18].msg}</button>`
-var closeApp = `<button class="w3-round-xlarge w3-red w3-btn w3-ripple w3-hover-lime w3-large w3-border-black" title="Close The App" onclick="window.close()"><span class="icon-exit"></span>    ${langObj.popupMsgs[19].msg}</button>`
-var cp2usb = `<button class="w3-round-xlarge w3-teal w3-btn w3-ripple w3-hover-pink w3-large w3-border-black" style="letter-spacing:1px" title="Copy These Files To A Blank USB Drive" onclick="openCopyFolder()"><span class="icon-copy2"></span> ${langObj.menu.copytousb.toolTip}</button>`
-var saveBtn = `<button class="w3-round-xlarge w3-purple w3-btn w3-ripple w3-hover-deep-orange w3-large w3-border-green" style="letter-spacing:.81px" title="Save Options" onclick="$('#save-btn').click()"><span class="icon-floppy-disk"></span> ${langObj.menu.save.toolTip}</button>`
+var strtOver = `<button id="startOver" class="w3-round-large w3-btn w3-ripple w3-large w3-hover-white w3-border w3-border-white w3-hover-border-black" onclick="location.reload()" autofocus><span class="icon-space-shuttle"></span>     ${langObj.popupMsgs[17].msg}</button>`
+var viewLog = `<button class="w3-round-large w3-indigo w3-btn w3-ripple w3-hover-cyan w3-large w3-border w3-border-black view-log" title='Compile Log' onclick="$('#opn-mzd-log').click()"><span class='icon-star-full'></span>   ${langObj.popupMsgs[18].msg}</button>`
+var closeApp = `<button class="w3-round-large w3-red w3-btn w3-ripple w3-hover-lime w3-large w3-border w3-border-purple" title="Close The App" onclick="window.close()"><span class="icon-exit"></span>    ${langObj.popupMsgs[19].msg}</button>`
+var cp2usb = `<button class="w3-round-large w3-teal w3-btn w3-ripple w3-hover-pink w3-large w3-border w3-border-indigo" style="letter-spacing:1px" title="Copy These Files To A Blank USB Drive" onclick="openCopyFolder()"><span class="icon-copy2"></span> ${langObj.menu.copytousb.toolTip}</button>`
+var saveBtn = `<button class="w3-round-large w3-purple w3-btn w3-ripple w3-hover-deep-orange w3-large w3-border w3-border-green" style="letter-spacing:.81px" title="Save Options" onclick="$('#save-btn').click()"><span class="icon-floppy-disk"></span> ${langObj.menu.save.toolTip}</button>`
 var openUSB = ''
 function finishedMessage (mp) {
   cleanUpTempFolders()
@@ -1095,18 +1072,24 @@ function finishedMessage (mp) {
       cleanCopyDir()
       cp2usb = ''
     }
-    openUSB = `<h3><button class="w3-round-xlarge w3-amber w3-btn w3-ripple w3-hover-blue w3-large" title='${langObj.popupMsgs[5].msg}' onclick="shell.showItemInFolder('${mp}')"></span><span class="icon-usb3"></span> ${langObj.popupMsgs[5].msg}</button></h3>`
+    openUSB = `<h3><button class="w3-round-large w3-amber w3-btn w3-ripple w3-hover-blue w3-large w3-border w3-border-pink" title='${langObj.popupMsgs[5].msg}' onclick="shell.showItemInFolder('${mp}')"></span><span class="icon-usb3"></span> ${langObj.popupMsgs[5].msg}</button></h3>`
   }
   bootbox.hideAll()
   if (errFlag) {
-    bootbox.alert({
-      message: `<div class="errMessage w3-center"><span class="w3-closebtn" onclick="location.reload()">&times;</span><h2>An Error Has Occured.  Please Try Again.</h2><br /><h3>${strtOver}</h3><h3>${saveBtn}</h3><h3>${viewLog}</h3></div>`
+    bootbox.dialog({
+      message: `<div class="errMessage w3-center"><span class="w3-closebtn" onclick="location.reload()">&times;</span><h2>An Error Has Occured.  Please Try Again.</h2><br /><h3>${strtOver}</h3><h3>${saveBtn}</h3><h3>${viewLog}</h3></div>`,
+      className: 'finishedMessage',
+      closeButton: false
     })
   } else {
     setTimeout(function () {
-      bootbox.dialog({
-        message: `<span class="w3-closebtn" onclick="postInstallTitle()">&times;</span><div class="w3-center w3-container w3-blue-grey" style="line-height:1.5;"><h1><small class="icon-bolt3"></small> ${langObj.popupMsgs[20].msg} <small class="icon-magic-wand"></small></h1><h3>${strtOver}</h3><h3>${viewLog}</h3><h3>${openUSB}</h3><h3>${cp2usb}</h3><h3>${closeApp}</h3></div>`,
+      var finalbox = bootbox.dialog({
+        message: `<span class="w3-closebtn" onclick="postInstallTitle()">&times;</span><div class="w3-center w3-container w3-blue-grey" style="line-height:1.5;"><h1><small class="icon-bolt3"></small> ${langObj.popupMsgs[20].msg} <small class="icon-magic-wand"></small></h1><h3>${strtOver}</h3><h3>${viewLog}</h3><h3>${openUSB}</h3><h3>${cp2usb}</h3><h3>${saveBtn}</h3><h3>${closeApp}</h3></div>`,
+        className: 'finishedMessage',
         closeButton: false
+      })
+      finalbox.on('shown.bs.modal',function(){
+        $("#startOver").focus();
       })
     }, 100)
   }
@@ -1170,4 +1153,83 @@ function fullSystemRestore (user) {
     aioLog(`Uninstall files copied successfully!`)
   })
   writeTweaksFile()
+}
+function buildAutorunInstaller (user) {
+  copydir(`${approot}/files/tweaks/cmu-autorun/installer`, `${tmpdir}`, function (err) {
+    if (err) {
+      errFlag = true
+      aioLog('ERROR COPYING AUTORUN FILES', err)
+    } else {
+      if (user.autorun.id7recovery) {
+        copydir(`${approot}/files/tweaks/cmu-autorun/sdcard/recovery`, `${tmpdir}`, function (err) {
+          if (err) {
+            errFlag = true
+            aioLog('ERROR COPYING ID7RECOVERY FILES', err)
+          } else {
+            rimraf.sync(`${tmpdir}/**/*.md`)
+            rimraf.sync(`${tmpdir}/00-*/*.txt`)
+            rimraf.sync(`${tmpdir}/run.sh`)
+            aioLog('ID7_recovery Pack Copied Successfully!')
+            addWifiApp(user)
+          }
+        })
+      } else {
+        aioLog('Autorun Installer/Uninstaller Copied Successfully!')
+        addWifiApp(user)
+      }
+    }
+  })
+}
+function addWifiApp (user) {
+  filesComplete = true
+  opsComplete = true
+  if (user.autorun.autoADB || user.autorun.autoWIFI) {
+    copydir(`${approot}/files/tweaks/cmu-autorun/sdcard/recovery-extra`, `${tmpdir}`, function (err) {
+      if (err) {
+        errFlag = true
+        aioLog('ERROR COPYING AUTORUN FILES', err)
+      }
+      if (!user.autorun.autoADB) {
+        rimraf.sync(`${tmpdir}/00-start-adb/`)
+        rimraf.sync(`${tmpdir}/adb`)
+      }
+      if (!user.autorun.autoWIFI) {
+        rimraf.sync(`${tmpdir}/00-start-wifiAP/`)
+      }
+    })
+  }
+  if (user.autorun.dryrun) {
+    copydir(`${approot}/files/tweaks/cmu-autorun/sdcard/dryrun`, `${tmpdir}`, function (err) {
+      if (err) { errFlag = true }
+    })
+  }
+  if (user.autorun.autoWIFI) {
+    bootbox.hideAll()
+    var wificonfig = "# This is your wifiAP.config file\nexport NETWORK_WIFI_SSID=YourSSID\nexport NETWORK_WIFI_PASSWORD=YourSSIDpassword\n"
+    bootbox.prompt({
+      title: "You <b>MUST REPLACE THE VALUES</b> <em>'YourSSID'</em> and <em>'YourSSIDPassword'</em> with <b>your own values</b> to run the wifi app!",
+      inputType: 'textarea',
+      className: 'wifiSSIDprompt',
+      value: wificonfig,
+      callback: function (result) {
+        console.log(result)
+        if (result === null || result === wificonfig) {
+          bootbox.alert({
+            size: "small",
+            title: "Values Were Not Changed",
+            message: "WiFi App Will not be installed",
+            callback: function(){
+              rimraf.sync(`${tmpdir}/00-start-wifiAP/`)
+              printAIOlog()
+            }
+          })
+        } else {
+          fs.writeFileSync(`${tmpdir}/00-start-wifiAP/wifiAP.config`, result + '\n')
+          printAIOlog()
+        }
+      }
+    })
+  } else {
+    printAIOlog()
+  }
 }

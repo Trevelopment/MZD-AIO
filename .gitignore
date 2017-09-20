@@ -14,5 +14,6 @@ win-unpacked
 ssl
 /old_patch_tool/
 launch*
-tools/*
+/tools
 sign.sh
+/app/.pki

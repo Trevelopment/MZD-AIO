@@ -1,4 +1,4 @@
-var additionalApps = ["_androidauto","_speedometer","_videoplayer","_background","_helloworld","_mzdmeter","_mzdaio","_aio","_setup","app.2048","app.aio","app.android","app.androidauto","app.background","app.breakout","app.casdk","app.devtools","app.helloworld","app.multicontroller","app.myapp","app.simpledashboard","app.speedometer","app.snake","app.terminal","app.tetris","app.vdd"];
+var AIOapps = ["_androidauto","_speedometer","_videoplayer","_background","_helloworld","_mzdmeter","_mzdaio","_aiotweaks","_aio","_setup","app.2048","app.aio","app.android","app.androidauto","app.background","app.breakout","app.casdk","app.devtools","app.helloworld","app.multicontroller","app.myapp","app.simpledashboard","app.speedometer","app.snake","app.terminal","app.tetris","app.vdd"];
 /*
 Copyright 2012 by Johnson Controls
 __________________________________________________________________________
@@ -17,8 +17,7 @@ Description: IHU GUI System App
 Revisions:
 v0.1 - 08-May-2012  Integrated mainMenuControl. Fixed issues with DOM ready
 v0.2 - 10-May-2012  Added ActivePanel, LeftButton, StatusBar
-v0.3 - 11-May-2012  Merged transitions.js code into framework. System App Prototype now shows transitions between
-contexts.
+v0.3 - 11-May-2012  Merged transitions.js code into framework. System App Prototype now shows transitions between contexts.
 v0.4 - 17-May-2012  Reworked functionality of Active Panel Content to handle transitions. Added alerts.
 v0.5 - 14-June-2012 Language Localization added to ListCtrls
 v0.6 - 20-June-2012 Fixed buggy ActivePanel behavior related to new "pop transitions"
@@ -554,6 +553,9 @@ systemApp.prototype.appInit = function()
     //Show timed SBN Voice not supported
     "TimedSBN_VoiceNotSupported"  : this._TimedSBN_VoiceNotSupportedMsgHandler.bind(this),
 
+	//Show timed SBN Voice Recognition Loading
+        "TimedSBN_VRLoading"          : this._TimedSBN_VRLoadingMsgHandler.bind(this),
+
     //At Speed Restriction
     "Global.AtSpeed"              : this._AtSpeedMsgHandler.bind(this),
 
@@ -592,8 +594,7 @@ systemApp.prototype.appInit = function()
 **************************/
 
 systemApp.prototype.getWinkProperties = function(alert, params)
-{
-  log.info("setting wink properties for: ", alert, params);
+{  log.info("setting wink properties for: ", alert, params);
   var winkProperties = null;
   switch(alert)
   {
@@ -626,8 +627,7 @@ systemApp.prototype.getWinkProperties = function(alert, params)
 ///////////////////////////////////////////////////////////////////////////////
 
 systemApp.prototype._initEntertainmentDataList = function()
-{
-  var items = [];
+{  var items = [];
 
   if (framework.localize.getRegion() === framework.localize.REGIONS.Japan)
   {
@@ -664,8 +664,7 @@ systemApp.prototype._initEntertainmentDataList = function()
 };
 
 systemApp.prototype._initApplicationsDataList = function()
-{
-  var items = [];
+{  var items = [];
 
   this._vehicleConfigurationType = null;
   this._vehicleConfigurationType = framework.getSharedData("syssettings","VehicleConfigData");
@@ -710,8 +709,7 @@ systemApp.prototype._initApplicationsDataList = function()
 };
 
 systemApp.prototype._initCommunicationsDataList = function()
-{
-  var items = [];
+{  var items = [];
 
   items.push(
     { appData : { appName : '',            isVisible : false, mmuiEvent : 'SelectActiveCall'    }, text1Id : 'ActiveCallItem',        disabled : false, itemStyle : 'style01', hasCaret : false},
@@ -742,8 +740,7 @@ systemApp.prototype._initCommunicationsDataList = function()
 ///////////////////////////////////////////////////////////////////////////////
 
 systemApp.prototype._StatusPhoneCallMsgHandler = function(msg)
-{
-  if (msg.params && msg.params.payload && msg.params.payload.phoneCallStatus)
+{  if (msg.params && msg.params.payload && msg.params.payload.phoneCallStatus)
   {
     // Add or remove the Active Call item in the communications menu
     var hasActiveCall = msg.params.payload.phoneCallStatus === "ActiveCall" || msg.params.payload.phoneCallStatus === "Connecting";
@@ -772,8 +769,7 @@ systemApp.prototype._StatusPhoneCallMsgHandler = function(msg)
 };
 
 systemApp.prototype._StatusMenuMsgHandler = function(msg)
-{
-  log.debug("Received StatusMenu message: " + msg.params.payload.statusMenu.appName + " " + msg.params.payload.statusMenu.appStatus);
+{  log.debug("Received StatusMenu message: " + msg.params.payload.statusMenu.appName + " " + msg.params.payload.statusMenu.appStatus);
 
   // Update menu items associated with the given appName of the message. Menu items can appear
   // in several different contexts or appear multiple times: this function searches all those places.
@@ -851,8 +847,7 @@ systemApp.prototype._StatusMenuMsgHandler = function(msg)
 };
 
 systemApp.prototype._enableAppListItem = function(appName, isDisabled, dataList)
-{
-  for (var i = 0; i < dataList.items.length; ++i)
+{  for (var i = 0; i < dataList.items.length; ++i)
   {
     if (dataList.items[i].appData.appName.indexOf(appName) === 0)
     {
@@ -896,8 +891,7 @@ systemApp.prototype._enableAppListItem = function(appName, isDisabled, dataList)
 };
 
 systemApp.prototype._enableSpeedRestrictedItem = function(appName, isDisabled, dataList)
-{
-  for (var i = 0; i < dataList.items.length; ++i)
+{  for (var i = 0; i < dataList.items.length; ++i)
   {
     if (dataList.items[i].appData.appName === appName)
     {
@@ -909,8 +903,7 @@ systemApp.prototype._enableSpeedRestrictedItem = function(appName, isDisabled, d
 };
 
 systemApp.prototype._StatusMenuVisibleMsgHandler = function(msg)
-{
-  if (msg.params && msg.params.payload)
+{  if (msg.params && msg.params.payload)
   {
     log.debug("Received StatusMenuVisible message: " + msg.params.payload.appName + " " + msg.params.payload.state);
 
@@ -1254,6 +1247,17 @@ systemApp.prototype._StatusMenuVisibleMsgHandler = function(msg)
                 };
                 framework.common.startTimedSbn(this.uiaId, 'SiriStatusNotification', "vrStatus", params);
               };
+
+//If VR is not ready after Disclaimer then display SBN
+systemApp.prototype._TimedSBN_VRLoadingMsgHandler = function()
+{    framework.common.endStateSbn(this.uiaId, 'SiriStatusNotification', "vrStatus");//End the SBN if displayed
+    var params = {
+            sbnStyle : 'Style02',
+            text1Id : 'common.SbnVoiceLoading',
+            imagePath1 : 'common/images/icons/IcnSbnMicUnavail.png'
+        };
+    framework.common.startTimedSbn(this.uiaId, 'VoiceRecoLoading', "vrStatus", params);
+};
 
               systemApp.prototype._TimedSBN_VoiceNotSupportedMsgHandler = function()
               {
@@ -1734,7 +1738,6 @@ systemApp.prototype._StatusMenuVisibleMsgHandler = function(msg)
                 return dataList;
               };
 
-
               ///////////////////////////////////////////////////////////////////////////////
               // Communication - avalajh
               ///////////////////////////////////////////////////////////////////////////////
@@ -1775,7 +1778,6 @@ systemApp.prototype._StatusMenuVisibleMsgHandler = function(msg)
 
                 return dataList;
               };
-
 
               ///////////////////////////////////////////////////////////////////////////////
               // NoConnectionNotify
@@ -2467,7 +2469,7 @@ systemApp.prototype._StatusMenuVisibleMsgHandler = function(msg)
                           //We have two different context (Applications and VehicleStatusMonitor) for displaying Appication item(s),so context wise storing the array of appName(s) to be displayed on corresponding Context.
                           this._applicationsCtxtWiseAppNames = {
                             //Context Name :  // [appName,appName....]
-                            "Applications"            : ["hdtrafficimage","idm","ecoenergy","driverid","warnguide","schedmaint","vehicleStatus","vdt_settings","vdt","carplay","androidauto"].concat(additionalApps),
+                            "Applications"            : ["hdtrafficimage","idm","ecoenergy","driverid","warnguide","schedmaint","vehicleStatus","vdt_settings","vdt","carplay","androidauto"].concat(AIOapps),
                             "VehicleStatusMonitor"    : ["vsm"]
                           };
 
@@ -2477,7 +2479,7 @@ systemApp.prototype._StatusMenuVisibleMsgHandler = function(msg)
                           //We have two different context (Applications and VehicleStatusMonitor) for displaying Appication item(s),so context wise storing the array of appName(s) to be displayed on corresponding Context.
                           this._applicationsCtxtWiseAppNames = {
                             //Context Name :  // [appName,appName....]
-                            "Applications"            : ["hdtrafficimage","idm","ecoenergy","driverid","vehicleStatus","vdt_settings","vdt","carplay","androidauto"].concat(additionalApps),
+                            "Applications"            : ["hdtrafficimage","idm","ecoenergy","driverid","vehicleStatus","vdt_settings","vdt","carplay","androidauto"].concat(AIOapps),
                             "VehicleStatusMonitor"    : ["warnguide","vsm","schedmaint"]
                           };
                         }

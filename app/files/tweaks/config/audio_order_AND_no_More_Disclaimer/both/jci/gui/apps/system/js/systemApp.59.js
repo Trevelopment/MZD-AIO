@@ -1,4 +1,4 @@
-var additionalApps = ["_androidauto","_speedometer","_videoplayer","_background","_helloworld","_mzdmeter","_mzdaio","_aio","_setup","app.2048","app.aio","app.android","app.androidauto","app.background","app.breakout","app.casdk","app.devtools","app.helloworld","app.multicontroller","app.myapp","app.simpledashboard","app.speedometer","app.snake","app.terminal","app.tetris","app.vdd"];
+var AIOapps = ["_androidauto","_speedometer","_videoplayer","_background","_helloworld","_mzdmeter","_mzdaio","_aiotweaks","_aio","_setup","app.2048","app.aio","app.android","app.androidauto","app.background","app.breakout","app.casdk","app.devtools","app.helloworld","app.multicontroller","app.myapp","app.simpledashboard","app.speedometer","app.snake","app.terminal","app.tetris","app.vdd"];
 /*
  Copyright 2012 by Johnson Controls
  __________________________________________________________________________
@@ -17,8 +17,7 @@ var additionalApps = ["_androidauto","_speedometer","_videoplayer","_background"
  Revisions:
  v0.1 - 08-May-2012  Integrated mainMenuControl. Fixed issues with DOM ready
  v0.2 - 10-May-2012  Added ActivePanel, LeftButton, StatusBar
- v0.3 - 11-May-2012  Merged transitions.js code into framework. System App Prototype now shows transitions between
-                     contexts.
+ v0.3 - 11-May-2012  Merged transitions.js code into framework. System App Prototype now shows transitions between contexts.
  v0.4 - 17-May-2012  Reworked functionality of Active Panel Content to handle transitions. Added alerts.
  v0.5 - 14-June-2012 Language Localization added to ListCtrls
  v0.6 - 20-June-2012 Fixed buggy ActivePanel behavior related to new "pop transitions"
@@ -542,6 +541,9 @@ systemApp.prototype.appInit = function()
         //Show timed SBN Voice not supported
         "TimedSBN_VoiceNotSupported"  : this._TimedSBN_VoiceNotSupportedMsgHandler.bind(this),
 
+	//Show timed SBN Voice Recognition Loading
+        "TimedSBN_VRLoading"          : this._TimedSBN_VRLoadingMsgHandler.bind(this),
+		
         //At Speed Restriction
         "Global.AtSpeed"              : this._AtSpeedMsgHandler.bind(this),
 
@@ -1241,6 +1243,16 @@ systemApp.prototype._TimedSBN_SiriErrorMsgHandler = function()
             text1Id : 'ErrorWhileStartingSiri',
         };
     framework.common.startTimedSbn(this.uiaId, 'SiriStatusNotification', "vrStatus", params);
+};
+//If VR is not ready after Disclaimer then display SBN
+systemApp.prototype._TimedSBN_VRLoadingMsgHandler = function()
+{    framework.common.endStateSbn(this.uiaId, 'SiriStatusNotification', "vrStatus");//End the SBN if displayed
+    var params = {
+            sbnStyle : 'Style02',
+            text1Id : 'common.SbnVoiceLoading',
+            imagePath1 : 'common/images/icons/IcnSbnMicUnavail.png'
+        };
+    framework.common.startTimedSbn(this.uiaId, 'VoiceRecoLoading', "vrStatus", params);
 };
 
 systemApp.prototype._TimedSBN_VoiceNotSupportedMsgHandler = function()
@@ -2387,7 +2399,7 @@ systemApp.prototype._updateApplicationStructure = function(vehicleConfiguration)
         //We have two different context (Applications and VehicleStatusMonitor) for displaying Appication item(s),so context wise storing the array of appName(s) to be displayed on corresponding Context.
         this._applicationsCtxtWiseAppNames = {
           //Context Name :  // [appName,appName....]
-          "Applications"            : ["hdtrafficimage","idm","ecoenergy","driverid","warnguide","schedmaint","vehicleStatus","vdt_settings","vdt","carplay","androidauto"].concat(additionalApps),
+          "Applications"            : ["hdtrafficimage","idm","ecoenergy","driverid","warnguide","schedmaint","vehicleStatus","vdt_settings","vdt","carplay","androidauto"].concat(AIOapps),
           "VehicleStatusMonitor"    : ["vsm"]
         };
 
@@ -2397,7 +2409,7 @@ systemApp.prototype._updateApplicationStructure = function(vehicleConfiguration)
         //We have two different context (Applications and VehicleStatusMonitor) for displaying Appication item(s),so context wise storing the array of appName(s) to be displayed on corresponding Context.
         this._applicationsCtxtWiseAppNames = {
           //Context Name :  // [appName,appName....]
-          "Applications"            : ["hdtrafficimage","idm","ecoenergy","driverid","vehicleStatus","vdt_settings","vdt","carplay","androidauto"].concat(additionalApps),
+          "Applications"            : ["hdtrafficimage","idm","ecoenergy","driverid","vehicleStatus","vdt_settings","vdt","carplay","androidauto"].concat(AIOapps),
           "VehicleStatusMonitor"    : ["warnguide","vsm","schedmaint"]
         };
     }

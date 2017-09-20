@@ -1,7 +1,8 @@
 
 <div id="header" style="" class="w3-teal" ng-cloak>
-  <h1 id="mzd-title" class="mazda"> MZD-AIO <small><i>v</i>{{appVer}}</small>
-    <button id="compileButton" class="w3-shadow w3-green w3-small w3-btn w3-ripple w3-hover-light-blue" style="letter-spacing:1.4px;" data-toggle="tooltip" data-placement="bottom" title="{{menu.start.toolTip}}" ng-click="startCompile()"><span class="icon-genius"></span> {{menu.start.label}} <span class="icon-lab2"></span></button>
+  <h1 id="mzd-title" class="mazda">MZD-AIO <small><i>v</i>{{appVer}}</small>
+    <button id="compileButton" class="w3-shadow w3-green w3-small w3-btn w3-ripple w3-hover-light-blue" ng-hide="user.autorun.installer" style="letter-spacing:1.4px;" data-toggle="tooltip" data-placement="bottom" title="{{menu.start.toolTip}}" ng-click="startCompile()"><span class="icon-genius"></span> {{menu.start.label}} <span class="icon-lab2"></span></button>
+    <button id="compileAutorun" class="w3-shadow w3-pale-blue w3-small w3-btn w3-ripple w3-hover-indigo" ng-show="user.autorun.installer" style="letter-spacing:1.4px;" data-toggle="tooltip" data-placement="bottom" title="Install CMU-autorun" ng-click="startAutorunCompile()"><span class="icon-genius"></span> Autorun <span class="icon-lab2"></span></button>
   </h1>
   <span id="update-ready" class="w3-hide"><a href="" onclick="ipc.send('update-and-restart')" class="w3-btn w3-padding w3-hover-text-light-green">UPDATE &amp; RESTART</a></span>
   <button id="helpDropBtn" onclick="helpDropdown()" class="w3-btn w3-large helphints"><span class="icon-cog3"></span></button>
@@ -15,7 +16,11 @@
   <h1 id="mzd-title-hidden" class="mazda" style="visibility:hidden;">MZD-AIO-TI</h1>
   <span id="openSidePanel" class="w3-opennav w3-xxlarge w3-display-topright w3-padding w3-text-black w3-hide" onclick="w3_openright()" style="position:fixed">&#9776;</span>
 </header>
-<div class="w3-container mainContainer" ng-cloak>
+<label for="checkAutorun" class="w3-label checkAutorun"><input type="checkbox" id="checkAutorun" data-toggle="tooltip" data-placement="bottom"  title="CMU-autorun - Scripts For Testing and Recovery" class="w3-check w3-padding" name="checkAutorun" ng-value="user.autorun.installer" ng-model="user.autorun.installer"/><span ng-hide="user.autorun.installer"> Autorun &amp;<br><span class="icon-medkit"></span>&nbsp;&nbsp;Recovery</span></label>
+<div class="w3-container autorunContainer" ng-show="user.autorun.installer">
+<div class="w3-display-middle" ng-include="'views/autoHelp.htm'"></div>
+</div>
+<div class="w3-container mainContainer" ng-hide="user.autorun.installer">
   <section id="main" class="main">
     <section id="mainOptions" class="options container w3-row">
       <div id="step4" class="w3-container form-group1 col-md-3 col-sm-6 col-xs-12">
@@ -104,6 +109,22 @@
           <!--span class="w3-right inline-safety sfty" ng-class="option.safetylvl" ng-bind="option.safetylvl"></span-->
         </td>
       </tr>
+	  <tr ng-show="user.twkfltr.toLowerCase() === 'mzdmeterdev' || user.mzdmeter.inst || user.mzdmeter.uninst || user.mzdmeter.show" class="w3-hover-pale-blue w3-tooltip w3-half" ng-class="">
+        <td>
+          <div class="install-check">
+            <input id="IN28" type="checkbox" name="MZD Meter" ng-value="user.mzdmeter.inst" onclick="persistantData.set('showMeter', true);snackbarstay('Remember that this app is not 100% working.  Please contribute by fixing non-working features rather than reporting issues.')" ng-click="user.twkfltr = ''; user.mzdmeter.show = true" ng-disabled="user.mzdmeter.uninst" ng-model="user.mzdmeter.inst">
+            <label for="IN28" data-toggle="tooltip" data-placement="auto left" title="Install MZD Meter"></label>
+          </div>
+          <div class="uninstall-check">
+            <input id="UN28" type="checkbox" name="MZD Meter" ng-value="user.mzdmeter.uninst" onclick="persistantData.set('showMeter', false)" ng-disabled="user.mzdmeter.inst" ng-model="user.mzdmeter.uninst">
+            <label for="UN28" data-toggle="tooltip" data-placement="auto right" title="Uninstall MZD Meter"></label>
+          </div>
+        </td>
+        <td>
+          <label id="label-28" class="w3-validate" for="IN28" value="MZD Meter" data-toggle="tooltip" data-placement="auto top" title="<h5>MZD Meter </h5> An Advanced Speedometer App. This app is only party working, please help contribute to fixing the non-working features if you can.">MZD Meter</label>
+          <!--span class="w3-right inline-safety sfty" ng-class="option.safetylvl" ng-bind="option.safetylvl"></span-->
+        </td>
+      </tr>
     </table>
     <div id="bg-img" ng-class="{'w3-hide': user.mainOps.indexOf(2) == -1}" ng-cloak>
       <div id="bgPickTitle" style="text-align:center;"><h2>Chosen Background Image: <small>(click for preview mode)</small></h2><br>
@@ -119,7 +140,7 @@
         <div id="bgimg" onclick="document.getElementById('backgroundPreviewModal').style.display = 'block'" style="cursor:pointer;">
           <div id="imgframe" class="imgframe">
             <a class="w3-btn w3-ripple w3-teal w3-center" style="position:absolute;margin-top:20px" href="" onclick="ipc.send('open-file-bg')"><span class="icon-image2"></span> Select Background Image</a>
-            <img src="../../background/background.png" alt="Choose A Background" title="Your Infotainment Background" onerror="$(this).hide()"/></div>
+            <img id="infotnmtBG" src="" alt="Choose A Background" title="Your Infotainment Background" onerror=""/></div>
         </div>
       </div>
       <div id="selected-file"></div>
@@ -257,7 +278,7 @@
   <!--span id="closePrevew" onclick="$(this).parent().fadeOut(200)" class="w3-closebtn w3-hover-red w3-text-white w3-xxlarge w3-container w3-text-shadow w3-opacity w3-margin hide-sm" data-toggle="tooltip" data-placement="bottom" title="{{menu.close.label}}" style="top:-60px;right:55px;">×</span-->
   <div class="w3-modal-content w3-animate-zoom">
     <div id="imgmodal" class="imgframe w3-card-16" width="800" height="480">
-      <img src="../../background/background.png" alt="Choose A Background" title="A Preview of Your Infotainment Background" onerror="$(this).hide()">
+      <img id="modalimg" src="" alt="Choose A Background" title="A Preview of Your Infotainment Background" onerror="">
     </div>
     <div style="position:absolute;margin:auto;text-align:center;right:0;left:0;top:0;height:65px;background-color:rgba(0,0,0,{{user.statusbar.opacity}})"><img src="files/img/statusbar.png" ng-hide="user.statusbar.main" alt=""  onerror="$(this).hide()"></div>
     <div id="ctxt-ico"><span class="icon-home"></span></div>
@@ -282,6 +303,10 @@
 <div class="slide-out-div" ng-cloak>
   <a class="handle" href="">Install Options</a>
   <div id="bkupchks" class="w3-container" ng-cloak>
+    <input id="dataDump" name="dataDump" type="checkbox" class="w3-check w3-margin" ng-model="user.dataDump" ng-value="user.dataDump">
+    <label for="dataDump" class="w3-validate">Retrieve CMU Data</label>
+    <!--input id="checkFullRestore" name="checkFullRestore" type="checkbox" class="w3-check w3-margin" ng-model="user.restore.full" ng-value="user.restore.full" title="Fully Restores Infotainment System Back to Stock.">
+    <label for="checkFullRestore" class="w3-label checkFullRestore" style="">Full System Restore</label-->
     <input id="skipConfirm" name="skipConfirm" type="checkbox" class="w3-check w3-margin" ng-model="user.backups.skipconfirm" ng-value="user.backups.skipconfirm">
     <label for="skipConfirm" class="w3-validate">{{mainOps.retain.skipconfirm}}</label>
     <input id="keepBackups" name="keepBackups" type="checkbox" class="w3-check w3-margin" ng-model="user.backups.org" ng-value="user.backups.org">

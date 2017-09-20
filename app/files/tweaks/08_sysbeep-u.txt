@@ -1,0 +1,9 @@
+show_message "RESTORE LIST BEEP"
+log_message "=========********    UNINSTALL REMOVE SYSTEM BEEP...   ********=========="
+
+# Modify List2Ctrl.js
+sed -i '/No More Beeps/ c\        return framework.common.beep(pressType, eventCause);' /jci/gui/common/controls/List2/js/List2Ctrl.js
+log_message "===                  Restored Beeps in List2Ctrl.js                   ==="
+
+log_message "======*******   END UNINSTALLATION OF REMOVE SYSTEM BEEP   *******======="
+log_message " "

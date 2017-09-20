@@ -43,7 +43,7 @@ function VideoPlayerTmplt(uiaId, parentDiv, templateID, controlProperties)
     // do whatever you want here
                 //var script1 = document.createElement("script");
     this.divElt.innerHTML = '<div id="myVideoContainer">'+
-	'<div id="myVideoControlDiv">'+
+	'<div id="myVideoControlDiv" class="blueTheme">'+
 	'<ul>'+
 	'<li id="myVideoStopBtn" style="display: none; background-image: url(apps/_videoplayer/templates/VideoPlayer/images/myVideoStopBtn.png)"></li>'+
 	'<li id="myVideoNextBtn" style="display: none; background-image: url(apps/_videoplayer/templates/VideoPlayer/images/myVideoNextBtn.png)"></li>'+
@@ -56,16 +56,17 @@ function VideoPlayerTmplt(uiaId, parentDiv, templateID, controlProperties)
 	'<li id="myVideoRepeatBtn" class="playbackOption"><a>Repeat 1</a></li>'+
 	'<li id="myVideoShuffleBtn" class="playbackOption"><a>Shuffle</a></li>'+
 	'<li id="myVideoRepeatAllBtn" class="playbackOption"><a>Repeat All</a></li>'+
-	'<li class="rebootBtnDiv" style="float:left !important; background-image: url(apps/_videoplayer/templates/VideoPlayer/images/rebootSys.png)"></li>'+
+	'<li id="rebootBtnDiv" class="playbackOption" style="float:left !important; background-image: url(apps/_videoplayer/templates/VideoPlayer/images/rebootSys.png)"></li>'+
 	'</ul>'+
 	'<div id="myVideoName" style="font-style:italic"></div>'+
 	'<div id="myVideoStatus" style="font-style:italic"></div></div>'+
 	'<div id="myVideoList"></div>'+
 	'<div id="myVideoScroll">'+
-	'<img src="apps/_videoplayer/templates/VideoPlayer/images/Info.png" id="myVideoInfo" />'+
+	'<li id="myUnicodeToggle" style="background-image:url(apps/_videoplayer/templates/VideoPlayer/images/uni.png)"></li>'+
+	'<li id="myVideoInfo" class="playbackOption" style="background-image:url(apps/_videoplayer/templates/VideoPlayer/images/Info.png)"></li>'+
 	'<img src="apps/_videoplayer/templates/VideoPlayer/images/myVideoUpBtn.png" id="myVideoScrollUp" />'+
 	'<img src="apps/_videoplayer/templates/VideoPlayer/images/myVideoDownBtn.png" id="myVideoScrollDown" />'+
-	'<img src="apps/_videoplayer/templates/VideoPlayer/images/bgbtn.png" id="toggleBgBtn" />'+
+	'<li id="toggleBgBtn" class="playbackOption" style="background-image:url(apps/_videoplayer/templates/VideoPlayer/images/bgbtn.png)"></li>'+
 	'</div>'+
 	'<div id="videoPlayControl">'+
 	'<ul>'+
@@ -81,13 +82,22 @@ function VideoPlayerTmplt(uiaId, parentDiv, templateID, controlProperties)
 	'</div>'+
 	'</div>'+
 	'<div id="videoInfoPanel"><span id="myVideoInfoClose">&times;</span>'+
-	'<span class="stateInfo infoBtn">State</span>'+
-	'<span class="recentInfo infoBtn">Played</span>'+
-	'<div id="infoTitle">Video Player Info</div>'+
+	'<span id="popInfoTab" class="infoBtn">Options</span>'+
+	'<span id="popOptionsTab" class="infoBtn">Info</span>'+
 	'<aside id="widget-content">'+
-	'<div id="widgetContent"></div>'+
-	'<div id="widgetContentState"></div>'+
-	'</aside></div>'+
+	'<div id="widgetContent">'+
+  '<div id="optionTitle">Video Player Options</div>'+
+  '<button id="optionTestError" class="panelOption btn">Test Error Message</button>'+
+  '<ul><li id="optionHideUnicodeBtn" class="panelOption"><a>Hide Unicode Button</a></li>' +
+  '<li id="optionStatusbarTitle" class="panelOption"><a>Title to Statusbar</a></li>'+
+  '</ul></div>' +
+	'<div id="widgetContentState">'+
+  '<div id="infoTitle">Video Player Information</div>'+
+  '<ul><li>Best Video Format: 360p MP4 H264 AAC</li>'+
+  '<li>Switch To Unicode Mode To Fix Character Isues</li>'+
+  '<li>To Translate Info, Make Suggestions, Or Add Functionality</li>'+
+  '<li>Visit https://github.com/Trevelopment/Mazda-Videoplayer</li>'+
+	'</ul></div></aside></div>'+
 	'<script src="addon-common/jquery.min.js" type="text/javascript"></script>'+
 	'<script src="apps/_videoplayer/js/videoplayer-v2.js" type="text/javascript"></script>';
 	//$.getScript('apps/_videoplayer/js/videoplayer-v2.js');

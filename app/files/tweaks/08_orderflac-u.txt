@@ -1,6 +1,6 @@
 # remove track-order and FLAC support
 show_message "REMOVE TRACK-ORDER AND FLAC SUPPORT ..."
-log_message "====****   UNINSTALL TRACK-ORDER AND FLAC SUPPORT   ****====="
+log_message "========******   UNINSTALL TRACK-ORDER AND FLAC SUPPORT   ******========="
 # Compatibility Check
 TRACKORDER_FLAC=0
 if [ ${CMU_SW_VER} = "56.00.100A-ADR" ] \
@@ -33,11 +33,11 @@ then
 fi
 if [ "${TRACKORDER_FLAC}" = "0" ]
 then
-	log_message "===     This tweak is not compatible with your FW version   ==="
+	log_message "===          This tweak is not compatible with your FW version        ==="
 else
-	if test -s /jci/lib/libmc_user.so.org
+	if [ -e /jci/lib/libmc_user.so.org ]
 	then
-		cp /jci/lib/libmc_user.so.org /jci/lib/libmc_user.so
+		cp -a /jci/lib/libmc_user.so.org /jci/lib/libmc_user.so
 		log_message "=== Restored original /jci/lib/libmc_user.so from backup libmc_user.so.org ==="
 	else
 		log_message "=== No backup of /jci/lib/libmc_user.so available, no changes were made ==="

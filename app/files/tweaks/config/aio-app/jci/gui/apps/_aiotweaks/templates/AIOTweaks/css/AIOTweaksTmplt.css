@@ -1,0 +1,286 @@
+.AIOTweaksTmplt {
+	vertical-align: middle;
+	text-align: center;
+}
+ul.tab {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	border: 1px solid #ccc;
+	background-color: #f1f1f1;
+	box-shadow:0 8px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19)!important;
+}
+
+/* Float the list items side by side */
+ul.tab li {
+	width: 33%;
+	height: 50px;
+	float: left;
+}
+
+/* Style the links inside the list items */
+ul.tab li a {
+	display: inline-block;
+	color: black;
+	text-align: center;
+	padding: 20px 17px;
+	text-decoration: none;
+	transition: 0.3s;
+	font-size: 30px;
+	height: 20px;
+	width: 100%;
+	font-weight: bold;
+}
+
+/* Change background color of links on hover */
+ul.tab li a:hover {
+	background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+ul.tab li a:focus, .active {
+	background-color: #009090;
+}
+#Tweaks {
+	height: 350px;
+}
+/* Style the tab content */
+.tabcontent {
+	display: none;
+	padding: 6px 12px;
+	border: 1px solid #ccc;
+	border-top: none;
+	background: rgba(52, 52, 53, 0.78);
+}
+#MainMenuMsg {
+	font-size: 24px;
+}
+button {
+	height: 50px;
+	text-shadow: none;
+	font-weight: bold;
+	font-size: 20px;
+	border:none;
+	outline:0;
+	padding:6px 10px;
+	margin: 3px;
+	vertical-align:middle;
+	overflow:hidden;
+	color:#fff;
+	background-color:#000;
+	white-space:nowrap;
+	box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+}
+button.fullRestoreBtn {
+	background: #6b1a28;
+	border-radius: 6px;
+	padding: 3px!important;
+	text-shadow: 0px 4px 3px rgba(0,0,0,0.4),0px 8px 13px rgba(0,0,0,0.2),0px 18px 23px rgba(0,0,0,0.2);
+}
+.tablinks {
+	text-shadow: none;
+}
+
+.tabcontent button:focus {
+	background: blue;
+	/*border: 2px dotted #fff;*/
+	border-radius: 5px;
+	box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+.animate-zoom {animation:animatezoom 0.6s}
+@keyframes animatezoom{from{transform:scale(0)} to{transform:scale(1)}}
+
+.sidenav {
+	height: 100%;
+	width: 0;
+	position: fixed;
+	z-index: 1;
+	top: 0;
+	left: 0;
+	background-color: #111;
+	overflow-x: hidden;
+	transition: 0.5s;
+	padding-top: 60px;
+	margin-top: 59px;
+}
+
+.sidenav a {
+	padding: 8px 8px 8px 32px;
+	text-decoration: none;
+	font-size: 25px;
+	color: #818181;
+	display: block;
+	transition: 0.3s
+}
+
+.sidenav a:hover, .offcanvas a:focus{
+	color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+	position: absolute;
+	top: 0;
+	right: 25px;
+	font-size: 36px;
+	margin-left: 50px;
+}
+
+#main {
+	transition: margin-left .5s;
+}
+#StatusBar_ButtonCtrl1.hidden {
+	display: none!important;
+}
+@media screen and (max-height: 450px) {
+	.sidenav {padding-top: 15px;}
+	.sidenav a {font-size: 18px;}
+}
+#Options {
+	columns: 2;
+}
+#MainMenu {
+	columns: 3;
+}
+.audioSources{
+	width:150px;
+	margin-bottom:20px;
+}
+.audioCtrls{
+	float:left;
+	width:125px;
+}
+[id*="TrackBtn"] {
+	width: 180px;
+}
+#aaTitle, #csTitle {
+	position: absolute;
+	bottom: 15px;
+	padding: 5px;
+	left: 20px;
+	font-size: 25px;
+	font-weight: bolder;
+	height: 120px;
+	width: 365px;
+	outline: 6px dashed #fff;
+}
+#csTitle {
+	left:410px;
+}
+.aaFunc, .csFunc {
+	position: absolute;
+	bottom: 20px;
+	width: 150px;
+}
+button#AAstart {
+	left: 40px;
+	background: green;
+}
+button#AAstop {
+	left: 200px;
+	background: #ff0000;
+}
+button#CSstart {
+	left: 440px;
+	background: green;
+}
+button#CSstop {
+	left: 600px;
+	background: #ff0000;
+}
+button#CSstart:focus, button#AAstart:focus {
+	background: #001680;
+}
+button#CSstop:focus, button#AAstop:focus {
+	background: #670092;
+}
+#Options button {
+	min-width: 150px;
+}
+#MainMenu button {
+	width: 240px;
+	text-overflow: ellipsis;
+}
+button#hideMusicBg,
+button#hideSbn,
+button#noBgBtn {
+	font-size: 1rem;
+}
+#touchscreenPanel {
+	display: none;
+	position: absolute;
+	width: 400px;
+	padding: 10px;
+	margin: auto;
+	top: 130px;
+	right: 0;
+	left: 0;
+	background: #5e6684;
+	border-radius: 20px;
+	z-index: 990;
+}
+#AioInfoPanel {
+	display: none;
+	position: absolute;
+	width: 600px;
+	min-height: 160px;
+	max-height: 420px;
+	margin: auto;
+	top: 60px;
+	right: 0;
+	left: 0;
+	background: rgba(0, 0, 0, .75);
+	color: #fff;
+	border-radius: 17px;
+	border: 2px dashed #0f0;
+	z-index: 998;
+}
+#AioInformation {
+	margin: 30px;
+	padding: 30px;
+	font-size: 20px;
+	border: 2px dashed #fff;
+	border-radius: 7px;
+	background: #000;
+	max-height: 300px;
+	overflow-y:auto;
+}
+.AIO-scroller {
+	left:40px;
+	position:absolute;
+	width: 48px;
+	height: 48px;
+	padding: 0;
+}
+#scrollUpBtn{
+	top: 200px;
+}
+#scrollDownBtn{
+	top: 260px;
+}
+#closeAioInfo,
+#closeTouchPanel {
+	position: absolute;
+	top: 0;
+	right: 0;
+	border: 2px solid #000;
+	border-radius: 20px;
+	background-image: url(../images/closeBtn.png);
+	background-size: contain;
+	width: 45px;
+	height: 45px;
+	z-index: 9998;
+}
+#closeTouchPanel:focus {
+	opacity:0.8;
+	border-color: #ff0000;
+}
+.Touch {
+	z-index:9999;
+}
+#MainMenuMsg {
+	background: #000;
+	border-radius: 20px;
+	width: 48%;
+	margin: auto;
+}

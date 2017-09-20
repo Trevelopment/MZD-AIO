@@ -43,6 +43,7 @@ function SpeedoMeterTmplt(uiaId, parentDiv, templateID, controlProperties)
     // do whatever you want here
     this.divElt.innerHTML = '<script language="javascript" type="text/javascript" src="/jci/gui/apps/_speedometer/js/speedometerUpdate.js"></script>'+
 '<div id="speedometerContainer">'+
+'<div id="hideIdleBtn"></div>'+
 '<div id="table_bg">'+
 '<div id="valuetable">'+
 '<fieldset class="tripDistFieldSet">'+
@@ -170,6 +171,34 @@ SpeedoMeterTmplt.prototype.handleControllerEvent = function(eventID)
     log.debug("handleController() called, eventID: " + eventID);
 
     var retValue = 'giveFocusLeft';
+
+    switch(eventID) {
+      case "select":
+		$('.tripTimeFieldSet').click();
+		retValue = "consumed";
+		break;
+      case "down":
+		$('.speedTopFieldSet').click();
+		retValue = "consumed";
+		break;
+      case "up":
+		$('#valuetable .tripDistFieldSet').click();
+		retValue = "consumed";
+		break;
+      case "left":
+		$('#analog').click();
+		retValue = "consumed";
+		break;
+      case "right":
+ 		$('#digital').click();
+		retValue = "consumed";
+		break;
+    //  case "cw":
+    //  case "ccw":
+      default:
+		retValue = "ignored";
+	}
+
     return retValue;
 };
 /*

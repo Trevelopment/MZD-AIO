@@ -1,0 +1,17 @@
+/* CSS For Full Width Titles */
+.NowPlaying4CtrlAudioTitle,
+.NowPlaying4CtrlAudioTitleStyle3,
+.NowPlaying4CtrlAudioTitleBlock,
+.NowPlaying4CtrlDetailLine1Block,
+.NowPlaying4CtrlDetailLine1,
+.NowPlaying4CtrlDetailLine2,
+.NowPlaying4CtrlDetailLine3,
+.NowPlaying4CtrlAudioTitleBlockFrame,
+.NowPlaying4CtrlDetailLine1BlockFrame,
+.NowPlaying4CtrlAudioTitleStyle3Full,
+.NowPlaying4CtrlAudioTitleFull,
+.NowPlaying4CtrlDetailLine1Full,
+.NowPlaying4CtrlDetailLine2Full,
+.NowPlaying4CtrlDetailLine3Full {
+	width: 740px;
+}

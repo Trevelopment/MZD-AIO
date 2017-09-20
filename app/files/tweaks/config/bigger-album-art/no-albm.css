@@ -1,0 +1,5 @@
+/* CSS For Hide Album Art */
+.NowPlaying4CtrlArtworkImage,
+.NowPlaying4CtrlArtworkImageBorder {
+	display: none;
+}

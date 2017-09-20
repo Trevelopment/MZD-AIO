@@ -1,13 +1,13 @@
 # Install Castscreen receiver
 show_message "INSTALL CASTSCREEN-RECEIVER ..."
-log_message "=====******  INSTALL CASTSCREEN-RECEIVER ...   ******====="
+log_message "=====**************  INSTALL CASTSCREEN-RECEIVER ...   *************====="
 
 cp -a ${MYDIR}/config/castscreen-receiver/* /jci/scripts/
 cp -a /jci/scripts/adb /usr/bin/
 rm -f /jci/scripts/cs_receiver_conn_arm
 rm -f /jci/scripts/castscreen-1.0.apk
 rm -f /jci/scripts/castscreen-1.0.1.apk
-log_message "=== Copied castscreen-receiver files to /jci/scripts/  ==="
+log_message "===        Copied castscreen-receiver files to /jci/scripts/          ==="
 chmod 755 /jci/scripts/wait_adb_arm.sh
 chmod 755 /jci/scripts/cs_receiver_arm
 chmod 755 /jci/scripts/mirroring.sh
@@ -24,18 +24,17 @@ then
 	if grep -Fq "watch /jci/scripts/mirroring.sh &" /jci/scripts/stage_wifi.sh
 	then
 		echo "exist"
-		log_message "=== Modifications already done to /jci/scripts/stage_wifi.sh ==="
+		log_message "===            Modifications already done to stage_wifi.sh            ==="
 	else
-		#first backup
 		if [ ! -e /jci/scripts/stage_wifi.sh.org ]
 		then
 			cp -a /jci/scripts/stage_wifi.sh /jci/scripts/stage_wifi.sh.org
-			log_message "=== Backup of /jci/scripts/stage_wifi.sh to stage_wifi.sh.org ==="
+			log_message "===           Backup of stage_wifi.sh to stage_wifi.sh.org            ==="
 		fi
 		echo "### Castscreen receiver watch" >> /jci/scripts/stage_wifi.sh
 		echo "watch /jci/scripts/mirroring.sh &" >> /jci/scripts/stage_wifi.sh
 		sed -i '/Castscreen receiver watch/ i\ ' /jci/scripts/stage_wifi.sh
-		log_message "=== Modifications added to /jci/scripts/stage_wifi.sh  ==="
+		log_message "===         Modifications added to /jci/scripts/stage_wifi.sh         ==="
 		if [ "${TESTBKUPS}" = "1" ]
 		then
 			cp /jci/scripts/stage_wifi.sh ${MYDIR}/bakups/test/stage_wifi_castscreen-after.sh
@@ -46,12 +45,12 @@ fi
 if [ ! -e /jci/scripts/jci-fw.sh.org ]
 then
 	cp /jci/scripts/jci-fw.sh /jci/scripts/jci-fw.sh.org
-	log_message "===       Backup of /jci/scripts/jci-fw.sh        ==="
+	log_message "===                  Backup of /jci/scripts/jci-fw.sh                 ==="
 fi
 if [ "$KEEPBKUPS" = 1 ]
 then
 	cp /jci/scripts/jci-fw.sh.org ${MYDIR}/bakups/
-	log_message "===         saved Backup of jci-fw.sh             ==="
+	log_message "===                    Saved Backup of jci-fw.sh                      ==="
 fi
 # Fix Firewall Settings
 if ! grep -q "Allow ScreenCast rule" /jci/scripts/jci-fw.sh
@@ -60,10 +59,10 @@ then
 	\
 	\# Allow ScreenCast rule \
 	\$IPTABLES -A INPUT -p tcp --dport 53515 -m state --state NEW,ESTABLISHED -j ACCEPT' /jci/scripts/jci-fw.sh
-	log_message "===          Added port 53515 to fw iptables      ====="
+	log_message "===                  Added port 53515 to fw iptables                ====="
 else
-	log_message "===   Port 53515 is already an accepted connection     ==="
+	log_message "===           Port 53515 is already an accepted connection            ==="
 fi
 
-log_message "=====**** END INSTALLATION OF CASTSCREEN-RECEIVER ****===="
+log_message "=====************ END INSTALLATION OF CASTSCREEN-RECEIVER ***********===="
 log_message " "

@@ -1,4 +1,4 @@
-var additionalApps = ["_androidauto","_speedometer","_videoplayer","_background","_helloworld","_mzdmeter","_mzdaio","_aio","_setup","app.2048","app.aio","app.android","app.androidauto","app.background","app.breakout","app.casdk","app.devtools","app.helloworld","app.multicontroller","app.myapp","app.simpledashboard","app.speedometer","app.snake","app.terminal","app.tetris","app.vdd"];
+var AIOapps = ["_androidauto","_speedometer","_videoplayer","_background","_helloworld","_mzdmeter","_mzdaio","_aiotweaks","_aio","_setup","app.2048","app.aio","app.android","app.androidauto","app.background","app.breakout","app.casdk","app.devtools","app.helloworld","app.multicontroller","app.myapp","app.simpledashboard","app.speedometer","app.snake","app.terminal","app.tetris","app.vdd"];
 /*
  Copyright 2012 by Johnson Controls
  __________________________________________________________________________
@@ -17,8 +17,7 @@ var additionalApps = ["_androidauto","_speedometer","_videoplayer","_background"
  Revisions:
  v0.1 - 08-May-2012  Integrated mainMenuControl. Fixed issues with DOM ready
  v0.2 - 10-May-2012  Added ActivePanel, LeftButton, StatusBar
- v0.3 - 11-May-2012  Merged transitions.js code into framework. System App Prototype now shows transitions between
-                     contexts.
+ v0.3 - 11-May-2012  Merged transitions.js code into framework. System App Prototype now shows transitions between contexts.
  v0.4 - 17-May-2012  Reworked functionality of Active Panel Content to handle transitions. Added alerts.
  v0.5 - 14-June-2012 Language Localization added to ListCtrls
  v0.6 - 20-June-2012 Fixed buggy ActivePanel behavior related to new "pop transitions"
@@ -542,6 +541,9 @@ systemApp.prototype.appInit = function()
         //Show timed SBN Voice not supported
         "TimedSBN_VoiceNotSupported"  : this._TimedSBN_VoiceNotSupportedMsgHandler.bind(this),
 
+	//Show timed SBN Voice Recognition Loading
+        "TimedSBN_VRLoading"          : this._TimedSBN_VRLoadingMsgHandler.bind(this),
+
         //At Speed Restriction
         "Global.AtSpeed"              : this._AtSpeedMsgHandler.bind(this),
 
@@ -580,8 +582,7 @@ systemApp.prototype.appInit = function()
  **************************/
 
 systemApp.prototype.getWinkProperties = function(alert, params)
-{
-    log.info("setting wink properties for: ", alert, params);
+{    log.info("setting wink properties for: ", alert, params);
     var winkProperties = null;
     switch(alert)
     {
@@ -614,8 +615,7 @@ systemApp.prototype.getWinkProperties = function(alert, params)
 ///////////////////////////////////////////////////////////////////////////////
 
 systemApp.prototype._initEntertainmentDataList = function()
-{
-    var items = [];
+{    var items = [];
 
     if (framework.localize.getRegion() === framework.localize.REGIONS.Japan)
     {
@@ -652,8 +652,7 @@ systemApp.prototype._initEntertainmentDataList = function()
 };
 
 systemApp.prototype._initApplicationsDataList = function()
-{
-    var items = [];
+{    var items = [];
 
     this._vehicleConfigurationType = null;
     this._vehicleConfigurationType = framework.getSharedData("syssettings","VehicleConfigData");
@@ -698,8 +697,7 @@ systemApp.prototype._initApplicationsDataList = function()
 };
 
 systemApp.prototype._initCommunicationsDataList = function()
-{
-    var items = [];
+{    var items = [];
 
     items.push(
         { appData : { appName : '',            isVisible : false, mmuiEvent : 'SelectActiveCall'    }, text1Id : 'ActiveCallItem',        disabled : false, itemStyle : 'style01', hasCaret : false},
@@ -730,8 +728,7 @@ systemApp.prototype._initCommunicationsDataList = function()
 ///////////////////////////////////////////////////////////////////////////////
 
 systemApp.prototype._StatusPhoneCallMsgHandler = function(msg)
-{
-    if (msg.params && msg.params.payload && msg.params.payload.phoneCallStatus)
+{    if (msg.params && msg.params.payload && msg.params.payload.phoneCallStatus)
     {
         // Add or remove the Active Call item in the communications menu
         var hasActiveCall = msg.params.payload.phoneCallStatus === "ActiveCall" || msg.params.payload.phoneCallStatus === "Connecting";
@@ -760,8 +757,7 @@ systemApp.prototype._StatusPhoneCallMsgHandler = function(msg)
 };
 
 systemApp.prototype._StatusMenuMsgHandler = function(msg)
-{
-    log.debug("Received StatusMenu message: " + msg.params.payload.statusMenu.appName + " " + msg.params.payload.statusMenu.appStatus);
+{    log.debug("Received StatusMenu message: " + msg.params.payload.statusMenu.appName + " " + msg.params.payload.statusMenu.appStatus);
 
     // Update menu items associated with the given appName of the message. Menu items can appear
     // in several different contexts or appear multiple times: this function searches all those places.
@@ -839,8 +835,7 @@ systemApp.prototype._StatusMenuMsgHandler = function(msg)
 };
 
 systemApp.prototype._enableAppListItem = function(appName, isDisabled, dataList)
-{
-    for (var i = 0; i < dataList.items.length; ++i)
+{    for (var i = 0; i < dataList.items.length; ++i)
     {
         if (dataList.items[i].appData.appName.indexOf(appName) === 0)
         {
@@ -884,8 +879,7 @@ systemApp.prototype._enableAppListItem = function(appName, isDisabled, dataList)
 };
 
 systemApp.prototype._enableSpeedRestrictedItem = function(appName, isDisabled, dataList)
-{
-    for (var i = 0; i < dataList.items.length; ++i)
+{    for (var i = 0; i < dataList.items.length; ++i)
     {
         if (dataList.items[i].appData.appName === appName)
         {
@@ -897,8 +891,7 @@ systemApp.prototype._enableSpeedRestrictedItem = function(appName, isDisabled, d
 };
 
 systemApp.prototype._StatusMenuVisibleMsgHandler = function(msg)
-{
-    if (msg.params && msg.params.payload)
+{    if (msg.params && msg.params.payload)
     {
         log.debug("Received StatusMenuVisible message: " + msg.params.payload.appName + " " + msg.params.payload.state);
 
@@ -1012,8 +1005,7 @@ systemApp.prototype._StatusMenuVisibleMsgHandler = function(msg)
     }
 };
 systemApp.prototype._StatusMenuUSBAudioMsgHandler = function(msg)
-{
-    if (msg.params && msg.params.payload && msg.params.payload.statusMenuUSBAudio)
+{    if (msg.params && msg.params.payload && msg.params.payload.statusMenuUSBAudio)
     {
         // Update cached values for the USB device status
         var status = msg.params.payload.statusMenuUSBAudio;
@@ -1080,8 +1072,7 @@ systemApp.prototype._StatusMenuUSBAudioMsgHandler = function(msg)
 };
 
 systemApp.prototype._StatusMenuBTAudioMsgHandler = function(msg)
-{
-    if (msg.params && msg.params.payload)
+{    if (msg.params && msg.params.payload)
     {
         var masterIndex = -1;
 
@@ -1134,8 +1125,7 @@ systemApp.prototype._StatusMenuBTAudioMsgHandler = function(msg)
 };
 
 systemApp.prototype._StatusUpdateEcoEnergyMsgHandler = function(msg)
-{
-    if (msg.params && msg.params.payload)
+{    if (msg.params && msg.params.payload)
     {
         log.debug("Received _StatusUpdateEcoEnergy message: " + msg.params.payload.fuelType);
 
@@ -1182,8 +1172,7 @@ systemApp.prototype._StatusUpdateEcoEnergyMsgHandler = function(msg)
 
 // Handle message to update the notification counts in the Communication context.
 systemApp.prototype._StatusUpdateNotificationsHandler = function(msg)
-{
-    if (msg.params && msg.params.payload && msg.params.payload.messageCounts)
+{    if (msg.params && msg.params.payload && msg.params.payload.messageCounts)
     {
         // Update message counts and the notifications list item displayed in the Communication menu
         var countEmail = msg.params.payload.messageCounts.countEmail;
@@ -1223,8 +1212,7 @@ systemApp.prototype._StatusUpdateNotificationsHandler = function(msg)
 };
 
 systemApp.prototype._ShowStateSBN_SiriActiveMsgHandler = function()
-{
-    framework.common.endStateSbn(this.uiaId, 'SiriStatusNotification', "vrStatus"); //End the SBN if displayed
+{    framework.common.endStateSbn(this.uiaId, 'SiriStatusNotification', "vrStatus"); //End the SBN if displayed
     var params = {
             sbnStyle : 'Style02',
             text1Id : 'VoiceRecognition',
@@ -1234,8 +1222,7 @@ systemApp.prototype._ShowStateSBN_SiriActiveMsgHandler = function()
 };
 
 systemApp.prototype._TimedSBN_SiriErrorMsgHandler = function()
-{
-    framework.common.endStateSbn(this.uiaId, 'SiriStatusNotification', "vrStatus");//End the SBN if displayed
+{    framework.common.endStateSbn(this.uiaId, 'SiriStatusNotification', "vrStatus");//End the SBN if displayed
     var params = {
             sbnStyle : 'Style01',
             text1Id : 'ErrorWhileStartingSiri',
@@ -1243,9 +1230,19 @@ systemApp.prototype._TimedSBN_SiriErrorMsgHandler = function()
     framework.common.startTimedSbn(this.uiaId, 'SiriStatusNotification', "vrStatus", params);
 };
 
+//If VR is not ready after Disclaimer then display SBN
+systemApp.prototype._TimedSBN_VRLoadingMsgHandler = function()
+{    framework.common.endStateSbn(this.uiaId, 'SiriStatusNotification', "vrStatus");//End the SBN if displayed
+    var params = {
+            sbnStyle : 'Style02',
+            text1Id : 'common.SbnVoiceLoading',
+            imagePath1 : 'common/images/icons/IcnSbnMicUnavail.png'
+        };
+    framework.common.startTimedSbn(this.uiaId, 'VoiceRecoLoading', "vrStatus", params);
+};
+
 systemApp.prototype._TimedSBN_VoiceNotSupportedMsgHandler = function()
-{
-    framework.common.endStateSbn(this.uiaId, 'SiriStatusNotification', "vrStatus");//End the SBN if displayed
+{    framework.common.endStateSbn(this.uiaId, 'SiriStatusNotification', "vrStatus");//End the SBN if displayed
     var params = {
             sbnStyle : 'Style02',
             text1Id : 'VoiceNotSupported',
@@ -1255,13 +1252,11 @@ systemApp.prototype._TimedSBN_VoiceNotSupportedMsgHandler = function()
 };
 
 systemApp.prototype._RemoveStateSBN_SiriActiveMsgHandler = function()
-{
-    framework.common.endStateSbn(this.uiaId, 'SiriStatusNotification', "vrStatus");
+{    framework.common.endStateSbn(this.uiaId, 'SiriStatusNotification', "vrStatus");
 };
 
 systemApp.prototype._TimedSBN_SourceNotAvailableMsgHandler = function(msg)
-{
-    if (msg.params && msg.params.payload)
+{    if (msg.params && msg.params.payload)
     {
         var params = {
             sbnStyle : 'Style02',
@@ -1301,8 +1296,7 @@ systemApp.prototype._TimedSBN_SourceNotAvailableMsgHandler = function(msg)
 };
 
 systemApp.prototype._updateEntertainmentNowPlayingIcon = function(audioSource, isPlaying, dataList)
-{
-    for (var i = 0; i < dataList.items.length; ++i)
+{    for (var i = 0; i < dataList.items.length; ++i)
     {
         if (isPlaying)
         {
@@ -1322,8 +1316,7 @@ systemApp.prototype._updateEntertainmentNowPlayingIcon = function(audioSource, i
 };
 
 systemApp.prototype._StatusUpdateAudioSourceMsgHandler = function(msg)
-{
-    if (msg.params && msg.params.payload)
+{    if (msg.params && msg.params.payload)
     {
         var audioSource = msg.params.payload.statusAudio.audioSource;
         var isPlaying = msg.params.payload.statusAudio.audioActive === "Play";
@@ -1342,8 +1335,7 @@ systemApp.prototype._StatusUpdateAudioSourceMsgHandler = function(msg)
 };
 
 systemApp.prototype._StatusUpdateMissedCallCountMsgHandler = function(msg)
-{
-    var count = "";
+{    var count = "";
     if (msg.params && msg.params.payload && msg.params.payload.missedCallCount > 0)
     {
         count = msg.params.payload.missedCallCount.toString();
@@ -1374,8 +1366,7 @@ systemApp.prototype._StatusUpdateMissedCallCountMsgHandler = function(msg)
 };
 
 systemApp.prototype._WarningStatusCountMsgHandler = function(msg)
-{
-    if (msg.params && msg.params.payload)
+{    if (msg.params && msg.params.payload)
     {
         var count = "";
         var icon = "";
@@ -1437,8 +1428,7 @@ systemApp.prototype._WarningStatusCountMsgHandler = function(msg)
 };
 
 systemApp.prototype._StatusUpdateSchedMaintHandler = function(msg)
-{
-    if (msg.params && msg.params.payload)
+{    if (msg.params && msg.params.payload)
     {
         var isDue = msg.params.payload.due;
         var warningCountValue = null;
@@ -1530,15 +1520,13 @@ systemApp.prototype._StatusUpdateSchedMaintHandler = function(msg)
 };
 
 systemApp.prototype._AtSpeedMsgHandler = function(msg)
-{
-    //At speed will disable the speed Restricted items
+{    //At speed will disable the speed Restricted items
     this._AtSpeedDisabled = true;
     this._updateSpeedRestrictedApps(this._AtSpeedDisabled);
 };
 
 systemApp.prototype._NoSpeedMsgHandler = function(msg)
-{
-    //At speed will Enable the speed Restricted items
+{    //At speed will Enable the speed Restricted items
     this._AtSpeedDisabled = false;
     this._updateSpeedRestrictedApps(this._AtSpeedDisabled);
 };
@@ -1554,8 +1542,7 @@ systemApp.prototype._NoSpeedMsgHandler = function(msg)
  * @param   params      (Object) Contains label for the selected icon
  */
 systemApp.prototype._selectCallbackHomeScreen = function(mainMenuCtrlObj, appData, params)
-{
-    log.debug("_selectCallbackHomeScreen() called for icon: " + params.icon);
+{    log.debug("_selectCallbackHomeScreen() called for icon: " + params.icon);
 
     var icon = params.icon;
 
@@ -1584,8 +1571,7 @@ systemApp.prototype._selectCallbackHomeScreen = function(mainMenuCtrlObj, appDat
  * Appdata for these list items is a hash: { appName: "", mmuiEvent: ""}
  */
 systemApp.prototype._menuItemSelectCallback = function(listCtrlObj, appData, params)
-{
-    framework.sendEventToMmui(this.uiaId, appData.mmuiEvent, {}, params.fromVui);
+{    framework.sendEventToMmui(this.uiaId, appData.mmuiEvent, {}, params.fromVui);
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -1593,8 +1579,7 @@ systemApp.prototype._menuItemSelectCallback = function(listCtrlObj, appData, par
 ///////////////////////////////////////////////////////////////////////////////
 
 systemApp.prototype._CommCtxtContextIn = function()
-{
-    var scrollTo = 0;
+{    var scrollTo = 0;
 
     // We cannot use the data list in the current context here, becuase it doesn't exist yet
     // so we use _buildCommunicationDataList() just like _readyCommunications() will
@@ -1627,8 +1612,7 @@ systemApp.prototype._CommCtxtContextIn = function()
 ///////////////////////////////////////////////////////////////////////////////
 
 systemApp.prototype._readyApplications = function()
-{
-    // This context has dynamically visible items (see StatusMenuVisible message) so the list contents is rebuilt.
+{    // This context has dynamically visible items (see StatusMenuVisible message) so the list contents is rebuilt.
     if (this._currentContext && this._currentContextTemplate)
     {
         this._AtSpeedDisabled = framework.common.getAtSpeedValue();
@@ -1644,8 +1628,7 @@ systemApp.prototype._readyApplications = function()
 
 // Build list data from this._masterApplicationDataList based on the currently visible items.
 systemApp.prototype._buildApplicationsDataList = function()
-{
-    var dataList = {
+{    var dataList = {
         itemCountKnown : true,
         itemCount : 0,
         items : [],
@@ -1686,8 +1669,7 @@ systemApp.prototype._buildApplicationsDataList = function()
 ///////////////////////////////////////////////////////////////////////////////
 
 systemApp.prototype._readyEntertainment = function()
-{
-    // This context has dynamically visible items (see StatusMenuVisible message) so the list contents is rebuilt.
+{    // This context has dynamically visible items (see StatusMenuVisible message) so the list contents is rebuilt.
     if (this._currentContext && this._currentContextTemplate)
     {
         this._AtSpeedDisabled = framework.common.getAtSpeedValue();
@@ -1702,8 +1684,7 @@ systemApp.prototype._readyEntertainment = function()
 
 // Build list data from this._masterEntertainmentDataList based on the currently visible items.
 systemApp.prototype._buildEntertainmentDataList = function()
-{
-    var dataList = {
+{    var dataList = {
         itemCountKnown : true,
         itemCount : 0,
         items : [],
@@ -1722,14 +1703,12 @@ systemApp.prototype._buildEntertainmentDataList = function()
     return dataList;
 };
 
-
 ///////////////////////////////////////////////////////////////////////////////
 // Communication - avalajh
 ///////////////////////////////////////////////////////////////////////////////
 
 systemApp.prototype._readyCommunication = function()
-{
-    // This context has dynamically visible items (see StatusMenuVisible message) so the list contents is rebuilt.
+{    // This context has dynamically visible items (see StatusMenuVisible message) so the list contents is rebuilt.
     if (this._currentContext && this._currentContextTemplate)
     {
         this._AtSpeedDisabled = framework.common.getAtSpeedValue();
@@ -1744,8 +1723,7 @@ systemApp.prototype._readyCommunication = function()
 
 // Build list data from this._communicationsDataList based on the currently visible items.
 systemApp.prototype._buildCommunicationDataList = function()
-{
-    var dataList = {
+{    var dataList = {
         itemCountKnown : true,
         itemCount : 0,
         items : [],
@@ -1764,14 +1742,12 @@ systemApp.prototype._buildCommunicationDataList = function()
     return dataList;
 };
 
-
 ///////////////////////////////////////////////////////////////////////////////
 // NoConnectionNotify
 ///////////////////////////////////////////////////////////////////////////////
 
 systemApp.prototype._selectCallbackNoConnectionNotify = function(dialogBtnCtrlObj, appData, params)
-{
-    switch(this._currentContext.ctxtId)
+{    switch(this._currentContext.ctxtId)
     {
         case 'NoConnectionNotify':
             switch(appData)
@@ -1793,16 +1769,14 @@ systemApp.prototype._selectCallbackNoConnectionNotify = function(dialogBtnCtrlOb
 ///////////////////////////////////////////////////////////////////////////////
 
 systemApp.prototype._NotifyDialogCtxtTmpltReadyToDisplay = function()
-{
-    if (this._currentContext.params && this._currentContext.params.payload && this._currentContext.params.payload.messageNotifyData)
+{    if (this._currentContext.params && this._currentContext.params.payload && this._currentContext.params.payload.messageNotifyData)
     {
         this._currentContextTemplate.dialog3Ctrl.setText2(this._currentContext.params.payload.messageNotifyData.name);
     }
 };
 
 systemApp.prototype._NotifyDialogCtxtTmpltDisplayed = function()
-{
-    // Start timer to dismiss the notification if the user doesn't respond
+{    // Start timer to dismiss the notification if the user doesn't respond
     var self = this;
     this._NotifyDialogTimeoutId = setTimeout(function() {
         this._NotifyDialogTimeoutId = null;
@@ -1811,8 +1785,7 @@ systemApp.prototype._NotifyDialogCtxtTmpltDisplayed = function()
 };
 
 systemApp.prototype._NotifyDialogCtxtTmpltNoLongerDisplayed = function()
-{
-    if (this._NotifyDialogTimeoutId !== null)
+{    if (this._NotifyDialogTimeoutId !== null)
     {
         clearTimeout(this._NotifyDialogTimeoutId);
         this._NotifyDialogTimeoutId = null;
@@ -1820,8 +1793,7 @@ systemApp.prototype._NotifyDialogCtxtTmpltNoLongerDisplayed = function()
 };
 
 systemApp.prototype._selectCallbackNotifyDialog = function(controlRef, appData, params)
-{
-    if (this._NotifyDialogTimeoutId !== null)
+{    if (this._NotifyDialogTimeoutId !== null)
     {
         clearTimeout(this._NotifyDialogTimeoutId);
         this._NotifyDialogTimeoutId = null;
@@ -1857,8 +1829,7 @@ systemApp.prototype._selectCallbackNotifyDialog = function(controlRef, appData, 
 ///////////////////////////////////////////////////////////////////////////////
 
 systemApp.prototype._selectCallbackNotificationListRetry = function(controlRef, appData, params)
-{
-    switch (appData)
+{    switch (appData)
     {
         case "Global.Cancel":
             framework.sendEventToMmui("common", appData);
@@ -1875,8 +1846,7 @@ systemApp.prototype._selectCallbackNotificationListRetry = function(controlRef, 
 ///////////////////////////////////////////////////////////////////////////////
 
 systemApp.prototype._readyNotificationList = function(readyParams)
-{
-    log.debug("_readyNotificationList called...");
+{    log.debug("_readyNotificationList called...");
 
     if (readyParams)
     {
@@ -1910,13 +1880,11 @@ systemApp.prototype._readyNotificationList = function(readyParams)
 };
 
 systemApp.prototype._noLongerDisplayedNotificationList = function()
-{
-    this._closeMsgApiConnection();
+{    this._closeMsgApiConnection();
 };
 
 systemApp.prototype._msgConnectCallback = function(msg)
-{
-    if (msg && msg.msgType === "methodResponse" && msg.params && msg.params.status === 100)
+{    if (msg && msg.msgType === "methodResponse" && msg.params && msg.params.status === 100)
     {
         this._msgApiConnection = msg.params.connection;
         var params = {
@@ -1935,8 +1903,7 @@ systemApp.prototype._msgConnectCallback = function(msg)
 };
 
 systemApp.prototype._msgGetNewMessagesListCallback = function(msg)
-{
-    if (msg && msg.msgType === "methodResponse" && msg.params)
+{    if (msg && msg.msgType === "methodResponse" && msg.params)
     {
         switch (msg.params.status)
         {
@@ -2038,8 +2005,7 @@ systemApp.prototype._msgGetNewMessagesListCallback = function(msg)
 };
 
 systemApp.prototype._closeMsgApiConnection = function()
-{
-    if (this._msgApiConnection)
+{    if (this._msgApiConnection)
     {
         var params = {
             "connection_in" : this._msgApiConnection,
@@ -2051,8 +2017,7 @@ systemApp.prototype._closeMsgApiConnection = function()
 };
 
 systemApp.prototype._selectNotificationListItem = function(controlRef, appData, params)
-{
-    if (appData && appData.eventId)
+{    if (appData && appData.eventId)
     {
         switch (appData.eventId)
         {
@@ -2091,8 +2056,7 @@ systemApp.prototype._selectNotificationListItem = function(controlRef, appData, 
 ///////////////////////////////////////////////////////////////////////////////
 
 systemApp.prototype._selectCallbackNoDevice = function(controlRef, appData, params)
-{
-    switch (appData)
+{    switch (appData)
     {
         case "Global.GoBack":
             framework.sendEventToMmui("common", appData);
@@ -2109,8 +2073,7 @@ systemApp.prototype._selectCallbackNoDevice = function(controlRef, appData, para
 ///////////////////////////////////////////////////////////////////////////////
 
 systemApp.prototype._displayOffUserActivity = function(controlRef, appData, params)
-{
-    framework.sendEventToMmui("system", "DisplayOffGUIActivity");
+{    framework.sendEventToMmui("system", "DisplayOffGUIActivity");
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -2118,8 +2081,7 @@ systemApp.prototype._displayOffUserActivity = function(controlRef, appData, para
 ///////////////////////////////////////////////////////////////////////////////
 
 systemApp.prototype._noMoreDisclaimer = function(controlRef, appData, params)
-{
-    framework.sendEventToMmui("system", "DisposeIntroVideo");
+{    framework.sendEventToMmui("system", "DisposeIntroVideo");
 
 	// this need only for log
     this._disclaimerTime.remaining = 3500;
@@ -2133,8 +2095,7 @@ systemApp.prototype._noMoreDisclaimer = function(controlRef, appData, params)
 ///////////////////////////////////////////////////////////////////////////////
 
 systemApp.prototype._selectCallbackSystemWarning = function(controlRef, appData, params)
-{
-    switch (appData)
+{    switch (appData)
     {
         case "Global.Yes":
             framework.sendEventToMmui("common", appData);
@@ -2147,8 +2108,7 @@ systemApp.prototype._selectCallbackSystemWarning = function(controlRef, appData,
 ///////////////////////////////////////////////////////////////////////////////
 
 systemApp.prototype._selectCallbackEnableRVR = function(controlRef, appData, params)
-{
-    switch (appData)
+{    switch (appData)
     {
         case "Global.Yes":
             framework.sendEventToMmui("common", appData);
@@ -2161,8 +2121,7 @@ systemApp.prototype._selectCallbackEnableRVR = function(controlRef, appData, par
 ///////////////////////////////////////////////////////////////////////////////
 
 systemApp.prototype._selectCallbackRVRInstructions = function(controlRef, appData, params)
-{
-    switch (appData)
+{    switch (appData)
     {
         case "Global.Yes":
             framework.sendEventToMmui("common", appData);
@@ -2175,8 +2134,7 @@ systemApp.prototype._selectCallbackRVRInstructions = function(controlRef, appDat
 ///////////////////////////////////////////////////////////////////////////////
 
 systemApp.prototype._readySourceReconnect = function()
-{
-    if (this._currentContext.params &&
+{    if (this._currentContext.params &&
         this._currentContext.params.payload &&
         this._currentContextTemplate &&
         this._currentContextTemplate.dialog3Ctrl)
@@ -2224,8 +2182,7 @@ systemApp.prototype._readySourceReconnect = function()
 };
 
 systemApp.prototype._selectSourceReconnect = function(controlRef, appData, params)
-{
-    switch (appData)
+{    switch (appData)
     {
         case "SelectEntertainmentMenu":
             framework.sendEventToMmui(this.uiaId, appData);
@@ -2238,8 +2195,7 @@ systemApp.prototype._selectSourceReconnect = function(controlRef, appData, param
 ///////////////////////////////////////////////////////////////////////////////
 
 systemApp.prototype._readySourceReconnectFailed = function()
-{
-    if (this._currentContext.params &&
+{    if (this._currentContext.params &&
         this._currentContext.params.payload &&
         this._currentContextTemplate &&
         this._currentContextTemplate.dialog3Ctrl)
@@ -2279,8 +2235,7 @@ systemApp.prototype._readySourceReconnectFailed = function()
 
 //Siri EnableRVR context ready to Display Function
 systemApp.prototype._readyEnableRVR = function()
-{
-    if (this._currentContext.params &&
+{    if (this._currentContext.params &&
         this._currentContext.params.payload &&
         this._currentContextTemplate &&
         this._currentContextTemplate.dialog3Ctrl)
@@ -2294,8 +2249,7 @@ systemApp.prototype._readyEnableRVR = function()
 
 //Siri SiriLaunchingError context ready to Display Function
 systemApp.prototype._readySiriLaunchingError = function()
-{
-    if (this._currentContext.params &&
+{    if (this._currentContext.params &&
         this._currentContext.params.payload &&
         this._currentContextTemplate &&
         this._currentContextTemplate.dialog3Ctrl)
@@ -2308,8 +2262,7 @@ systemApp.prototype._readySiriLaunchingError = function()
 };
 
 systemApp.prototype._selectSourceReconnectFailed = function(controlRef, appData, params)
-{
-    switch (appData)
+{    switch (appData)
     {
         case "Global.Yes":
             framework.sendEventToMmui("common", appData);
@@ -2319,8 +2272,7 @@ systemApp.prototype._selectSourceReconnectFailed = function(controlRef, appData,
 
 // Store the Availability Status of Speed Restricted Apps
 systemApp.prototype._StatusMenuChanged = function(appName, isDisabled)
-{
-    for(var i = 0; i < this._SpeedRestrictedApps.length; ++i)
+{    for(var i = 0; i < this._SpeedRestrictedApps.length; ++i)
     {
         var speedRestrictedAppName = this._SpeedRestrictedApps[i].appName;
         if(speedRestrictedAppName.indexOf(appName) === 0)
@@ -2332,8 +2284,7 @@ systemApp.prototype._StatusMenuChanged = function(appName, isDisabled)
 
 // Update the items for Speed Restricted Message
 systemApp.prototype._updateSpeedRestrictedApps = function(isDisabled)
-{
-    var status = null;
+{    var status = null;
     var appName = null;
     for(var i = 0; i < this._SpeedRestrictedApps.length; ++i)
     {
@@ -2381,13 +2332,12 @@ systemApp.prototype._updateSpeedRestrictedApps = function(isDisabled)
 
 // Update the Applications structure based on vehicle configuration(Old or New)
 systemApp.prototype._updateApplicationStructure = function(vehicleConfiguration)
-{
-    if(vehicleConfiguration === "Old")
+{    if(vehicleConfiguration === "Old")
     {
         //We have two different context (Applications and VehicleStatusMonitor) for displaying Appication item(s),so context wise storing the array of appName(s) to be displayed on corresponding Context.
         this._applicationsCtxtWiseAppNames = {
           //Context Name :  // [appName,appName....]
-          "Applications"            : ["hdtrafficimage","idm","ecoenergy","driverid","warnguide","schedmaint","vehicleStatus","vdt_settings","vdt","carplay","androidauto"].concat(additionalApps),
+          "Applications"            : ["hdtrafficimage","idm","ecoenergy","driverid","warnguide","schedmaint","vehicleStatus","vdt_settings","vdt","carplay","androidauto"].concat(AIOapps),
           "VehicleStatusMonitor"    : ["vsm"]
         };
 
@@ -2397,11 +2347,9 @@ systemApp.prototype._updateApplicationStructure = function(vehicleConfiguration)
         //We have two different context (Applications and VehicleStatusMonitor) for displaying Appication item(s),so context wise storing the array of appName(s) to be displayed on corresponding Context.
         this._applicationsCtxtWiseAppNames = {
           //Context Name :  // [appName,appName....]
-          "Applications"            : ["hdtrafficimage","idm","ecoenergy","driverid","vehicleStatus","vdt_settings","vdt","carplay","androidauto"].concat(additionalApps),
+          "Applications"            : ["hdtrafficimage","idm","ecoenergy","driverid","vehicleStatus","vdt_settings","vdt","carplay","androidauto"].concat(AIOapps),
           "VehicleStatusMonitor"    : ["warnguide","vsm","schedmaint"]
         };
     }
-}
-
-// Tell framework that system app has finished loading
+}// Tell framework that system app has finished loading
 framework.registerAppLoaded("system", null, true);

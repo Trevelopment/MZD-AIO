@@ -1,0 +1,64 @@
+show_message "REMOVE MZD METER ..."
+log_message "========****************  UNINSTALL MZD METER ... ****************======="
+
+### kills all WebSocket daemons
+pkill websocketd
+
+if [ "${TESTBKUPS}" = "1" ]
+then
+	cp /jci/scripts/stage_wifi.sh "${MYDIR}/bakups/test/stage_wifi_mzd-before.sh"
+	cp /jci/opera/opera_dir/userjs/additionalApps.json "${MYDIR}/bakups/test/additionalApps_mzd_before.json"
+fi
+
+sed -i '/### MZD Meter/d' /jci/scripts/stage_wifi.sh
+sed -i '/mzdmonitor.sh/d' /jci/scripts/stage_wifi.sh
+
+ADDIT_APPS=0
+# delete mzdmeter entry from /jci/opera/opera_dir/userjs/additionalApps.json
+if grep -Fq "_androidauto" /jci/opera/opera_dir/userjs/additionalApps.json
+then
+	log_message "===           Found androidauto entry in additionalApps.json          ==="
+	ADDIT_APPS=1
+elif grep -Fq "_speedometer" /jci/opera/opera_dir/userjs/additionalApps.json
+then
+	log_message "===           Found speedometer entry in additionalApps.json          ==="
+	ADDIT_APPS=1
+elif grep -Fq "_videoplayer" /jci/opera/opera_dir/userjs/additionalApps.json
+then
+	log_message "===           Found videoplayer entry in additionalApps.json          ==="
+	ADDIT_APPS=1
+elif grep -Fq "_aiotweaks" /jci/opera/opera_dir/userjs/additionalApps.json
+then
+	log_message "===          Found aiotweaksapp entry in additionalApps.json          ==="
+	ADDIT_APPS=1
+fi
+if [ ${ADDIT_APPS} = "0" ]
+then
+	log_message "===    No more entrys in additionalApps.json, files will be deleted   ==="
+	rm -f /jci/opera/opera_dir/userjs/additionalApps.*
+else
+	remove_app_json "_mzdmeter"
+fi
+## check for speedometer app
+if [ -e /jci/gui/apps/_speedometer/js/speedometer.js ]
+then
+	sed -i "/.. Remove Mzd ../,/.. End Mzd ../d" /jci/opera/opera_dir/userjs/speedometer-startup.js
+	log_message "===             Speedometer App found removed mzd startup             ==="
+else
+	rm -f /jci/opera/opera_dir/userjs/speedometer-startup.js
+	log_message "===         No Speedometer App found deleting mzd-meter startup       ==="
+fi
+if [ ! -e /jci/opera/opera_dir/userjs/additionalApps.json ]; then
+	rm -fr /jci/gui/addon-common
+	log_message "===      Removed /jci/gui/addon-common because no more AIO apps       ==="
+fi
+rm -fr /jci/gui/apps/_mzdmeter
+rm -fr /paa
+
+if [ "${TESTBKUPS}" = "1" ]
+then
+	cp /jci/scripts/stage_wifi.sh "${MYDIR}/bakups/test/stage_wifi_mzd-after.sh"
+fi
+
+log_message "====-==************* END UNINSTALLATION OF MZD METER *************======="
+log_message " "

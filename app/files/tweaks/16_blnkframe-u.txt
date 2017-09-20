@@ -1,11 +1,11 @@
 # restore blank album art frame
 show_message "RESTORE BLANK ALBUM ART FRAME ..."
-log_message "===**** UNINSTALL REMOVE BLANK ALBUM ART FRAME ... ****==="
+log_message "========****** UNINSTALL REMOVE BLANK ALBUM ART FRAME ... *******========"
 
 cp -a "${MYDIR}/config_org/blank-album-art-frame/jci/gui/common/controls/InCall2/images/NowPlayingImageFrame.png" /jci/gui/common/controls/InCall2/images
 cp -a "${MYDIR}/config_org/blank-album-art-frame/jci/gui/common/controls/NowPlaying4/images/NowPlayingImageFrame.png" /jci/gui/common/controls/NowPlaying4/images
 cp -a "${MYDIR}/config_org/blank-album-art-frame/jci/gui/common/images/no_artwork_icon.png" /jci/gui/common/images
-log_message "===           Restored Blank Album Art Frame           ==="
+log_message "===                   Restored Blank Album Art Frame                  ==="
 
-log_message "===*** END UNINSTALLATION OF REMOVE BLANK ALBUM ART ***==="
+log_message "========***** END UNINSTALLATION OF REMOVE BLANK ALBUM ART ******========"
 log_message " "

@@ -1,4 +1,4 @@
 # change to Turkish version
 show_message "CHANGE SPEEDOMETER TO TURKISH..."
 sed -i 's/var language = "DE";/var language = "TR";/g' /jci/opera/opera_dir/userjs/speedometer-startup.js
-log_message "===       CHANGED SPEEDOMETER TO TURKISH VERSION       ==="
+log_message "===              CHANGED SPEEDOMETER TO TURKISH VERSION               ==="

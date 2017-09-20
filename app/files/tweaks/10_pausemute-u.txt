@@ -1,12 +1,12 @@
 # remove pause on mute
 show_message "REMOVE PAUSE_ON_MUTE  ..."
-log_message "=======******** UNINSTALL PAUSE_ON_MUTE ... *******======="
+log_message "==========************* UNINSTALL PAUSE_ON_MUTE ... ************========="
 
 # If this string is found, the line is deleted and we are done
 if grep -Fq 'Pause on Mute' /jci/gui/common/js/Common.js
 then
   sed -i '/.*Pause on Mute.*/d' /jci/gui/common/js/Common.js
-  log_message "=== Removed Pause_on_mute Code From Common.js ==="
+  log_message "===             Removed Pause_on_mute Code From Common.js             ==="
   # Looks for this line of code that doesnt exist in the original file for installations prior to AIO v2.1
 elif grep -Fq 'isMuted ? "Global.Pause" : "Global.Resume"' /jci/gui/common/js/Common.js
 then
@@ -44,22 +44,22 @@ then
     pause_copy_file=56.00.511A-EU
   fi
   # If Backup is Available then we're done
-  if test -s /jci/gui/common/js/Common.js.org
+  if [ -e /jci/gui/common/js/Common.js.org ]
   then
-    cp /jci/gui/common/js/Common.js.org /jci/gui/common/js/Common.js
-    log_message "=== Common.js Restored From Original Backup ==="
+    cp -a /jci/gui/common/js/Common.js.org /jci/gui/common/js/Common.js
+    log_message "===             Common.js Restored From Original Backup               ==="
     # Fallback only if supported FW version
   elif [ ${pause_copy} = "1" ]
   then
-    log_message "=== No backup of Common.js available, no changes were made ==="
+    log_message "===      No backup of Common.js available, no changes were made       ==="
     # cp -a ${MYDIR}/config_org/pause-on-mute/jci/gui/common/js/Common.js.${pause_copy_file} /jci/gui/common/js/Common.js
     # log_message "=== Detected ${CMU_SW_VER}: Copied fitting original /jci/gui/common/js/Common.js ==="
   else
-    log_message "=== No Suitable Backup Available! No Changes Were Made to Common.js. ==="
+    log_message "===  No Suitable Backup Available! No Changes Were Made to Common.js. ==="
   fi
 else
   # Not found, we're done
-  log_message "=== Pause On Menu Mod Not Found! No Changes Were Made to Common.js. ==="
+  log_message "===   Pause On Menu Mod Not Found! No Changes Were Made to Common.js. ==="
 fi
-log_message "=====***** END UNINSTALLATION OF PAUSE-ON-MUTE ******====="
+log_message "=========********* END UNINSTALLATION OF PAUSE-ON-MUTE **********========"
 log_message " "

@@ -1,10 +1,10 @@
 # remove safety warning from reverse camera for 12 different countries
 show_message "REMOVE SAFETY WARNING FROM REVERSE CAMERA ..."
-log_message "===******* INSTALL REMOVE SAFETY WARNING FROM REVERSE CAMERA ... *******==="
+log_message "===******* INSTALL REMOVE SAFETY WARNING FROM REVERSE CAMERA ... *****==="
 
 # Copy reverse camera safety warning images
 cp -a ${MYDIR}/config/safety-warning-reverse-camera/jci/nativegui/images/*.png /jci/nativegui/images/
-log_message "===                Reverse Camera Safety Warning Removed                ==="
+log_message "===               Reverse Camera Safety Warning Removed               ==="
 
-log_message "===*** END INSTALLATION OF REMOVE SAFETY WARNING FROM REVERSE CAMERA ***==="
+log_message "==*** END INSTALLATION OF REMOVE SAFETY WARNING FROM REVERSE CAMERA ***=="
 log_message " "

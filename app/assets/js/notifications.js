@@ -1,9 +1,11 @@
 // Display a notification message when a new version is ready for install
-ipc.on('update-available', (event) => {
-  $('#update-available').removeClass('w3-hide')
+ipc.on('update-available-alert', (event) => {
+  $('#update-available, #update-available a').removeClass('w3-hide')
+  var updots = 0
   var dll = setInterval(function () {
-    $('#update-available').append('.')
-  }, 20000)
+	if (updots !== 5) { $('#update-available a').append('.'); updots++ }
+	else{ $('#update-available').html('<a>Update Downloading.</a>'); updots=0 }
+  }, 2000)
 })
 ipc.on('update-downloaded', (event) => {
   snackbarstay(`<span id="restart">An Update Is Available:  <a href="" class="w3-btn w3-deep-purple w3-hover-light-blue">UPDATE</a></span>`)
@@ -20,7 +22,7 @@ ipc.on('dl-progress', (event, megaBytes, fileName, totalSize) => {
     if ($('#progress').length) {
       //document.getElementById('progress').innerHTML = '<div class="w3-progress-container"><div id="progBar" class="w3-progressbar w3-green" style="width:' + parseInt((megaBytes / totalSize) * 100) + '%"><span class="w3-center w3-text-black color-progress">' + megaBytes.toFixed(2) + 'MB | ' + parseInt((megaBytes / totalSize) * 100) + '%</span></div>'
     } else {
-      showNotification('Downloading ... Please wait <img src="./files/img/load-1.gif" alt="...">', `<div id="dl-notif"><h5>Downloading ${fileName}: </h5><span id="progress"></span></div>`, 0)
+      showNotification('Downloading Please wait <img src="./files/img/load-1.gif" alt="...">', `<div id="dl-notif"><h5>Downloading ${fileName}: </h5><span id="progress"></span></div>`, 0)
     }
   } else {
     document.getElementById('progress').innerHTML = `${fileName} Download Complete.`

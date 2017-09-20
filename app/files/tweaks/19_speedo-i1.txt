@@ -1,8 +1,8 @@
 # Speedometer 4.4 by Diginix
 show_message "DIGINIX'S SPEEDOMETER WITH ROTATING COMPASS\nAND ADDITIONAL GPS INFOS IN STATUSBAR"
-log_message "======**********   INSTALL SPEEDOMETER  **********======"
+log_message "==========**************** INSTALL SPEEDOMETER *****************========="
 
-log_message "===         Begin Installation of Speedometer        ==="
+log_message "===                 Begin Installation of Speedometer                 ==="
 if [ "${TESTBKUPS}" = "1" ]
 then
   cp /jci/scripts/stage_wifi.sh "${MYDIR}/bakups/test/stage_wifi_speedometer-before.sh"
@@ -17,36 +17,7 @@ rm -fr /jci/gui/addon-player
 rm -fr /jci/gui/addon-speedometer
 rm -fr /jci/gui/speedometer
 rm -fr /jci/gui/apps/_speedometer
-if [ -e /jci/opera/opera_dir/userjs/addon-startup.js ]; then
-  rm -f /jci/opera/opera_dir/userjs/addon-startup.js
-fi
-if [ -e /jci/opera/opera_dir/userjs/speedometerKMPH.js ]; then
-  rm -f /jci/opera/opera_dir/userjs/speedometerKMPH.js
-fi
-if [ -e /jci/opera/opera_dir/userjs/speedometerMPH.js ]; then
-  rm -f /jci/opera/opera_dir/userjs/speedometerMPH.js
-fi
-if [ -e /jci/opera/opera_dir/userjs/speedometer.js ]; then
-  rm -f /jci/opera/opera_dir/userjs/speedometer.js
-fi
-if [ -e /jci/opera/opera_dir/userjs/mySpeedometer.js ]; then
-  rm -f /jci/opera/opera_dir/userjs/mySpeedometer.js
-fi
-if [ -e /jci/scripts/get-gps-data.sh ]; then
-  rm -f /jci/scripts/get-gps-data.sh
-fi
-if [ -e /jci/scripts/get-log-data.sh ]; then
-  rm -f /jci/scripts/get-log-data.sh
-fi
-if [ -e /jci/scripts/get-vehicle-data-other.sh ]; then
-  rm -f /jci/scripts/get-vehicle-data-other.sh
-fi
-if [ -e /jci/scripts/get-vehicle-speed.sh ]; then
-  rm -f /jci/scripts/get-vehicle-speed.sh
-fi
-if [ -e /jci/scripts/get-vehicle-gear.sh ]; then
-  rm -f /jci/scripts/get-vehicle-gear.sh
-fi
+
 sed -i '/Speedo-Compass-Video_Tweak/d' /jci/scripts/stage_wifi.sh
 sed -i '/v3.2/d' /jci/scripts/stage_wifi.sh
 sed -i '/Removed requirement/d' /jci/scripts/stage_wifi.sh
@@ -78,30 +49,38 @@ sed -i '/sleep 4/d' /jci/scripts/stage_wifi.sh
 sed -i '/sleep 6/d' /jci/scripts/stage_wifi.sh
 
 # delete empty lines
-sed -i '/^$/ d' /jci/scripts/stage_wifi.sh
-sed -i '/#!/ a' /jci/scripts/stage_wifi.sh
+sed -i '/^ *$/ d' /jci/scripts/stage_wifi.sh
+sed -i '/#!/ a\ ' /jci/scripts/stage_wifi.sh
 
-### Copy tweak files to MZD
-cp -a "${MYDIR}/config/speedometer/jci/opera/opera_dir/userjs/speedometer-startup.js" /jci/opera/opera_dir/userjs/
+# Add startup file check for speedometer app too
+cp -a ${MYDIR}/config/speedometer/jci/opera/opera_dir/userjs/speedometer-startup.js /jci/opera/opera_dir/userjs/
+if [ -e /jci/gui/apps/_mzdmeter/js/mzdmeter.js ]
+then
+  log_message "===                Mzdmeter installed copied startup file             ==="
+else
+  sed -i "/.. Remove Mzd ../,/.. End Mzd ../d" /jci/opera/opera_dir/userjs/speedometer-startup.js
+  log_message "===                    Copied speedometer startup file                ==="
+fi
+
 find /jci/opera/opera_dir/userjs/ -type f -name '*.js' -exec chmod 755 {} \;
-log_message "=== Copied /jci/opera/opera_dir/userjs/speedometer-startup.js ==="
+log_message "===     Copied /jci/opera/opera_dir/userjs/speedometer-startup.js     ==="
 
 cp -a ${MYDIR}/config/speedometer/jci/gui/apps/* /jci/gui/apps/
-log_message "=== Copied folder /jci/gui/apps/_speedometer ==="
+log_message "===             Copied folder /jci/gui/apps/_speedometer              ==="
 find /jci/gui/apps/_*/ -type f -name '*.js' -exec chmod 755 {} \;
 find /jci/gui/apps/_*/ -type f -name '*.sh' -exec chmod 755 {} \;
 
 if [ ! -e /jci/gui/addon-common/websocketd ]  || [ ! -e /jci/gui/addon-common/jquery.min.js ]; then
   cp -a "${MYDIR}/config/speedometer/jci/gui/addon-common/" /jci/gui/
   chmod 755 /jci/gui/addon-common/websocketd
-  log_message "=== Copied websocketd and jquery.min.js to /jci/gui/addon-common/ ==="
+  log_message "===   Copied websocketd and jquery.min.js to /jci/gui/addon-common/   ==="
 else
-  log_message "=== websocketd and jquery.min.js available, no copy needed ==="
+  log_message "===       websocketd and jquery.min.js available, no copy needed      ==="
 fi
 
 if [ ! -e /bin/busybox-armv7l ]; then
   cp -a "${MYDIR}/config/bin/busybox-armv7l" /bin/
-  log_message "=== Copied /bin/busybox-armv7l ==="
+  log_message "===                     Copied /bin/busybox-armv7l                    ==="
   chmod 755 /bin/busybox-armv7l
   rm -f /usr/bin/nc
   ln -s /bin/busybox-armv7l /usr/bin/nc
@@ -112,10 +91,10 @@ fi
 if grep -Fq "#!/bin/sh" /jci/scripts/stage_wifi.sh
 then
   echo "OK"
-  log_message "===          1st line of stage_wifi.sh is OK         ==="
+  log_message "===                   1st line of stage_wifi.sh is OK                 ==="
 else
   cp -a "${MYDIR}/config/speedometer/stage_wifi.sh" /jci/scripts/
-  log_message "=== Missing 1st line of stage_wifi.sh, copied new one ==="
+  log_message "===         Missing 1st line of stage_wifi.sh, copied new one         ==="
 fi
 
 # add commands for speedometer to stage_wifi.sh
@@ -124,7 +103,7 @@ then
   if grep -Fq "### Speedometer" /jci/scripts/stage_wifi.sh
   then
     echo "exist"
-    log_message "=== Speedometer entry already exists in /jci/scripts/stage_wifi.sh ==="
+    log_message "===  Speedometer entry already exists in /jci/scripts/stage_wifi.sh   ==="
   else
     sed -i '/#!/ a\### Speedometer' /jci/scripts/stage_wifi.sh
     sleep 1
@@ -135,7 +114,7 @@ then
     echo "exist"
   else
     sed -i '/### Speedometer/ a\/jci/gui/addon-common/websocketd --port=55554 /jci/gui/apps/_speedometer/sh/speedometer.sh &' /jci/scripts/stage_wifi.sh
-    log_message "=== Added speedometer entry to /jci/scripts/stage_wifi.sh ==="
+    log_message "===       Added speedometer entry to /jci/scripts/stage_wifi.sh       ==="
     cp /jci/scripts/stage_wifi.sh "${MYDIR}/bakups/test/stage_wifi_speedometer-after.sh"
   fi
 fi
@@ -143,7 +122,7 @@ fi
 # copy additionalApps.js, if not already present
 if [ ! -e /jci/opera/opera_dir/userjs/additionalApps.js ]
 then
-  log_message "=== No additionalApps.js available, will copy one ==="
+  log_message "===           No additionalApps.js available, will copy one           ==="
   cp -a ${MYDIR}/config/speedometer/jci/opera/opera_dir/userjs/additionalApps.* /jci/opera/opera_dir/userjs/
   find /jci/opera/opera_dir/userjs/ -type f -name '*.js' -exec chmod 755 {} \;
 fi
@@ -151,9 +130,10 @@ fi
 # create new additionalApps.json file from scratch if not already present
 if [ ! -e /jci/opera/opera_dir/userjs/additionalApps.json ]
 then
-  log_message "=== No additionalApps.json available, generating one ==="
-  echo "[" > /jci/opera/opera_dir/userjs/additionalApps.json
-  echo "]" >> /jci/opera/opera_dir/userjs/additionalApps.json
+  log_message "===          No additionalApps.json available, generating one         ==="
+  #echo "[" > /jci/opera/opera_dir/userjs/additionalApps.json
+  #echo "]" >> /jci/opera/opera_dir/userjs/additionalApps.json
+  cp -a ${MYDIR}/config/speedometer/jci/opera/opera_dir/userjs/additionalApps.json /jci/opera/opera_dir/userjs/
   cp /jci/opera/opera_dir/userjs/additionalApps.json "${MYDIR}/bakups/test/additionalApps_generated.json"
   chmod 755 /jci/opera/opera_dir/userjs/additionalApps.json
 fi
@@ -162,59 +142,65 @@ fi
 add_app_json "_speedometer" "Speedometer"
 
 # change compass rotating depending on NAV SD card inside or not
-if [ ! -d /mnt/sd_nav/content/speedcam ] || [ ${FW_PRE_58} = 0  ]
+if [ ! -d /mnt/sd_nav/content/speedcam ] || [ ${COMPAT_GROUP} -ne 1  ]
 then
   sed -i 's/var noNavSD = false;/var noNavSD = true;/g' /jci/opera/opera_dir/userjs/speedometer-startup.js
-  log_message "=== Changed compass rotating, because no NAV SD card is inside ==="
+  log_message "===    Changed compass rotating, because no NAV SD card is inside     ==="
+fi
+if [ ${SPEEDCOLOR} != 0 ]
+then
+  rm -f /jci/gui/common/images/*.aio
+  touch /jci/gui/common/images/${SPEEDCOLOR}.aio
+  log_message "===                   Set Speedometer Color: ${SPEEDCOLOR}                    ==="
 fi
 
 # patch systemApp.js if needed for v59+ app list
-if [ ! -e /jci/gui/apps/system/js/systemApp.js.audio ] && [ ! -e /jci/gui/apps/system/js/systemApp.js.disclaimer ] && [ ${APP_PATCH_59} = 0 ]
+if ! grep -Fq "_speedometer" /jci/gui/apps/system/js/systemApp.js && [ ${APP_PATCH_59} -eq 0 ]
 then
   cp ${MYDIR}/config/patch59/systemApp.js /jci/gui/apps/system/js/
   APP_PATCH_59=1
-  log_message "===           Applied App List Patch For V59+           ==="
+  log_message "===                  Applied App List Patch For V59+                  ==="
 fi
 
 # if another color scheme is active, then change speeometer graphics too
 if [ -e /jci/gui/common/images/Blue.aio ]
 then
   cp -a ${MYDIR}/config/speedometer/color/Blue/* /jci/gui/apps/_speedometer/templates/SpeedoMeter/images/
-  log_message "=== Change speedometer graphics to blue too, because blue color scheme is active ==="
+  log_message "===               Change speedometer graphics to blue                 ==="
 fi
 
 if [ -e /jci/gui/common/images/Green.aio ]
 then
   cp -a ${MYDIR}/config/speedometer/color/Green/* /jci/gui/apps/_speedometer/templates/SpeedoMeter/images/
-  log_message "=== Change speedometer graphics to green too, because green color scheme is active ==="
+  log_message "===               Change speedometer graphics to green                ==="
 fi
 
 if [ -e /jci/gui/common/images/Orange.aio ]
 then
   cp -a ${MYDIR}/config/speedometer/color/Orange/* /jci/gui/apps/_speedometer/templates/SpeedoMeter/images/
-  log_message "=== Change speedometer graphics to orange too, because orange color scheme is active ==="
+  log_message "===               Change speedometer graphics to orange               ==="
 fi
 
 if [ -e /jci/gui/common/images/Pink.aio ]
 then
   cp -a ${MYDIR}/config/speedometer/color/Pink/* /jci/gui/apps/_speedometer/templates/SpeedoMeter/images/
-  log_message "=== Change speedometer graphics to pink too, because pink color scheme is active ==="
+  log_message "===                Change speedometer graphics to pink                ==="
 fi
 
 if [ -e /jci/gui/common/images/Purple.aio ]
 then
   cp -a ${MYDIR}/config/speedometer/color/Purple/* /jci/gui/apps/_speedometer/templates/SpeedoMeter/images/
-  log_message "=== Change speedometer graphics to purple too, because purple color scheme is active ==="
+  log_message "===               Change speedometer graphics to purple               ==="
 fi
 
 if [ -e /jci/gui/common/images/Silver.aio ]
 then
   cp -a ${MYDIR}/config/speedometer/color/Silver/* /jci/gui/apps/_speedometer/templates/SpeedoMeter/images/
-  log_message "=== Change speedometer graphics to silver too, because silver color scheme is active ==="
+  log_message "===               Change speedometer graphics to silver               ==="
 fi
 
 if [ -e /jci/gui/common/images/Yellow.aio ]
 then
   cp -a ${MYDIR}/config/speedometer/color/Yellow/* /jci/gui/apps/_speedometer/templates/SpeedoMeter/images/
-  log_message "=== Change speedometer graphics to yellow too, because yellow color scheme is active ==="
+  log_message "===               Change speedometer graphics to yellow               ==="
 fi

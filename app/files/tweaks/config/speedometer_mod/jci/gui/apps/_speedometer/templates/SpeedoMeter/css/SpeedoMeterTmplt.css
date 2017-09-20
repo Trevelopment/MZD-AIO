@@ -430,10 +430,25 @@ fieldset div span {
 }
 /* end org */
 
-.tripDistFieldSet { 
+.tripDistFieldSet {
 background: url(../images/btn1.png) 0% 100% repeat-x transparent;
 }
 
-.mphbu { 
+.mphbu {
 background: url(../images/btn1_mph.png) 0% 100% repeat-x transparent;
+}
+/* For Resize Mods */
+.alt1 fieldset legend {
+    font-size: 24px;
+}
+.alt1 fieldset legend span{
+    font-size: 18px;
+}
+.alt1 fieldset div {
+    font-weight: 700;
+    font-size: 30px;
+}
+.alt1 .idleTimeFieldSet,
+.alt1 .engIdleTimeFieldSet {
+	display: none;
 }

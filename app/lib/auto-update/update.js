@@ -4,7 +4,7 @@ const os = require('os')
 const platform = os.platform() + '_' + os.arch()
 
 // const { autoUpdater } = require('electron')
-const { autoUpdater } = require('electron-auto-updater')
+const { autoUpdater } = require('electron-updater')
 
 module.exports = function update (options) {
   /* if (!options.url) {
@@ -19,11 +19,12 @@ module.exports = function update (options) {
     autoUpdater.checkForUpdates()
   } catch (e) {
     console.error(e.message)
-    throw e
+    //throw e
   }
 
   autoUpdater.on('error', (e) => {
     console.error(e.message)
+    require('electron').ipcMain.emit('update-err', autoUpdater)
   })
 
   autoUpdater.on('checking-for-update', () => {

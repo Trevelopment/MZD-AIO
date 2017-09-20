@@ -1,64 +1,70 @@
 # remove List_Loop_Mod
 show_message "REMOVE LIST_LOOP_MOD  ..."
-log_message "========******      UNINSTALL LIST_LOOP_MOD ...      ******========="
-
+log_message "========*********      UNINSTALL LIST_LOOP_MOD ...      ********========="
+# Check for Remove Beep and Shorter Delay Mods to reapply after copying List2Crl.js
+if grep "No More Beep" /jci/gui/common/controls/List2/js/List2Ctrl.js
+then
+	REMOVE_BEEP=1
+fi
+if grep "Shorter Delay Mod" /jci/gui/common/controls/List2/js/List2Ctrl.js
+then
+	SHORTER_DELAY_MOD=1
+fi
 # If Backup is available, then we are done.
-if test -s /jci/gui/common/controls/List2/js/List2Ctrl.js.org
+if [ -e /jci/gui/common/controls/List2/js/List2Ctrl.js.org ]
 then
 	cp /jci/gui/common/controls/List2/js/List2Ctrl.js.org /jci/gui/common/controls/List2/js/List2Ctrl.js
-	log_message "===         Original List2Ctrl.js is available as backup         ==="
+	log_message "===             Original List2Ctrl.js is available as backup          ==="
 else
 	# Fallback check, Only those who have never installed this tweak with AIO will reach this case
 	# Just in case it is needed, you have to remove the comments below to copy the fallback files
 	TRACKORDER_LIST=0
 	# Compatibility Check
-	log_message "=== FW ${CMU_SW_VER} detected, copy matching List2Ctrl.js ==="
-	if [ "${CMU_SW_VER}" = "59.00.441A-NA" ] \
-	|| [ "${CMU_SW_VER}" = "59.00.443A-NA" ] \
-	|| [ "${CMU_SW_VER}" = "59.00.446A-NA" ] \
-	|| [ "${CMU_SW_VER}" = "59.00.450A-NA" ] \
-	|| [ "${CMU_SW_VER}" = "59.00.445A-JP" ] \
-	|| [ "${CMU_SW_VER}" = "59.00.443C-EU" ] \
-	|| [ "${CMU_SW_VER}" = "59.00.447A-EU" ] \
-	|| [ "${CMU_SW_VER}" = "59.00.449A-EU" ] \
-	|| [ "${CMU_SW_VER}" = "59.00.442A-ADR" ] \
-	|| [ "${CMU_SW_VER}" = "59.00.443C-ADR" ] \
-	|| [ "${CMU_SW_VER}" = "59.00.449A-ADR" ] \
-	|| [ "${CMU_SW_VER}" = "59.00.450A-ADR" ]
+	log_message "===       FW ${CMU_SW_VER} detected, copy matching List2Ctrl.js       ==="
+	if [ "${COMPAT_GROUP}" = "4" ]
 	then
 		TRACKORDER_LIST=1
 		TRACKORDER_LIST_FILE="59"
-	elif [ "${CMU_SW_VER}" = "58.00.250A-NA" ] \
-	|| [ "${CMU_SW_VER}" = "58.00.251A-ADR" ]
-	then
-		TRACKORDER_LIST=1
-		TRACKORDER_LIST_FILE="58"
-	elif [ "${CMU_SW_VER}" = "59.00.326A-ADR" ] \
-	|| [ "${CMU_SW_VER}" = "59.00.330A-NA" ] \
-	|| [ "${CMU_SW_VER}" = "59.00.330A-EU" ] \
-	|| [ "${CMU_SW_VER}" = "59.00.330A-ADR" ] \
-	|| [ "${CMU_SW_VER}" = "59.00.342A-ADR" ] \
-	|| [ "${CMU_SW_VER}" = "59.00.331A-EU" ]
+	elif [ "${COMPAT_GROUP}" = "3" ]
 	then
 		TRACKORDER_LIST=1
 		TRACKORDER_LIST_FILE="59.330"
+	elif [ "${COMPAT_GROUP}" = "2" ]
+	then
+		TRACKORDER_LIST=1
+		TRACKORDER_LIST_FILE="58"
 	fi
-	if [ "${FW_PRE_58}" = "0" ]
+
+	if [ "${COMPAT_GROUP}" = "1" ]
 	then
 		# Uncomment the following line if you need the fallback file (v55-56)
 		# cp -a "${MYDIR}/config_org/list-loop/jci/gui/common/controls/List2/js/List2Ctrl.js" /jci/gui/common/controls/List2/js/
-		log_message "=== No backup of List2Ctrl.js available, No changes were made ==="
+		log_message "===     No backup of List2Ctrl.js available, No changes were made     ==="
 	elif [ "${TRACKORDER_LIST}" = "1" ]
 	then
 		# Uncomment the following line if you need the fallback file (v58+)
 		# cp -a "${MYDIR}/config_org/list-loop/jci/gui/common/controls/List2/js/List2Ctrl.${TRACKORDER_LIST_FILE}.js" /jci/gui/common/controls/List2/js/List2Ctrl.js
-		# log_message "=== Restored List2Ctrl.js for ${CMU_SW_VER} from SD card ==="
-		log_message "=== No backup of List2Ctrl.js available, No changes were made ==="
+		# log_message "===          Restored List2Ctrl.js for ${CMU_SW_VER} from SD card          ==="
+		log_message "===     No backup of List2Ctrl.js available, No changes were made     ==="
 	else
-		log_message "=== No backup of List2Ctrl.js available, No changes were made ==="
-		# log_message "===           No List2Ctrl.js found for ${CMU_SW_VER}       ==="
+		log_message "===     No backup of List2Ctrl.js available, No changes were made     ==="
+		# log_message "===                 No List2Ctrl.js found for ${CMU_SW_VER}           ==="
 	fi
 fi
-
-log_message "=====*****      END UNINSTALLATION OF LIST_LOOP_MOD      *****======"
+# Reapply tweaks
+if [ "${REMOVE_BEEP}" = "1" ]
+then
+	sed -i 's/return framework.common.beep(pressType, eventCause);/\/\/ return framework.common.beep(pressType, eventCause); \/\/No More Beeps/g' /jci/gui/common/controls/List2/js/List2Ctrl.js
+	log_message "===               Reapplied Disable Beeps in List2Ctrl.js             ==="
+fi
+if [ "${SHORTER_DELAY_MOD}" = "1" ]
+then
+	sed -i 's/autoscrollTier1Timeout :                1500,/autoscrollTier1Timeout :                150,/g' /jci/gui/common/controls/List2/js/List2Ctrl.js
+	sed -i 's/autoscrollTier2Timeout :                5000,/autoscrollTier2Timeout :                300,/g' /jci/gui/common/controls/List2/js/List2Ctrl.js
+	sed -i 's/autoscrollTier1Interval :               500,/autoscrollTier1Interval :               200,/g' /jci/gui/common/controls/List2/js/List2Ctrl.js
+	sed -i 's/autoscrollTier2Interval :               1000,/autoscrollTier2Interval :               300,/g' /jci/gui/common/controls/List2/js/List2Ctrl.js
+	sed -i '/autoscrollTier2Interval :               300,/ a\        \/\/Shorter Delay Mod' /jci/gui/common/controls/List2/js/List2Ctrl.js
+	log_message "===                   Modified Delay in List2Ctrl.js                  ==="
+fi
+log_message "=====********      END UNINSTALLATION OF LIST_LOOP_MOD      *******======"
 log_message " "

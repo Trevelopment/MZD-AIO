@@ -1,4 +1,4 @@
 # change to slovak version
 show_message "CHANGE SPEEDOMETER TO SLOVAK..."
 sed -i 's/var language = "DE";/var language = "SK";/g' /jci/opera/opera_dir/userjs/speedometer-startup.js
-log_message "===        CHANGED SPEEDOMETER TO SLOVAK VERSION       ==="
+log_message "===                CHANGED SPEEDOMETER TO SLOVAK VERSION              ==="

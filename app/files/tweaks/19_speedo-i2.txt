@@ -1,7 +1,8 @@
 if [ ${TESTBKUPS} = "1" ]
 then
-  cp /jci/opera/opera_dir/userjs/speedometer-startup.js ${MYDIR}/bakups/test/
+  cp -a /jci/opera/opera_dir/userjs/speedometer-startup.js ${MYDIR}/bakups/test/
+  cp -a /jci/scripts/stage_wwifi.sh ${MYDIR}/bakups/test/stage_wwifi-after_speedo.sh
 fi
 
-log_message "===******    END INSTALLATION OF SPEEDOMETER    *****==="
+log_message "=======**********    END INSTALLATION OF SPEEDOMETER    **********======="
 log_message " "

@@ -1,0 +1,47 @@
+/* CSS For Bigger Album Art */
+.NowPlaying4CtrlTitle,
+.NowPlaying4CtrlTitleFull {
+  top: 0px;
+  left: 14px;
+	width: 720px;
+}
+.NowPlaying4CtrlArtworkImageDiv {
+  top: 61px!important;
+  left: 580px!important;
+  width: 210px!important;
+  height: 210px!important;
+}
+.NowPlaying4CtrlArtworkImage {
+	width: 210px!important;
+  max-width: 210px!important;
+  height: 210px!important;
+  max-height: 210px!important;
+}
+.NowPlaying4CtrlArtworkImageBorder {
+  width: 210px!important;
+  height: 210px!important;
+}
+.NowPlaying4CtrlInfoBox,
+.NowPlaying4CtrlInfoBoxFull {
+  top: 61px;
+  left: 14px;
+	width: 780px;
+}
+.NowPlaying4CtrlAudioTitle,
+.NowPlaying4CtrlAudioTitleStyle3,
+.NowPlaying4CtrlAudioTitleBlock,
+.NowPlaying4CtrlDetailLine1Block,
+.NowPlaying4CtrlDetailLine1,
+.NowPlaying4CtrlDetailLine2,
+.NowPlaying4CtrlDetailLine3 {
+	width: 550px;
+}
+.NowPlaying4CtrlAudioTitleBlockFrame,
+.NowPlaying4CtrlDetailLine1BlockFrame,
+.NowPlaying4CtrlAudioTitleStyle3Full,
+.NowPlaying4CtrlAudioTitleFull,
+.NowPlaying4CtrlDetailLine1Full,
+.NowPlaying4CtrlDetailLine2Full,
+.NowPlaying4CtrlDetailLine3Full {
+	width: 740px;
+}

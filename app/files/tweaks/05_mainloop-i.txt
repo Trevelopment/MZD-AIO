@@ -1,12 +1,12 @@
 # main menu loop
 show_message "INSTALL MAIN_MENU_LOOP ..."
-log_message "=====******            INSTALL MAIN_MENU_LOOP ...            ******====="
+log_message "=====*******            INSTALL MAIN_MENU_LOOP ...           *******====="
 
 # Backups
 if [ ! -e /jci/gui/apps/system/controls/MainMenu/js/MainMenuCtrl.js.org ]
 then
 	cp -a /jci/gui/apps/system/controls/MainMenu/js/MainMenuCtrl.js /jci/gui/apps/system/controls/MainMenu/js/MainMenuCtrl.js.org
-	log_message "=== Backup of /jci/gui/apps/system/controls/MainMenu/js/MainMenuCtrl.js to MainMenuCtrl.js.org ==="
+	log_message "=== Backup /jci/gui/apps/system/controls/MainMenu/js/MainMenuCtrl.js  ==="
 fi
 if [ "${KEEPBKUPS}" = 1 ]
 then
@@ -16,7 +16,7 @@ fi
 
 # Copy modified MainMenuCtrl.js
 cp -a "${MYDIR}/config/main-menu-loop/jci/gui/apps/system/controls/MainMenu/js/MainMenuCtrl.js" /jci/gui/apps/system/controls/MainMenu/js/
-log_message "=== Copied /jci/gui/apps/system/controls/MainMenu/js/MainMenuCtrl.js ==="
+log_message "=== Copied /jci/gui/apps/system/controls/MainMenu/js/MainMenuCtrl.js  ==="
 
-log_message "=======****        END INSTALLATION OF MAIN_MENU_LOOP        ****======="
+log_message "=======******       END INSTALLATION OF MAIN_MENU_LOOP      ******======="
 log_message " "

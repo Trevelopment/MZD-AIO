@@ -1,0 +1,7 @@
+.MainMenuCtrlSetHighlight,
+.MainMenuCtrlComHighlight,
+.MainMenuCtrlAppHighlight,
+.MainMenuCtrlNavHighlight,
+.MainMenuCtrlEntHighlight {
+	top: 120px;
+}

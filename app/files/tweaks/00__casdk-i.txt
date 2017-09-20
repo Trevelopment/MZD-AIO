@@ -4,7 +4,7 @@
 
 show_message "===***   INSTALLING CASDK   ***==="
 log_message "  "
-log_message "==========****** BEGIN INSTALLING CASDK  ******==========="
+log_message "==========************* BEGIN INSTALLING CASDK  **************==========="
 log_message " "
 
 # enable javascript logging
@@ -15,7 +15,7 @@ sed -i 's/Console Error Log=$OPERA_HOME\/error.log/Console Error Log=\/tmp\/root
 if [ ! -e /tmp/mnt/data_persist/storage ]
 then
 	mkdir -p /tmp/mnt/data_persist/storage
-	log_message "===              Created Storage Folder                 ==="
+	log_message "===                     Created Storage Folder                        ==="
 fi
 
 if [ ! -e /jci/opera/opera_home/pstorage/psindex.dat.org ]
@@ -31,7 +31,7 @@ then
 	fi
 	# copy psindex file
 	cp -a ${MYDIR}/casdk/storage/psindex.dat /jci/opera/opera_home/pstorage/
-	log_message "===             Copied psindex.dat file                 ==="
+	log_message "===                    Copied psindex.dat file                        ==="
 fi
 
 # install data reader files
@@ -40,9 +40,9 @@ then
 	mkdir -p /jci/casdk
 	cp -a ${MYDIR}/casdk/scripts/* /jci/casdk
 	find /jci/casdk/ -name "vdt*.sh" -exec chmod 755 {} \;
-	log_message "===           Installed data reader files               ==="
+	log_message "===                  Installed data reader files                      ==="
 else
-	log_message "===        Data reader files already installed          ==="
+	log_message "===               Data reader files already installed                 ==="
 fi
 
 # copy initialization file
@@ -50,10 +50,10 @@ if [ ! -e /jci/scripts/stage_wifi.sh.org ]
 then
 	cp -a /jci/scripts/stage_wifi.sh /jci/scripts/stage_wifi.sh.org
 	cp -a ${MYDIR}/casdk/jci/stage_wifi.sh /jci/scripts/
-	log_message "===       CASDK Entries Added To Stage_wifi.sh          ==="
+	log_message "===              CASDK Entries Added To Stage_wifi.sh                 ==="
 elif grep -Fq './jci/casdk/vdtol.sh &' /jci/scripts/stage_wifi.sh
 then
-	log_message "===   CASDK Entries already present in stage_wifi.sh    ==="
+	log_message "===          CASDK Entries already present in stage_wifi.sh           ==="
 else
 cat <<EOT > /jci/scripts/stage_wifi.sh
 #!/bin/sh
@@ -76,7 +76,7 @@ watch -n 60 /jci/casdk/vdt60s.sh &
 # 300s update rate
 watch -n 300 /jci/casdk/vdt300s.sh &
 EOT
-	log_message "===       CASDK Entries Added To Stage_wifi.sh          ==="
+	log_message "===              CASDK Entries Added To Stage_wifi.sh                 ==="
 	if [ "${SPEEDO}" = "1" ]
 	then
 		echo "" >> /jci/scripts/stage_wifi.sh
@@ -107,24 +107,24 @@ chmod 755 /jci/scripts/stage_wifi.sh
 # if [ ! -e /jci/opera/opera_dir/userjs/CustomApplicationsProxy.js ]
 # then
 #	 cp -a ${MYDIR}/casdk/proxy/CustomApplicationsProxy.js /jci/opera/opera_dir/userjs/
-#	 log_message "===          Copied CustomApplicstionProxy.js              ==="
+#	 log_message "===                 Copied CustomApplicstionProxy.js                  ==="
 # else
-#	 log_message "===      CustomApplicstionProxy.js Already Exists          ==="
+#	 log_message "===             CustomApplicstionProxy.js Already Exists              ==="
 # fi
 
 # copy proxy & patched additionalApps for native apps
 cp -a ${MYDIR}/casdk/proxy/CustomApplicationsProxy.js /jci/opera/opera_dir/userjs/
-log_message "===          Copied CustomApplicationsProxy.js          ==="
+log_message "===                 Copied CustomApplicationsProxy.js                 ==="
 
 cp -a ${MYDIR}/casdk/proxy/additionalApps.js /jci/opera/opera_dir/userjs/
-log_message "===     Copied AdditionalApps.js patched for CASDK      ==="
+log_message "===            Copied AdditionalApps.js patched for CASDK             ==="
 
 log_message " "
 # create custom folder
 if [ ! -e /jci/gui/apps/custom ]
 then
 	mkdir -p /jci/gui/apps/custom
-	log_message "===            Created Custom App Folder                ==="
+	log_message "===                   Created Custom App Folder                       ==="
 
 	# create symlinks to various destinations
 	ln -sf /tmp/mnt/sd_nav/system/js /jci/gui/apps/custom/js
@@ -133,7 +133,7 @@ then
 	ln -sf /tmp/mnt/sd_nav/system/runtime /jci/gui/apps/custom/runtime
 	ln -sf /tmp/mnt/sd_nav/apps /jci/gui/apps/custom/apps
 	ln -sf /tmp/root /jci/gui/apps/custom/data
-	log_message "===      Created Symlinks To Various Destinations       ==="
+	log_message "===             Created Symlinks To Various Destinations              ==="
 fi
 sleep 5
 killall jci-dialog

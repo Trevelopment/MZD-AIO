@@ -58,7 +58,7 @@
     {
       "id": 3,
       "title": "Fehlerbehebung",
-      "msg": "Hier sind einige häufige Fehler mit der Möglichkeiten, sie zu vermeiden. \n#### Wenn Sie weiterhin auf Fehler treffen und/oder Systemhänger:\n - Das häufigste Problem ist ein Dateizugriffsfehler: Quelle beschäftigt oder gesperrt.  Dies tritt auf, wenn eine Datei oder ein Verzeichnis nicht geändert werden kann, da sie geöffnet ist oder von einem anderen Programm verwendet wird. Schließen Sie bei der Kompilierung alle Ordner und Dokumente, insbesondere Dateien, die aktiv von MZD-AIO-TI verwendet werden (*zB: '_copy_to_usb'*)\n - <s>Versuchen Sie weniger Tweaks auf einmal zu wählen, zu viele erhöht die Wahrscheinlichkeit für einen unerwarteten Fehler.</s> Jeder einzelne Tweak wurde viele Male getestet, wenn Sie dennoch auf einen Fehler stoßen, melden sie ihn bitte.  \n - Wenn das Installationsprogramm im Auto nicht gestartet wird, versuchen Sie, Ihr USB-Laufwerk als FAT32 neu zu formatieren und stellen Sie sicher, dass alle anderen USB-Geräte getrennt sind. Es hilft Bluetooth aus zu schalten, die NAV SD-Karte sollte drinnen bleiben.",
+      "msg": "Hier sind einige häufige Fehler mit der Möglichkeiten, sie zu vermeiden. \n#### Wenn Sie weiterhin auf Fehler treffen und/oder Systemhänger:\n - Das häufigste Problem ist ein Dateizugriffsfehler: Quelle beschäftigt oder gesperrt.  Dies tritt auf, wenn eine Datei oder ein Verzeichnis nicht geändert werden kann, da sie geöffnet ist oder von einem anderen Programm verwendet wird. Schließen Sie bei der Kompilierung alle Ordner und Dokumente, insbesondere Dateien, die aktiv von MZD-AIO-TI verwendet werden (*zB: '_copy_to_usb'*)\n - Wenn das Installationsprogramm im Auto nicht gestartet wird, versuchen Sie, Ihr USB-Laufwerk als FAT32 neu zu formatieren und stellen Sie sicher, dass alle anderen USB-Geräte getrennt sind. Es hilft Bluetooth aus zu schalten, die NAV SD-Karte sollte drinnen bleiben.",
       "t2": "Wenn Sie Video-Player Probleme haben",
       "msg2": " Versuche:\n\n- Speicher die Videos im Ordner mit dem Namen 'Movies'! \n\n- Nutze den H264 video codec und MPEG-4 AAC audio codec in Videos\n\n- Ziehen Sie alle anderen USB-Laufwerke ab, vor allem mit vielen MP3s drauf\n\n- Kopieren Sie nur eine mp3 auf Ihr USB-Laufwerk \n\n- Kopiere nur ein paar Videos auf deinen Stick (du musst sie nicht löschen, umbenennen in * ._ mp4 ist auch OK, damit sie nicht mehr gefunden werden) \n\n- Starten Sie Ihr System neu und versuchen Sie direkt danach ein Video wiederzugeben \n\n- Schließe den Player und starte ihn wieder \n\n- Falls das nicht hilft, wechsel den Audioquelle.\n\n- Manchmal ist hängt das erste Video oder es lässt sich nicht starten aber durch Drücken von 'next' startet manchmal das nächste Video.\n\n- Videoformate: MP4, AVI, FLV, WMV"
     },
@@ -72,7 +72,7 @@
     {
       "id": 5,
       "title": "Tipps & Tricks",
-      "msg": "Ich werde einige Tipps über diese App geben. <br><br><a href='' onclick=externalLink('emulate')>Hier ist eine Anleitung wie man das CMU-System auf einem PC zum laufen bringt.</a><br><br><a href='' onclick=externalLink('cmu-autorun')>CMU-Autorun script for testing and recovery.</a>",
+      "msg": "Ich werde einige Tipps über diese App geben. <br><br><a href='' onclick=externalLink('emulate')>Hier ist eine Anleitung wie man das CMU-System auf einem PC zum laufen bringt.</a><br><br><a href='' onclick=externalLink('cmu-autorun')>CMU-Autorun script for testing and recovery.</a><h4><em>How to run Android Auto from an SD card</em></h4><p>First of all uninstall Android Auto from your system.  Click the CMU-Autorun link above and download the repository (download button is on the top right next to \"<span class='icon-search4'></span>Find File\").  Copy the \"installer\" Folder to a blank USB drive to install the autorun script, this script will run every time the system boots up.   The script looks at the root of the SD card (if available) for a file called \"run.sh\" and if found, executes the file. After installing, copy the \"dryrun\" folder onto an SD card to test that the installation worked correctly. </p><p>AA - Copy the contents of the \"headunit\" folder to the root of a blank SD card, connect before booting up infotanment system, a message will show the first time to confirm it is running.  \nPlug in an Android Auto compatible phone to start.</p><p><b>Caveats:</b> The device with the headunit files must be connected before booting up the infotainment system to run. Once the headunit app is running it is loaded into memory and will silently run in the background, this means that even if you remove the SD card the headunit app will still be running in memory.  To stop the process you can do one of these things: <ol><li>Turn off the vehicle for about 5-10 minutes</li><li>Hard reset (hold: mute + nav + back)</li><li>Login SSH, enter command 'killall headunit'</li></ol></p><hr><p><h3>Want to run tweaks from an SD card?</h3>With autorun script installed copy tweak files to an SD card.  Rename \"tweaks.sh\" to \"run.sh\".  Boot up the system and tweaks will run as expected.  NOTE: I/O to SD card is slower than USB so installation will take longer.</p>",
       "t2": "Technical Talk",
       "msg2": "Diese Anwendung ist mit <a href='' onclick='externalLink(`Electron`)' title='Electron'>Electron</a> und <a href='' onclick='externalLink(`AngularJS`)' title='AngularJS'>AngularJS</a> erstellt."
     },
@@ -239,7 +239,7 @@
   "mainOps": {
     "wifi": {
       "id": 0,
-      "label": "WLAN aktivieren (NA)",
+      "label": "WLAN aktivieren",
       "safetylvl": "safe",
       "toolTip": "<h5>WLAN </h5>Aktiviert WLAN für Nordamerika"
     },
@@ -290,7 +290,7 @@
       "testlabel":"Teste Backups",
       "skipconfirm": "Bestätigung überspringen",
       "safetylvl": "safe",
-      "toolTip": "<h5>Bestätigung überspringen</h5><p>Ermöglicht die Ausführung der Installation, ohne dass zur Bestätigung aufgefordert wird. Hauptsächlich wird dies für die Wiederherstellung verwendet, wenn der Touchscreen nicht reagiert.  </p><h5>Kopiere Backups:</h5> <p> Kopiert Original-Dateien der geänderten Systemdateien, zum aufbewahren. </p><h5>Teste Backups:</h5> <p>Einige 'Tweaks' erstellen während der Installation Kopien vor und nach der Änderung.  Wenn so etwas benötigt wird, werden die Dateien nach your-usb/bakups/test/ kopiert.</p>"
+      "toolTip": "<h5>Retrieve CMU Data</h5><p>Dump diagnostic files from the CMU to the USB Drive.  Cleans out error files and core dumps from the system.</p><h5>Bestätigung überspringen</h5><p>Ermöglicht die Ausführung der Installation, ohne dass zur Bestätigung aufgefordert wird. Hauptsächlich wird dies für die Wiederherstellung verwendet, wenn der Touchscreen nicht reagiert.  </p><h5>Kopiere Backups:</h5> <p> Kopiert Original-Dateien der geänderten Systemdateien, zum aufbewahren. </p><h5>Teste Backups:</h5> <p>Einige 'Tweaks' erstellen während der Installation Kopien vor und nach der Änderung.  Wenn so etwas benötigt wird, werden die Dateien nach your-usb/bakups/test/ kopiert.</p>"
     },
     "mainmenu": {
       "id": 8,
@@ -680,6 +680,18 @@
       "id": 11,
       "label": "Small Focused Coin"
     },
+    "hideglow": {
+      "id": 12,
+      "label": "Remove Glow"
+    },
+    "fulltitles": {
+      "id": 13,
+      "label": "Full Length Titles"
+    },
+    "noalbm": {
+      "id": 14,
+      "label": "Hide Album Art"
+    },
     "mainlabel": [
       {
         "id": 1,
@@ -688,6 +700,10 @@
       {
         "id": 2,
         "label": "Hide Text"
+      },
+      {
+        "id": 3,
+        "label": "Color Text"
       }
     ],
     "layout": [
@@ -946,14 +962,14 @@
     },
     {
       "id": 8,
-      "OpName": "Media Order Patch & FLAC Support",
-      "INST": "Media_order patch u. FLAC support installieren?",
-      "DEINST": "\"Media_order patch u. FLAC support entfernen?",
-      "toolTip": "<h5>Media Order Patching und FLAC Support </h5>Musik wird nun alphabetisch sortiert und nicht mehr nach Datum mit neusten Einträgen zuerst<div>Support für Audio-Format FLAC <h6>Audio Order Patch & FLAC Support ist nur  kompatibel mit folgenden FW Versionen: </h6><div style='columns:5'>55.00.650A-NA  55.00.753A-NA  55.00.760A-NA  56.00.100A-ADR  56.00.230A-EU  56.00.240B-ADR  56.00.511A-EU  56.00.512A-EU  56.00.521A-NA  58.00.250A-NA  59.00.326A-ADR  59.00.331A-EU  56.00.513C-EU  56.00.513B-EU  56.00.513C-ADR  59.00.330A-ADR   59.00.342A-ADR   59.00.441A-NA  59.00.443C-EU</div></div>",
+      "OpName": "No More Beeps",
+      "INST": "Disable All System Beeps",
+      "DEINST": "Restore System Beeps",
+      "toolTip": "<h5>No More Beeps</h5>Disable all 'Beeps' made by the system that are not silenced by the 'Settings > Sound > Beep' option.  This also includes the beeps that cannot be silenced by the settings option.",
       "img": "",
-      "safetylvl": "warning",
+      "safetylvl": "safe",
       "extraOps": false,
-      "advancedOp": true
+      "advancedOp": false
     },
     {
       "id": 9,
@@ -1012,14 +1028,36 @@
       "advancedOp": false
     },
     {
+      "id": 20,
+      "OpName": "Statusbar Tweaks",
+      "INST": "Date_to_statusbar_mod by diginix installieren?",
+      "DEINST": "Date_to_statusbar_mod by diginix entfernen?",
+      "toolTip": "<p style=\"\" class=\"\"><b>Datum in Statusleiste</b></p><p style=\"\" class=\"\">Dauerhaft sichtbares Datum + Icons über der Uhr, auch wenn vom MZD Navi- oder Systemmeldung eingeblendet werden.</p>",
+      "img": "mzd_datum_icons_all.jpg",
+      "safetylvl": "safe",
+      "extraOps": true,
+      "advancedOp": false
+    },
+    {
+      "id": 26,
+      "OpName": "USB Audio Mod",
+      "INST": "Install USB Audio Mod",
+      "DEINST": "Remove USB Audio Mod",
+      "toolTip": "<h5>USB Audio Mod. <small>By: Enlsen</small> </h5><b>Patches The USB Audio App With These Mods:   <br><ol><li>Long press (click hold) folders/all songs to play</li><li>Adds new icon for USB root menu on the UMP control</li> <li>Removes \"More like this\" button from UMP control</li><li>Adds folders button to UMP control</li><li>Set folders and song list icons correctly (were switched) on UMP control</li><li>Removes trailing \"/\" character from folder names for list control and title of now playing</li><li>Adds folder and song icons to the list control</li><li>Adds folder and playlist icons to now playing</li></ol>",
+      "img": "USBAudioMod.jpg",
+      "safetylvl": "safe",
+      "extraOps": false,
+      "advancedOp": false
+    },
+    {
       "id": 14,
       "OpName": "Bigger Album Art",
       "INST": "Installiert größeres Albumcover",
       "DEINST": "Albumcover auf Original zurücksetzen",
-      "toolTip": "<h5>größeres Albumcover </h5> Es wird ein größeres Albumcover gezeigt.",
-      "img": "",
+      "toolTip": "<h5>größeres Albumcover </h5> Es wird ein größeres Albumcover gezeigt.  Extra Options: Full Width Titles & Hide Album Art",
+      "img": "full_titles.png",
       "safetylvl": "safe",
-      "extraOps": false,
+      "extraOps": true,
       "advancedOp": false
     },
     {
@@ -1032,7 +1070,7 @@
       "safetylvl": "safe",
       "extraOps": true,
       "advancedOp": false
-    }
+    },
     {
       "id": 16,
       "OpName": "Change Blank Album Art Frame",
@@ -1078,17 +1116,6 @@
       "advancedOp": false
     },
     {
-      "id": 20,
-      "OpName": "Statusbar Tweaks",
-      "INST": "Date_to_statusbar_mod by diginix installieren?",
-      "DEINST": "Date_to_statusbar_mod by diginix entfernen?",
-      "toolTip": "<p style=\"\" class=\"\"><b>Datum in Statusleiste</b></p><p style=\"\" class=\"\">Dauerhaft sichtbares Datum + Icons über der Uhr, auch wenn vom MZD Navi- oder Systemmeldung eingeblendet werden.</p>",
-      "img": "mzd_datum_icons_all.jpg",
-      "safetylvl": "safe",
-      "extraOps": true,
-      "advancedOp": false
-    },
-    {
       "id": 22,
       "OpName": "FuelConsumtion Tweak",
       "INST": "Installiert Fuel Consumption Tweak",
@@ -1098,17 +1125,6 @@
       "safetylvl": "safe",
       "extraOps": true,
       "advancedOp": false
-    },
-    {
-      "id": 23,
-      "OpName": "Speedcam patch",
-      "INST": "Installiert Speedcam-Patch",
-      "DEINST": "Entfernt speedcam-patch",
-      "toolTip": "<h5>Speedcam Patch. </h5>Das Navi wird so modifiziert, dass die Datenbank für Blitzer akzeptiert wird.  Man kann anschließend die Datei 'speedcam.txt' auf die Speicherkarte kopieren, die dann importiert wird.    <h6>Speedcam Patch ist nur mit folgenden FW Versionen kompatibel:</h6> <div style='columns:4'>55.00.650A-NA    55.00.753A-NA   55.00.760A-NA   56.00.100A-ADR  56.00.230A-EU  56.00.511A-EU  56.00.512A-EU  56.00.513B-EU  56.00.513C-ADR    56.00.230A-ADR   56.00.240B-ADR    56.00.401A-JP   56.00.521A-NA   58.00.250A-NA    59.00.326A-ADR   59.00.331A-EU</div>",
-      "img": "",
-      "safetylvl": "warning",
-      "extraOps": true,
-      "advancedOp": true
     },
     {
       "id": 24,
@@ -1134,15 +1150,26 @@
       "advancedOp": false
     },
     {
-      "id": 26,
-      "OpName": "USB Audio Mod",
-      "INST": "Install USB Audio Mod",
-      "DEINST": "Remove USB Audio Mod",
-      "toolTip": "<h5>USB Audio Mod. <small>By: Enlsen</small> </h5><b>Patches The USB Audio App With These Mods:   <br><ol><li>Long press (click hold) folders/all songs to play</li><li>Adds new icon for USB root menu on the UMP control</li> <li>Removes \"More like this\" button from UMP control</li><li>Adds folders button to UMP control</li><li>Set folders and song list icons correctly (were switched) on UMP control</li><li>Removes \"/\" character from folder names for list control and title of now playing control</li><li>Adds folder and song icons to the list control</li><li>Adds folder and playlist icons to now playing control</li></ol>",
-      "img": "USBAudioMod.png",
+      "id": 27,
+      "OpName": "AIO Tweaks App",
+      "INST": "Install AIO Tweaks App",
+      "DEINST": "Remove AIO Tweaks App",
+      "toolTip": "<div class='aio-help'><h5>AIO Tweaks App </h5> An experimental app by Trezdog44. <h5>This is an experimental app that I made to test the limits of app functionality.  For each success there were several failures.</h5><h6><strong>Every function in this app is <em>not</em> guaranteed to work</strong> but here are some useful and/or fun things you can do:</h6><ul><li>&#39;Apps&#39; Tab:<ul><li>Home: Goes home. This was the easy part.</li><li>Go to: USB A, USB B, Bluetooth (audio context).</li><li>Previous, Next - Works without changing contexts</li><li>Stop (and Start*) Android Auto Headunit process.<ul><li>Killing headunit process with allow Bluetooth calling to work correctly.</li><li>Starting the process does not work properly yet, reboot CMU to restart headunit process.</li></ul></li><li>Stop and Start Castscreen Receiver<ul><li>Useful for troubleshooting if it is not functioning correctly.  </li><li>Both of these do work but there is a possibility that a memory issue may prevent the process from properly starting in which case a reboot is required to allow the process to run.</li></ul></li></ul></li><li>&#39;Tweaks&#39; Tab:<ul><li>Many familiar AIO layout related tweaks that can be applied on the fly<ul><li>Applied tweaks are automatically saved to localStorage and saved tweaks are applied on boot.</li><li>Toggle each individual tweak on or off.</li><li>One button to reset all tweaks.</li><li><em>NOTE: AIO Tweaks App will not UNDO installed tweaks, they will mix and may result in unexpected and/or interesting layouts</em></li></ul></li></ul></li><li><p>&#39;Options&#39; Tab:</p><ul><li><p>Touchscreen: <em>NOTE: Changes to the touchscreen functionality are applied when the vehicle comes to a <strong>COMPLETE STOP</strong></em></p><ul><li>Enable Touchscreen and Menu</li><ul><li>Normally disabled menu items while driving ie. Text messages &amp; enter address for navigation,</li><li>Compass is disabled</li></ul><li>Enable Touchscreen and Compass</li><ul><li>Compass is functional</li><li>Menu items are disabled</lI></ul><li>Disable Touchscreen</li><ul><li>Touchscreen and Menu Items disabled</li><li><p>Compass is functional</p></li></ul></ul></li><li><p>Show Background: Show only background (any button to exit).</p></li><li>Reboot: To Reboot.</li></ul></li></ul></div>",
+      "img": "AIO_Tweaks-Screen.png",
       "safetylvl": "safe",
       "extraOps": false,
       "advancedOp": false
+    },
+    {
+      "id": 21,
+      "OpName": "(DISABLED) Media Order Patch & FLAC Support",
+      "INST": "(DISABLED) Media_order patch u. FLAC support installieren?",
+      "DEINST": "Media_order patch u. FLAC support entfernen?",
+      "toolTip": "<h5>Media Order Patching und FLAC Support </h5>Musik wird nun alphabetisch sortiert und nicht mehr nach Datum mit neusten Einträgen zuerst<div>Support für Audio-Format FLAC <h6>Audio Order Patch & FLAC Support ist nur  kompatibel mit folgenden FW Versionen: </h6><div style='columns:5'>55.00.650A-NA  55.00.753A-NA  55.00.760A-NA  56.00.100A-ADR  56.00.230A-EU  56.00.240B-ADR  56.00.511A-EU  56.00.512A-EU  56.00.521A-NA  58.00.250A-NA  59.00.326A-ADR  59.00.331A-EU  56.00.513C-EU  56.00.513B-EU  56.00.513C-ADR  59.00.330A-ADR   59.00.342A-ADR   59.00.441A-NA  59.00.443C-EU</div></div>",
+      "img": "",
+      "safetylvl": "warning",
+      "extraOps": false,
+      "advancedOp": true
     }
   ]
 }

@@ -1,7 +1,7 @@
 # Install Android Auto Headunit App
 show_message "INSTALL ANDROID AUTO HEADUNIT APP ..."
-log_message "====****   INSTALL ANDROID AUTO HEADUNIT APP ...  ****===="
-log_message "===   Begin Installation Of Android Auto Headunit App  ==="
+log_message "====*******        INSTALL ANDROID AUTO HEADUNIT APP ...      *******===="
+log_message "===          Begin Installation Of Android Auto Headunit App          ==="
 TESTBKUPS=1
 if [ "${TESTBKUPS}" = "1" ]
 then
@@ -10,17 +10,10 @@ then
 	cp /jci/sm/sm.conf "${MYDIR}/bakups/test/sm_androidauto-before.conf"
 fi
 
-
-# Install Android Auto Headunit App
-show_message "INSTALL ANDROID AUTO HEADUNIT APP ..."
-log_message "====****   INSTALL ANDROID AUTO HEADUNIT APP ...  ****===="
-log_message "===   Begin Installation Of Android Auto Headunit App  ==="
-
 ### kills all WebSocket daemons
 killall -q -9 headunit
 pkill websocketd
 
-rm -f /tmp/mnt/data_persist/dev/bin/websocketd
 rm -f /tmp/mnt/data_persist/dev/bin/headunit
 rm -f /tmp/mnt/data_persist/dev/bin/aaserver
 rm -f /tmp/mnt/data_persist/dev/bin/headunit-wrapper
@@ -39,59 +32,34 @@ sed -i '/headunit-wrapper &/d' /jci/scripts/stage_wifi.sh
 sed -i '/9999/d' /jci/scripts/stage_wifi.sh
 sed -i '/headunit/d' /jci/scripts/stage_wifi.sh
 sed -i '/Android Auto/d' /jci/scripts/stage_wifi.sh
-cp -a "${MYDIR}/config_org/androidauto/usr/lib/gstreamer-0.10/libgstalsa.so" /usr/lib/gstreamer-0.10
-log_message "===     Removed old Android Auto App    ==="
+log_message "===                   Removed old Android Auto App                    ==="
 if grep -Fq "input_filter" /jci/sm/sm.conf
 then
-	log_message "=== Clean obsolete input_filter to /jci/sm/sm.conf ==="
+	log_message "===           Clean obsolete input_filter to /jci/sm/sm.conf          ==="
 	sed -i '/input_filter/ d' /jci/sm/sm.conf
 fi
 
 if [ -e /usr/lib/gstreamer-0.10/libgstalsa.so.org ]
 then
-		rm -f /usr/lib/gstreamer-0.10/libgstalsa.so
-		log_message "=== Original libgstalsa.so is available as backup ==="
-		mv /usr/lib/gstreamer-0.10/libgstalsa.so.org /usr/lib/gstreamer-0.10/libgstalsa.so
-		/bin/fsync /usr/lib/gstreamer-0.10/libgstalsa.so
+	rm -f /usr/lib/gstreamer-0.10/libgstalsa.so
+	log_message "===           Original libgstalsa.so is available as backup           ==="
+	mv /usr/lib/gstreamer-0.10/libgstalsa.so.org /usr/lib/gstreamer-0.10/libgstalsa.so
+	/bin/fsync /usr/lib/gstreamer-0.10/libgstalsa.so
 fi
 # delete empty lines
-sed -i '/^$/ d' /jci/scripts/stage_wifi.sh
-sed -i '/#!/ a' /jci/scripts/stage_wifi.sh
-
-# delete old config
-if grep -Fq "websocketd --port=9999" /jci/scripts/stage_wifi.sh
-then
-	sed -i '/Android Auto start/d' /jci/scripts/stage_wifi.sh
-	sed -i '/9999/d' /jci/scripts/stage_wifi.sh
-	sed -i '/headunit-wrapper/d' /jci/scripts/stage_wifi.sh
-	log_message "=== Removed old configuration from stage_wifi.sh ==="
-fi
+sed -i '/^ *$/ d' /jci/scripts/stage_wifi.sh
+sed -i '/#!/ a\ ' /jci/scripts/stage_wifi.sh
 
 # check for 1st line of stage_wifi.sh
 if grep -Fq "#!/bin/sh" /jci/scripts/stage_wifi.sh
 then
-	echo "OK"
-	log_message "=== 1st line of stage_wifi.sh is OK ==="
-else
-	cp -a "${MYDIR}/config/androidauto/stage_wifi.sh" /jci/scripts/
-	log_message "=== Missing 1st line of stage_wifi.sh, copied new one ==="
-fi
-
-# add commands for Android Auto to stage_wifi
-if [ -e /jci/scripts/stage_wifi.sh ]
-then
-	if grep -Fq "### Android Auto start" /jci/scripts/stage_wifi.sh
-	then
-		log_message "=== Android Auto entry already exists in /jci/scripts/stage_wifi.sh ==="
-	else
-		#first backup
-		cp -a /jci/scripts/stage_wifi.sh /jci/scripts/stage_wifi.sh.AA
-		log_message "=== Backup of /jci/scripts/stage_wifi.sh to stage_wifi.sh.AA ==="
 		echo -e "\n\n### Android Auto start" >> /jci/scripts/stage_wifi.sh
 		sleep 1
 		echo -e "headunit-wrapper &" >> /jci/scripts/stage_wifi.sh
-		log_message "=== Added Android Auto entry to /jci/scripts/stage_wifi.sh ==="
-	fi
+		log_message "===      Added Android Auto entry to /jci/scripts/stage_wifi.sh       ==="
+else
+	cp -a "${MYDIR}/config/androidauto/stage_wifi.sh" /jci/scripts/
+	log_message "===         Missing 1st line of stage_wifi.sh, copied new one         ==="
 fi
 
 cp -a ${MYDIR}/config/androidauto/data_persist/dev/* /tmp/mnt/data_persist/dev
@@ -100,41 +68,52 @@ chmod 755 /tmp/mnt/data_persist/dev/bin/headunit_libs/libgsth264parse.so
 chmod 755 /tmp/mnt/data_persist/dev/bin/headunit_libs/libmfw_gst_isink.so
 chmod 755 /tmp/mnt/data_persist/dev/bin/headunit
 chmod 755 /tmp/mnt/data_persist/dev/bin/headunit-wrapper
-dos2unix /tmp/mnt/data_persist/dev/bin/headunit-wrapper
-log_message "=== Copied Android Auto Headunit App files ==="
+log_message "===                Copied Android Auto Headunit App files             ==="
 
 # copy additionalApps.js, if not already present
 if [ ! -e /jci/opera/opera_dir/userjs/additionalApps.js ]
 then
-	log_message "=== No additionalApps.js available, will copy one ==="
+	log_message "===           No additionalApps.js available, will copy one           ==="
 	cp -a ${MYDIR}/config/androidauto/jci/opera/opera_dir/userjs/additionalApps.* /jci/opera/opera_dir/userjs/
 	find /jci/opera/opera_dir/userjs/ -type f -name '*.js' -exec chmod 755 {} \;
 fi
 
-# create new additionalApps.json file from scratch if not already present
-if [ ! -e /jci/opera/opera_dir/userjs/additionalApps.json ]
+# call function add_app_json to modify additionalApps.json
+add_app_json "_androidauto" "Android Auto"
+
+
+SOUND_X=$(grep -c "tel_asymed" /etc/asound.conf)
+if [ $SOUND_X -eq 1 ]; then
+	# remove patch to /etc/asound.conf Bluetooth calling Bug is fixed
+	log_message "===     Detected Bluetooth call patch in asound.conf reverting file   ==="
+	if [ -e /etc/asound.conf.org ];	then
+		if mv /etc/asound.conf.org /etc/asound.conf; then
+			log_message "===     /etc/asound.conf reverted from backup /etc/asound.conf.org    ==="
+		else
+			log_message "===           Error removing patch from /etc/asound.conf              ==="
+		fi
+	fi
+fi
+
+# patch systemApp.js if needed for v59+ app list
+if ! grep -Fq "_androidauto" /jci/gui/apps/system/js/systemApp.js && [ ${APP_PATCH_59} -eq 0 ]
 then
-	log_message "=== No additionalApps.json available, generating one ==="
-	echo "[" > /jci/opera/opera_dir/userjs/additionalApps.json
-	echo "]" >> /jci/opera/opera_dir/userjs/additionalApps.json
-	chmod 755 /jci/opera/opera_dir/userjs/additionalApps.json
+	APP_PATCH_59=1
+	cp -a ${MYDIR}/config/patch59/systemApp.js /jci/gui/apps/system/js/
+	log_message "===                 Applied App List Patch For V59+                   ==="
 fi
 
 if [ "${TESTBKUPS}" = "1" ]
 then
 	cp -a /jci/scripts/stage_wifi.sh ${MYDIR}/bakups/test/stage_wifi_androidauto-after.sh
-	cp -a /jci/opera/opera_dir/userjs/additionalApps.json "${MYDIR}/bakups/test/additionalApps_generated.json"
+	cp -a /jci/opera/opera_dir/userjs/additionalApps.json "${MYDIR}/bakups/test/additionalApps_after-AA.json"
 fi
-# call function add_app_json to modify additionalApps.json
-add_app_json "_androidauto" "Android Auto"
 
-# patch systemApp.js if needed for v59+ app list
-if [ ! -e /jci/gui/apps/system/js/systemApp.js.audio ] && [ ! -e /jci/gui/apps/system/js/systemApp.js.disclaimer ] && [ ${APP_PATCH_59} = 0 ]
+# Move headunit log file to USB Drive if exists
+if [ -e /tmp/mnt/data/headunit.log ]
 then
-	APP_PATCH_59=1
-  cp -a ${MYDIR}/config/patch59/systemApp.js /jci/gui/apps/system/js/
-	log_message "===           Applied App List Patch For V59+           ==="
+	mv /tmp/mnt/data/headunit.log ${MYDIR}
+	log_message "===                 Moved headunit.log To USB Drive                   ==="
 fi
-
-log_message "===*** END INSTALLATION OF ANDROID AUTO HEADUNIT APP **==="
+log_message "====******** END INSTALLATION OF ANDROID AUTO HEADUNIT APP *********====="
 log_message " "

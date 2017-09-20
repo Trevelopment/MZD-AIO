@@ -72,7 +72,7 @@
     {
       "id": 5,
       "title": "Tips & Tricks",
-      "msg": "I will include some tips that go above and beyond this app. <br><br><a href='' onclick=externalLink('emulate')>Here are instructions how to run the CMU OS on yor computer.</a><br><br><a href='' onclick=externalLink('cmu-autorun')>CMU-Autorun script for testing and recovery.</a>",
+      "msg": "I will include some tips that go above and beyond this app. <br><br><a href='' onclick=externalLink('emulate')>Here are instructions how to run the CMU OS on yor computer.</a><br><br><a href='' onclick=externalLink('cmu-autorun')>CMU-Autorun script for testing and recovery.</a><h4><em>How to run Android Auto from an SD card</em></h4><p>First of all uninstall Android Auto from your system.  Click the CMU-Autorun link above and download the repository (download button is on the top right next to \"<span class='icon-search4'></span>Find File\").  Copy the \"installer\" Folder to a blank USB drive to install the autorun script, this script will run every time the system boots up.   The script looks at the root of the SD card (if available) for a file called \"run.sh\" and if found, executes the file. After installing, copy the \"dryrun\" folder onto an SD card to test that the installation worked correctly. </p><p>AA - Copy the contents of the \"headunit\" folder to the root of a blank SD card, connect before booting up infotanment system, a message will show the first time to confirm it is running.  \nPlug in an Android Auto compatible phone to start.</p><p><b>Caveats:</b> The device with the headunit files must be connected before booting up the infotainment system to run. Once the headunit app is running it is loaded into memory and will silently run in the background, this means that even if you remove the SD card the headunit app will still be running in memory.  To stop the process you can do one of these things: <ol><li>Turn off the vehicle for about 5-10 minutes</li><li>Hard reset (hold: mute + nav + back)</li><li>Login SSH, enter command 'killall headunit'</li></ol></p><hr><p><h3>Want to run tweaks from an SD card?</h3>With autorun script installed copy tweak files to an SD card.  Rename \"tweaks.sh\" to \"run.sh\".  Boot up the system and tweaks will run as expected.  NOTE: I/O to SD card is slower than USB so installation will take longer.</p>",
       "t2": "Technical Talk",
       "msg2": "This app is built with <a href='' onclick='externalLink(`Electron`)' title='Electron'>Electron</a> and <a href='' onclick='externalLink(`AngularJS`)' title='AngularJS'>AngularJS</a>"
     },
@@ -239,7 +239,7 @@
   "mainOps": {
     "wifi": {
       "id": 0,
-      "label": "Activation WIFI (NA)",
+      "label": "Activation WIFI",
       "safetylvl": "safe",
       "toolTip": "<h5>WIFI </h5>Activation du WIFI pour l'Amérique du Nord"
     },
@@ -289,7 +289,7 @@
       "testlabel": "Test Backups",
       "skipconfirm": "Skip Confirmation",
       "safetylvl": "safe",
-      "toolTip": "<h5>Skip Confirmation</h5><p>Allows for the installation to run without prompting for confirmation to begin the install. Mainly this is used for recovering when the touchscreen is not responding.  </p><h5>Copy Backups:</h5> <p> Copy original backups of modified system files, for safe keeping. </p><h5>Test Backups:</h5> <p>Some tweaks have before and after copys of the files modified during the instalation.  If you like that kind of thing they will copied to your-usb/bakups/test/.</p>"
+      "toolTip": "<h5>Retrieve CMU Data</h5><p>Dump diagnostic files from the CMU to the USB Drive.  Cleans out error files and core dumps from the system.</p><h5>Skip Confirmation</h5><p>Allows for the installation to run without prompting for confirmation to begin the install. Mainly this is used for recovering when the touchscreen is not responding.  </p><h5>Copy Backups:</h5> <p> Copy original backups of modified system files, for safe keeping. </p><h5>Test Backups:</h5> <p>Some tweaks have before and after copys of the files modified during the instalation.  If you like that kind of thing they will copied to your-usb/bakups/test/.</p>"
     },
     "mainmenu": {
       "id": 8,
@@ -600,15 +600,15 @@
       "label": "Mazda Logos"
     },
     "floating": {
-			"id": 15,
+      "id": 15,
       "label": "Floating Logo"
     },
     "xmen": {
-			"id": 16,
+      "id": 16,
       "label": "X-Men"
     },
     "custom": {
-			"id": 17,
+      "id": 17,
       "label": "Custom Theme"
     }
   },
@@ -679,6 +679,18 @@
       "id": 11,
       "label": "Small Focused Coin"
     },
+    "hideglow": {
+      "id": 12,
+      "label": "Remove Glow"
+    },
+    "fulltitles": {
+      "id": 13,
+      "label": "Full Width Titles"
+    },
+    "noalbm": {
+      "id": 14,
+      "label": "Hide Album Art"
+    },
     "mainlabel": [
       {
         "id": 1,
@@ -687,6 +699,10 @@
       {
         "id": 2,
         "label": "Hide Text"
+      },
+      {
+        "id": 3,
+        "label": "Color Text"
       }
     ],
     "layout": [
@@ -945,14 +961,14 @@
     },
     {
       "id": 8,
-      "OpName": "Patch ordre alphabetique & support FLAC",
-      "INST": "Activation du patch media / support des fichiers FLAC?",
-      "DEINST": "Suppression du correctif pour l'ordre des supports media ?",
-      "toolTip": "<h5>Patch ordre alphabetique &amp; support FLAC </h5>La musique sera triee par ordre alphabetique et non par date des nouvelles entrees. Support pour le format audio FLAC  <h6>Audio Order Patch & FLAC Support is only compatible with these FW Versions: </h6><div style='columns:5'>55.00.650A-NA  55.00.753A-NA  55.00.760A-NA  56.00.100A-ADR  56.00.230A-EU  56.00.240B-ADR  56.00.511A-EU  56.00.512A-EU  56.00.521A-NA  58.00.250A-NA  59.00.326A-ADR  59.00.331A-EU  56.00.513C-EU  56.00.513B-EU  56.00.513C-ADR  59.00.330A-ADR   59.00.342A-ADR   59.00.441A-NA  59.00.443C-EU</div>",
+      "OpName": "No More Beeps",
+      "INST": "Disable All System Beeps",
+      "DEINST": "Restore System Beeps",
+      "toolTip": "<h5>No More Beeps</h5>Disable all 'Beeps' made by the system that are not silenced by the 'Settings > Sound > Beep' option.  This also includes the beeps that cannot be silenced by the settings option.",
       "img": "",
-      "safetylvl": "warning",
+      "safetylvl": "safe",
       "extraOps": false,
-      "advancedOp": true
+      "advancedOp": false
     },
     {
       "id": 9,
@@ -1010,14 +1026,36 @@
       "advancedOp": false
     },
     {
+      "id": 20,
+      "OpName": "Statusbar Tweaks",
+      "INST": "Installation de la date dans la barre de statut",
+      "DEINST": "Desinstallation de la date dans la barre de statut",
+      "toolTip": "<h5>Date dans la barre de statut</h5>  Date dans la barre d'etat, visible en permanence date + icones par l'horloge , même si les messages systemes sont affiches",
+      "img": "mzd_datum_icons_all.jpg",
+      "safetylvl": "safe",
+      "extraOps": true,
+      "advancedOp": false
+    },
+    {
+      "id": 26,
+      "OpName": "USB Audio Mod",
+      "INST": "Install USB Audio Mod",
+      "DEINST": "Remove USB Audio Mod",
+      "toolTip": "<h5>USB Audio Mod. <small>By: Enlsen</small> </h5><b>Patches The USB Audio App With These Mods:   <br><ol><li>Long press (click hold) folders/all songs to play</li><li>Adds new icon for USB root menu on the UMP control</li> <li>Removes \"More like this\" button from UMP control</li><li>Adds folders button to UMP control</li><li>Set folders and song list icons correctly (were switched) on UMP control</li><li>Removes trailing \"/\" character from folder names for list control and title of now playing</li><li>Adds folder and song icons to the list control</li><li>Adds folder and playlist icons to now playing</li></ol>",
+      "img": "USBAudioMod.jpg",
+      "safetylvl": "safe",
+      "extraOps": false,
+      "advancedOp": false
+    },
+    {
       "id": 14,
       "OpName": "Grande pochette d'album",
       "INST": "Installation de la Grande pochette d'album",
       "DEINST": "Desinstallation de la Grande pochette d'album",
-      "toolTip": "<h5>Grande pochette d'album </h5> La pochette d'album est agrandie.",
-      "img": "",
+      "toolTip": "<h5>Grande pochette d'album </h5> La pochette d'album est agrandie.   Extra Options: Full Width Titles & Hide Album Art",
+      "img": "full_titles.png",
       "safetylvl": "safe",
-      "extraOps": false,
+      "extraOps": true,
       "advancedOp": false
     },
     {
@@ -1076,17 +1114,6 @@
       "advancedOp": false
     },
     {
-      "id": 20,
-      "OpName": "Statusbar Tweaks",
-      "INST": "Installation de la date dans la barre de statut",
-      "DEINST": "Desinstallation de la date dans la barre de statut",
-      "toolTip": "<h5>Date dans la barre de statut</h5>  Date dans la barre d'etat, visible en permanence date + icones par l'horloge , même si les messages systemes sont affiches",
-      "img": "mzd_datum_icons_all.jpg",
-      "safetylvl": "safe",
-      "extraOps": true,
-      "advancedOp": false
-    },
-    {
       "id": 22,
       "OpName": "Consommation d'essence KM/L",
       "INST": "Installation de la consommation essence KM/L",
@@ -1096,17 +1123,6 @@
       "safetylvl": "safe",
       "extraOps": false,
       "advancedOp": false
-    },
-    {
-      "id": 23,
-      "OpName": "Patch Radar",
-      "INST": "Installation du patch Radar",
-      "DEINST": "Suppression du patch Radar",
-      "toolTip": "<h5>Patch Radar. </h5><div>Le navigateur est corrigée afin que la base de données accepte les radars. Vous pouvez copier un fichier 'speedcam.txt' sur la carte SD qui contient la navigation, elle sera importée.  <h6>Speedcam Patch is only compatible with these FW Versions:</h6> <div style='columns:4'>55.00.650A-NA    55.00.753A-NA   55.00.760A-NA   56.00.100A-ADR  56.00.230A-EU  56.00.511A-EU  56.00.512A-EU  56.00.513B-EU  56.00.513C-ADR    56.00.230A-ADR   56.00.240B-ADR    56.00.401A-JP   56.00.521A-NA   58.00.250A-NA    59.00.326A-ADR   59.00.331A-EU</div></div>",
-      "img": "",
-      "safetylvl": "warning",
-      "extraOps": true,
-      "advancedOp": true
     },
     {
       "id": 24,
@@ -1124,23 +1140,34 @@
       "OpName": "Android Auto Headunit App",
       "INST": "Installer l'application Android Auto Headunit?",
       "DEINST": "Suppression d'Android Auto Headunit App?",
-			"toolTip": "<h5>Android Car Headunit app.  Android car for the infotainment system. </h5>  <br>1. Install the Android app from google play store<br>2. Connect the phone to USB and pair the phone bluetooth with the CMU <br>3. Manually switch to Bluetooth Audio Input. <br>4. Click on the AA icon under Applications Menu on the CMU <br>5. A black screen with credits should open up first and input <br>6. Android Auto will then start. If it does not, pull out the USB and start over again (or check the installation.) <br>7. 2 ways to stop AA - Disconnect the USB cable or use the onscreen menu 'Return to Mazda Connect' on last screen with speedo icon.  <br>8. Once disconnected, the back screen will remain. Press Home Button on the Mazda's Commander to close it. I had to do this because js double click wasn't working.  <br>**What does not work:** <br>1. Reverse camera gets blacked out. <br>2. Voice Control <br>3. Touch drag / multi touch <br>4. Google Maps night mode always on.<h5><b><span class='icon-star-full'></span> Android Auto Patch!: <span class='icon-android'></span><br><span class='icon-gamepad'></span> input_filter is no longer needed (#12) <span class='icon-trophy'></span></b></h5><div class='w3-container w3-border-green'><strong>'Remove the input_filter background process. It's not needed since we can use EVIOCGRAB to consume input events before the CMU UI without the /dev/uinput trickery.' /cc @lmagder <span class='icon-thumbs-up'></span> <span class='icon-thumbs-up'></span></strong></div>",
-			"toolTip2": "<h5>Android Car Headunit app. </h5><a href onclick='externalLink(`AA-app`)'>Install the Android app from google play store: HERE.</a><strong><h5><span class='icon-star-full'></span>v0.99:</h5> <li>Older version, less stable</li> <li>can make bluetooth calls but cannot dial from AA interface (Voice commands/dialing do work)</li><li><em>Do not report bug/issues for this version</em>, they are addressed in later versions.</li><h5>v1.02:</h5><li>More stable/up to date release.</li><li>Automatically connects when phone is connected</li><li>'bluetooth-call bug' redirects bluetooth calls back to phone.</li></strong></div>",
-			"img": "AndroidAuto.jpg",
-			"safetylvl": "safe",
+      "toolTip": "<h5>Android Car Headunit app.  Android car for the infotainment system. </h5>  <br>1. Install the Android app from google play store<br>2. Connect the phone to USB and pair the phone bluetooth with the CMU <br>3. Manually switch to Bluetooth Audio Input. <br>4. Click on the AA icon under Applications Menu on the CMU <br>5. A black screen with credits should open up first and input <br>6. Android Auto will then start. If it does not, pull out the USB and start over again (or check the installation.) <br>7. 2 ways to stop AA - Disconnect the USB cable or use the onscreen menu 'Return to Mazda Connect' on last screen with speedo icon.  <br>8. Once disconnected, the back screen will remain. Press Home Button on the Mazda's Commander to close it. I had to do this because js double click wasn't working.  <br>**What does not work:** <br>1. Reverse camera gets blacked out. <br>2. Voice Control <br>3. Touch drag / multi touch <br>4. Google Maps night mode always on.<h5><b><span class='icon-star-full'></span> Android Auto Patch!: <span class='icon-android'></span><br><span class='icon-gamepad'></span> input_filter is no longer needed (#12) <span class='icon-trophy'></span></b></h5><div class='w3-container w3-border-green'><strong>'Remove the input_filter background process. It's not needed since we can use EVIOCGRAB to consume input events before the CMU UI without the /dev/uinput trickery.' /cc @lmagder <span class='icon-thumbs-up'></span> <span class='icon-thumbs-up'></span></strong></div>",
+      "toolTip2": "<h5>Android Car Headunit app. </h5><a href onclick='externalLink(`AA-app`)'>Install the Android app from google play store: HERE.</a><strong><h5><span class='icon-star-full'></span>v0.99:</h5> <li>Older version, less stable</li> <li>can make bluetooth calls but cannot dial from AA interface (Voice commands/dialing do work)</li><li><em>Do not report bug/issues for this version</em>, they are addressed in later versions.</li><h5>v1.02:</h5><li>More stable/up to date release.</li><li>Automatically connects when phone is connected</li><li>'bluetooth-call bug' redirects bluetooth calls back to phone.</li></strong></div>",
+      "img": "AndroidAuto.jpg",
+      "safetylvl": "safe",
       "extraOps": true,
       "advancedOp": false
     },
     {
-      "id": 26,
-      "OpName": "USB Audio Mod",
-      "INST": "Install USB Audio Mod",
-      "DEINST": "Remove USB Audio Mod",
-      "toolTip": "<h5>USB Audio Mod. <small>By: Enlsen</small> </h5><b>Patches The USB Audio App With These Mods:   <br><ol><li>Long press (click hold) folders/all songs to play</li><li>Adds new icon for USB root menu on the UMP control</li> <li>Removes \"More like this\" button from UMP control</li><li>Adds folders button to UMP control</li><li>Set folders and song list icons correctly (were switched) on UMP control</li><li>Removes \"/\" character from folder names for list control and title of now playing control</li><li>Adds folder and song icons to the list control</li><li>Adds folder and playlist icons to now playing control</li></ol>",
-      "img": "USBAudioMod.png",
+      "id": 27,
+      "OpName": "AIO Tweaks App",
+      "INST": "Install AIO Tweaks App",
+      "DEINST": "Remove AIO Tweaks App",
+      "toolTip": "<div class='aio-help'><h5>AIO Tweaks App </h5> An experimental app by Trezdog44. <h5>This is an experimental app that I made to test the limits of app functionality.  For each success there were several failures.</h5><h6><strong>Every function in this app is <em>not</em> guaranteed to work</strong> but here are some useful and/or fun things you can do:</h6><ul><li>&#39;Apps&#39; Tab:<ul><li>Home: Goes home. This was the easy part.</li><li>Go to: USB A, USB B, Bluetooth (audio context).</li><li>Previous, Next - Works without changing contexts</li><li>Stop (and Start*) Android Auto Headunit process.<ul><li>Killing headunit process with allow Bluetooth calling to work correctly.</li><li>Starting the process does not work properly yet, reboot CMU to restart headunit process.</li></ul></li><li>Stop and Start Castscreen Receiver<ul><li>Useful for troubleshooting if it is not functioning correctly.  </li><li>Both of these do work but there is a possibility that a memory issue may prevent the process from properly starting in which case a reboot is required to allow the process to run.</li></ul></li></ul></li><li>&#39;Tweaks&#39; Tab:<ul><li>Many familiar AIO layout related tweaks that can be applied on the fly<ul><li>Applied tweaks are automatically saved to localStorage and saved tweaks are applied on boot.</li><li>Toggle each individual tweak on or off.</li><li>One button to reset all tweaks.</li><li><em>NOTE: AIO Tweaks App will not UNDO installed tweaks, they will mix and may result in unexpected and/or interesting layouts</em></li></ul></li></ul></li><li><p>&#39;Options&#39; Tab:</p><ul><li><p>Touchscreen: <em>NOTE: Changes to the touchscreen functionality are applied when the vehicle comes to a <strong>COMPLETE STOP</strong></em></p><ul><li>Enable Touchscreen and Menu</li><ul><li>Normally disabled menu items while driving ie. Text messages &amp; enter address for navigation,</li><li>Compass is disabled</li></ul><li>Enable Touchscreen and Compass</li><ul><li>Compass is functional</li><li>Menu items are disabled</lI></ul><li>Disable Touchscreen</li><ul><li>Touchscreen and Menu Items disabled</li><li><p>Compass is functional</p></li></ul></ul></li><li><p>Show Background: Show only background (any button to exit).</p></li><li>Reboot: To Reboot.</li></ul></li></ul></div>",
+      "img": "AIO_Tweaks-Screen.png",
       "safetylvl": "safe",
       "extraOps": false,
       "advancedOp": false
+    },
+    {
+      "id": 21,
+      "OpName": "(DISABLED) Patch ordre alphabetique & support FLAC",
+      "INST": "(DISABLED) Activation du patch media / support des fichiers FLAC?",
+      "DEINST": "Suppression du correctif pour l'ordre des supports media ?",
+      "toolTip": "<h5>Patch ordre alphabetique &amp; support FLAC </h5>La musique sera triee par ordre alphabetique et non par date des nouvelles entrees. Support pour le format audio FLAC  <h6>Audio Order Patch & FLAC Support is only compatible with these FW Versions: </h6><div style='columns:5'>55.00.650A-NA  55.00.753A-NA  55.00.760A-NA  56.00.100A-ADR  56.00.230A-EU  56.00.240B-ADR  56.00.511A-EU  56.00.512A-EU  56.00.521A-NA  58.00.250A-NA  59.00.326A-ADR  59.00.331A-EU  56.00.513C-EU  56.00.513B-EU  56.00.513C-ADR  59.00.330A-ADR   59.00.342A-ADR   59.00.441A-NA  59.00.443C-EU</div>",
+      "img": "",
+      "safetylvl": "warning",
+      "extraOps": false,
+      "advancedOp": true
     }
   ]
 }

@@ -1,6 +1,6 @@
 #diagmenu with 1 sec. press at clock in display settings menu, script made by Sumire_Racing_JPN
 show_message "DIAGMENU W. 1 SEC. PRESS AT CLOCK IN DISPLAY SETTINGS MENU"
-log_message "===***   INSTALL DIAGMENU W. 1 SEC. PRESS AT CLOCK IN DISPLAY SETTINGS MENU ...  ***==="
+log_message "===*** INSTALL DIAGMENU 1 SEC. PRESS CLOCK IN DISPLAY SETTINGS MENU ...  ***==="
 # Backups
 if [ ! -e /jci/gui/apps/diag/js/diagApp.js.org ]
 then

@@ -21,7 +21,13 @@
         <label for="speedo{{option.id}}" data-toggle="tooltip" data-placement="auto bottom" title="{{option.label}}">{{option.label}}</label>
       </td>
     </tr>
-    <tr class="w3-col w3-row"><td><strong style="font-size: 17px;">MPH or KM/H: </strong></td></tr>
+    <tr class="w3-col w3-row" ng-style="{'background-color' : user.speedoOps.color}"><td class="w3-half"><strong style="font-size: 17px;">Color: </strong></td>
+	<td class="w3-half">
+	<select ng-model="user.speedoOps.color" class="w3-select" ng-style="{'background-color' : user.speedoOps.color}" ng-options="x for x in speedoOps.color">
+          <option value="" selected="selected">--- Speedometer Color ---</option>
+        </select>
+		</td>
+		</tr>
     <tr ng-repeat="(key,option) in speedoOps.xph" class="w3-hover-pale-blue w3-tooltip w3-half">
       <td>
         <div class="speedo-check extraRadio">

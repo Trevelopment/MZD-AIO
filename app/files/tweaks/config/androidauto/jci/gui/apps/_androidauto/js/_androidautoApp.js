@@ -15,7 +15,7 @@ function _androidautoApp(uiaId)
     // Base application functionality is provided in a common location via this call to baseApp.init().
     // See framework/js/BaseApp.js for details.
     baseApp.init(this, uiaId);
-    
+
 //    framework.sendEventToMmui("common", "SelectBTAudio");
 
 }
@@ -42,7 +42,6 @@ _androidautoApp.prototype.appInit = function()
             "template": "AndroidAutoTmplt",
             "leftBtnStyle" : "goBack",
             "properties" : {
-      
             },// end of list of controlProperties
             "templatePath": "apps/_androidauto/templates/AndroidAuto", //only needed for app-specific templates
             "readyFunction": this._StartContextReady.bind(this),
@@ -65,11 +64,10 @@ _androidautoApp.prototype.appInit = function()
  * CONTEXT CALLBACKS
  * =========================
  */
-
 function AAcallCommandServer(method, request, resultFunc)
 {
     var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() 
+    xhttp.onreadystatechange = function()
     {
         if (xhttp.readyState == 4)
         {
@@ -96,9 +94,9 @@ function AAdisplayError(location, err)
     }
 }
 
-function AAlogPoll() 
+function AAlogPoll()
 {
-    
+
     try
     {
         AAcallCommandServer("GET", "status",  function(currentStatus)
@@ -118,12 +116,12 @@ function AAlogPoll()
                     if (currentStatus.logPath != null)
                     {
                         var xhttp = new XMLHttpRequest();
-                        xhttp.onreadystatechange = function() 
+                        xhttp.onreadystatechange = function()
                         {
                             try
                             {
                                 var debugTxt = null;
-                                if (xhttp.readyState >= 3 && xhttp.status == 200) 
+                                if (xhttp.readyState >= 3 && xhttp.status == 200)
                                 {
                                     debugTxt = xhttp.responseText;
                                 }
@@ -146,9 +144,9 @@ function AAlogPoll()
                             {
                                 AAdisplayError("onreadystatechange", err);
                             }
-                            
+
                         };
-                        xhttp.open("GET", "file://localhost" + currentStatus.logPath, true);
+                        xhttp.open("GET", "file://" + currentStatus.logPath, true);
                         xhttp.send();
                     }
                 }
@@ -165,10 +163,11 @@ function AAlogPoll()
         AAdisplayError("AAlogPoll", err);
     }
 
-} 
+}
 
 _androidautoApp.prototype._StartContextReady = function ()
 {
+  	framework.common.setSbDomainIcon("apps/_androidauto/aa.png");
     try
     {
         AAcallCommandServer("GET", "status", function(currentStatus)
@@ -177,7 +176,7 @@ _androidautoApp.prototype._StartContextReady = function ()
             {
                 if (!currentStatus.videoFocus && currentStatus.connected)
                 {
-                    var takeFocus = function() 
+                    var takeFocus = function()
                     {
                         AAcallCommandServer("POST", "takeVideoFocus", function(currentStatus){});
                     };
@@ -196,7 +195,7 @@ _androidautoApp.prototype._StartContextReady = function ()
     {
         AAdisplayError("_StartContextReady", err);
     }
-}; 
+};
 
 _androidautoApp.prototype._StartContextOut = function ()
 {

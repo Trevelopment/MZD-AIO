@@ -1,6 +1,6 @@
 # track-order and FLAC support
 show_message "INSTALL TRACK-ORDER AND FLAC SUPPORT ..."
-log_message "=====****** INSTALL TRACK-ORDER AND FLAC SUPPORT ... ******===="
+log_message "======********** INSTALL TRACK-ORDER AND FLAC SUPPORT ... **********====="
 
 TRACKORDER_FLAC=0
 if [ ${CMU_SW_VER} = "56.00.100A-ADR" ] \

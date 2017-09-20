@@ -1,10 +1,10 @@
 # Statusbar Color Tweaks - Uninstall
 # Trevelopment By: Trezdog44
 show_message "UNINSTALL STATUSBAR COLOR TWEAKS ..."
-log_message "=====****     UNINSTALL STATUSBAR COLOR TWEAKS ...    ****====="
+log_message "=====**********     UNINSTALL STATUSBAR COLOR TWEAKS ...    **********====="
 
 remove_aio_css /jci/gui/common/controls/StatusBar/css/StatusBarCtrl.css
 remove_aio_css /jci/gui/common/controls/SbnBar/css/SbnBarCtrl.css
 
-log_message "===***    END UNINSTALLATION OF STATUSBAR COLOR TWEAKS    ***==="
+log_message "===*********   END UNINSTALLATION OF STATUSBAR COLOR TWEAKS    *********==="
 log_message " "

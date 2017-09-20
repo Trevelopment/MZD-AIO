@@ -964,271 +964,271 @@
         <Node key="UK_English">
             <Node key="TTSEmailMessageTag" data="String" value="Message"/>
             <Node key="TTSEndEmailMessageTag" data="String" value="End of the email"/>
-            <Node key="TTSEndSMSMessageTag" data="String" value="End of the message"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value=""/>
             <Node key="TTSSubjectTag" data="String" value="Subject"/>
         </Node>
         <Node key="US_English">
             <Node key="TTSEmailMessageTag" data="String" value="Message"/>
             <Node key="TTSEndEmailMessageTag" data="String" value="End of the email"/>
-            <Node key="TTSEndSMSMessageTag" data="String" value="End of the message"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value=""/>
             <Node key="TTSSubjectTag" data="String" value="Subject"/>
         </Node>
         <Node key="AU_English">
             <Node key="TTSEmailMessageTag" data="String" value="Message"/>
             <Node key="TTSEndEmailMessageTag" data="String" value="End of the Email"/>
-            <Node key="TTSEndSMSMessageTag" data="String" value="End of the message"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value=""/>
             <Node key="TTSSubjectTag" data="String" value="Subject"/>
         </Node>
         <Node key="CN_French">
             <Node key="TTSEmailMessageTag" data="String" value="Message"/>
             <Node key="TTSEndEmailMessageTag" data="String" value="Fin de l’Email"/>
-            <Node key="TTSEndSMSMessageTag" data="String" value="Fin du message"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value=""/>
             <Node key="TTSSubjectTag" data="String" value="Sujet"/>
         </Node>
         <Node key="EU_French">
             <Node key="TTSEmailMessageTag" data="String" value="Message"/>
             <Node key="TTSEndEmailMessageTag" data="String" value="Fin de l’Email"/>
-            <Node key="TTSEndSMSMessageTag" data="String" value="Fin du message"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value=""/>
             <Node key="TTSSubjectTag" data="String" value="Sujet"/>
         </Node>
         <Node key="Arabic">
             <Node key="TTSEmailMessageTag" data="String" value="رسالة"/>
             <Node key="TTSEndEmailMessageTag" data="String" value="نهاية البريد الإلكتروني"/>
-            <Node key="TTSEndSMSMessageTag" data="String" value="نهاية الرسالة"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value=""/>
             <Node key="TTSSubjectTag" data="String" value="الموضوع"/>
         </Node>
         <Node key="Danish">
             <Node key="TTSEmailMessageTag" data="String" value="Besked"/>
             <Node key="TTSEndEmailMessageTag" data="String" value="Slut på Email"/>
-            <Node key="TTSEndSMSMessageTag" data="String" value="Slut på besked"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value=""/>
             <Node key="TTSSubjectTag" data="String" value="Emne"/>
         </Node>
         <Node key="Dutch">
             <Node key="TTSEmailMessageTag" data="String" value="Bericht"/>
             <Node key="TTSEndEmailMessageTag" data="String" value="Einde Email"/>
-            <Node key="TTSEndSMSMessageTag" data="String" value="Einde bericht"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value=""/>
             <Node key="TTSSubjectTag" data="String" value="Onderwerp"/>
         </Node>
         <Node key="Finnish">
             <Node key="TTSEmailMessageTag" data="String" value="Viesti"/>
             <Node key="TTSEndEmailMessageTag" data="String" value="Email loppu"/>
-            <Node key="TTSEndSMSMessageTag" data="String" value="Viestin loppu"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value=""/>
             <Node key="TTSSubjectTag" data="String" value="Aihe"/>
         </Node>
         <Node key="German">
             <Node key="TTSEmailMessageTag" data="String" value="Nachricht"/>
             <Node key="TTSEndEmailMessageTag" data="String" value="Email-Ende"/>
-            <Node key="TTSEndSMSMessageTag" data="String" value="Nachrichtenende"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value=""/>
             <Node key="TTSSubjectTag" data="String" value="Betreff"/>
         </Node>
         <Node key="Italian">
             <Node key="TTSEmailMessageTag" data="String" value="Messaggio"/>
             <Node key="TTSEndEmailMessageTag" data="String" value="Fine della Email"/>
-            <Node key="TTSEndSMSMessageTag" data="String" value="Fine del messaggio"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value=""/>
             <Node key="TTSSubjectTag" data="String" value="Oggetto"/>
         </Node>
         <Node key="Japanese">
             <Node key="TTSEmailMessageTag" data="String" value="ホンブン"/>
             <Node key="TTSEndEmailMessageTag" data="String" value="メッセージ終了"/>
-            <Node key="TTSEndSMSMessageTag" data="String" value="メッセージ終了"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value=""/>
             <Node key="TTSSubjectTag" data="String" value="件名"/>
         </Node>
         <Node key="Chinese_Mandarin">
             <Node key="TTSEmailMessageTag" data="String" value="消息"/>
             <Node key="TTSEndEmailMessageTag" data="String" value="电子邮件的结尾"/>
-            <Node key="TTSEndSMSMessageTag" data="String" value="消息的结尾"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value=""/>
             <Node key="TTSSubjectTag" data="String" value="主题"/>
         </Node>
         <Node key="EU_Portuguese">
             <Node key="TTSEmailMessageTag" data="String" value="Mensagem"/>
             <Node key="TTSEndEmailMessageTag" data="String" value="Fim do Email"/>
-            <Node key="TTSEndSMSMessageTag" data="String" value="Fim da mensagem"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value=""/>
             <Node key="TTSSubjectTag" data="String" value="Assunto"/>
         </Node>
         <Node key="Russian">
             <Node key="TTSEmailMessageTag" data="String" value="Сообщение"/>
             <Node key="TTSEndEmailMessageTag" data="String" value="Конец Email письма"/>
-            <Node key="TTSEndSMSMessageTag" data="String" value="Конец сообщения"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value=""/>
             <Node key="TTSSubjectTag" data="String" value="Тема"/>
         </Node>
         <Node key="Castilian_Spanish">
             <Node key="TTSEmailMessageTag" data="String" value="Mensaje"/>
             <Node key="TTSEndEmailMessageTag" data="String" value="Fin de Email"/>
-            <Node key="TTSEndSMSMessageTag" data="String" value="Fin del mensaje"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value=""/>
             <Node key="TTSSubjectTag" data="String" value="Asunto"/>
         </Node>
         <Node key="NA_Spanish">
             <Node key="TTSEmailMessageTag" data="String" value="Mensaje"/>
             <Node key="TTSEndEmailMessageTag" data="String" value="Fin de Email"/>
-            <Node key="TTSEndSMSMessageTag" data="String" value="Fin del mensaje"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value=""/>
             <Node key="TTSSubjectTag" data="String" value="Asunto"/>
         </Node>
         <Node key="Swedish">
             <Node key="TTSEmailMessageTag" data="String" value="Meddelande"/>
             <Node key="TTSEndEmailMessageTag" data="String" value="Slut på e-post"/>
-            <Node key="TTSEndSMSMessageTag" data="String" value="Slut på meddelande"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value=""/>
             <Node key="TTSSubjectTag" data="String" value="Ämne"/>
         </Node>
         <Node key="Norwegian">
             <Node key="TTSEmailMessageTag" data="String" value="Melding"/>
             <Node key="TTSEndEmailMessageTag" data="String" value="Slutt på Email"/>
-            <Node key="TTSEndSMSMessageTag" data="String" value="Slutt på melding"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value=""/>
             <Node key="TTSSubjectTag" data="String" value="Emne"/>
         </Node>
         <Node key="Czech">
             <Node key="TTSEmailMessageTag" data="String" value="Zpráva"/>
             <Node key="TTSEndEmailMessageTag" data="String" value="Konec Email"/>
-            <Node key="TTSEndSMSMessageTag" data="String" value="Konec zprávy"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value=""/>
             <Node key="TTSSubjectTag" data="String" value="Předmět"/>
         </Node>
         <Node key="Slovakian">
             <Node key="TTSEmailMessageTag" data="String" value="Správa"/>
             <Node key="TTSEndEmailMessageTag" data="String" value="Koniec Email"/>
-            <Node key="TTSEndSMSMessageTag" data="String" value="Koniec správy"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value=""/>
             <Node key="TTSSubjectTag" data="String" value="Predmet"/>
         </Node>
         <Node key="Hungarian">
             <Node key="TTSEmailMessageTag" data="String" value="Üzenet"/>
             <Node key="TTSEndEmailMessageTag" data="String" value="Email vége"/>
-            <Node key="TTSEndSMSMessageTag" data="String" value="Üzenet vége"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value=""/>
             <Node key="TTSSubjectTag" data="String" value="Tárgy"/>
         </Node>
         <Node key="Turkish">
             <Node key="TTSEmailMessageTag" data="String" value="Mesaj"/>
             <Node key="TTSEndEmailMessageTag" data="String" value="E-postanın sonu"/>
-            <Node key="TTSEndSMSMessageTag" data="String" value="Mesajın sonu"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value=""/>
             <Node key="TTSSubjectTag" data="String" value="Konu"/>
         </Node>
         <Node key="Polish">
             <Node key="TTSEmailMessageTag" data="String" value="Wiadomość"/>
             <Node key="TTSEndEmailMessageTag" data="String" value="Koniec wiadomości Email"/>
-            <Node key="TTSEndSMSMessageTag" data="String" value="Koniec wiadomości"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value=""/>
             <Node key="TTSSubjectTag" data="String" value="Temat"/>
         </Node>
         <Node key="Romanian">
             <Node key="TTSEmailMessageTag" data="String" value="Mesaj"/>
             <Node key="TTSEndEmailMessageTag" data="String" value="Sfârşit Email"/>
-            <Node key="TTSEndSMSMessageTag" data="String" value="Sfârşit mesaj"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value=""/>
             <Node key="TTSSubjectTag" data="String" value="Subiect"/>
         </Node>
         <Node key="Estonian">
             <Node key="TTSEmailMessageTag" data="String" value="Sõnum"/>
             <Node key="TTSEndEmailMessageTag" data="String" value="Email lõpp"/>
-            <Node key="TTSEndSMSMessageTag" data="String" value="Sõnumi lõpp"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value=""/>
             <Node key="TTSSubjectTag" data="String" value="Teema"/>
         </Node>
         <Node key="Latvian">
             <Node key="TTSEmailMessageTag" data="String" value="Ziņa"/>
             <Node key="TTSEndEmailMessageTag" data="String" value="Email beigas"/>
-            <Node key="TTSEndSMSMessageTag" data="String" value="Ziņas beigas"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value=""/>
             <Node key="TTSSubjectTag" data="String" value="Tēma"/>
         </Node>
         <Node key="Lithuanian">
             <Node key="TTSEmailMessageTag" data="String" value="Pranešimas"/>
             <Node key="TTSEndEmailMessageTag" data="String" value="Email pabaiga"/>
-            <Node key="TTSEndSMSMessageTag" data="String" value="Pranešimo pabaiga"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value=""/>
             <Node key="TTSSubjectTag" data="String" value="Tema"/>
         </Node>
         <Node key="Greek">
             <Node key="TTSEmailMessageTag" data="String" value="Μήνυμα"/>
             <Node key="TTSEndEmailMessageTag" data="String" value="Τέλος του Email"/>
-            <Node key="TTSEndSMSMessageTag" data="String" value="Τέλος του μηνύματος"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value=""/>
             <Node key="TTSSubjectTag" data="String" value="Θέμα"/>
         </Node>
         <Node key="Croatian">
             <Node key="TTSEmailMessageTag" data="String" value="Poruka"/>
             <Node key="TTSEndEmailMessageTag" data="String" value="Kraj Email-a"/>
-            <Node key="TTSEndSMSMessageTag" data="String" value="Kraj poruke"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value=""/>
             <Node key="TTSSubjectTag" data="String" value="Predmet"/>
         </Node>
         <Node key="Bulgarian">
             <Node key="TTSEmailMessageTag" data="String" value="Съобщение"/>
             <Node key="TTSEndEmailMessageTag" data="String" value="Край на Email"/>
-            <Node key="TTSEndSMSMessageTag" data="String" value="Край на съобщението"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value=""/>
             <Node key="TTSSubjectTag" data="String" value="Тема"/>
         </Node>
         <Node key="Serbian">
             <Node key="TTSEmailMessageTag" data="String" value="Poruka"/>
             <Node key="TTSEndEmailMessageTag" data="String" value="Kraj Email"/>
-            <Node key="TTSEndSMSMessageTag" data="String" value="Kraj poruke"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value=""/>
             <Node key="TTSSubjectTag" data="String" value="Predmet"/>
         </Node>
         <Node key="Hebrew">
             <Node key="TTSEmailMessageTag" data="String" value="הודעה"/>
             <Node key="TTSEndEmailMessageTag" data="String" value="סוף Email"/>
-            <Node key="TTSEndSMSMessageTag" data="String" value="סוף ההודעה"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value=""/>
             <Node key="TTSSubjectTag" data="String" value="נושא"/>
         </Node>
         <Node key="BR_Portuguese">
             <Node key="TTSEmailMessageTag" data="String" value="Mensagem"/>
             <Node key="TTSEndEmailMessageTag" data="String" value="Fim do e-mail"/>
-            <Node key="TTSEndSMSMessageTag" data="String" value="Fim da mensagem"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value=""/>
             <Node key="TTSSubjectTag" data="String" value="Assunto"/>
         </Node>
         <Node key="Malaysian">
             <Node key="TTSEmailMessageTag" data="String" value="Mesej"/>
             <Node key="TTSEndEmailMessageTag" data="String" value="E-mel tamat"/>
-            <Node key="TTSEndSMSMessageTag" data="String" value="Mesej tamat"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value=""/>
             <Node key="TTSSubjectTag" data="String" value="Subjek"/>
         </Node>
         <Node key="Thai">
             <Node key="TTSEmailMessageTag" data="String" value="ข้อความ"/>
             <Node key="TTSEndEmailMessageTag" data="String" value="สิ้นสุดอีเมล"/>
-            <Node key="TTSEndSMSMessageTag" data="String" value="สิ้นสุดข้อความ"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value=""/>
             <Node key="TTSSubjectTag" data="String" value="เรื่อง"/>
         </Node>
         <Node key="Indonesian">
             <Node key="TTSEmailMessageTag" data="String" value="Pesan"/>
             <Node key="TTSEndEmailMessageTag" data="String" value="Akhir dari Email"/>
-            <Node key="TTSEndSMSMessageTag" data="String" value="Akhir dari pesan"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value=""/>
             <Node key="TTSSubjectTag" data="String" value="Judul"/>
         </Node>
         <Node key="Chinese_Cantonese">
             <Node key="TTSEmailMessageTag" data="String" value="Message"/>
             <Node key="TTSEndEmailMessageTag" data="String" value="End of the email"/>
-            <Node key="TTSEndSMSMessageTag" data="String" value="End of the message"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value=""/>
             <Node key="TTSSubjectTag" data="String" value="Subject"/>
         </Node>
         <Node key="Chinese_Simplified">
             <Node key="TTSEmailMessageTag" data="String" value="消息"/>
             <Node key="TTSEndEmailMessageTag" data="String" value="电子邮件的结尾"/>
-            <Node key="TTSEndSMSMessageTag" data="String" value="消息的结尾"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value=""/>
             <Node key="TTSSubjectTag" data="String" value="主题"/>
         </Node>
         <Node key="Chinese_Traditional">
             <Node key="TTSEmailMessageTag" data="String" value="訊息"/>
             <Node key="TTSEndEmailMessageTag" data="String" value="電子郵件的結尾"/>
-            <Node key="TTSEndSMSMessageTag" data="String" value="訊息的結尾"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value=""/>
             <Node key="TTSSubjectTag" data="String" value="主題"/>
         </Node>
         <Node key="Korean">
             <Node key="TTSEmailMessageTag" data="String" value="Message"/>
             <Node key="TTSEndEmailMessageTag" data="String" value="End of the email"/>
-            <Node key="TTSEndSMSMessageTag" data="String" value="End of the message"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value=""/>
             <Node key="TTSSubjectTag" data="String" value="Subject"/>
         </Node>
         <Node key="Malay">
             <Node key="TTSEmailMessageTag" data="String" value="Message"/>
             <Node key="TTSEndEmailMessageTag" data="String" value="End of the email"/>
-            <Node key="TTSEndSMSMessageTag" data="String" value="End of the message"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value=""/>
             <Node key="TTSSubjectTag" data="String" value="Subject"/>
         </Node>
         <Node key="ADR_English">
             <Node key="TTSEmailMessageTag" data="String" value="Message"/>
             <Node key="TTSEndEmailMessageTag" data="String" value="End of the email"/>
-            <Node key="TTSEndSMSMessageTag" data="String" value="End of the message"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value=""/>
             <Node key="TTSSubjectTag" data="String" value="Subject"/>
         </Node>
         <Node key="HK_Cantonese">
             <Node key="TTSEmailMessageTag" data="String" value="訊息"/>
             <Node key="TTSEndEmailMessageTag" data="String" value="電子郵件末尾"/>
-            <Node key="TTSEndSMSMessageTag" data="String" value="訊息末尾"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value=""/>
             <Node key="TTSSubjectTag" data="String" value="主題"/>
         </Node>
         <Node key="TW_Mandarin">
             <Node key="TTSEmailMessageTag" data="String" value="訊息"/>
             <Node key="TTSEndEmailMessageTag" data="String" value="電子郵件結尾"/>
-            <Node key="TTSEndSMSMessageTag" data="String" value="訊息結尾"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value=""/>
             <Node key="TTSSubjectTag" data="String" value="主旨"/>
         </Node>
     </Node>

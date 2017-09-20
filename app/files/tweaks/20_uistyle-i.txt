@@ -1,18 +1,18 @@
 # UI Style Tweaks
 # Trevelopment By: Trezdog44
 show_message "INSTALL UI STYLE TWEAKS ..."
-log_message "==========**********  INSTALL UI STYLE TWEAKS ...  **********=========="
+log_message "==========************  INSTALL UI STYLE TWEAKS ...  **********=========="
 
 # Always create a backup
 if [ ! -e /jci/gui/common/controls/List2/css/List2Ctrl.css.org ]
 then
   cp -a /jci/gui/common/controls/List2/css/List2Ctrl.css /jci/gui/common/controls/List2/css/List2Ctrl.css.org
-  log_message "=== Backup of /jci/gui/common/controls/List2/css/List2Ctrl.css to List2Ctrl.css.org ==="
+  log_message "===                       Backup of List2Ctrl.css                     ==="
 fi
 if [ ! -e /jci/gui/common/controls/NowPlaying4/css/NowPlaying4Ctrl.css.org ]
 then
   cp -a /jci/gui/common/controls/NowPlaying4/css/NowPlaying4Ctrl.css /jci/gui/common/controls/NowPlaying4/css/NowPlaying4Ctrl.css.org
-  log_message "=== Backup of /jci/gui/common/controls/NowPlaying4/css/NowPlaying4Ctrl.css to NowPlaying4Ctrl.css.org ==="
+  log_message "===                     Backup NowPlaying4Ctrl.css                    ==="
 fi
 if [ ${KEEPBKUPS} = "1" ]
 then
@@ -31,7 +31,7 @@ fi
 remove_aio_css /jci/gui/common/controls/List2/css/List2Ctrl.css UISTYLE
 remove_aio_css /jci/gui/common/controls/NowPlaying4/css/NowPlaying4Ctrl.css UISTYLE
 sed -i "/.. MZD-AIO-TI CSS ../,/.. END AIO CSS ../d" /jci/gui/common/controls/NowPlaying4/css/NowPlaying4Ctrl.css
-log_message "===           Removed any existing UI Style CSS modifications             ==="
+log_message "===         Removed any existing UI Style CSS modifications           ==="
 
 cat <<EOT >> /jci/gui/common/controls/List2/css/List2Ctrl.css
 /* MZD-AIO-TI UISTYLE CSS */
@@ -49,7 +49,7 @@ body {
 }
 /* END AIO UISTYLE CSS */
 EOT
-log_message "===      Modified /jci/gui/common/controls/List2/css/List2Ctrl.css        ==="
+log_message "===      Modified /jci/gui/common/controls/List2/css/List2Ctrl.css    ==="
 
 cat <<EOT >> /jci/gui/common/controls/NowPlaying4/css/NowPlaying4Ctrl.css
 /* MZD-AIO-TI UISTYLE CSS */
@@ -81,8 +81,8 @@ then
   cp -a /jci/gui/common/controls/List2/css/List2Ctrl.css "${MYDIR}/bakups/test/List2Ctrl_after.css"
   cp -a /jci/gui/common/controls/NowPlaying4/css/NowPlaying4Ctrl.css "${MYDIR}/bakups/test/NowPlaying4Ctrl_after.css"
 fi
-log_message "=== Modified /jci/gui/common/controls/NowPlaying4/css/NowPlaying4Ctrl.css ==="
-log_message "===                    Added CSS For UI Style Tweaks                      ==="
+log_message "===                   Modified NowPlaying4Ctrl.css                    ==="
+log_message "===                   Added CSS For UI Style Tweaks                   ==="
 
-log_message "========*********   END INSTALLATION OF UI STYLE TWEAKS     **********======="
+log_message "========*******   END INSTALLATION OF UI STYLE TWEAKS     ********======="
 log_message " "

@@ -13,22 +13,20 @@
  - [x] Translator.
  - [x] Choose location of \_copy_to_usb folder [desktop (default), documents, downloads]
  - [x] Automatic Updates
- - [ ] **Finish help menu information** *
  - [x] Clean up tweak sh logic when handling backups.
- - [ ] Include Speedometer Docs.
+ - [x] Include Speedometer Docs.
  - [x] Text color tweak
  - [x] Status bar color/opacity (D2SBv2.4?)
  - [ ] Audio source list customization
   - [x] Using angular-dragula!
- - [ ] More Docs/Guides
- - [ ] Package Mac installer. (dmg)
-
-
- ## For Next Version:
- - [ ] New VideoPlayer
- - [ ] Link to autorun
- - [ ] New SSH root user jci?
- - [ ] Boot Animations
-
+ - [x] More Docs/Guides
+ - [x] Package Mac installer. (dmg)
+ - [x] New VideoPlayer
+ - [x] Link to autorun
+ - [x] New SSH root user jci?
+ - [x] Boot Animations
+ - [ ] **Finish help menu information** *
+ - [ ] Show Background: Shows only the background, use any command knob action to go back to the app, home or back to exit.
+ - [ ] Shift Background: Change to next background (only works with multiple backgrounds single background will show black).
  ## Future Plans:
  - [ ] CASDK

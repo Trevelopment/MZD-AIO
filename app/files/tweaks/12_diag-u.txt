@@ -1,6 +1,6 @@
 #remove diagmenu with 1 sec. press at clock in display settings menu, script made by Sumire_Racing_JPN
 show_message "REMOVE DIAGMENU W. 1 SEC. PRESS AT CLOCK \nIN DISPLAY SETTINGS MENU"
-log_message "===*** UNINSTALL DIAGMENU W. 1 SEC. PRESS AT CLOCK IN DISPLAY SETTINGS MENU ... ***==="
+log_message "===*** UNINSTALL DIAGMENU W. AT CLOCK IN DISPLAY SETTINGS MENU ... ***==="
 if [ "${TESTBKUPS}" = "1" ]
 then
 	cp /jci/gui/apps/diag/js/diagApp.js "${MYDIR}/bakups/test/diagApp_diagmenu-before.js"
@@ -10,25 +10,25 @@ fi
 if grep -Fq '"settleTime" : 20000,' /jci/gui/apps/diag/js/diagApp.js
 then
 	echo "exist"
-	log_message "=== /jci/gui/apps/diag/js/diagApp.js was not modified ==="
+	log_message "===          /jci/gui/apps/diag/js/diagApp.js was not modified        ==="
 else
 	sed -i 's/"settleTime" : 1000,/"settleTime" : 20000,/g' /jci/gui/apps/diag/js/diagApp.js
-	log_message "=== Modified /jci/gui/apps/diag/js/diagApp.js ==="
+	log_message "===             Modified /jci/gui/apps/diag/js/diagApp.js             ==="
 fi
 if grep -Fq '"holdTimeout" : 5000,' /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js
 then
 	echo "exist"
-	log_message "=== /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js was not modified ==="
+	log_message "=== /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js not modified ==="
 else
 	sed -i 's/"holdTimeout" : 1000,/"holdTimeout" : 5000,/g' /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js
-	log_message "=== Modified /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js ==="
+	log_message "===  Modified /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js  ==="
 fi
 if grep -Fq 'framework.sendEventToMmui("syssettings", "SelectDiagnostics"); // Sumire Racing' /jci/gui/common/js/Common.js
 then
 	sed -i '/Sumire Racing/d' /jci/gui/common/js/Common.js
-	log_message "=== Modified /jci/gui/common/js/Common.js to original ==="
+	log_message "===        Modified /jci/gui/common/js/Common.js to original          ==="
 else
-	log_message "=== /jci/gui/common/js/Common.js was not modified ==="
+	log_message "===          /jci/gui/common/js/Common.js was not modified            ==="
 fi
 if [ "${TESTBKUPS}" = "1" ]
 then
@@ -36,5 +36,5 @@ then
 	cp /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js "${MYDIR}/bakups/test/StatusBarCtrl_diagmenu-after.js"
 	cp /jci/gui/common/js/Common.js "${MYDIR}/bakups/test/Common_diagmenu-after.js"
 fi
-log_message "===*** END UNINSTALLATION OF DIAGMENU WITH 1 SEC. PRESS AT CLOCK IN DISPLAY SETTINGS MENU ***==="
+log_message "===***** END UNINSTALLATION OF DIAGMENU IN DISPLAY SETTINGS MENU *****==="
 log_message " "

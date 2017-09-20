@@ -1,4 +1,4 @@
-var additionalApps = ["_androidauto","_speedometer","_videoplayer","_background","_helloworld","_mzdmeter","_mzdaio","_aio","_setup","app.2048","app.aio","app.android","app.androidauto","app.background","app.breakout","app.casdk","app.devtools","app.helloworld","app.multicontroller","app.myapp","app.simpledashboard","app.speedometer","app.snake","app.terminal","app.tetris","app.vdd"];
+var AIOapps = ["_androidauto","_speedometer","_videoplayer","_background","_helloworld","_mzdmeter","_mzdaio","_aiotweaks","_aio","_setup","app.2048","app.aio","app.android","app.androidauto","app.background","app.breakout","app.casdk","app.devtools","app.helloworld","app.multicontroller","app.myapp","app.simpledashboard","app.speedometer","app.snake","app.terminal","app.tetris","app.vdd"];
 /*
 Copyright 2012 by Johnson Controls
 __________________________________________________________________________
@@ -682,7 +682,7 @@ systemApp.prototype._initApplicationsDataList = function()
   //We have two different context (Applications and VehicleStatusMonitor) for displaying Appication item(s),so context wise storing the array of appName(s) to be displayed on corresponding Context.
   this._applicationsCtxtWiseAppNames = {
     //Context Name :  // [appName,appName....]
-    "Applications"            : ["hdtrafficimage","idm","ecoenergy","driverid","vehicleStatus","vdt_settings","vdt","carplay","androidauto"].concat(additionalApps),
+    "Applications"            : ["hdtrafficimage","idm","ecoenergy","driverid","vehicleStatus","vdt_settings","vdt","carplay","androidauto"].concat(AIOapps),
     "VehicleStatusMonitor"    : ["warnguide","vsm","schedmaint"]
   };
 };

@@ -1,11 +1,11 @@
 show_message "INSTALL ${COLORTHEME} CUSTOM INFOTAINMENT COLOR THEME ..."
-log_message "===*** INSTALL ${COLORTHEME} CUSTOM INFOTAINMENT COLOR THEME ... ***==="
+log_message "=====****** INSTALL ${COLORTHEME} CUSTOM INFOTAINMENT COLOR THEME ... *******====="
 
 cp -a ${MYDIR}/config/color-schemes/${COLORTHEME}/jci /
 if [ -d /jci/gui/apps/_speedometer ]
 then
 	cp -a ${MYDIR}/config/color-schemes/speedometer/${COLORTHEME}/* /jci/gui/apps/_speedometer/templates/SpeedoMeter/images/
-	log_message "=== Change speedometer graphics to ${COLORTHEME} too, because it is already installed ==="
+	log_message "===               Change speedometer graphics to ${COLORTHEME} too             ==="
 fi
 rm -f /jci/gui/common/images/*.aio
 cp ${MYDIR}/config/color-schemes/${COLORTHEME}/jci/gui/common/images/${COLORTHEME}.aio /jci/gui/common/images/
@@ -14,9 +14,9 @@ cp ${MYDIR}/config/color-schemes/${COLORTHEME}/jci/gui/common/images/${COLORTHEM
 if [ ${COLORTHEME} = "Blue" ]
 then
 	cp -a ${MYDIR}/config/color-schemes/Blue/_skin_jci_bluedemo.zip /jci/nng/ux/
-	log_message "===             Change NAV App color scheme to Blue too             ==="
+	log_message "===               Change NAV App color scheme to Blue too             ==="
 fi
-log_message "===                  COLORTHEME = ${COLORTHEME}                     ==="
+log_message "===                       COLORTHEME = ${COLORTHEME}                           ==="
 
-log_message "===***** END INSTALLATION OF ${COLORTHEME} CUSTOM COLOR THEME *****===="
+log_message "=====******** END INSTALLATION OF ${COLORTHEME} CUSTOM COLOR THEME *********======"
 log_message " "

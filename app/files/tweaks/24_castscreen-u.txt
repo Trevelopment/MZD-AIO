@@ -1,6 +1,6 @@
 # Remove castscreen receiver
 show_message "REMOVE CASTSCREEN-RECEIVER ..."
-log_message "=====*****  UNINSTALL CASTSCREEN-RECEIVER ...   *****====="
+log_message "=====*************  UNINSTALL CASTSCREEN-RECEIVER ...   ************====="
 
 if [ "${TESTBKUPS}" = "1" ]
 then
@@ -20,7 +20,7 @@ if [ "${TESTBKUPS}" = "1" ]
 then
   cp /jci/scripts/stage_wifi.sh "${MYDIR}/bakups/test/stage_wifi_castscreen-after.sh"
 fi
-log_message "===            Castscreen-Receiver Removed             ==="
+log_message "===                  Castscreen-Receiver Removed                      ==="
 
-log_message "====**** END UNINSTALLATION OF CASTSCREEN-RECEIVER ****==="
+log_message "====************ END UNINSTALLATION OF CASTSCREEN-RECEIVER ***********==="
 log_message " "

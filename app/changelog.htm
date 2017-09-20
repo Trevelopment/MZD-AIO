@@ -1,4 +1,219 @@
+<!DOCTYPE html>
 <h1 id="">MZD-AIO-TI v2 CHANGELOG</h1>
+
+<h4>2.7.0</h4>
+
+<h6>The software distribution service bintray.com has cancelled my account because they had recently seen the DMCA Takedown notice in the MZD-AIO-TI GitHub repository from March 6th, 2017.  Although I explained that the NNG files had been removed immediately upon receiving the notice they only agreed to leave the versions that had already been uploaded (Ending with v2.6.8) but would block my account from uploading any future versions. Therefor Automatic updates may of may not work in this version until I find another distribution solution.  So in case new updates do not download automatically &quot;Check For Update&quot; has been added in the top menu bar under the &quot;Download&quot; menu.</h6>
+
+<h5>Android Auto v1.04</h5>
+
+<ul><li><strong><em>Bluetooth Call Bug Fixed!!!</em></strong> <em>Big thanks to @lmagder for fixing the headunit code after @Trezdog44 found the root of the issue with the &#39;Bluetooth call patch&#39;</em></li><li>Video focus is lost at the beginning and end of a call due to the system expecting a context change.  Press the FAV (&lt;span class=&quot;icon-star&quot;&gt;&lt;/span&gt;) Button to get video focus back and AA will function normally.</li><li>Phone button opens AA phone screen, also call buttons work for answering and ending calls.</li><li>N\AV button opens the AA home screen</li><li>Tap the black box on the credit screen to display contents of the headunit.log file.</li><li>Added the Android Auto Icon to the statusbar</li><li>(The &#39;Bluetooth Call Patch&#39; from AA 1.03 is no longer needed from this version on.)<ul><li>(If it was applied will be reverted back to normal)</li></ul></li></ul>
+
+<h5>VideoPlayer v3.0</h5>
+
+<ul><li>Gave the VideoPlayer its own Icon</li><li>Toggle Unicode Mode On/Off with &quot;U&quot; Icon (If you have a lot of videos you will see the difference in load time)</li><li>Information/Options Panel, Open/Close with &quot;i&quot; Icon</li><li>Close by pressing command knob</li><li>Option: Hide/Show Unicode button</li><li>Video Title to Statusbar</li><li>Test Error Message</li><li>I put this in for me to test the error message because all my videos are formatted <strong>360p MP4 H264 AAC</strong> so I rarely hit a memory error.</li><li>Select options with left/right now includes reboot, show/hide background and info/options button.</li><li>Memory Error Message is now very informative</li><li>Offers Suggestions to Avoid Future Errors</li><li>Changed highlight color to blue</li></ul>
+
+<h5>AIO Tweaks v0.3</h5>
+
+<ul><li>Start Headunit Process<ul><li>Will now successfully Start Android Auto Headunit Process</li><li>Also Active Headunit stdout will pop up</li></ul></li><li>View Headunit Log<ul><li>Shows the existing headunit.log file in a window</li></ul></li><li>Screen off<ul><li>Turns the screen off</li></ul></li><li>wifiAP<ul><li>Starts Wifi Access Point</li><li>(start_wifi.sh; jci-wifiap.sh start)</li></ul></li><li>Stop Firewall<ul><li>Stops the firewall</li><li>(jci-fw.sh stop)</li></ul></li><li>System Restore <em>WARNING: This will remove all tweaks and uninstall all AIO apps</em><ul><li>Restore you system on the fly with a slimmed down restore script</li><li>Removes all tweaks and AIO apps including this one</li><li>Does not restore Color Scheme (all those image files take up a lot of space)</li><li>Very small and safe only targets and restores from internal backups.</li><li>Asks for verification twice to ensure it is not accidentally run.</li></ul></li><li>Env - Environment variables<ul><li>For informational/educational purposes</li><li>Also used by developers for fun times</li></ul></li><li><p>Fixed saving issue with the tweak toggle buttons</p></li><li><p>General Improvements/Bug Fixes</p><ul><li>On Startup looks for some AIO log files loads FW version if found.</li><li>If FW version is found An &quot;i&quot; Icon will appear in the top menu bar to the left of the &quot;reload&quot; icon.</li><li>Click the icon to show your FW version, future plans to display more pertinent information as well.</li><li>Added Save Button to Success Dialog</li><li>Added To Top Menu &quot;Downloads &gt; Check For Update&quot;</li><li>Small logging fixes in autorun and recovery scripts</li><li>Fixed WiFiAP files not copying when it was the only autorun script chosen</li><li>Many other small improvements/fixes</li></ul></li></ul>
+
+<h4 id="2-6-8">v2.6.8</h4>
+<ul>
+  <li style="list-style:none;margin-left: -40px;"><span class="icon-arrow-left-alt1"></span> New Install Option: <strong>Retrieve CMU Data</strong><ul>
+    <li>Changes the &#39;no&#39;s to &#39;yes&#39; in dataRetrieval_config.txt</li>
+    <li>Dumps diagnostic and error files from CMU data partitions</li>
+    <li>Good to do every once in a while, cleans the system of error and log files.</li>
+    <li>Also can be used to check Autorun and Android Auto installation issues.</li>
+  </ul>
+</li>
+<li>Autorun Change: Choose options after pressing &#39;autorun&#39; button.<ul>
+  <li>Options:<ul>
+    <li>ID7_Recovery Scripts Pack</li>
+    <li><strong>Automatic WiFi App</strong><ul>
+      <li>Starts WiFi app on boot starts DHCP Server IP: 192.168.53.1</li>
+      <li>MUST change values for &#39;YourSSID&#39; &amp; &#39;YourSSIDPassword&#39; to run.(AIO will prompt for these values and apply them while building installer.)
+      </li>
+    </ul>
+  </li>
+  <li><strong>SSH Over ADB</strong><ul>
+    <li>Starts ADB Server on boot starts ADB reverse porting SSH on port 2222.</li>
+    <li>Over a USB cable it is the fastest connection.</li>
+  </ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>AIO Tweaks App v0.2</p>
+  <ul>
+    <li>Shortcut to WiFi Settings</li>
+    <li>Fixed &#39;Bigger Album Art&#39; toggle</li>
+    <li>Adjusted the &#39;enable touchscreen&#39; buttons so they can be tapped, its still in the air how well they work since the vehicle has to make a complete stop to apply changes.</li>
+  </ul>
+</li>
+</li>
+<li>Announcements (aka The Emergency Broadcast System): Each announcement will show once in the &quot;Selected Tweaks&quot; sidebar until it is hidden.  <ul>
+  <li>You can view the announcement again from the help menu.</li>
+  <li>This is because communication needs to happen more quickly and directly.  You better believe Visteon has someone checking this app and in all the forums daily and reporting back to keep up with us so if we want to keep the upper hand our communication needs to be just as fast.  Everyone needs to know right away if there is a critical change or update to look out for, this way we can minimize damage and loss of access for the community as a whole.</li>
+</ul>
+</li>
+<li>Fixed contact form not sending the email but still reporting success <strong>Sorry if you tried to contact me with the feedback/contact form recently and I didn&#39;t answer your email, I just didn&#39;t receive it</strong><ul>
+  <li>Now it will only say successfully sent if it actually was sent and prompt user to fix invalid contact form entries instead of not sending anything.</li>
+</ul>
+</li>
+<li>Cleaned up logging a bit
+  <li>AIO Docker Build for Linux<ul>
+    <li>Running the Docker script builds a container with all dependencies and spits out a .deb Linux installer for MZD-AIO-TI in the root directory.</li>
+    <li>Big Thanks to Xep and Khantaena for that</li>
+  </ul>
+</li>
+</ul>
+<h4 id="2-6-6">v2.6.6</h4>
+<h5 id="id7_recovery">ID7_Recovery Pack - A collection of autorun scripts that will lay dormant until needed for recovery. Upon detected configuration change automatically applies SSH_bringback with additional recovery features, it is the easyest way to maintain system access.</h5>
+<ul><li>ID7_Recovery - Fixed Install not showing dialog to reboot</li>
+   <ul><li>Fixed cmu user/pass</li><li>Configuration Improvements - Opens Ports 22, 24000, &amp; 36000 for SSH access</li><ul><li> (**SSH_Bringback also opens additional ports 24000 &amp; 36000**)</li></ul><li>(Recomended Update if already installed)</li></ul><li>Fixed these release notes popping up every time AIO is opened</li>
+   <li>Added some images and info in help messages</li></ul>
+<h4 id="2-6-5">v2.6.5</h4>
+<strong>ID7_Recovery will persist through a Firmware update.  On each boot checks, and if necessary repairs the following:</strong>
+<ul>
+<li>SSH access<ul>
+<li>passwd</li>
+<li>sshd_config</li>
+<li>firewall</li>
+</ul>
+</li>
+<li>Ability to run <code>tweaks.sh</code><ul>
+<li>add udev rules</li>
+<li>watch for existence of tweaks file to run (every 5 seconds)</li>
+</ul>
+</li>
+<li>It can also be used to run, if present a <code>run.sh</code> script from the root of the SD card<ul>
+<li>OR search and execute <code>run.sh</code> from the root of a USB Drive</li>
+</ul>
+</li>
+</ul>
+<em><strong>It is recommended to install this pack BEFORE updating firmware or anytime as a safety net.  This script will ensure that SSH access will be automatically restored if it is lost for any reason.</strong></em>
+<h4>v2.6.4</h4>
+<h3>CMU-Autorun - <em>For Testing and <strong>Recovery</strong></em></h3>
+<ul><li>Autorun Installer - Install the autorun script <strong>BEFORE</strong> updating to v59.00.502 to <strong>recover your system</strong> and regain access after the update is complete.</li><li>There is <em>no harm, performance impact, or danger</em> installing the autorun script and not using it until it is needed.</li><li>If there is no <code>run.sh</code> script file available at the root of the SD card or USB drives the script silently does nothing.  </li><li>Ultimately it is a good idea for everyone to install because it provides an additional layer of safety for system recovery in any situation.</li><li>More to come in the next AIO update, for SD card scripts to use with autorun check out the <a href="" onclick="externalLink('cmu-autorun')" title="CMU-autorun Repo">CMU-autorun repository</a></li><li><em>Make sure you check the forums</em> before allowing an update to an unknown firmware version to ensure this and other known workarounds have not been closed.</li></ul>
+<h4>AIO Tweaks App!</h4>
+<h5>This is an experimental app that I made to test the limits of app functionality.  For each success there were several failures.</h5>
+<h6><strong>Every function in this app is <em>not</em> guaranteed to work</strong> but here are some useful and/or fun things you can do:</h6>
+<ul><li>&#39;Apps&#39; Tab:<ul><li>Home: Goes home. This was the easy part.</li><li>Go to: USB A, USB B, Bluetooth (audio context).</li><li>Previous, Next - Works without changing contexts</li><li>Stop (and Start*) Android Auto Headunit process.<ul><li>Killing headunit process with allow Bluetooth calling to work correctly.</li><li>Starting the process does not work properly yet, reboot CMU to restart headunit process.</li></ul></li><li>Stop and Start Castscreen Receiver<ul><li>Useful for troubleshooting if it is not functioning correctly.  </li><li>Both of these do work but there is a possibility that a memory issue may prevent the process from properly starting in which case a reboot is required to allow the process to run.</li>
+</ul></li></ul></li><li>&#39;Tweaks&#39; Tab:<ul><li>Many familiar AIO layout related tweaks that can be applied on the fly<ul><li>Applied tweaks are automatically saved to localStorage and saved tweaks are applied on boot.</li><li>Toggle each individual tweak on or off.</li><li>One button to reset all tweaks.</li><li><em>NOTE: AIO Tweaks App will not UNDO installed tweaks, they will mix and may result in unexpected and/or interesting layouts</em></li></ul></li></ul></li><li>
+<p>&#39;Options&#39; Tab:</p><ul><li>
+<p>Touchscreen: <em>NOTE: Changes to the touchscreen functionality are applied when the vehicle comes to a <strong>COMPLETE STOP</strong></em></p><ul><li>Enable Touchscreen and Menu</li><ul><li>Normally disabled menu items while driving ie. Text messages &amp; enter address for navigation,</li><li>Compass is disabled</li></ul><li>Enable Touchscreen and Compass</li><ul><li>Compass is functional</li><li>Menu items are disabled</li></ul><li>Disable Touchscreen</li><ul><li>Touchscreen and Menu Items disabled</li><li><p>Compass is functional</p></li></ul></ul></li><li><p>Show Background: Show only background (any button to exit).</p></li><li>Reboot: To Reboot</li></ul></li></ul>
+<h6>Speedometer</h6>
+<ul><li>Choose speedometer color independently of theme color</li></ul>
+<h6>Speedometer Variant</h6>
+<ul><li>Press Command Knob or Tap &#39;Total Time&#39;:  Reset &#39;Total Time,&#39; (to 0) &#39;Ave. Speed,&#39; &#39;Top Speed,&#39; (to 0 or current speed) and both idle time fields (reset to 0 view will reset when vehicle is idle again).</li><li>Tilt-Down or Tap &#39;Top Speed&#39;: Toggle hide/show for both idle times and increase the font-size of all other fields.</li><li>Tilt-Left: Digital Speedometer</li><li>Tilt-Right: Analog Speedometer</li><li>Tilt-Up: Toggle between mph and km/h</li></ul>
+<h3>Bug Fixes</h3>
+<ul><li>Fixed Bug with Apps randomly disappearing from App Menu effecting v59.00.400 - v59.00.450</li><li>Fixed bug where after running the &#39;Full Restore&#39; Script, &#39;Android Auto&#39; could not be reinstalled.<ul><li>Applied fix to both the &#39;Full Restore&#39; Script and &#39;Android Auto&#39; Install Script</li></ul></li></ul>
+<h4 id="2-6-1">v2.6.1</h4>
+<h6 id="cmu-autorun">CMU-Autorun</h6>
+<ul>
+<li>Linked in the &quot;download&quot; menu &amp; &quot;Help Panel &gt; Tips &amp; Tricks&quot; - Installer/Uninstaller is in one script.</li>
+<li>For advanced users - This script has no protection any code in \&quot;run.sh\&quot; will be executed each time the system boots up.</li>
+<li>In the &quot;Help Panel &gt; Tips &amp; Tricks&quot; Section instructions how use autorun to run Android Auto from an SD card or USB drive.</li>
+<li>Runs every time the system boots up, after running SD card will have a &quot;log&quot; folder containing the headunit log file.</li>
+<li>Additional autorun scripts include a memory logging script and a script that takes and saves multiple screenshots in intervals.</li>
+</ul>
+<h6 id="tweak-fixes">Tweak Fixes</h6>
+<ul>
+<li>Fixed Smooth color themes changing background when &quot;Use Color Scheme Background&quot; option is not checked.</li>
+<li>Applying color scheme will no longer overwrite custom blank album art or custom off-screen background.</li>
+</ul>
+<h4 id="2-6-0">v2.6.0</h4>
+<h3 id="new-tweaks"><strong>NEW TWEAKS:</strong></h3>
+<ul>
+<li><p><strong style="font-size:1.2em">USB Audio Mod</strong> | <em>By: Enlsen</em></p>
+<ul>
+<li>Long press folders/all songs in list view to play</li>
+<li>Adds folders button</li>
+<li>Removes &quot;More like this&quot; button</li>
+<li>Adds new icon for USB root button</li>
+<li>Set folders and song list icons correctly (were switched)</li>
+<li>Removes trailing &quot;/&quot; from folder names for list view and title of now playing</li>
+<li>Adds folder and song icons to the list view</li>
+<li>Adds folder and playlist icons to now playing</li>
+<li>Medium Album Art (180 pixels)<blockquote>
+<p>Bigger Album Art Tweak</p>
+<ul>
+<li>Will make album art even larger (210 pixels)</li>
+<li>Stretch smaller images to enforce bigger size</li>
+<li>More space for long titles (Folder, Song Title, Album etc.)</li>
+<li><strong>Full Width Titles</strong> Option<ul>
+<li>Titles will span the entire width of the screen.</li>
+<li>Will overlap album art if not hidden</li>
+</ul>
+</li>
+<li><strong>Hide Album Art</strong> Option<ul>
+<li>Hides all album art</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p><strong>No More Beeps</strong></p>
+<ul>
+<li>Disables All System &#39;Beeps&#39; (Those that are not be silenced by &#39;Settings &gt; Sound &gt; Beep&#39; option).</li>
+<li>&#39;Improved List Loop &gt; Remove List Beeps&#39; option is redundant but only disables list scrolling Beeps, I see no reason to remove it.</li>
+</ul>
+</li>
+<li>&#39;Remove Background Behind Buttons&#39; is now <strong>&#39;Remove Background Overlays&#39;</strong> Options to Remove the Following Background Overlays:<ul>
+<li>Behind Buttons (Original Tweak)</li>
+<li><strong>Now Playing</strong> (Entertainment)</li>
+<li><strong>List View</strong></li>
+<li><strong>Text Message View</strong></li>
+<li><strong>In Call</strong> (Active Caller Background)</li>
+</ul>
+</li>
+<li>Options Under &#39;Main Menu Tweaks&#39;<ul>
+<li>Main Menu Layout: <strong>FlatLine</strong></li>
+<li>Main Menu Text: <strong>Color Text</strong> &amp; <strong>Hide Text</strong></li>
+<li>Smaller Coins &gt; <strong>Small Focused Coin</strong></li>
+<li><strong>Remove Glow</strong> (Behind Selected Coin)</li>
+</ul>
+</li>
+</ul>
+<h5 id="simplified-compatibility-check-">Simplified Compatibility Check:</h5>
+<ul>
+<li>Checked by Compatibility Group Based on FW version</li>
+<li>For better readability and to extend compatibility to cover all FW in the known groups.</li>
+<li>Compatibility Extended to: (Flavor and Region letters are irrelevant for these checks)<ul>
+<li>Group 1 = All v55 &amp; v56</li>
+<li>Group 2 = All v58</li>
+<li>Group 3 = All v59.00.300 - v59.00.399</li>
+<li>Group 4 = All v59.00.400 - v59.00.499</li>
+</ul>
+</li>
+<li>A few specific checks are still done by FW, certain tweaks may not install on unknown versions.</li>
+<li>Other than v59.00.500+ and v54- if you have a firmware version that does not fall in those ranges email me but I think that covers all of them.</li>
+</ul>
+<h6 id="bug-fixes-changes">Bug Fixes &amp; Changes</h6>
+<ul>
+<li>Wifi will now be enabled for Japan and NorthAmerica (From this point on Wifi is enabled for all no matter what region, previous installations are not effected)</li>
+<li>&#39;Remove Message Replies&#39; now also removes the TTS Message &quot;End of the message&quot; After Reading a Text Message.<ul>
+<li>Must factory reset <strong><em>ALL settings</em></strong> after installing to apply changes</li>
+</ul>
+</li>
+<li>Fixed Bug where Install/Uninstall for &#39;Improved List Loop&#39; would uninstall &#39;Shorter Delay Mod&#39; and &#39;No More Beeps&#39;</li>
+<li>Moved some of the tweaks around in the list</li>
+<li>Merged Windows, Mac OSX, and Linux projects into one so they are all on the same version. Required making some changes and improvements in the tweak building process and platform checks.</li>
+<li>Full Restore Script can be accessed from the left side navigation menu</li>
+</ul>
+<h5 id="for-aio-v1-x-x-changelog-https-github-com-siutsch-aio-all-in-one-tweaks-blob-master-changelog-md-or-visit-mazdatweaks-com-">FOR <a href="https://github.com/Siutsch/AIO---All-in-one-tweaks/blob/master/CHANGELOG.md">AIO v1.x.x CHANGELOG</a> or visit <a href="(http://mazdatweaks.com/)">MazdaTweaks.com</a></h5>
+<h3 id="v2-5-10">v2.5.10</h3>
+<li>  Reworked v59 App List Patch</li>
+  <ul><li>  Pro: Menu structure will no longer be broken (VSM submenu will be restored)  if there are any cars with strange/diffrent app menu configurations let me know.</li>
+  <li>  Con: All apps that can come up on the list need to be added to the &#39;additionalApps&#39; array in systemApp.js (I included every app I have ever seen or heard of including CASDK apps in the array you will only need to add custom developed apps.  Array is on the first line of /jci/gui/apps/system/js/systemApp.js)</li></ul>
+<li>  Patch to Full Restore Script to prevent bootloop when running with &#39;delete backups&#39; option several times in a row.</li>
+<li>  Replaced missing speedometer images</li>
+<li>  Adjusted CastScreen, may fix issues for some.</li>
+<li>  Added compatible firmware 59.00.445A-JP</li>
+</ul>
 <h4 id="v2-5-9">v2.5.9</h4>
 <h4 id="ssh_bringback-">SSH_Bringback:</h4>
 <ul>

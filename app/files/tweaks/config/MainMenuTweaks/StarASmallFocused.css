@@ -1,0 +1,17 @@
+.MainMenuCtrlComHighlight {
+    top: -125px;
+}
+.MainMenuCtrlSetHighlight {
+    left: 305px;
+}
+.MainMenuCtrlAppHighlight {
+    left: 125px;
+}
+.MainMenuCtrlEntHighlight {
+	left: 0;
+	top: -50px;
+}
+.MainMenuCtrlNavHighlight {
+	left:440px;
+	top: -50px;
+}

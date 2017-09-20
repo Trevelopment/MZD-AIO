@@ -180,7 +180,7 @@ let template = [
   }
 ]
 },
-{
+/*{
   label: 'Back',
   accelerator: 'CmdOrCtrl+B',
   click: function (item, focusedWindow) {
@@ -193,14 +193,14 @@ let template = [
   label: 'Close',
   accelerator: 'CmdOrCtrl+W',
   role: 'close'
-},
+},*/
 {
   label: 'Quit',
   accelerator: 'CmdOrCtrl+Q',
   role: 'quit'
 }
 ];
-if (process.platform === 'darwin') {
+/*if (process.platform === 'darwin') {
   const name = app.getName();
   template.unshift({
     label: name,
@@ -255,7 +255,7 @@ if (process.platform === 'darwin') {
         role: 'front'
       });
     }
-  }
+  }*/
   app.on('ready', function () {
     const menu = Menu.buildFromTemplate(template)
     Menu.setApplicationMenu(menu)

@@ -10,140 +10,147 @@
 }
 
 #myVideoContainer #ajaxLoader {
-    width: 150px;
-    height: 150px;
-    left: 275px;
-    top: 130px;
-    position: absolute;
+  width: 150px;
+  height: 150px;
+  left: 275px;
+  top: 130px;
+  position: absolute;
 }
 #myVideoControlDiv {
-    top:430px;
-    right:0;
-    left:0;
-    height:50px;
-    width:100%;
-    position:absolute;
-    border-top:1px solid #444444;
-    /*background-color: #000000;*/
+  top:430px;
+  right:0;
+  left:0;
+  height:50px;
+  width:100%;
+  position:absolute;
+  border-top:1px solid #444444;
+  /*background-color: #000000;*/
 }
 #myVideoName {
-    color: #cccccc;
-    font-size: 16px;
-    font-family: verdana;
-    font-weight: normal;
-    height:23px;
-    width:410px;
-    position:absolute;
-    left:12px;
-    bottom:23px;
-    display:none;
-    overflow: hidden;
-	white-space: nowrap;
-    text-overflow: ellipsis;
+  color: #cccccc;
+  font-size: 16px;
+  font-family: verdana;
+  font-weight: normal;
+  height:23px;
+  width:410px;
+  position:absolute;
+  left:12px;
+  bottom:23px;
+  display:none;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 #myVideoStatus {
-    color: #cccccc;
-    font-size: 14px;
-    font-family: verdana;
-    font-weight: normal;
-    height:23px;
-    width:430px;
-    position:absolute;
-    left:12px;
-    bottom:2px;
-    display:none;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  color: #cccccc;
+  font-size: 14px;
+  font-family: verdana;
+  font-weight: normal;
+  height:23px;
+  width:430px;
+  position:absolute;
+  left:12px;
+  bottom:2px;
+  display:none;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
-#myVideoControlDiv ul {
-    margin:0;
-    padding:0;
-    list-style-type: none;
-    height: 100%;
-    width: 100%;
+#myVideoControlDiv ul, #videoInfoPanel ul {
+  margin:0;
+  padding:0;
+  list-style-type: none;
+  height: 100%;
+  width: 100%;
 }
-#myVideoControlDiv ul li {
-    float: right;
-    padding-left: 42px;
-    margin-right: 12px;
-    background-repeat: no-repeat !important;
-    background-position: 0 7px;
-    height: 100%;
+#myVideoControlDiv ul li, #videoInfoPanel ul li{
+  float: right;
+  padding-left: 42px;
+  margin-right: 12px;
+  background-repeat: no-repeat !important;
+  background-position: 0 7px;
+  height: 100%;
 }
-#myVideoControlDiv ul li a {
-    display: block;
-    color: #cccccc;
-    font-size: 16px;
-    font-family: verdana;
-    font-weight: normal;
-    padding-top: 16px;
+#myVideoControlDiv ul li a, #videoInfoPanel ul li a {
+  display: block;
+  color: #cccccc;
+  font-size: 16px;
+  font-family: verdana;
+  font-weight: normal;
+  padding-top: 16px;
 }
 #myVideoControlDiv ul li:active {
-    background: -o-linear-gradient(bottom,rgba(0,0,0,0),rgba(0,0,0,1));  /*Opera 11.1-12*/
-    background-repeat: no-repeat !important;
-    background-position: 0 3px;
+  background: -o-linear-gradient(bottom,rgba(0,0,0,0),rgba(0,0,0,1));  /*Opera 11.1-12*/
+  background-repeat: no-repeat !important;
+  background-position: 0 3px;
 }
 
 .rebootBtnDiv {
-    margin-top: 1px;
-    margin-left: 10px;
+  margin-top: 1px;
+  margin-left: 10px;
 }
 
 #myVideoList {
-    top:66px;
-    right:100px;
-    bottom:61px;
-    left:20px;
-    position:absolute;
-    font-size: 24px;
-    color: #cccccc;
-    font-family: verdana;
-    overflow: hidden;
+  top:66px;
+  right:100px;
+  bottom:61px;
+  left:20px;
+  position:absolute;
+  font-size: 24px;
+  color: #cccccc;
+  font-family: verdana;
+  overflow: hidden;
 }
 #myVideoList ul {
-    height:100%;
-    width:100%;
-    margin:0;
-    padding:0;
-    list-style-type: none;
-    /*overflow-y: scroll;*/
+  height:100%;
+  width:100%;
+  margin:0;
+  padding:0;
+  list-style-type: none;
+  /*overflow-y: scroll;*/
 }
 #myVideoList ul li {
-    border-bottom: 1px solid #666666;
-    padding: 10px 15px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  border-bottom: 1px solid #666666;
+  padding: 10px 15px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 #myVideoList ul li:focus,  #myVideoList ul li:active {
-    background: -o-linear-gradient(top,rgba(255,0,0,0),rgba(255,0,0,1));  /*Opera 11.1-12*/
-    background: linear-gradient(to top, rgba(255,0,0,0), rgba(255,0,0,1));  /*Standard*/
+  background: -o-linear-gradient(top,rgba(255,0,0,0),rgba(255,0,0,1));  /*Opera 11.1-12*/
+  background: -webkit-linear-gradient(to top, rgba(0,0,0,255), rgba(0,0,255,1));  /*Standard*/
 }
 #myVideoScroll {
-    top:80px;
-    right:40px;
-    position:absolute;
+  top:40px;
+  right:40px;
+  position:absolute;
 }
-#myVideoScroll img {
-    display:block;
-    visibility:hidden;
-    margin-top:30px;
+#myVideoScroll {
+  margin-top:15px;
+}
+#myVideoScroll img, #myVideoScroll li {
+  display:block;
+  margin-top:15px;
+  width:50px;
+  height:50px;
+  background-repeat:no-repeat;
+  background-position: center;
+  background-size: 100%;
 }
 #videoPlayControl {
-    top:64px;
-    right:0px;
-    bottom:50px;
-    left:0px;
-    position:absolute;
-    display: none;
+  top:64px;
+  right:0px;
+  bottom:50px;
+  left:0px;
+  position:absolute;
+  display: none;
 }
 #videoPlayControl ul{
-    margin:0;
-    padding:0;
-    list-style-type: none;
+  margin:0;
+  padding:0;
+  list-style-type: none;
 }
 #videoPlayControl ul li{
-    float:left;
+  float:left;
 }
 #videoShuffleBtn {
   top: 0;
@@ -215,9 +222,24 @@
 }
 .selectedItem {
   background: -o-linear-gradient(top,rgba(255,0,0,0),rgba(255,0,0,1));  /*Opera 11.1-12*/
+  background: -webkit-linear-gradient(top,rgba(0,0,255,0),rgba(0,0,255,1));
 }
-.playbackOption.selectedItem {
-  text-shadow: 0 0 5px #fff;
+.blueTheme .selectedItem {
+  background: -o-linear-gradient(top,rgba(0,0,255,0),rgba(0,0,255,1));
+  background: -webkit-linear-gradient(top,rgba(0,255,0,0),rgba(0,255,0,1));
+}
+#myVideoContainer .unicodeMessage {
+  position: absolute;
+  font-size: 20px;
+  color: #fff;
+  background: #000;
+  border: 6px double #6fffdf;
+  padding: 15px 0;
+  width: 65%;
+  top: 45%;
+  left: 15%;
+  text-align:center;
+  z-index: 20500;
 }
 #myVideoContainer #memErrorMessage {
   position: absolute;
@@ -225,18 +247,27 @@
   color: #fff;
   background: #000;
   outline: 4px solid #ff0000;
-  width: 65%;
-  top: 50%;
-  left: 15%;
+  padding: 15px 0;
+  width: 85%;
+  top: 20%;
+  left: 5%;
   text-align:center;
   z-index: 20600;
+}
+#memErrorMessage ul {
+  list-style: none;
 }
 #memErrorMessage .rebootBtnDiv {
   background-repeat: no-repeat;
   background-size: contain;
-  height: 25px;
+  height: 35px;
+  padding-left: 42px;
+  margin-left: 46.5%;
 }
-
+.playbackOption.selectedItem {
+  text-shadow: 0 0 5px #fff;
+  background: rgba(0, 117, 48, 0.45);
+}
 #videoInfoPanel {
   display:none;
   position: absolute;
@@ -265,44 +296,85 @@ aside#widget-content {
   overflow-x: hidden;
   overflow-y: auto;
 }
-#myVideoInfo {
-    height: 50px;
-    width: 50px;
+#myVideoInfo, #myUnicodeToggle {
+  height: 50px;
+  width: 50px;
 }
-#infoTitle {
-	font-size: 25px;
-	font-weight: 700;
-	padding-left: 40px;
-	padding-top: 5px;
+#infoTitle, #optionTitle {
+  font-size: 25px;
+  font-weight: 700;
+  padding-top: 5px;
+  width: 100%;
+  text-align: center;
 }
 #myVideoInfoClose {
-	position: absolute;
-	top: 5px;
-	right: 45px;
-	font-size: 30px;
-	color:#fff;
+  position: absolute;
+  top: 5px;
+  right: 45px;
+  font-size: 30px;
+  color:#fff;
 }
-#videoInfoPanel .recentInfo,
-#videoInfoPanel.state .stateInfo{
-	background:#ee0000;
+#videoInfoPanel #popOptionsTab,
+#videoInfoPanel.state #popInfoTab{
+  background:#000;
 }
-#videoInfoPanel.state .recentInfo{
-	background:#000;
+#videoInfoPanel #popInfoTab,
+#videoInfoPanel.state #popOptionsTab{
+  background:#0000ee;
 }
 #videoInfoPanel.state #widgetContent,
 #videoInfoPanel #widgetContentState {
-	display:none;
+  display:none;
 }
 #videoInfoPanel #widgetContent,
 #videoInfoPanel.state #widgetContentState {
-	display:block;
+  display:block;
+}
+#videoInfoPanel ul li {
+  float: none;
+  line-height: 22px;
+  background-position: 0;
+}
+#widgetContentState ul li {
+  line-height: 28px;
+  padding-left: 15px;
+}
+#videoInfoPanel ul li a {
+  font-size:22px;
 }
 .infoBtn {
-	outline: 2px solid #ff0000;
-    margin: 10px 10px 0 0;
-    float: right;
-    padding: 15px;
+  border: 4px solid #00ff00;
+  padding: 2px 100px;
+  left: 40px;
+  top: 8px;
+  background: #000;
+  position: relative;
+  font-size: 20px;
 }
-span.stateInfo {
-    margin-right: 200px;
+#myVideoScroll #myUnicodeToggle {
+  visibility: visible;
+  margin-top:35px;
+}
+.btn {
+  height: 50px;
+  text-shadow: none;
+  font-weight: bold;
+  font-size: 20px;
+  border:none;
+  outline:0;
+  padding: 6px 20px;
+  margin: 3px;
+  vertical-align:middle;
+  overflow:hidden;
+  color:#000;
+  background-color:#fff;
+  white-space:nowrap;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+}
+#optionTestError{
+  float: right;
+}
+li {
+  list-style: none;
+  background-repeat:no-repeat;
 }

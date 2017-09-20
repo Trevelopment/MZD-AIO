@@ -10,7 +10,7 @@
 **                                                                            **
 ** ************************************************************************** **
 \* ************************************************************************** */
-/* jshint esversion:6, -W033 */
+/* jshint -W117 */
 (function () {
   'use strict'
   angular.module('AIO', ['checklist-model', 'ngSanitize', 'ngRoute'])// 'angular-electron'
@@ -31,7 +31,6 @@
     $scope.disclaimOps = langObj.disclaimOps
     $scope.statusbar = langObj.statusbar
     $scope.uistyle = langObj.uistyle
-    $scope.speedcamOps = langObj.speedcamOps
     $scope.d2sbOps = langObj.d2sbOps
     $scope.speedoOps = langObj.speedoOps
     $scope.fuelOps = langObj.fuelOps
@@ -52,7 +51,6 @@
       disclaimOps: 0,
       fuelOps: 0,
       colors: 1,
-      speedcamOps: 0,
       aaVer: 1,
       d2sbOps: 3,
       zipbackup: false,
@@ -62,10 +60,23 @@
       keepSpeedRestrict: false,
       listbeep: false,
       advancedOps: false,
+      dataDump: false,
       darkMode: settings.get('darkMode') || false,
       flipOption: settings.get('flipOption') || '',
       transMsg: persistantData.get('transMsg') || false,
       copydir: persistantData.get('copyFolderLocation')
+    }
+    $scope.user.autorun = {
+      installer: false,
+      id7recovery: false,
+      autoWIFI: false,
+      autoADB: false,
+      dryrun: false
+    }
+    $scope.user.mzdmeter = {
+      show: persistantData.get('showMeter') || false,
+      inst: false,
+      uninst: false
     }
     $scope.user.restore = {
       full: false,
@@ -105,6 +116,7 @@
       xph: {id: 11},
       sml: {id: 22},
       bg: {id: 30},
+      color: null,
       mod: false,
       modAlt: false,
       opac: 0
@@ -125,19 +137,23 @@
       listitemdisabled: '#929497',
       title: '#ffffff',
       radio: '#ffffff',
+      labelcolor: '#ffffff',
       mainlabel: 0,
       layout: 0,
       ellipse: false,
       shadow: false,
       minicoins: false,
       minifocus: false,
+      hideglow: false,
       uninstmain: false,
       uninst: false,
       nobtnbg: false,
       nonpbg: false,
       nolistbg: false,
       nocallbg: false,
-      notextbg: false
+      notextbg: false,
+      noalbm: false,
+      fulltitles: false
     }
     $scope.user.rmvallbg = function(){
       $scope.user.uistyle.nobtnbg = true
@@ -243,6 +259,7 @@
           $('.draggable').draggable()
           $('#ctxt-title').on('click', function () { $(this).fadeOut(500); $('#ctxt-notif').fadeIn(500) })
           $('#ctxt-notif').on('click', function () { $(this).fadeOut(500); $('#ctxt-title').fadeIn(500) })
+          $('#background').on('click', function () { $('#infotnmtBG,#modalimg').attr('src',`${tempDir}/background.png`) })
           $('[data-toggle="tooltip"]').tooltip({html: true, delay: {show: 1400, hide: 200}})
           $('[data-toggle="popover"]').popover({html: true})
           $('.imgframe').mousewheel(function (event, delta) {
@@ -272,6 +289,9 @@
           startTime()
         })
       }
+      if (persistantData.get('visits') > 20) {
+        $scope.user.mainOps = [7]
+      }
       if (persistantData.get('menuLock')) {
         $('body, .hideNav, .w3-overlay').addClass('showNav')
       }
@@ -291,7 +311,7 @@
         $scope.user.options.push(20)
         $scope.user.statusbar.d2sbinst = true
       }
-      snackbar("Date-to-StatusBar Mod is Auto-Selected with Speedometer-in-StatusBar Mod")
+      snackbar('Date-to-StatusBar Mod is Auto-Selected with Speedometer-in-StatusBar Mod')
     }
 
     // TODO: More saving options. Save different settings by name.
@@ -350,7 +370,7 @@
     })
     $scope.instAll = function () {
       $scope.user.mainOps = [0, 2, 3, 4, 5, 7, 8, 9]
-      $scope.user.options = [1, 2, 3, 4, 5, 6, 7, 9, 10, 11, 12, 13, 14, 15, 16, 17, 19, 20, 22]
+      $scope.user.options = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 19, 20, 22, 26]
       $scope.user.colors = 2
       $scope.user.speedoOps.lang.id = 0
       $scope.user.speedoOps.xph.id = 10
@@ -361,6 +381,8 @@
       $scope.user.uistyle.minicoins = true
       $scope.user.uistyle.ellipse = true
       $scope.user.uistyle.main3d = true
+      $scope.user.uistyle.nobtnbg = true
+      $scope.user.uistyle.nonpbg = true
       $scope.user.listbeep = true
       $scope.user.statusbar.d2sbinst = true
     }
@@ -374,13 +396,20 @@
       $scope.user.speedoOps.opac = 0
       $scope.user.colors = 1
       $scope.user.disclaimOps = 0
-      $scope.user.speedcamOps = 0
       $scope.user.d2sbOps = 2
+      $scope.user.uistyle.shadow = false
+      $scope.user.uistyle.minicoins = false
+      $scope.user.uistyle.ellipse = false
+      $scope.user.uistyle.main3d = false
+      $scope.user.uistyle.nobtnbg = false
+      $scope.user.uistyle.nonpbg = false
+      $scope.user.listbeep = false
+      $scope.user.statusbar.d2sbinst = false
     }
     $scope.uninstAll = function () {
       /* $scope.user.options.splice(0, $scope.user.options.length)
       $scope.user.options.push(1) */
-      $scope.user.options = $scope.options.map(function (item) { if (Number(item.id) !== 8 && Number(item.id) !== 23) { return Number(item.id) + 100 } })
+      $scope.user.options = $scope.options.map(function (item) { if (Number(item.id) !== 21) { return Number(item.id) + 100 } })
       $scope.user.mainOps = [0, 2, 3, 5, 7, 8, 9, 106, 110]
       // $scope.user.mainOps = $scope.mainOps.map(function (item) { if (Number(item.id)==1||Number(item.id)==3) {return Number(item.id)}})
       $scope.user.colors = 0
@@ -417,14 +446,14 @@
     $scope.startRestoreCompile = function () {
       closeHelpDrop()
       remote.BrowserWindow.fromId(1).focus()
-      if (!$scope.user.restore.full) return
+      if (!$scope.user.restore.full) { return }
       var msg = '<center>This script will completely remove all tweaks installed by AIO.\n'
       if ($scope.user.restore.delBackups) { msg += `<h3 style='width:100%;text-align:center;'>*** YOU HAVE CHOSEN TO DELETE ALL BACKUP FILES. ***</h3><br><h4>BY CONTINUING, YOU ARE ACKNOWLEDGING THAT YOU UNDERSTAND THE IMPLECATIONS OF PERFORMING THIS ACTION.</h4>` }
       msg += '\nCONTINUE?</center>'
       bootbox.confirm({
         title: `AIO Full Restore Script`,
         message: msg,
-        className: 'confirmCompile',
+        className: 'compileRestore',
         buttons: {
           confirm: {
             label: 'Start',
@@ -443,6 +472,57 @@
             $('#compileRestore').hide()
             $scope.compileTweaks()
           }
+        }
+      })
+    }
+    /**
+    * start the autorun compile
+    */
+    $scope.startAutorunCompile = function () {
+      closeHelpDrop()
+      remote.BrowserWindow.fromId(1).focus()
+      var armsg = '<center>CMU-Autorun Scripts<br>Installer/Uninstaller For Autorun Scripts.<br>'
+      armsg += '</center>'
+      armsg += '<a href class="autorunHelp" onclick="autoHelp()"><span class="icon-question2"></span></a>'
+      bootbox.prompt({
+        title: armsg,
+        className: 'confirmAutorunCompile',
+        inputType: 'checkbox',
+        value: 'id7',
+        inputOptions: [
+          {
+            text: 'Install ID7_Recovery Scripts Pack',
+            value: 'id7'
+          },
+          {
+            text: 'Install Automatic Wifi App',
+            value: 'autow'
+          },
+          {
+            text: 'Install SSH Over ADB',
+            value: 'autoa'
+          },
+          {
+            text: 'Dryrun Script (To Test Installation)',
+            value: 'dryrun'
+          }
+        ],
+        callback: function (results) {
+          if (results === null) { return }
+          if (results.indexOf('autow') !== -1) {
+            $scope.user.autorun.autoWIFI = true
+          }
+          if (results.indexOf('autoa') !== -1) {
+            $scope.user.autorun.autoADB = true
+          }
+          if (results.indexOf('id7') !== -1) {
+            $scope.user.autorun.id7recovery = true
+          }
+          if (results.indexOf('dryrun') !== -1) {
+            $scope.user.autorun.dryrun = true
+          }
+          $('#confirmAutorunCompile').hide()
+          $scope.compileTweaks()
         }
       })
     }
@@ -467,146 +547,139 @@
           return
         }
       }
-      if ($scope.user.options.indexOf(23) !== -1 || $scope.user.options.indexOf(123) !== -1) {
-        if (!spfiles) {
-          bootbox.alert({
-            title: `Please Download Speedcam Patch Files Before Compiling`,
-            message: `<a href="" class="w3-btn" onclick="ipc.send('download-aio-files','speedcam-patch')">Download Speedcam Patch Files</a>`
-          })
-          return
+      if ($scope.user.options.indexOf(23) !== -1) {
+      $('#refreshBtn').click() // Speedcam Patch has been removed
+      return
+    }
+    $scope.ConfirmCompile()
+  }
+  $scope.ConfirmCompile = function () {
+    var msg = `<div id="tweak-install-list" style='font-size:12px;text-align:center;'><ul style="list-style:none;">`
+    if ($scope.user.mainOps.indexOf(4) !== -1) { msg += `<li style='width:100%'>****** ${$scope.mainOps.sshbringback.label} ******</li>` }
+    if ($scope.user.mainOps.indexOf(1) !== -1) { msg += `<li>****** ${$scope.mainOps.backup.label} ******</li>` }
+    if ($scope.user.mainOps.indexOf(0) !== -1) { msg += `<li>****** ${$scope.mainOps.wifi.label} ******</li>` }
+    if ($scope.user.mainOps.indexOf(2) !== -1) { msg += `<li>****** ${$scope.mainOps.background.label} ******</li>` }
+    if ($scope.user.mainOps.indexOf(6) !== -1) { msg += `<li>****** ${$scope.mainOps.backgroundrotator.label} ******</li>` }
+    if ($scope.user.mainOps.indexOf(10) !== -1) { msg += `<li>****** ${$scope.mainOps.offscreenbg.label} ******</li>` }
+    if ($scope.user.mainOps.indexOf(3) !== -1) { msg += `<li>****** ${$scope.mainOps.colors.label} ******</li>` }
+    if ($scope.user.mainOps.indexOf(8) !== -1) { msg += `<li>****** ${$scope.mainOps.mainmenu.label} ******</li>` }
+    if ($scope.user.mainOps.indexOf(9) !== -1) { msg += `<li>****** ${$scope.mainOps.uistyle.label} ******</li>` }
+    if ($scope.user.mainOps.indexOf(5) !== -1) { msg += `<li>****** ${$scope.mainOps.sdcid.label} ******</li>` }
+    if ($scope.user.mainOps.indexOf(110) !== -1) { msg += `<li>****** ${$scope.menu.uninstall.label} ${$scope.mainOps.offscreenbg.label} ******</li>` }
+    if ($scope.user.mainOps.indexOf(106) !== -1) { msg += `<li>****** ${$scope.menu.uninstall.label} ${$scope.mainOps.backgroundrotator.label} ******</li>` }
+    msg += $scope.options.map(function (item) { if ($scope.user.options.indexOf(Number(item.id)) !== -1) { return `<li class='inst-list'>${item.INST}</li>` } })
+    msg += $scope.options.map(function (item) { if ($scope.user.options.indexOf(Number(item.id) + 100) !== -1) { return `<li class='uninst-list'>${item.DEINST}</li>` } })
+    msg += '</ul></div>'
+    msg = msg.split(`,`).join(``)
+    var compileTweaksDialog = bootbox.confirm({
+      title: `<center><h3 class="tweak-inst-title">*************** ${$scope.menu.tweakstoinstall.label}: ***************</h3></center>`,
+      message: msg,
+      className: 'confirmCompile',
+      buttons: {
+        confirm: {
+          label: 'Start',
+          className: 'btn-success'
+        },
+        cancel: {
+          label: 'Cancel',
+          className: 'btn-danger'
+        }
+      },
+      callback: function (result) {
+        if (result) {
+          if ($scope.user.mainOps.indexOf(2) !== -1) {
+            $('#imgframe').click()
+            $('#slideShowBtn').click()
+          }
+          if ($scope.user.mainOps.indexOf(6) !== -1) {
+            $('#imgmodal').addClass('slideshow')
+          }
+          setTimeout(function () {
+            $('.bootbox.modal').animate({'top': '+=150', 'opacity': '.85'}, 1000)
+          }, 3000)
+          setTimeout(function () {
+            introJs().setOption('hintButtonLabel', 'COOL!')
+            introJs().addHints()
+          }, 2400)
+          setTimeout(function () {
+            introJs().hideHints()
+          }, 4000)
+          $scope.compileTweaks()
         }
       }
-      if ($scope.user.options.indexOf(8) !== -1) {
-        snackbar("To test compatibility for 'Media Order Patch & FLAC Support Tweak' remove comments from the proper lines in tweaks.sh to support your firmware.")
+    })
+    compileTweaksDialog.on('shown.bs.modal',function(){
+      $(".btn-success").focus();
+    })
+  }
+  $scope.compileTweaks = function () {
+    $('#compileButton, #compileAutorun, .checkAutorun').hide()
+    buildTweakFile($scope.user)
+  }
+})
+.config(function ($routeProvider, $locationProvider) {
+  $routeProvider
+  .when('/', {
+    templateUrl: 'views/main.htm'
+  })
+  .when('/translate', {
+    templateUrl: 'views/translate.html',
+    controller: 'TranslatorCtrl'
+  })
+  .when('/joiner', {
+    templateUrl: 'PhotoJoiner/PhotoJoiner.html',
+    controller: 'JoinerCtrl'
+  })
+  .when('/casdk', {
+    templateUrl: 'views/casdk.htm',
+    controller: 'CasdkCtrl'
+  })
+  .otherwise({
+    template: `<h1>MZD-AIO-TI</h1>`
+  })
+})
+.directive('compile', ['$compile', function ($compile) {
+  return function (scope, element, attrs) {
+    scope.$watch(
+      function (scope) {
+        // watch the 'compile' expression for changes
+        return scope.$eval(attrs.compile)
+      },
+      function (value) {
+        // when the 'compile' expression changes
+        // assign it into the current DOM
+        element.html(value)
+        // compile the new DOM and link it to the current
+        // scope.
+        // NOTE: we only compile .childNodes so that
+        // we don't get into infinite loop compiling ourselves
+        $compile(element.contents())(scope)
       }
-      $scope.ConfirmCompile()
-    }
-    $scope.ConfirmCompile = function () {
-      var msg = `<div id="tweak-install-list" style='font-size:12px;text-align:center;'><ul style="list-style:none;">`
-      if ($scope.user.mainOps.indexOf(4) !== -1) { msg += `<li style='width:100%'>****** ${$scope.mainOps.sshbringback.label} ******</li>` }
-      if ($scope.user.mainOps.indexOf(1) !== -1) { msg += `<li>****** ${$scope.mainOps.backup.label} ******</li>` }
-      if ($scope.user.mainOps.indexOf(0) !== -1) { msg += `<li>****** ${$scope.mainOps.wifi.label} ******</li>` }
-      if ($scope.user.mainOps.indexOf(2) !== -1) { msg += `<li>****** ${$scope.mainOps.background.label} ******</li>` }
-      if ($scope.user.mainOps.indexOf(6) !== -1) { msg += `<li>****** ${$scope.mainOps.backgroundrotator.label} ******</li>` }
-      if ($scope.user.mainOps.indexOf(10) !== -1) { msg += `<li>****** ${$scope.mainOps.offscreenbg.label} ******</li>` }
-      if ($scope.user.mainOps.indexOf(3) !== -1) { msg += `<li>****** ${$scope.mainOps.colors.label} ******</li>` }
-      if ($scope.user.mainOps.indexOf(8) !== -1) { msg += `<li>****** ${$scope.mainOps.mainmenu.label} ******</li>` }
-      if ($scope.user.mainOps.indexOf(9) !== -1) { msg += `<li>****** ${$scope.mainOps.uistyle.label} ******</li>` }
-      if ($scope.user.mainOps.indexOf(5) !== -1) { msg += `<li>****** ${$scope.mainOps.sdcid.label} ******</li>` }
-      if ($scope.user.mainOps.indexOf(110) !== -1) { msg += `<li>****** ${$scope.menu.uninstall.label} ${$scope.mainOps.offscreenbg.label} ******</li>` }
-      if ($scope.user.mainOps.indexOf(106) !== -1) { msg += `<li>****** ${$scope.menu.uninstall.label} ${$scope.mainOps.backgroundrotator.label} ******</li>` }
-      msg += $scope.options.map(function (item) { if ($scope.user.options.indexOf(Number(item.id)) !== -1) { return `<li class='inst-list'>${item.INST}</li>` } })
-      msg += $scope.options.map(function (item) { if ($scope.user.options.indexOf(Number(item.id) + 100) !== -1) { return `<li class='uninst-list'>${item.DEINST}</li>` } })
-      msg += '</ul></div>'
-      msg = msg.split(`,`).join(``)
-      bootbox.confirm({
-        title: `<center><h3 class="tweak-inst-title">*************** ${$scope.menu.tweakstoinstall.label}: ***************</h3></center>`,
-        message: msg,
-        className: 'confirmCompile',
-        buttons: {
-          confirm: {
-            label: 'Start',
-            className: 'btn-success'
-          },
-          cancel: {
-            label: 'Cancel',
-            className: 'btn-danger'
-          }
-        },
-        callback: function (result) {
-          if (result) {
-            if ($scope.user.mainOps.indexOf(2) !== -1) {
-              $('#imgframe').click()
-              $('#slideShowBtn').click()
-            }
-            if ($scope.user.mainOps.indexOf(6) !== -1) {
-              $('#imgmodal').addClass('slideshow')
-            }
-            setTimeout(function () {
-              $('.bootbox.modal').animate({'top': '+=150', 'opacity': '.85'}, 1000)
-            }, 3000)
-            $('#compileButton').hide()
-            setTimeout(function () {
-            }, 30000)
-            setTimeout(function () {
-              introJs().setOption('hintButtonLabel', 'COOL!')
-              introJs().addHints()
-            }, 24000)
-            setTimeout(function () {
-              introJs().hideHints()
-            }, 420000)
-            $scope.compileTweaks()
-          }
-        }
-      })
-    }
-    $scope.compileTweaks = function () {
-      buildTweakFile($scope.user)
-    }
-  })
-  .config(function ($routeProvider, $locationProvider) {
-    $routeProvider
-    .when('/', {
-      templateUrl: 'views/main.htm'
-    })
-    .when('/translate', {
-      templateUrl: 'views/translate.html',
-      controller: 'TranslatorCtrl'
-    })
-    .when('/joiner', {
-      templateUrl: 'PhotoJoiner/PhotoJoiner.html',
-      controller: 'JoinerCtrl'
-    })
-    .when('/casdk', {
-      templateUrl: 'views/casdk.htm',
-      controller: 'CasdkCtrl'
-    })
-    .otherwise({
-      template: `<h1>MZD-AIO-TI</h1>`
-    })
-  })
-  .directive('compile', ['$compile', function ($compile) {
-    return function (scope, element, attrs) {
-      scope.$watch(
-        function (scope) {
-          // watch the 'compile' expression for changes
-          return scope.$eval(attrs.compile)
-        },
-        function (value) {
-          // when the 'compile' expression changes
-          // assign it into the current DOM
-          element.html(value)
-          // compile the new DOM and link it to the current
-          // scope.
-          // NOTE: we only compile .childNodes so that
-          // we don't get into infinite loop compiling ourselves
-          $compile(element.contents())(scope)
-        }
-      )
-    }
-  }])
-  .filter('htmlToPlaintext', function () {
-    return function (text) {
-      return text ? String(text).replace(/<[^>]+>/gm, '') : ''
-    }
-  })
-  .filter('markdown', function ($sce) {
-    var Converter = new Showdown.converter()
-    return function (value) {
-      var html = Converter.makeHtml(value || '')
-      return $sce.trustAsHtml(html)
-    }
-  })
-  function helpCtrl ($scope, $http) {
-    $scope.helpMsgs = langObj.helpMsgs
+    )
   }
-  function JoinerCtrl ($scope, $http) {
-    $scope.imgOps = langObj.imgOps
+}])
+.filter('htmlToPlaintext', function () {
+  return function (text) {
+    return text ? String(text).replace(/<[^>]+>/gm, '') : ''
   }
-  function TranslatorCtrl ($scope, $http) {
-    $scope.trans = langObj.translatorWindow
+})
+.filter('markdown', function ($sce) {
+  var Converter = new Showdown.converter()
+  return function (value) {
+    var html = Converter.makeHtml(value || '')
+    return $sce.trustAsHtml(html)
   }
-  function CasdkCtrl ($scope, $http) {
-    // $scope.casdk = langObj.casdk
-  }
+})
+function helpCtrl ($scope, $http) {
+  $scope.helpMsgs = langObj.helpMsgs
+}
+function JoinerCtrl ($scope, $http) {
+  $scope.imgOps = langObj.imgOps
+}
+function TranslatorCtrl ($scope, $http) {
+  $scope.trans = langObj.translatorWindow
+}
+function CasdkCtrl ($scope, $http) {
+  // $scope.casdk = langObj.casdk
+}
 })()

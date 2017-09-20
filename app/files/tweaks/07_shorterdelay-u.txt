@@ -1,13 +1,14 @@
 # possibly separate this to its own tweak
 show_message "UNINSTALL SHORTER DELAY MOD"
-log_message "=======*****    UNINSTALL SHORTER DELAY MOD ...   *****========"
+log_message "=======**********    UNINSTALL SHORTER DELAY MOD ...   **********========"
 
 # Modify List2Ctrl.js
 sed -i 's/autoscrollTier1Timeout :                150,/autoscrollTier1Timeout :                1500,/g' /jci/gui/common/controls/List2/js/List2Ctrl.js
 sed -i 's/autoscrollTier2Timeout :                300,/autoscrollTier2Timeout :                5000,/g' /jci/gui/common/controls/List2/js/List2Ctrl.js
 sed -i 's/autoscrollTier1Interval :               200,/autoscrollTier1Interval :               500,/g' /jci/gui/common/controls/List2/js/List2Ctrl.js
 sed -i 's/autoscrollTier2Interval :               300,/autoscrollTier2Interval :               1000,/g' /jci/gui/common/controls/List2/js/List2Ctrl.js
-log_message "=== Modified /jci/gui/common/controls/List2/js/List2Ctrl.js ==="
+sed -i '/Shorter Delay Mod/d' /jci/gui/common/controls/List2/js/List2Ctrl.js
+log_message "===      Modified /jci/gui/common/controls/List2/js/List2Ctrl.js      ==="
 
-log_message "====****   END UNINSTALLATION OF SHORTER DELAY MOD    ****====="
+log_message "=====*********   END UNINSTALLATION OF SHORTER DELAY MOD    *********===="
 log_message " "

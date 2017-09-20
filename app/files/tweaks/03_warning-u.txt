@@ -1,10 +1,10 @@
 # restore safety warning from reverse camera
 show_message "RESTORE SAFETY WARNING FROM REVERSE CAMERA ..."
-log_message "===******* UNINSTALL REMOVE SAFETY WARNING FROM REVERSE CAMERA ... *******==="
+log_message "===***** UNINSTALL REMOVE SAFETY WARNING FROM REVERSE CAMERA ... *****==="
 
 # Copy reverse camera safety warning images
 cp -a ${MYDIR}/config_org/safety-warning-reverse-camera/jci/nativegui/images/*.png /jci/nativegui/images/
-log_message "===                Reverse Camera Safety Warning Restored                 ==="
+log_message "===              Reverse Camera Safety Warning Restored               ==="
 
-log_message "===*** END UNINSTALLATION OF REMOVE SAFETY WARNING FROM REVERSE CAMERA ***==="
+log_message "===***** END UNINSTALLATION OF REMOVE WARNING FROM REVERSE CAMERA ****==="
 log_message " "

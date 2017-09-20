@@ -117,7 +117,6 @@ Procfile       text
 *.webp binary
 *.ico  binary
 *.icns binary
-*.md5  binary
 
 ## AUDIO
 *.kar  binary

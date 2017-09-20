@@ -1,9 +1,9 @@
 show_message "INSTALL CUSTOM INFOTAINMENT THEME ..."
-log_message "===*** INSTALL CUSTOM INFOTAINMENT THEME (${COLORTHEME}) ... ***==="
+log_message "===******** INSTALL CUSTOM INFOTAINMENT THEME (${COLORTHEME}) ... ********==="
 
 # Copy custom theme images
 cp -a ${MYDIR}/config/color-schemes/theme/jci /
-log_message "===                ${COLORTHEME} Theme Applied                  ==="
+log_message "===                     ${COLORTHEME} Theme Applied                       ==="
 
-log_message "=======***** END INSTALLATION OF ${COLORTHEME} THEME ******========"
+log_message "=======********** END INSTALLATION OF ${COLORTHEME} THEME ***********========"
 log_message " "

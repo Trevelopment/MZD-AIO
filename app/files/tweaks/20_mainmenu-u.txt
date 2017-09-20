@@ -1,10 +1,10 @@
 # Main Menu Tweaks - Uninstall
 # Trevelopment By: Trezdog44
 show_message "UNINSTALL MAIN MENU TWEAKS ..."
-log_message "========****  UNINSTALL MAIN MENU TWEAKS ... ****========="
+log_message "============********* UNINSTALL MAIN MENU TWEAKS ... *********============="
 
 # One Line Uninstall
 remove_aio_css /jci/gui/apps/system/controls/MainMenu/css/MainMenuCtrl.css MAINMENU
 
-log_message "=====**** END UNINSTALLATION OF MAIN MENU TWEAKS ****====="
+log_message "=========********* END UNINSTALLATION OF MAIN MENU TWEAKS ********========="
 log_message " "

@@ -5,7 +5,7 @@
 ** http://mazdatweaks.com                                                     **
 ** ©2017 Trevelopment                                                         **
 **                                                                            **
-** main.js - The main process to run in electron.											        **
+** main.js - The main process to run in electron.                             **
 **                                                                            **
 ** ************************************************************************** **
 \* ************************************************************************** */
@@ -23,6 +23,7 @@ const dialog = require('electron').dialog
 const Tray = require('electron').Tray
 const ipc = require('electron').ipcMain
 const nativeImage = require('electron').nativeImage
+const crashReporter = require('electron').crashReporter
 const windowStateKeeper = require('electron-window-state')
 const path = require('path')
 const pjson = require('./package.json')
@@ -34,13 +35,18 @@ const drivelist = require('drivelist')// Module that gets the available USB driv
 require('./menus/menu.js') // Menu
 require('./menus/context-menu.js')
 require('./menus/shortcuts.js')
-const Config = require('electron-config')
+const Config = require('electron-store')
 const persistantData = new Config({'name': 'aio-persist'})
 const userThemes = new Config({'name': 'user-themes'})
 require('./lib/log')(pjson.productName || 'MZD-AIO-TI')
 var hasColorFiles = fs.existsSync(`${app.getPath('userData')}/color-schemes/`)
 var hasSpeedCamFiles = fs.existsSync(`${app.getPath('userData')}/speedcam-patch/`)
 var iconLoc = path.join(app.getAppPath(),"/icon.icns")
+var favicon = "./app/icon.icns"
+if (process.platform === 'win32') {
+  iconLoc = path.join(app.getAppPath(),"icon.ico")
+  favicon = './app/icon.ico'
+}
 let nimage = nativeImage.createFromPath(iconLoc);
 // Manage unhandled exceptions as early as possible
 process.on('uncaughtException', (e) => {
@@ -49,6 +55,9 @@ process.on('uncaughtException', (e) => {
   app.quit()
 })
 console.log('Locale: ' + persistantData.get('locale'))
+if (!persistantData.has('visits')) {
+  persistantData.set('visits', 0)
+}
 // Load build target configuration file
 try {
   var config = require('./config.json')
@@ -60,6 +69,13 @@ try {
 const isDev = (require('electron-is-dev') || pjson.config.debug)
 global.appSettings = pjson.config
 global.pjson = pjson
+persistantData.set('AIO-Ver', pjson.version)
+crashReporter.start({
+  companyName: 'Trevelopment',
+  submitURL: 'https://trevelopment.com/crash/bin/mini-breakpad-server',
+  uploadToServer: true,
+  extra: persistantData.store
+})
 
 if (isDev) {
   console.info('Running in development')
@@ -90,9 +106,6 @@ let imageJoin = null
 
 app.setName(pjson.productName || 'MZD-AIO-TI')
 
-if (!persistantData.has('delCopyFolder')) {
-  persistantData.set('delCopyFolder', false)
-}
 function initialize () {
   var shouldQuit = makeSingleInstance()
   if (shouldQuit) return app.quit()
@@ -101,13 +114,8 @@ function initialize () {
   }
   function onClosed () {
     // save some persistant data
-    if (persistantData.has('visits')) {
-      persistantData.set('visits', Number(persistantData.get('visits')) + 1)
-    } else {
-      persistantData.set('visits', '0')
-    }
+    persistantData.set('visits', Number(persistantData.get('visits')) + 1)
     // Dereference used windows
-    // for multiple windows store them in an array
     downloadwin = null
     mailform = null
     mainWindow = null
@@ -131,7 +139,7 @@ function initialize () {
       'minHeight': 650,
       'resizable': true,
       'show': false,
-      'icon': './app/icon.icns',
+      'icon': favicon,
       'webPreferences': {
         'nodeIntegration': pjson.config.nodeIntegration || true, // Disabling node integration allows to use libraries such as jQuery/React, etc
         'preload': path.resolve(path.join(__dirname, 'preload.js'))
@@ -181,8 +189,8 @@ function initialize () {
 
     win.webContents.on('crashed', () => {
       // In the real world you should display a box and do something
-      console.error('The window has just crashed')
       window.alert('MZD-AIO-TI has crashed', 'MZD-AIO-TI ERROR')
+      console.error('The window has just crashed')
     })
 
     win.webContents.on('did-finish-load', () => {
@@ -198,16 +206,16 @@ function initialize () {
       console.log(`Copy_to_usb: ${persistantData.get('copyFolderLocation')}`)
     }
     console.log(`Copy_to_usb: ${persistantData.get('copyFolderLocation')}`)
-	tray = new Tray(nimage)
+    tray = new Tray(nimage)
     var template = [
       {label: 'Location of _copy_to_usb',
-        submenu: [
+      submenu: [
         {label: 'Desktop', id: 'desktop', type: 'radio', checked: (persistantData.get('copyFolderLocation').includes('desktop') || false), click: function (menuItem, browserWindow, event) { setCopyLoc('desktop') }},
         {label: 'Downloads', id: 'downloads', type: 'radio', checked: (persistantData.get('copyFolderLocation').includes('downloads') || false), click: function (menuItem, browserWindow, event) { setCopyLoc('downloads') }},
         {label: 'Documents', id: 'documents', type: 'radio', checked: (persistantData.get('copyFolderLocation').includes('documents') || false), click: function (menuItem, browserWindow, event) { setCopyLoc('documents') }}]},
         {type: 'separator'},
         {label: 'Open _copy_to_usb Folder', click: function () { win.webContents.send('open-copy-folder') }},
-      {label: 'Delete _copy_to_usb Folder',
+        {label: 'Delete _copy_to_usb Folder',
         type: 'normal',
         click: function (menuItem, browserWindow, event) {
           rimraf(path.normalize(path.join(persistantData.get('copyFolderLocation'), '_copy_to_usb')), function (e) {
@@ -224,125 +232,128 @@ function initialize () {
       {label: 'Fullscreen', click: function () { win.setFullScreen(!win.isFullScreen()) }},
       {label: 'Close', role: 'close', click: function () { win.close() }}]
 
-    var trayMenu = Menu.buildFromTemplate(template)
-    tray.setToolTip('MZD-AIO-TI')
-    tray.setContextMenu(trayMenu)
-    tray.on('click', () => {
-      win.isVisible() ? win.hide() : win.show()
-    })
-    tray.on('double-click', () => {
-      win.show()
-      win.setFullScreen(!win.isFullScreen())
-    })
-    win.on('show', () => {
-      tray.setHighlightMode('always')
-    })
-    win.on('hide', () => {
-      tray.setHighlightMode('never')
-    })
-    if (pjson.config.debug) { win.openDevTools() }
-    return win
-  }
-
-  app.on('window-all-closed', () => {
-    if (process.platform !== 'darwin') {
-      app.quit()
+      var trayMenu = Menu.buildFromTemplate(template)
+      tray.setToolTip('MZD-AIO-TI')
+      tray.setContextMenu(trayMenu)
+      tray.on('click', () => {
+        win.isVisible() ? win.hide() : win.show()
+      })
+      tray.on('double-click', () => {
+        win.show()
+        win.setFullScreen(!win.isFullScreen())
+      })
+      win.on('show', () => {
+        tray.setHighlightMode('always')
+      })
+      win.on('hide', () => {
+        tray.setHighlightMode('never')
+      })
+      if (pjson.config.debug) { win.openDevTools() }
+      return win
     }
-  })
 
-  app.on('activate', () => {
-    if (!mainWindow) {
-      mainWindow = createMainWindow()
-    }
-  })
-
-  app.on('ready', () => {
-    mainWindow = createMainWindow()
-    persistantData.set('locale', app.getLocale())
-      // Manage automatic updates
-    try {
-      if (!process.execPath.includes('electron')) { // match(/[\\\/]electron/)) {
-        require('./lib/auto-update/update')({
-          url: (pjson.config.update) ? pjson.config.update.url || false : false,
-          version: app.getVersion()
-        })
+    app.on('window-all-closed', () => {
+      if (process.platform !== 'darwin') {
+        app.quit()
       }
-      ipc.on('update-available-alert', (autoUpdater) => {
-        setTimeout(function () {
-          mainWindow.send('update-available')
-        }, 5000)
-      })
-      ipc.on('update-downloaded', (autoUpdater) => {
-          // Elegant solution: display unobtrusive notification messages
-        mainWindow.webContents.send('update-downloaded')
-        ipc.on('update-and-restart', () => {
-          persistantData.set('new-update-first-run', true)
-          autoUpdater.quitAndInstall()
-        })
-      })
-    } catch (e) {
-      console.error(e.message)
-      dialog.showErrorBox('Update Error', e.message)
-    }
-      // if (persistantData.has('FW')) {
-      // getUSBDrives() //This sometimes causes errors so I am removing it for now
-      // }
-  })
-
-  app.on('will-quit', () => {})
-
-  ipc.on('reset-window-size', () => {
-    mainWindow.setSize(1280, 780)
-    mainWindow.center()
-  })
-  ipc.on('open-info-window', () => {
-    if (infoWindow) {
-      return
-    }
-    infoWindow = new BrowserWindow({
-      width: 600,
-      height: 600,
-      icon: './app/icon.icns',
-      resizable: false
     })
-    infoWindow.loadURL(`file://${__dirname}/views/info.html`)
 
-    infoWindow.on('closed', () => {
-      infoWindow = null
+    app.on('activate', () => {
+      if (!mainWindow) {
+        mainWindow = createMainWindow()
+      }
     })
-  })
+
+    app.on('ready', () => {
+      mainWindow = createMainWindow()
+      persistantData.set('locale', app.getLocale())
+      if(persistantData.get('locale').includes('en-US') && persistantData.get('visits') > 250) {
+        if(!persistantData.get('Diehard') || persistantData.get('visits') > 500) {
+          persistantData.set('showMeter', true)
+          persistantData.set('Diehard', true)
+        }
+      }
+      // Manage automatic updates
+      try {
+        if (!process.execPath.includes('electron')) { // match(/[\\\/]electron/)) {
+          require('./lib/auto-update/update.js')({
+            url: (pjson.config.update) ? pjson.config.update.url || false : false,
+            version: app.getVersion()
+          })
+          ipc.on('update-downloaded', (autoUpdater) => {
+            // Elegant solution: display unobtrusive notification messages
+            mainWindow.webContents.send('update-downloaded')
+            ipc.on('update-and-restart', () => {
+              persistantData.set('new-update-first-run', true)
+              autoUpdater.quitAndInstall()
+            })
+          })
+        }
+      } catch (e) {
+        console.error(e.message)
+        dialog.showErrorBox('Update Error', e.message)
+      }
+      try {
+        getUSBDrives()
+      } catch (e) {
+        // Do nothing
+      }
+    })
+
+    app.on('will-quit', () => {})
+
+    ipc.on('reset-window-size', () => {
+      mainWindow.setSize(1280, 800)
+      mainWindow.center()
+    })
+    ipc.on('open-info-window', () => {
+      if (infoWindow) {
+        return
+      }
+      infoWindow = new BrowserWindow({
+        width: 600,
+        height: 600,
+        icon: favicon,
+        resizable: false
+      })
+      infoWindow.loadURL(`file://${__dirname}/views/info.html`)
+
+      infoWindow.on('closed', () => {
+        infoWindow = null
+      })
+    })
     // Triggers ImageJoiner Window
-  ipc.on('open-joiner-window', () => {
-    var previewClose = false
-    if (imageJoin) {
-      imageJoin.show()
-      return
-    }
-    imageJoin = new BrowserWindow({
-      width: 1600,
-      height: 600,
-      minWidth: 1450,
-      minHeight: 500,
-      modal: true,
-      icon: './app/icon.icns',
-      title: 'Join Images Together to Create a Your Rotating Background Images',
-      autoHideMenuBar: true,
-      parent: mainWindow,
-      resizable: true
-    })
-    imageJoin.loadURL(`file://${__dirname}/views/joiner.html#joiner`)
-    imageJoin.on('did-finish-load', () => {
-    })
-    ipc.on('bg-prev', () => {
-      previewClose = true
-    })
+    ipc.on('open-joiner-window', () => {
+      var previewClose = false
+      if (imageJoin) {
+        imageJoin.show()
+        return
+      }
+      imageJoin = new BrowserWindow({
+        width: 1600,
+        height: 600,
+        minWidth: 1450,
+        minHeight: 500,
+        modal: true,
+        icon: favicon,
+        title: 'Join Images Together to Create a Your Rotating Background Images',
+        autoHideMenuBar: true,
+        parent: mainWindow,
+        resizable: true
+      })
+      imageJoin.loadURL(`file://${__dirname}/views/joiner.html#joiner`)
+      imageJoin.on('did-finish-load', () => {
+      })
+      ipc.on('bg-prev', () => {
+        previewClose = true
+      })
       // Update the background preview in the Main Window on joiner Window close
-    imageJoin.on('closed', () => {
-      mainWindow.webContents.send('set-bg', previewClose)
-      imageJoin = null
+      imageJoin.on('closed', () => {
+        mainWindow.webContents.send('set-bg', previewClose)
+        imageJoin = null
+      })
     })
-  })
-}
+  }
 
   // Make this app a single instance app.
   //
@@ -351,61 +362,61 @@ function initialize () {
   //
   // Returns true if the current version of the app should quit instead of
   // launching.
-function makeSingleInstance () {
-  return app.makeSingleInstance(() => {
-    if (mainWindow) {
-      if (mainWindow.isMinimized()) mainWindow.restore()
-      mainWindow.focus()
-    }
-  })
-}
-function getUSBDrives () {
-  var disks = []
-  var aioInfo
-  var aioBkups = []
-  drivelist.list((error, dsklst) => {
-    if (error) {
-      bootbox.alert({
-        title: 'Error Locating Available USB Drives:',
-        message: `${error}`,
-        callback: function () {
-          bootbox.hideAll()
-        }
-      })
-    }
-    dsklst.forEach((drive) => {
-      var sizeGB = Math.round(drive.size / 100000000) / 10
-      if (!drive.system) {
-        console.log(`Raw: ${drive.raw}\n Mountpoint: ${drive.mountpoints[0].path}\n Description: ${drive.description}\n Size: ${sizeGB}GB`)
-        disks.push({'desc': drive.description, 'mp': drive.mountpoints[0].path})
+  function makeSingleInstance () {
+    return app.makeSingleInstance(() => {
+      if (mainWindow) {
+        if (mainWindow.isMinimized()) mainWindow.restore()
+        mainWindow.focus()
       }
     })
-    if (disks.length) {
-      var aioJSON = null
-      var bkupJSON = persistantData.get('bkup_json')
-      disks.forEach((drive) => {
-        if (fs.existsSync(`${drive.mp}/AIO_info.json`)) {
-          console.log(`Found AIO_info.json on USB Drive - ${drive.mp} ${drive.desc}`)
-          aioJSON = fs.readFileSync(`${drive.mp}/AIO_info.json`)
+  }
+  function getUSBDrives () {
+    var disks = []
+    var aioInfo
+    var aioBkups = []
+    drivelist.list((error, dsklst) => {
+      if (error) {
+        bootbox.alert({
+          title: 'Error Locating Available USB Drives:',
+          message: `${error}`,
+          callback: function () {
+            bootbox.hideAll()
+          }
+        })
+      }
+      dsklst.forEach((drive) => {
+        var sizeGB = Math.round(drive.size / 100000000) / 10
+        if (!drive.system) {
+          console.log(`Raw: ${drive.raw}\n Mountpoint: ${drive.mountpoints[0].path}\n Description: ${drive.description}\n Size: ${sizeGB}GB`)
+          disks.push({'desc': drive.description, 'mp': drive.mountpoints[0].path})
         }
       })
-      if (aioJSON) {
-        try {
-          aioInfo = JSON.parse(aioJSON)
-          aioBkups = aioInfo.Backups
-          console.log(aioBkups)
+      if (disks.length) {
+        var aioJSON = null
+        var bkupJSON = persistantData.get('bkup_json')
+        disks.forEach((drive) => {
+          if (fs.existsSync(`${drive.mp}/AIO_info.json`)) {
+            console.log(`Found AIO_info.json on USB Drive - ${drive.mp} ${drive.desc}`)
+            aioJSON = fs.readFileSync(`${drive.mp}/AIO_info.json`)
+          }
+        })
+        if (aioJSON) {
+          try {
+            aioInfo = JSON.parse(aioJSON)
+            aioBkups = aioInfo.Backups
+            console.log(aioBkups)
             /* console.log(`FW_VER: ${aioInfo.info.CMU_SW_VER}`)
             console.log(`AIO_VER: ${aioInfo.info.AIO_VER}`) */
-          persistantData.set('FW', aioInfo.info.CMU_SW_VER)
-          persistantData.set('last_aio', aioInfo.info.AIO_VER)
-          _.pullAll(aioBkups, bkupJSON)
-          console.log(aioBkups)
-          mainWindow.webContents.send('aio-info')
-        } catch (e) { console.log(e.message) }
+            persistantData.set('FW', aioInfo.info.CMU_SW_VER)
+            persistantData.set('last_aio', aioInfo.info.AIO_VER)
+            _.pullAll(aioBkups, bkupJSON)
+            console.log(aioBkups)
+            mainWindow.webContents.send('aio-info')
+          } catch (e) { console.log(e.message) }
+        }
       }
-    }
-  })
-}
+    })
+  }
   /* function createMenu () {
   return Menu.buildFromTemplate(require('./lib/menu'))
 } */

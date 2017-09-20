@@ -72,7 +72,7 @@ do_start()
 
     export IPTABLES=/usr/sbin/iptables
 
-    
+
     # load modules explicitly as otherwise it takes about 2 seconds for modprobe to resolve...
     insmod /lib/modules/3.0.35/kernel/net/netfilter/x_tables.ko
     insmod /lib/modules/3.0.35/kernel/net/ipv4/netfilter/ip_tables.ko
@@ -86,7 +86,7 @@ do_start()
 
     $IPTABLES -F
     $IPTABLES -X
-    
+
     # Accept anything on the loopback interface
     # KGT: We want this fast
     $IPTABLES -A INPUT -i lo -j ACCEPT
@@ -110,7 +110,7 @@ do_start()
     # Allow incoming SSH connections on any interface
     # Note that iptables with kernel 2.4/2.6 allows for a filter rule based upon
     # different connection states (NEW, ESTABLISHED, RELATED, INVALID).
-    $IPTABLES -A INPUT -p tcp --dport 22 -m state --state NEW,ESTABLISHED -j ACCEPT
+    $IPTABLES -A INPUT -p tcp -m multiport --destination-ports 22,24000,36000 -m state --state NEW,ESTABLISHED -j ACCEPT
     # KGT: This is the default
     #$IPTABLES -A OUTPUT -p tcp --sport 22 -m state --state ESTABLISHED -j ACCEPT
 

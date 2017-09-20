@@ -16,6 +16,33 @@ function updateSpeedoApp(){
 	$('#digital').click(function(){
 		$('#digital').hide();
 		$('#analog').show();
+});
+	// Hide Ilde Valuse and enlarge the fonts of the other values
+	// --------------------------------------------------------------------------
+	$('.speedTopFieldSet').click(function(){
+		$('#valuetable').toggleClass('alt1');
+	});
+	// Reset Values to 0  values are updated right away
+	// --------------------------------------------------------------------------
+	$('.tripTimeFieldSet').click(function(){
+		tripDistCurrent = 0;
+		prevTripDist = 0;
+		tripDistBkp = 0;
+		tripDist = 0;
+		speedCurrent = 0;
+		speedSumTotal = 0;
+		speedTop = 0;
+		speedAvg = 0;
+		GPSspeedCurrent = 0;
+		GPSaltCurrent = 0;
+		idleTimeValue = '0:00';
+		engONidleTimeValue = '0:00';
+		totalTripSeconds = 0;
+		totalIdleSeconds = 0;
+		totalEngineOnSeconds = 0;
+		totalMoveCount = 0;
+		engineSpeedCurrent = 0;
+		engineSpeedTop = 0;
 	});
 
 	// touch to togle kmh / MPH
@@ -91,13 +118,16 @@ function updateSpeedoApp(){
 	// language specific labels
 
 	// Español
-	if(language == 'ES'){
+	if(language === 'ES'){
 		// $('.gpsSpeedFieldSet legend').html('Vel. GPS');
 		$('.tripDistFieldSet legend').html('Dist. de viaje <span>(km)</span>');
 		$('.speedTopFieldSet legend').html('Vel. Max');
 		$('.speedAvgFieldSet legend').html('Vel. &empty;');
 		$('.gpsAltitudeFieldSet legend').html('Altitud <span>(m)</span>');
+    // $('.gpsAltitudeMinFieldSet legend').html('Altitud <span>min</span>');
+    // $('.gpsAltitudeMaxFieldSet legend').html('Altitud <span>max</span>');
 		$('.gpsAltitudeMinMaxFieldSet legend').html('<span>min/max</span>');
+    $('.gpsHeadingFieldSet legend').html('Direcci&oacute;n');
 		$('.gpsLatitudeFieldSet legend').html('Lat.');
 		$('.gpsLongitudeFieldSet legend').html('Lon.');
 		$('.tripTimeFieldSet legend').html('T. Total');
@@ -106,8 +136,8 @@ function updateSpeedoApp(){
 	}
 
 	// Polskie
-	if(language == 'PL'){
-		// $('.gpsSpeedFieldSet legend').html('Prędkość GPS');
+  else if(language === 'PL'){
+    // $('.gpsSpeedFieldSet legend').html('PrÄ™dkoÅ›Ä‡ GPS');
 		$('.tripDistFieldSet legend').html('Dystans <span>(km)</span>');
 		$('.speedTopFieldSet legend').html('Prędkość maks.');
 		$('.speedAvgFieldSet legend').html('Prędkość śr.');
@@ -121,7 +151,7 @@ function updateSpeedoApp(){
 	}
 
 	// Slovenský
-	if(language == 'SK'){
+	else if(language === 'SK'){
 		$('.tripDistFieldSet legend').html('Vzdialenosť <span>(km)</span>');
 		$('.speedTopFieldSet legend').html('Najvyššia rých.');
 		$('.speedAvgFieldSet legend').html('Priemerná rýchlosť');
@@ -135,7 +165,7 @@ function updateSpeedoApp(){
 	}
 
 	// Deutsch
-	if(language == 'DE'){
+  else if(language === 'DE'){
 		// $('.gpsSpeedFieldSet legend').html('Geschw. GPS');
 		$('.tripDistFieldSet legend').html('Strecke <span>(km)</span>');
 		$('.speedTopFieldSet legend').html('Geschw. max');
@@ -154,7 +184,7 @@ function updateSpeedoApp(){
 	}
 
 	// Türk
-	if(language == 'TR'){
+	else if(language === 'TR'){
 		$('.tripDistFieldSet legend').html('Gidilen Yol <span>(km)</span>');
 		$('.speedTopFieldSet legend').html('Maksimum Hız');
 		$('.speedAvgFieldSet legend').html('Ortalama Hız');
@@ -177,7 +207,7 @@ function updateSpeedoApp(){
 	}
 
 	// Français
-	if(language == 'FR'){
+	else if(language === 'FR'){
 		// $('.gpsSpeedFieldSet legend').html('Vit. GPS');
 		$('.tripDistFieldSet legend').html('Trajet Dist. <span>(km)</span>');
 		$('.speedTopFieldSet legend').html('V. max');
@@ -194,6 +224,27 @@ function updateSpeedoApp(){
 		$('.NorthWest').html('NO');
 		$('.Drv1AvlFuelEFieldSet legend').html('L/100 km <span>Moy.</span>');
 	}
+  // Italiano
+  else if(language === 'IT'){
+    // $('.gpsSpeedFieldSet legend').html('Vel. GPS');
+    $('.tripDistFieldSet legend').html('Dist. tragitto <span>(km)</span>');
+    $('.speedTopFieldSet legend').html('Vel. max');
+    $('.speedAvgFieldSet legend').html('Vel. media');
+    $('.gpsAltitudeFieldSet legend').html('Altitudine <span>(m)</span>');
+    // $('.gpsAltitudeMinFieldSet legend').html('Altitudine <span>min</span>');
+    // $('.gpsAltitudeMaxFieldSet legend').html('Altitudine <span>max</span>');
+    $('.gpsAltitudeMinMaxFieldSet legend').html('<span>min/max</span>');
+    $('.gpsHeadingFieldSet legend').html('Direzione');
+    $('.gpsLatitudeFieldSet legend').html('Lat.');
+    $('.gpsLongitudeFieldSet legend').html('Lon.');
+    $('.tripTimeFieldSet legend').html('Tempo tot.');
+    $('.idleTimeFieldSet legend').html('T. d\'arresto');
+    $('.engIdleTimeFieldSet legend').html('T. di inattivit&agrave;');
+    $('.SouthWest').html('SO');
+    $('.West').html('O');
+    $('.NorthWest').html('NO');
+    $('.Drv1AvlFuelEFieldSet legend').html('L/100 km <span>media</span>');
+  }
 
 	// unit specific changes
 

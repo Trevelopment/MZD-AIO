@@ -1,6 +1,6 @@
 # Remove videoplayer v2
 show_message "REMOVE VIDEOPLAYER V2.7 ..."
-log_message "=======********  UNINSTALL VIDEOPLAYER ... ********======="
+log_message "=========**************  UNINSTALL VIDEOPLAYER ... *************========="
 
 ### kills all WebSocket daemons
 pkill websocketd
@@ -37,23 +37,23 @@ sed -i '/addon-player.sh &/d' /jci/scripts/stage_wifi.sh
 # delete videoplayer entry from /jci/opera/opera_dir/userjs/additionalApps.json
 if grep -Fq "_androidauto" /jci/opera/opera_dir/userjs/additionalApps.json
 then
-	log_message "=== Found androidauto entry in /jci/opera/opera_dir/userjs/additionalApps.json ==="
+	log_message "===             Found androidauto in additionalApps.json              ==="
 	appmenu_androidauto=1
 else
-	log_message "=== No androidauto entry found in /jci/opera/opera_dir/userjs/additionalApps.json ==="
+	log_message "===           No androidauto found in additionalApps.json             ==="
 	appmenu_androidauto=0
 fi
 if grep -Fq "_speedometer" /jci/opera/opera_dir/userjs/additionalApps.json
 then
-	log_message "=== Found speedometer entry in /jci/opera/opera_dir/userjs/additionalApps.json ==="
+	log_message "===         Found speedometer entry in additionalApps.json            ==="
 	appmenu_speedometer=1
 else
-	log_message "=== No speedometer entry found in /jci/opera/opera_dir/userjs/additionalApps.json ==="
+	log_message "===           No speedometer found in additionalApps.json             ==="
 	appmenu_speedometer=0
 fi
 if [ ${appmenu_androidauto} = "0" ] && [ ${appmenu_speedometer} = "0" ]
 then
-	log_message "=== No more entrys in additionalApps.json, files will be deleted ==="
+	log_message "===    No more entrys in additionalApps.json, files will be deleted   ==="
 	rm -f /jci/opera/opera_dir/userjs/additionalApps.*
 else
 	remove_app_json "_videoplayer"
@@ -62,7 +62,7 @@ fi
 ### cleanup old versions
 if [ ! -d /jci/gui/apps/_speedometer ]; then
 	rm -fr /jci/gui/addon-common
-	log_message "=== Removed /jci/gui/addon-common because speedometer isn't installed neither ==="
+	log_message "===       Removed /jci/gui/addon-common because no mpore AIO apps     ==="
 fi
 rm -fr /jci/gui/addon-player
 rm -fr /jci/gui/addon-speedometer
@@ -83,5 +83,5 @@ then
 	cp /jci/scripts/stage_wifi.sh "${MYDIR}/bakups/test/stage_wifi_videoplayer-after.sh"
 fi
 
-log_message "======***** END UNINSTALLATION OF VIDEOPLAYER *****======="
+log_message "===========******** END UNINSTALLATION OF VIDEOPLAYER *******============"
 log_message " "

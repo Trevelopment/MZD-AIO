@@ -2,7 +2,7 @@
   "name": "MZD-AIO-TI",
   "productName": "MZD All In One Tweaks Installer",
   "description": "An Installer/Uninstaller for Over 50 System Tweaks for the Mazda MZD Infotainment System.",
-  "version": "2.5.10",
+  "version": "2.7.0",
   "homepage": "http://mazdatweaks.com",
   "license": "GPL-3.0",
   "main": "main.js",
@@ -14,10 +14,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/trevelopment/MZD-AIO-TI"
+    "url": "https://gitlab.com/Trezdog44/MZD-AIO-TI"
   },
   "bugs": {
-    "url": "https://github.com/trevelopment/MZD-AIO-TI/issues"
+    "url": "https://gitlab.com/Trezdog44/MZD-AIO-TI/issues"
   },
   "engines": {
     "node": "6.5.x"
@@ -51,14 +51,13 @@
     "build:win": "npm run prebuild && build --win --ia32 --x64 --em.author.name=Trevelopment && npm run postbuild",
     "build:win64": "npm run prebuild && build --win --x64 --em.author.name=Trevelopment && npm run postbuild",
     "build:win32": "npm run prebuild && build --win --ia32 --em.author.name=Trevelopment && npm run postbuild",
-    "build:linux": "npm run prebuild && build --linux deb AppImage --x64 && npm run postbuild",
+    "build:linux:x64": "npm run prebuild && build --linux deb AppImage --x64 && npm run postbuild",
+    "build:linux:deb": "./scripts/build_linux_deb.sh",
     "build": "build",
     "release": "build",
-    "publish": "npm run build:win && npm run release",
     "postbuild": "node build/target.js --clean",
-    "xinstall": "ncu -u",
-    "postinstall": "install-app-deps",
-    "pack-win": "electron-packager ./app/ MZD-AIO-TI --asar --asar-unpack=protocol-link.html --overwrite --platform=win32 --arch=ia32 --icon=favicon.ico --prune=true --out=out --version-string.CompanyName='Trevelopment' --version-string.FileDescription='MZD-AIO-TI' --version-string.ProductName='MZD-AIO-TI'"
+    "xinstall": "cd app && ncu -u && ncu -a && npm i && cd .. && ncu -u && ncu -a && npm i",
+    "postinstall": "electron-builder install-app-deps"
   },
   "standard": {
     "globals": [
@@ -97,15 +96,26 @@
     "appId": "com.trevelopment.mzd-aio-ti",
     "productName": "MZD-AIO-TI",
     "copyright": "© 2017 Trevelopment By Trevor G Martin",
+    "artifactName": "${productName}-${os}_${version}.${ext}",
     "extraResources": [
       "background-images/**/*",
       "tools/*"
     ],
     "extraFiles": [
-      "background/*.png",
       "castscreenApp/*.apk"
     ],
     "compression": "maximum",
+    "mac": {
+      "category": "public.app-category.entertainment",
+      "publish": {
+        "provider": "bintray",
+        "owner": "trevelopment",
+        "repo": "MZD-AIO-TI",
+        "package": "MZD-AIO-MAC",
+        "user": "trevelopment",
+        "token": "0d890a1a98b29d041e2d3521f4fbb99c809f9958"
+      }
+    },
     "dmg": {
       "iconSize": 120,
       "iconTextSize": 14,
@@ -123,40 +133,50 @@
         }
       ]
     },
-    "mac": {
-      "category": "com.trevelopment.mzd-aio-ti"
-    },
     "linux": {
-      "category": "Development"
+      "category": "Development",
+      "executableName": "AIO",
+      "synopsis": "Mazda All In One Tweaks Installer",
+      "target": "deb",
+      "publish": {
+        "provider": "bintray",
+        "owner": "aio",
+        "repo": "aio",
+        "package": "aio",
+        "user": "Trezdog44",
+        "token": "17bd7a6abad6a511d622c9159ea269e9210efd25"
+      }
     },
     "win": {
       "target": [
-        "nsis-web",
         "nsis"
-      ]
+      ],
+      "publish": {
+        "provider": "bintray",
+        "owner": "aio",
+        "repo": "aio",
+        "package": "aio",
+        "user": "Trezdog44",
+        "token": "17bd7a6abad6a511d622c9159ea269e9210efd25"
+      }
     },
     "directories": {
       "output": "releases"
     },
-    "nsis": {},
-    "publish": {
-      "provider": "bintray",
-      "owner": "trevelopment",
-      "repo": "MZD-AIO-TI",
-      "package": "MZD-Updates",
-      "user": "trevelopment"
+    "nsis": {
+      "artifactName": "${productName}_Setup_${version}.${ext}"
     }
   },
   "devDependencies": {
     "async": "^2",
-    "chai": "^3",
-    "chai-as-promised": "^6",
+    "chai": "^4",
+    "chai-as-promised": "^7",
     "dependency-check": "^2",
     "devtron": "^1",
-    "electron": "^1.6.8",
-    "electron-builder": "^17.10.0",
+    "electron": "^1.6.11",
+    "electron-builder": "^19.11.1",
     "electron-debug": "^1",
-    "electron-is-dev": "^0.1",
+    "electron-is-dev": "^0.3",
     "istanbul": "^0.4",
     "mocha": "^3",
     "rimraf": "^2",
@@ -170,13 +190,12 @@
     "async": "^2.1.4",
     "copy-dir": "^0.3.0",
     "crlf": "^1.1.0",
-    "drivelist": "^5.0.20",
-    "electron-config": "^1.0.0",
-    "electron-context-menu": "^0.9.0",
+    "drivelist": "5.0.22",
+    "electron-context-menu": "^0.9.1",
     "electron-image-resize": "^1.2.4",
+    "electron-store": "^1.0.0",
     "extract-zip": "^1.6.5",
     "jquery": "^3.2.1",
     "mkdirp": "^0.5.1"
-  },
-  "debug": true
+  }
 }

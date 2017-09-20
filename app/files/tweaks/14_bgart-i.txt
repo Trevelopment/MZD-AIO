@@ -1,12 +1,12 @@
 # bigger album art
 show_message "BIGGER ALBUM ART ..."
-log_message "======******          INSTALL BIGGER ALBUM ART ...        ******====="
+log_message "========*********      INSTALL BIGGER ALBUM ART ...      *********======="
 
 # Backup
 if [ ! -e /jci/gui/common/controls/NowPlaying4/css/NowPlaying4Ctrl.css.org ]
 then
 	cp -a /jci/gui/common/controls/NowPlaying4/css/NowPlaying4Ctrl.css /jci/gui/common/controls/NowPlaying4/css/NowPlaying4Ctrl.css.org
-	log_message "=== Backup of /jci/gui/common/controls/NowPlaying4/css/NowPlaying4Ctrl.css to NowPlaying4Ctrl.css.org ==="
+  log_message "===                  Backup of NowPlaying4Ctrl.css                    ==="
 fi
 if [ ${KEEPBKUPS} = "1" ]
 then
@@ -22,38 +22,25 @@ cp -a ${MYDIR}/config/bigger-album-art/jci/gui/common/controls/NowPlaying4/image
 remove_aio_css /jci/gui/common/controls/NowPlaying4/css/NowPlaying4Ctrl.css BIGGERALBM
 
 # Add CSS
-cat <<EOT >> /jci/gui/common/controls/NowPlaying4/css/NowPlaying4Ctrl.css
-/* MZD-AIO-TI BIGGERALBM CSS */
+echo "/* MZD-AIO-TI BIGGERALBM CSS */" >> /jci/gui/common/controls/NowPlaying4/css/NowPlaying4Ctrl.css
 
-/* CSS For Bigger Album Art */
-.NowPlaying4CtrlTitle,
-.NowPlaying4CtrlTitleFull {
-  top: 0px;
-  left: 14px;
-}
-.NowPlaying4CtrlArtworkImageDiv {
-  top: 61px;
-  left: 580px;
-  width: 210px;
-  height: 210px;
-}
-.NowPlaying4CtrlArtworkImage {
-  max-width: 210px;
-  max-height: 210px;
-}
-.NowPlaying4CtrlArtworkImageBorder {
-  width: 210px;
-  height: 210px;
-}
-.NowPlaying4CtrlInfoBox,
-.NowPlaying4CtrlInfoBoxFull {
-  top: 61px;
-  left: 14px;
-}
+cat ${MYDIR}/config/bigger-album-art/big-albm.css >> /jci/gui/common/controls/NowPlaying4/css/NowPlaying4Ctrl.css
 
-/* END AIO BIGGERALBM CSS */
-EOT
-log_message "===              CSS Added for Bigger Album Art Tweak             ==="
+if [ ${FULLTITLES} = "1" ]
+then
+	cat ${MYDIR}/config/bigger-album-art/full-titles.css >> /jci/gui/common/controls/NowPlaying4/css/NowPlaying4Ctrl.css
+	log_message "===                  Added for Full Width Titles                      ==="
+fi
 
-log_message "======******     END INSTALLATION OF BIGGER ALBUM ART     ******====="
+if [ ${NOALBM} = "1" ]
+then
+	cat ${MYDIR}/config/bigger-album-art/no-albm.css >> /jci/gui/common/controls/NowPlaying4/css/NowPlaying4Ctrl.css
+	log_message "===               Added CSS For Hide Album Art Option                 ==="
+fi
+
+echo "/* END AIO BIGGERALBM CSS */" >> /jci/gui/common/controls/NowPlaying4/css/NowPlaying4Ctrl.css
+
+log_message "===              CSS Added for Bigger Album Art Tweak                 ==="
+
+log_message "========*******   END INSTALLATION OF BIGGER ALBUM ART   ********========"
 log_message " "
