@@ -1,4 +1,4 @@
-# MZD-AIO-TI 2.5 [![Download](https://api.bintray.com/packages/trevelopment/MZD-AIO-TI/AIO/images/download.svg?version=MZD-AIO-TI) ](http://dl.mazdatweaks.win)
+# MZD-AIO-TI 2.7 [![Download](https://api.bintray.com/packages/trevelopment/MZD-AIO-TI/AIO/images/download.svg?version=MZD-AIO-TI) ](http://dl.mazdatweaks.win)
 
 ## MZD All In One tweaks Installer
 
@@ -13,33 +13,16 @@ Included Translator & Photo-Joiner (for background rotator tweak)
 ### And of course, Thanks to @Siutsch for [AIO 1.x][1]
 ##### (Mazda 2 (DJ), Mazda 3 (BM), Mazda 6 (GJ), Mazda CX-3 (DK), Mazda CX-5 (KE), Mazda MX-5 Roadster (ND) and new 2017 Mazda CX-9 (TC))
 
+#### WHICH FW VERSIONS ARE SUPPORTED:
+
+##### All Firmware versions v55, v56, v58, v59 up to 59.00.502 **NOTE: v59.00.502 has removed the ability to install tweaks  When updating from a previous version install autorun & recovery scripts BEFORE updating to recover access.**
+
 -----
 
 ### **IMPORTANT: All changes happen at your own risk!**
 ##### **Please understand that you can damage or brick your infotainment system running these tweaks!**
 ##### **Anyone who is unsure should leave it alone, ask someone with experience to help or ask in the forum.**
 ##### **I am not responsible for damages that may incur from the use.**
-
------
-# The MZD-AIO-TI v2 Philosophy
-
-### AIO is an awesome program but it is far from complete.  I have adopted a new way of unifying AIO into an integrated system and have begun to work toward achieving that philosophy through this set of rules:
-1. **Avoid Replacing Files** When The Same Can Be Achieved By Appending A Modification.  This will reduce issues with updated firmware versions because a file will never be replaced with an old incompatible version and it make for easier removal of modifications.  This only applies to tweaks where this is possible.
-2. When Modifying, **Always Backup The Original Files** With The Added Extension .org (except images). This will eliminate the need for fallback files, though fallbacks will still be used if needed.  Also this should only be done once with the **original file** so it can be used to revert the system.
-3. **Keep .org Files Forever!** Honestly, there is no reason to delete the backup files created by AIO.  After a .org is made of the original file the system will always have a way to revert that file back to its original state by copying the .org file without the .org extension, once it is deleted the system loses that failsafe.  Creating a new .org on every install can also have issues, especially if you install and uninstall many tweaks over a long period of time with tweaks that modify or replace the same files, so why not just keep the original as your failsafe from the start?
-4. **Information Is Key.**  The AIO desktop app and MZD system can be aware of the state of one another by passing data back and forth with the USB drive.  At least you should be able to somehow keep track of the modifications you've made to your system and be able to access that information easily and that is something that will eventually be a feature of this app.  This is a separate from the actual tweaks but in the end will prove to be beneficial in many ways.
-5. **Know Your Compatibility.**  There are several kinds of files in your MZD system and some are completely safe to modify such as:
- * *Any Image File* - .png/.jpg - As long as you replace it with another image file, any image is safe to modify and replace.
- * *CSS Files* - .css - CSS (Cascading Style Sheets) files control formatting only and will not damage the system no matter what errors may be contained in the file.  Worst case scenario you can always revert the file to the original.
-Those 2 kinds of files are completely safe to modify and really can achieve a great deal including almost any formatting related modifications to the system.  I wrote the Background Rotator tweak and Statusbar tweaks purely with CSS.  I also wrote the Off Screen Background tweak which just replaces an image.  
-
-#### Files that and riskier to modify:
-
- * *JavaScript* - .js - Some JavaScript files and required to boot up the system so just leave them alone unless you know what you are doing.  That being said, there are many JavaScript files that are safe to edit but you probably need to know what you are doing to figure that out anyway.
- * *Shell Scripts* - .sh - Same thing, to avoid a boot loop situation only modify these if you know what you are doing.
- * *Binary Files* - various extensions or no extension - Just stay away from modifying these in general unless you **really** know what you are doing they are very important.
-
-**I am working toward developing all AIO Tweaks to adhere to these rules.  Not every tweak follows these rules as of now but there are certain safety precautions already built in.**
 
 # [CHANGELOG]
 
@@ -104,14 +87,7 @@ Those 2 kinds of files are completely safe to modify and really can achieve a gr
 #### - Images are converted to .png format
 
 #### - Built in Translator
-***
-~~:bomb:**A T T E N T I O N - Important information:**~~
 
- ~~**DOING A FACTORY RESET AFTER INSTALLING ANDROID AUTO LEADS THE SYSTEM TO STAY AT MAZDA BOOT LOGO!!!**
- **SO AVOID A FACTORY RESET OR UNINSTALL AA BEFORE THAT!**  :dizzy_face:
-**There is unfortunately no chance to get access again on the CMU after doing a factory reset,**
- **the wireless settings will be deleted too when doing a factory reset**~~
-#### **[This issue has recently been fixed!!!](https://github.com/Siutsch/AIO---All-in-one-tweaks/pull/20)!!!! Perfect timing for MZD-AIO-TI 2.0 release**
 **Only use with Firmaware >= v55.  DO NOT USE with V30/31/33 OR THE SYSTEM TO STAY AT MAZDA BOOT LOGO!!!!!**
 
 -----
@@ -143,43 +119,16 @@ For installation of speedcam patch (see below), the NAVI SD card must remain in 
 - Remove the USB drive after restart.
 - Tweaks will be applied upon reboot.
 
-#### WHICH FW VERSIONS ARE SUPPORTED:
 
-##### The tweaks can be installed for these FW versions at this time:
+##### The following tweaks are checked for compatibility:
 
-- 56.00.100A/230A/240B/511A/512A/513C / 59.00.326A -ADR (4A N)
-- 56.00.230A/511A/512A/513B -EU
-- 55.00.650A/753A/760A / 58.00.250A -NA
-- 56.00.401A-JP
-- 59.00.330A/441A/443A/446A/450A-NA(N NA)
-
-_**This will be generally checked at the beginning of an installation, if your FW is not compatible the installation will abort at this point.  This is for the safety of incompatible systems.**_
-
-
-##### The following tweaks are checked individually during installation of tweaks.sh, because there are different (config)-files to consider:
-
-- speedcam-patch
-- pause_on_mute
 - track-order/FLAC support
 - no_more_disclaimer
 - list_loop
 - order_of_audio_source_list
 
 
-##### Speedcam-patch support is only for:
-
-- 56.00.100A/230A/240B/513C / 59.00.326A -ADR (4A N)
-- 56.00.230A/511A/512A/513B -EU
-- 55.00.650A/753A/760A / 58.00.250A -NA
-- 56.00.401A -JP
-
-##### For 56.00.51xX -EU / ADR there is no GPS data anymore! Use this workaround:
-
-- After opening the doors at least wait 35 seconds, then press the start button or start the car
-- Before starting the speedometer app, start the NAVI app before (and close again)
-- Unplug and replug the NAV SD card (should be avoided)
-
-##### Track-order/FLAC support only for:
+##### ~~Track-order/FLAC support only for:~~
 - 56.00.100A/240B/513C -ADR (4A N)
 - 56.00.230A/511A/512A/513B -EU
 - 55.00.650A/753A/760A / 58.00.250A -NA
@@ -190,7 +139,7 @@ _**This will be generally checked at the beginning of an installation, if your F
 - [Electron] is an amazing shell developed by Github utilizing the awesome power of both the [NodeJS] and [Chromium] APIs into a single runtime harnessing web based programming languages into beautifully packaged desktop apps.
 - [AngularJS] New hot Javascript app framework by Google
 ---
-# List of tweaks:
+# List of original tweaks:
 
 ## **Tweaks Master Bundle (v55)**
 #### by miket0429
