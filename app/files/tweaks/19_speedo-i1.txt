@@ -1,5 +1,5 @@
-# Speedometer 4.4 by Diginix
-show_message "DIGINIX'S SPEEDOMETER WITH ROTATING COMPASS\nAND ADDITIONAL GPS INFOS IN STATUSBAR"
+# Speedometer v4.8
+show_message "DIGINIX'S SPEEDOMETER v4.8 WITH ROTATING COMPASS\nAND ADDITIONAL GPS INFOS IN STATUSBAR"
 log_message "==========**************** INSTALL SPEEDOMETER *****************========="
 
 log_message "===                 Begin Installation of Speedometer                 ==="
@@ -52,18 +52,20 @@ sed -i '/sleep 6/d' /jci/scripts/stage_wifi.sh
 sed -i '/^ *$/ d' /jci/scripts/stage_wifi.sh
 sed -i '/#!/ a\ ' /jci/scripts/stage_wifi.sh
 
-# Add startup file check for speedometer app too
-cp -a ${MYDIR}/config/speedometer/jci/opera/opera_dir/userjs/speedometer-startup.js /jci/opera/opera_dir/userjs/
-if [ -e /jci/gui/apps/_mzdmeter/js/mzdmeter.js ]
-then
-  log_message "===                Mzdmeter installed copied startup file             ==="
-else
-  sed -i "/.. Remove Mzd ../,/.. End Mzd ../d" /jci/opera/opera_dir/userjs/speedometer-startup.js
-  log_message "===                    Copied speedometer startup file                ==="
-fi
+# Add startup file check for speedometer app ** startup file is now loaded with preload **
+# cp -a ${MYDIR}/config/speedometer/jci/opera/opera_dir/userjs/speedometer-startup.js/jci/opera/opera_dir/userjs/
+# Remove startup file from userjs
+rm -f /jci/opera/opera_dir/userjs/speedometer-startup.js
+#if [ -e /jci/gui/apps/_mzdmeter/js/mzdmeter.js ]
+#then
+#  log_message "===                Mzdmeter installed copied startup file             ==="
+#else
+#  sed -i "/.. Remove Mzd ../,/.. End Mzd ../d" /jci/gui/apps/_speedometer/js/speedometer-startup.js
+#  log_message "===                    Copied speedometer startup file                ==="
+#fi
 
-find /jci/opera/opera_dir/userjs/ -type f -name '*.js' -exec chmod 755 {} \;
-log_message "===     Copied /jci/opera/opera_dir/userjs/speedometer-startup.js     ==="
+#find /jci/opera/opera_dir/userjs/ -type f -name '*.js' -exec chmod 755 {} \;
+#log_message "===     /jci/opera/opera_dir/userjs/speedometer-startup.js    ==="
 
 cp -a ${MYDIR}/config/speedometer/jci/gui/apps/* /jci/gui/apps/
 log_message "===             Copied folder /jci/gui/apps/_speedometer              ==="
@@ -78,19 +80,18 @@ else
   log_message "===       websocketd and jquery.min.js available, no copy needed      ==="
 fi
 
-if [ ! -e /bin/busybox-armv7l ]; then
-  cp -a "${MYDIR}/config/bin/busybox-armv7l" /bin/
-  log_message "===                     Copied /bin/busybox-armv7l                    ==="
-  chmod 755 /bin/busybox-armv7l
-  rm -f /usr/bin/nc
-  ln -s /bin/busybox-armv7l /usr/bin/nc
-  log_message "=== Modified file rights of new busybox and make new link to /usr/bin/nc ==="
-fi
+#if [ ! -e /bin/busybox-armv7l ]; then
+#  cp -a "${MYDIR}/config/bin/busybox-armv7l" /bin/
+#  log_message "===                     Copied /bin/busybox-armv7l                    ==="
+#  chmod 755 /bin/busybox-armv7l
+#  rm -f /usr/bin/nc
+#  ln -s /bin/busybox-armv7l /usr/bin/nc
+#  log_message "=== Modified file rights of new busybox and make new link to /usr/bin/nc ==="
+#fi
 
 # check for 1st line of stage_wifi.sh
 if grep -Fq "#!/bin/sh" /jci/scripts/stage_wifi.sh
 then
-  echo "OK"
   log_message "===                   1st line of stage_wifi.sh is OK                 ==="
 else
   cp -a "${MYDIR}/config/speedometer/stage_wifi.sh" /jci/scripts/
@@ -102,7 +103,6 @@ if [ -e /jci/scripts/stage_wifi.sh ]
 then
   if grep -Fq "### Speedometer" /jci/scripts/stage_wifi.sh
   then
-    echo "exist"
     log_message "===  Speedometer entry already exists in /jci/scripts/stage_wifi.sh   ==="
   else
     sed -i '/#!/ a\### Speedometer' /jci/scripts/stage_wifi.sh
@@ -111,7 +111,7 @@ then
   fi
   if grep -Fq "speedometer.sh &" /jci/scripts/stage_wifi.sh
   then
-    echo "exist"
+    log_message "===  Speedometer entry already exists in /jci/scripts/stage_wifi.sh   ==="
   else
     sed -i '/### Speedometer/ a\/jci/gui/addon-common/websocketd --port=55554 /jci/gui/apps/_speedometer/sh/speedometer.sh &' /jci/scripts/stage_wifi.sh
     log_message "===       Added speedometer entry to /jci/scripts/stage_wifi.sh       ==="
@@ -127,24 +127,27 @@ then
   find /jci/opera/opera_dir/userjs/ -type f -name '*.js' -exec chmod 755 {} \;
 fi
 
-# create new additionalApps.json file from scratch if not already present
-if [ ! -e /jci/opera/opera_dir/userjs/additionalApps.json ]
+# call function add_app_json to modify additionalApps.json
+add_app_json "_speedometer" "Speedometer" "speedometer-startup.js"
+
+# copy updated additionalApps.js if needed
+if ! grep -q "preloadPath" /jci/opera/opera_dir/userjs/additionalApps.js
 then
-  log_message "===          No additionalApps.json available, generating one         ==="
-  #echo "[" > /jci/opera/opera_dir/userjs/additionalApps.json
-  #echo "]" >> /jci/opera/opera_dir/userjs/additionalApps.json
-  cp -a ${MYDIR}/config/speedometer/jci/opera/opera_dir/userjs/additionalApps.json /jci/opera/opera_dir/userjs/
-  cp /jci/opera/opera_dir/userjs/additionalApps.json "${MYDIR}/bakups/test/additionalApps_generated.json"
-  chmod 755 /jci/opera/opera_dir/userjs/additionalApps.json
+	cp -a ${MYDIR}/config/speedometer/jci/opera/opera_dir/userjs/additionalApps.js /jci/opera/opera_dir/userjs/
+	log_message "===                  Copy New additionalApps.js                       ==="
 fi
 
-# call function add_app_json to modify additionalApps.json
-add_app_json "_speedometer" "Speedometer"
+# add preload to the AA json entry if needed
+if ! grep -q "speedometer-startup.js" /jci/opera/opera_dir/userjs/additionalApps.json
+then
+	sed -i 's/"label": "Speedometer" \}/"label": "Speedometer", "preload": "speedometer-startup.js" \}/g' /jci/opera/opera_dir/userjs/additionalApps.json
+	log_message "===     Added speedometer-startup.js to speedometer json entry        ==="
+fi
 
 # change compass rotating depending on NAV SD card inside or not
 if [ ! -d /mnt/sd_nav/content/speedcam ] || [ ${COMPAT_GROUP} -ne 1  ]
 then
-  sed -i 's/var noNavSD = false;/var noNavSD = true;/g' /jci/opera/opera_dir/userjs/speedometer-startup.js
+  sed -i 's/var noNavSD = false;/var noNavSD = true;/g' /jci/gui/apps/_speedometer/js/speedometer-startup.js
   log_message "===    Changed compass rotating, because no NAV SD card is inside     ==="
 fi
 if [ ${SPEEDCOLOR} != 0 ]

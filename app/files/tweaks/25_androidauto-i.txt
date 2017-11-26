@@ -1,6 +1,6 @@
 # Install Android Auto Headunit App
-show_message "INSTALL ANDROID AUTO HEADUNIT APP ..."
-log_message "====*******        INSTALL ANDROID AUTO HEADUNIT APP ...      *******===="
+show_message "INSTALL ANDROID AUTO HEADUNIT APP v1.07 ..."
+log_message "====*******        INSTALL ANDROID AUTO HEADUNIT APP v1.07...      *******===="
 log_message "===          Begin Installation Of Android Auto Headunit App          ==="
 TESTBKUPS=1
 if [ "${TESTBKUPS}" = "1" ]
@@ -20,8 +20,6 @@ rm -f /tmp/mnt/data_persist/dev/bin/headunit-wrapper
 rm -f /tmp/mnt/data_persist/dev/bin/input_filter
 rm -f /tmp/mnt/data/enable_input_filter
 rm -f /tmp/mnt/data/input_filter
-rm -f /usr/lib/gstreamer-0.10/libgsth264parse.so
-rm -f /usr/lib/gstreamer-0.10/libgstalsa.so.org
 rm -fr /tmp/mnt/data_persist/dev/androidauto
 rm -fr /jci/gui/apps/_androidauto
 rm -fr /tmp/mnt/data_persist/dev/bin/headunit_libs
@@ -39,13 +37,6 @@ then
 	sed -i '/input_filter/ d' /jci/sm/sm.conf
 fi
 
-if [ -e /usr/lib/gstreamer-0.10/libgstalsa.so.org ]
-then
-	rm -f /usr/lib/gstreamer-0.10/libgstalsa.so
-	log_message "===           Original libgstalsa.so is available as backup           ==="
-	mv /usr/lib/gstreamer-0.10/libgstalsa.so.org /usr/lib/gstreamer-0.10/libgstalsa.so
-	/bin/fsync /usr/lib/gstreamer-0.10/libgstalsa.so
-fi
 # delete empty lines
 sed -i '/^ *$/ d' /jci/scripts/stage_wifi.sh
 sed -i '/#!/ a\ ' /jci/scripts/stage_wifi.sh
@@ -79,9 +70,23 @@ then
 fi
 
 # call function add_app_json to modify additionalApps.json
-add_app_json "_androidauto" "Android Auto"
+add_app_json "_androidauto" "Android Auto" "preload.js"
 
+# copy updated additionalApps.js if needed
+if ! grep -q "preloadPath" /jci/opera/opera_dir/userjs/additionalApps.js
+then
+	cp -a ${MYDIR}/config/androidauto/jci/opera/opera_dir/userjs/additionalApps.js /jci/opera/opera_dir/userjs/
+	log_message "===                  Copy New additionalApps.js                       ==="
+fi
 
+# add preload to the AA json entry if needed
+if ! grep -q "preload.js" /jci/opera/opera_dir/userjs/additionalApps.json
+then
+	sed -i 's/"label": "Android Auto" \}/"label": "Android Auto", "preload": "preload.js" \}/g' /jci/opera/opera_dir/userjs/additionalApps.json
+	log_message "===           Added preload.js to Android Auto json entry             ==="
+fi
+
+# Remove obsolete patch to asound.conf
 SOUND_X=$(grep -c "tel_asymed" /etc/asound.conf)
 if [ $SOUND_X -eq 1 ]; then
 	# remove patch to /etc/asound.conf Bluetooth calling Bug is fixed

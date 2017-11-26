@@ -9,8 +9,24 @@
 -->
 <table>
 	<tbody class="w3-col">
+    <tr id="no-mount" class="w3-hover-pale-green w3-tooltip w3-col">
+      <td>
+        <input id="mount-swap" style="top:0" class="w3-check" type="checkbox" ng-model="user.swapOps.mount" ng-value="user.swapOps.mount" />
+      </td>
+      <td>
+        <label for="mount-swap" data-toggle="tooltip" data-placement="auto bottom" title="Mount Swapfile on Boot">Mount Swap On Boot</label>
+      </td>
+    </tr>
+    <!--tr id="res-mount" class="w3-hover-pale-green w3-tooltip w3-half">
+      <td>
+        <input id="res-swap" style="top:0" class="w3-check" type="checkbox" ng-model="user.swapOps.resources" ng-value="user.swapOps.resources" />
+      </td>
+      <td>
+        <label for="res-swap" data-toggle="tooltip" data-placement="auto bottom" title="Create Swapfile in Resouces Partition of the CMU">Create Swapfile in Resources</label>
+      </td>
+    </tr-->
 		<tr class="w3-hover-pale-blue">
-			<td style="color:#ff0000" ng-bind-html="options[17].toolTip">
+			<td style="color:#ff0000" ng-bind-html="options[19].toolTip">
 			</td>
 		</tr>
 	</tbody>

@@ -1,6 +1,6 @@
 # track-order and FLAC support
 show_message "INSTALL TRACK-ORDER AND FLAC SUPPORT ..."
-log_message "======********** INSTALL TRACK-ORDER AND FLAC SUPPORT ... **********====="
+log_message "=======******** INSTALL TRACK-ORDER AND FLAC SUPPORT ... *********======="
 
 TRACKORDER_FLAC=0
 if [ ${CMU_SW_VER} = "56.00.100A-ADR" ] \
@@ -16,103 +16,68 @@ fi
 if [ ${CMU_SW_VER} = "56.00.511A-EU" ] \
 || [ ${CMU_SW_VER} = "56.00.512A-EU" ] \
 || [ ${CMU_SW_VER} = "58.00.250A-NA" ] \
+|| [ ${CMU_SW_VER} = "56.00.513C-EU" ] \
+|| [ ${CMU_SW_VER} = "56.00.513B-EU" ] \
+|| [ ${CMU_SW_VER} = "56.00.513C-ADR" ] \
 || [ ${CMU_SW_VER} = "56.00.521A-NA" ]
 then
   TRACKORDER_FLAC=1
   TRACKORDER_FLAC_FILE=511A-EU
 elif [ ${CMU_SW_VER} = "59.00.326A-ADR" ] \
+|| [ ${CMU_SW_VER} = "59.00.330A-ADR" ] \
+|| [ ${CMU_SW_VER} = "59.00.342A-ADR" ] \
+|| [ ${CMU_SW_VER} = "59.00.441A-NA" ] \
+|| [ ${CMU_SW_VER} = "59.00.443C-EU" ] \
 || [ ${CMU_SW_VER} = "59.00.331A-EU" ]
 then
   TRACKORDER_FLAC=1
   TRACKORDER_FLAC_FILE=326A-ADR
 fi
 
-# Sorry for the hassle but it pains me to hear that someone has damaged their system from this tweak
-# Remove the following line to allow Media Order Patch and FLAC Support Tweak to work
-TRACKORDER_FLAC=0
-
-# There seems to be something wrong with the md5 checksum values,
-# If you have some experience and would like to help
-# Repair this tweak contact me at aio@mazdatweaks.com
-
-# ***** Please make sure you can recover via SSH connection if testing compatibility *****
-
-# ##### Some have reported issues with the following FW versions
-# ##### Remove comments from the following lines to install for these versions
-# if [ ${CMU_SW_VER} = "56.00.513C-EU" ] \
-# || [ ${CMU_SW_VER} = "56.00.513B-EU" ] \
-# || [ ${CMU_SW_VER} = "56.00.513C-ADR" ]
-# then
-#   log_message "*** Issues have been reported regarding FLAC tweak and FW version 56.00.513C-EU ***"
-#   TRACKORDER_FLAC=1
-#   TRACKORDER_FLAC_FILE=511A-EU
-# fi
-# ######----------------------------------------------------
-
-# ##### These are newly added compatibilities for testing
-# ##### Remove comments from following lines to test
-# if [ ${CMU_SW_VER} = "59.00.330A-ADR" ] \
-# || [ ${CMU_SW_VER} = "59.00.342A-ADR" ] \
-# || [ ${CMU_SW_VER} = "59.00.441A-NA" ] \
-# || [ ${CMU_SW_VER} = "59.00.443C-EU" ]
-# then
-#   log_message "*** Testing Media Order Patch & FLAC Support for FW: ${CMU_SW_VER} ***"
-#   TRACKORDER_FLAC=1
-#   TRACKORDER_FLAC_FILE=326A-ADR
-# fi
-# ######----------------------------------------------------
-
-
 # Backup
 if [ ! -e /jci/lib/libmc_user.so.org ]
 then
   cp -a /jci/lib/libmc_user.so /jci/lib/libmc_user.so.org
-  log_message "===  Backup of /jci/lib/libmc_user.so to libmc_user.so.org  ==="
+  log_message "===       Backup of /jci/lib/libmc_user.so to libmc_user.so.org       ==="
 fi
+if [ ! -e /tmp/mnt/data_persist/dev/bin/autorun ]
+then
+  cp -a ${MYDIR}/config/media-order-patching/data_persist/* /tmp/mnt/data_persist/
+  log_message "===    Install autorun script in case USB ports fail after install     ==="
+fi
+cp -a ${MYDIR}/config/media-order-patching/data_persist/dev/bin/flac-usb-recovery /tmp/mnt/data_persist/dev/bin
+log_message "===    copy flac-usb-recovery if it is needed can be run via SSH    ==="
+chmod +x /tmp/mnt/data_persist/dev/bin/*
+
 
 if [ "${TRACKORDER_FLAC}" = "0" ]
 then
-  log_message "===     Your firmware is not compatible with this tweak     ==="
+  log_message "===    Your firmware ${CMU_SW_VER} is not compatible with this tweak    ==="
 else
   if [ "${TRACKORDER_FLAC}" = "1" ]
   then
-    cp -a ${MYDIR}/config/media-order-patching/jci/lib/libmc_user.so.${TRACKORDER_FLAC_FILE} /jci/lib/libmc_user.so
+    cp -a ${MYDIR}/config/media-order-patching/jci/lib/libmc_user.${TRACKORDER_FLAC_FILE}.so /jci/lib/libmc_user.so
     cp -a ${MYDIR}/config/media-order-patching/usr/lib/gstreamer-0.10/libgstflac.so /usr/lib/gstreamer-0.10
     cp -a ${MYDIR}/config/media-order-patching/usr/lib/libFLAC.so.8.3.0 /usr/lib
     log_message "=== Detected ${CMU_SW_VER}: Copied fitting patched /jci/lib/libmc_user.so ==="
     /bin/fsync /jci/lib/libmc_user.so
   fi
 
-  if [ "${TRACKORDER_FLAC}" = "1" ]
+  status=`md5sum -c ${MYDIR}/config/media-order-patching/jci/lib/checksum.${TRACKORDER_FLAC_FILE}.md5 2>&1 | grep FAILED`
+  if [[ $? -ne 1 ]]
   then
-    for I in 1 2 3
-    do
-      status=`md5sum -c ${MYDIR}/config/media-order-patching/jci/lib/checksum.${TRACKORDER_FLAC_FILE}.md5 2>&1 | grep FAILED`
-      if [[ $? -ne 1 ]]
-      then
-        if [[ I -eq 3 ]]
-        then
-          log_message "=== Copying failed. Restoring original library from backup! ==="
-          cp -a /jci/lib/libmc_user.so.org /jci/lib/libmc_user.so
-          break
-        else
-          log_message "=== ${I}. Checksum wrong of /jci/lib/libmc_user.so, try to copy libmc_user.so again from SD card ==="
-          cp -a ${MYDIR}/config/media-order-patching/jci/lib/libmc_user.so.${TRACKORDER_FLAC_FILE} /jci/lib/libmc_user.so
-          sleep 3
-          /bin/fsync /jci/lib/libmc_user.so
-          continue
-        fi
-      else
-        log_message "=== Checksum OK of /jci/lib/libmc_user.so, copy was succesful ==="
-        break
-      fi
-    done
+    cp -a /jci/lib/libmc_user.so.org /jci/lib/libmc_user.so
+    /bin/fsync /jci/lib/libmc_user.so
+    log_message "===       Copying failed. Restoring original library from backup!     ==="
+  else
+    log_message "===             Checksum of libmc_user.so OK. copy success            ==="
   fi
 
   chmod 755 /jci/lib/libmc_user.so
   chmod 755 /usr/lib/gstreamer-0.10/libgstflac.so
   chmod 755 /usr/lib/libFLAC.so.8.3.0
   ln -s /usr/lib/libFLAC.so.8.3.0 /usr/lib/libFLAC.so.8
+  log_message "===                     Chmod FLAC support files                      ==="
 fi
-log_message "===*** END INSTALLATION OF TRACK-ORDER AND FLAC SUPPORT  ***==="
+log_message "======****** END INSTALLATION OF TRACK-ORDER AND FLAC SUPPORT ******====="
 log_message " "

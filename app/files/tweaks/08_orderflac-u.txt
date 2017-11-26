@@ -1,83 +1,20 @@
 # remove track-order and FLAC support
 show_message "REMOVE TRACK-ORDER AND FLAC SUPPORT ..."
-log_message "========******   UNINSTALL TRACK-ORDER AND FLAC SUPPORT   ******========="
-# Compatibility Check
-TRACKORDER_FLAC=0
-if [ ${CMU_SW_VER} = "56.00.100A-ADR" ] \
-|| [ ${CMU_SW_VER} = "56.00.240B-ADR" ] \
-|| [ ${CMU_SW_VER} = "56.00.230A-EU" ] \
-|| [ ${CMU_SW_VER} = "55.00.650A-NA" ] \
-|| [ ${CMU_SW_VER} = "55.00.753A-NA" ] \
-|| [ ${CMU_SW_VER} = "55.00.760A-NA" ]
+log_message "=======*******   UNINSTALL TRACK-ORDER AND FLAC SUPPORT   *******========"
+
+if [ -e /jci/lib/libmc_user.so.org ]
 then
-	TRACKORDER_FLAC=1
-	TRACKORDER_FLAC_FILE=230A-EU
-fi
-if [ ${CMU_SW_VER} = "56.00.511A-EU" ] \
-|| [ ${CMU_SW_VER} = "56.00.512A-EU" ] \
-|| [ ${CMU_SW_VER} = "56.00.513B-EU" ] \
-|| [ ${CMU_SW_VER} = "56.00.513C-EU" ] \
-|| [ ${CMU_SW_VER} = "56.00.513C-ADR" ] \
-|| [ ${CMU_SW_VER} = "58.00.250A-NA" ] \
-|| [ ${CMU_SW_VER} = "56.00.521A-NA" ]
-then
-	TRACKORDER_FLAC=1
-	TRACKORDER_FLAC_FILE=511A-EU
+	cp -a /jci/lib/libmc_user.so.org /jci/lib/libmc_user.so
+  /bin/fsync /jci/lib/libmc_user.so
+	log_message "===  Restored original /jci/lib/libmc_user.so from libmc_user.so.org  ==="
 fi
 
-if [ ${CMU_SW_VER} = "59.00.326A-ADR" ] \
-|| [ ${CMU_SW_VER} = "59.00.331A-EU" ]
-then
-	TRACKORDER_FLAC=1
-	TRACKORDER_FLAC_FILE=326A-ADR
-fi
-if [ "${TRACKORDER_FLAC}" = "0" ]
-then
-	log_message "===          This tweak is not compatible with your FW version        ==="
-else
-	if [ -e /jci/lib/libmc_user.so.org ]
-	then
-		cp -a /jci/lib/libmc_user.so.org /jci/lib/libmc_user.so
-		log_message "=== Restored original /jci/lib/libmc_user.so from backup libmc_user.so.org ==="
-	else
-		log_message "=== No backup of /jci/lib/libmc_user.so available, no changes were made ==="
-#		if [ "${TRACKORDER_FLAC}" = "1" ]
-#		then
-#			cp -a "${MYDIR}/config_org/media-order-patching/jci/lib/libmc_user.so.${TRACKORDER_FLAC_FILE}" /jci/lib/libmc_user.so
-#			log_message "=== Detected ${CMU_SW_VER}: Copied fitting original /jci/lib/libmc_user.so ==="
-#			/bin/fsync /jci/lib/libmc_user.so
-#		fi
-	fi
+chmod 755 /jci/lib/libmc_user.so
+rm -f /usr/lib/gstreamer-0.10/libgstflac.so
+rm -f /usr/lib/libFLAC.so.8.3.0
+rm -f /usr/lib/libFLAC.so.8
+rm -f /tmp/mnt/data_persist/dev/bin/flac-usb-recovery
+log_message "===                   Removed FLAC support files                      ==="
 
-#	if [ "${TRACKORDER_FLAC}" = "1" ]
-#	then
-#		for I in 1 2 3
-#		do
-#			status=$(md5sum -c ${MYDIR}/config_org/media-order-patching/jci/lib/checksum.${TRACKORDER_FLAC_FILE}.md5 2>&1 | grep FAILED)
-#			if [ $? -ne 1 ]
-#			then
-#				if [ $I -eq 3 ]
-#				then
-#					log_message "=== Copying failed. Could not restore original library from backup! ==="
-#					break
-#				else
-#					log_message "=== ${I}. Checksum wrong of /jci/lib/libmc_user.so, try to copy libmc_user.so again from SD card ==="
-#					cp -a "${MYDIR}/config_org/media-order-patching/jci/lib/libmc_user.so.${TRACKORDER_FLAC_FILE}" /jci/lib/libmc_user.so
-#					sleep 3
-#					/bin/fsync /jci/lib/libmc_user.so
-#					continue
-#				fi
-#			else
-#				log_message "=== Checksum OK of /jci/lib/libmc_user.so, copy was successful ==="
-#				break
-#			fi
-#		done
-#	fi
-
-	chmod 755 /jci/lib/libmc_user.so
-	rm -f /usr/lib/gstreamer-0.10/libgstflac.so
-	rm -f /usr/lib/libFLAC.so.8.3.0
-	rm -f /usr/lib/libFLAC.so.8
-fi
-log_message "===*** END UNINSTALLATION OF TRACK-ORDER AND FLAC SUPPORT ***==="
+log_message "======***** END UNINSTALLATION OF TRACK-ORDER AND FLAC SUPPORT ****======"
 log_message " "

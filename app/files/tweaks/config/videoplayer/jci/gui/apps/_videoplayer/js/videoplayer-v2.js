@@ -76,6 +76,7 @@ var unicodeMode = JSON.parse(localStorage.getItem('videoplayer.unicodemode')) ||
 var hideUnicodeBtn = JSON.parse(localStorage.getItem('videoplayer.hideunicodebtn')) || false;
 var statusbarTitleVideo = JSON.parse(localStorage.getItem('videoplayer.statusbartitle')) || false;
 var selectedOptionItem = -1; //6 ??
+var colorcode = "255,0,0";
 
 //var logFile = "/tmp/mnt/sd_nav/video-log.txt";
 var logFile = "/jci/gui/apps/_videoplayer/videoplayer_log.txt";
@@ -96,8 +97,8 @@ $(document).ready(function(){
 		*  Then switch back to videoplayer and play a video.
 		*  This is a temporary solution untill a better one is discovered.
 		*/
-		var usbaudioApp = framework.getAppInstance("usbaudio");
-		framework.sendEventToMmui(usbaudioApp.uiaId, "Global.Pause");
+		//var usbaudioApp = framework.getAppInstance("usbaudio");
+		//framework.sendEventToMmui(usbaudioApp.uiaId, "Global.Pause");
 		//usbaudioApp._changePlayButton("pause");
 	}
 	catch(err)
@@ -112,6 +113,35 @@ $(document).ready(function(){
 		var check = (checkIt) ? boxChecked : boxUncheck;
 		$(opId).css({'background-image': check});
 	}
+	$('#colorThemes a').click(function(e){
+		var colorPick = $(this).html();
+    getVideoColorCode(colorPick);
+		$('#colorThemes a').css('background','');
+		$(this).css('background',colorPick);
+		document.getElementById('myVideoControlDiv').className = colorPick + 'Theme';
+		localStorage.setItem('videoplayer.colortheme', JSON.stringify(colorPick));
+	});
+  function getVideoColorCode(colorPick) {
+    switch(colorPick) {
+      case "blue":
+        colorcode = "0,0,255";
+        break;
+      case "green":
+        colorcode = "0,255,0";
+        break;
+      case "pink":
+        colorcode = "255,0,255";
+        break;
+      default:
+        colorcode = "255,0,0";
+        break;
+    }
+  }
+	if (JSON.parse(localStorage.getItem('videoplayer.colortheme'))) {
+    var colortheme = JSON.parse(localStorage.getItem('videoplayer.colortheme'));
+    document.getElementById('myVideoControlDiv').className = colortheme + 'Theme';
+    getVideoColorCode(colortheme);
+  }
 	if (JSON.parse(localStorage.getItem('videoplayer.background'))) {$('#myVideoContainer').addClass('noBg');}
 	if(hideUnicodeBtn){$('#myUnicodeToggle').css({"visibility":"hidden"});}
 	//	if (window.File && window.FileReader && window.FileList && window.Blob) {
@@ -141,7 +171,7 @@ $(document).ready(function(){
 
 	if (enableLog)
 	{
-		src = src + 'cat /proc/swaps >> '+ logFile +'; ';
+		src += 'cat /proc/swaps >> '+ logFile +'; ';
 	}
 
 	src += 'gst-inspect-0.10 > /dev/null 2>&1; '; // Start gstreamer before starting videos
@@ -453,15 +483,15 @@ function myVideoListRequest(){
 
 		if (enableLog)
 		{
-			src = src + 'echo "====retrieve list start====" >> '+logFile+'; ';
+			src = 'echo "====retrieve list start====" >> '+logFile+'; ';
 		}
 
 		src = 'MNTFOLDER=\'' + folderPath + '\'; ';
-		src = src + 'FILES=$(ls -d -1 $MNTFOLDER/sd*/Movies/** | egrep ".avi|.mp4|.wmv|.flv"); ';
-		src = src + 'FILES=$(echo "$FILES" | tr \'\n\' \'|\'); ';
+		src += 'FILES=$(ls -d -1 $MNTFOLDER/sd*/Movies/** | egrep ".avi|.mp4|.wmv|.flv"); ';
+		src += 'FILES=$(echo "$FILES" | tr \'\n\' \'|\'); ';
 
 
-		src = src + 'echo playback-list#"${FILES}"';
+		src += 'echo playback-list#"${FILES}"';
 
 		writeLog(src);
 		myVideoWs(src, true); //playback-list
@@ -566,10 +596,10 @@ function myUnicodeListRequest(){
 
 		if (enableLog)
 		{
-			src = src + 'echo "====retrieve list start====" >> /jci/gui/apps/_videoplayer/log/videoplayer_log.txt; ';
+			src += 'echo "====retrieve list start====" >> '+ logFile +'; ';
 		}
 
-		src = src + 'USBDRV=$(ls /mnt | grep sd); ' +
+		src += 'USBDRV=$(ls /mnt | grep sd); ' +
 
 			'for USB in $USBDRV; ' +
 			'do ' +
@@ -581,20 +611,22 @@ function myUnicodeListRequest(){
 
 		if (enableLog)
 		{
-			src = src + 'echo "====Search USB: ${USB}====" >> /jci/gui/apps/_videoplayer/log/videoplayer_log.txt; ';
+			src += 'echo "====Search USB: ${USB}====" >> '+ logFile +'; ';
 		}
 
 			//add more file type if needed
-		src = src + 'for VIDEO in "${USBPATH}"/*.mp4 "${USBPATH}"/*.avi "${USBPATH}"/*.flv "${USBPATH}"/*.wmv; ' +
-			'do ' +
+		src += 'for VIDEO in "${USBPATH}"/*.mp4 "${USBPATH}"/*.avi "${USBPATH}"/*.flv "${USBPATH}"/*.wmv; ' +
+			'do ';
 
 			//'VIDEO=${VIDEO// /&nbsp;}; ' +
 			//'VIDEO=${VIDEO//\\\'/&#39;}; ' +
 			//'VIDEO=${VIDEO//\\"/&#34;}; ' +
+			if (enableLog)
+			{
+				src += 'echo $VIDEO >> '+ logFile +'; ';
+			}
 
-			'echo $VIDEO >> /jci/gui/apps/_videoplayer/log/videoplayer_log.txt; ' +
-
-			'VIDEONAME=$(echo "${VIDEO}" | cut -d\'/\' -f 6); ' +
+			src += 'VIDEONAME=$(echo "${VIDEO}" | cut -d\'/\' -f 6); ' +
 			'VIDEOCHECK=${VIDEONAME:0:1}; ' +
 			'if [ "${VIDEOCHECK}" != "*" ]; ' +
 			'then ' +
@@ -609,10 +641,10 @@ function myUnicodeListRequest(){
 
 		if (enableLog)
 		{
-			src = src + 'echo "movie found --- ${VIDEONAME}" >> /jci/gui/apps/_videoplayer/log/videoplayer_log.txt; ';
+			src += 'echo "movie found --- ${VIDEONAME}" >> '+ logFile +'; ';
 		}
 
-		src = src + 'VIDEOS="${VIDEOS}<li video-name=\'${VIDEONAME}\' video-data=\'${VIDEO}\' class=\'videoTrack\'>${TRACKCOUNT}. ${VIDEONAME// /&nbsp;}</li>"; ' +
+		src += 'VIDEOS="${VIDEOS}<li video-name=\'${VIDEONAME}\' video-data=\'${VIDEO}\' class=\'videoTrack\'>${TRACKCOUNT}. ${VIDEONAME// /&nbsp;}</li>"; ' +
 			'if [ $LI_ELEMENT == "8" ]; ' +
 			'then ' +
 				'VIDEOS="${VIDEOS}</ul>"; ' +
@@ -629,10 +661,10 @@ function myUnicodeListRequest(){
 
 		if (enableLog)
 		{
-			src = src + 'echo "====retrieve list finished====" >> /jci/gui/apps/_videoplayer/log/videoplayer_log.txt; ';
+			src += 'echo "====retrieve list finished====" >> '+ logFile +'; ';
 		}
 
-		src = src + 'echo "playback-list#${VIDEOS}#${TRACKCOUNT}"'; //aditional {}
+		src += 'echo "playback-list#${VIDEOS}#${TRACKCOUNT}"'; //aditional {}
 
 		writeLog(src);
 		myVideoWs(src, true); //playback-list
@@ -797,18 +829,18 @@ function myVideoStartRequest(obj){
 		//Screen size 800w*480h
 		//Small screen player 700w*367h
 
-		src = src + '/usr/bin/gplay --video-sink="mfw_v4lsink';
+		src += '/usr/bin/gplay --video-sink="mfw_v4lsink';
 
 		if (!FullScreen)
 		{
-			src = src + ' disp-width=700 disp-height=367 axis-left=50 axis-top=64';
+			src += ' disp-width=700 disp-height=367 axis-left=50 axis-top=64';
 		}
 
-		src = src + '" --audio-sink=alsasink "' + videoToPlay + '" 2>&1 ';
+		src += '" --audio-sink=alsasink "' + videoToPlay + '" 2>&1 ';
 
 		if (enableLog)
 		{
-			src = src + "| tee -a "+ logFile +"; ";
+			src += "| tee -a "+ logFile +"; ";
 		}
 
 
@@ -885,7 +917,7 @@ function myVideoNextRequest(){
 			{
 				while (recentlyPlayed.indexOf(nextVideoTrack) !== -1 || nextVideoTrack === currentVideoTrack)
 				{
-					nextVideoTrack = Math.floor(Math.random() * totalVideos);
+					nextVideoTrack = Math.floor(Math.random() * (totalVideos+1));
 				}
 			}
 			else
@@ -1227,7 +1259,7 @@ function handleCommander(eventID)
 		case "down":
 		if (optionsPanelOpen)
 		{
-			$('#optionStatusbarTitle').click()
+      $('#myVideoInfoClose').click();
 		}
 		else if (currentVideoTrack === null)
 		{
@@ -1261,7 +1293,7 @@ function handleCommander(eventID)
 		case "up":
 		if (optionsPanelOpen)
 		{
-			$('#optionHideUnicodeBtn').click()
+			$('#myVideoInfoClose').click();
 		}
 		else if (currentVideoTrack === null)
 		{
@@ -1287,7 +1319,13 @@ function handleCommander(eventID)
 		break;
 
 		case "ccw":
-		if (currentVideoTrack !== null)
+    if (optionsPanelOpen)
+		{
+      $(".panelOptions a").eq(selectedItem).removeClass("selectedItem");
+      (selectedItem < 0) ? selectedItem = 5 : selectedItem--;
+      $(".panelOptions a").eq(selectedItem).addClass("selectedItem");
+		}
+		else if (currentVideoTrack !== null)
 		{
 			$('#myVideoRW').click();
 		}
@@ -1320,7 +1358,13 @@ function handleCommander(eventID)
 		break;
 
 		case "cw":
-		if (currentVideoTrack !== null)
+    if (optionsPanelOpen)
+		{
+      $(".panelOptions a").eq(selectedItem).removeClass("selectedItem");
+      (selectedItem > 5) ? selectedItem = 0 : selectedItem++;
+      $(".panelOptions a").eq(selectedItem).addClass("selectedItem");
+		}
+		else if (currentVideoTrack !== null)
 		{
 			$('#myVideoFF').click();
 		}
@@ -1377,7 +1421,7 @@ function handleCommander(eventID)
 
 			$(".playbackOption").eq(selectedOptionItem).addClass("selectedItem");
 			$(".playbackOption").eq(selectedOptionItem).css("background-image", function(i, val){
-				return "-o-linear-gradient(top,rgba(0,255,0,0),rgba(0,0,255,1)), " + val;});
+				return "-o-linear-gradient(top,rgba(" + colorcode + ",0),rgba(" + colorcode + ",1)), " + val;});
 		}
 		break;
 
@@ -1388,7 +1432,7 @@ function handleCommander(eventID)
 		}
 		else if (optionsPanelOpen)
 		{
-			$('#myVideoInfo').click();
+			$('.panelOptions .selectedItem').click();
 		}
 		else
 		{
@@ -1400,7 +1444,7 @@ function handleCommander(eventID)
 			{
 				$('.playbackOption').eq(selectedOptionItem).click();
 				$(".playbackOption").eq(selectedOptionItem).css("background-image", function(i, val){
-					return "-o-linear-gradient(top,rgba(0,255,0,0),rgba(0,0,255,1)), " + val;});
+					return "-o-linear-gradient(top,rgba(" + colorcode + ",0),rgba(" + colorcode + ",1)), " + val;});
 			}
 		}
 		break;
@@ -1431,7 +1475,7 @@ function handleCommander(eventID)
 
 			$(".playbackOption").eq(selectedOptionItem).addClass("selectedItem");
 			$(".playbackOption").eq(selectedOptionItem).css("background-image", function(i, val){
-				return "-o-linear-gradient(top,rgba(0,255,0,0),rgba(0,0,255,1)), " + val;});
+				return "-o-linear-gradient(top,rgba(" + colorcode + ",0),rgba(" + colorcode + ",1)), " + val;});
 
 		}
 		break;

@@ -1,32 +1,37 @@
 # Remove swap file
-show_message "REMOVE SWAP FILE FROM USB DRIVE ..."
+show_message "REMOVE SWAP FILE ..."
 log_message "==========***********     UNINSTALL SWAP FILE ...   ***********=========="
 if [ "${TESTBKUPS}" = "1" ]
 then
   cp /jci/scripts/stage_wifi.sh "${MYDIR}/bakups/test/stage_wifi_swap-before.sh"
 fi
-sed -i '/find swap file for media player v2/d' /jci/scripts/stage_wifi.sh
-sed -i '/	sleep 5/d' /jci/scripts/stage_wifi.sh
-sed -i '/ sleep 5/d' /jci/scripts/stage_wifi.sh
-sed -i '/for USB in a b c d e/d' /jci/scripts/stage_wifi.sh
-sed -i '/	do/d' /jci/scripts/stage_wifi.sh
-sed -i '/ do/d' /jci/scripts/stage_wifi.sh
+sed -i '/swap file/d' /jci/scripts/stage_wifi.sh
+sed -i '/for USB in/d' /jci/scripts/stage_wifi.sh
 sed -i '/USBPATH/d' /jci/scripts/stage_wifi.sh
+sed -i '/USBDRV/d' /jci/scripts/stage_wifi.sh
 sed -i '/SWAPFILE/d' /jci/scripts/stage_wifi.sh
-sed -i '/	then/d' /jci/scripts/stage_wifi.sh
-sed -i '/  then/d' /jci/scripts/stage_wifi.sh
 sed -i '/rw,remount/d' /jci/scripts/stage_wifi.sh
+sed -i '/	sleep 5/d' /jci/scripts/stage_wifi.sh
+sed -i '/	do/d' /jci/scripts/stage_wifi.sh
+sed -i '/	then/d' /jci/scripts/stage_wifi.sh
 sed -i '/	break/d' /jci/scripts/stage_wifi.sh
-sed -i '/ break/d' /jci/scripts/stage_wifi.sh
 sed -i '/	fi/d' /jci/scripts/stage_wifi.sh
-sed -i '/ fi/d' /jci/scripts/stage_wifi.sh
-sed -i '/done/d' /jci/scripts/stage_wifi.sh
+sed -i '/	done/d' /jci/scripts/stage_wifi.sh
 sleep 2
 log_message "===       Deleted modifications from /jci/scripts/stage_wifi.sh       ==="
 if [ "${TESTBKUPS}" = "1" ]
 then
   cp /jci/scripts/stage_wifi.sh "${MYDIR}/bakups/test/stage_wifi_swap-after.sh"
 fi
-
+if [ -e /tmp/mnt/resources/swapfile ]
+then
+  mount -o rw,remount /tmp/mnt/resources/
+  swapoff /tmp/mnt/resources/swapfile
+  if rm -f /tmp/mnt/resources/swapfile; then
+    log_message "===                    Swapfile deleted successfully                  ==="
+  else
+    log_message "===              ERROR: Swapfile NOT deleted successfully             ==="
+  fi
+fi
 log_message "==========********   END UNINSTALLATION OF SWAP FILE    *******=========="
 log_message " "

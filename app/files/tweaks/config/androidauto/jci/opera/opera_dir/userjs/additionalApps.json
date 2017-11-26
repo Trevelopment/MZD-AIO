@@ -1,3 +1,3 @@
 [
-	{ "name": "_androidauto", "label": "Android Auto" }
+	{ "name": "_androidauto", "label": "Android Auto", "preload": "preload.js" }
 ]

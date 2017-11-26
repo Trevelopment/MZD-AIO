@@ -31,6 +31,7 @@ _videoplayerApp.prototype.appInit = function()
 {
     log.debug("_videoplayerApp appInit  called...");
 
+
     //Context table
     //@formatter:off
 

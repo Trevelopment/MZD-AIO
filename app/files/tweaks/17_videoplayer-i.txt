@@ -1,11 +1,11 @@
 #######################################################################
 # Video_Player by many many people
-# V2.9 - Mods by vic_bam85 & Trezdog44
+# V3.1 - Mods by vic_bam85 & Trezdog44
 #######################################################################
-show_message "VIDEOPLAYER v3.0 MODS BY VIC_BAM85 & TREZDOG44"
+show_message "VIDEOPLAYER v3.1\nMODS BY VIC_BAM85 & TREZDOG44"
 log_message "============***********   INSTALL VIDEOPLAYER   ************============="
 
-log_message "===             Begin Installation of VideoPlayer V3.0               ==="
+log_message "===             Begin Installation of VideoPlayer V3.1               ==="
 
 if [ "${TESTBKUPS}" = "1" ]
 then

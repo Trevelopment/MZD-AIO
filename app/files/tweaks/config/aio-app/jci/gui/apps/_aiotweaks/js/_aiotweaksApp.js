@@ -63,7 +63,10 @@ _aiotweaksApp.prototype._StartContextReady = function ()
 
 _aiotweaksApp.prototype._StartContextOut = function ()
 {
-  localStorage.setItem("aiotweaks", $('body').attr('class'));
+  var currTwks = document.getElementsByTagName("body")[0].className;
+  if(currTwks.length > 0) {
+    localStorage.aiotweaks = JSON.stringify(currTwks);
+  }
 };
 /**
  * =========================

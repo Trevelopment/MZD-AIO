@@ -27,6 +27,10 @@ function addAdditionalApps() {
 				systemApp._masterApplicationDataList.items.push({ appData : { appName : additionalApp.name, isVisible : true,  mmuiEvent : 'Select'+additionalApp.name }, text1Id : additionalApp.name, disabled : false, itemStyle : 'style01', hasCaret : false });
 				framework.localize._appDicts[systemAppId][additionalApp.name] = additionalApp.label;
 				framework.common._contextCategory._contextCategoryTable[additionalApp.name+'.*'] = category;
+				if (additionalApp.preload != null) {
+					var preloadPath = "apps/" + additionalApp.name + "/js/" + additionalApp.preload;
+					utility.loadScript(preloadPath);
+				}
 			}
 
 			// intercept app selection from the list to do our magic
@@ -101,7 +105,7 @@ function additionalAppRouteMmuiMsg(jsObject) {
 			break;
 		default:
 			// do nothing
-			break;	
+			break;
 	}
 
 	this.origRouteMmuiMsg(jsObject);

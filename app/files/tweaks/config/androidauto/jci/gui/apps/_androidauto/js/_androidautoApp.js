@@ -42,6 +42,7 @@ _androidautoApp.prototype.appInit = function()
             "template": "AndroidAutoTmplt",
             "leftBtnStyle" : "goBack",
             "properties" : {
+
             },// end of list of controlProperties
             "templatePath": "apps/_androidauto/templates/AndroidAuto", //only needed for app-specific templates
             "readyFunction": this._StartContextReady.bind(this),
@@ -64,6 +65,7 @@ _androidautoApp.prototype.appInit = function()
  * CONTEXT CALLBACKS
  * =========================
  */
+
 function AAcallCommandServer(method, request, resultFunc)
 {
     var xhttp = new XMLHttpRequest();
@@ -167,7 +169,7 @@ function AAlogPoll()
 
 _androidautoApp.prototype._StartContextReady = function ()
 {
-  	framework.common.setSbDomainIcon("apps/_androidauto/aa.png");
+    framework.common.setSbDomainIcon("apps/_androidauto/aa.png");
     try
     {
         AAcallCommandServer("GET", "status", function(currentStatus)

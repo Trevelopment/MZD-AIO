@@ -1,3 +1,3 @@
 [
-    { "name": "_speedometer", "label": "Speedometer" }
+    { "name": "_speedometer", "label": "Speedometer", "preload": "speedometer-startup.js" }
 ]
