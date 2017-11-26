@@ -107,6 +107,14 @@ footer,
 .showNav .w3-navbar {
 	width:100%;
 }
+div#header,
+#notices,
+nav#mySidenav,
+header span#openNav,
+header span#openSidePanel,
+.w3-container.mainContainer {
+	transition: .8s ease;
+}
 .showNav ~.ng-scope .w3-container.mainContainer .twkfltr {
 	top: 50px;
 }
@@ -878,7 +886,7 @@ label.w3-validate + .tooltip > .tooltip-inner {
 	width: 800px!important;
 }
 /* DARK MODE */
-.w3-black  .w3-dropdown-content a {
+.w3-black .w3-dropdown-content a {
 	color: #000;
 }
 .w3-black #helpMenuTop a {
@@ -922,6 +930,10 @@ body.w3-black {
 .w3-black  .w3-dropdown-content .accordion.help-messages a,
 .w3-black .accordion-content .w3-panel .w3-btn {
 	color: #fff;
+}
+.w3-black label.w3-label.checkAutorun {
+	color: #fff;
+	border-color: #fff;
 }
 .tweak-inst-title {
 	font-family: "stencil";
@@ -1460,6 +1472,10 @@ tr#uistyle-mainlabel.color td input[type="color"] {
 		.useColorBG.w3-right {
 			width: 50%;
 		}
+		#sidePanel .AAmsg,
+		#sidePanel td.aa-side.w3-col label {
+			font-size:16px;
+		}
 		@media only screen and (min-width: 1400px) {
 			div#options, #extraOptions {
 				width:49%;
@@ -1812,8 +1828,8 @@ a.handle:active {
 	max-width: 800px;
 }
 #autoHelp {
-  margin-top: 125px;
-  min-width: 600px;
+	margin-top: 125px;
+	min-width: 600px;
 }
 .featherlight.autoHelpBox .featherlight-content #autoHelp {
 	margin-top: 0;
@@ -1887,6 +1903,11 @@ input#id7Recovery {
 	outline-offset: -10px;
 	outline: 2px dotted #ff0000;
 }
+#sidePanel td.aa-side.w3-col label,
+#sidePanel td.aa-side.w3-col input {
+    margin-top: 0;
+    padding-bottom: 10px;
+}
 .featherlight-content .anonCloseBtn {
 	display: none;
 }
@@ -1909,10 +1930,18 @@ button.btn.btn-primary[data-bb-handler="confirm"]:hover {
 }
 label.w3-label.checkAutorun {
 	position: absolute;
-	top: 125px;
+	top: 95px;
 	right: 15px;
 	font-size: 20px;
 	color: #000;
 	text-align: center;
 	z-index: 99;
+	transition: .8s ease;
+}
+.showNav label.w3-label.checkAutorun {
+	top: 125px;
+}
+.w3-navbar *,
+.w3-sidenav * {
+    cursor: pointer;
 }

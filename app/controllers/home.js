@@ -61,6 +61,7 @@
       listbeep: false,
       advancedOps: false,
       dataDump: false,
+      aaBetaVer: false,
       darkMode: settings.get('darkMode') || false,
       flipOption: settings.get('flipOption') || '',
       transMsg: persistantData.get('transMsg') || false,
@@ -89,7 +90,7 @@
     $scope.user.backups = {
       org: persistantData.get('keepBackups') || false,
       test: persistantData.get('testBackups') || false,
-      skipconfirm: false
+      skipconfirm: persistantData.get('skipConfirm') || false
     }
     $scope.user.boot = {
       logo1: 0,
@@ -154,6 +155,10 @@
       notextbg: false,
       noalbm: false,
       fulltitles: false
+    }
+    $scope.user.swapOps = {
+      mount: true,
+      resources: false
     }
     $scope.user.rmvallbg = function(){
       $scope.user.uistyle.nobtnbg = true
@@ -233,8 +238,8 @@
         $scope.getScript('PhotoJoiner_files/jquery-ui.js')
         $scope.getScript('PhotoJoiner_files/jquery.fineuploader-3.0.min.js')
         $scope.getScript('PhotoJoiner_files/PhotoJoin.js')
-        $scope.getScript('../assets/vendor/jquery.mousewheel.min.js')
         $(function () {
+          $scope.getScript('../assets/vendor/jquery.mousewheel.min.js')
           setTimeout(function () {
             $('#thumbs').mousewheel(function (event, delta) {
               this.scrollLeft -= (delta * 200)
@@ -278,13 +283,13 @@
             tabHandle: '.handle',                     // class of the element that will become your tab
             // pathToTabImage: 'files/img/tab.png', //path to the image for the tab //Optionally can be set using css
             imageHeight: '40px',                     // height of tab image           //Optionally can be set using css
-            imageWidth: '9S0px',                       // width of tab image            //Optionally can be set using css
+            imageWidth: '90px',                       // width of tab image            //Optionally can be set using css
             tabLocation: 'left',                      // side of screen where tab lives, top, right, bottom, or left
             speed: 300,                               // speed of animation
             action: 'click',                          // options: 'click' or 'hover', action to trigger animation
             topPos: '90px',                          // position from the top/ use if tabLocation is left or right
             leftPos: '50px',                          // position from left/ use if tabLocation is bottom or top
-            fixedPosition: false                      // options: true makes it stick(fixed position) on scroll
+            fixedPosition: false                     // options: true makes it stick(fixed position) on scroll
           })
           startTime()
         })

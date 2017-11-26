@@ -1,6 +1,6 @@
 if [ ${TESTBKUPS} = "1" ]
 then
-  cp -a /jci/opera/opera_dir/userjs/speedometer-startup.js ${MYDIR}/bakups/test/
+  cp -a /jci/gui/apps/_speedometer/js/speedometer-startup.js ${MYDIR}/bakups/test/
   cp -a /jci/scripts/stage_wwifi.sh ${MYDIR}/bakups/test/stage_wwifi-after_speedo.sh
 fi
 

@@ -82,8 +82,8 @@ fi
 ### Check for mzdmeter
 if [ -e /jci/gui/apps/_mzdmeter/js/mzdmeter.js ]
 then
-	sed -i "/.. Remove Speed ../,/.. End Speed ../d" /jci/opera/opera_dir/userjs/speedometer-startup.js
-	sed -i 's/var enableSmallSbSpeedo = true;/var enableSmallSbSpeedo = false;/g' /jci/opera/opera_dir/userjs/speedometer-startup.js
+	sed -i "/.. Remove Speed ../,/.. End Speed ../d" /jci/gui/apps/_speedometer/js/speedometer-startup.js
+	sed -i 's/var enableSmallSbSpeedo = true;/var enableSmallSbSpeedo = false;/g' /jci/gui/apps/_speedometer/js/speedometer-startup.js
 	log_message "===           mzdmeter App found remove speedometer startup           ==="
 else
   rm -f /jci/opera/opera_dir/userjs/speedometer-startup.js

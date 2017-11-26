@@ -1,0 +1,17 @@
+#!/bin/sh
+echo 1 > /sys/class/gpio/Watchdog\ Disable/value
+mount -o rw,remount /
+
+if [ -e /jci/lib/libmc_user.so.org ]
+then
+	if cp -a /jci/lib/libmc_user.so.org /jci/lib/libmc_user.so; then
+	   /jci/tools/jci-dialog --info --title="Recovery Complete" --text="libmc_user.so restored from backup\nPress OK to Reboot" --no-cancel
+  else
+    /jci/tools/jci-dialog --info --title="ERROR" --text="An error occured while trying to restore libmc_user.so" --no-cancel
+  fi
+  reboot
+else
+  /jci/tools/jci-dialog --info --title="AIO ERROR" --text="Backup of libmc_user.so not found\nTo repair USB inputs, replace libmc_user.so\nwith an unchanged copy of libmc_user.so for your firmware" --no-cancel
+fi
+
+exit

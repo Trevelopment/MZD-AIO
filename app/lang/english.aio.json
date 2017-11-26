@@ -268,7 +268,7 @@
 			"id": 4,
 			"label": "Install SSH_bringback",
 			"safetylvl": "safe",
-			"toolTip": "<h5>SSH_bringback </h5>**No removing possible!** With FW 56.00.511 Mazda has removed SSH access.  With SSH_bringback this will be reinstalled.  This tweak will still only be installed if FW 56.00.511 is recognized, if it's 56.00.230, nothing happens."
+			"toolTip": "<h5>SSH_bringback </h5>**No removing possible!** With FW 56.00.511+ Mazda has removed SSH access.  With SSH_bringback this will be reinstalled."
 		},
 		"sdcid": {
 			"id": 5,

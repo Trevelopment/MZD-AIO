@@ -1,8 +1,8 @@
 #######################################################################
 # AIO Tweaks Headunit App
-# V0.2 By: Trezdog44
+# V0.4 By: Trezdog44
 #######################################################################
-show_message "INSTALLING AIO TWEAKS APP ..."
+show_message "INSTALLING AIO TWEAKS APP v0.4..."
 log_message "=========************   INSTALL AIO TWEAKS APP   *************==========="
 
 if [ "${TESTBKUPS}" = "1" ]
@@ -16,6 +16,8 @@ pkill websocketd
 
 # Remove previous files
 rm -fr /jci/gui/apps/_aiotweaks/
+# Remove old aio-startup
+rm -f /jci/opera/opera_dir/userjs/aio-startup.js
 
 # Copies the additionalApps.js
 if [ ! -e /jci/opera/opera_dir/userjs/additionalApps.js ]
@@ -55,9 +57,22 @@ log_message "===           Set Websocketd for AIO in Stage_wifi.sh              
 
 
 # Call to the function to populate the json
-add_app_json "_aiotweaks" "AIO Tweaks"
+add_app_json "_aiotweaks" "AIO Tweaks" "AIO-startup.js"
 
-cp -a ${MYDIR}/config/aio-app/jci/opera/opera_dir/userjs/aio-startup.js /jci/opera/opera_dir/userjs/
+# copy updated additionalApps.js if needed
+if ! grep -q "preloadPath" /jci/opera/opera_dir/userjs/additionalApps.js
+then
+	cp -a ${MYDIR}/config/aio-app/jci/opera/opera_dir/userjs/additionalApps.js /jci/opera/opera_dir/userjs/
+	log_message "===                  Copy New additionalApps.js                       ==="
+fi
+
+# add preload to the AA json entry if needed
+if ! grep -q "AIO-startup.js" /jci/opera/opera_dir/userjs/additionalApps.json
+then
+	sed -i 's/"label": "AIO Tweaks" }/"label": "AIO Tweaks", "preload": "AIO-startup.js" }/g' /jci/opera/opera_dir/userjs/additionalApps.json
+	log_message "===           Added AIO-startup.js to AIO Tweaks json entry             ==="
+fi
+
 cp -a ${MYDIR}/config/aio-app/jci/gui/apps/* /jci/gui/apps/
 cp -a ${MYDIR}/config/aio-app/data_persist/* /tmp/mnt/data_persist/
 chmod 755 -R /jci/gui/apps/_aiotweaks/

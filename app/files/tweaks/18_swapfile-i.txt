@@ -15,36 +15,33 @@ log_message "===   Add commands for speedometer and media player to stage_wifi.s
 # add commands for speedometer and media player to stage_wifi.sh
 cp /jci/scripts/stage_wifi.sh ${MYDIR}/bakups/test/stage_wifi_swap-before.sh
 # first delete all
-sed -i '/find swap file for media player v2/d' /jci/scripts/stage_wifi.sh
-sed -i '/	sleep 5/d' /jci/scripts/stage_wifi.sh
-sed -i '/ sleep 5/d' /jci/scripts/stage_wifi.sh
-sed -i '/for USB in a b c d e/d' /jci/scripts/stage_wifi.sh
-sed -i '/	do/d' /jci/scripts/stage_wifi.sh
-sed -i '/ do/d' /jci/scripts/stage_wifi.sh
+sed -i '/swap file/d' /jci/scripts/stage_wifi.sh
+sed -i '/for USB in/d' /jci/scripts/stage_wifi.sh
 sed -i '/USBPATH/d' /jci/scripts/stage_wifi.sh
+sed -i '/USBDRV/d' /jci/scripts/stage_wifi.sh
 sed -i '/SWAPFILE/d' /jci/scripts/stage_wifi.sh
-sed -i '/	then/d' /jci/scripts/stage_wifi.sh
-sed -i '/  then/d' /jci/scripts/stage_wifi.sh
 sed -i '/rw,remount/d' /jci/scripts/stage_wifi.sh
+sed -i '/	sleep 5/d' /jci/scripts/stage_wifi.sh
+sed -i '/	do/d' /jci/scripts/stage_wifi.sh
+sed -i '/	then/d' /jci/scripts/stage_wifi.sh
 sed -i '/	break/d' /jci/scripts/stage_wifi.sh
-sed -i '/ break/d' /jci/scripts/stage_wifi.sh
 sed -i '/	fi/d' /jci/scripts/stage_wifi.sh
-sed -i '/ fi/d' /jci/scripts/stage_wifi.sh
-sed -i '/done/d' /jci/scripts/stage_wifi.sh
+sed -i '/	done/d' /jci/scripts/stage_wifi.sh
 log_message "===    First deleted modifications from /jci/scripts/stage_wifi.sh    ==="
 
 # add commands for swap file to stage_wifi.sh
 log_message "===             Add commands for swap file to stage_wifi.sh           ==="
-if grep -Fq 'for USB in a b c d e' /jci/scripts/stage_wifi.sh
+if grep -Fq 'for USB in' /jci/scripts/stage_wifi.sh
 then
 	echo "exist"
 	log_message "=== Modifications for swapfile already in /jci/scripts/stage_wifi.sh  ==="
 else
-	echo '### find swap file for media player v2' >> /jci/scripts/stage_wifi.sh
+	echo '### find swap file' >> /jci/scripts/stage_wifi.sh
 	echo '	sleep 5' >> /jci/scripts/stage_wifi.sh
-	echo '	for USB in a b c d e' >> /jci/scripts/stage_wifi.sh
+	echo '	USBDRV=$(ls /mnt | grep sd)" resources"' >> /jci/scripts/stage_wifi.sh
+	echo '	for USB in $USBDRV' >> /jci/scripts/stage_wifi.sh
 	echo '	do' >> /jci/scripts/stage_wifi.sh
-	echo '		USBPATH=/tmp/mnt/sd${USB}1' >> /jci/scripts/stage_wifi.sh
+	echo '		USBPATH=/tmp/mnt/${USBDRV}' >> /jci/scripts/stage_wifi.sh
 	echo '		SWAPFILE="${USBPATH}"/swapfile' >> /jci/scripts/stage_wifi.sh
 	echo '		if [ -e "${SWAPFILE}" ]' >> /jci/scripts/stage_wifi.sh
 	echo '			then' >> /jci/scripts/stage_wifi.sh
@@ -55,7 +52,7 @@ else
 	echo '		fi' >> /jci/scripts/stage_wifi.sh
 	echo '	done' >> /jci/scripts/stage_wifi.sh
 	sleep 1
-	sed -i '/find swap file for media player v2/ i\ ' /jci/scripts/stage_wifi.sh
+	sed -i '/find swap file/ i\ ' /jci/scripts/stage_wifi.sh
 	log_message "===  Modifications for swapfile added to /jci/scripts/stage_wifi.sh   ==="
 fi
 cp /jci/scripts/stage_wifi.sh ${MYDIR}/bakups/test/stage_wifi_swap-after.sh

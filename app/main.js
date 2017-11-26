@@ -206,48 +206,50 @@ function initialize () {
       console.log(`Copy_to_usb: ${persistantData.get('copyFolderLocation')}`)
     }
     console.log(`Copy_to_usb: ${persistantData.get('copyFolderLocation')}`)
-    tray = new Tray(nimage)
-    var template = [
-      {label: 'Location of _copy_to_usb',
-      submenu: [
-        {label: 'Desktop', id: 'desktop', type: 'radio', checked: (persistantData.get('copyFolderLocation').includes('desktop') || false), click: function (menuItem, browserWindow, event) { setCopyLoc('desktop') }},
-        {label: 'Downloads', id: 'downloads', type: 'radio', checked: (persistantData.get('copyFolderLocation').includes('downloads') || false), click: function (menuItem, browserWindow, event) { setCopyLoc('downloads') }},
-        {label: 'Documents', id: 'documents', type: 'radio', checked: (persistantData.get('copyFolderLocation').includes('documents') || false), click: function (menuItem, browserWindow, event) { setCopyLoc('documents') }}]},
+    if (process.platform === 'win32') {
+      tray = new Tray(nimage)
+      var template = [
+        {label: 'Location of _copy_to_usb',
+        submenu: [
+          {label: 'Desktop', id: 'desktop', type: 'radio', checked: (persistantData.get('copyFolderLocation').includes('desktop') || false), click: function (menuItem, browserWindow, event) { setCopyLoc('desktop') }},
+          {label: 'Downloads', id: 'downloads', type: 'radio', checked: (persistantData.get('copyFolderLocation').includes('downloads') || false), click: function (menuItem, browserWindow, event) { setCopyLoc('downloads') }},
+          {label: 'Documents', id: 'documents', type: 'radio', checked: (persistantData.get('copyFolderLocation').includes('documents') || false), click: function (menuItem, browserWindow, event) { setCopyLoc('documents') }}]},
+          {type: 'separator'},
+          {label: 'Open _copy_to_usb Folder', click: function () { win.webContents.send('open-copy-folder') }},
+          {label: 'Delete _copy_to_usb Folder',
+          type: 'normal',
+          click: function (menuItem, browserWindow, event) {
+            rimraf(path.normalize(path.join(persistantData.get('copyFolderLocation'), '_copy_to_usb')), function (e) {
+              if (e) {
+                console.error(e.message)
+                window.alert(e.message, `Error Deleting ${path.normalize(path.join(persistantData.get('copyFolderLocation'), '_copy_to_usb'))}`)
+              } else {
+                console.log(`Deleted ${path.normalize(path.join(persistantData.get('copyFolderLocation'), '_copy_to_usb'))}`)
+              }
+            })
+          }
+        },
         {type: 'separator'},
-        {label: 'Open _copy_to_usb Folder', click: function () { win.webContents.send('open-copy-folder') }},
-        {label: 'Delete _copy_to_usb Folder',
-        type: 'normal',
-        click: function (menuItem, browserWindow, event) {
-          rimraf(path.normalize(path.join(persistantData.get('copyFolderLocation'), '_copy_to_usb')), function (e) {
-            if (e) {
-              console.error(e.message)
-              window.alert(e.message, `Error Deleting ${path.normalize(path.join(persistantData.get('copyFolderLocation'), '_copy_to_usb'))}`)
-            } else {
-              console.log(`Deleted ${path.normalize(path.join(persistantData.get('copyFolderLocation'), '_copy_to_usb'))}`)
-            }
-          })
-        }
-      },
-      {type: 'separator'},
-      {label: 'Fullscreen', click: function () { win.setFullScreen(!win.isFullScreen()) }},
-      {label: 'Close', role: 'close', click: function () { win.close() }}]
+        {label: 'Fullscreen', click: function () { win.setFullScreen(!win.isFullScreen()) }},
+        {label: 'Close', role: 'close', click: function () { win.close() }}]
 
-      var trayMenu = Menu.buildFromTemplate(template)
-      tray.setToolTip('MZD-AIO-TI')
-      tray.setContextMenu(trayMenu)
-      tray.on('click', () => {
-        win.isVisible() ? win.hide() : win.show()
-      })
-      tray.on('double-click', () => {
-        win.show()
-        win.setFullScreen(!win.isFullScreen())
-      })
-      win.on('show', () => {
-        tray.setHighlightMode('always')
-      })
-      win.on('hide', () => {
-        tray.setHighlightMode('never')
-      })
+        var trayMenu = Menu.buildFromTemplate(template)
+        tray.setToolTip('MZD-AIO-TI')
+        tray.setContextMenu(trayMenu)
+        tray.on('click', () => {
+          win.isVisible() ? win.hide() : win.show()
+        })
+        tray.on('double-click', () => {
+          win.show()
+          win.setFullScreen(!win.isFullScreen())
+        })
+        win.on('show', () => {
+          tray.setHighlightMode('always')
+        })
+        win.on('hide', () => {
+          tray.setHighlightMode('never')
+        })
+      }
       if (pjson.config.debug) { win.openDevTools() }
       return win
     }
@@ -273,6 +275,9 @@ function initialize () {
           persistantData.set('Diehard', true)
         }
       }
+      if (!persistantData.has('menuLock')) {
+        persistantData.set('menuLock', true)
+      }
       // Manage automatic updates
       try {
         if (!process.execPath.includes('electron')) { // match(/[\\\/]electron/)) {
@@ -284,7 +289,6 @@ function initialize () {
             // Elegant solution: display unobtrusive notification messages
             mainWindow.webContents.send('update-downloaded')
             ipc.on('update-and-restart', () => {
-              persistantData.set('new-update-first-run', true)
               autoUpdater.quitAndInstall()
             })
           })
@@ -343,6 +347,7 @@ function initialize () {
       })
       imageJoin.loadURL(`file://${__dirname}/views/joiner.html#joiner`)
       imageJoin.on('did-finish-load', () => {
+
       })
       ipc.on('bg-prev', () => {
         previewClose = true
@@ -386,7 +391,7 @@ function initialize () {
       }
       dsklst.forEach((drive) => {
         var sizeGB = Math.round(drive.size / 100000000) / 10
-        if (!drive.system) {
+        if (!drive.system && drive.mountpoints[0]) {
           console.log(`Raw: ${drive.raw}\n Mountpoint: ${drive.mountpoints[0].path}\n Description: ${drive.description}\n Size: ${sizeGB}GB`)
           disks.push({'desc': drive.description, 'mp': drive.mountpoints[0].path})
         }

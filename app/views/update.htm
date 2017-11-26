@@ -2,20 +2,94 @@
 <style>.bootbox.update-info{margin-top: 0px;}</style>
 <p><a href="changelog.htm" data-featherlight="ajax">Full Changelog</a></p>
 
-<h3>2.7.0</h3>
+<h3>2.7.2</h3>
 
-<h6>The software distribution service bintray.com has cancelled my account because they had recently seen the DMCA Takedown notice in the MZD-AIO-TI GitHub repository from March 6th, 2017.  Although I explained that the NNG files had been removed immediately upon receiving the notice, they only agreed to leave the versions that had already been uploaded (Ending with v2.6.8) but would block my account from uploading any future versions. Therefor Automatic updates may or may not work in this version until I find another reliable distribution solution.  So in case new updates do not download automatically &quot;Check For Update&quot; has been added in the top menu bar under the &quot;Download&quot; menu.</h6>
+<h5>Android Auto v1.07</h5>
 
-<h5>Android Auto v1.04</h5>
+<ul>
+<li>All Bluetooth Calling &amp; Video Focus Issues are fixed</li>
+<li>Release Audio Focus (To Radio, USB Audio, etc.) with FAV (<span class="icon-star"></span>) Button</li>
+<li>Control USB Audio with Next/Prev steering wheel buttons when it has Audio Focus</li>
+<li>Fix for GPS, Mazda Navigation and HUD features will now function correctly</li>
+<li>Black screen issues are memory related and can be avoided by minimizing the amount of memory being used by the system. This can be done by:
+<ul>
+<li>Removing Nav SD card and other connected USB devices.</li>
+<li>Speedometer and CastScreen apps use active memory, uninstalling them will improve AA performance.</li>
+<li>Reboot the system, connect your phone after reboot.</li>
+<li>Use the Swapfile for additional memory.</li>
+</ul></li>
+</ul>
 
-<ul><li><strong><em>Bluetooth Call Bug Fixed!!!</em></strong> <em>Big thanks to @lmagder for fixing the headunit code after the &#39;Bluetooth call patch&#39; clarified the root of the issue</em></li><li>Video focus is lost at the beginning and end of a call due to the system expecting a context change.  <b>Press the FAV (<span class="icon-star"></span>) Button to get video focus back and AA will function normally.</b></li><li>Phone button opens AA phone screen, also call buttons work for answering and ending calls.</li><li>NAV button opens the AA home screen</li><li>Tap the black box on the credit screen to display contents of the headunit.log file.</li><li>Added the Android Auto Icon to the statusbar</li><li>(The &#39;Bluetooth Call Patch&#39; from AA 1.03 is no longer needed from this version on.)<ul><li>(If it was applied will be reverted back to normal)</li></ul></li></ul>
-<h6><b>NOTES ON AA BLACK SCREEN ISSUE:</b> When starting AA you will sometimes get a black screen.  This is due to a memory error (The same error encountered in the VideoPlayer app).  There are a few ways to attempt to fix this issue:</h6><ol><li>Put the vehicle in and out of reverse <B>ONLY IF THE VEHICLE IS AT A COMPLETE STOP, I CANNOT STRESS THIS ENOUGH</B></li><li>Open the VideoPlayer App and play a video.  You will hit a memory error on the first video you choose, but pressing 'next track' will sometimes cause gstreamer to reset and reallocate the needed memory space.  I found this out by luck.</li><li>Reboot the system and your phone. If you tried the other 2 options and they didnt work rebooting will almost always fix the issue.</li></ol>
-<h5>VideoPlayer v3.0</h5>
+<h5>VideoPlayer v3.1</h5>
 
-<ul><li>Gave the VideoPlayer its own Icon</li><li>Toggle Unicode Mode On/Off with &quot;U&quot; Icon (If you have a lot of videos you will see the difference in load time)</li><li>Information/Options Panel, Open/Close with &quot;i&quot; Icon</li>
-<ul><li>Close by pressing command knob</li><li>Option: Hide/Show Unicode button</li><li>Video Title to Statusbar</li><li>Test Error Message</li><ul><li>I put this in for me to test the error message because all my videos are formatted <strong>360p MP4 H264 AAC</strong> so I rarely hit a memory error.</li></ul></ul>
-<li>Select options with left/right now includes reboot, show/hide background and info/options button.</li><li>Memory Error Message is now very informative</li><ul><li>Offers Suggestions to Avoid Future Errors</li><li>Often pressing 'next track' will clear the error and play the next video</li></ul><li>Changed highlight color to blue</li></ul>
+<ul>
+<li>Fully Multicontroller Navigable</li>
+<li>Navigate "Video Options/Info" panel with Control Knob.
+<ul>
+<li>Rotate to choose</li>
+<li>Push to toggle option</li>
+<li>Tilt up/down to close options/info panel</li>
+<li>Tilt left right to choose between info and options</li>
+</ul></li>
+<li>Change Highlight Color
+<ul>
+<li>Choices: Red, Blue, Green, Pink</li>
+</ul></li>
+<li>Fixed bug: random never played the last video in the list</li>
+</ul>
 
-<h5>AIO Tweaks v0.3</h5>
+<h5>AIO Tweaks v0.4</h5>
 
-<ul><li>Start Headunit Process<ul><li>Will now successfully Start Android Auto Headunit Process</li><li>Also Active Headunit stdout will pop up</li></ul></li><li>View Headunit Log<ul><li>Shows the existing headunit.log file in a window</li></ul></li><li>Screen off<ul><li>Turns the screen off</li></ul></li><li>wifiAP<ul><li>Starts Wifi Access Point</li><li>(start_wifi.sh; jci-wifiap.sh start)</li></ul></li><li>Stop Firewall<ul><li>Stops the firewall</li><li>(jci-fw.sh stop)</li></ul></li><li>System Restore <em>WARNING: This will remove all tweaks and uninstall all AIO apps</em><ul><li>Restore you system on the fly with a slimmed down restore script</li><li>Removes all tweaks and AIO apps including this one</li><li>Does not restore Color Scheme (all those image files take up a lot of space)</li><li>Very small and safe only targets and restores from internal backups.</li><li>Asks for verification twice to ensure it is not accidentally run.</li></ul></li><li>Env - Environment variables<ul><li>For informational/educational purposes</li><li>Also used by developers for fun times</li></ul></li><li><p>Fixed saving issue with the tweak toggle buttons</p></li><li><p>General Improvements/Bug Fixes</p><ul><li>On Startup looks for some AIO log files loads FW version if found.</li><li>If FW version is found An &quot;i&quot; Icon will appear in the top menu bar to the left of the &quot;reload&quot; icon.</li><li>Click the icon to show your FW version, future plans to display more pertinent information as well.</li><li>Added Save Button to Success Dialog</li><li>Added To Top Menu &quot;Downloads &gt; Check For Update&quot;</li><li>Small logging fixes in autorun and recovery scripts</li><li>Fixed WiFiAP files not copying when it was the only autorun script chosen</li><li>Many other small improvements/fixes</li></ul></li></ul>
+<ul>
+<li>Mount SwapFile
+<ul>
+<li>Mount an unmounted SwapFile</li>
+</ul></li>
+<li>Some shell commands with output (command shown in message when one is used)
+<ul>
+<li>Running Processes: ps</li>
+<li>Disk Space: df -h</li>
+<li>Memory Info: cat /proc/swaps &amp;&amp; cat /proc/meminfo</li>
+<li>E-mail me for requests/suggestions</li>
+</ul></li>
+<li>Select Tweaks with command knob
+<ul>
+<li>Rotate to choose</li>
+<li>Push to Select</li>
+</ul></li>
+<li>Scroll message box by rotating/tilting command knob
+<ul>
+<li>Tilt up at the top and pushing select close the message box</li>
+<li>Tilt up to reopen</li>
+<li>Works well when checking headunit.log</li>
+</ul></li>
+<li>Irrelevant options are now hidden
+<ul>
+<li>Ex: If CastScreen is not installed the CastScreen Start/Stop options will be hidden</li>
+</ul></li>
+<li>General little fixes
+<h6>There are MANY failed legitimate attempts in the AIO Tweaks App code most notable of which include "Show Backup Camera," "Take Screenshot" and global "Pause/Play Music". If you think you can get something to work that I have not, go for it!</h6></li>
+</ul>
+
+<h5>Speedometer to StatusBar</h5>
+
+<ul>
+<li>Now Speedometer to StatusBar moves the 'volume meter' and 'contact loading meter' a little bit to the left so they do not overlap the numbers.</li>
+</ul>
+
+<h4>Swapfile</h4>
+
+<ul>
+<li>Choose to mount on boot (on by default) or copy without mounting.
+<ul>
+<li>Mounted automatically when starting the VideoPlayer App</li>
+<li>Can be mounted manually with the AIO Tweaks App</li>
+<li><strong>Swapfile can be copied by itself onto the root of a separate USB drive containing music and/or videos and mounted during run-time as needed</strong></li>
+</ul></li>
+</ul>
+
+<h4>App Changes</h4>
+
+<ul>
+<li>Skip Confirmation choice will persist</li>
+</ul>

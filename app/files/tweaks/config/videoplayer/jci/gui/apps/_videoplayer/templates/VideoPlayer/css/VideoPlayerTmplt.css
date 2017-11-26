@@ -78,6 +78,9 @@
   font-weight: normal;
   padding-top: 16px;
 }
+#myVideoControlDiv ul li a {
+  padding-bottom: 22px;
+}
 #myVideoControlDiv ul li:active {
   background: -o-linear-gradient(bottom,rgba(0,0,0,0),rgba(0,0,0,1));  /*Opera 11.1-12*/
   background-repeat: no-repeat !important;
@@ -117,7 +120,7 @@
 }
 #myVideoList ul li:focus,  #myVideoList ul li:active {
   background: -o-linear-gradient(top,rgba(255,0,0,0),rgba(255,0,0,1));  /*Opera 11.1-12*/
-  background: -webkit-linear-gradient(to top, rgba(0,0,0,255), rgba(0,0,255,1));  /*Standard*/
+  background: -webkit-linear-gradient(top,rgba(0,0,0,255), rgba(0,0,255,1));  /*Standard*/
 }
 #myVideoScroll {
   top:40px;
@@ -220,13 +223,27 @@
   background-color: transparent;
   background-image: none;
 }
-.selectedItem {
-  background: -o-linear-gradient(top,rgba(255,0,0,0),rgba(255,0,0,1));  /*Opera 11.1-12*/
+.selectedItem, .playbackOption.selectedItem {
+  background: -o-linear-gradient(top,rgba(255,0,0,0),rgba(255,0,0,1));
+  background: -webkit-linear-gradient(top,rgba(255,0,0,0),rgba(255,0,0,1));
+}
+.blueTheme~#videoInfoPanel .selectedItem, .blueTheme~#myVideoList .selectedItem {
+  background: -o-linear-gradient(top,rgba(0,0,255,0),rgba(0,0,255,1));
   background: -webkit-linear-gradient(top,rgba(0,0,255,0),rgba(0,0,255,1));
 }
-.blueTheme .selectedItem {
-  background: -o-linear-gradient(top,rgba(0,0,255,0),rgba(0,0,255,1));
+.greenTheme~#videoInfoPanel .selectedItem, .greenTheme~#myVideoList .selectedItem {
+  background: -o-linear-gradient(top,rgba(0,255,0,0),rgba(0,255,0,1));
   background: -webkit-linear-gradient(top,rgba(0,255,0,0),rgba(0,255,0,1));
+}
+.pinkTheme~#videoInfoPanel .selectedItem, .pinkTheme~#myVideoList .selectedItem {
+  background: -o-linear-gradient(top,rgba(255,0,255,0),rgba(255,0,255,1));
+  background: -webkit-linear-gradient(top,rgba(255,0,255,0),rgba(255,0,255,1));
+}
+#videoInfoPanel ul li#colorThemes a {
+  width: 25%;
+  float: left;
+  text-align: center;
+  padding-bottom: 20px;
 }
 #myVideoContainer .unicodeMessage {
   position: absolute;
@@ -266,7 +283,7 @@
 }
 .playbackOption.selectedItem {
   text-shadow: 0 0 5px #fff;
-  background: rgba(0, 117, 48, 0.45);
+  /* background: rgba(0, 117, 48, 0.45);*/
 }
 #videoInfoPanel {
   display:none;
@@ -309,10 +326,20 @@ aside#widget-content {
 }
 #myVideoInfoClose {
   position: absolute;
-  top: 5px;
-  right: 45px;
-  font-size: 30px;
-  color:#fff;
+  top: 0;
+  right: 30px;
+  font-size: 32px;
+  color: #fff;
+}
+#myVideoInfoClose a {
+  padding: 0 15px;
+}
+#myVideoInfoClose a:focus,
+#myVideoInfoClose a:active,
+#myVideoInfoClose a.selectedItem {
+    color:#ff0000;
+    -webkit-transform: rotate(100deg); /* Chrome, Safari, Opera */
+    transform: rotate(100deg);
 }
 #videoInfoPanel #popOptionsTab,
 #videoInfoPanel.state #popInfoTab{
@@ -341,10 +368,11 @@ aside#widget-content {
 }
 #videoInfoPanel ul li a {
   font-size:22px;
+  width:50%;
 }
 .infoBtn {
   border: 4px solid #00ff00;
-  padding: 2px 100px;
+  padding: 2px 90px;
   left: 40px;
   top: 8px;
   background: #000;

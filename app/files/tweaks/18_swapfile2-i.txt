@@ -1,0 +1,71 @@
+# add spwap file for media player
+show_message "ADD SWAP FILE TO RESOURCES ..."
+log_message "=========**************   INSTALL SWAP FILE ...  *************==========="
+
+log_message "===                  Adding Swap File To resources                    ==="
+df -h >> "${MYDIR}/AIO_log.txt"
+cat /proc/meminfo >> "${MYDIR}/AIO_log.txt"
+cat /proc/swaps >> "${MYDIR}/AIO_log.txt"
+if [ ! -e /tmp/mnt/resources/swapfile ]
+then
+  mount -o rw,remount /tmp/mnt/resources/
+  if dd if=/dev/zero of=/tmp/mnt/resources/swapfile bs=1024k count=1000; then
+    log_message "===                    Swapfile created successfully                  ==="
+  else
+    log_message "===              ERROR: Swapfile NOT created successfully             ==="
+  fi
+fi
+sleep 3
+chmod 600 -v /tmp/mnt/resources/swapfile >> "${MYDIR}/AIO_log.txt"
+mkswap /tmp/mnt/resources/swapfile
+swapon /tmp/mnt/resources/swapfile
+log_message "===                   Swapfile added to resources                     ==="
+sed -i '/swap file/d' /jci/scripts/stage_wifi.sh
+sed -i '/for USB in/d' /jci/scripts/stage_wifi.sh
+sed -i '/USBPATH/d' /jci/scripts/stage_wifi.sh
+sed -i '/USBDRV/d' /jci/scripts/stage_wifi.sh
+sed -i '/SWAPFILE/d' /jci/scripts/stage_wifi.sh
+sed -i '/rw,remount/d' /jci/scripts/stage_wifi.sh
+sed -i '/	sleep 5/d' /jci/scripts/stage_wifi.sh
+sed -i '/	do/d' /jci/scripts/stage_wifi.sh
+sed -i '/	then/d' /jci/scripts/stage_wifi.sh
+sed -i '/	break/d' /jci/scripts/stage_wifi.sh
+sed -i '/	fi/d' /jci/scripts/stage_wifi.sh
+sed -i '/	done/d' /jci/scripts/stage_wifi.sh
+log_message "===    First deleted modifications from /jci/scripts/stage_wifi.sh    ==="
+
+# add commands for swap file to stage_wifi.sh
+log_message "===             Add commands for swap file to stage_wifi.sh           ==="
+if grep -Fq 'swap file' /jci/scripts/stage_wifi.sh
+then
+	echo "exist"
+	log_message "=== Modifications for swapfile already in /jci/scripts/stage_wifi.sh  ==="
+else
+  echo '### find swap file' >> /jci/scripts/stage_wifi.sh
+	echo '	sleep 5' >> /jci/scripts/stage_wifi.sh
+	echo '	USBDRV="resources $(ls /mnt | grep sd)"' >> /jci/scripts/stage_wifi.sh
+	echo '	for USB in $USBDRV' >> /jci/scripts/stage_wifi.sh
+	echo '	do' >> /jci/scripts/stage_wifi.sh
+	echo '		USBPATH=/tmp/mnt/${USBDRV}' >> /jci/scripts/stage_wifi.sh
+	echo '		SWAPFILE="${USBPATH}"/swapfile' >> /jci/scripts/stage_wifi.sh
+	echo '		if [ -e "${SWAPFILE}" ]' >> /jci/scripts/stage_wifi.sh
+	echo '			then' >> /jci/scripts/stage_wifi.sh
+	echo '				mount -o rw,remount ${USBPATH}' >> /jci/scripts/stage_wifi.sh
+	echo '				mkswap ${SWAPFILE}' >> /jci/scripts/stage_wifi.sh
+	echo '				swapon ${SWAPFILE}' >> /jci/scripts/stage_wifi.sh
+	echo '				break' >> /jci/scripts/stage_wifi.sh
+	echo '		fi' >> /jci/scripts/stage_wifi.sh
+	echo '	done' >> /jci/scripts/stage_wifi.sh
+	sleep 1
+	sed -i '/find swap file/ i\ ' /jci/scripts/stage_wifi.sh
+	log_message "===  Modifications for swapfile added to /jci/scripts/stage_wifi.sh   ==="
+fi
+df -h >> "${MYDIR}/AIO_log.txt"
+cat /proc/meminfo >> "${MYDIR}/AIO_log.txt"
+cat /proc/swaps >> "${MYDIR}/AIO_log.txt"
+cat /etc/fstab >> "${MYDIR}/AIO_log.txt"
+cp /jci/scripts/stage_wifi.sh ${MYDIR}/bakups/test/stage_wifi_swap-after.sh
+log_message "===                   Swap File Added To USB Drive                    ==="
+
+log_message "===========********** END INSTALLATION OF SWAP FILE **********==========="
+log_message " "

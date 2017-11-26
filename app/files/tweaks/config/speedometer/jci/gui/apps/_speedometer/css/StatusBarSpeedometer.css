@@ -79,6 +79,13 @@
     right: 88px;
     top: 23px;
 }
+/* *** Statusbar adjustments *** */
 .SbnCtrl {
 	background-image: none!important;
+}
+.SbnCtrl_Style03_Meter {
+	left: 110px!important;
+}
+.SbnCtrl_Style06_Meter {
+  left: 270px!important;
 }

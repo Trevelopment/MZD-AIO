@@ -40,10 +40,10 @@ var filesComplete = true // Flag to signal the files have all been copied
 var disclaimerAndAudioFlag = false // Flag to prevent disclaimer&audiosource folder from being copied twice
 var errFlag = false // Error flag
 var copySwapfile = false // Swapfile flag
-var speedcamPatchFlag = false // Speedcam Patch flag
 var tweaks2write = [] // Queue for order consistantcy writing tweaks.sh (Always starts with 00_intro.txt)
 var tmpdir = path.normalize(path.join(persistantData.get('copyFolderLocation'), '_copy_to_usb')) // Place to hold USB drive files before copying
 var themeColor = 'Red'
+var swapdest = ''
 /*                                      *********\
 |*  START BUILD OF TWEAKS.SH & ASSOCIATED FILES *|
 \**********                                     */
@@ -58,7 +58,6 @@ function buildTweakFile (user) {
   /* Start Writing Log Files */
   AIO_LOG += `- Tweak Files Location: ${tmpdir}\r\n`
   AIO_LOG_HTML += `<li><b>Tweak Files Location: ${tmpdir}</b></li>`
-  /* Attach Hints */
   /* Building Dialog */
   bootbox.dialog({
     message: `<div style='text-align:center;'>${langObj.popupMsgs[0].msg}<br><div id='userLogView' style='text-align:center;' ></div><br><img class='loader' src='./files/img/load-1.gif' alt='...' /></div><div id='copy-loc'>${langObj.popupMsgs[1].msg}: ${tmpdir}<span class="w3-close icon-x w3-right" onclick="$(this).parent().hide()"></span></div>`,
@@ -66,6 +65,7 @@ function buildTweakFile (user) {
   })
   persistantData.set('keepBackups', user.backups.org)
   persistantData.set('testBackups', user.backups.test)
+  persistantData.set('skipConfirm', user.backups.skipconfirm)
   if (fs.existsSync(`${tmpdir}`)) {
     aioLog('Delete old _copy_to_usb folder...')
     try {
@@ -423,6 +423,9 @@ function buildTweak (user) {
   if (user.options.indexOf(25) !== -1) {
     addTweak('25_androidauto-i.txt')
     addTweakDir('androidauto', true)
+    if(user.aaBetaVer){
+      addTweakDir('androidautob', true)
+    }
   }
   if (user.options.indexOf(11) !== -1) {
     addTweak('11_msgreplies-i.txt')
@@ -553,7 +556,10 @@ function buildTweak (user) {
   //  in the script is to remove all of the other tweak files
   if (user.options.indexOf(18) !== -1) {
     copySwapfile = true
-    addTweak('18_swapfile-i.txt')
+    if (user.swapOps.mount) {
+      swapdest = '/config/swapfile/'
+      addTweak('18_swapfile-i.txt')
+    }
   }
   // Finish with the end script
   addTweak('00_end.txt')
@@ -1010,6 +1016,7 @@ function unzipSwapfile (dest) {
     nocopy = true
     dest = `${tmpdir}`
   }
+  dest = `${dest}${swapdest}`
   if (copySwapfile) {
     copySwapfile = false
     appendAIOlog(`<li style='color:#005182'>${langObj.popupMsgs[13].msg}: ${dest.replace(':', '')}</li>`)
@@ -1033,11 +1040,11 @@ function unzipSwapfile (dest) {
       }
     }, 40000)
     try {
-      fs.mkdirSync(`${dest}/config/swapfile/`)
+      fs.mkdirSync(`${dest}`)
     } catch (e) {
       appendAIOlog(`<li style='color:#ff0000'>${e} Swapfile Already Exists, Overwriting...</li>`)
     }
-    extract(`${approot}/files/tweaks/config/swapfile/swapfile.zip`, {dir: `${dest}/config/swapfile/`}, function (err) {
+    extract(`${approot}/files/tweaks/config/swapfile/swapfile.zip`, {dir: `${dest}`}, function (err) {
       if (err) {
         appendAIOlog(`<li style='color:#ff0000'>${err} Swapfile Error</li>`)
         console.error(err, err)
@@ -1065,7 +1072,6 @@ var cp2usb = `<button class="w3-round-large w3-teal w3-btn w3-ripple w3-hover-pi
 var saveBtn = `<button class="w3-round-large w3-purple w3-btn w3-ripple w3-hover-deep-orange w3-large w3-border w3-border-green" style="letter-spacing:.81px" title="Save Options" onclick="$('#save-btn').click()"><span class="icon-floppy-disk"></span> ${langObj.menu.save.toolTip}</button>`
 var openUSB = ''
 function finishedMessage (mp) {
-  cleanUpTempFolders()
   // Finished message
   if (mp) {
     if (persistantData.get('delCopyFolder')) {
@@ -1104,14 +1110,6 @@ function postInstallTitle () {
 }
 function cleanCopyDir () {
   rimraf(`${tmpdir}`, function () { appendAIOlog(`<li style='color:#ff3366'>Deleted '_copy_to_usb' Folder</li>`) })
-}
-function cleanUpTempFolders () {
-  if (speedcamPatchFlag) {
-    rimraf(path.normalize(path.join(`${__dirname}`, '../org')), function (e) {
-      if (e) { appendAIOlog(e) }
-      appendAIOlog(`<li style='color:#ff3366'>Deleted Temporary Folders</li>`)
-    })
-  }
 }
 function buildCASDK (user) {
   mkdirp.sync(`${tmpdir}/casdk/`)

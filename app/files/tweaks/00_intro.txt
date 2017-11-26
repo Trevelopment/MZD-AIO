@@ -1,13 +1,13 @@
 #!/bin/sh
-# tweaks.sh - MZD-AIO-TI Version 2.7.0
+# tweaks.sh - MZD-AIO-TI Version 2.7.2
 # Special thanks to Siutsch for collecting all the tweaks and for the original AIO
-# Big Thanks to Modfreakz, khantaena, Xep, ID7, Doog, oz_paulb.
-# For more information visit http://mazdatweaks.com
+# Big Thanks to Modfreakz, khantaena, Xep, ID7, Doog, Diginix, oz_paulb & lmagder
+# For more information visit https://mazdatweaks.com
 # Enjoy, Trezdog44 - Trevelopment.com
 
 # Time
 hwclock --hctosys
 
 # AIO Variables
-AIO_VER=2.7.0
-AIO_DATE=2017.09.22
+AIO_VER=2.7.2
+AIO_DATE=2017.11.27

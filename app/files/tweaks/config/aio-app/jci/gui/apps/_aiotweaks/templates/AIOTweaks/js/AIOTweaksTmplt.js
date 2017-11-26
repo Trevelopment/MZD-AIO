@@ -13,6 +13,9 @@ log.addSrcFile("AIOTweaksTmplt.js", "AIOTweaks");
 * Constructor
 * =========================
 */
+var selectedItem = 0;
+var currTab = '';
+var maxButtons = 13;
 function AIOTweaksTmplt(uiaId, parentDiv, templateID, controlProperties)
 {
   this.divElt = null;
@@ -41,7 +44,7 @@ function AIOTweaksTmplt(uiaId, parentDiv, templateID, controlProperties)
   parentDiv.appendChild(this.divElt);
 
   // Build The Environment
-  this.divElt.innerHTML = '<ul id="main" class="tab" style="margin-top:60px">' +
+  this.divElt.innerHTML = '<ul id="AIO-Main" class="tab" style="margin-top:60px">' +
   '<li><a href="javascript:void(0)" class="tablinks" id="Twk">Apps</a></li>' +
   '<li><a href="javascript:void(0)" class="tablinks" id="Main">Tweaks</a></li>' +
   '<li><a href="javascript:void(0)" class="tablinks" id="Opt">Options</a></li>' +
@@ -53,92 +56,125 @@ function AIOTweaksTmplt(uiaId, parentDiv, templateID, controlProperties)
   '<div id="Options" class="tabcontent FadeIn">'+
   '</div>'+
   '<div id="AioInfoPanel"><div id="AioInformation"></div></div>';
-  // Tab Openers
-  $("#Main").click(function(){$('.tabcontent').hide();$('#MainMenu').show()});
-  $("#Twk").click(function(){$('.tabcontent').hide();$('#Tweaks').show()});
-  $("#Opt").click(function(){$('.tabcontent').hide();$('#Options').show()});
+
+  function AIOTabs(tab, tabLink) {
+    $(".tablinks").removeClass("active-tab");
+    $(".tabcontent").hide();
+    $("button").removeClass("selectedItem");
+    maxButtons = $(tab + " a").length - 2;
+    $(tab).show();
+    (selectedItem < maxButtons) ? $(tab + " button").eq(selectedItem).addClass("selectedItem") : selectedItem = 0;
+    $(tabLink).addClass("active-tab");
+    currTab = tab;
+  }
 
   // Buttons
   // Tweaks Section
-  $("<button/>").attr("id", "star1").addClass('mmLayout').text('Star 1').appendTo($('#MainMenu'));
-  $("<button/>").attr("id", "star3").addClass('mmLayout').text('Star 2').appendTo($('#MainMenu'));
-  $("<button/>").attr("id", "star2").addClass('mmLayout').text('Inverted').appendTo($('#MainMenu'));
-  $("<button/>").attr("id", "star4").addClass('mmLayout').text('Flat Line').appendTo($('#MainMenu'));
-  $("<button/>").attr("id", "ellipse").addClass('toggleTweaks').text('Hide Ellipse').appendTo($('#MainMenu'));
-  $("<button/>").attr("id", "minicoins").addClass('toggleTweaks').text('Mini Coins').appendTo($('#MainMenu'));
-  $("<button/>").attr("id", "label3d").addClass('toggleTweaks').text('3D Main Text').appendTo($('#MainMenu'));
-  $("<button/>").attr("id", "hidelabel").addClass('toggleTweaks').text('Hide Main Text').appendTo($('#MainMenu'));
-  $("<button/>").attr("id", "bgrAlbmArt").addClass('toggleTweaks').text('Bigger Albm Art').appendTo($('#MainMenu'));
-  $("<button/>").attr("id", "txtShadow").addClass('toggleTweaks').text('Text Shadow').appendTo($('#MainMenu'));
-  $("<button/>").attr("id", "no-btn-bg").addClass('toggleTweaks').text('Hide Button Background').appendTo($('#MainMenu'));
-  $("<button/>").attr("id", "hideStatus").addClass('toggleTweaks').text('Hide StatusBar').appendTo($('#MainMenu'));
-  $("<button/>").attr("id", "hideMusicBg").addClass('toggleTweaks').text('Hide Entertainment Background').appendTo($('#MainMenu'));
-  $("<button/>").attr("id", "hideListBg").addClass('toggleTweaks').text('Hide List Background').appendTo($('#MainMenu'));
-  $("<button/>").attr("id", "clearTweaksBtn").text('Reset Tweaks').appendTo($('#MainMenu'));
+  $("<button/>").attr("id", "star1").addClass('mmLayout').html('<a>Star 1</a>').appendTo($('#MainMenu'));
+  $("<button/>").attr("id", "star3").addClass('mmLayout').html('<a>Star 2</a>').appendTo($('#MainMenu'));
+  $("<button/>").attr("id", "star2").addClass('mmLayout').html('<a>Inverted</a>').appendTo($('#MainMenu'));
+  $("<button/>").attr("id", "star4").addClass('mmLayout').html('<a>Flat Line</a>').appendTo($('#MainMenu'));
+  $("<button/>").attr("id", "ellipse").addClass('toggleTweaks').html('<a>Hide Ellipse</a>').appendTo($('#MainMenu'));
+  $("<button/>").attr("id", "minicoins").addClass('toggleTweaks').html('<a>Mini Coins</a>').appendTo($('#MainMenu'));
+  $("<button/>").attr("id", "label3d").addClass('toggleTweaks').html('<a>3D Main Text</a>').appendTo($('#MainMenu'));
+  $("<button/>").attr("id", "hidelabel").addClass('toggleTweaks').html('<a>Hide Main Text</a>').appendTo($('#MainMenu'));
+  $("<button/>").attr("id", "bgrAlbmArt").addClass('toggleTweaks').html('<a>Bigger Albm Art</a>').appendTo($('#MainMenu'));
+  $("<button/>").attr("id", "txtShadow").addClass('toggleTweaks').html('<a>Text Shadow</a>').appendTo($('#MainMenu'));
+  $("<button/>").attr("id", "no-btn-bg").addClass('toggleTweaks').html('<a>Hide Button Background</a>').appendTo($('#MainMenu'));
+  $("<button/>").attr("id", "hideStatus").addClass('toggleTweaks').html('<a>Hide StatusBar</a>').appendTo($('#MainMenu'));
+  $("<button/>").attr("id", "hideMusicBg").addClass('toggleTweaks').html('<a>Hide Entertainment Background</a>').appendTo($('#MainMenu'));
+  $("<button/>").attr("id", "hideListBg").addClass('toggleTweaks').html('<a>Hide List Background</a>').appendTo($('#MainMenu'));
+  $("<button/>").attr("id", "clearTweaksBtn").html('<a>Reset Tweaks</a>').appendTo($('#MainMenu'));
   $("<div/>").attr("id", "MainMenuMsg").css({"padding":"0px"}).insertAfter($('#MainMenu'));
 
   // Apps Section
-  $("<button/>").attr("id", "twkOut").addClass('mainApps').text('Home').addClass('audioSources').appendTo($('#Tweaks'));
-  $("<button/>").attr("id", "usba").text('USB A').addClass('audioSources').appendTo($('#Tweaks'));
-  $("<button/>").attr("id", "usbb").text('USB B').addClass('audioSources').appendTo($('#Tweaks'));
-  $("<button/>").attr("id", "BluetoothAudio").addClass('audioSources').text('Bluetooth').appendTo($('#Tweaks'));
+  $("<button/>").attr("id", "twkOut").addClass('mainApps').html('<a>Home</a>').addClass('audioSources').appendTo($('#Tweaks'));
+  $("<button/>").attr("id", "usba").html('<a>USB A</a>').addClass('audioSources').appendTo($('#Tweaks'));
+  $("<button/>").attr("id", "usbb").html('<a>USB B</a>').addClass('audioSources').appendTo($('#Tweaks'));
+  $("<button/>").attr("id", "BluetoothAudio").addClass('audioSources').html('<a>Bluetooth</a>').appendTo($('#Tweaks'));
   $("<br>").appendTo($('#Tweaks'));
-  $("<button/>").attr("id", "previousTrackBtn").addClass('audioSources').text('Previous').appendTo($('#Tweaks'));
-  $("<button/>").attr("id", "nextTrackBtn").addClass('audioSources').text('Next').appendTo($('#Tweaks'));
-  //$("<button/>").attr("id", "allSongsBtn").addClass('audioSources').text('All Songs').appendTo($('#Tweaks'));
+  $("<button/>").attr("id", "previousTrackBtn").addClass('audioSources').html('<a>Previous</a>').appendTo($('#Tweaks'));
+  $("<button/>").attr("id", "nextTrackBtn").addClass('audioSources').html('<a>Next</a>').appendTo($('#Tweaks'));
   $("<br>").appendTo($('#Tweaks'));
-  $("<button/>").attr("id", "headunitLogBtn").addClass('aaLog').text('View Headunit Log').appendTo($('#Tweaks'));
-  //$("<button/>").attr("id", "fakeIncomingCallBtn").addClass('test').text('Fake Incoming Call').appendTo($('#Tweaks'));
-  //$("<button/>").attr("id", "activeCallBtn").addClass('test').text('Fake Active Call').appendTo($('#Tweaks'));
-
-  $('<div/>').attr('id','aaTitle').text('Android Auto Headunit').appendTo('#Tweaks');
-  $("<button/>").attr("id", "AAstart").addClass('aaFunc').text('Start').appendTo($('#Tweaks'));
-  $("<button/>").attr("id", "AAstop").addClass('aaFunc').text('Stop').appendTo($('#Tweaks'));
-  $('<div/>').attr('id','csTitle').text('CastScreen Receiver').appendTo('#Tweaks');
-  $("<button/>").attr("id", "CSstart").addClass('csFunc').text('Start').appendTo($('#Tweaks'));
-  $("<button/>").attr("id", "CSstop").addClass('csFunc').text('Stop').appendTo($('#Tweaks'));
-  //$("<button/>").attr("id", "pauseBtn").addClass('audioCtrls').text('Pause').appendTo($('#Tweaks'));
+  $("<button/>").attr("id", "headunitLogBtn").addClass('aaLog').html('<a>View Headunit Log</a>').appendTo($('#Tweaks'));
+  $("<button/>").attr("id", "mountSwapBtn").html('<a>Mount Swapfile</a>').appendTo($('#Tweaks'));
+  $('<div/>').attr('id','aaTitle').html('Android Auto Headunit').appendTo('#Tweaks');
+  $("<button/>").attr("id", "AAstart").addClass('aaFunc fnStart').html('<a>Start</a>').appendTo($('#Tweaks'));
+  $("<button/>").attr("id", "AAstop").addClass('aaFunc fnStop').html('<a>Stop</a>').appendTo($('#Tweaks'));
+  $('<div/>').attr('id','csTitle').html('CastScreen Receiver').appendTo('#Tweaks');
+  $("<button/>").attr("id", "CSstart").addClass('csFunc fnStart').html('<a>Start</a>').appendTo($('#Tweaks'));
+  $("<button/>").attr("id", "CSstop").addClass('csFunc fnStop').html('<a>Stop</a>').appendTo($('#Tweaks'));
   $("<button/>").attr("id", "scrollUpBtn").addClass('AIO-scroller').html('<img src="apps/_aiotweaks/templates/AIOTweaks/images/scrollUp.png" />').insertAfter($('#AioInfoPanel'));
   $("<button/>").attr("id", "scrollDownBtn").addClass('AIO-scroller').html('<img src="apps/_aiotweaks/templates/AIOTweaks/images/scrollDown.png" />').insertAfter($('#AioInfoPanel'));
+  //$("<button/>").attr("id", "createSwapBtn").html('<a>Create Swapfile</a>').appendTo($('#Tweaks'));
+  //$("<button/>").attr("id", "pauseBtn").addClass('audioCtrls').html('<a>Pause</a>').appendTo($('#Tweaks'));
+  //$("<button/>").attr("id", "allSongsBtn").addClass('audioSources').html('<a>All Songs</a>').appendTo($('#Tweaks'));
+  //$("<button/>").attr("id", "fakeIncomingCallBtn").addClass('test').html('<a>Fake Incoming Call</a>').appendTo($('#Tweaks'));
+  //$("<button/>").attr("id", "activeCallBtn").addClass('test').html('<a>Fake Active Call</a>').appendTo($('#Tweaks'));
+  //$('<div/>').attr('id','spTitle').html('Speedometer').appendTo('#Tweaks');
+  //$("<button/>").attr("id", "SPstart").addClass('spFunc fnStart').html('<a>Start</a>').appendTo($('#Tweaks'));
+  //$("<button/>").attr("id", "SPstop").addClass('spFunc fnStop').html('<a>Stop</a>').appendTo($('#Tweaks'));
 
   // Options Section
-  //$("<button/>").attr("id", "screenshotBtn").text('Screenshot').appendTo($('#Options'));
-  //$("<button/>").attr("id", "messageBtn").text('Message').appendTo($('#Options'));
-  $("<button/>").attr("id", "aioInfo").text('Info').appendTo($('#Options'));
-  $("<button/>").attr("id", "messageTestBtn").text('Message Test').appendTo($('#Options'));
-  $("<button/>").attr("id", "touchscreenToggle").text('Touchscreen').appendTo($('#Options'));
-  $("<button/>").attr("id", "showBgBtn").text('Show Background').appendTo($('#Options'));
-  $("<button/>").attr("id", "showEnvBtn").text('Env').appendTo($('#Options'));
-  $("<button/>").attr("id", "appListBtn").text('App List').appendTo($('#Options'));
-  //$("<button/>").attr("id", "test").text('NodeJS Test').appendTo($('#Options'));
-  //$("<button/>").attr("id", "chooseBg").text('Node Version').appendTo($('#Options'));
-  //$("<button/>").attr("id", "saveScreenshotBtn").text('Save Screenshot to SD').appendTo($('#Options')).hide();
-  //$("<button/>").attr("id", "runTweaksBtn").text('Run AIO Tweaks').appendTo($('#Options'));
-  //$("<button/>").attr("id", "backupCamBtn").text('Backup Camera').appendTo($('#Options'));
-  $("<button/>").attr("id", "displayOffBtn").text('Screen Off').appendTo($('#Options'));
-  $("<button/>").attr("id", "wifiSettings").text('WIFI Settings').appendTo($('#Options'));
-  $("<button/>").attr("id", "systemTab").text('Settings > System').appendTo($('#Options'));
-  $("<button/>").attr("id", "toggleWifiAPBtn").text('WifiAP').appendTo($('#Options'));
-  $("<button/>").attr("id", "stopFirewallBtn").text('Stop Firewall').appendTo($('#Options'));
-  $("<button/>").attr("id", "fullRestoreConfirmBtn").text('System Restore').appendTo($('#Options'));
-  $("<button/>").attr("id", "aioReboot").text('Reboot').appendTo($('#Options'));
+  $("<button/>").attr("id", "aioInfo").html('<a>Info</a>').appendTo($('#Options'));
+  $("<button/>").attr("id", "messageTestBtn").html('<a>Message Test</a>').appendTo($('#Options'));
+   $("<button/>").attr("id", "Tst").addClass("tablinks").html('<a>Touchscreen</a>').appendTo($('#Options'));
+  $("<button/>").attr("id", "showBgBtn").html('<a>Show Background</a>').appendTo($('#Options'));
+  $("<button/>").attr("id", "showEnvBtn").html('<a>Env</a>').appendTo($('#Options'));
+  $("<button/>").attr("id", "appListBtn").html('<a>App List</a>').appendTo($('#Options'));
+  $("<button/>").attr("id", "showDFHBtn").html('<a>Disk Space</a>').appendTo($('#Options'));
+  $("<button/>").attr("id", "showMeminfoBtn").html('<a>Memory Info</a>').appendTo($('#Options'));
+  $("<button/>").attr("id", "showPSBtn").html('<a>Running Processes</a>').appendTo($('#Options'));
+  $("<button/>").attr("id", "displayOffBtn").html('<a>Screen Off</a>').appendTo($('#Options'));
+  $("<button/>").attr("id", "wifiSettings").html('<a>WIFI Settings</a>').appendTo($('#Options'));
+  $("<button/>").attr("id", "systemTab").html('<a>Settings &gt; System</a>').appendTo($('#Options'));
+  $("<button/>").attr("id", "toggleWifiAPBtn").html('<a>WifiAP</a>').appendTo($('#Options'));
+  $("<button/>").attr("id", "stopFirewallBtn").html('<a>Stop Firewall</a>').appendTo($('#Options'));
+  $("<button/>").attr("id", "fullRestoreConfirmBtn").html('<a>System Restore</a>').appendTo($('#Options'));
+  $("<button/>").attr("id", "aioReboot").html('<a>Reboot</a>').appendTo($('#Options'));
   $("<div/>").attr("id", "closeAioInfo").appendTo('#AioInfoPanel');
-  $("<div/>").attr("id", "touchscreenPanel").insertAfter($('#Options'));
-  $("<div/>").attr("id", "closeTouchPanel").addClass('Touch').appendTo('#touchscreenPanel');
-  $("<button/>").attr("id", "touchscreenBtn").addClass('Touch').text('Enable Touchscreen & Menu').appendTo($('#touchscreenPanel'));
-  $("<button/>").attr("id", "touchscreenCompassBtn").addClass('Touch').text('Enable Touchscreen & Compass').appendTo($('#touchscreenPanel'));
-  $("<button/>").attr("id", "touchscreenOffBtn").addClass('Touch').text('Disable Touchscreen').appendTo($('#touchscreenPanel'));
+  $("<div/>").attr("id", "touchscreenPanel").addClass('tabcontent FadeIn').insertAfter($('#Options'));
+  $("<button/>").attr("id", "closeTouchPanel").addClass('Touch').html('<a>&times;</a>').appendTo($('#touchscreenPanel'));
+  $("<button/>").attr("id", "touchscreenBtn").addClass('Touch').html('<a>Enable Touchscreen & Menu</a>').appendTo($('#touchscreenPanel'));
+  $("<button/>").attr("id", "touchscreenCompassBtn").addClass('Touch').html('<a>Enable Touchscreen & Compass</a>').appendTo($('#touchscreenPanel'));
+  $("<button/>").attr("id", "touchscreenOffBtn").addClass('Touch').html('<a>Disable Touchscreen</a>').appendTo($('#touchscreenPanel'));
+  //$("<button/>").attr("id", "screenshotBtn").html('<a>Screenshot</a>').appendTo($('#Options'));
+  //$("<button/>").attr("id", "messageBtn").html('<a>Message</a>').appendTo($('#Options'));
+  //$("<button/>").attr("id", "test").html('<a>NodeJS Test</a>').appendTo($('#Options'));
+  //$("<button/>").attr("id", "chooseBg").html('<a>Node Version</a>').appendTo($('#Options'));
+  //$("<button/>").attr("id", "saveScreenshotBtn").html('<a>Save Screenshot to SD</a>').appendTo($('#Options')).hide();
+  //$("<button/>").attr("id", "unmountSwapBtn").html('<a>Unmount Swapfile</a>').appendTo($('#Options'));
+  //$("<button/>").attr("id", "runTweaksBtn").html('<a>VidYos</a>').appendTo($('#Options'));
+  //$("<button/>").attr("id", "backupCamBtn").html('<a>localStorage</a>').appendTo($('#Options'));
+
   //$("<br>").appendTo($('#Options'));
+  function buildAIObuttons (aioButtons) {
+    //TODO: This function will build the whole thing from a JSON object
+    //{Buttons:[{tag:'button',id:'twkOut',label:'Home',tab:'Tweaks',classes:"mainApps audioSources"},]}
+  }
+  // Tabs
+  $("#Main").click(function(){
+    AIOTabs("#MainMenu", "#Main");
+  });
+  $("#Twk").click(function(){
+    AIOTabs("#Tweaks", "#Twk");
+  });
+  $("#Opt").click(function(){
+    AIOTabs("#Options", "#Opt");
+  });
+  $("#Tst").click(function(){
+    AIOTabs("#touchscreenPanel", "#Tst");
+  });
+
   // Start from the last opened tab
-  var prevTab = JSON.parse(localStorage.getItem('aio.prevtab')) || null;
+  var prevTab = JSON.parse(localStorage.getItem("aio.prevtab")) || null;
   if(prevTab) {
     prevTab = "#" + prevTab;
     $(prevTab).click();
   } else {
-    $('#Main').click();
+    $("#Main").click();
   }
-
-  $.getScript('apps/_aiotweaks/js/mzd.js');
+  utility.loadScript("apps/_aiotweaks/js/mzd.js");
 }
 
 /*
@@ -158,42 +194,80 @@ AIOTweaksTmplt.prototype.handleControllerEvent = function(eventID)
 
   var retValue = null;
   switch(eventID) {
-
-    /*
-    * MultiController was moved to the left
-    */
     case "ccw":
-    case "left":
-      $('#Twk').click();
-      retValue = null;
-      break;
-    case "down":
-      retValue = $('#Main').click();
-      break;
-    case "up":
-      retValue = $('#AioInfoPanel').toggle();
+      if($("#AioInfoPanel").hasClass("opened")) {
+        document.getElementById("AioInformation").scrollTop -= 200;
+      } else {
+        $("button").removeClass("selectedItem");
+        (selectedItem < 0) ? selectedItem = maxButtons : selectedItem--;
+        $(currTab + " a").eq(selectedItem).parent().addClass("selectedItem");
+      }
       break;
     case "cw":
+      if($("#AioInfoPanel").hasClass("opened")) {
+        document.getElementById("AioInformation").scrollTop += 200;
+      } else {
+        $("button").removeClass("selectedItem");
+        (selectedItem > maxButtons) ? selectedItem = 0 : selectedItem++;
+        $(currTab + " a").eq(selectedItem).parent().addClass("selectedItem");
+      }
+      break;
+    case "up":
+      if($("#AioInfoPanel").hasClass("opened")) {
+        if(document.getElementById("AioInformation").scrollTop === 0) {
+          $("#closeAioInfo").click();
+        }
+        document.getElementById("AioInformation").scrollTop = 0;
+        document.getElementById("AioInformation").scrollLeft = 0;
+      } else {
+        showAioInfo(null, true);
+      }
+      retValue = "consumed";
+      break;
+    case "down":
+      if($("#AioInfoPanel").hasClass("opened")) {
+        document.getElementById("AioInformation").scrollTop += 2500;
+      } else {
+        retValue = $("#Main").click();
+      }
+      break;
+    case "left":
+      if($("#AioInfoPanel").hasClass("opened")) {
+        document.getElementById("AioInformation").scrollLeft -= 1000;
+      } else {
+        $("#Twk").click();
+      }
+      retValue = null;
+      break;
     case "right":
-      $('#Opt').click();
+      if($("#AioInfoPanel").hasClass("opened")) {
+        document.getElementById("AioInformation").scrollLeft += 500;
+      } else {
+        $("#Opt").click();
+      }
       retValue = "consumed";
       break;
     case "select":
-      retValue = framework.sendEventToMmui("common", "Global.IntentHome");
+      if($("#AioInfoPanel").hasClass("opened")) {
+        $("#closeAioInfo").click();
+      } else {
+        $(currTab + " a").eq(selectedItem).parent().click();
+      }
+      retValue = "consumed";
       break;
     case "downStart":
     case "upStart":
     case "leftStart":
     case "rightStart":
+    case "selectStart":
       retValue = "ignored"
       break;
     default:
-      $('#closeAioInfo').click();
-      retValue = 'giveFocusLeft';
+      retValue = "giveFocusLeft";
       break;
   }
-  $('#touchscreenPanel').hide();
-  $('html').removeClass('showBg');
+  $('button').blur();
+  $("html").removeClass("showBg");
   return retValue;
 };
 /*
@@ -202,8 +276,10 @@ AIOTweaksTmplt.prototype.handleControllerEvent = function(eventID)
 */
 AIOTweaksTmplt.prototype.cleanUp = function()
 {
-  $('html').removeClass('showBg');
-  $('#SbSpeedo').fadeIn();
+  $(".AIOTweaksTmplt").remove();
+  utility.removeScript("apps/_aiotweaks/js/mzd.js");
+  $("html").removeClass("showBg");
+  $("#SbSpeedo").fadeIn();
 };
 
 framework.registerTmpltLoaded("AIOTweaksTmplt");

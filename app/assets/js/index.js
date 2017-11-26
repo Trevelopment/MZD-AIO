@@ -58,10 +58,6 @@ function getBackground () {
   return `${tempDir}/background.png`
 }
 function saveMenuLock () {
-  persistantData.get('menuLock')
-  if (!persistantData.has('menuLock')) {
-    persistantData.set('menuLock', true)
-  }
   persistantData.set('menuLock', !persistantData.get('menuLock'))
   $('body, .hideNav, .w3-overlay').toggleClass('showNav')
 }
@@ -118,7 +114,7 @@ function autoHelp () {
 }
 function myStance () {
   ipc.send('reset-window-size')
-  $.featherlight('views/stance.htm',{closeSpeed:2000,variant:'myStance'})
+  $.featherlight('views/stance.htm',{closeSpeed:2000,variant:'myStance',afterClose:updateNotesCallback})
 }
 function announcement() {
   var anoncmntNum = localStorage.getItem('anoncmnt')
@@ -144,7 +140,7 @@ function showAnnouncement () {
   $.featherlight('https://aio.trevelopment.com/aio.php',{closeSpeed:1000,variant:'announcementWindow'})
 }
 function hideAnnouncement (anonNum) {
-  $('.communicationFile').remove()
+  $('.communicationFile').hide()
   $.featherlight.close()
   localStorage.setItem('anoncmnt', anonNum)
 }
@@ -166,16 +162,23 @@ function updateNotes () {
   }, 2000)
 }
 function firstTimeVisit () {
-  if (!persistantData.has('ver270')) {
+  if (!persistantData.has('updateVer') || persistantData.get('updateVer') < 271) {
     myStance()
-    persistantData.set('ver270', false)
+    persistantData.set('updateVer', 272)
+    persistantData.set('updated', false)
+    persistantData.delete('ver270')
     persistantData.delete('message-502')
     persistantData.delete('message-503')
+    persistantData.delete('new-update-first-run')
+  } else {
+    updateNotesCallback()
   }
+}
+function updateNotesCallback () {
   if (visits > 0) {
-    if(!persistantData.get('ver270')) {
+    if(!persistantData.get('updated')) {
       updateNotes()
-      persistantData.set('ver270', true)
+      persistantData.set('updated', true)
     }
   } else {
     $('body').prepend('<div id="super-overlay" style="z-index:999999;width:9999px;height:9999px;display:block;position:fixed;background:transparent;"></div>')
@@ -316,7 +319,7 @@ function getParameterByName (name, url) {
   url = url.toLowerCase() // This is just to avoid case sensitiveness
   name = name.replace(/[[\]]/g, '\\$&').toLowerCase()// This is just to avoid case sensitiveness for query parameter name
   var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
-    results = regex.exec(url)
+  results = regex.exec(url)
   if (!results) return ''// url.substr(url.lastIndexOf('/') + 1)
   if (!results[2]) return ''
   return decodeURIComponent(results[2].replace(/\+/g, ' '))
@@ -371,7 +374,7 @@ function saveAIOLogHTML () {
   a.click()
 }
 function checkForUpdate (ver) {
-  $.featherlight(`https://aio.trevelopment.com/update.php?ver=270`,{closeSpeed:100,variant:'checkForUpdate'})
+  $.featherlight(`https://aio.trevelopment.com/update.php?ver=271`,{closeSpeed:100,variant:'checkForUpdate'})
 }
 function formatDateCustom (dateFormatType) {
   var currentTime = new Date()
@@ -401,9 +404,6 @@ function formatDateCustom (dateFormatType) {
 function getAIOver () {
   return app.getVersion()
 }
-/* setInterval(function(){
-$('#IN21, #UN8').prop('disabled',true)
-},1000) */
 function showCompatibility () {
   $(`<div id="compatibilityCheck" class="w3-small w3-padding" style="width:100%;max-width:1200px;margin:auto;background:rgba(0,0,0,.8);color:#fff;">
   <header class="w3-container w3-indigo">
@@ -413,44 +413,19 @@ function showCompatibility () {
   </header>
   <div class="w3-container">
   <div class="w3-panel w3-center">
-  <H2> **AIO IS COMPATIBLE WITH ALL FW V55, V56, V58, AND V59 UP TO V59.00.502** </H2>
-  <!--H5>ALL TWEAKS HAVE BEEN TESTED ON FW VERSIONS:</H5>
-  <div class="all-compat" style="">
-  55.00.650A-NA  55.00.750B-NA  55.00.753A-NA  55.00.760A-NA  56.00.100A-ADR  56.00.230A-ADR  56.00.240B-ADR  56.00.511A-ADR  56.00.512A-ADR  56.00.513C-ADR  56.00.514A-ADR  56.00.100A-CHN  56.00.100A-EU  56.00.230A-EU  56.00.511A-EU  56.00.512A-EU  56.00.513B-EU  56.00.513C-EU  56.00.521A-NA  56.00.521A-EU  56.00.401A-JP  59.00.331A-EU  58.00.250A-NA  58.00.251A-ADR  59.00.330A-NA  59.00.441A-NA  59.00.443A-NA  59.00.443C-EU  59.00.330A-EU  59.00.330A-ADR  59.00.342A-ADR  59.00.442A-ADR  59.00.443C-ADR 59.00.446A-NA 59.00.450A-NA 59.00.447A-EU 59.00.449A-EU 59.00.326A-ADR
-  </div></div>
-  <div class="w3-border w3-border-red w3-col w3-padding">
-  Advanced Option <b>Media Order Patch & FLAC Support</b> -
-  <div class="all-compat" style="">
-  55.00.650A-NA  55.00.753A-NA  55.00.760A-NA  56.00.100A-ADR  56.00.230A-EU  56.00.240B-ADR  56.00.511A-EU  56.00.512A-EU  56.00.521A-NA  58.00.250A-NA  59.00.326A-ADR  59.00.331A-EU  56.00.513C-EU  56.00.513B-EU  56.00.513C-ADR   59.00.330A-ADR   59.00.342A-ADR   59.00.441A-NA    59.00.443C-EU-->
-  </div>
-  </div>
-  <!--div class="additional-sompat-check">These tweaks have additional compatibility checks for firmware specific files:
-  <li>No More Disclaimer</li> <li>Order of Audio Source List</li> <li>Improved List Loop</li> <li>Date To Statusbar Mod</li></div--></div>`).insertAfter($('#mzd-title'))
+  <H2> **AIO IS COMPATIBLE WITH ALL FW V55, V56, V58, AND V59 UP TO V59.00.504** </H2>
+  </div>`).insertAfter($('#mzd-title'))
 }
 $(function () {
   $('.toggleExtra.1').addClass('icon-plus-square').removeClass('icon-minus-square')
-  //$('#IN6').click(function(){$('#UN7').prop('checked',true);$('#UN8').prop('checked',true);})
-  setInterval(function () {
-    if (!$('#IN23').prop('disabled')) { $('#IN23').prop('disabled', true) }
-    if (!$('#IN21').prop('disabled')){$('#IN21').prop('disabled',true);}
-    //if (!$('#UN23').prop('disabled')) { $('#UN23').prop('disabled', true) }
-    //if (!$('#UN21').prop('disabled')){$('#UN21').prop('disabled',true);}
-  }, 2000)
   setTimeout(function () {
     $('#IN21').click(function () {
-      snackbar('THERE MAY BE ISSUES REGARDING COMPATIBILITY WITH THIS TWEAK. AFTER INSTALLING, YOUR USB PORTS MAY BECOME UNREADABLE TO THE CMU. <h3>DO NOT PREFORM THIS INSTALL UNLESS YOU KNOW HOW TO RECOVER YOUR CMU VIA SSH</h3>')
-    })
-    $('#IN21, #IN23, #IN24, #IN25').click(function () {
-      if (!$('#sshbringback').prop('checked')) { $('#sshbringback').click() }
-      if (!$('#wifi').prop('checked')) { $('#wifi').click() }
+      snackbar('THERE MAY BE ISSUES REGARDING COMPATIBILITY WITH THIS TWEAK. AFTER INSTALLING, YOUR USB PORTS MAY BECOME UNREADABLE TO THE CMU. <h3>AUTORUN-RECOVERY SCRIPT WILL BE INSTALLED IN CASE RECOVERY BY SD CARD SLOT IS NEEDED TO RECOVER USB FUNCTION</h3>')
     })
     $('#advancedOptions').click(function () {
-      snackbarstay('These Tweaks are disabled due to DMCA takedown request (Speedcam) or due to unresolved issues (Media Order Patch & FLAC Support)')
       $('.advancedOp, #twkOpsTitle').toggle()
       $('.sidePanel').toggleClass('adv')
       if ($('#IN21').prop('checked')) { $('#IN21').click() }
-      if ($('#IN23').prop('checked')) { $('#IN23').click() }
-      if ($('#UN23').prop('checked')) { $('#UN23').click() }
     })
   }, 1000)
 })
