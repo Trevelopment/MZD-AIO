@@ -45,10 +45,12 @@ _aiotweaksApp.prototype.appInit = function()
     //@formatter:on
 
     //@formatter:off
-    this._messageTable = {
-        // haven't yet been able to receive messages from MMUI
+    this._messageTable =
+    {
+      //Speed Handlers
+      "Global.AtSpeed" : this._AtSpeedMsgHandler.bind(this),
+      "Global.NoSpeed" : this._NoSpeedMsgHandler.bind(this)
     };
-    //@formatter:on
 };
 
 /**
@@ -56,6 +58,12 @@ _aiotweaksApp.prototype.appInit = function()
  * CONTEXT CALLBACKS
  * =========================
  */
+_aiotweaksApp.prototype._AtSpeedMsgHandler = function (msg){
+  log.info("AIO Tweaks App Received AtSpeedMsg" + msg);
+}
+_aiotweaksApp.prototype._NoSpeedMsgHandler = function (msg){
+  log.info("AIO Tweaks App Received NoSpeedMsg" + msg);
+}
 _aiotweaksApp.prototype._StartContextReady = function ()
 {
   framework.common.setSbDomainIcon("apps/_aiotweaks/app.png");
@@ -65,7 +73,7 @@ _aiotweaksApp.prototype._StartContextOut = function ()
 {
   var currTwks = document.getElementsByTagName("body")[0].className;
   if(currTwks.length > 0) {
-    localStorage.aiotweaks = JSON.stringify(currTwks);
+    localStorage.setItem("aio.tweaks",currTwks);
   }
 };
 /**

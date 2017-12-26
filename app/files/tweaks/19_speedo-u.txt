@@ -97,10 +97,17 @@ fi
 log_message "===                       cleanup old versions                        ==="
 rm -fr /jci/gui/addon-player
 rm -fr /jci/gui/addon-speedometer
-rm -fr /jci/gui/speedometer
 rm -fr /jci/gui/apps/_speedometer
+rm -fr /jci/gui/speedometer
 rm -f /jci/opera/opera_dir/userjs/addon-startup.js
 rm -f /jci/scripts/stage_wifi.sh.bak?
+rm -f /jci/scripts/get-vehicle-speed.sh
+rm -f /jci/scripts/stage_vehSpeed.sh
+rm -f /jci/scripts/get-vehicle-fuel.sh
+rm -f /jci/scripts/get-gps-speed.sh
+rm -f /jci/scripts/get-engine-speed.sh
+rm -f /jci/scripts/get-gear-position.sh
+rm -f /jci/scripts/get-temp.sh
 
 if [ "${TESTBKUPS}" = "1" ]
 then

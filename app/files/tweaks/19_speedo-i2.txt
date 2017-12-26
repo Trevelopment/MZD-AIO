@@ -1,7 +1,7 @@
 if [ ${TESTBKUPS} = "1" ]
 then
   cp -a /jci/gui/apps/_speedometer/js/speedometer-startup.js ${MYDIR}/bakups/test/
-  cp -a /jci/scripts/stage_wwifi.sh ${MYDIR}/bakups/test/stage_wwifi-after_speedo.sh
+  cp -a /jci/scripts/stage_wifi.sh ${MYDIR}/bakups/test/stage_wifi-after_speedo.sh
 fi
 
 log_message "=======**********    END INSTALLATION OF SPEEDOMETER    **********======="

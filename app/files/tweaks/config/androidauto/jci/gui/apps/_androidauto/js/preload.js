@@ -66,4 +66,6 @@ function AAInstallHook()
     this.hookInstalled = true;
 }
 
+framework.transitionsObj._genObj._TEMPLATE_CATEGORIES_TABLE.AndroidAutoTmplt = "Detail with UMP";
+
 AAInstallHook();

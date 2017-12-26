@@ -80,6 +80,7 @@ function VideoPlayerTmplt(uiaId, parentDiv, templateID, controlProperties)
   '<li id="videoNextBtn" class="videoTouchControls"></li>'+
 	'</ul>'+
 	'</div>'+
+	'</div>'+
   '<div id="videoInfoPanel" class="panelOptions">'+
 	'<span id="popInfoTab" class="infoBtn">Options</span>'+
 	'<span id="popOptionsTab" class="infoBtn">Info</span>'+
@@ -90,24 +91,31 @@ function VideoPlayerTmplt(uiaId, parentDiv, templateID, controlProperties)
   '<button id="optionTestError" class="panelOption btn">Test Error Message</button>'+
   '<ul><li id="optionHideUnicodeBtn" class="panelOption"><a>Hide Unicode Button</a></li>' +
   '<li id="optionStatusbarTitle" class="panelOption"><a>Title to Statusbar</a></li>'+
-  '<li id="colorThemes" class="panelOption"><a>red</a> <a>blue</a> <a>green</a> <a>pink</a></li>'+
-  '</ul></div>'+
+  '<li id="colorThemes" class="panelOption">'+
+  '<a class="darkred" style="color:red">red</a>'+
+  '<a class="darkblue" style="color:blue">blue</a>'+
+  '<a class="darkgreen" style="color:green">green</a>'+
+  '<a class="darkviolet" style="color:darkviolet">violet</a><br>'+
+  '<a class="darkorange" style="color:orange">orange</a>'+
+  '<a class="teal" style="color:teal">teal</a>'+
+  '<a class="darkslategrey" style="color:darkslategrey">slate</a>'+
+  '<a class="seashell" style="color:seashell">white</a>'+
+  '<!--a class="darkgoldenrod" style="color:darkgoldenrod">gold</a-->'+
+  '</li></ul></div>'+
 	'<div id="widgetContentState">'+
   '<div id="infoTitle">Video Player Information</div>'+
   '<ul><li>Best Video Format: 360p MP4 H264 AAC</li>'+
   '<li>Switch To Unicode Mode To Fix Character Isues</li>'+
   '<li>For Hackers:</li>'+
   '<li>https://github.com/Trevelopment/Mazda-Videoplayer</li>'+
-	'</ul></div></aside></div></div>';
-  //'<script src="apps/_videoplayer/js/videoplayer-v2.js" type="text/javascript"></script>';
-  //'<script src="addon-common/jquery.min.js" type="text/javascript"></script>';
-  if (!window.jQuery) {
+	'</ul></div></aside></div>'+
+  '<script src="addon-common/jquery.min.js" type="text/javascript"></script>'+
+  '<script src="apps/_videoplayer/js/videoplayer-v2.js" type="text/javascript"></script>';
+  /*if (!window.jQuery) {
     utility.loadScript("addon-common/jquery.min.js", {}, function(){
       $.getScript("apps/_videoplayer/js/videoplayer-v2.js");
     });
-  } else {
-    $.getScript("apps/_videoplayer/js/videoplayer-v2.js");
-  }
+  }*/
 }
 
 /*

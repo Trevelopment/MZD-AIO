@@ -1,0 +1,6 @@
+# Android Auto Headunit App w/ Disabled Car Navigation
+if [ -e ${MYDIR}/config/androidautob/data_persist/dev/bin/headunit ]
+then
+	cp -a ${MYDIR}/config/androidautob/data_persist/dev/bin/headunit /tmp/mnt/data_persist/dev/bin
+	log_message "===                     Copied Android Auto v1.08b                     ==="
+fi

@@ -1,0 +1,3 @@
+# Digital Clock Mod
+sed -i '/Remove this/d' /jci/gui/apps/_speedometer/css/StatusBarSpeedometer.css
+log_message "===                      Digital Clock Mod                            ==="

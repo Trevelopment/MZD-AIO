@@ -9,18 +9,41 @@ show_message()
   killall -q jci-dialog
 }
 
-USBDRV="resources $(ls /mnt | grep sd)"
-for USB in ${USBDRV}
-do
-  USBPATH=/tmp/mnt/${USB}
-  SWAPFILE="${USBPATH}"/swapfile
-  if [ -e "${SWAPFILE}" ]
-  then
-    show_message "SWAPFILE FOUND, MOUNTING: ${SWAPFILE}"
-    mount -o rw,remount ${USBPATH}
-    mkswap ${SWAPFILE}
-    swapon ${SWAPFILE}
-    break
-  fi
-done
-exit 0
+CMD="$1"
+shift
+
+if [ "$CMD" = "" ] || ["$CMD" = "mount" ] ; then
+  USBDRV="resources $(ls /mnt | grep sd)"
+  for USB in ${USBDRV}
+  do
+    USBPATH=/tmp/mnt/${USB}
+    SWAPFILE="${USBPATH}"/swapfile
+    if [ -e "${SWAPFILE}" ]
+    then
+      show_message "SWAPFILE FOUND, MOUNTING: ${SWAPFILE}"
+      mount -o rw,remount ${USBPATH}
+      mkswap ${SWAPFILE}
+      swapon ${SWAPFILE}
+      break
+    fi
+  done
+  exit 0
+fi
+
+if ["$CMD" = "unmount" ] ; then
+  USBDRV="resources $(ls /mnt | grep sd)"
+  for USB in ${USBDRV}
+  do
+    USBPATH=/tmp/mnt/${USB}
+    SWAPFILE="${USBPATH}"/swapfile
+    if [ -e "${SWAPFILE}" ]
+    then
+      show_message "SWAPFILE FOUND, UNMOUNTING: ${SWAPFILE}"
+      mount -o rw,remount ${USBPATH}
+      swapoff ${SWAPFILE}
+      break
+    fi
+  done
+  exit 0
+
+fi

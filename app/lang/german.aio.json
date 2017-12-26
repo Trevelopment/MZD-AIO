@@ -844,6 +844,26 @@
         "label": "km/h"
       }
     },
+    "effic": {
+      "kml": {
+        "id": 40,
+        "label": "km/L"
+      },
+      "lkm": {
+        "id": 41,
+        "label": "L/100km"
+      }
+    },
+    "temperature": {
+      "cel": {
+        "id": 42,
+        "label": "C"
+      },
+      "fer": {
+        "id": 43,
+        "label": "F"
+      }
+    },
     "sml": {
       "gps": {
         "id": 20,
@@ -870,7 +890,7 @@
     },
     "mod": {
       "id": 50,
-      "label": "Speedo Variant By: pnedkov"
+      "label": "Speedo Variant"
     },
     "modAlt": {
       "id": 51,
@@ -1030,8 +1050,8 @@
     {
       "id": 20,
       "OpName": "Statusbar Tweaks",
-      "INST": "Date_to_statusbar_mod by diginix installieren?",
-      "DEINST": "Date_to_statusbar_mod by diginix entfernen?",
+      "INST": "Date_to_statusbar_mod installieren?",
+      "DEINST": "Date_to_statusbar_mod entfernen?",
       "toolTip": "<p style=\"\" class=\"\"><b>Datum in Statusleiste</b></p><p style=\"\" class=\"\">Dauerhaft sichtbares Datum + Icons über der Uhr, auch wenn vom MZD Navi- oder Systemmeldung eingeblendet werden.</p>",
       "img": "mzd_datum_icons_all.jpg",
       "safetylvl": "safe",
@@ -1107,8 +1127,8 @@
     {
       "id": 19,
       "OpName": "Speedometer",
-      "INST": "Speedometer by Diginix installieren?",
-      "DEINST": "Speedometer by Diginix entfernen?\"",
+      "INST": "Speedometer installieren?",
+      "DEINST": "Speedometer entfernen?\"",
       "toolTip": "<h5>Speedometer mit Kompass als App im Anwendungsmenü</h5><h5><ul><li>unter dem Tacho steht km/h oder mph, je nach Einstellung<br></li> <li>Geschwindigkeitsbereich bis 240 km/h<br></li> <li>Verbrauchswerte</li> <li>Optimierte Grafikbausteine mit neuem Tachozeiger</li> <li>Kleine Tachonadel für Topspeed im analogen Teil<br></li> <li>Das Bild für die Tachoskala hat unterschiedlich lange oder helle Striche für 5, 10 und 20 km/h Sprünge</li> <li>Rechte Tabelle komplett deutsch und Farbe/Größe optimiert</li> <li>Alle Zahlen haben einen leichten Schatten um sich besser vom Hintergrund abzuheben.</li> <li>Fahrtrichtungsabhängig rotierender Kompass zentral um die aktuelle Geschwindigkeit</li> <li>Längen- und Breitengrad in rechter Tabelle</li> <li>Animiertes Overlay in der Statusbar mit GPS Speed und Fahrtrichtung welches in jedem Menü angezeigt werden kann, durch Touch auf die Uhr kann es ein-/ausgeblendet werden</li> <li>Wenn das Navi oder Rückfahrkamera gestartet wird, erscheint es automatisch</li> <li>Für den kleinen Speedo in der Statusbar muss der 'date_to_statusbar' Mod V2.2 mit installiert werden, dieser wird nun also automatisch mit ausgewählt, falls nicht schon geschehen.<br></li></ul></h5><h5></h5>",
       "img": "mzd_SpeedoCompass.gif",
       "safetylvl": "safe",

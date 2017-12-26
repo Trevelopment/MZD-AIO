@@ -36,67 +36,83 @@ function SpeedoMeterTmplt(uiaId, parentDiv, templateID, controlProperties)
     // create the div for template
     this.divElt = document.createElement('div');
     this.divElt.id = templateID;
-    this.divElt.className = "TemplateWithStatus";
+    this.divElt.className = "TemplateWithStatus SpeedoMeterTmplt";
 
     parentDiv.appendChild(this.divElt);
 
     // do whatever you want here
-    this.divElt.innerHTML = '<script language="javascript" type="text/javascript" src="/jci/gui/apps/_speedometer/js/speedometerUpdate.js"></script>'+
+    this.divElt.innerHTML = '<!-- MZD Speedometer v5.0 - Variant Mod  -->'+
 '<div id="speedometerContainer">'+
 '<div id="hideIdleBtn"></div>'+
 '<div id="table_bg">'+
 '<div id="valuetable">'+
-'<fieldset class="tripDistFieldSet">'+
-    '<legend>Trip Dist. <span>(km)</span></legend>'+
+'<fieldset id="tripDistFieldSet">'+
+    '<legend>Trip Dist. <span class="spunit">(<span class="distUnit">km</span>)</span></legend>'+
     '<div class="tripDistance">0.00</div>'+
 '</fieldset>'+
-'<fieldset class="speedTopFieldSet">'+
+'<fieldset id="speedTopFieldSet">'+
     '<legend>Top Speed</legend>'+
     '<div class="speedTopValue"><span>(0)</span>0</div>'+
 '</fieldset>'+
-'<fieldset class="speedAvgFieldSet">'+
+'<fieldset id="speedAvgFieldSet">'+
     '<legend>Avg. Speed</legend>'+
     '<div class="speedAvgValue">0</div>'+
 '</fieldset>'+
-'<fieldset class="gpsAltitudeFieldSet">'+
-    '<legend>Altitude <span>(m)</span></legend>'+
+'<fieldset id="gpsAltitudeFieldSet">'+
+    '<legend>Altitude <span class="spunit">(<span class="altUnit">m</span>)</span></legend>'+
     '<div class="gpsAltitudeValue">-</div>'+
 '</fieldset>'+
-// '<fieldset class="gpsAltitudeMinFieldSet">'+
+// '<fieldset id="gpsAltitudeMinFieldSet">'+
 //     '<legend>Altitude <span>min</span></legend>'+
 //     '<div class="gpsAltitudeMin">-</div>'+
 // '</fieldset>'+
-// '<fieldset class="gpsAltitudeMaxFieldSet">'+
+// '<fieldset id="gpsAltitudeMaxFieldSet">'+
 //     '<legend>Altitude <span>max</span></legend>'+
 //     '<div class="gpsAltitudeMax">-</div>'+
 // '</fieldset>'+
-'<fieldset class="gpsAltitudeMinMaxFieldSet">'+
+'<fieldset id="gpsAltitudeMinMaxFieldSet">'+
     '<legend><span>min/max</span></legend>'+
     '<div class="gpsAltitudeMinMax">-</div>'+
 '</fieldset>'+
-'<fieldset class="gpsLatitudeFieldSet">'+
+'<fieldset id="gpsLatitudeFieldSet">'+
     '<legend>Lat.</legend>'+
     '<div class="gpsLatitudeValue">-</div>'+
 '</fieldset>'+
-'<fieldset class="gpsLongitudeFieldSet">'+
+'<fieldset id="gpsLongitudeFieldSet">'+
     '<legend>Lon.</legend>'+
     '<div class="gpsLongitudeValue">-</div>'+
 '</fieldset>'+
-'<fieldset class="tripTimeFieldSet">'+
+'<fieldset id="tripTimeFieldSet">'+
     '<legend>Total Time</legend>'+
     '<div class="tripTimeValue">0:00</div>'+
 '</fieldset>'+
-'<fieldset class="idleTimeFieldSet">'+
+'<fieldset id="idleTimeFieldSet">'+
     '<legend>Idle Time</legend>'+
     '<div class="idleTimeValue">0:00</div>'+
 '</fieldset>'+
-'<fieldset class="engIdleTimeFieldSet">'+
+'<fieldset id="engIdleTimeFieldSet">'+
     '<legend>Engine Idle</legend>'+
     '<div class="engineIdleTimeValue">0:00</div>'+
 '</fieldset>'+
-'<fieldset class="Drv1AvlFuelEFieldSet">'+
+'<fieldset id="Drv1AvlFuelEFieldSet">'+
     '<legend>L/100 km &empty;</legend>'+
     '<div class="Drv1AvlFuelEValue"><span>(0)</span>0</div>'+
+'</fieldset>'+
+'<fieldset id="outsideTempFieldSet">'+
+    '<legend>Outside Temp.</legend>'+
+    '<div class="outsideTempValue">0</div>'+
+'</fieldset>'+
+'<fieldset id="intakeTempFieldSet">'+
+    '<legend>Intake Temp.</legend>'+
+    '<div class="intakeTempValue">0</div>'+
+'</fieldset>'+
+'<fieldset id="coolantTempFieldSet">'+
+    '<legend>Coolant Temp.</legend>'+
+    '<div class="coolantTempValue">0</div>'+
+'</fieldset>'+
+'<fieldset id="gearPositionFieldSet">'+
+    '<legend>Gear Position</legend>'+
+    '<div class="gearPositionValue">0</div>'+
 '</fieldset>'+
 '</div>'+
 '</div>'+
@@ -152,7 +168,8 @@ function SpeedoMeterTmplt(uiaId, parentDiv, templateID, controlProperties)
 	'<div class="vehicleSpeed">0</div>'+
 	'<div class="speedUnit">---</div>'+
 '</div>'+
-'<script language="javascript" type="text/javascript">setTimeout(function() {updateSpeedoApp();}, 700);</script>';
+'<!-- script language="javascript" type="text/javascript">setTimeout(function() {updateSpeedoApp();}, 700);</script -->';
+$.getScript('apps/_speedometer/js/speedometerUpdate.js', setTimeout(function() {updateSpeedoApp();}, 700));
 }
 
 /*
@@ -173,29 +190,29 @@ SpeedoMeterTmplt.prototype.handleControllerEvent = function(eventID)
     var retValue = 'giveFocusLeft';
 
     switch(eventID) {
-      case "select":
-		$('.tripTimeFieldSet').click();
+  case "select":
+		$('#speedAvgFieldSet').click();
 		retValue = "consumed";
 		break;
-      case "down":
-		$('.speedTopFieldSet').click();
+  case "down":
+		$('#speedTopFieldSet').click();
 		retValue = "consumed";
 		break;
-      case "up":
-		$('#valuetable .tripDistFieldSet').click();
+  case "up":
+		$('#engineSpeedFieldSet').click();
 		retValue = "consumed";
 		break;
-      case "left":
+  case "left":
 		$('#analog').click();
 		retValue = "consumed";
 		break;
-      case "right":
+  case "right":
  		$('#digital').click();
 		retValue = "consumed";
 		break;
     //  case "cw":
     //  case "ccw":
-      default:
+  default:
 		retValue = "ignored";
 	}
 

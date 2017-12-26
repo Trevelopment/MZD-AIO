@@ -63,9 +63,7 @@ function buildTweakFile (user) {
     message: `<div style='text-align:center;'>${langObj.popupMsgs[0].msg}<br><div id='userLogView' style='text-align:center;' ></div><br><img class='loader' src='./files/img/load-1.gif' alt='...' /></div><div id='copy-loc'>${langObj.popupMsgs[1].msg}: ${tmpdir}<span class="w3-close icon-x w3-right" onclick="$(this).parent().hide()"></span></div>`,
     closeButton: false
   })
-  persistantData.set('keepBackups', user.backups.org)
-  persistantData.set('testBackups', user.backups.test)
-  persistantData.set('skipConfirm', user.backups.skipconfirm)
+  saveInstallerOps(user)
   if (fs.existsSync(`${tmpdir}`)) {
     aioLog('Delete old _copy_to_usb folder...')
     try {
@@ -405,11 +403,27 @@ function buildTweak (user) {
     } else if (user.speedoOps.bg.id === 31) {
       addTweak('19_speedo-old_background.txt', true)
     }
+    if (user.speedoOps.sbtemp) {
+      addTweak('19_speedo-sbtemp.txt', true)
+    }
+    if (user.speedoOps.temperature.id === 43) {
+      addTweak('19_speedo-temp.txt', true)
+    }
+    if (user.speedoOps.effic.id === 41) {
+      addTweak('19_speedo-sbtemp.txt', true)
+    }
+    if (user.speedoOps.digiclock) {
+      addTweak('19_speedo-digiclock.txt', true)
+    }
     addTweak('19_speedo-i2.txt', true)
     addTweakDir('speedometer', true)
-    if (user.speedoOps.mod) {
+    if (user.speedoOps.mod || user.speedoOps.simpmod) {
       addTweak('19_speedo_variant-i.txt', true)
       addTweakDir('speedometer_mod', true)
+    }
+    if (user.speedoOps.simpmod) {
+      addTweak('19_speedo_bar.txt', true)
+      addTweakDir('speedometer_bar', true)
     }
   }
   if (user.options.indexOf(21) !== -1) {
@@ -423,7 +437,8 @@ function buildTweak (user) {
   if (user.options.indexOf(25) !== -1) {
     addTweak('25_androidauto-i.txt')
     addTweakDir('androidauto', true)
-    if(user.aaBetaVer){
+    if(user.aaBetaVer) {
+      addTweak('25_androidautob-i.txt')
       addTweakDir('androidautob', true)
     }
   }
@@ -453,6 +468,9 @@ function buildTweak (user) {
   if (user.options.indexOf(17) !== -1) {
     addTweak('17_videoplayer-i.txt')
     addTweakDir('videoplayer', true)
+    if(user.vpUnicode) {
+      addTweak('17_videoplayer-unicode.txt')
+    }
   }
   if (user.options.indexOf(27) !== -1) {
     addTweak('27_aioapp-i.txt')
@@ -559,6 +577,8 @@ function buildTweak (user) {
     if (user.swapOps.mount) {
       swapdest = '/config/swapfile/'
       addTweak('18_swapfile-i.txt')
+    } else {
+      swapdest = '/'
     }
   }
   // Finish with the end script
@@ -893,12 +913,18 @@ function usbDrives () {
       })
       appendAIOlog(`Error finding USB drives: ${error}`)
     }
+    try {
     dsklst.forEach((drive) => {
       if (!drive.system) {
         disks.push({'desc': drive.description, 'mp': `${drive.mountpoints[0].path}`})
         usbDriveLst.push({'text': `<span class='icon-usb'></span> ${drive.mountpoints[0].path} ${drive.description.replace(' USB Device', '')}`, 'value': drive.mountpoints[0].path})
       }
     })
+  } catch(e) {
+    appendAIOlog("Error: " + e)
+    disks = null
+  }
+
     introJs().hideHints()
     var usb = disks
     var lst = ''
@@ -933,12 +959,12 @@ function usbDrives () {
           if (!result) {
             unzipSwapfile(null)
           } else {
-            persistantData.set('delCopyFolder', $('#rmCpDirCheck').prop('checked'))
+            settings.set('delCopyFolder', $('#rmCpDirCheck').prop('checked'))
             copyToUSB(result)
           }
         }
       })
-      $('#rmCpDirCheck').prop('checked', persistantData.get('delCopyFolder'))
+      $('#rmCpDirCheck').prop('checked', settings.get('delCopyFolder'))
     } else if (usb.length === 1) {
       lst = `<h2><b>${langObj.popupMsgs[6].msg}: </b></h2>`
       for (var k = 0; k < usb.length; k++) {
@@ -964,12 +990,12 @@ function usbDrives () {
           if (!result) {
             unzipSwapfile(null)
           } else {
-            persistantData.set('delCopyFolder', $('#rmCpDirCheck').prop('checked'))
+            settings.set('delCopyFolder', $('#rmCpDirCheck').prop('checked'))
             copyToUSB(usb[0].mp)
           }
         }
       })
-      $('#rmCpDirCheck').prop('checked', persistantData.get('delCopyFolder'))
+      $('#rmCpDirCheck').prop('checked', settings.get('delCopyFolder'))
       return usb
     }
   })
@@ -1036,7 +1062,7 @@ function unzipSwapfile (dest) {
     }, 35000)
     setTimeout(function () {
       if (document.getElementById('swapLogView')) {
-        document.getElementById('swapLogView').innerHTML = `${langObj.popupMsgs[16].msg}:<br>${langObj.tweakOps[17].toolTip}`
+        document.getElementById('swapLogView').innerHTML = `${langObj.popupMsgs[16].msg}:<br>${langObj.tweakOps[19].toolTip}`
       }
     }, 40000)
     try {
@@ -1074,7 +1100,7 @@ var openUSB = ''
 function finishedMessage (mp) {
   // Finished message
   if (mp) {
-    if (persistantData.get('delCopyFolder')) {
+    if (settings.get('delCopyFolder')) {
       cleanCopyDir()
       cp2usb = ''
     }
@@ -1094,7 +1120,7 @@ function finishedMessage (mp) {
         className: 'finishedMessage',
         closeButton: false
       })
-      finalbox.on('shown.bs.modal',function(){
+      finalbox.on('shown.bs.modal',function() {
         $("#startOver").focus();
       })
     }, 100)
@@ -1107,6 +1133,11 @@ function postInstallTitle () {
   bootbox.hideAll()
   $('.twkfltr').hide()
   document.getElementById(`mzd-title`).innerHTML = `${viewLog}${document.getElementById('mzd-title').innerHTML}${strtOver}`
+}
+function saveInstallerOps (user) {
+  settings.set('keepBackups', user.backups.org)
+  settings.set('testBackups', user.backups.test)
+  settings.set('skipConfirm', user.backups.skipconfirm)
 }
 function cleanCopyDir () {
   rimraf(`${tmpdir}`, function () { appendAIOlog(`<li style='color:#ff3366'>Deleted '_copy_to_usb' Folder</li>`) })
@@ -1136,10 +1167,10 @@ function fullSystemRestore (user) {
   addRootFiles()
   tweaks2write.push(`${builddir}00___fullRestore.sh`)
   if(fs.existsSync(`${extradir}/color-schemes/Red/jci.zip`)) {
-    mkdirp.sync(`${tmpdir}/config/color-schemes`)
+    mkdirp.sync(`${tmpdir}/config/color-schemes/Red`)
     aioLog(`Unzipping Red color theme folder`)
     extract(`${extradir}/color-schemes/Red/jci.zip`, {dir: `${tmpdir}/config/color-schemes/Red`}, function (err) {
-      if (err) { aioLog(err, err) }
+      if (err) { aioLog(err) }
       aioLog(`Red Color Scheme Added Successfully`)
     })
   }
@@ -1216,7 +1247,7 @@ function addWifiApp (user) {
             size: "small",
             title: "Values Were Not Changed",
             message: "WiFi App Will not be installed",
-            callback: function(){
+            callback: function() {
               rimraf.sync(`${tmpdir}/00-start-wifiAP/`)
               printAIOlog()
             }

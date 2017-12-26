@@ -34,7 +34,7 @@ var egt_temp_lvl2 = 70;  // default = 75 , high-sense = 65, dangerous-zone = 75
 
 
 var engineTempC = 0;
-var engineTempGuage = 0;
+var engineTempGauge = 0;
 var IntakeAirTempC = 0;
 var vehicleSpeedLock = true;
 var showSpeed = true;
@@ -465,7 +465,7 @@ $(document).ready(function(){
 		var engineTemp = $.trim(engineTempIn);
 		engineTemp = parseInt(engineTemp);
 		engineTempC = Math.round((engineTemp - 32) * 0.556).toFixed(0); // c0nvert to degree C
-		engineTempGuage = engineTempC;
+		engineTempGauge = engineTempC;
 		
 		// **** Unit is Farenhi
 		// (F  -  32)  x  5/9 = C

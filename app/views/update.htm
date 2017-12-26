@@ -1,95 +1,80 @@
 <!DOCTYPE html>
 <style>.bootbox.update-info{margin-top: 0px;}</style>
 <p><a href="changelog.htm" data-featherlight="ajax">Full Changelog</a></p>
-
-<h3>2.7.2</h3>
-
-<h5>Android Auto v1.07</h5>
-
+<h3 id="2-7-4">2.7.4</h3>
+<h5 id="android-auto-v1-08">Android Auto v1.08</h5>
 <ul>
-<li>All Bluetooth Calling &amp; Video Focus Issues are fixed</li>
-<li>Release Audio Focus (To Radio, USB Audio, etc.) with FAV (<span class="icon-star"></span>) Button</li>
-<li>Control USB Audio with Next/Prev steering wheel buttons when it has Audio Focus</li>
-<li>Fix for GPS, Mazda Navigation and HUD features will now function correctly</li>
-<li>Black screen issues are memory related and can be avoided by minimizing the amount of memory being used by the system. This can be done by:
-<ul>
-<li>Removing Nav SD card and other connected USB devices.</li>
-<li>Speedometer and CastScreen apps use active memory, uninstalling them will improve AA performance.</li>
-<li>Reboot the system, connect your phone after reboot.</li>
-<li>Use the Swapfile for additional memory.</li>
-</ul></li>
+<li>Fixed music not resuming after phone calls</li>
+<li>More code optimizations</li>
+<li>All Audio Focus transitions are smooth</li>
+<li>Navigation Fixes
+<li>Option to disable processing car GPS in case there are still navigation issues<ul>
+<li>There may still be navigation issues with FW v56 with a Nav SD card connected <span style="font-size:.8em">(Disconnecting Nav SD card fixes the issue)</span></li></ul></li>
 </ul>
-
-<h5>VideoPlayer v3.1</h5>
-
+<h5 id="speedometer-v5-0">Speedometer v5.0</h5>
 <ul>
-<li>Fully Multicontroller Navigable</li>
-<li>Navigate "Video Options/Info" panel with Control Knob.
-<ul>
-<li>Rotate to choose</li>
-<li>Push to toggle option</li>
-<li>Tilt up/down to close options/info panel</li>
-<li>Tilt left right to choose between info and options</li>
-</ul></li>
-<li>Change Highlight Color
-<ul>
-<li>Choices: Red, Blue, Green, Pink</li>
-</ul></li>
-<li>Fixed bug: random never played the last video in the list</li>
+<li>Major performance improvements to all styles and variants. <span style="font-size:.8em">(All variants use the same data collection script)</span></li>
+<li>Every variation value is configurable and toggleable<ul>
+<li>Added option for starting temperature (&deg;C &amp; &deg;F)</li>
+<li>and fuel efficiency (km/L &amp; L/100km)</li>
 </ul>
-
-<h5>AIO Tweaks v0.4</h5>
-
-<ul>
-<li>Mount SwapFile
-<ul>
-<li>Mount an unmounted SwapFile</li>
-</ul></li>
-<li>Some shell commands with output (command shown in message when one is used)
-<ul>
-<li>Running Processes: ps</li>
-<li>Disk Space: df -h</li>
-<li>Memory Info: cat /proc/swaps &amp;&amp; cat /proc/meminfo</li>
-<li>E-mail me for requests/suggestions</li>
-</ul></li>
-<li>Select Tweaks with command knob
-<ul>
-<li>Rotate to choose</li>
-<li>Push to Select</li>
-</ul></li>
-<li>Scroll message box by rotating/tilting command knob
-<ul>
-<li>Tilt up at the top and pushing select close the message box</li>
-<li>Tilt up to reopen</li>
-<li>Works well when checking headunit.log</li>
-</ul></li>
-<li>Irrelevant options are now hidden
-<ul>
-<li>Ex: If CastScreen is not installed the CastScreen Start/Stop options will be hidden</li>
-</ul></li>
-<li>General little fixes
-<h6>There are MANY failed legitimate attempts in the AIO Tweaks App code most notable of which include "Show Backup Camera," "Take Screenshot" and global "Pause/Play Music". If you think you can get something to work that I have not, go for it!</h6></li>
+</li>
+<li><strong>Digital Bar Speedometer Mod</strong><ul>
+<li>4 values in the right column</li>
+<li>Cycle through 3 groups of 5 values on the bottom row.</li>
+<li>Including Main speed that&#39;s 20 values!</li>
+<li>Command knob &quot;select&quot; to change bottom bar values.</li>
+<li>Tilt up to toggle mph &amp; km/h</li>
+<li>Tilt right to<ul>
+<li>Toggle km/L &amp; L/100km (in km/h mode)</li>
+<li>Toggle &deg;C &amp; &deg;F (in mph mode)</li>
 </ul>
-
-<h5>Speedometer to StatusBar</h5>
-
-<ul>
-<li>Now Speedometer to StatusBar moves the 'volume meter' and 'contact loading meter' a little bit to the left so they do not overlap the numbers.</li>
+</li>
+<li>Tilt left to toggle background.</li>
+<li>Tilt down to toggle the speedometer in statusbar extra values between Heading/Altitude &amp; Temperature/Fuel Efficiency</li>
+<li>Fully Customizable - Value positions can be customized in and easy and intuitive way, Even the Main speedometer value can be changed to any value<ul>
+<li>Instructions Included in Speedometer Options. <a data-featherlight="views/speed.htm">(View Instructions)</a></li>
 </ul>
-
-<h4>Swapfile</h4>
-
-<ul>
-<li>Choose to mount on boot (on by default) or copy without mounting.
-<ul>
-<li>Mounted automatically when starting the VideoPlayer App</li>
-<li>Can be mounted manually with the AIO Tweaks App</li>
-<li><strong>Swapfile can be copied by itself onto the root of a separate USB drive containing music and/or videos and mounted during run-time as needed</strong></li>
-</ul></li>
+</li>
 </ul>
-
-<h4>App Changes</h4>
-
+</li>
+<li><strong>Speedometer in Statusbar Alternate Values</strong><ul>
+<li>Outside Temperature &amp; Current Drive Fuel Efficiency</li>
+<li>Tap the statusbar speedometer to toggle the extra values (same as tilt down when speedometer is open)</li>
+</ul>
+</li>
+<li><strong>Digital Clock Mod</strong><ul>
+<li>Use the font from the digital bar speedometer on the statusbar speedometer &amp; clock.</li>
+</ul>
+</li>
+</ul>
+<h5 id="aio-tweaks-v0-4a">AIO Tweaks v0.4a</h5>
 <ul>
-<li>Skip Confirmation choice will persist</li>
+<li>Removed superfluous/experimental code that may be causing the app to freeze for some.</li>
+</ul>
+<h5 id="video-player-v3-2">Video Player v3.2</h5>
+<ul>
+<li>Option to use Unicode Mode by default <span style="font-size:.8em">(still toggleable inside the app)</span></li>
+<li>I need a lot of color in my life so now you can choose between 8!<ul>
+<li>Red, Green, Blue, Violet, Orange, Teal, Slate, and White.</li>
+</ul>
+</li>
+<li>Merged improvements by <em>VIC_BAM85</em><ul>
+<li>Sort order now is case insensitive (only for ASCII mode Not Unicode)</li>
+<li>You start with selection on the last played video</li>
+<li>Small fixes on the FF / RW in order to make only one call</li>
+<li>Added a plugin to the cmu in order to allow fullscreen toggle (commander up while playing) so it changes while playing the video, resize and rotate (not available on the GUI yet)</li>
+<li>Delete the gstreamer registry on start in order to fix the plugin repository <span style="font-size:.8em">(Resets to the one without the codecs at car restart)</span></li>
+</ul>
+</li>
+</ul>
+<h5 id="swapfile">Swapfile</h5>
+<ul>
+<li>Fixed swap memory mounting on boot</li>
+<li>Improvements to how swapfile is mounted and order of apps initializing during boot</li>
+</ul>
+<h5 id="all-apps">All Apps</h5>
+<ul>
+<li>Now use built in framework transitions for smoother opening and closing</li>
+<li>Improvements with initialization methods &amp; startup scripts</li>
 </ul>

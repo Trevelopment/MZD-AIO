@@ -1,4 +1,4 @@
 # change to version with mph
-show_message "CHANGE SPEEDOMETER TO MPH ..."
+# show_message "CHANGE SPEEDOMETER TO MPH ..."
 sed -i 's/var isMPH = false;/var isMPH = true;/g' /jci/gui/apps/_speedometer/js/speedometer-startup.js
 log_message "===                     CHANGED SPEEDOMETER TO MPH                    ==="

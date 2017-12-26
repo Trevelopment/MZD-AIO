@@ -1,4 +1,4 @@
 # csetting speedometer variant start in analog mode
-show_message "SETTING ANALOG STARTUP MODE ..."
+# show_message "SETTING ANALOG STARTUP MODE ..."
 sed -i 's/var startAnalog = false;/var startAnalog = true;/g' /jci/gui/apps/_speedometer/js/speedometer-startup.js
 log_message "===               START MODED SPEEDOMETER IN ANALOG MODE              ==="

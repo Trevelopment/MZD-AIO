@@ -276,7 +276,7 @@ function MZDMeterTmplt(uiaId, parentDiv, templateID, controlProperties)
 '$("#EGTBorderRing").click(function(){'+
 '	showSpeed = false;'+
 '	$("#mzdMainDialBG .txtSpeed").css("font-size","30px");'+
-'	$(".txtSpeed").text(engineTempGuage+"°C");'+
+'	$(".txtSpeed").text(engineTempGauge+"°C");'+
 '	vehicleSpeedLock = false;'+
 '});'+
 '$("#infoPageBtn").click(function(){'+

@@ -23,18 +23,15 @@ if [ -e /jci/scripts/stage_wifi.sh ]
 then
 	if grep -Fq "watch /jci/scripts/mirroring.sh &" /jci/scripts/stage_wifi.sh
 	then
-		echo "exist"
-		log_message "===            Modifications already done to stage_wifi.sh            ==="
+    log_message "===           Castscreen Receiver already in stage_wifi.sh            ==="
 	else
-		if [ ! -e /jci/scripts/stage_wifi.sh.org ]
-		then
-			cp -a /jci/scripts/stage_wifi.sh /jci/scripts/stage_wifi.sh.org
-			log_message "===           Backup of stage_wifi.sh to stage_wifi.sh.org            ==="
-		fi
-		echo "### Castscreen receiver watch" >> /jci/scripts/stage_wifi.sh
-		echo "watch /jci/scripts/mirroring.sh &" >> /jci/scripts/stage_wifi.sh
-		sed -i '/Castscreen receiver watch/ i\ ' /jci/scripts/stage_wifi.sh
-		log_message "===         Modifications added to /jci/scripts/stage_wifi.sh         ==="
+		#echo "### Castscreen receiver watch" >> /jci/scripts/stage_wifi.sh
+		#echo "watch /jci/scripts/mirroring.sh &" >> /jci/scripts/stage_wifi.sh
+    sed -i '/#!/ a\#### Castscreen receiver' /jci/scripts/stage_wifi.sh
+    sleep 1
+    sed -i '/Castscreen receiver/ i\ ' /jci/scripts/stage_wifi.sh
+    sed -i '/Castscreen receiver/ a\watch /jci/scripts/mirroring.sh &' /jci/scripts/stage_wifi.sh
+    log_message "===             Castscreen Receiver added to stage_wifi.sh            ==="
 		if [ "${TESTBKUPS}" = "1" ]
 		then
 			cp /jci/scripts/stage_wifi.sh ${MYDIR}/bakups/test/stage_wifi_castscreen-after.sh

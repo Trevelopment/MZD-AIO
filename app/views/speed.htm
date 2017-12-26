@@ -1,0 +1,42 @@
+<h4 style="font-weight:bold;margin-tiop:5px;">To costomize the Bar Speedometer edit the file (from USB Drive or _copy_to_usb folder): 'config/speedometer_bar/speedometer-config.js'</h4>
+<pre><code>/** speedometer-config.js ************************************************************** *\
+|* =========================                                                             *|
+|* Speedometer Configuration - Used to configure position of Speedometer values.         *|
+|* =========================                                                             *|
+|* Main Speedometer Value: [0, 0, 0] - Large, Front, & Center.                           *|
+|* Other Values: [ 0/1:(0 For Main Column OR 1 For Bottom Rows), Row Number, Position ]  *|
+|* Main Column Positions: 4 Values (1-4 From Top to Bottom)                              *|
+|* Bottom Rows Positions: 5 Values Per Row (1-5 From Left to Right)                      *|
+|* Examples:                                                                             *|
+|* [0, 1, 4] = [Main, Column, 4th position (Bottom of the Column)]                       *|
+|* [1, 3, 1] = [Bottom, 3rd Row, First Position (Left Side)]                             *|
+|* [1, 1, 5] = [Bottom, 1st Row, Last Position (Right Side)]                             *|
+|* To Hide a Value = [1, 1, 0] (Any bottom row position 0 will hide the value)           *|
+|* Note: Only numbers inside [] brackets determine position, order in this list DOES NOT *|
+\* ************************************************************************************* */
+var spdTbl = { // Default Layout:
+&nbsp;&nbsp;vehSpeed:&nbsp;&nbsp;&nbsp;[0, 0, 0], //Vehicle Speed
+&nbsp;&nbsp;topSpeed:&nbsp;&nbsp;&nbsp;[0, 1, 1], //Top Speed
+&nbsp;&nbsp;avgSpeed:&nbsp;&nbsp;&nbsp;[0, 1, 2], //Average Speed
+&nbsp;&nbsp;gpsSpeed:&nbsp;&nbsp;&nbsp;[0, 1, 3], //GPS Speed
+&nbsp;&nbsp;engSpeed:&nbsp;&nbsp;&nbsp;[0, 1, 4], //Engine Speed
+&nbsp;&nbsp;trpTime:&nbsp;&nbsp;&nbsp;&nbsp;[1, 1, 1], //Trip Time
+&nbsp;&nbsp;trpDist:&nbsp;&nbsp;&nbsp;&nbsp;[1, 1, 2], //Trip Distance
+&nbsp;&nbsp;outTemp:&nbsp;&nbsp;&nbsp;&nbsp;[1, 1, 3], //Outside Temperature
+&nbsp;&nbsp;inTemp:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[1, 1, 4], //Intake Temperature
+&nbsp;&nbsp;coolTemp:&nbsp;&nbsp;&nbsp;[1, 1, 5], //Coolant Temperature
+&nbsp;&nbsp;gearPos:&nbsp;&nbsp;&nbsp;&nbsp;[1, 2, 1], //Gear Position
+&nbsp;&nbsp;fuelLvl:&nbsp;&nbsp;&nbsp;&nbsp;[1, 2, 2], //Fuel Gauge Level
+&nbsp;&nbsp;trpFuel:&nbsp;&nbsp;&nbsp;&nbsp;[1, 2, 3], //Trip Fuel Economy
+&nbsp;&nbsp;totFuel:&nbsp;&nbsp;&nbsp;&nbsp;[1, 2, 4], //Total Fuel Economy
+&nbsp;&nbsp;avgFuel:&nbsp;&nbsp;&nbsp;&nbsp;[1, 2, 5], //Average Fuel Economy
+&nbsp;&nbsp;gpsAlt:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[1, 3, 2], //Altitude
+&nbsp;&nbsp;gpsAltMM:&nbsp;&nbsp;&nbsp;[1, 3, 3], //Altitude Min/Max
+&nbsp;&nbsp;gpsHead:&nbsp;&nbsp;&nbsp;&nbsp;[1, 3, 1], //GPS Heading
+&nbsp;&nbsp;gpsLat:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[1, 3, 4], //GPS Latitude
+&nbsp;&nbsp;gpsLon:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[1, 3, 5], //GPS Longitude
+&nbsp;&nbsp;trpIdle:&nbsp;&nbsp;&nbsp;&nbsp;[1, 1, 0], //Idle Time
+&nbsp;&nbsp;trpEngIdle:&nbsp;[1, 1, 0], //Engine Idle Time
+&nbsp;&nbsp;engTop:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[1, 1, 0], //Engine Top Speed
+};
+</code><img style="cursor:pointer;" class="speedoRef" src="files/screenshots/barSpeedo.jpg" data-featherlight="files/screenshots/barSpeedo.jpg" /></pre>

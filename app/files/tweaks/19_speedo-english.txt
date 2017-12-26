@@ -1,4 +1,4 @@
 # change to english version
-show_message "CHANGE SPEEDOMETER TO ENGLISH..."
+# show_message "CHANGE SPEEDOMETER TO ENGLISH..."
 sed -i 's/var language = "DE";/var language = "EN";/g' /jci/gui/apps/_speedometer/js/speedometer-startup.js
 log_message "===              CHANGED SPEEDOMETER TO ENGLISH VERSION               ==="

@@ -355,6 +355,7 @@ footer [class*="icon-"] {
 }
 span.test-panel-toggle,
 .footer-donate {
+	margin-top: 5px;
 	position: fixed;
 	left: 10px;
 	z-index: 99999;
@@ -374,6 +375,7 @@ span.test-panel-toggle,
 	font-size: 21px;
 }
 footer .contact-form {
+	margin-top: 3px;
 	right: 10px;
 	position: fixed;
 }
@@ -463,6 +465,7 @@ section.options {
 	font-size: 14px;
 	letter-spacing: normal;
 	font-weight: normal;
+	line-height: normal;
 }
 .form-group, .form-actions {
 	margin: 10px;
@@ -988,6 +991,9 @@ body.w3-black {
 .modal-footer button {
 	font-size: 18px;
 }
+.bootbox.copytoUSB1 .bootbox-body {
+	width: 360px;
+}
 .copytoUSB1 .modal-footer button,
 .bootbox-confirm .modal-footer button {
 	min-width: 35%;
@@ -1294,6 +1300,7 @@ span.icon-question {
 }
 #sidePanel td {
 	padding: 3px 5px;
+	vertical-align: -webkit-baseline-middle;
 }
 div#fullSystemRestore {
 	top: 30%;
@@ -1715,10 +1722,12 @@ tr#uistyle-mainlabel.color td input[type="color"] {
 .update-info h5 {
 	font-weight: 600;
 }
+.unwifiap,
 .update-info a,
 .help-messages a,
 #sidePanel a:not(.w3-closenav) {
 	border-bottom: 1px dashed #499aff;
+	cursor: pointer;
 }
 a#update-available {
 	white-space: nowrap;
@@ -1794,23 +1803,24 @@ a.handle:active {
 .featherlight.myStance .featherlight-content {
 	max-width: 90%;
 }
-.featherlight.myStance h1.featherlight-inner {
+.featherlight.myStance .featherlight-inner h1 {
 	white-space:normal;
 	font-size: 1.6rem;
 }
-.featherlight.myStance h2.featherlight-inner {
+.featherlight.myStance .featherlight-inner h2 {
 	text-align: center;
 	font-size: 1.2rem;
 }
-.featherlight.myStance h3.featherlight-inner {
+.featherlight.myStance .featherlight-inner h3 {
 	text-align: center;
 	font-size: 1.1rem;
 }
-.featherlight.myStance h4.featherlight-inner {
+.featherlight.myStance .featherlight-inner h4 {
 	text-align: justify;
 	font-size: 1rem;
 }
 .featherlight.myStance p.featherlight-inner {
+	font-size: 20px;
 	text-align: justify;
 }
 .featherlight.myStance a {
@@ -1822,6 +1832,12 @@ a.handle:active {
 }
 .featherlight.myStance {
 	user-select:none;
+}
+.featherlight.myStance #firstTimer {
+	text-align: center;
+}
+script.featherlight-inner {
+	display: none!important;
 }
 .featherlight.autoHelpBox .featherlight-content {
 	width: 80%;
@@ -1897,6 +1913,23 @@ input#id7Recovery {
 	line-height: 40px;
 	border: none;
 }
+style.featherlight-inner{
+	display:none!important;
+}
+.speedoRef{
+	text-align:right;
+	margin-top:-500px;
+	width:40%;
+	max-width:500px;
+}
+pre.featherlight-inner code {
+	white-space: pre;
+	width: 60%;
+	display: inline-block;
+}
+.featherlight .featherlight-content{
+	max-height:100%
+}
 #sidePanel div#anonce {
 	border: 2px dashed;
 	padding: 20px;
@@ -1905,8 +1938,8 @@ input#id7Recovery {
 }
 #sidePanel td.aa-side.w3-col label,
 #sidePanel td.aa-side.w3-col input {
-    margin-top: 0;
-    padding-bottom: 10px;
+	margin-top: 0;
+	padding-bottom: 10px;
 }
 .featherlight-content .anonCloseBtn {
 	display: none;
@@ -1943,5 +1976,14 @@ label.w3-label.checkAutorun {
 }
 .w3-navbar *,
 .w3-sidenav * {
-    cursor: pointer;
+	cursor: pointer;
+}
+.w3-sidenav .AAmsg div {
+	padding: 10px;
+	font-weight: 500;
+	font-size: 14px;
+}
+.w3-sidenav .AAmsg div a {
+	display: inline;
+	padding: 0px 2px;
 }

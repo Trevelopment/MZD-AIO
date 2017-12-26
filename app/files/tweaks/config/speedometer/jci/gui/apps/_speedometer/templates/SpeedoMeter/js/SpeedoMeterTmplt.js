@@ -58,7 +58,7 @@ function SpeedoMeterTmplt(uiaId, parentDiv, templateID, controlProperties)
     '<div class="speedAvgValue">0</div>'+
 '</fieldset>'+
 '<fieldset class="gpsAltitudeFieldSet">'+
-    '<legend>Altitude <span>(m)</span></legend>'+
+    '<legend>Altitude (<span>m</span>)</legend>'+
     '<div class="gpsAltitudeValue">-</div>'+
 '</fieldset>'+
 // '<fieldset class="gpsAltitudeMinFieldSet">'+

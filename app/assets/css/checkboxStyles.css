@@ -718,3 +718,19 @@ input[type=color]::-webkit-color-swatch {
    height: 33px;
    padding: 5px;
 }
+.w3-col .speedo-check.extrCheck {
+    padding: 2px 2px 0px 4px;
+}
+#aaBetaVer {
+    top: 9px;
+}
+#custOptions19 tr.w3-col.w3-row td {
+    padding: 2px 2px 0px 0px;
+}
+tr.w3-row.w3-col td strong {
+  margin: 15px;
+  line-height: 2;
+}
+.w3-sidenav tr.w3-row.w3-col td strong {
+  margin: 8px;
+}

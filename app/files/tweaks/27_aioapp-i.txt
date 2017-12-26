@@ -1,8 +1,8 @@
 #######################################################################
 # AIO Tweaks Headunit App
-# V0.4 By: Trezdog44
+# V0.4a By: Trezdog44
 #######################################################################
-show_message "INSTALLING AIO TWEAKS APP v0.4..."
+show_message "INSTALLING AIO TWEAKS APP v0.4a..."
 log_message "=========************   INSTALL AIO TWEAKS APP   *************==========="
 
 if [ "${TESTBKUPS}" = "1" ]
@@ -46,13 +46,16 @@ sed -i '/AIO/d' /jci/scripts/stage_wifi.sh
 sed -i '/--port=9997/d' /jci/scripts/stage_wifi.sh
 sed -i '/--passenv/d' /jci/scripts/stage_wifi.sh
 
-echo -e '\n\n\n### AIO Tweaks App' >> /jci/scripts/stage_wifi.sh
-echo -e '\n/jci/gui/addon-common/websocketd --passenv $(env | grep XDG_ | sed "s/=.*$//g" | tr "\\n" ",")PATH,SHELL --port=9997 sh &' >> /jci/scripts/stage_wifi.sh
-chmod 755 /jci/scripts/stage_wifi.sh
-
+#echo -e '\n\n\n### AIO Tweaks App' >> /jci/scripts/stage_wifi.sh
+#echo -e '\n/jci/gui/addon-common/websocketd --passenv $(env | grep XDG_ | sed "s/=.*$//g" | tr "\\n" ",")PATH,SHELL --port=9997 sh &' >> /jci/scripts/stage_wifi.sh
+sed -i '/#!/ a\### AIO Tweaks App' /jci/scripts/stage_wifi.sh
+sleep 1
+sed -i '/AIO Tweaks/ i\ ' /jci/scripts/stage_wifi.sh
+sed -i '/AIO Tweaks/ a\/jci/gui/addon-common/websocketd --passenv $(env | grep XDG_ | sed "s/=.*$//g" | tr "\\n" ",")PATH,SHELL --port=9997 sh &' /jci/scripts/stage_wifi.sh
 # delete empty lines
 sed -i '/^ *$/ d' /jci/scripts/stage_wifi.sh
 sed -i '/#!/ a\ ' /jci/scripts/stage_wifi.sh
+chmod 755 /jci/scripts/stage_wifi.sh
 log_message "===           Set Websocketd for AIO in Stage_wifi.sh                 ==="
 
 
@@ -69,7 +72,7 @@ fi
 # add preload to the AA json entry if needed
 if ! grep -q "AIO-startup.js" /jci/opera/opera_dir/userjs/additionalApps.json
 then
-	sed -i 's/"label": "AIO Tweaks" }/"label": "AIO Tweaks", "preload": "AIO-startup.js" }/g' /jci/opera/opera_dir/userjs/additionalApps.json
+	sed -i 's/"label": "AIO Tweaks" \}/"label": "AIO Tweaks", "preload": "AIO-startup.js" \}/g' /jci/opera/opera_dir/userjs/additionalApps.json
 	log_message "===           Added AIO-startup.js to AIO Tweaks json entry             ==="
 fi
 

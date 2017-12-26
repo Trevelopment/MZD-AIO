@@ -843,6 +843,26 @@
         "label": "KM/H"
       }
     },
+    "effic": {
+      "kml": {
+        "id": 40,
+        "label": "km/L"
+      },
+      "lkm": {
+        "id": 41,
+        "label": "L/100km"
+      }
+    },
+    "temperature": {
+      "cel": {
+        "id": 42,
+        "label": "C"
+      },
+      "fer": {
+        "id": 43,
+        "label": "F"
+      }
+    },
     "sml": {
       "gps": {
         "id": 20,
@@ -869,7 +889,7 @@
     },
     "mod": {
       "id": 50,
-      "label": "Speedo Variant By: pnedkov"
+      "label": "Speedo Variant"
     },
     "modAlt": {
       "id": 51,

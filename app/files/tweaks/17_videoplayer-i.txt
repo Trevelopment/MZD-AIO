@@ -2,10 +2,10 @@
 # Video_Player by many many people
 # V3.1 - Mods by vic_bam85 & Trezdog44
 #######################################################################
-show_message "VIDEOPLAYER v3.1\nMODS BY VIC_BAM85 & TREZDOG44"
+show_message "VIDEOPLAYER v3.2\nMODS BY VIC_BAM85 & TREZDOG44"
 log_message "============***********   INSTALL VIDEOPLAYER   ************============="
 
-log_message "===             Begin Installation of VideoPlayer V3.1               ==="
+log_message "===             Begin Installation of VideoPlayer V3.2                ==="
 
 if [ "${TESTBKUPS}" = "1" ]
 then
@@ -56,10 +56,13 @@ fi
 count=$(grep -c '/jci/gui/addon-common/websocketd --port=9998 sh' /jci/scripts/stage_wifi.sh)
 if [ "$count" = "0" ]
 	then
-		cp /jci/scripts/stage_wifi.sh /jci/scripts/stage_wifi.sh.old
-		echo -e '\n\n\n### Video player' >> /jci/scripts/stage_wifi.sh
-		echo -e '\n/jci/gui/addon-common/websocketd --port=9998 sh &' >> /jci/scripts/stage_wifi.sh
-		chmod 755 /jci/scripts/stage_wifi.sh
+		#echo -e '\n\n\n### Video player' >> /jci/scripts/stage_wifi.sh
+		#echo -e '\n/jci/gui/addon-common/websocketd --port=9998 sh &' >> /jci/scripts/stage_wifi.sh
+    sed -i '/#!/ a\### Video player' /jci/scripts/stage_wifi.sh
+    sleep 1
+    sed -i '/Video player/ i\ ' /jci/scripts/stage_wifi.sh
+    sed -i '/Video player/ a\/jci/gui/addon-common/websocketd --port=9998 sh &' /jci/scripts/stage_wifi.sh
+    chmod 755 /jci/scripts/stage_wifi.sh
     log_message "===                      Modified Stage_wifi.sh                       ==="
 fi
 
@@ -68,6 +71,27 @@ add_app_json "_videoplayer" "Video Player"
 
 cp -a ${MYDIR}/config/videoplayer/jci/gui/apps/* /jci/gui/apps/
 chmod 755 -R /jci/gui/apps/_videoplayer/
+
+log_message "===                       Copy VideoPlayer Files                      ==="
+
+
+cp -a ${MYDIR}/config/videoplayer/usr/lib/gstreamer-0.10/* /usr/lib/gstreamer-0.10/
+chmod 755 -R /usr/lib/gstreamer-0.10/libgstautodetect.so
+log_message "===                Copy libs to usr/lib/gstreamer-0.10                ==="
+
+
+count=$(grep -c '/imx-mm/video-codec' /etc/profile)
+if [ "$count" = "0" ]
+	then
+		sed -i 's/\/imx-mm\/parser/\/imx-mm\/parser:\/usr\/lib\/imx-mm\/video-codec/g' /etc/profile
+    log_message "===                       Fix exports / codecs                        ==="
+fi
+
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/imx-mm/video-codec
+
+rm -f /tmp/root/.gstreamer-0.10/registry.arm.bin
+/usr/bin/gst-inspect
+log_message "===                     Updated gstreamer registry                    ==="
 
 # patch systemApp.js if needed for v59+ app list
 if ! grep -Fq "_videoplayer" /jci/gui/apps/system/js/systemApp.js && [ ${APP_PATCH_59} -eq 0 ]

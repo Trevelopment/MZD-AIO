@@ -50,10 +50,13 @@
  *		Complete the plugins in the cmu in order to allow more file types and fullscreen toggle
  */
 var enableLog = false;
+var vpColor = "Red";
+var vphColor = "darkred";
+var vpColorClass = "selectedItem" + vpColor;
 
 //var folderPath='/home/victor/Videos1';
 var folderPath='/tmp/mnt';
-var currentVideoTrack = null;
+var currentVideoTrack = JSON.parse(localStorage.getItem('videoplayer.currentvideo')) || null;
 var Repeat = JSON.parse(localStorage.getItem('videoplayer.repeat')) || false;
 var FullScreen =  JSON.parse(localStorage.getItem('videoplayer.fullscreen')) || false;
 var Shuffle = JSON.parse(localStorage.getItem('videoplayer.shuffle')) || false;
@@ -69,19 +72,20 @@ var CurrentVideoPlayTime = -5; //The gplay delays ~5s to start
 var TotalVideoTime = null;
 var intervalPlaytime;
 var waitingNext = false;
-var optionsPanelOpen = false;
 var selectedItem = 0;
+var defaultUnicode = false;// Change to true for Unicode Mode
+var unicodeMode = JSON.parse(localStorage.getItem('videoplayer.unicodemode')) || defaultUnicode;
 var recentlyPlayed = JSON.parse(localStorage.getItem('videoplayer.recentlyplayed')) || [];
-var unicodeMode = JSON.parse(localStorage.getItem('videoplayer.unicodemode')) || false;
 var hideUnicodeBtn = JSON.parse(localStorage.getItem('videoplayer.hideunicodebtn')) || false;
 var statusbarTitleVideo = JSON.parse(localStorage.getItem('videoplayer.statusbartitle')) || false;
 var selectedOptionItem = -1; //6 ??
-var colorcode = "255,0,0";
 
 //var logFile = "/tmp/mnt/sd_nav/video-log.txt";
 var logFile = "/jci/gui/apps/_videoplayer/videoplayer_log.txt";
 var boxChecked = 'url(apps/_videoplayer/templates/VideoPlayer/images/myVideoCheckedBox.png)';
 var boxUncheck = 'url(apps/_videoplayer/templates/VideoPlayer/images/myVideoUncheckBox.png)';
+var startFullScreen =  JSON.parse(localStorage.getItem('videoplayer.fullscreen')) || false;
+var optionsPanelOpen = false;
 
 var src = '';
 
@@ -100,53 +104,48 @@ $(document).ready(function(){
 		//var usbaudioApp = framework.getAppInstance("usbaudio");
 		//framework.sendEventToMmui(usbaudioApp.uiaId, "Global.Pause");
 		//usbaudioApp._changePlayButton("pause");
+    if (localStorage.getItem('videoplayer.colortheme')) {
+      var colorPick = JSON.parse(localStorage.getItem('videoplayer.colortheme')) || null;
+      if(utility.toType(colorPick) === "array") {
+        vpColor = colorPick[0].charAt(0).toUpperCase() + colorPick[0].slice(1);
+        vphColor = colorPick[1];
+      } else if(utility.toType(colorPick) === "string")  {
+        vpColor = colorPick.charAt(0).toUpperCase() + colorPick.slice(1);
+        vphColor = colorPick;
+      }
+      vpColorClass = "selectedItem" + vpColor;
+    }
+    if (JSON.parse(localStorage.getItem('videoplayer.background'))) {
+      $('#myVideoContainer').addClass('noBg');
+    }
 	}
 	catch(err)
 	{
 
 	}
-	setCheckBoxes('#myVideoFullScrBtn', FullScreen);
-	setCheckBoxes('#myVideoShuffleBtn', Shuffle);
-	setCheckBoxes('#myVideoRepeatBtn', Repeat);
-	setCheckBoxes('#myVideoRepeatAllBtn', RepeatAll);
-	function setCheckBoxes(opId, checkIt) {
-		var check = (checkIt) ? boxChecked : boxUncheck;
-		$(opId).css({'background-image': check});
+	if(hideUnicodeBtn) {
+		$('#myUnicodeToggle').css({"visibility":"hidden"});
 	}
-	$('#colorThemes a').click(function(e){
-		var colorPick = $(this).html();
-    getVideoColorCode(colorPick);
-		$('#colorThemes a').css('background','');
-		$(this).css('background',colorPick);
-		document.getElementById('myVideoControlDiv').className = colorPick + 'Theme';
-		localStorage.setItem('videoplayer.colortheme', JSON.stringify(colorPick));
-	});
-  function getVideoColorCode(colorPick) {
-    switch(colorPick) {
-      case "blue":
-        colorcode = "0,0,255";
-        break;
-      case "green":
-        colorcode = "0,255,0";
-        break;
-      case "pink":
-        colorcode = "255,0,255";
-        break;
-      default:
-        colorcode = "255,0,0";
-        break;
-    }
+  setCheckBoxes('#myVideoFullScrBtn', FullScreen);
+  setCheckBoxes('#myVideoShuffleBtn', Shuffle);
+  setCheckBoxes('#myVideoRepeatBtn', Repeat);
+  setCheckBoxes('#myVideoRepeatAllBtn', RepeatAll);
+  function setCheckBoxes(opId, checkIt) {
+    var check = (checkIt) ? boxChecked : boxUncheck;
+    $(opId).css({'background-image': check});
   }
-	if (JSON.parse(localStorage.getItem('videoplayer.colortheme'))) {
-    var colortheme = JSON.parse(localStorage.getItem('videoplayer.colortheme'));
-    document.getElementById('myVideoControlDiv').className = colortheme + 'Theme';
-    getVideoColorCode(colortheme);
-  }
-	if (JSON.parse(localStorage.getItem('videoplayer.background'))) {$('#myVideoContainer').addClass('noBg');}
-	if(hideUnicodeBtn){$('#myUnicodeToggle').css({"visibility":"hidden"});}
-	//	if (window.File && window.FileReader && window.FileList && window.Blob) {
-	//		$('#myVideoList').html("step 1");
-	//	}
+  $('#colorThemes a').click(function(e){
+    var colorPick = $(this).html();
+    $('#colorThemes a').removeClass(vpColorClass);
+    vpColor = colorPick.charAt(0).toUpperCase() + colorPick.slice(1);
+    vphColor = $(this).attr('class');
+    vpColorClass = "selectedItem" + vpColor;
+    $(this).css('background', vphColor);
+    var themeColors = [vpColor,vphColor];
+    localStorage.setItem('videoplayer.colortheme', JSON.stringify(themeColors));
+  });
+
+
 	if (enableLog)
 	{
 		myVideoWs('mount -o rw,remount /; hwclock --hctosys; ', false); //enable-write - Change Date
@@ -173,6 +172,8 @@ $(document).ready(function(){
 	{
 		src += 'cat /proc/swaps >> '+ logFile +'; ';
 	}
+
+	src += 'rm -f /tmp/root/.gstreamer-0.10/registry.arm.bin;'; //cleans the gstreamer registry
 
 	src += 'gst-inspect-0.10 > /dev/null 2>&1; '; // Start gstreamer before starting videos
 
@@ -386,52 +387,52 @@ $(document).ready(function(){
 		$('.memErrorMessage').delay(1500).fadeOut(1000);
 	});
 
-	/* Video information / options panel
-	==================================================================================*/
-	$('#myVideoInfo, #myVideoInfoClose').click(function(){
-	  $('#videoInfoPanel').toggleClass('showInfo');
-		optionsPanelOpen = $('#videoInfoPanel').hasClass('showInfo');
-		if(optionsPanelOpen){
-			setCheckBoxes('#optionHideUnicodeBtn', hideUnicodeBtn);
-			setCheckBoxes('#optionStatusbarTitle', statusbarTitleVideo);
-		}
-	});
+  /* Video information / options panel
+  ==================================================================================*/
+  $('#myVideoInfo, #myVideoInfoClose').click(function(){
+    $('#videoInfoPanel').toggleClass('showInfo');
+    optionsPanelOpen = $('#videoInfoPanel').hasClass('showInfo');
+    if(optionsPanelOpen){
+      $('#popInfoTab').css("background", vpColor);
+      setCheckBoxes('#optionHideUnicodeBtn', hideUnicodeBtn);
+      setCheckBoxes('#optionStatusbarTitle', statusbarTitleVideo);
+    } else {
+      SelectCurrentTrack();
+    }
+  });
+
 	$('#popInfoTab').click(function(){
 		$('#videoInfoPanel').removeClass('state');
+		$('#popInfoTab').css("background", vphColor);
+		$('#popOptionsTab').css("background", '');
 	});
 	$('#popOptionsTab').click(function(){
 		$('#videoInfoPanel').addClass('state');
+		$('#popOptionsTab').css("background", vphColor);
+		$('#popInfoTab').css("background", '');
 	});
 
 
 	setTimeout(function () {
 		//writeLog("setTimeout started");
 		myVideoListRequest();
-		/* if (recentlyPlayed.length > 0)
-		{
-			selectedItem = recentlyPlayed[recentlyPlayed.length -1];
-			selectedItem++;
-			currentVideoListContainer = Math.floor(selectedItem / 8);
-			handleCommander("ccw");
-		} */
 	}, 500);
 
 
 	//try to close the video if the videoplayer is not the current app
 	intervalVideoPlayer = setInterval(function () {
-		//writeLog("setInterval intervalVideoPlayer - " + framework.getCurrentApp());
 
 		if ((!waitingForClose) && (framework.getCurrentApp() !== '_videoplayer'))
 		{
-			clearInterval(intervalPlaytime);
+			myVideoStopRequest();
+			waitingForClose = true;
 			clearInterval(intervalVideoPlayer);
 
-			writeLog("Closing App - New App: " + framework.getCurrentApp());
-			waitingForClose = true;
-			myVideoStopRequest();
+			clearInterval(intervalPlaytime);
 
 			if (enableLog === true)
 			{
+				writeLog("Closing App - New App: " + framework.getCurrentApp());
 				myVideoWs('mount -o ro,remount /', false); //disable-write
 			}
 
@@ -480,14 +481,15 @@ function myVideoListRequest(){
 
 		writeLog("Start List Recall");
 
+		src='';
 
 		if (enableLog)
 		{
-			src = 'echo "====retrieve list start====" >> '+logFile+'; ';
+			src += 'echo "====retrieve list start====" >> '+logFile+'; ';
 		}
 
-		src = 'MNTFOLDER=\'' + folderPath + '\'; ';
-		src += 'FILES=$(ls -d -1 $MNTFOLDER/sd*/Movies/** | egrep ".avi|.mp4|.wmv|.flv"); ';
+		src += 'MNTFOLDER=\'' + folderPath + '\'; ';
+		src += 'FILES=$(ls -d -1 $MNTFOLDER/sd*/Movies/** | sort -f -t \/ -k 6 | egrep ".avi|.mp4|.wmv|.flv"); ';
 		src += 'FILES=$(echo "$FILES" | tr \'\n\' \'|\'); ';
 
 
@@ -517,16 +519,25 @@ function myVideoListResponse(data){
 
 	if(videos[0] === ""){
 		writeLog("No videos found");
-		videoList.html('No videos found<br/><br/>Tap <img src="apps/_videoplayer/templates/VideoPlayer/images/myVideoMovieBtn.png" style="margin-left:8px; margin-right:8px" /> to search again');
+		videoList.html('No videos found<br/><br/>Tap <img src="apps/_videoplayer/templates/VideoPlayer/images/myVideoMovieBtn.png" style="margin-left:8px; margin-right:8px" /> to search again<br/></br>Make sure your avi/mp4/flv/wmv files are in the "Movies" folder');
+
+		currentVideoTrack = null;
+
+    $(".playbackOption").css("background-image", function(i, val){return val.substring(0, val.indexOf(")")+1);});
+
+		selectedOptionItem = 0;
+
+    $(".playbackOption").eq(selectedOptionItem).css("background-image", function(i, val){return val + ", -o-linear-gradient(top," + vphColor + ", rgba(0,0,0,0))";});
 	}
 	else
 	{
+    //$(".playbackOption").css("background-image", function(i, val){return val.substring(0, val.indexOf(")")+1);});
 
 		writeLog("myVideoList insert data --- " + data);
 
 		videoList.append($('<ul id="ul' + totalVideoListContainer + '"></ul>')
 		.addClass("videoListContainer"));
-		videoListUl = $("#ul" + totalVideoListContainer);
+		var videoListUl = $("#ul" + totalVideoListContainer);
 
 		videos.forEach(function(item, index){
 
@@ -552,10 +563,8 @@ function myVideoListResponse(data){
 		});
 
 		totalVideos = videos.length;
-		selectedItem=1;
-		handleCommander("ccw");
-		$('#toggleBgBtn').css({'visibility' : 'visible'});
-		$('#myVideoInfo').css({'visibility' : 'visible'});
+
+		SelectCurrentTrack();// Check for USB Existance
 
 		if(totalVideoListContainer > 1)
 		{
@@ -616,17 +625,13 @@ function myUnicodeListRequest(){
 
 			//add more file type if needed
 		src += 'for VIDEO in "${USBPATH}"/*.mp4 "${USBPATH}"/*.avi "${USBPATH}"/*.flv "${USBPATH}"/*.wmv; ' +
-			'do ';
+			'do ' +
 
 			//'VIDEO=${VIDEO// /&nbsp;}; ' +
 			//'VIDEO=${VIDEO//\\\'/&#39;}; ' +
 			//'VIDEO=${VIDEO//\\"/&#34;}; ' +
-			if (enableLog)
-			{
-				src += 'echo $VIDEO >> '+ logFile +'; ';
-			}
 
-			src += 'VIDEONAME=$(echo "${VIDEO}" | cut -d\'/\' -f 6); ' +
+			'VIDEONAME=$(echo "${VIDEO}" | cut -d\'/\' -f 6); ' +
 			'VIDEOCHECK=${VIDEONAME:0:1}; ' +
 			'if [ "${VIDEOCHECK}" != "*" ]; ' +
 			'then ' +
@@ -765,6 +770,8 @@ function myVideoStartRequest(obj){
 	writeLog("Recently Played: " + recentlyPlayed);
 	$('#widgetContent').prepend($('</div>').addClass('recentPlayedItem').text(currentVideoTrack + ": " + videoToPlay));
 
+	localStorage.setItem('videoplayer.currentvideo', JSON.stringify(currentVideoTrack));
+
 	waitingNext = false;
 
 	writeLog("myVideoStartRequest - Video #" + currentVideoTrack + ": " + videoToPlay);
@@ -817,7 +824,8 @@ function myVideoStartRequest(obj){
 
 	try
 	{
-		src = 'sleep 0.3; ';
+		src = 'killall -9 gplay; ';
+		src += 'sleep 0.3; ';
 
 		writeLog('start playing');
 
@@ -829,14 +837,16 @@ function myVideoStartRequest(obj){
 		//Screen size 800w*480h
 		//Small screen player 700w*367h
 
-		src += '/usr/bin/gplay --video-sink="mfw_v4lsink';
+		src += '/usr/bin/gplay ';
+		//src += '--video-sink="mfw_v4lsink ';
 
-		if (!FullScreen)
+		/* if (!FullScreen)
 		{
 			src += ' disp-width=700 disp-height=367 axis-left=50 axis-top=64';
-		}
+		} */
 
-		src += '" --audio-sink=alsasink "' + videoToPlay + '" 2>&1 ';
+		//src += '" --audio-sink=alsasink ';
+		src += '"' + videoToPlay + '" 2>&1 ';
 
 		if (enableLog)
 		{
@@ -847,6 +857,8 @@ function myVideoStartRequest(obj){
 		writeLog(src);
 
 		CurrentVideoPlayTime = -5;
+
+		startFullScreen = FullScreen;
 
 		wsVideo = new WebSocket('ws://127.0.0.1:9998/');
 
@@ -938,6 +950,7 @@ function myVideoNextRequest(){
 		if(nextVideoObject.length !== 0)
 		{
 			wsVideo.send('x');
+			myVideoWs('killall -9 gplay', false);
 			wsVideo.close();
 			wsVideo=null;
 
@@ -963,7 +976,6 @@ function myVideoPreviousRequest(){
 
 	clearInterval(intervalPlaytime);
 
-	//var previousVideoTrack = currentVideoTrack;
 	var previousVideoTrack = recentlyPlayed.pop();
 
 	while (previousVideoTrack === currentVideoTrack)
@@ -997,12 +1009,8 @@ function myVideoPreviousRequest(){
 ==========================================================================================================*/
 function myVideoStopRequest(){
 	writeLog("myVideoStopRequest called");
-	$('.memErrorMessage').remove();
-	clearInterval(intervalPlaytime);
-	$('#myVideoName').html('');
-	$('#myVideoStatus').html('');
-	VideoPaused=false;
-	$('#myVideoPausePlayBtn').css({'background-image' : 'url(apps/_videoplayer/templates/VideoPlayer/images/myVideoPauseBtn.png)'});
+
+	framework.common.setSbName("Video Player");
 
 	if (wsVideo !== null)
 	{
@@ -1010,7 +1018,19 @@ function myVideoStopRequest(){
 		wsVideo.close();
 		wsVideo = null;
 	}
-	currentVideoTrack = null;
+
+	clearInterval(intervalPlaytime);
+
+	$('.memErrorMessage').remove();
+
+	$('#myVideoName').html('');
+	$('#myVideoStatus').html('');
+	VideoPaused=false;
+	$('#myVideoPausePlayBtn').css({'background-image' : 'url(apps/_videoplayer/templates/VideoPlayer/images/myVideoPauseBtn.png)'});
+
+	SelectCurrentTrack();
+
+	//currentVideoTrack = null;
 
 	$('#myVideoPreviousBtn').css({'display' : 'none'});
 	$('#myVideoRW').css({'display' : 'none'});
@@ -1086,9 +1106,7 @@ function myVideoFFRequest(){
 		{
 			CurrentVideoPlayTime = TotalVideoTime - 1;
 		}
-		wsVideo.send('e');
-		wsVideo.send('1');
-		wsVideo.send('t' + CurrentVideoPlayTime);
+		wsVideo.send('e 1 t' + CurrentVideoPlayTime);
 
 		waitingWS = false;
 	}
@@ -1110,9 +1128,7 @@ function myVideoRWRequest(){
 			CurrentVideoPlayTime = 0;
 		}
 
-		wsVideo.send('e');
-		wsVideo.send('1');
-		wsVideo.send('t' + CurrentVideoPlayTime);
+		wsVideo.send('e 1 t' + CurrentVideoPlayTime);
 
 		waitingWS = false;
 	}
@@ -1137,7 +1153,16 @@ function fullScreenRequest()
 		}
 
 		localStorage.setItem('videoplayer.fullscreen',  JSON.stringify(FullScreen));
+
+		if (!startFullScreen)
+		{
 		wsVideo.send('f');
+		}
+		else
+		{
+			wsVideo.send('z 50 64 700 367');
+			startFullScreen = false;
+		}
 
 		waitingWS = false;
 	}
@@ -1180,6 +1205,35 @@ function checkStatus(state)
 		showMemErrorMessage(res);
 	}
 	//$('#widgetContentState').prepend(res + "<br />");
+
+}
+
+
+/* Select Current Track
+============================================================================================= */
+function SelectCurrentTrack()
+{
+	writeLog('SelectCurrentTrack called');
+
+	$(".videoTrack").removeClass(vpColorClass);
+	if ((currentVideoTrack === null) || (currentVideoTrack > totalVideos -1))
+	{
+		currentVideoTrack = 0;
+	}
+
+	selectedItem = currentVideoTrack;
+
+	currentVideoTrack = null;
+
+	$(".videoListContainer:eq(" + currentVideoListContainer + ")").css("display", "none");
+
+	currentVideoListContainer = ((selectedItem) / 8) >> 0;
+
+	$(".videoListContainer:eq(" + currentVideoListContainer + ")").css("display", "");
+
+	$(".videoTrack").eq(selectedItem).addClass(vpColorClass);
+
+	myVideoListScrollUpDown('other');// moved from 4 lines above
 }
 
 function showMemErrorMessage(res){
@@ -1210,6 +1264,13 @@ function startPlayTimeInterval()
 		if (!VideoPaused)
 		{
 			CurrentVideoPlayTime++;
+			if (CurrentVideoPlayTime === 0)
+			{
+				if (!FullScreen)
+				{
+					wsVideo.send('z 50 64 700 367');
+				}
+			}
 
 			var state = '';
 			var hours = Math.floor(CurrentVideoPlayTime / 3600);
@@ -1259,7 +1320,7 @@ function handleCommander(eventID)
 		case "down":
 		if (optionsPanelOpen)
 		{
-      $('#myVideoInfoClose').click();
+			$('#myVideoInfoClose').click();
 		}
 		else if (currentVideoTrack === null)
 		{
@@ -1267,7 +1328,9 @@ function handleCommander(eventID)
 			{
 				$('#myVideoScrollDown').click();
 
-				$(".videoTrack").eq(selectedItem).removeClass("selectedItem");
+				$(".playbackOption").css("background-image", function(i, val){return val.substring(0, val.indexOf(")")+1);});
+				$(".videoTrack").removeClass(vpColorClass);
+
 				selectedItem += 8;
 
 				if (selectedItem >= totalVideos)
@@ -1275,13 +1338,13 @@ function handleCommander(eventID)
 					selectedItem = totalVideos - 1;
 				}
 
-				$(".videoTrack").eq(selectedItem).addClass("selectedItem");
+				$(".videoTrack").eq(selectedItem).addClass(vpColorClass);
 			}
 			else if ((currentVideoListContainer + 1) === totalVideoListContainer)
 			{
-				$(".videoTrack").eq(selectedItem).removeClass("selectedItem");
+				$(".videoTrack").removeClass(vpColorClass);
 				selectedItem = totalVideos - 1;
-				$(".videoTrack").eq(selectedItem).addClass("selectedItem");
+				$(".videoTrack").eq(selectedItem).addClass(vpColorClass);
 			}
 		}
 		else
@@ -1301,15 +1364,16 @@ function handleCommander(eventID)
 			{
 				$('#myVideoScrollUp').click();
 
-				$(".videoTrack").eq(selectedItem).removeClass("selectedItem");
+				$(".playbackOption").css("background-image", function(i, val){return val.substring(0, val.indexOf(")")+1);});
+				$(".videoTrack").removeClass(vpColorClass);
 				selectedItem -= 8;
-				$(".videoTrack").eq(selectedItem).addClass("selectedItem");
+				$(".videoTrack").eq(selectedItem).addClass(vpColorClass);
 			}
 			else if (currentVideoListContainer === 0)
 			{
-				$(".videoTrack").eq(selectedItem).removeClass("selectedItem");
+				$(".videoTrack").removeClass(vpColorClass);
 				selectedItem = 0;
-				$(".videoTrack").eq(selectedItem).addClass("selectedItem");
+				$(".videoTrack").eq(selectedItem).addClass(vpColorClass);
 			}
 		}
 		else
@@ -1319,11 +1383,12 @@ function handleCommander(eventID)
 		break;
 
 		case "ccw":
-    if (optionsPanelOpen)
+		if (optionsPanelOpen)
 		{
-      $(".panelOptions a").eq(selectedItem).removeClass("selectedItem");
-      (selectedItem < 0) ? selectedItem = 5 : selectedItem--;
-      $(".panelOptions a").eq(selectedItem).addClass("selectedItem");
+      $('#colorThemes a').css({'background':''});
+			$(".panelOptions a").removeClass(vpColorClass);
+			(selectedItem < 0) ? selectedItem = 9 : selectedItem--;
+			$(".panelOptions a").eq(selectedItem).addClass(vpColorClass);
 		}
 		else if (currentVideoTrack !== null)
 		{
@@ -1331,13 +1396,11 @@ function handleCommander(eventID)
 		}
 		else
 		{
-			$(".playbackOption").eq(selectedOptionItem).removeClass("selectedItem");
-			$(".playbackOption").eq(selectedOptionItem).css("background-image", function(i, val){
-				return val.substring(val.indexOf("url("));});
+			$(".playbackOption").css("background-image", function(i, val){return val.substring(0, val.indexOf(")")+1);});
 
 			if (selectedItem > 0)
 			{
-				$(".videoTrack").eq(selectedItem).removeClass("selectedItem");
+				$(".videoTrack").removeClass(vpColorClass);
 
 				if ((selectedItem % 8) === 0)
 				{
@@ -1345,24 +1408,27 @@ function handleCommander(eventID)
 				}
 
 				selectedItem--;
-				$(".videoTrack").eq(selectedItem).addClass("selectedItem");
+
+				$(".videoTrack").eq(selectedItem).addClass(vpColorClass);
+
 			}
 			else //if (selectedItem < 0)
 			{
-				$(".videoTrack").eq(selectedItem).removeClass("selectedItem");
+				$(".videoTrack").removeClass(vpColorClass);
 				selectedItem = totalVideos - 1;
 				myVideoListScrollUpDown('bottom');
-				$(".videoTrack").eq(selectedItem).addClass("selectedItem");
+				$(".videoTrack").eq(selectedItem).addClass(vpColorClass);
 			}
 		}
 		break;
 
 		case "cw":
-    if (optionsPanelOpen)
+		if (optionsPanelOpen)
 		{
-      $(".panelOptions a").eq(selectedItem).removeClass("selectedItem");
-      (selectedItem > 5) ? selectedItem = 0 : selectedItem++;
-      $(".panelOptions a").eq(selectedItem).addClass("selectedItem");
+      $('#colorThemes a').css({'background':''});
+			$(".panelOptions a").removeClass(vpColorClass);
+			(selectedItem > 9) ? selectedItem = 0 : selectedItem++;
+			$(".panelOptions a").eq(selectedItem).addClass(vpColorClass);
 		}
 		else if (currentVideoTrack !== null)
 		{
@@ -1370,15 +1436,13 @@ function handleCommander(eventID)
 		}
 		else
 		{
-			$(".playbackOption").eq(selectedOptionItem).removeClass("selectedItem");
-			$(".playbackOption").eq(selectedOptionItem).css("background-image", function(i, val){
-				return val.substring(val.indexOf("url("));});
+			$(".playbackOption").css("background-image", function(i, val){return val.substring(0, val.indexOf(")")+1);});
 
 			if (selectedItem < totalVideos - 1)
 			{
-				$(".videoTrack").eq(selectedItem).removeClass("selectedItem");
+				$(".videoTrack").removeClass(vpColorClass);
 				selectedItem++;
-				$(".videoTrack").eq(selectedItem).addClass("selectedItem");
+				$(".videoTrack").eq(selectedItem).addClass(vpColorClass);
 
 				if ((selectedItem > 0) && ((selectedItem % 8) === 0))
 				{
@@ -1387,10 +1451,10 @@ function handleCommander(eventID)
 			}
 			else //if (selectedItem >= totalVideos)
 			{
-				$(".videoTrack").eq(selectedItem).removeClass("selectedItem");
+				$(".videoTrack").removeClass(vpColorClass);
 				selectedItem = 0;
 				myVideoListScrollUpDown('top');
-				$(".videoTrack").eq(selectedItem).addClass("selectedItem");
+				$(".videoTrack").eq(selectedItem).addClass(vpColorClass);
 			}
 		}
 		break;
@@ -1406,11 +1470,9 @@ function handleCommander(eventID)
 		}
 		else
 		{
-			$(".videoTrack").eq(selectedItem).removeClass("selectedItem");
+			$(".videoTrack").removeClass(vpColorClass);
 
-			$(".playbackOption").eq(selectedOptionItem).removeClass("selectedItem");
-			$(".playbackOption").eq(selectedOptionItem).css("background-image", function(i, val){
-				return val.substring(val.indexOf("url("));});
+			$(".playbackOption").css("background-image", function(i, val){return val.substring(0, val.indexOf(")") + 1);});
 
 			selectedOptionItem++;
 
@@ -1419,9 +1481,7 @@ function handleCommander(eventID)
 				selectedOptionItem = 0;
 			}
 
-			$(".playbackOption").eq(selectedOptionItem).addClass("selectedItem");
-			$(".playbackOption").eq(selectedOptionItem).css("background-image", function(i, val){
-				return "-o-linear-gradient(top,rgba(" + colorcode + ",0),rgba(" + colorcode + ",1)), " + val;});
+			$(".playbackOption").eq(selectedOptionItem).css("background-image", function(i, val){return val + ", -o-linear-gradient(top," + vphColor + ", rgba(0,0,0,0))";});
 		}
 		break;
 
@@ -1432,19 +1492,19 @@ function handleCommander(eventID)
 		}
 		else if (optionsPanelOpen)
 		{
-			$('.panelOptions .selectedItem').click();
+      $(".videoTrack").removeClass(vpColorClass);
+			$('.panelOptions .' + vpColorClass).click();
 		}
 		else
 		{
-			if ($(".videoTrack").eq(selectedItem).hasClass("selectedItem"))
+			if ($(".videoTrack").eq(selectedItem).hasClass(vpColorClass))
 			{
 				myVideoStartRequest($(".videoTrack").eq(selectedItem));
 			}
 			else
 			{
 				$('.playbackOption').eq(selectedOptionItem).click();
-				$(".playbackOption").eq(selectedOptionItem).css("background-image", function(i, val){
-					return "-o-linear-gradient(top,rgba(" + colorcode + ",0),rgba(" + colorcode + ",1)), " + val;});
+				$(".playbackOption").eq(selectedOptionItem).css("background-image", function(i, val){return val + ", -o-linear-gradient(top, rgba(0,0,0,0)," + vphColor + ")";});
 			}
 		}
 		break;
@@ -1460,11 +1520,9 @@ function handleCommander(eventID)
 		}
 		else
 		{
-			$(".videoTrack").eq(selectedItem).removeClass("selectedItem");
+			$(".videoTrack").removeClass(vpColorClass);
 
-			$(".playbackOption").eq(selectedOptionItem).removeClass("selectedItem");
-			$(".playbackOption").eq(selectedOptionItem).css("background-image", function(i, val){
-				return val.substring(val.indexOf("url("));});
+			$(".playbackOption").css("background-image", function(i, val){return val.substring(0, val.indexOf(")") + 1);});
 
 			selectedOptionItem--;
 
@@ -1473,10 +1531,7 @@ function handleCommander(eventID)
 				selectedOptionItem = 7;
 			}
 
-			$(".playbackOption").eq(selectedOptionItem).addClass("selectedItem");
-			$(".playbackOption").eq(selectedOptionItem).css("background-image", function(i, val){
-				return "-o-linear-gradient(top,rgba(" + colorcode + ",0),rgba(" + colorcode + ",1)), " + val;});
-
+			$(".playbackOption").eq(selectedOptionItem).css("background-image", function(i, val){return val + ", -o-linear-gradient(top," + vphColor + ", rgba(0,0,0,0))";});
 		}
 		break;
 

@@ -2,7 +2,6 @@ function updateSpeedoApp(){
   if(enableSmallSbSpeedo){
     $('#SbSpeedo').fadeIn();
   }
-  $('.StatusBarCtrlDomainIcon').css("background-image", "url('/jci/gui/apps/_speedometer/IcnSbnSpeedometer.png')");
 
   // language specific labels
 

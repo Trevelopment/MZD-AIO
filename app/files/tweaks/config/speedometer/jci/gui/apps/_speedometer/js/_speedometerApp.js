@@ -57,7 +57,7 @@ _speedometerApp.prototype.appInit = function()
  */
 _speedometerApp.prototype._StartContextReady = function ()
 {
-    // do anything you want here
+  framework.common.setSbDomainIcon("apps/_speedometer/IcnSbnSpeedometer.png");
 };
 
 /**

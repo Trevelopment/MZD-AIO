@@ -37,7 +37,7 @@
     $scope.faqs = langObj.FAQs
     $scope.popupMsgs = langObj.popupMsgs
     $scope.colors = langObj.colors
-    $scope.rmCpDir = persistantData.get('delCopyFolder') || false
+    $scope.rmCpDir = settings.get('delCopyFolder') || false
     $scope.loc = persistantData.get('locale') || 'en-US'
     $scope.twkfltr = ''
     $scope.bgSec = 60
@@ -62,9 +62,10 @@
       advancedOps: false,
       dataDump: false,
       aaBetaVer: false,
+      vpUnicode: false,
       darkMode: settings.get('darkMode') || false,
       flipOption: settings.get('flipOption') || '',
-      transMsg: persistantData.get('transMsg') || false,
+      transMsg: settings.get('transMsg') || false,
       copydir: persistantData.get('copyFolderLocation')
     }
     $scope.user.autorun = {
@@ -88,9 +89,9 @@
       uninst: false
     }
     $scope.user.backups = {
-      org: persistantData.get('keepBackups') || false,
-      test: persistantData.get('testBackups') || false,
-      skipconfirm: persistantData.get('skipConfirm') || false
+      org: settings.get('keepBackups') || false,
+      test: settings.get('testBackups') || false,
+      skipconfirm: settings.get('skipConfirm') || false
     }
     $scope.user.boot = {
       logo1: 0,
@@ -117,9 +118,15 @@
       xph: {id: 11},
       sml: {id: 22},
       bg: {id: 30},
+      effic: {id: 40},
+      temperature: {id: 42},
+      startbar: {id:45},
       color: null,
       mod: false,
       modAlt: false,
+      simpmod: false,
+      sbtemp: false,
+      digiclock: false,
       opac: 0
     }
     $scope.user.statusbar = {

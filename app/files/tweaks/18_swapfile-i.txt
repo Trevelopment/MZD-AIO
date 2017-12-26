@@ -38,10 +38,10 @@ then
 else
 	echo '### find swap file' >> /jci/scripts/stage_wifi.sh
 	echo '	sleep 5' >> /jci/scripts/stage_wifi.sh
-	echo '	USBDRV=$(ls /mnt | grep sd)" resources"' >> /jci/scripts/stage_wifi.sh
+	echo '	USBDRV=$(ls /tmp/mnt | grep sd)" resources"' >> /jci/scripts/stage_wifi.sh
 	echo '	for USB in $USBDRV' >> /jci/scripts/stage_wifi.sh
 	echo '	do' >> /jci/scripts/stage_wifi.sh
-	echo '		USBPATH=/tmp/mnt/${USBDRV}' >> /jci/scripts/stage_wifi.sh
+	echo '		USBPATH=/tmp/mnt/${USB}' >> /jci/scripts/stage_wifi.sh
 	echo '		SWAPFILE="${USBPATH}"/swapfile' >> /jci/scripts/stage_wifi.sh
 	echo '		if [ -e "${SWAPFILE}" ]' >> /jci/scripts/stage_wifi.sh
 	echo '			then' >> /jci/scripts/stage_wifi.sh
@@ -60,11 +60,15 @@ log_message "===                   Swap File Added To USB Drive                 
 log_message "===                       Deleting Tweak Files                        ==="
 rm -fr ${MYDIR}/config
 rm -fr ${MYDIR}/config_org
+rm -fr ${MYDIR}/bakups
+rm -fr ${MYDIR}/VehDataPull
 rm -f ${MYDIR}/cmu_dataretrieval.up
 rm -f ${MYDIR}/dataRetrieval_config.txt
 rm -f ${MYDIR}/jci-autoupdate
+rm -f ${MYDIR}/MZD_LOG.md
+rm -f ${MYDIR}/AIO_info.json
+rm -f ${MYDIR}/headunit.log
 rm -f ${MYDIR}/tweaks.sh
-rm -fr ${MYDIR}/VehDataPull
 
 log_message "===========********** END INSTALLATION OF SWAP FILE **********==========="
 log_message " "

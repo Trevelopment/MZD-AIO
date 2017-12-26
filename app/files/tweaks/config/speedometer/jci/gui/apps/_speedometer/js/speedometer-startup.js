@@ -30,12 +30,25 @@ var original_background_image = false;
 // false to start in digital mode
 var startAnalog = false;
 
+// set to true for Outside Temperature & Fuel Efficiency in the statusbar
+// false for Compass & Altitude
+var sbTemp = false;
+
+// flag for bar SpeedoMeter
+// Set This to true if using the Bar Speedometer Mod
+var barSpeedometerMod = false;
+
+// set this to true for Fahrenheit false for Celsius
+var tempIsF = false;
+
 //// user config end ////
 
 // try not to make changes to the lines below
 if (!window.jQuery) {
   utility.loadScript("addon-common/jquery.min.js");
 }
+
+framework.transitionsObj._genObj._TEMPLATE_CATEGORIES_TABLE.SpeedoMeterTmplt = "Detail with UMP";
 
 function SbSpeedo(){
      $('head').prepend($('<link rel="stylesheet" type="text/css" />').attr('href', 'apps/_speedometer/css/StatusBarSpeedometer.css'));
@@ -53,14 +66,35 @@ function SbSpeedo(){
     });
 
     setInterval(function (){
-        if(framework.getCurrentApp() === 'backupparking'){
-            $('#SbSpeedo').addClass('parking');
-        } else {
-            $('#SbSpeedo').removeClass('parking');
-        }
+      if(framework.getCurrentApp() === 'backupparking'){
+        $('#SbSpeedo').addClass('parking');
+      } else {
+        $('#SbSpeedo').removeClass('parking');
+      }
     }, 1000);
+    $('#SbSpeedo').on('click',toggleSbSpeedoExtra);
+    if(sbTemp) {
+      sbTemp = !sbTemp;
+      toggleSbSpeedoExtra();
+    }
 }
-
+function toggleSbSpeedoExtra() {
+  if(sbTemp) {
+    $('#SbSpeedo .Drv1AvlFuelEValue').addClass('gpsAltitudeValue').removeClass('Drv1AvlFuelEValue');
+    $('#SbSpeedo .outsideTempValue').addClass('gpsHeading').removeClass('outsideTempValue').fadeIn();
+  } else {
+    $('#SbSpeedo .gpsHeading').addClass('outsideTempValue').removeClass('gpsHeading').fadeIn();
+    $('#SbSpeedo .gpsAltitudeValue').addClass('Drv1AvlFuelEValue').removeClass('gpsAltitudeValue');
+  }
+  sbTemp = !sbTemp;
+}
+function loadSpeedoTemplate() {
+  if(barSpeedometerMod) {
+    $.getScript('apps/_speedometer/js/speedometer-config.js', function(data){
+      $('body').prepend("<script>"+data+"</script>");
+    });
+  }
+}
 
 //addonInit();
 setTimeout(function(){
@@ -68,5 +102,6 @@ setTimeout(function(){
     if(enableSmallSbSpeedo){
       SbSpeedo();
     }
+    loadSpeedoTemplate();
   });
 }, 5000);

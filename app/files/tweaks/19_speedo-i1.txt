@@ -1,5 +1,5 @@
 # Speedometer v4.8
-show_message "DIGINIX'S SPEEDOMETER v4.8 WITH ROTATING COMPASS\nAND ADDITIONAL GPS INFOS IN STATUSBAR"
+show_message "INSTALL SPEEDOMETER v5.0 ..."
 log_message "==========**************** INSTALL SPEEDOMETER *****************========="
 
 log_message "===                 Begin Installation of Speedometer                 ==="
@@ -18,7 +18,7 @@ rm -fr /jci/gui/addon-speedometer
 rm -fr /jci/gui/speedometer
 rm -fr /jci/gui/apps/_speedometer
 
-sed -i '/Speedo-Compass-Video_Tweak/d' /jci/scripts/stage_wifi.sh
+sed -i '/Speedo-Compass-Video/d' /jci/scripts/stage_wifi.sh
 sed -i '/v3.2/d' /jci/scripts/stage_wifi.sh
 sed -i '/Removed requirement/d' /jci/scripts/stage_wifi.sh
 sed -i '/# mount /d' /jci/scripts/stage_wifi.sh
@@ -39,6 +39,7 @@ sed -i '/Log data collection/d' /jci/scripts/stage_wifi.sh
 sed -i '/get-log-data.sh/d' /jci/scripts/stage_wifi.sh
 sed -i '/addon-speedometer.sh &/d' /jci/scripts/stage_wifi.sh
 sed -i '/addon-player.sh &/d' /jci/scripts/stage_wifi.sh
+sed -i '/stage_vehSpeed.sh/d' /jci/scripts/stage_wifi.sh
 sed -i '/mount of SD card/d' /jci/scripts/stage_wifi.sh
 sed -i '/sleep 40/d' /jci/scripts/stage_wifi.sh
 sed -i '/sleep 55/d' /jci/scripts/stage_wifi.sh
@@ -56,6 +57,7 @@ sed -i '/#!/ a\ ' /jci/scripts/stage_wifi.sh
 # cp -a ${MYDIR}/config/speedometer/jci/opera/opera_dir/userjs/speedometer-startup.js/jci/opera/opera_dir/userjs/
 # Remove startup file from userjs
 rm -f /jci/opera/opera_dir/userjs/speedometer-startup.js
+rm -f /jci/opera/opera_dir/userjs/speedometer.js
 #if [ -e /jci/gui/apps/_mzdmeter/js/mzdmeter.js ]
 #then
 #  log_message "===                Mzdmeter installed copied startup file             ==="
@@ -101,18 +103,13 @@ fi
 # add commands for speedometer to stage_wifi.sh
 if [ -e /jci/scripts/stage_wifi.sh ]
 then
-  if grep -Fq "### Speedometer" /jci/scripts/stage_wifi.sh
+  if grep -Fq "speedometer.sh &" /jci/scripts/stage_wifi.sh
   then
     log_message "===  Speedometer entry already exists in /jci/scripts/stage_wifi.sh   ==="
   else
     sed -i '/#!/ a\### Speedometer' /jci/scripts/stage_wifi.sh
     sleep 1
     sed -i '/Speedometer/ i\ ' /jci/scripts/stage_wifi.sh
-  fi
-  if grep -Fq "speedometer.sh &" /jci/scripts/stage_wifi.sh
-  then
-    log_message "===  Speedometer entry already exists in /jci/scripts/stage_wifi.sh   ==="
-  else
     sed -i '/### Speedometer/ a\/jci/gui/addon-common/websocketd --port=55554 /jci/gui/apps/_speedometer/sh/speedometer.sh &' /jci/scripts/stage_wifi.sh
     log_message "===       Added speedometer entry to /jci/scripts/stage_wifi.sh       ==="
     cp /jci/scripts/stage_wifi.sh "${MYDIR}/bakups/test/stage_wifi_speedometer-after.sh"

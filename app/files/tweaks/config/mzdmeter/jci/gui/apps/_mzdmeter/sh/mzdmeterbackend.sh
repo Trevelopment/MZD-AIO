@@ -8,7 +8,7 @@ do
 done
 
 
-if [ "${action}" == "all_value" ]
+if [ "${action}"="all_value" ]
 then
     TRIPDISTANCE_TRIG=0
     BAHTPERKM=0
@@ -198,7 +198,7 @@ fi
 
 ## All Info group1 : fast speed response : loop infinite
 ## ================================================================================================
-if [ "${action}" == "gear_stwhl" ]
+if [ "${action}"="gear_stwhl" ]
 then
 	while true
 	do
@@ -212,7 +212,7 @@ fi
 
 ## All Info group1 : fast speed response : loop infinite
 ## ================================================================================================
-if [ "${action}" == "speed_rpm" ]
+if [ "${action}"="speed_rpm" ]
 then
 	while true
 	do
@@ -228,7 +228,7 @@ fi
 ## One way action : no response, no loop
 #Problem : system has no flush the data in buffer to file !!**** fix by try to do in 5 times, if not success then write to backup file to recovery data in anytime (in reboot state)
 ## ================================================================================================
-if [ "${action}" == "resetDistance" ]
+if [ "${action}"="resetDistance" ]
 then
     touch /paa/resetmile.flag
 fi
@@ -247,17 +247,17 @@ then
 	    wget -O /paa/oil_price_${timeusec}.txt -q --no-check-certificate http://www.pttplc.com/th/getoilprice.aspx/
 	    if [ $? -eq 0 ]; then
 		if [ -e /paa/oil_price_${timeusec}.txt ]; then
-		    if [ ${gasType} = "s95" ]; then // Gasoline 95
+		    if [ ${gasType} = "s95" ]; then # Gasoline 95
 		        MNYFUEL=`cat /paa/oil_price_${timeusec}.txt | grep 'Gasoline95PriceDiv' | awk '{print substr($0,index($0, "title="))}' | cut -d '"' -f2`
-		    elif [ ${gasType} = "g95" ]; then    // Gasohol 95
+		    elif [ ${gasType} = "g95" ]; then    # Gasohol 95
 		        MNYFUEL=`cat /paa/oil_price_${timeusec}.txt | grep 'Gasohol95PriceDiv' | awk '{print substr($0,index($0, "title="))}' | cut -d '"' -f2`
-		    elif [ ${gasType} = "e20" ]; then    // Gasohol E20
+		    elif [ ${gasType} = "e20" ]; then    # Gasohol E20
 		        MNYFUEL=`cat /paa/oil_price_${timeusec}.txt | grep 'GasoholE20PriceDiv' | awk '{print substr($0,index($0, "title="))}' | cut -d '"' -f2`
-		    elif [ ${gasType} = "e85" ]; then    // Gasohol E85
+		    elif [ ${gasType} = "e85" ]; then    # Gasohol E85
 		        MNYFUEL=`cat /paa/oil_price_${timeusec}.txt | grep 'GasoholE85PriceDiv' | awk '{print substr($0,index($0, "title="))}' | cut -d '"' -f2`
-		    elif [ ${gasType} = "Diesel" ]; then    // Diesel
+		    elif [ ${gasType} = "Diesel" ]; then    # Diesel
 		        MNYFUEL=`cat /paa/oil_price_${timeusec}.txt | grep 'DieselPriceDiv' | awk '{print substr($0,index($0, "title="))}' | cut -d '"' -f2`
-	            elif [ ${gasType} = "pDiesel" ]; then    // HighForce Premium Diesel
+	            elif [ ${gasType} = "pDiesel" ]; then    # HighForce Premium Diesel
 		        MNYFUEL=`cat /paa/oil_price_${timeusec}.txt | grep 'HyForcePremiumDieselDiv' | awk '{print substr($0,index($0, "title="))}' | cut -d '"' -f2`
 		    fi
 		    #DATEFUEL=`cat /paa/oil_price_${timeusec}.txt | grep 'oilpricebanner-row-datetime-format' | awk '{print substr($0,index($0, "title="))}' | cut -d '"' -f2`

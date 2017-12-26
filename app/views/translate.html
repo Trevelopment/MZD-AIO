@@ -14,7 +14,7 @@
 </div>
 <div class="main w3-container">
   <h1>MZD-AIO-TI {{trans[0].label}}</h1>
-  <p class="w3-panel w3-blue-grey w3-padding" ng-class="{'w3-hide': user.transMsg}"><span class="w3-closebtn" onclick="$(this).parent().hide();persistantData.set('transMsg',true);" ng-click="">&times;</span>{{trans[10].label}}<br>HINT: Double click to paste to a text field. (only works for single line text boxes for now)</p>
+  <p class="w3-panel w3-blue-grey w3-padding" ng-class="{'w3-hide': user.transMsg}"><span class="w3-closebtn" onclick="$(this).parent().hide();settings.set('transMsg',true);" ng-click="">&times;</span>{{trans[10].label}}<br>HINT: Double click to paste to a text field. (only works for single line text boxes for now)</p>
   <input type="text" placeholder="{{trans[12].label}}" ng-model="newLanguage" id="newFileName" class="w3-input w3-half"><label for="newFileName" class="w3-padding newfile" style="" ng-cloak> {{trans[2].label}} <span style="text-transform: lowercase;">{{newLanguage}}.aio.json</span> {{trans[3].label}})</label>
   <br>
   <button id='submit'></button>

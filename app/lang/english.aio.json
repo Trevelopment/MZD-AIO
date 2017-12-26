@@ -844,6 +844,26 @@
 				"label": "KM/H"
 			}
 		},
+		"effic": {
+			"kml": {
+				"id": 40,
+				"label": "km/L"
+			},
+			"lkm": {
+				"id": 41,
+				"label": "L/100km"
+			}
+		},
+		"temperature": {
+			"cel": {
+				"id": 42,
+				"label": "C"
+			},
+			"fer": {
+				"id": 43,
+				"label": "F"
+			}
+		},
 		"sml": {
 			"gps": {
 				"id": 20,
@@ -871,7 +891,7 @@
 		"color": ["Blue","Green","Purple","Yellow","Orange","Pink","Silver"],
 		"mod": {
 			"id": 50,
-			"label": "Speedo Variant By: pnedkov"
+			"label": "Speedo Variant"
 		},
 		"modAlt": {
 			"id": 51,
@@ -1107,9 +1127,9 @@
 		{
 			"id": 19,
 			"OpName": "Speedometer",
-			"INST": "Install speedometer by Diginix",
-			"DEINST": "Remove speedometer by Diginix",
-			"toolTip": "<h5>Speedometer With Compass in the Application Menu. </h5>  <ul><li>Below the speedometer is km/h or mph, depending on the setting</li> <li>Speed range up to 240 km/h</li> <li>Consumption values</li> <li>Optimized graphics modules with new speedometer pointer</li> <li>Small speedometer needle for top speed in the analog part</li> <li>The picture for the speedometer scale has different lengths or bright lines for 5, 10 and 20 km/h jumps</li> <li>Right table English or German and color / size optimized</li> <li>All numbers have a slight shadow around to better stand out from the background.</li> <li>On travel direction rotating compass central to the current speed</li> <li>Animated overlay in the status with GPS speed and direction of travel in each menu can be prepared by touch at the clock</li> <li>Latitude and longitude in the right table</li> <li>When the Navi or Rear Camera is started, it automatically appears</li></ul><br>For the small speedo in the status bar you have to install date_to_statusbar mod V2.2 too. Therefore it will be automatically selected, if not already done.",
+			"INST": "Install speedometer",
+			"DEINST": "Remove speedometer",
+			"toolTip": "<h5>Speedometer With Compass in the Application Menu. </h5>  <ul><li>Below the speedometer is km/h or mph, depending on the setting</li> <li>Speed range up to 240 km/h</li> <li>Consumption values</li> <li>Optimized graphics modules with new speedometer pointer</li> <li>Small speedometer needle for top speed in the analog part</li> <li>The picture for the speedometer scale has different lengths or bright lines for 5, 10 and 20 km/h jumps</li> <li>Right table English or German and color / size optimized</li> <li>All numbers have a slight shadow around to better stand out from the background.</li> <li>On travel direction rotating compass central to the current speed</li> <li>Animated overlay in the status with GPS speed and direction of travel in each menu can be prepared by touch at the clock</li> <li>Latitude and longitude in the right table</li> <li>When the Navi or Rear Camera is started, it automatically appears</li></ul><br>For the small speedo in the status bar you have to install date_to_statusbar mod too. Therefore it will be automatically selected, if not already done.",
 			"img": "mzd_SpeedoCompass.gif",
 			"safetylvl": "safe",
 			"extraOps": true,

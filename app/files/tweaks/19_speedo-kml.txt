@@ -1,0 +1,3 @@
+# cchange km/l to L/100km
+sed -i 's/var fuelEffunit_kml = false;/var fuelEffunit_kml = true;/g' /jci/gui/apps/_speedometer/js/speedometer-startup.js
+log_message "===                          km/L => L/100km                          ==="

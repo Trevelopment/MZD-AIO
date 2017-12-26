@@ -108,7 +108,7 @@ ul.w3-ul li:last-child{border-bottom:none}
 .w3-accordion-content a{padding:6px 16px;display:block}.w3-accordion-content a:hover{background-color:#ccc}
 .w3-progress-container{width:100%;height:1.5em;position:relative;background-color:#f1f1f1}
 .w3-progressbar{background-color:#757575;height:100%;position:absolute;line-height:inherit}
-.bootbox-form .checkbox input[type=checkbox],input[type=checkbox].w3-check,input[type=radio].w3-radio{width:24px;height:24px;position:relative;top:6px;visibility:visible;}
+.bootbox-form .checkbox input[type=checkbox],input[type=checkbox].w3-check,input[type=radio].w3-radio{width:24px;height:24px;position:relative;/*top:6px;*/visibility:visible;}
 input[type=checkbox].w3-check:checked+.w3-validate,input[type=radio].w3-radio:checked+.w3-validate{color:#009688}
 input[type=checkbox].w3-check:disabled+.w3-validate,input[type=radio].w3-radio:disabled+.w3-validate{color:#aaa}
 .w3-responsive{overflow-x:auto}

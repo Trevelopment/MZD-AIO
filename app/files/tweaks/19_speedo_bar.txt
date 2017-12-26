@@ -1,0 +1,15 @@
+# Speedometer v5.0
+show_message "INSTALL DIGITAL BAR SPEEDOMETER VARIANT ..."
+log_message "=========********** INSTALL DIGITAL BAR SPEEDOMETER ************========="
+
+cp -a ${MYDIR}/config/speedometer_bar/jci /
+log_message "===                 Speedometer Bar Variant Installed                 ==="
+
+cp -a ${MYDIR}/config/speedometer_bar/speedometer-config.js /jci/gui/apps/_speedometer/js
+log_message "===                  Copied Speedometer Config File                   ==="
+
+sed -i 's/var barSpeedometerMod = false;/var barSpeedometerMod = true;/g' /jci/gui/apps/_speedometer/js/speedometer-startup.js
+log_message "===       Set flag for bar speedometer in speedometer-startup.js      ==="
+
+log_message "=========************ END DIGITAL BAR SPEEDOMETER **************========="
+log_message " "

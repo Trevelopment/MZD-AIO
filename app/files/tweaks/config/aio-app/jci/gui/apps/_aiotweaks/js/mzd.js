@@ -1,14 +1,15 @@
 // *****************************
-// ** AIO Tweaks App v0.4 - mzd.js
+// ** AIO Tweaks App v0.4a - mzd.js
 // ** All the functions for Buttons in AIO Tweaks App
 // ** By Trezdog44
 // *****************************
 /* jshint -W117 */
-var wsAIO = null;
+
 var AArunning = false;
-var AIOvideo = false;
 var appListData = [];
-var aioWsVideo = null;
+//var wsAIO = null;
+//var aioWsVideo = null;
+//var AIOvideo = false;
 $(document).ready(function(){
   try
   {
@@ -25,27 +26,27 @@ $(document).ready(function(){
   // AIO info
   getAppListData();
   $('button').on('click',function(){$('button').removeClass('selectedItem');$(this).addClass('selectedItem')});
-  $("#aioInfo").on("click",function(){showAioInfo("<div class='infoMessage'><h1>AIO Tweaks App v0.4</h1>This is an experimental app by Trezdog44 made to test the capabilities, functionalities, and limitations of apps in the MZD Infotainment System.<br>This app has some useful and fun functions although it is not guaranteed that everything works.  There may be non-functioning or experimental features.</div>");});
+  $("#aioInfo").on("click",function(){showAioInfo("<div class='infoMessage'><h1>AIO Tweaks App v0.4a</h1>This is an experimental app by Trezdog44 made to test the capabilities, functionalities, and limitations of apps in the MZD Infotainment System.<br>This app has some useful and fun functions although it is not guaranteed that everything works.  There may be non-functioning or experimental features.</div>");});
   $("#aioReboot").on("click",myRebootSystem);
-  $("#mainMenuLoop").on("click",setMainMenuLoop);
-  $("#test").on("click",myTest);
+  //$("#mainMenuLoop").on("click",setMainMenuLoop);
+  //$("#test").on("click",myTest);
   $("#touchscreenBtn").on("click",enableTouchscreen);
   $("#touchscreenOffBtn").on("click",disableTouchscreen);
   $("#touchscreenCompassBtn").on("click",enableCompass);
-  $("#messageBtn").on("click",myMessage);
+  //$("#messageBtn").on("click",myMessage);
   $("#messageTestBtn").on("click",messageTest);
-  $("#screenshotBtn").on("click",takeScreenshot);
-  $("#saveScreenshotBtn").on("click",saveScreenshot);
+  //$("#screenshotBtn").on("click",takeScreenshot);
+  //$("#saveScreenshotBtn").on("click",saveScreenshot);
   $("#AAstart").on("click",startHeadunit);
   $("#AAstop").on("click",stopHeadunit);
   $("#CSstart").on("click",startCastScreen);
   $("#CSstop").on("click",stopCastScreen);
-  $("#SPstart").on("click",startSpeedometer);
-  $("#SPstop").on("click",stopSpeedometer);
-  $("#chooseBg").on("click",chooseBackground);
+  //$("#SPstart").on("click",startSpeedometer);
+  //$("#SPstop").on("click",stopSpeedometer);
+  //$("#chooseBg").on("click",chooseBackground);
   $("#systemTab").on("click",settingsSystemTab);
   $("#wifiSettings").on("click",wifiSettings);
-  $("#runTweaksBtn").on("click",playAllVideos);
+  //$("#runTweaksBtn").on("click",playAllVideos);
   $("#fullRestoreConfirmBtn").on("click",fullSystemRestoreConfirm);
   $("#headunitLogBtn").on("click",showHeadunitLog);
   $("#scrollUpBtn").on("click",scrollUp);
@@ -53,7 +54,6 @@ $(document).ready(function(){
   $("#appListBtn").on("click",showAppList);
   $("#showEnvBtn").on("click",showEnvVar);
   $("#closeAioInfo").on("click",closeAioInfo);
-  $("#backupCamBtn").on("click",showBodyClassName);
   $("#showDFHBtn").on("click",showDFH);
   $("#showPSBtn").on("click",showPS);
   $("#showMeminfoBtn").on("click",showMeminfo);
@@ -61,17 +61,22 @@ $(document).ready(function(){
   $("#stopFirewallBtn").on("click",stopFirewall);
   $("#displayOffBtn").on("click",displayOff);
   $("#mountSwapBtn").on("click",mountSwap);
-  $("#createSwapBtn").on("click",createSwap);
+  $("#unmountSwapBtn").on("click",unmountSwap);
+  $("#createSwapBtn").on("click",showVehicleType);
+  $("#backupCamBtn").on("click",showBodyClassName);
   $("#showBgBtn").on("click",function(){$("html").addClass("showBg")});
   $("#twkOut").on("click",function(){framework.sendEventToMmui("common", "Global.IntentHome")});
   $("#usba").on("click",function(){framework.sendEventToMmui("system", "SelectUSBA")});
   $("#usbb").on("click",function(){framework.sendEventToMmui("system", "SelectUSBB")});
+  //$("#BluetoothAudio").on("click",function(){framework.sendEventToMmui("common", "Global.Resume")});
+  //$("#previousTrackBtn").on("click",function(){framework.sendEventToMmui("common", "Global.PreviousHoldStop")});
+  //$("#nextTrackBtn").on("click",function(){framework.sendEventToMmui("common", "Global.NextHoldStop")});
   $("#BluetoothAudio").on("click",function(){framework.sendEventToMmui("system", "SelectBTAudio")});
   $("#previousTrackBtn").on("click",function(){framework.sendEventToMmui("Common", "Global.Previous")});
   $("#nextTrackBtn").on("click",function(){framework.sendEventToMmui("Common", "Global.Next")});
   $(".mmLayout").on("click",function(){changeLayout($(this).attr("id"));$("#MainMenuMsg").html($(this).text());});
   $(".toggleTweaks").on("click",function(){$("body").toggleClass($(this).attr("id"));$("#MainMenuMsg").html($(this).text());});
-  $("#clearTweaksBtn").on("click",function(){$("body").attr("class","");$("#MainMenuMsg").text("Main Menu Restored");localStorage.removeItem("aiotweaks");});
+  $("#clearTweaksBtn").on("click",function(){$("body").attr("class","");$("#MainMenuMsg").text("Main Menu Restored");localStorage.removeItem("aio.tweaks");});
   //$("#touchscreenToggle").on("click",toggleTSPanel);
   $("#closeTouchPanel").on("click",closeTSPanel);
   // Tab select & localStrage save on each button press
@@ -88,13 +93,18 @@ $(document).ready(function(){
     document.getElementById("mySidenav").style.width = "0";
     document.getElementById("main").style.marginLeft= "0";
   });
+  /*if (typeof(Storage) !== "undefined") {
+    console.log("localStorage Supported: " + JSON.stringify(localStorage));
+  } else {
+    console.log("localStorage Not Supported!!");
+  }*/
 });
 // *****************************
 // ** Button Functions GO!
 // *****************************
 function saveTweaks () {
   var body = document.getElementsByTagName("body")[0];
-  localStorage.aiotweaks = JSON.stringify(body.className);
+  localStorage.setItem("aio.tweaks",body.className);
   aioWs("sync && echo DONE");
 }
 function changeLayout (newlayout) {
@@ -105,12 +115,16 @@ function changeLayout (newlayout) {
   saveTweaks();
 }
 function getAppListData(){
-  $.getJSON( "../opera/opera_dir/userjs/additionalApps.json", function( data ) {
-    appListData = data;
-    hasAA();
-    hasCS();
-    hasSwap();
-  });
+  try {
+    $.getJSON( "../opera/opera_dir/userjs/additionalApps.json", function(data) {
+      appListData = data;
+      hasAA();
+      hasCS();
+      hasSwap();
+    });
+  } catch (e) {
+    showAioInfo('Error: Cannot retrieve AIO app list...  <br>' + e);
+  }
 }
 /*this.unsetMainMenuLoop = function() {
 this.offSetFocus = MainMenuCtrl.prototype._offsetFocus.toString();
@@ -206,20 +220,16 @@ function myRebootSystem(){
   showAioInfo("$ reboot");
   aioWs('reboot', 0); //reboot
 }
-function runTweaks(){
-  CSExists();
-  //aioWs('/bin/sh /jci/gui/apps/_aiotweaks/sh/poc.sh', 3); //run AIOtweaks
-}
 function fullSystemRestoreConfirm(){
-  showAioInfo('<div class="infoMessage"><div style="font-weight:bold;font-size:40px;">ARE YOU SURE?</div><br>THIS WILL REMOVE ALL AIO TWEAKS AND APPS *INCLUDING THIS ONE*<br>But it will not restore default color theme files<br><br><button class="fullRestoreBtn" onclick="fullSystemRestore()">RUN SYSTEM RESTORE</button></div>');
+  showAioInfo('<div class="infoMessage"><div style="font-weight:bold;font-size:40px;">ARE YOU SURE?</div><br>THIS WILL REMOVE ALL AIO TWEAKS AND APPS *INCLUDING THIS ONE*<br>But it will not restore default color theme files<br><br><button class="fullRestoreBtn" onclick="$(this).hide();fullSystemRestore();">RUN SYSTEM RESTORE</button></div>');
 }
 function fullSystemRestore(){
   aioWs('/bin/sh /tmp/mnt/data_persist/dev/system_restore/restore.sh', 2); // Run Full Restore Script
 }
-function backUpCam(){
+/*function backUpCam(){
   utility.setRequiredSurfaces("NATGUI_SURFACE", true);
   aioWs('/bin/sh /jci/backupcam/start_cam.sh', 2);
-}
+}*/
 function toggleWifiAP(){
   showAioInfo("$ start_wifi.sh && jci-wifiap.sh start");
   aioWs('/bin/sh /jci/scripts/start_wifi.sh; /bin/sh /jci/scripts/jci-wifiap.sh start && echo DONE  ', 5);
@@ -228,10 +238,10 @@ function stopFirewall(){
   showAioInfo("$ jci-fw.sh stop");
   aioWs('/bin/sh /jci/scripts/jci-fw.sh stop && echo "DONE" || echo "FAILBOAT" ', 1);
 }
-function myMessage(){
+/*function myMessage(){
   var msg = '/jci/gui/apps/_aiotweaks/sh/message.sh "MESSAGES DISPLAY SUCCESS!!<br>THIS IS A P.O.C. FOR DISPAYING JCI-DIALOG<br>MESSAGES USING WEBSOCKETS AND JAVASCRIPT"';
   aioWs(msg, 0);
-}
+}*/
 function hasAA(){
   var AA = false;
   $.each(appListData, function( key, val ) {
@@ -261,11 +271,24 @@ function AioFileCheck(fc) {
     //$('#createSwapBtn').off('click').on('click',deleteSwap).html('<a>Delete Swapfile</a>');
   } else if (fc.indexOf('_NOSWAP') !== -1) {
     $('#mountSwapBtn').remove();
+    $('#unmountSwapBtn').remove();
     //$('#mountSwapBtn').html('').hide();
     //$('#createSwapBtn').off('click').on('click',createSwap).html('<a>Create Swapfile</a>');
   } else {
     showAioInfo('INVALID FILE CHECK: ' + fc);
   }
+}
+function showVehicleType(){
+  var vehicleType = framework.getSharedData("syssettings","VehicleType");
+  var hud = framework.getSharedData("vehsettings", "HudInstalled");
+  var IgnitionStatus = framework.getSharedData("vehsettings", "IgnitionStatus");
+  var CANStatus = framework.getSharedData("vehsettings", "CanStatus");
+  var vehicleConfig = framework.getSharedData("syssettings","VehicleConfigData");
+  var email = framework.getSharedData('email',"emailSupported");
+  var destination = framework.getSharedData("syssettings", "DestinationCode") ;
+  var steeringWheelType = framework.getSharedData("vehsettings","SteeringWheelLoc");
+  var toolTipsEnabled = framework.getSharedData("syssettings", "ToolTips");
+  showAioInfo("Vehicle Type: " + vehicleType + "<br>HUD: " + hud + "<br>Ignition Status: " + IgnitionStatus + "<br>CAN Status: " + CANStatus + "<br>Vehicle Configuration Data: " + vehicleConfig + "<br>Email Support: " + email + "<br>Destination: " + destination + "<br>Steering Wheel Type: " + steeringWheelType + "<br>Tool Tips Enabled: " + toolTipsEnabled);
 }
 function showAppList(){
   var items = [];
@@ -304,7 +327,7 @@ function stopCastScreen(){
   showAioInfo("$ killall cs_receiver_arm");
   aioWs('killall cs_receiver_arm 2>&1', 0);
 }
-function startSpeedometer(){
+/*function startSpeedometer(){
   utility.loadScript('apps/_speedometer/js/speedometer.js');
   $('<div id="SbSpeedo"><div class="gpsAltitudeValue"></div><div class="gpsHeading"></div><div class="gpsSpeedValue">0</div><div class="speedUnit"></div></div>').appendTo('body');
   aioWs('/jci/gui/addon-common/websocketd --port=55554 /jci/gui/apps/_speedometer/sh/speedometer.sh &', 1);
@@ -313,7 +336,7 @@ function stopSpeedometer(){
   utility.removeScript('apps/_speedometer/js/speedometer.js');
   $("#SbSpeedo").remove();
   aioWs('pkill speedometer.sh', 1);
-}
+}*/
 function settingsSystemTab(){
   framework.sendEventToMmui("common", "Global.IntentSettingsTab",{payload:{settingsTab:"System"}});
 }
@@ -325,9 +348,6 @@ function wifiSettings(){
 function messageTest() {
   aioWs('/bin/sh /jci/gui/apps/_aiotweaks/sh/message.sh');
 }
-function pocTweaks() {
-  //	aioWs('/bin/sh /jci/gui/apps/_aiotweaks/sh/poc.sh "Yo What Up Dooooggggggg!!!!"');
-}
 function showVersion(){
   showAioInfo("$ show_version.sh");
   aioWs('show_version.sh', 1);
@@ -338,9 +358,7 @@ function displayOff(){
   //framework.sendEventToMmui("system", "DisplayOffGUIActivity");
 }
 function showHeadunitLog(){
-  /*showAioInfo("$ cat /tmp/mnt/data/headunit.log");
-  aioWs('cat /tmp/mnt/data/headunit.log &', 2);*/
-  showAioInfo();
+  showAioInfo("Loading /tmp/mnt/data/headunit.log ...");
   $.ajax({
      url : "/tmp/mnt/data/headunit.log",
      dataType: "text",
@@ -354,7 +372,9 @@ function showHeadunitLog(){
 }
 function showBodyClassName(){
   //showAioInfo("Body className: <br> " + document.getElementsByTagName("body")[0].className + "<br><br>localStorage.getItem(\"aiotweaks\"): <br> " + JSON.parse(localStorage.getItem("aiotweaks")));
-  showAioInfo("<div class='infoMessage'>" + JSON.stringify(localStorage) + "</div>");
+  str = JSON.stringify(localStorage);
+  str = str.replace(/,/g, '<br>');
+  showAioInfo("<div class='infoMessage'>" + str + "</div>");
 }
 function showDFH(){
   showAioInfo("$ df -h");
@@ -378,11 +398,14 @@ function scrollDown(){
 function mountSwap(){
   showAioInfo('$ swapon ${SWAPFILE}<br>');
   aioWs('sh /jci/gui/apps/_aiotweaks/sh/resource_swap.sh 2>&1 && echo DONE');
+  $("#mountSwapBtn").fadeOut(5000);
 }
+
 function unmountSwap(){
   showAioInfo('$ swapoff -a<br>');
   aioWs('swapoff -a 2>&1');
 }
+/*
 function createSwap() {
   showAioInfo('$ dd if=/dev/zero of=${SWAPFILE} size=1024k steps=1000');
   aioWs('dd if=/dev/zero of=/tmp/mnt/sda1/swapfile bs=1024 count=524288 2>&1 && echo "Swapfile Created Successfully" && echo DONE &', 3);
@@ -395,13 +418,7 @@ function deleteSwap() {
   //aioWs('sh /jci/gui/apps/_aiotweaks/sh/deleteSwap.sh');
   hasSwap(false);
 }
-function playAllVideos(){
-  showAioInfo("$ gplay");
-  //var src = 'gst-launch filesrc location=$(ls -d -1 /tmp/mnt/sd*/Movies/** | egrep ".avi|.mp4|.wmv|.flv" | tr "\n" ",") typefind=true ! aiurdemux name=demux demux. ! queue max-size-buffers=0 max-size-time=0 ! vpudec ! mfw_v4lsink demux. ! queue max-size-buffers=0 max-size-time=0 ! beepdec ! audioconvert ! "audio/x-raw-int, channels=2" ! alsasink'
-  //var src = 'gplay --video-sink=mfw_v4lsink --audio-sink=alsasink $(ls -d -1 /tmp/mnt/sd*/Movies/** | egrep ".avi|.mp4|.wmv|.flv" | tr "\n" ",") 2>&1 && echo DONE';
-  var src = 'sync; for n in 0 1 2 3; do echo $n > /proc/sys/vm/drop_caches; done; gplay --video-sink=mfw_v4lsink --audio-sink=alsasink $(ls -d -1 /tmp/mnt/sd*/Movies/** | egrep ".avi|.mp4|.wmv|.flv" | tr "\n" ";")  2>&1 && echo DONE';
-  aioWs(src,4);
-}
+*/
 /* ******************
 function globalPause(){ // only works with CASDK
 framework.sendEventToMmui("system", "SelectUSBB");

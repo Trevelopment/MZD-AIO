@@ -1,5 +1,5 @@
 # show the vehicle speed instead of the gps speed in the small speedometer
-show_message "CHANGE TO VEHICLE SPEED IN SMALL SPEEDO ..."
+# show_message "CHANGE TO VEHICLE SPEED IN SMALL SPEEDO ..."
 sed -i 's/<div class="gpsSpeedValue">0<\/div>/<div class="vehicleSpeed">0<\/div>/g' /jci/gui/apps/_speedometer/js/speedometer-startup.js
 sed -i 's/.gpsSpeedValue/.vehicleSpeed/g' /jci/gui/apps/_speedometer/css/StatusBarSpeedometer.css
 log_message "===              CHANGE TO VEHICLE SPEED IN SMALL SPEEDO              ==="

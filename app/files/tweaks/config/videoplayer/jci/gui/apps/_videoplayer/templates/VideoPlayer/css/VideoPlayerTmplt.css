@@ -3,6 +3,7 @@
   width:100%;
   position:relative;
   background-image: url('../images/player_background.jpg');
+  text-shadow: 2px 2px .8px #000;
 }
 #myVideoContainer.noBg {
   background-image:none;
@@ -82,7 +83,7 @@
   padding-bottom: 22px;
 }
 #myVideoControlDiv ul li:active {
-  background: -o-linear-gradient(bottom,rgba(0,0,0,0),rgba(0,0,0,1));  /*Opera 11.1-12*/
+  background: linear-gradient(bottom,rgba(0,0,0,0),rgba(0,0,0,1));
   background-repeat: no-repeat !important;
   background-position: 0 3px;
 }
@@ -95,7 +96,7 @@
 #myVideoList {
   top:66px;
   right:100px;
-  bottom:61px;
+  bottom:50px;
   left:20px;
   position:absolute;
   font-size: 24px;
@@ -119,8 +120,8 @@
   text-overflow: ellipsis;
 }
 #myVideoList ul li:focus,  #myVideoList ul li:active {
-  background: -o-linear-gradient(top,rgba(255,0,0,0),rgba(255,0,0,1));  /*Opera 11.1-12*/
-  background: -webkit-linear-gradient(top,rgba(0,0,0,255), rgba(0,0,255,1));  /*Standard*/
+  background: linear-gradient(top,rgba(0,139,139,0),rgba(0,139,139,1));
+  background: -webkit-linear-gradient(top,rgba(0,0,0,255), rgba(0,0,139,1));
 }
 #myVideoScroll {
   top:40px;
@@ -223,27 +224,69 @@
   background-color: transparent;
   background-image: none;
 }
-.selectedItem, .playbackOption.selectedItem {
-  background: -o-linear-gradient(top,rgba(255,0,0,0),rgba(255,0,0,1));
-  background: -webkit-linear-gradient(top,rgba(255,0,0,0),rgba(255,0,0,1));
-}
-.blueTheme~#videoInfoPanel .selectedItem, .blueTheme~#myVideoList .selectedItem {
-  background: -o-linear-gradient(top,rgba(0,0,255,0),rgba(0,0,255,1));
-  background: -webkit-linear-gradient(top,rgba(0,0,255,0),rgba(0,0,255,1));
-}
-.greenTheme~#videoInfoPanel .selectedItem, .greenTheme~#myVideoList .selectedItem {
-  background: -o-linear-gradient(top,rgba(0,255,0,0),rgba(0,255,0,1));
-  background: -webkit-linear-gradient(top,rgba(0,255,0,0),rgba(0,255,0,1));
-}
-.pinkTheme~#videoInfoPanel .selectedItem, .pinkTheme~#myVideoList .selectedItem {
-  background: -o-linear-gradient(top,rgba(255,0,255,0),rgba(255,0,255,1));
-  background: -webkit-linear-gradient(top,rgba(255,0,255,0),rgba(255,0,255,1));
-}
 #videoInfoPanel ul li#colorThemes a {
   width: 25%;
   float: left;
   text-align: center;
   padding-bottom: 20px;
+}
+.selectedItemRed {
+  background: -webkit-linear-gradient(to top,rgba(139,0,0,1) 44%,rgba(0,0,0,0.1));
+}
+.selectedItemBlue {
+  background: -webkit-linear-gradient(to top,rgba(0,0,139,1) 44%,rgba(0,0,0,0.1));
+}
+.selectedItemGreen {
+  background: -webkit-linear-gradient(to top,rgba(0,100,0,1) 44%,rgba(0,0,0,0.1));
+}
+.selectedItemOrange {
+  background: -webkit-linear-gradient(to top,rgba(255,140,0,1) 44%,rgba(0,0,0,0.1));
+}
+.selectedItemTeal {
+  background: -webkit-linear-gradient(to top,rgba(0,139,139,1) 44%,rgba(0,0,0,0.1));
+}
+.selectedItemSlate {
+  background: -webkit-linear-gradient(to top,rgba(47,79,79,1) 44%,rgba(0,0,0,0.1));
+}
+.selectedItemGold {
+  background: -webkit-linear-gradient(to top,rgba(184,134,11,1) 44%,rgba(0,0,0,0.1));
+}
+.selectedItemWhite {
+  background: -webkit-linear-gradient(to top,rgba(255,255,255,1) 74%,rgba(0,0,0,0.1));
+  color: #000!important;
+}
+.selectedItemPink,
+.selectedItemViolet {
+  background: -webkit-linear-gradient(to top,rgba(148,0,211,1) 44%,rgba(0,0,0,0.1));
+}
+#myVideoList .selectedItemRed {
+  background: -webkit-linear-gradient(to left,rgba(139,0,0,0),rgba(139,0,0,1) 60%);
+}
+#myVideoList .selectedItemBlue {
+  background: -webkit-linear-gradient(to left,rgba(0,0,139,0),rgba(0,0,139,1) 60%);
+}
+#myVideoList .selectedItemGreen {
+  background: -webkit-linear-gradient(to left,rgba(0,100,0,0),rgba(0,100,0,1) 60%);
+}
+#myVideoList .selectedItemOrange {
+  background: -webkit-linear-gradient(to left,rgba(255,140,0,0),rgba(255,140,0,1) 60%);
+}
+#myVideoList .selectedItemTeal {
+  background: -webkit-linear-gradient(to left,rgba(0,139,139,0),rgba(0,139,139,1) 60%);
+}
+#myVideoList .selectedItemSlate {
+  background: -webkit-linear-gradient(to left,rgba(0,0,0,0),rgba(47,79,79,1) 60%);
+}
+#myVideoList .selectedItemPink,
+#myVideoList .selectedItemViolet {
+  background: -webkit-linear-gradient(to left,rgba(148,0,211,0),rgba(148,0,211,1) 60%);
+}
+#myVideoList .selectedItemGold {
+  background: -webkit-linear-gradient(to left,rgba(184,134,11,0),rgba(184,134,11,1) 60%);
+}
+#myVideoList .selectedItemWhite {
+  background: -webkit-linear-gradient(to left,rgba(255,255,255,0.1),rgba(255,255,255,1) 60%);
+  color: #000!important;
 }
 #myVideoContainer .unicodeMessage {
   position: absolute;
@@ -270,6 +313,7 @@
   left: 5%;
   text-align:center;
   z-index: 20600;
+  text-shadow: 2px 2px .8px #000;
 }
 #memErrorMessage ul {
   list-style: none;
@@ -283,7 +327,7 @@
 }
 .playbackOption.selectedItem {
   text-shadow: 0 0 5px #fff;
-  /* background: rgba(0, 117, 48, 0.45);*/
+  background: rgba(0, 117, 48, 0.45);
 }
 #videoInfoPanel {
   display:none;
@@ -301,6 +345,7 @@
   background-size: contain;
   background-repeat: no-repeat;
   z-index: 20400;
+  text-shadow: 2px 2px .8px #000;
 }
 #videoInfoPanel.showInfo {
   display: block;

@@ -1,5 +1,5 @@
 #!/bin/sh
-# restore.sh - MZD-AIO-TI Version 2.7.2
+# restore.sh - MZD-AIO-TI Version 2.7.4
 # The Full Restore script for the AIO Tweaks app
 # For more information visit http://mazdatweaks.com
 # By Trezdog44 - Trevelopment.com
@@ -9,7 +9,7 @@ hwclock --hctosys
 
 # AIO Variables
 AIO_VER=0.4
-AIO_DATE=2017.10.20
+AIO_DATE=2018.01.01
 
 # TO DELETE ALL BACKUP FILES CHENGE DEL_BAKUPS=0 TO DEL_BAKUPS=1
 DEL_BAKUPS=0

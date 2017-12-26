@@ -843,6 +843,26 @@
         "label": "KM/H"
       }
     },
+    "effic": {
+      "kml": {
+        "id": 40,
+        "label": "km/L"
+      },
+      "lkm": {
+        "id": 41,
+        "label": "L/100km"
+      }
+    },
+    "temperature": {
+      "cel": {
+        "id": 42,
+        "label": "C"
+      },
+      "fer": {
+        "id": 43,
+        "label": "F"
+      }
+    },
     "sml": {
       "gps": {
         "id": 20,
@@ -869,7 +889,7 @@
     },
     "mod": {
       "id": 50,
-      "label": "Speedo Variant By: pnedkov"
+      "label": "Speedo Variant"
     },
     "modAlt": {
       "id": 51,
@@ -1105,8 +1125,8 @@
     {
       "id": 19,
       "OpName": "Speedometer",
-      "INST": "Speedometer by Diginix telepítése",
-      "DEINST": "Speedometer by Diginix törlése",
+      "INST": "Speedometer telepítése",
+      "DEINST": "Speedometer törlése",
       "toolTip": "<h5>Speedometer íránytűvel App-ként mutatása az alkalmazás menüben </h5>  <ul><li>a sebességmérő alatt km/h vagy mph látszik a beállítások függvényében</li> <li>Max. mutatható sebesség: 240 km/h</li> <li>Fogyasztási adatoks</li> <li>Optimalizált grafikus elemek új sebességmérővel</li> <li>Kis sebességmérő tű, mely a legnagyobb sebességet mutatja az analóg skálán</li> <li>A skála különböző hosszúságú és világosságú az 5, 10 ill. 20 km/h-s felbontás függvényében</li> <li>Jobboldali táblázat német és angol szövegekre lett optimalizálva</li> <li>Minden számnak van árnyéka a jobb olvashatóság érdekében</li> <li>Haladási iránytól függő iránytű a sebesség körül</li> <li>Animált felület a fejlécben GPS által mért sebességgel és haladási iránnyal, mely egy érintéssel az órára bármelyik menüben előhozható vagy elrejthető</li> <li>Szélességi és hosszúsági fokok a jobboldali táblázatban</li> <li>Ha a navigáció vagy a tolatókamera aktiválódik, automatikusan elindul</li></ul><br>A kis sebességmérő fejlécben való mutatása a \"dátum a fejlécben\" mod V2.2 igényli, ezért ez automatikusan kiválasztásra kerül, ha nem történt még meg..",
       "img": "mzd_SpeedoCompass.gif",
       "safetylvl": "safe",

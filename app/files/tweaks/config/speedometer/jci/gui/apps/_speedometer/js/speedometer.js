@@ -36,6 +36,8 @@ $(document).ready(function(){
     speedometerWs.onmessage = function(event){
       var res = event.data.split('#');
       switch(res[0]){
+        case 'vehicleData':   updateVehicleSpeed(res[1]); updateEngineSpeed(res[2]); updateTripDist(res[3]); updateGPSSpeed(res[4]); updateGPSAltitude(res[5]); updateGPSHeading(res[6]); updateGPSLatitude(res[7]); updateGPSLongitude(res[8]); break;
+        case 'envData':   updateFuelEfficiency(res[1]); updateTotFuelEfficiency(res[2]); break;
         case 'vehicleSpeed':   updateVehicleSpeed(res[1]); break;
         case 'fuelEfficiency': updateFuelEfficiency(res[1]); break;
         case 'totfuelEff':     updateTotFuelEfficiency(res[1]); break;
@@ -489,12 +491,14 @@ $(document).ready(function(){
   }, 4000);
 
   setTimeout(function(){
-    retrievedata('vehicleSpeed');
+    retrievedata('vehicleData');
+    retrievedata('envData');
+    /*retrievedata('vehicleSpeed');
     retrievedata('gpsdata');
     retrievedata('totfuelEfficiency');
     retrievedata('fuelEfficiency');
     retrievedata('drivedist');
-    retrievedata('engineSpeed');
+    retrievedata('engineSpeed');*/
   }, 35000);
 
 });
