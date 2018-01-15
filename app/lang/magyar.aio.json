@@ -1064,7 +1064,7 @@
       "toolTip": "<h5>USB Audio Mod. <small>By: Enlsen</small> </h5><b>Patches The USB Audio App With These Mods:   <br><ol><li>Long press (click hold) folders/all songs to play</li><li>Adds new icon for USB root menu on the UMP control</li> <li>Removes \"More like this\" button from UMP control</li><li>Adds folders button to UMP control</li><li>Set folders and song list icons correctly (were switched) on UMP control</li><li>Removes trailing \"/\" character from folder names for list control and title of now playing</li><li>Adds folder and song icons to the list control</li><li>Adds folder and playlist icons to now playing</li></ol>",
       "img": "USBAudioMod.jpg",
       "safetylvl": "safe",
-      "extraOps": false,
+      "extraOps": true,
       "advancedOp": false
     },
     {
@@ -1160,8 +1160,8 @@
       "OpName": "Android Auto fejegység applikáció",
       "INST": "Android Auto fejegység applikáció telepítése",
       "DEINST": "Android Auto fejegység applikáció visszaállítása",
-      "toolTip": "<h5>Android Car Headunit app.  Android car for the infotainment system. </h5>  <br>1. Install the Android app from google play store<br>2. Connect the phone to USB and pair the phone bluetooth with the CMU <br>3. Manually switch to Bluetooth Audio Input. <br>4. Click on the AA icon under Applications Menu on the CMU <br>5. A black screen with credits should open up first and input <br>6. Android Auto will then start. If it does not, pull out the USB and start over again (or check the installation.) <br>7. 2 ways to stop AA - Disconnect the USB cable or use the onscreen menu 'Return to Mazda Connect' on last screen with speedo icon.  <br>8. Once disconnected, the back screen will remain. Press Home Button on the Mazda's Commander to close it. I had to do this because js double click wasn't working.  <br>**What does not work:** <br>1. Reverse camera gets blacked out. <br>2. Voice Control <br>3. Touch drag / multi touch <br>4. Google Maps night mode always on.<h5><b><span class='icon-star-full'></span> Android Auto Patch!: <span class='icon-android'></span><br><span class='icon-gamepad'></span> input_filter is no longer needed (#12) <span class='icon-trophy'></span></b></h5><div class='w3-container w3-border-green'><strong>'Remove the input_filter background process. It's not needed since we can use EVIOCGRAB to consume input events before the CMU UI without the /dev/uinput trickery.' /cc @lmagder <span class='icon-thumbs-up'></span> <span class='icon-thumbs-up'></span></strong></div>",
-      "toolTip2": "<h5>Android Car Headunit app. </h5><a href onclick='externalLink(`AA-app`)'>Install the Android app from google play store: HERE.</a><strong><h5><span class='icon-star-full'></span>v0.99:</h5> <li>Older version, less stable</li> <li>can make bluetooth calls but cannot dial from AA interface (Voice commands/dialing do work)</li><li><em>Do not report bug/issues for this version</em>, they are addressed in later versions.</li><h5>v1.02:</h5><li>More stable/up to date release.</li><li>Automatically connects when phone is connected</li><li>'bluetooth-call bug' redirects bluetooth calls back to phone.</li></strong></div>",
+      "toolTip": "<h5>Android Car Headunit app for the MZD Infotainment System. </h5>  <ol><li>Install the Android app from google play store</li><li> Connect the phone to USB and pair the phone bluetooth with the CMU </li><li> Android Auto will then start. If it does not try to open from the 'Applications' menu <li>3 ways to stop AA <ol><li>Press Home Button on the Mazda's Commander</li><li>Disconnect the USB cable</li><li>Use the onscreen menu 'Return to Mazda Connect' on last screen with speedo icon.</li></ol></ol>",
+      "toolTip2": "",
       "img": "AndroidAuto.jpg",
       "safetylvl": "safe",
       "extraOps": true,
@@ -1180,8 +1180,8 @@
     },
     {
       "id": 21,
-      "OpName": "(DISABLED) Zeneszámok név szerinti rendezése és FLAC támogatás",
-      "INST": "(DISABLED) media_order patch és FLAC támogatás telepítése",
+      "OpName": "Zeneszámok név szerinti rendezése és FLAC támogatás",
+      "INST": "media_order patch és FLAC támogatás telepítése",
       "DEINST": "media_order patch és FLAC támogatás visszaállítása",
       "toolTip": "<h5>Zeneszámok név szerinti rendezése és FLAC támogatás </h5>Zenék név szerinti rendezése és nem dátum szerinti rendezése. FLAC formátum támogatása. <h6>Audio Order Patch & FLAC Support is only compatible with these FW Versions: </h6><div style='columns:5'>55.00.650A-NA  55.00.753A-NA  55.00.760A-NA  56.00.100A-ADR  56.00.230A-EU  56.00.240B-ADR  56.00.511A-EU  56.00.512A-EU  56.00.521A-NA  58.00.250A-NA  59.00.326A-ADR  59.00.331A-EU  56.00.513C-EU  56.00.513B-EU  56.00.513C-ADR  59.00.330A-ADR   59.00.342A-ADR   59.00.441A-NA  59.00.443C-EU</div>",
       "img": "",

@@ -1,10 +1,16 @@
 'use strict'
 
 const os = require('os')
+const ipc = require('electron').ipcMain
+const BrowserWindow = require('electron').BrowserWindow
 const platform = os.platform() + '_' + os.arch()
+const Config = require('electron-store')
+const persistantData = new Config({'name': 'aio-persist'})
 
 // const { autoUpdater } = require('electron')
 const { autoUpdater } = require('electron-updater')
+
+let win = BrowserWindow.fromId(1)
 
 module.exports = function update (options) {
   /* if (!options.url) {
@@ -24,25 +30,38 @@ module.exports = function update (options) {
 
   autoUpdater.on('error', (e) => {
     console.error(e.message)
-    require('electron').ipcMain.emit('update-err', autoUpdater)
+    ipc.emit('update-err', autoUpdater)
+    win.webContents.send('update-not-available')
+    persistantData.set('updateAvailable', false)
   })
 
   autoUpdater.on('checking-for-update', () => {
     console.info('Checking for update...')
+    win.webContents.send('checking-updates')
   })
 
   autoUpdater.on('update-available', () => {
+    while(win === null) {
+      win = BrowserWindow.getFocusedWindow()
+    }
     console.info('Found available update!')
-    require('electron').ipcMain.emit('update-available-alert', autoUpdater)
+    ipc.emit('update-available-alert', autoUpdater)
+    win.webContents.send('update-available-alert')
+    persistantData.set('updateAvailable', true)
   })
 
   autoUpdater.on('update-not-available', () => {
+    while(win === null) {
+      win = BrowserWindow.getFocusedWindow()
+    }
+    win.webContents.send('update-not-available')
     console.info('There are no updates available.')
   })
 
   autoUpdater.on('update-downloaded', () => {
     console.info('Update package downloaded')
-    require('electron').ipcMain.emit('update-downloaded', autoUpdater)
+    win.webContents.send('update-downloaded')
+    ipc.emit('update-downloaded', autoUpdater)
   })
 }
 /*

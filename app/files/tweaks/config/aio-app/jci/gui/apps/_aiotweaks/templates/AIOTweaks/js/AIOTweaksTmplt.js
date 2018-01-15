@@ -55,8 +55,7 @@ function AIOTweaksTmplt(uiaId, parentDiv, templateID, controlProperties)
   '</div>'+
   '<div id="Options" class="tabcontent FadeIn">'+
   '</div>'+
-  '<div id="AioInfoPanel"><div id="AioInformation"></div></div>'+
-  '<script src="apps/_aiotweaks/js/mzd.js" type="text/javascript"></script>';
+  '<div id="AioInfoPanel"><div id="AioInformation"></div></div>';
 
   function AIOTabs(tab, tabLink) {
     $(".tablinks").removeClass("active-tab");
@@ -108,10 +107,10 @@ function AIOTweaksTmplt(uiaId, parentDiv, templateID, controlProperties)
   $("<button/>").attr("id", "CSstop").addClass('csFunc fnStop').html('<a>Stop</a>').appendTo($('#Tweaks'));
   $("<button/>").attr("id", "scrollUpBtn").addClass('AIO-scroller').html('<img src="apps/_aiotweaks/templates/AIOTweaks/images/scrollUp.png" />').insertAfter($('#AioInfoPanel'));
   $("<button/>").attr("id", "scrollDownBtn").addClass('AIO-scroller').html('<img src="apps/_aiotweaks/templates/AIOTweaks/images/scrollDown.png" />').insertAfter($('#AioInfoPanel'));
-  //$("<button/>").attr("id", "createSwapBtn").html('<a>Vehicle Type</a>').appendTo($('#Tweaks'));
+  $("<button/>").attr("id", "errLogBtn").html('<a>Error Log</a>').appendTo($('#Tweaks')).hide();
   //$("<button/>").attr("id", "backupCamBtn").html('<a>localStorage</a>').appendTo($('#Tweaks'));
-  //$("<button/>").attr("id", "pauseBtn").addClass('audioCtrls').html('<a>Pause</a>').appendTo($('#Tweaks'));
-  //$("<button/>").attr("id", "allSongsBtn").addClass('audioSources').html('<a>All Songs</a>').appendTo($('#Tweaks'));
+  //$("<button/>").attr("id", "pauseBtn").html('<a>Clear localStorage</a>').appendTo($('#Tweaks'));
+  //$("<button/>").attr("id", "createSwapBtn").html('<a>Vehicle Type</a>').appendTo($('#Tweaks'));
   //$("<button/>").attr("id", "fakeIncomingCallBtn").addClass('test').html('<a>Fake Incoming Call</a>').appendTo($('#Tweaks'));
   //$("<button/>").attr("id", "activeCallBtn").addClass('test').html('<a>Fake Active Call</a>').appendTo($('#Tweaks'));
   //$('<div/>').attr('id','spTitle').html('Speedometer').appendTo('#Tweaks');
@@ -120,8 +119,10 @@ function AIOTweaksTmplt(uiaId, parentDiv, templateID, controlProperties)
 
   // Options Section
   $("<button/>").attr("id", "aioInfo").html('<a>Info</a>').appendTo($('#Options'));
+  $("<button/>").attr("id", "adbBtn").html('<a>adb</a>').appendTo($('#Options'));
   $("<button/>").attr("id", "messageTestBtn").html('<a>Message Test</a>').appendTo($('#Options'));
-   $("<button/>").attr("id", "Tst").addClass("tablinks").html('<a>Touchscreen</a>').appendTo($('#Options'));
+  $("<button/>").attr("id", "test").html('<a>SBN Test</a>').appendTo($('#Options'));
+  $("<button/>").attr("id", "Tst").addClass("tablinks").html('<a>Touchscreen</a>').appendTo($('#Options'));
   $("<button/>").attr("id", "showBgBtn").html('<a>Show Background</a>').appendTo($('#Options'));
   $("<button/>").attr("id", "showEnvBtn").html('<a>Env</a>').appendTo($('#Options'));
   $("<button/>").attr("id", "appListBtn").html('<a>App List</a>').appendTo($('#Options'));
@@ -142,8 +143,6 @@ function AIOTweaksTmplt(uiaId, parentDiv, templateID, controlProperties)
   $("<button/>").attr("id", "touchscreenCompassBtn").addClass('Touch').html('<a>Enable Touchscreen & Compass</a>').appendTo($('#touchscreenPanel'));
   $("<button/>").attr("id", "touchscreenOffBtn").addClass('Touch').html('<a>Disable Touchscreen</a>').appendTo($('#touchscreenPanel'));
   //$("<button/>").attr("id", "screenshotBtn").html('<a>Screenshot</a>').appendTo($('#Options'));
-  //$("<button/>").attr("id", "messageBtn").html('<a>Message</a>').appendTo($('#Options'));
-  //$("<button/>").attr("id", "test").html('<a>NodeJS Test</a>').appendTo($('#Options'));
   //$("<button/>").attr("id", "saveScreenshotBtn").html('<a>Save Screenshot to SD</a>').appendTo($('#Options')).hide();
   //$("<button/>").attr("id", "chooseBg").html('<a>Node Version</a>').appendTo($('#Options'));
   //$("<button/>").attr("id", "runTweaksBtn").html('<a>VidYos</a>').appendTo($('#Options'));
@@ -168,16 +167,18 @@ function AIOTweaksTmplt(uiaId, parentDiv, templateID, controlProperties)
   });
 
   // Start from the last opened tab
-  var prevTab = JSON.parse(localStorage.getItem("aio.prevtab")) || null;
-  if(prevTab) {
-    prevTab = "#" + prevTab;
-    $(prevTab).click();
-  } else {
-    $("#Main").click();
+  try {
+    var prevTab = JSON.parse(localStorage.getItem("aio.prevtab")) || false;
+    if(prevTab) {
+      prevTab = "#" + prevTab;
+      $(prevTab).click();
+    } else {
+      $("#Main").click();
+    }
+  } catch (e) {
+    $("#Opt").click();
   }
-  if(typeof showAioInfo === 'undefined') {
-    utility.loadScript("apps/_aiotweaks/js/mzd.js");
-  }
+  utility.loadScript('apps/_aiotweaks/js/mzd.js');
 }
 
 /*
@@ -223,7 +224,7 @@ AIOTweaksTmplt.prototype.handleControllerEvent = function(eventID)
         document.getElementById("AioInformation").scrollTop = 0;
         document.getElementById("AioInformation").scrollLeft = 0;
       } else {
-        showAioInfo(null, true);
+        showAioInfo("", true);
       }
       retValue = "consumed";
       break;
@@ -280,7 +281,7 @@ AIOTweaksTmplt.prototype.handleControllerEvent = function(eventID)
 AIOTweaksTmplt.prototype.cleanUp = function()
 {
   $(".AIOTweaksTmplt").remove();
-  utility.removeScript("apps/_aiotweaks/js/mzd.js");
+  //utility.removeScript("apps/_aiotweaks/js/mzd.js");
   $("html").removeClass("showBg");
   $("#SbSpeedo").fadeIn();
 };

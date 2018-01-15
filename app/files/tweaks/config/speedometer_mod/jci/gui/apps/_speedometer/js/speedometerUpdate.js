@@ -1,4 +1,5 @@
 function updateSpeedoApp(){
+  // remove all disabled values
   $('#vehdataMainDiv fieldset[class*="vehDataBar"].pos0').remove();
 	if(enableSmallSbSpeedo){
 		$('#SbSpeedo').fadeIn();
@@ -8,7 +9,10 @@ function updateSpeedoApp(){
       (currDataBar > 2) ? currDataBar = 1 : currDataBar++;
       $('[class*="vehDataBar"]').removeClass('activeDataBar');
       $('.vehDataBar' + currDataBar).addClass('activeDataBar');
-    })
+    });
+    $('.vehDataMain.pos2').click(function(){
+      engineSpeedBar = !engineSpeedBar;
+    });
   } else {
     // touch to toggle Analog / Digital
     // --------------------------------------------------------------------------
@@ -188,7 +192,7 @@ function updateSpeedoApp(){
   // *********************************************************************************************************************
 	// Español
 	if(language === 'ES'){
-		// $('#gpsSpeedFieldSet legend').html('Vel. GPS');
+		$('#gpsSpeedFieldSet legend').html('Vel. GPS');
 		$('#tripDistFieldSet legend').html('Dist. de viaje <span class="spunit">(<span class="distUnit">km</span>)</span>');
 		$('#speedTopFieldSet legend').html('Vel. Max');
 		$('#speedAvgFieldSet legend').html('Vel. &empty;');
@@ -207,11 +211,16 @@ function updateSpeedoApp(){
 		$('#outsideTempFieldSet legend').html('Outside  <span class="spunit">(&deg;<span class="tempUnit"></span>)</span>');
 		$('#intakeTempFieldSet legend').html('Intake  <span class="spunit">(&deg;<span class="tempUnit"></span>)</span>');
 		$('#coolantTempFieldSet legend').html('Coolant  <span class="spunit">(&deg;<span class="tempUnit"></span>)</span>');
+    $('#Drv1AvlFuelEFieldSet legend').html('Drive <span class="fuelEffUnit"></span>');
+    $('#TotAvgFuelFieldSet legend').html('Total <span class="fuelEffUnit"></span>');
+    $('#AvgFuelFieldSet legend').html('Avg. <span class="fuelEffUnit"></span>');
+    $('#batSOCFieldSet legend').html('Battery SOC');//Battery State of Charge
+    $('#engLoadFieldSet legend').html('Engine Load');
 	}
 
 	// Polskie
   else if(language === 'PL'){
-    // $('#gpsSpeedFieldSet legend').html('PrÄ™dkoÅ›Ä‡ GPS');
+    $('#gpsSpeedFieldSet legend').html('PrÄ™dkoÅ›Ä‡ GPS');
 		$('#tripDistFieldSet legend').html('Dystans <span class="spunit">(<span class="distUnit">km</span>)</span>');
 		$('#speedTopFieldSet legend').html('Prędkość maks.');
 		$('#speedAvgFieldSet legend').html('Prędkość śr.');
@@ -227,6 +236,11 @@ function updateSpeedoApp(){
     $('#outsideTempFieldSet legend').html('Outside  <span class="spunit">(&deg;<span class="tempUnit"></span>)</span>');
     $('#intakeTempFieldSet legend').html('Intake  <span class="spunit">(&deg;<span class="tempUnit"></span>)</span>');
     $('#coolantTempFieldSet legend').html('Coolant  <span class="spunit">(&deg;<span class="tempUnit"></span>)</span>');
+    $('#Drv1AvlFuelEFieldSet legend').html('Drive <span class="fuelEffUnit"></span>');
+    $('#TotAvgFuelFieldSet legend').html('Total <span class="fuelEffUnit"></span>');
+    $('#AvgFuelFieldSet legend').html('Avg. <span class="fuelEffUnit"></span>');
+    $('#batSOCFieldSet legend').html('Battery SOC');//Battery State of Charge
+    $('#engLoadFieldSet legend').html('Engine Load');
 	}
 
 	// Slovenský
@@ -240,17 +254,23 @@ function updateSpeedoApp(){
 		$('#gpsLongitudeFieldSet legend').html('Zem. dĺžka');
 		$('#tripTimeFieldSet legend').html('Celkový čas');
 		$('#idleTimeFieldSet legend').html('Doba <span>nečinn.</span>');
+    $('#engineSpeedFieldSet legend').html('Engine Speed');
 		$('#engIdleTimeFieldSet legend').html('Engine Idle');
     $('#fuelGaugeFieldSet legend').html('Fuel Gauge');
     $('#gearPositionFieldSet legend').html('Gear Position');
     $('#outsideTempFieldSet legend').html('Outside  <span class="spunit">(&deg;<span class="tempUnit"></span>)</span>');
     $('#intakeTempFieldSet legend').html('Intake  <span class="spunit">(&deg;<span class="tempUnit"></span>)</span>');
     $('#coolantTempFieldSet legend').html('Coolant  <span class="spunit">(&deg;<span class="tempUnit"></span>)</span>');
+    $('#Drv1AvlFuelEFieldSet legend').html('Drive <span class="fuelEffUnit"></span>');
+    $('#TotAvgFuelFieldSet legend').html('Total <span class="fuelEffUnit"></span>');
+    $('#AvgFuelFieldSet legend').html('Avg. <span class="fuelEffUnit"></span>');
+    $('#batSOCFieldSet legend').html('Battery SOC');//Battery State of Charge
+    $('#engLoadFieldSet legend').html('Engine Load');
 	}
 
 	// Deutsch
   else if(language === 'DE'){
-		// $('#gpsSpeedFieldSet legend').html('Geschw. GPS');
+		$('#gpsSpeedFieldSet legend').html('Geschw. GPS');
 		$('#tripDistFieldSet legend').html('Strecke <span class="spunit">(<span class="distUnit">km</span>)</span>');
 		$('#speedTopFieldSet legend').html('Geschw. max');
 		$('#speedAvgFieldSet legend').html('Geschw. &empty;');
@@ -265,11 +285,19 @@ function updateSpeedoApp(){
 		$('.East').html('O');
 		$('.SouthEast').html('SO');
 		$('#rpmDial .unit').text('U/min');
-    $('#fuelGaugeFieldSet legend').html('Fuel Gauge');
-    $('#gearPositionFieldSet legend').html('Gear Position');
-    $('#outsideTempFieldSet legend').html('Outside  <span class="spunit">(&deg;<span class="tempUnit"></span>)</span>');
-    $('#intakeTempFieldSet legend').html('Intake  <span class="spunit">(&deg;<span class="tempUnit"></span>)</span>');
-    $('#coolantTempFieldSet legend').html('Coolant  <span class="spunit">(&deg;<span class="tempUnit"></span>)</span>');
+    $('#gpsSpeedFieldSet legend').html('GPS Geschw');
+    $('#gpsHeadingFieldSet legend').html('Richtung');
+    $('#fuelGaugeFieldSet legend').html('Tankfüllung');
+    $('#gearPositionFieldSet legend').html('Gangposition');
+    $('#engineSpeedFieldSet legend').html('Motordrehzahl');
+    $('#outsideTempFieldSet legend').html('Aussen <span class="spunit">(&deg;<span class="tempUnit"></span>)</span>');
+    $('#intakeTempFieldSet legend').html('Einlass <span class="spunit">(&deg;<span class="tempUnit"></span>)</span>');
+    $('#coolantTempFieldSet legend').html('Kühlmittel <span class="spunit">(&deg;<span class="tempUnit"></span>)</span>');
+    $('#Drv1AvlFuelEFieldSet legend').html('Drive <span class="fuelEffUnit"></span>');
+    $('#TotAvgFuelFieldSet legend').html('Total <span class="fuelEffUnit"></span>');
+    $('#AvgFuelFieldSet legend').html('Avg. <span class="fuelEffUnit"></span>');
+    $('#batSOCFieldSet legend').html('Battery SOC');//Battery State of Charge
+    $('#engLoadFieldSet legend').html('Engine Load');
 	}
 
 	// Türk
@@ -285,24 +313,31 @@ function updateSpeedoApp(){
 		$('#idleTimeFieldSet legend').html('Durma Süresi');
 		$('#engIdleTimeFieldSet legend').html('Engine Idle');
     $('#fuelGaugeFieldSet legend').html('Fuel Gauge');
+    $('#engineSpeedFieldSet legend').html('Engine Speed');
+    $('#gpsHeadingFieldSet legend').html('Heading');
     $('#gearPositionFieldSet legend').html('Gear Position');
     $('#outsideTempFieldSet legend').html('Outside  <span class="spunit">(&deg;<span class="tempUnit"></span>)</span>');
     $('#intakeTempFieldSet legend').html('Intake  <span class="spunit">(&deg;<span class="tempUnit"></span>)</span>');
     $('#coolantTempFieldSet legend').html('Coolant  <span class="spunit">(&deg;<span class="tempUnit"></span>)</span>');
 		$('.North').html('K');
 		$('.NorthEast').html('KD');
+    $('#Drv1AvlFuelEFieldSet legend').html('Drive <span class="fuelEffUnit"></span>');
+    $('#TotAvgFuelFieldSet legend').html('Total <span class="fuelEffUnit"></span>');
+    $('#AvgFuelFieldSet legend').html('Avg. <span class="fuelEffUnit"></span>');
 		$('.East').html('D');
 		$('.SouthEast').html('GD');
 		$('.South').html('G');
 		$('.SouthWest').html('GB');
 		$('.West').html('B');
 		$('.NorthWest').html('KB');
+    $('#batSOCFieldSet legend').html('Battery SOC');//Battery State of Charge
+    $('#engLoadFieldSet legend').html('Engine Load');
 		$('.speedUnit').text('km/s');
 	}
 
 	// Français
 	else if(language === 'FR'){
-		// $('#gpsSpeedFieldSet legend').html('Vit. GPS');
+		$('#gpsSpeedFieldSet legend').html('Vit. GPS');
 		$('#tripDistFieldSet legend').html('Trajet Dist. <span class="spunit">(<span class="distUnit">km</span>)</span>');
 		$('#speedTopFieldSet legend').html('V. max');
 		$('#speedAvgFieldSet legend').html('V. Moyenne');
@@ -315,17 +350,24 @@ function updateSpeedoApp(){
 		$('#engIdleTimeFieldSet legend').html('T. au ralenti');
     $('#fuelGaugeFieldSet legend').html('Fuel Gauge');
     $('#gearPositionFieldSet legend').html('Gear Position');
+    $('#engineSpeedFieldSet legend').html('Engine Speed');
+    $('#gpsHeadingFieldSet legend').html('Heading');
     $('#outsideTempFieldSet legend').html('Outside  <span class="spunit">(&deg;<span class="tempUnit"></span>)</span>');
     $('#intakeTempFieldSet legend').html('Intake  <span class="spunit">(&deg;<span class="tempUnit"></span>)</span>');
     $('#coolantTempFieldSet legend').html('Coolant  <span class="spunit">(&deg;<span class="tempUnit"></span>)</span>');
 		$('.SouthWest').html('SO');
 		$('.West').html('O');
 		$('.NorthWest').html('NO');
+    $('#batSOCFieldSet legend').html('Battery SOC');//Battery State of Charge
+    $('#engLoadFieldSet legend').html('Engine Load');
 		$('legend .fuelEffUnit').html('L/100 km <span>Moy.</span>');
+    $('#Drv1AvlFuelEFieldSet legend').html('Drive <span class="fuelEffUnit"></span>');
+    $('#TotAvgFuelFieldSet legend').html('Total <span class="fuelEffUnit"></span>');
+    $('#AvgFuelFieldSet legend').html('Avg. <span class="fuelEffUnit"></span>');
 	}
   // Italiano
   else if(language === 'IT'){
-    // $('#gpsSpeedFieldSet legend').html('Vel. GPS');
+    $('#gpsSpeedFieldSet legend').html('Vel. GPS');
     $('#tripDistFieldSet legend').html('Dist. tragitto <span class="spunit">(<span class="distUnit">km</span>)</span>');
     $('#speedTopFieldSet legend').html('Vel. max');
     $('#speedAvgFieldSet legend').html('Vel. media');
@@ -343,11 +385,19 @@ function updateSpeedoApp(){
     $('.West').html('O');
     $('.NorthWest').html('NO');
     $('legend .fuelEffUnit').html('L/100 km <span>media</span>');
+    $('#engineSpeedFieldSet legend').html('Engine Speed');
+    $('#gpsHeadingFieldSet legend').html('Heading');
     $('#fuelGaugeFieldSet legend').html('Fuel Gauge');
     $('#gearPositionFieldSet legend').html('Gear Position');
     $('#outsideTempFieldSet legend').html('Outside  <span class="spunit">(&deg;<span class="tempUnit"></span>)</span>');
     $('#intakeTempFieldSet legend').html('Intake  <span class="spunit">(&deg;<span class="tempUnit"></span>)</span>');
     $('#coolantTempFieldSet legend').html('Coolant  <span class="spunit">(&deg;<span class="tempUnit"></span>)</span>');
+    $('#oilTempFieldSet legend').html('Oil <span class="spunit">(&deg;<span class="tempUnit"></span>)</span>');
+    $('#batSOCFieldSet legend').html('Battery SOC');//Battery State of Charge
+    $('#engLoadFieldSet legend').html('Engine Load');
+    $('#Drv1AvlFuelEFieldSet legend').html('Drive <span class="fuelEffUnit"></span>');
+    $('#TotAvgFuelFieldSet legend').html('Total <span class="fuelEffUnit"></span>');
+    $('#AvgFuelFieldSet legend').html('Avg. <span class="fuelEffUnit"></span>');
   }
 
 	// unit specific changes
@@ -397,7 +447,6 @@ function updateSpeedoApp(){
 		$('#speedometerContainer').css("background-image","url(apps/_speedometer/templates/SpeedoMeter/images/speedometer_background.jpg)");
 	}
 
-
 	// restore values after app restart
   (tempIsF) ? $('.tempUnit').html('F') : $('.tempUnit').html('C');
 	$('.tripDistance').html(tripDist);
@@ -408,6 +457,8 @@ function updateSpeedoApp(){
 	$('.outsideTempValue').html(outsideTemp+"&deg;");
   $('.gearPositionValue').html(lastGearPositionValue);
   $('.fuelGaugeValue').html(lastFuelGaugeValue+"%");
+  $('.gearLeverPositionValue').html(lastGearLeverPositionValue);
+  $('.gearPositionValue').html(lastGearPositionValue);
 
 	if(altGPSmin != 9999){
 		$('.gpsAltitudeMinMax').html(altGPSmin+' / '+altGPSmax);
@@ -415,10 +466,14 @@ function updateSpeedoApp(){
   if(barSpeedometerMod) {
     $('.vehDataBar1').addClass('activeDataBar');
     $('.speedTopValue').html(speedTop);
+    $('.engineSpeedTopValue').html(engineSpeedTop);
     $('.TotFuelEfficiency').html(TotFuelEfficiency);
     $('.Drv1AvlFuelEValue').html(FuelEfficiency);
     $('.avgFuelValue').html(AvgFuelEfficiency);
+    $('.idleTimeValue').html(idleTimeValue);
+    $('.engineIdleTimeValue').html(engONidleTimeValue);
   } else {
+    $('.idleTimeValue').html('<span>('+engONidleTimeValue+')</span>'+idleTimeValue);
     $('.speedTopValue').html('<span>('+engineSpeedTop+')</span>'+speedTop);
     $('.Drv1AvlFuelEValue').html('<span>('+TotFuelEfficiency+')</span>'+FuelEfficiency);
     $('.topRPMIndicator').css("transform","rotate("+(-145-engineSpeedTop*0.01)+"deg)");

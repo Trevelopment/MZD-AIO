@@ -2,7 +2,7 @@
   vertical-align: middle;
   text-align: center;
 }
-ul.tab {
+.AIOTweaksTmplt ul.tab {
   list-style-type: none;
   margin: 0;
   padding: 0;
@@ -13,14 +13,14 @@ ul.tab {
 }
 
 /* Float the list items side by side */
-ul.tab li {
+.AIOTweaksTmplt ul.tab li {
   width: 33%;
   height: 50px;
   float: left;
 }
 
 /* Style the links inside the list items */
-ul.tab li a {
+.AIOTweaksTmplt ul.tab li a {
   display: inline-block;
   color: black;
   text-align: center;
@@ -34,29 +34,29 @@ ul.tab li a {
 }
 
 /* Change background color of links on hover */
-ul.tab li a:hover {
+.AIOTweaksTmplt ul.tab li a:hover {
   background-color: #ddd;
 }
 
 /* Create an active/current tablink class */
-ul.tab li a:focus, .active-tab {
+.AIOTweaksTmplt ul.tab li a:focus, .active-tab {
   background-color: #009090;
 }
-#Tweaks {
+.AIOTweaksTmplt #Tweaks {
   height: 350px;
 }
 /* Style the tab content */
-.tabcontent {
+.AIOTweaksTmplt .tabcontent {
   display: none;
   padding: 6px 12px;
   border: 1px solid #ccc;
   border-top: none;
   background: rgba(52, 52, 53, 0.78);
 }
-#MainMenuMsg {
+.AIOTweaksTmplt #MainMenuMsg {
   font-size: 24px;
 }
-button {
+.AIOTweaksTmplt button {
   height: 50px;
   text-shadow: none;
   font-weight: bold;
@@ -72,17 +72,18 @@ button {
   white-space:nowrap;
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
 }
-button.fullRestoreBtn {
+.AIOTweaksTmplt button.fullRestoreBtn {
   background: #6b1a28;
   border-radius: 6px;
   padding: 3px!important;
   text-shadow: 0px 4px 3px rgba(0,0,0,0.4),0px 8px 13px rgba(0,0,0,0.2),0px 18px 23px rgba(0,0,0,0.2);
 }
-.tablinks {
+.AIOTweaksTmplt #errLogBtn,
+.AIOTweaksTmplt .tablinks {
   text-shadow: none;
 }
 
-.tabcontent button:focus {
+.AIOTweaksTmplt .tabcontent button:focus {
   background: blue;
   /*border: 2px dotted #fff;*/
   border-radius: 5px;
@@ -91,7 +92,7 @@ button.fullRestoreBtn {
 .animate-zoom {animation:animatezoom 0.6s}
 @keyframes animatezoom{from{transform:scale(0)} to{transform:scale(1)}}
 
-.sidenav {
+.AIOTweaksTmplt .sidenav {
   height: 100%;
   width: 0;
   position: fixed;
@@ -105,7 +106,7 @@ button.fullRestoreBtn {
   margin-top: 59px;
 }
 
-.sidenav a {
+.AIOTweaksTmplt .sidenav a {
   padding: 8px 8px 8px 32px;
   text-decoration: none;
   font-size: 25px;
@@ -114,11 +115,11 @@ button.fullRestoreBtn {
   transition: 0.3s
 }
 
-.sidenav a:hover, .offcanvas a:focus{
+.AIOTweaksTmplt .sidenav a:hover, .offcanvas a:focus{
   color: #f1f1f1;
 }
 
-.sidenav .closebtn {
+.AIOTweaksTmplt .sidenav .closebtn {
   position: absolute;
   top: 0;
   right: 25px;
@@ -126,34 +127,35 @@ button.fullRestoreBtn {
   margin-left: 50px;
 }
 
-#AIO-Main {
+.AIOTweaksTmplt #AIO-Main {
   transition: margin-left .5s;
 }
-#StatusBar_ButtonCtrl1.hidden {
+.AIOTweaksTmplt #StatusBar_ButtonCtrl1.hidden {
   display: none!important;
 }
 @media screen and (max-height: 450px) {
-  .sidenav {padding-top: 15px;}
-  .sidenav a {font-size: 18px;}
+  .AIOTweaksTmplt .sidenav {padding-top: 15px;}
+  .AIOTweaksTmplt  .sidenav a {font-size: 18px;}
 }
-#Options {
+.AIOTweaksTmplt #Options {
   columns: 2;
 }
-#MainMenu {
+.AIOTweaksTmplt #MainMenu {
   columns: 3;
 }
-.audioSources{
+.AIOTweaksTmplt .audioSources{
   width:150px;
   margin-bottom:20px;
 }
-.audioCtrls{
+.AIOTweaksTmplt .audioCtrls{
   float:left;
   width:125px;
 }
 [id*="TrackBtn"] {
   width: 180px;
 }
-#aaTitle, #csTitle {
+.AIOTweaksTmplt #aaTitle,
+.AIOTweaksTmplt #csTitle {
   position: absolute;
   bottom: 15px;
   padding: 5px;
@@ -164,69 +166,72 @@ button.fullRestoreBtn {
   width: 365px;
   outline: 6px dashed #fff;
 }
-#csTitle {
+.AIOTweaksTmplt #csTitle {
   left:410px;
 }
-.aaFunc, .csFunc {
+.AIOTweaksTmplt .aaFunc,
+.AIOTweaksTmplt .csFunc {
   position: absolute;
   bottom: 20px;
   width: 150px;
 }
-.spFunc {
+.AIOTweaksTmplt .spFunc {
   width:150px;
   margin: -10px 40px;
 }
-button#AAstart {
+.AIOTweaksTmplt button#AAstart {
   left: 40px;
 }
-button#AAstop {
+.AIOTweaksTmplt button#AAstop {
   left: 200px;
 }
-button#CSstart {
+.AIOTweaksTmplt button#CSstart {
   left: 440px;
 }
-button#CSstop {
+.AIOTweaksTmplt button#CSstop {
   left: 600px;
 }
-.fnStop{
+.AIOTweaksTmplt .fnStop{
   background: #ff0000;
 }
-.fnStart {
+.AIOTweaksTmplt .fnStart {
   background: green;
 }
-.fnStart:focus,.fnStart:active {
+.AIOTweaksTmplt .fnStart:focus,
+.AIOTweaksTmplt .fnStart:active {
   background: #001680;
 }
-.fnStop:focus, .fnStop:active {
+.AIOTweaksTmplt .fnStop:focus,
+.AIOTweaksTmplt .fnStop:active {
   background: #670092;
 }
-div#csTitle.centered,
-div#aaTitle.centered {
+.AIOTweaksTmplt #csTitle.centered,
+.AIOTweaksTmplt #aaTitle.centered {
   margin: auto;
   left: 0;
   right: 0;
 }
-.centered~.csFunc {
+.AIOTweaksTmplt .centered~.csFunc {
   margin-left: -195px;
 }
-.centered~.aaFunc {
+.AIOTweaksTmplt .centered~.aaFunc {
   margin-left: 205px;
 }
-#Options button {
+.AIOTweaksTmplt #Options button {
   width: 48%;
   font-size: 19px;
 }
-#MainMenu button {
+.AIOTweaksTmplt #MainMenu button {
   width: 240px;
   text-overflow: ellipsis;
 }
-button#showPSBtn,
-button#hideMusicBg,
-button#hideSbn,
-button#noBgBtn {
+.AIOTweaksTmplt button#showPSBtn,
+.AIOTweaksTmplt button#hideMusicBg,
+.AIOTweaksTmplt button#hideSbn,
+.AIOTweaksTmplt button#noBgBtn {
   font-size: 1rem;
 }
-#touchscreenPanel {
+.AIOTweaksTmplt #touchscreenPanel {
   display: none;
   position: absolute;
   width: 400px;
@@ -239,7 +244,7 @@ button#noBgBtn {
   border-radius: 20px;
   z-index: 990;
 }
-#AioInfoPanel {
+.AIOTweaksTmplt #AioInfoPanel {
   display: none;
   position: absolute;
   width: 740px;
@@ -255,7 +260,7 @@ button#noBgBtn {
   border: 2px dashed #0f0;
   z-index: 998;
 }
-#AioInformation {
+.AIOTweaksTmplt #AioInformation {
   margin: 15px;
   padding: 15px;
   font-size: 18px;
@@ -276,23 +281,23 @@ button#noBgBtn {
   padding: 0;
   display: none;
 }
-#AioInfoPanel.opened,
-#AioInfoPanel.opened.scrollers ~ .AIO-scroller {
+.AIOTweaksTmplt #AioInfoPanel.opened,
+.AIOTweaksTmplt #AioInfoPanel.opened.scrollers ~ .AIO-scroller {
   display:block;
 }
-#AioInfoPanel .infoMessage {
+.AIOTweaksTmplt #AioInfoPanel .infoMessage {
   text-align: center;
   white-space: normal;
   font-size: 24px;
 }
-#scrollUpBtn{
+.AIOTweaksTmplt #scrollUpBtn{
   top: 200px;
 }
-#scrollDownBtn{
+.AIOTweaksTmplt #scrollDownBtn{
   top: 260px;
 }
-#closeAioInfo,
-#closeTouchPanel {
+.AIOTweaksTmplt #closeAioInfo,
+.AIOTweaksTmplt #closeTouchPanel {
   position: absolute;
   top: 0;
   right: 0;
@@ -307,21 +312,21 @@ button#noBgBtn {
   z-index: 9998;
   line-height: 0;
 }
-#closeTouchPanel.selectedItem{
+.AIOTweaksTmplt #closeTouchPanel.selectedItem{
   opacity:0.8;
   border-color: #ff0000;
   color: #fff;
 }
-.Touch {
+.AIOTweaksTmplt .Touch {
   z-index:9999;
 }
-#MainMenuMsg {
+.AIOTweaksTmplt #MainMenuMsg {
   background: #000;
   border-radius: 20px;
   width: 48%;
   margin: auto;
 }
-button.selectedItem {
-  background: -o-linear-gradient(top,rgba(0,0,255,0),rgba(0,0,255,1));
-  background: -webkit-linear-gradient(top,rgba(0,0,255,0),rgba(0,0,255,1));
+.AIOTweaksTmplt button.selectedItem {
+  background: -o-linear-gradient(top,rgba(0,0,0,0.5),rgba(0,0,255,1));
+  background: -webkit-linear-gradient(top,rgba(0,0,0,0.5),rgba(0,0,255,1));
 }

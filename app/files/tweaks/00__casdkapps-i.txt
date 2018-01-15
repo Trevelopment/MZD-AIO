@@ -1,0 +1,91 @@
+# Install CASDK apps
+
+# run apps from SD card
+if [ ${CASDK_SD} -eq 1 ]
+then
+  if [ -e ${MZD_APP_SD} ]
+  then
+    mount -o rw,remount ${MZD_APP_SD}
+    rm -rf ${MZD_APP_DIR}
+    ln -sf ${MZD_APP_SD}/apps ${MZD_APP_DIR}
+    log_message "===               Created App Symlink To NAV_SD Card                  ==="
+    killall jci-dialog
+    /jci/tools/jci-dialog --confirm --title="INSTALL APPS TO SD CARD?" --text="INSTALL CASDK APPS ONTO SD CARD?\n\n1. YES - INSTALL APPS ONTO SD CARD.\nOR\n2. NO - SKIP (MANUALLY INSTALL APPS TO SD CARD)." --ok-label="1. YES - INSTALL" --cancel-label="2. NO - SKIP"
+    if [ $? -eq 1 ]
+    then
+      show_message "CASDK INSTALLATION COMPLETE\n\nCASDK APPS WILL ONLY RUN FROM SD CARD\n\nREBOOTING"
+      log_message "===  CASDK INSALLATION COMPLETE APPS RUN FROM SD CARD \"apps\" FOLDER   ==="
+      sleep 8
+      reboot
+      exit 0
+    else
+      MZD_APP_DIR=${MZD_APP_SD}/apps
+      show_message "INSTALLING CASDK APPS TO SD CARD ... "
+    fi
+  else
+    killall jci-dialog
+    /jci/tools/jci-dialog --confirm --title="INSTALL CASDK APPS?" --text="NO SD CARD CONNECTED, TO USE CASDK APPS:\n\n1. MANUALLY INSTALL APPS TO SD CARD\nOR\n2. INSTALL APPS TO SYSTEM (NO SD CARD NEEDED)." --ok-label="1. SD CARD" --cancel-label="2. SYSTEM DISK"
+    if [ $? -eq 1 ]
+    then
+      if [ -L ${MZD_APP_DIR} ]
+      then
+        rm -rf ${MZD_APP_DIR}
+      fi
+      show_message "INSTALLING CASDK APPS ... "
+    else
+      rm -rf ${MZD_APP_DIR}
+      ln -sf ${MZD_APP_SD}/apps ${MZD_APP_DIR}
+      log_message "===               Created App Symlink To NAV_SD Card                  ==="
+      show_message "CASDK INSTALLATION COMPLETE\n\nCASDK APPS WILL ONLY RUN FROM SD CARD\n\nREBOOTING"
+      log_message "===  CASDK INSALLATION COMPLETE APPS RUN FROM SD CARD \"apps\" FOLDER   ==="
+      sleep 8
+      reboot
+      exit 0
+    fi
+  fi
+else
+  if [ -L ${MZD_APP_DIR} ]
+  then
+    rm -rf ${MZD_APP_DIR}
+  fi
+  show_message "INSTALLING CASDK APPS... "
+fi
+
+log_message "===  INSTALLING CASDK APPS TO ${MZD_APP_DIR}   ==="
+# create apps folder if it doesnt exist
+mkdir -p ${MZD_APP_DIR}
+MZD_APPS_JS=${MZD_APP_DIR}/apps.js
+
+if [ -e ${MZD_APPS_JS} ]
+then
+  sed -i '/];/d' ${MZD_APPS_JS}
+else
+  echo "var CustomApplications = [" > ${MZD_APPS_JS}
+fi
+
+#if [ ${APPTERMINAL} -eq 1 ] && ! grep -Fq "app.terminal" ${MZD_APPS_JS}
+#then
+#  echo '  "app.terminal",' >> ${MZD_APPS_JS}
+#  cp -a ${MYDIR}/casdk/apps/app.terminal ${MZD_APP_DIR}
+#  log_message "===                 Installed CASDK App: Terminal                     ==="
+#fi
+
+add_casdk_app "${APPTERMINAL}" "terminal"
+add_casdk_app "${APPSIMPLEDASHBOARD}" "simpledashboard"
+add_casdk_app "${APPGPSSPEED}" "gpsspeed"
+add_casdk_app "${APPMULTIDASH}" "multidash"
+add_casdk_app "${APPBG}" "background"
+add_casdk_app "${APPVDD}" "vdd"
+add_casdk_app "${APPDEVTOOLS}" "devtools"
+#add_casdk_app "${APPTETRIS}" "tetris"
+#add_casdk_app "${APPBREAKOUT}" "breakout"
+#add_casdk_app "${APPSNAKE}" "snake"
+
+echo '];' >> ${MZD_APPS_JS}
+
+sleep 5
+log_message "=========************* CASDK INSTALLATION FINISHED *************========="
+killall jci-dialog
+/jci/tools/jci-dialog --title="MZD-AIO-TI+CASDK INSTALLED" --text="The Custom Application Runtime was successfully installed.\n\nThe System will reboot in a few seconds." --no-cancel &
+sleep 10
+reboot

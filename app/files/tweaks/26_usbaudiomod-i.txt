@@ -7,7 +7,6 @@ then
 	cp /jci/gui/common/controls/NowPlaying4/js/NowPlaying4Ctrl.js "${MYDIR}/bakups/test/"
 	cp /jci/gui/common/controls/NowPlaying4/css/NowPlaying4Ctrl.css "${MYDIR}/bakups/test/"
 	cp /jci/gui/apps/usbaudio/js/usbaudioApp.js "${MYDIR}/bakups/test/"
-	log_message "===             Copied Before Files to ${MYDIR}/bakups/test           ==="
 fi
 # Backups
 if [ ! -e /jci/gui/common/controls/NowPlaying4/js/NowPlaying4Ctrl.js.org ]
@@ -30,7 +29,6 @@ then
 	cp /jci/gui/common/controls/NowPlaying4/js/NowPlaying4Ctrl.js.org "${MYDIR}/bakups/"
 	cp /jci/gui/common/controls/NowPlaying4/css/NowPlaying4Ctrl.css.org "${MYDIR}/bakups/"
 	cp /jci/gui/apps/usbaudio/js/usbaudioApp.js.org "${MYDIR}/bakups/"
-	log_message "===               Copied Backup Files to ${MYDIR}/bakups/             ==="
 fi
 if [ ${COMPAT_GROUP} -lt 5 ]
 then
@@ -40,7 +38,8 @@ then
 	log_message "===                      Copied usbaudioApp.js                        ==="
 	cp -a ${MYDIR}/config/USBAudioMod/*.png /jci/gui/common/images/icons/
 	log_message "===                         Copied images                             ==="
-
+  sed -i "s/GRACENOTETEXT/${GRACENOTE}/g" /jci/gui/apps/usbaudio/js/usbaudioApp.js
+  log_message "===                      Changed Gracenote Text                       ==="
 	# Remove Existing CSS
 	remove_aio_css /jci/gui/common/controls/NowPlaying4/css/NowPlaying4Ctrl.css USBAUDIOMOD
 	# Add CSS

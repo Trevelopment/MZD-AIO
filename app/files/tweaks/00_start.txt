@@ -19,6 +19,43 @@ get_cmu_ver()
   _ver=$(grep "^JCI_SW_VER=" /jci/version.ini | sed 's/^.*_\([^_]*\)\"$/\1/' | cut -d '.' -f 1)
   echo ${_ver}
 }
+log_message()
+{
+  echo "$*" 1>&2
+  echo "$*" >> "${MYDIR}/AIO_log.txt"
+  /bin/fsync "${MYDIR}/AIO_log.txt"
+}
+aio_info()
+{
+  if [ ${KEEPBKUPS} -eq 1 ]
+  then
+    echo "$*" 1>&2
+    echo "$*" >> "${MYDIR}/AIO_info.json"
+    /bin/fsync "${MYDIR}/AIO_info.json"
+  fi
+}
+# CASDK functions
+MZD_APP_SD=/tmp/mnt/sd_nav
+MZD_APP_DIR=/tmp/mnt/resources/aio/mzd-casdk/apps
+get_casdk_mode()
+{
+  if [ -e /jci/casdk/casdk.aio ]; then
+    echo 1
+  else
+    echo 0
+  fi
+}
+add_casdk_app()
+{
+  CASDK_APP=${2}
+  if [ ${1} -eq 1 ] && ! grep -Fq "app.${CASDK_APP}" ${MZD_APPS_JS}
+  then
+    echo "  \"app.${CASDK_APP}\"," >> ${MZD_APPS_JS}
+    cp -a ${MYDIR}/casdk/apps/app.${CASDK_APP} ${MZD_APP_DIR}
+    CASDK_APP="${CASDK_APP}         "
+    log_message "===                 Installed CASDK App: ${CASDK_APP:0:10}                   ==="
+  fi
+}
 compatibility_check()
 {
   # Compatibility check falls into 5 groups:
@@ -48,7 +85,7 @@ compatibility_check()
     elif [ $_VER_EXT -lt 500 ] # v59.00.400-500
     then
       echo 4 && return
-    elif [ $_VER_EXT -lt 510 ]
+    elif [ $_VER_EXT -lt 599 ]
     then
       echo 5 && return # 59.00.502 is another level because it is not compatible with USB Audio Mod
     else
@@ -58,32 +95,17 @@ compatibility_check()
     echo 0
   fi
 }
-log_message()
-{
-  echo "$*" 1>&2
-  echo "$*" >> "${MYDIR}/AIO_log.txt"
-  /bin/fsync "${MYDIR}/AIO_log.txt"
-}
-aio_info()
-{
-  if [ ${KEEPBKUPS} -eq 1 ]
-  then
-    echo "$*" 1>&2
-    echo "$*" >> "${MYDIR}/AIO_info.json"
-    /bin/fsync "${MYDIR}/AIO_info.json"
-  fi
-}
 remove_aio_css()
 {
   sed -i "/.. MZD-AIO-TI *${2} *CSS ../,/.. END AIO *${2} *CSS ../d" "${1}"
-  INPUT=${1##*/}
-  log_message "===                Removed ${2} CSS From ${INPUT}                ==="
+  INPUT="${1##*/}               "
+  log_message "===               Removed CSS From ${INPUT:0:20}               ==="
 }
 remove_aio_js()
 {
   sed -i "/.. MZD-AIO-TI.${2}.JS ../,/.. END AIO.${2}.JS ../d" "${1}"
   INPUT=${1##*/}
-  log_message "===              Removed ${2} JavaScript From ${INPUT}             ==="
+  log_message "===            Removed ${2:0:11} JavaScript From ${INPUT:0:13}    ==="
 }
 show_message()
 {
@@ -117,7 +139,7 @@ add_app_json()
   count=$(grep -c '{ "name": "'"${1}"'"' /jci/opera/opera_dir/userjs/additionalApps.json)
   if [ "$count" = "0" ]
   then
-    log_message "=== ${2} not found in additionalApps.json, first installation ==="
+    log_message "===  ${2:0:10} not found in additionalApps.json, first installation  ==="
     mv /jci/opera/opera_dir/userjs/additionalApps.json /jci/opera/opera_dir/userjs/additionalApps.json.old
     sleep 2
     # delete last line with "]" from additionalApps.json
@@ -135,7 +157,7 @@ add_app_json()
       log_message "===           Found existing entrys in additionalApps.json            ==="
     fi
     # add app entry and "]" again to last line of additionalApps.json
-    log_message "===        Add ${2} to last line of additionalApps.json         ==="
+    log_message "===        Add ${2:0:10} to last line of additionalApps.json         ==="
     echo '  { "name": "'"${1}"'", "label": "'"${2}"'" }' >> /jci/opera/opera_dir/userjs/additionalApps.json
     sleep 2
     if [ ${3} != "" ]
@@ -148,17 +170,23 @@ add_app_json()
     cp /jci/opera/opera_dir/userjs/additionalApps.json "${MYDIR}/bakups/test/additionalApps${1}-5._after.json"
     rm -f /jci/opera/opera_dir/userjs/additionalApps.json.old
   else
-    log_message "===        ${2} already exists in additionalApps.json          ==="
+    log_message "===         ${2:0:10} already exists in additionalApps.json          ==="
+  fi
+  if [ -e /jci/opera/opera_dir/userjs/nativeApps.js ]
+  then
+    echo "additionalApps = $(cat /jci/opera/opera_dir/userjs/additionalApps.json)" > /jci/opera/opera_dir/userjs/nativeApps.js
+    log_message "===                    Updated nativeApps.js                          ==="
   fi
 }
 remove_app_json()
 # script by vic_bam85
 {
+  unix2dos /jci/opera/opera_dir/userjs/additionalApps.json
   # check if app entry in additionalApps.json still exists, if so, then it will be deleted
   count=$(grep -c '{ "name": "'"${1}"'"' /jci/opera/opera_dir/userjs/additionalApps.json)
   if [ "$count" -gt "0" ]
   then
-    log_message "====  Remove ${count} entry(s) of ${1} found in additionalApps.json   ==="
+    log_message "====   Remove ${count} entry(s) of ${1:0:10} found in additionalApps.json   ==="
     mv /jci/opera/opera_dir/userjs/additionalApps.json /jci/opera/opera_dir/userjs/additionalApps.json.old
     # delete last line with "]" from additionalApps.json
     grep -v "]" /jci/opera/opera_dir/userjs/additionalApps.json.old > /jci/opera/opera_dir/userjs/additionalApps.json
@@ -181,7 +209,7 @@ remove_app_json()
     # add "]" again to last line of additionalApps.json
     echo "]" >> /jci/opera/opera_dir/userjs/additionalApps.json
     sleep 2
-    first=$(head -c 1 /jci/opera/opera_dir/userjs/additionalApps.json.old)
+    first=$(head -c 1 /jci/opera/opera_dir/userjs/additionalApps.json)
     if [ $first != "[" ]
     then
       sed -i "1s/^/[\n/" /jci/opera/opera_dir/userjs/additionalApps.json
@@ -190,7 +218,13 @@ remove_app_json()
     rm -f /jci/opera/opera_dir/userjs/additionalApps.json.old
     cp /jci/opera/opera_dir/userjs/additionalApps.json "${MYDIR}/bakups/test/additionalApps${1}-4._after.json"
   else
-    log_message "===            ${1} not found in additionalApps.json              ==="
+    log_message "===            ${1:0:10} not found in additionalApps.json            ==="
+  fi
+  dos2unix /jci/opera/opera_dir/userjs/additionalApps.json
+  if [ -e /jci/opera/opera_dir/userjs/nativeApps.js ]
+  then
+    echo "additionalApps = $(cat /jci/opera/opera_dir/userjs/additionalApps.json)" > /jci/opera/opera_dir/userjs/nativeApps.js
+    log_message "===                    Updated nativeApps.js                          ==="
   fi
 }
 # disable watchdog and allow write access
@@ -201,9 +235,19 @@ MYDIR=$(dirname "$(readlink -f "$0")")
 CMU_VER=$(get_cmu_ver)
 CMU_SW_VER=$(get_cmu_sw_version)
 COMPAT_GROUP=$(compatibility_check)
-rm -f "${MYDIR}/AIO_log.txt"
-rm -f "${MYDIR}/AIO_info.json"
+CASDK_MODE=$(get_casdk_mode)
+
+# save logs
 mkdir -p "${MYDIR}/bakups/test/"
+if [ -f "${MYDIR}/AIO_log.txt" ]; then
+  if [ ! -f "${MYDIR}/bakups/count.txt" ]; then
+    echo 0 > "${MYDIR}/bakups/count.txt"
+  fi
+  logcount=$(cat ${MYDIR}/bakups/count.txt)
+  mv "${MYDIR}/AIO_log.txt" "${MYDIR}/bakups/AIO_log-${logcount}.txt"
+  echo $((logcount+1)) > "${MYDIR}/bakups/count.txt"
+fi
+rm -f "${MYDIR}/AIO_info.json"
 
 log_message "========================================================================="
 log_message "=======================   START LOGGING TWEAKS...  ======================"
@@ -211,11 +255,17 @@ log_message "======================= AIO v.${AIO_VER}  -  ${AIO_DATE} ==========
 log_message "======================= CMU_SW_VER = ${CMU_SW_VER} ======================"
 log_message "=======================  COMPATIBILITY_GROUP  = ${COMPAT_GROUP} ======================="
 #log_message "======================== CMU_VER = ${CMU_VER} ====================="
-log_message ""
+if [ $CASDK_MODE -eq 1 ]; then
+  log_message "=============================  CASDK MODE ==============================="
+  WELCOME_MSG="====== MZD-AIO-TI ${AIO_VER} ======\n\n===**** CASDK MODE ****===="
+else
+  log_message ""
+  WELCOME_MSG="==== MZD-AIO-TI  ${AIO_VER} ====="
+fi
 log_message "=======================   MYDIR = ${MYDIR}    ======================"
 log_message "==================      DATE = $(timestamp)        ================="
 
-show_message "==== MZD-AIO-TI  ${AIO_VER} ====="
+show_message "${WELCOME_MSG}"
 
 aio_info '{"info":{'
 aio_info \"CMU_SW_VER\": \"${CMU_SW_VER}\",

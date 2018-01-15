@@ -69,7 +69,7 @@ usbaudioApp.prototype.appInit = function()
     {
         utility.loadScript("apps/usbaudio/test/usbaudioAppTest.js");
     }
-
+    this.AIO_gracenoteText = "GRACENOTETEXT";
     // BLM metadata (md) filters
     this._mdFilter = {
         USBM_MetadataType_Unknown : 0,
@@ -907,8 +907,9 @@ usbaudioApp.prototype.appInit = function()
         list:2
     };
 
+    this._genreTimeout = null;
     this._gracenoteTimeout = null;
-    this._gracenoteTimeoutTime = 3000;
+    this._gracenoteTimeoutTime = 9000;
     this._umpElapseTime = 0;
     this._umpTotalTime = 0;
     this._userIntent = "Browse";
@@ -1394,9 +1395,9 @@ usbaudioApp.prototype.appInit = function()
                     hideLoadingOverlayTimeout: 0,
                     scrollTo : 0,
                     selectCallback : this._listItemClickCallback.bind(this),
-					// ---MZDMOD---
-					// Add call back for long press
-					longPressCallback : this._listLongPressCallback.bind(this),
+                    // ---MZDMOD---
+                    // Add call back for long press
+                    longPressCallback : this._listLongPressCallback.bind(this),
                     needDataCallback : this._requestMoreDataCallback.bind(this)
                 } // end of properties for "ListCtrl"
             }, // end of list of controlProperties
@@ -1408,9 +1409,9 @@ usbaudioApp.prototype.appInit = function()
             "sbNameId": this.uiaId,
             "controlProperties": {
                 "NowPlayingCtrl" : {
-					// ---MZDMOD---
+                    // ---MZDMOD---
                     // Added stlye8 to NowPlaying4Ctrl.js, you must use this updated control and the CSS file
-					//"ctrlStyle": "Style2",
+                   //"ctrlStyle": "Style2",
                     "ctrlStyle": "Style8",
                     "umpConfig" : this._umpConfig,
                 } // end of properties for "NowPlayingCtrl"
@@ -2171,9 +2172,9 @@ usbaudioApp.prototype._listItemClickCallback = function (listCtrlObj, appData, p
                         this._currentContext.params.hasOwnProperty("payload") &&
                         this._currentContext.params.payload.hasOwnProperty("folderId"))
                         {
-							this._cachedFolder.enabled = false;
-							this._cachedFolder.id = 0;
-                            this._appsdkGetFolderItems(this._currentContext.params.payload.folderId, this._viewType.list, 0, null, "play", params.fromVui);
+                          this._cachedFolder.enabled = false;
+                          this._cachedFolder.id = 0;
+                          this._appsdkGetFolderItems(this._currentContext.params.payload.folderId, this._viewType.list, 0, null, "play", params.fromVui);
                         }
                         else
                         {
@@ -2181,11 +2182,11 @@ usbaudioApp.prototype._listItemClickCallback = function (listCtrlObj, appData, p
                         }
                     break;
                 case 1:
-                if (this._userIntent == "Play")
+                    if (this._userIntent == "Play")
                     {
-						this._cachedFolder.enabled = false;
-						this._cachedFolder.id = 0;
-                        this._appsdkGetFolderItems(appData.id, this._viewType.list, 0, null, "play", params.fromVui);
+                      this._cachedFolder.enabled = false;
+                      this._cachedFolder.id = 0;
+                      this._appsdkGetFolderItems(appData.id, this._viewType.list, 0, null, "play", params.fromVui);
                     }
                     else
                     {
@@ -2193,10 +2194,10 @@ usbaudioApp.prototype._listItemClickCallback = function (listCtrlObj, appData, p
                     }
                     break;
                 case 3:
-					// Cached folder is cleared in _clearMetaData
+					          // Cached folder is cleared in _clearMetaData
                     this._clearMetadata();
                     this._clearTotalElapsedTime();
-					//this._cachedFolder.enabled = false;
+					          //this._cachedFolder.enabled = false;
                     framework.sendEventToMmui(this.uiaId, "BrowsePlayFileId", {payload:{fileId: appData.id, viewType: this._currentContext.params.payload.viewType, folderId: this._currentContext.params.payload.folderId}}, params.fromVui);
                     break;
             }
@@ -2260,30 +2261,30 @@ usbaudioApp.prototype._umpDefaultSelectCallback = function (ctrlObj, appData, pa
         case 'repeat':
             framework.sendEventToMmui(this.uiaId, "Repeat");
             break;
-		/*
-        case "GenerateMoreLikeThis":
-            framework.sendEventToMmui(this.uiaId, "GenerateMoreLikeThis", {payload:{"selectionId": this._selectionId.playing}});
-			if (this._selectionId.browsing != 0)
-		    {
-		        this._releaseSelection(this._selectionId.browsing);
-		        this._selectionId.browsing = 0;
-		    }
-            break;
-		*/
-		// ---MZDMOD---
-		// Add folder browsing from UMP and set logic for song list button
-		// Need to check how we played the songs, if we played them via long press
-		case "BrowseUSBFolders":
+      		/*
+              case "GenerateMoreLikeThis":
+                  framework.sendEventToMmui(this.uiaId, "GenerateMoreLikeThis", {payload:{"selectionId": this._selectionId.playing}});
+      			if (this._selectionId.browsing != 0)
+      		    {
+      		        this._releaseSelection(this._selectionId.browsing);
+      		        this._selectionId.browsing = 0;
+      		    }
+                  break;
+      		*/
+      		// ---MZDMOD---
+      		// Add folder browsing from UMP and set logic for song list button
+      		// Need to check how we played the songs, if we played them via long press
+      		case "BrowseUSBFolders":
             framework.sendEventToMmui(this.uiaId, "BrowseFolders");
             break;
-        case "SongList":
-			// Most of the browse events appear to require the list control to be active which is dumb
-			// For a workaround, I am opening the folders list control and in the ready function of the control, going to the appropiate folder
-			if ((this._cachedFolder.enabled == true) && (this._cachedFolder.id != 0))
-			{
-				this._cachedFolder.songList = true;
-			}
-			framework.sendEventToMmui(this.uiaId, "SongList");
+          case "SongList":
+      			// Most of the browse events appear to require the list control to be active which is dumb
+      			// For a workaround, I am opening the folders list control and in the ready function of the control, going to the appropiate folder
+      			if ((this._cachedFolder.enabled == true) && (this._cachedFolder.id != 0))
+      			{
+      				this._cachedFolder.songList = true;
+      			}
+      			framework.sendEventToMmui(this.uiaId, "SongList");
             break;
         case "next":
             framework.sendEventToMmui("Common", "Global.Next");
@@ -2408,7 +2409,7 @@ usbaudioApp.prototype._DeviceNormalizedMsgHandler = function (msg)
             //this._currentContextTemplate.nowPlaying4Ctrl.umpCtrl.setButtonDisabled("GenerateMoreLikeThis", !this._connectedDevs.selectedDevCataloged);
             if (this._connectedDevs.showGracenote == true)
             {
-                this._currentContextTemplate.nowPlaying4Ctrl.setDetailLine3({detailText: "Powered By Gracenote®"});
+                this._currentContextTemplate.nowPlaying4Ctrl.setDetailLine3({detailText: AIO_gracenoteText});
                 this._gracenoteTimeout = setTimeout(this._removeGracenote.bind(this), this._gracenoteTimeoutTime);
             }
         }
@@ -2442,7 +2443,7 @@ usbaudioApp.prototype._BODReadyMsgHandler = function (msg)
 
             if (this._connectedDevs.showGracenote == true && this._cachedSongDetails.title)
             {
-                this._currentContextTemplate.nowPlaying4Ctrl.setDetailLine3({detailText: "Powered By Gracenote®"});
+                this._currentContextTemplate.nowPlaying4Ctrl.setDetailLine3({detailText: AIO_gracenoteText});
                 this._gracenoteTimeout = setTimeout(this._removeGracenote.bind(this), this._gracenoteTimeoutTime);
             }
         }
@@ -2734,61 +2735,61 @@ usbaudioApp.prototype._PlaybackStatusMsgHandler = function (msg)
 
 usbaudioApp.prototype._NowPlayingDataMsgHandler = function (msg)
 {
-    log.debug("Inside _NowPlayingDataMsgHandler with msg : ", msg );
-    if (!this._currentContext){
-    	log.debug('No this._currentContext !!!');
-    }
-    else
+  console.log("Inside _NowPlayingDataMsgHandler with msg : ", msg );
+  if (!this._currentContext){
+    log.debug('No this._currentContext !!!');
+  }
+  else
+  {
+    log.debug('this._currentContext.ctxtId', this._currentContext.ctxtId);
+  }
+
+  if (this._currentContext && this._currentContext.ctxtId == "NowPlaying")
+  {
+    if (msg && msg.params && msg.params.payload && msg.params.payload.folderId != 0)
     {
-    	log.debug('this._currentContext.ctxtId', this._currentContext.ctxtId);
+      // ---MZDMOD---
+      if ((this._cachedFolder.enabled == true) && (this._cachedFolder.id != 0))
+      {
+        this._appsdkGetFolderItems(this._cachedFolder.id, this._viewType.tree, 0, null, "getFolderName", false);
+      }
+      else
+      {
+        var folderId = parseInt(msg.params.payload.folderId);
+        this._appsdkGetFolderItems(folderId, this._viewType.tree, 0, null, "getFolderName", false);
+      }
     }
+    else if (msg && msg.params && msg.params.payload && msg.params.payload.playlistName)
+    {
+      var playList = msg.params.payload.playlistName;
 
-    if (this._currentContext && this._currentContext.ctxtId == "NowPlaying")
-	{
-        if (msg && msg.params && msg.params.payload && msg.params.payload.folderId != 0)
+      if (playList.toLowerCase() == 'more like this')
+      {
+        playList = framework.localize.getLocStr('usbaudio', 'common.Tooltip_IcnUmpMore');
+        //test
+        if (this._selectionId.browsing != 0)
         {
-			// ---MZDMOD---
-			if ((this._cachedFolder.enabled == true) && (this._cachedFolder.id != 0))
-			{
-				this._appsdkGetFolderItems(this._cachedFolder.id, this._viewType.tree, 0, null, "getFolderName", false);
-			}
-			else
-			{
-				var folderId = parseInt(msg.params.payload.folderId);
-				this._appsdkGetFolderItems(folderId, this._viewType.tree, 0, null, "getFolderName", false);
-			}
+          this._releaseSelection(this._selectionId.browsing);
+          this._selectionId.browsing = 0;
         }
-        else if (msg && msg.params && msg.params.payload && msg.params.payload.playlistName)
-        {
-            var playList = msg.params.payload.playlistName;
+      }
 
-            if (playList.toLowerCase() == 'more like this')
-            {
-                playList = framework.localize.getLocStr('usbaudio', 'common.Tooltip_IcnUmpMore');
-                //test
-                if (this._selectionId.browsing != 0)
-			    {
-			        this._releaseSelection(this._selectionId.browsing);
-			        this._selectionId.browsing = 0;
-			    }
-            }
+      if (playList == "")
+      {
+        log.debug('Playlist is empty string!!!');
+        playList = "";
+      }
 
-            if (playList == "")
-            {
-		    	log.debug('Playlist is empty string!!!');
-            	playList = "";
-            }
-
-            this._cachedSongDetails.screenTitle = playList;
-		    if (this._currentContextTemplate)
-    		{
-				// ---MZDMOD---
-				// Add image for playlist objects
-            	//this._currentContextTemplate.nowPlaying4Ctrl.setCtrlTitle({ctrlTitleText: playList});
-				this._currentContextTemplate.nowPlaying4Ctrl.setCtrlTitle({ctrlTitleText: playList, ctrlTitleIcon: "common/images/icons/IcnListPlaylist_En.png"});
-           	}
-        }
+      this._cachedSongDetails.screenTitle = playList;
+      if (this._currentContextTemplate)
+      {
+        // ---MZDMOD---
+        // Add image for playlist objects
+        //this._currentContextTemplate.nowPlaying4Ctrl.setCtrlTitle({ctrlTitleText: playList});
+        this._currentContextTemplate.nowPlaying4Ctrl.setCtrlTitle({ctrlTitleText: playList, ctrlTitleIcon: "common/images/icons/IcnListPlaylist_En.png"});
+      }
     }
+  }
 };
 
 usbaudioApp.prototype._ObjectInfoMsgHandler = function (msg)
@@ -2798,6 +2799,14 @@ usbaudioApp.prototype._ObjectInfoMsgHandler = function (msg)
     this._cachedSongDetails.title = msg.params.payload.title;
     this._cachedSongDetails.album = msg.params.payload.album;
     this._stopElapsedUpdate = false;
+    // ---MZDMOD---
+    // Show Statusbar notification at start of each track: "Artist - Song"
+    framework.common.startTimedSbn(this.uiaId, 'USBA_ConnectionStatus_Sbn', 'typeE', {
+      sbnStyle : 'Style02',
+      imagePath1 : 'IcnSbnEnt.png',
+      text1 : this._cachedSongDetails.artist + " - ",
+      text2 : this._cachedSongDetails.title,
+    });
 
     // Update control if context is bound to a template
     if (this._currentContext && this._currentContextTemplate && this._currentContext.ctxtId && this._currentContext.ctxtId == "NowPlaying")
@@ -2812,8 +2821,16 @@ usbaudioApp.prototype._ObjectInfoMsgHandler = function (msg)
             //this._currentContextTemplate.nowPlaying4Ctrl.umpCtrl.setButtonDisabled("GenerateMoreLikeThis", !this._connectedDevs.selectedDevCataloged);
             if (this._connectedDevs.showGracenote == true)
             {
-                this._currentContextTemplate.nowPlaying4Ctrl.setDetailLine3({detailText: "Powered By Gracenote®"});
+                this._currentContextTemplate.nowPlaying4Ctrl.setDetailLine3({detailText: AIO_gracenoteText});
                 this._gracenoteTimeout = setTimeout(this._removeGracenote.bind(this), this._gracenoteTimeoutTime);
+            }
+        }
+        else // ---MZDMOD--- setDetailLine3 to genre for 20 seconds
+        {
+            if (this._cachedSongDetails.genre)
+            {
+                this._currentContextTemplate.nowPlaying4Ctrl.setDetailLine3({detailText: this._cachedSongDetails.genre});
+                this._genreTimeout = setTimeout(this._removeGenre.bind(this), 20000);
             }
         }
     }
@@ -2821,12 +2838,12 @@ usbaudioApp.prototype._ObjectInfoMsgHandler = function (msg)
 
 usbaudioApp.prototype._TimedSbn_CurrentSongMsgHandler = function (msg)
 {
-    framework.common.startTimedSbn(this.uiaId, 'TimedSbn_UsbAudio_CurrentSong', 'typeE', {
-        sbnStyle : 'Style02',
-        imagePath1 : 'IcnSbnEnt.png',
-		text1 : "USB",
-        text2 : msg.params.payload.title,
-    });
+  framework.common.startTimedSbn(this.uiaId, 'TimedSbn_UsbAudio_CurrentSong', 'typeE', {
+    sbnStyle : 'Style02',
+    imagePath1 : 'IcnSbnEnt.png',
+    text1 : "USB",
+    text2 : msg.params.payload.title,
+  });
 };
 
 usbaudioApp.prototype._PlayerStateMsgHandler = function (msg)
@@ -4245,7 +4262,7 @@ usbaudioApp.prototype._populateNowPlayingCtrl = function (tmplt, songDetails)
         }
         if (this._connectedDevs.showGracenote == true && songDetails.title && songDetails.artist && songDetails.album && this._connectedDevs.selectedDevCataloged)
         {
-            tmplt.nowPlaying4Ctrl.setDetailLine3({detailText: "Powered By Gracenote®"});
+            tmplt.nowPlaying4Ctrl.setDetailLine3({detailText: AIO_gracenoteText});
             this._gracenoteTimeout = setTimeout(this._removeGracenote.bind(this), this._gracenoteTimeoutTime);
         }
     }
@@ -4278,6 +4295,16 @@ usbaudioApp.prototype._removeGracenote = function ()
     {
         this._connectedDevs.B.showGracenote = false;
     }
+
+    if (this._currentContext.ctxtId == "NowPlaying" && this._currentContextTemplate)
+    {
+        this._currentContextTemplate.nowPlaying4Ctrl.setDetailLine3({detailText: ""});
+    }
+};
+usbaudioApp.prototype._removeGenre = function ()
+{
+    clearTimeout(this._genreTimeout);
+    this._genreTimeout = null;
 
     if (this._currentContext.ctxtId == "NowPlaying" && this._currentContextTemplate)
     {

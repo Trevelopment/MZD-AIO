@@ -38,6 +38,10 @@ var sbTemp = false;
 // Set This to true if using the Bar Speedometer Mod
 var barSpeedometerMod = false;
 
+// Set This to true if you want the Bar in the Bar Speedometer to measure engine speed
+// False for Current Vehicle Speed
+var engineSpeedBar = false;
+
 // set this to true for Fahrenheit false for Celsius
 var tempIsF = false;
 
@@ -51,32 +55,32 @@ if (!window.jQuery) {
 framework.transitionsObj._genObj._TEMPLATE_CATEGORIES_TABLE.SpeedoMeterTmplt = "Detail with UMP";
 
 function SbSpeedo(){
-     $('head').prepend($('<link rel="stylesheet" type="text/css" />').attr('href', 'apps/_speedometer/css/StatusBarSpeedometer.css'));
-     $('<div id="SbSpeedo"><div class="gpsAltitudeValue"></div><div class="gpsHeading"></div><div class="gpsSpeedValue">0</div><div class="speedUnit"></div></div>').appendTo('body');
-    if(isMPH){
-        $('.speedUnit').text('mph');
-    } else if(language === 'TR'){
-        $('.speedUnit').text('km/s');
+  $('head').prepend($('<link rel="stylesheet" type="text/css" />').attr('href', 'apps/_speedometer/css/StatusBarSpeedometer.css'));
+  $('<div id="SbSpeedo"><div class="gpsAltitudeValue"></div><div class="gpsHeading"></div><div class="gpsSpeedValue">0</div><div class="speedUnit"></div></div>').appendTo('body');
+  if(isMPH){
+    $('.speedUnit').text('mph');
+  } else if(language === 'TR'){
+    $('.speedUnit').text('km/s');
+  } else {
+    $('.speedUnit').text('km/h');
+  }
+
+  $('.StatusBarCtrlClock').click(function (){
+    $('#SbSpeedo').fadeToggle();
+  });
+
+  setInterval(function (){
+    if(framework.getCurrentApp() === 'backupparking'){
+      $('#SbSpeedo').addClass('parking');
     } else {
-        $('.speedUnit').text('km/h');
+      $('#SbSpeedo').removeClass('parking');
     }
-
-    $('.StatusBarCtrlClock').click(function (){
-        $('#SbSpeedo').fadeToggle();
-    });
-
-    setInterval(function (){
-      if(framework.getCurrentApp() === 'backupparking'){
-        $('#SbSpeedo').addClass('parking');
-      } else {
-        $('#SbSpeedo').removeClass('parking');
-      }
-    }, 1000);
-    $('#SbSpeedo').on('click',toggleSbSpeedoExtra);
-    if(sbTemp) {
-      sbTemp = !sbTemp;
-      toggleSbSpeedoExtra();
-    }
+  }, 1000);
+  $('#SbSpeedo').on('click',toggleSbSpeedoExtra);
+  if(sbTemp) {
+    sbTemp = !sbTemp;
+    toggleSbSpeedoExtra();
+  }
 }
 function toggleSbSpeedoExtra() {
   if(sbTemp) {
@@ -89,19 +93,19 @@ function toggleSbSpeedoExtra() {
   sbTemp = !sbTemp;
 }
 function loadSpeedoTemplate() {
-  if(barSpeedometerMod) {
-    $.getScript('apps/_speedometer/js/speedometer-config.js', function(data){
-      $('body').prepend("<script>"+data+"</script>");
-    });
-  }
+  $.getScript('apps/_speedometer/js/speedometer-config.js', function(data){
+    $('body').prepend("<script>"+data+"</script>");
+  });
 }
 
+if(barSpeedometerMod) {
+  loadSpeedoTemplate();
+}
 //addonInit();
 setTimeout(function(){
   $.getScript("apps/_speedometer/js/speedometer.js",function(){
-    if(enableSmallSbSpeedo){
+    if(enableSmallSbSpeedo) {
       SbSpeedo();
     }
-    loadSpeedoTemplate();
   });
-}, 5000);
+}, 500);

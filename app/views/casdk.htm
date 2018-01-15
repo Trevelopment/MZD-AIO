@@ -1,7 +1,8 @@
 <link rel="stylesheet" href="./assets/css/casdk.css">
-<div id="header" style="" class="w3-light-green" ng-cloak>
-  <h1 id="mzd-title" class="mazda"> MZD-AIO-TI + CASDK <small><i>v</i>{{appVer}}</small>
-    <button id="compileButton" class="w3-indigo w3-small w3-btn w3-ripple w3-hover-amber" style="letter-spacing:1.4px;" data-toggle="tooltip" data-placement="bottom" title="{{menu.start.toolTip}}" ng-click="compileTweaks()" onclick="$(this).hide()"><span class="icon-genius"></span> {{menu.start.label}} <span class="icon-lab2"></span></button>
+<link rel="stylesheet" href="./assets/vendor/gritter.css" />
+<div id="header" style="" class="w3-blue" ng-cloak>
+  <h1 id="mzd-title" class="mazda"> MZD-AIO-TI + CASDK <small class="w3-text-black"><i>v</i>{{appVer}}</small>
+    <!--button id="compileButton" class="w3-indigo w3-small w3-btn w3-ripple w3-hover-amber" style="letter-spacing:1.4px;" data-toggle="tooltip" data-placement="bottom" title="{{menu.start.toolTip}}" ng-click="compileTweaks()" onclick="$(this).hide()"><span class="icon-genius"></span> {{menu.start.label}} <span class="icon-lab2"></span></button-->
   </h1>
   <span id="update-ready" class="w3-hide"><a href="" onclick="ipc.send('update-and-restart')" class="w3-btn w3-padding w3-hover-text-light-green">UPDATE &amp; RESTART</a></span>
   <button id="helpDropBtn" onclick="helpDropdown()" class="w3-btn w3-large helphints"><span class="icon-cog3"></span></button>
@@ -15,271 +16,230 @@
   <h1 id="mzd-title" class="mazda" style="visibility:hidden;">MZD-AIO-TI</h1>
   <span id="openSidePanel" class="w3-opennav w3-xxlarge w3-display-topright w3-padding w3-text-black w3-hide" onclick="w3_openright()" style="position:fixed">&#9776;</span>
 </header>
-<div class="w3-container mainContainer casdk" ng-cloak>
-  <section id="main" class="main">
-    <section id="step3" id="mainOptions" class="options container w3-row">
-      <div id="step4" class="w3-container form-group1 col-md-3 col-sm-6 col-xs-12">
-        <div class="menuCheck casdk">
-          <input type="checkbox" id="casdkinst" name="casdkinst" ng-model="user.casdk.inst" ng-value="user.casdk.inst"/>
-          <label for="casdkinst" data-toggle="tooltip" data-placement="auto bottom" title=""></label>
-        </div>
-        <span class="casdkLabel" style=""><span class="icon-pictures"></span> Install CASDK
-      </span>
-      <br />
-      <div class="menuCheck casdk">
-        <input type="checkbox" id="casdkuninst" name="casdkuninst" ng-model="user.casdk.uninst" ng-value="user.casdk.uninstd" />
-        <label for="casdkuninst" data-toggle="tooltip" data-placement="auto bottom" title=""></label>
-      </div>
-      <span class="casdkLabel" style=""><span class="icon-droplet2"></span> Uninstall CASDK
-  </div>
-  <div class="w3-container col-md-3 col-sm-6 col-xs-6 form-group1">
-    <div class="menuCheck statusbar">
-      <input type="checkbox" value="statusbar" id="statusbarTweaks" name="statusbarTweaks" checklist-model="user.mainOps" checklist-value="mainOps.mainmenu.id" />
-      <label for="statusbarTweaks" data-toggle="tooltip" data-placement="auto bottom" title="{{mainOps.mainmenu.toolTip | htmlToPlaintext}}"></label>
-    </div>
-    <span class="statusbarlabel" style=""><span class="icon-star2"></span> {{mainOps.mainmenu.label}}
-  </span>
-  <br />
-  <div class="menuCheck uistyle">
-    <input type="checkbox" value="uistyle" id="uistyleTweaks" name="uistyle" checklist-model="user.mainOps" checklist-value="mainOps.uistyle.id" />
-    <label for="uistyleTweaks" data-toggle="tooltip" data-placement="auto bottom" title="{{mainOps.uistyle.toolTip | htmlToPlaintext}}"></label>
-  </div>
-  <span class="uistyleLabel" style=""><span class="icon-palette"></span> {{mainOps.uistyle.label}}
-  </span>
-  </div>
-  <div class="w3-container col-md-3 col-sm-6 col-xs-6 form-group1">
-    <div class="menuCheck backup">
-      <input type="checkbox" value="backup" id="backupJCI" name="backupJCI" checklist-model="user.mainOps" checklist-value="mainOps.backup.id" />
-      <label for="backupJCI" data-toggle="tooltip" data-placement="auto bottom" title="{{mainOps.backup.toolTip | htmlToPlaintext}}"></label>
-    </div>
-    <span class="backupLabel" style=""><span class="icon-save2"></span> {{mainOps.backup.label}}
-  </span>
-  <br />
-  <div class="menuCheck colors">
-    <input type="checkbox" value="colors" id="colors" name="colors" checklist-model="user.mainOps" checklist-value="mainOps.colors.id" />
-    <label for="colors" data-toggle="tooltip" data-placement="auto bottom" title="{{mainOps.colors.toolTip}}"></label>
-  </div>
-  <span class="colorLabel" style=""><span class="icon-droplet2"></span> {{mainOps.colors.label}}
+<!--div class="w3-container mainContainer casdk" ng-cloak>
+<section id="main" class="main">
+<section id="step3" id="mainOptions" class="options container w3-row">
+<div id="step4" class="w3-container form-group1 col-md-3 col-sm-6 col-xs-12">
+<div class="menuCheck casdk">
+<input type="checkbox" id="casdkinst" name="casdkinst" ng-model="user.casdk.inst" ng-value="user.casdk.inst"/>
+<label for="casdkinst" data-toggle="tooltip" data-placement="auto bottom" title=""></label>
+</div>
+<span class="casdkLabel" style=""><span class="icon-pictures"></span> Install CASDK
+</span>
+<br />
+<div class="menuCheck casdk">
+<input type="checkbox" id="casdkuninst" name="casdkuninst" ng-model="user.casdk.uninst" ng-value="user.casdk.uninstd" />
+<label for="casdkuninst" data-toggle="tooltip" data-placement="auto bottom" title=""></label>
+</div>
+<span class="casdkLabel" style=""><span class="icon-droplet2"></span> Uninstall CASDK
+</div>
+<div class="w3-container col-md-3 col-sm-6 col-xs-6 form-group1">
+<div class="menuCheck statusbar">
+<input type="checkbox" value="statusbar" id="statusbarTweaks" name="statusbarTweaks" checklist-model="user.mainOps" checklist-value="mainOps.mainmenu.id" />
+<label for="statusbarTweaks" data-toggle="tooltip" data-placement="auto bottom" title="{{mainOps.mainmenu.toolTip | htmlToPlaintext}}"></label>
+</div>
+<span class="statusbarlabel" style=""><span class="icon-star2"></span> {{mainOps.mainmenu.label}}
+</span>
+<br />
+<div class="menuCheck uistyle">
+<input type="checkbox" value="uistyle" id="uistyleTweaks" name="uistyle" checklist-model="user.mainOps" checklist-value="mainOps.uistyle.id" />
+<label for="uistyleTweaks" data-toggle="tooltip" data-placement="auto bottom" title="{{mainOps.uistyle.toolTip | htmlToPlaintext}}"></label>
+</div>
+<span class="uistyleLabel" style=""><span class="icon-palette"></span> {{mainOps.uistyle.label}}
+</span>
+</div>
+<div class="w3-container col-md-3 col-sm-6 col-xs-6 form-group1">
+<div class="menuCheck backup">
+<input type="checkbox" value="backup" id="backupJCI" name="backupJCI" checklist-model="user.mainOps" checklist-value="mainOps.backup.id" />
+<label for="backupJCI" data-toggle="tooltip" data-placement="auto bottom" title="{{mainOps.backup.toolTip | htmlToPlaintext}}"></label>
+</div>
+<span class="backupLabel" style=""><span class="icon-save2"></span> {{mainOps.backup.label}}
+</span>
+<br />
+<div class="menuCheck colors">
+<input type="checkbox" value="colors" id="colors" name="colors" checklist-model="user.mainOps" checklist-value="mainOps.colors.id" />
+<label for="colors" data-toggle="tooltip" data-placement="auto bottom" title="{{mainOps.colors.toolTip}}"></label>
+</div>
+<span class="colorLabel" style=""><span class="icon-droplet2"></span> {{mainOps.colors.label}}
 </span>
 </div>
 <div class="w3-container form-group1 col-md-3 col-sm-6 col-xs-6">
-  <div class="menuCheck wifi">
-    <input type="checkbox" value="wifi" id="wifi" name="wifi" checklist-model="user.mainOps" checklist-value="mainOps.wifi.id" />
-    <label for="wifi" data-toggle="tooltip" data-placement="auto bottom" title="{{mainOps.wifi.toolTip | htmlToPlaintext}}"></label>
-  </div>
-  <span class="wifiLabel" style=""><span class="icon-wifi"></span> {{mainOps.wifi.label}}
+<div class="menuCheck wifi">
+<input type="checkbox" value="wifi" id="wifi" name="wifi" checklist-model="user.mainOps" checklist-value="mainOps.wifi.id" />
+<label for="wifi" data-toggle="tooltip" data-placement="auto bottom" title="{{mainOps.wifi.toolTip | htmlToPlaintext}}"></label>
+</div>
+<span class="wifiLabel" style=""><span class="icon-wifi"></span> {{mainOps.wifi.label}}
 </span>
 <br />
 <div class="menuCheck ssh">
-  <input type="checkbox" value="ssh" id="sshbringback" name="sshbringback" checklist-model="user.mainOps" checklist-value="mainOps.sshbringback.id" />
-  <label for="sshbringback" data-toggle="tooltip" data-placement="auto bottom" title="{{mainOps.sshbringback.toolTip | htmlToPlaintext}}"></label>
+<input type="checkbox" value="ssh" id="sshbringback" name="sshbringback" checklist-model="user.mainOps" checklist-value="mainOps.sshbringback.id" />
+<label for="sshbringback" data-toggle="tooltip" data-placement="auto bottom" title="{{mainOps.sshbringback.toolTip | htmlToPlaintext}}"></label>
 </div>
 <span class="sshLabel" style=""><span class="icon-podcast"></span> {{mainOps.sshbringback.label}}
 </span>
 </div>
-</div>
-<div class="w3-container w3-row w3-section">
-  <div id="options">
-    <table class="w3-table w3-bordered w3-card-4 w3-col">
-      <!--th class="w3-row w3-col"> Tweak Options </th-->
-      <tr ng-repeat="option in options | filter:twkfltr"  class="w3-hover-pale-blue w3-tooltip w3-half">
-        <td>
-          <div class="install-check">
-            <input id="IN{{option.id}}" type="checkbox" name="{{option.OpName}}" checklist-model="user.options" checklist-value="option.id" ng-disabled="user.options.indexOf({{option.id}}+100) != -1">
-            <label for="IN{{option.id}}" data-toggle="tooltip" data-placement=" auto left" title="{{menu.install.label}} {{option.OpName}}"></label>
-          </div>
-          <div class="uninstall-check">
-            <input id="UN{{option.id}}" type="checkbox" name="{{option.OpName}}" checklist-model="user.options" checklist-value="option.id+100" ng-disabled="user.options.indexOf({{option.id}}) != -1">
-            <label for="UN{{option.id}}" data-toggle="tooltip" data-placement=" auto right" title="{{menu.uninstall.label}} {{option.OpName}}"></label>
-          </div>
-        </td>
-        <td>
-          <label id="label-{{option.id}}" class="w3-validate" for="IN{{option.id}}" value="option.OpName" data-toggle="tooltip" data-placement="auto bottom" title="{{option.toolTip}}">{{option.OpName}}</label>
-          <!--span class="w3-right inline-safety sfty" ng-class="option.safetylvl" ng-bind="option.safetylvl"></span-->
-        </td>
-      </tr>
-    </table>
-    <div id="bg-img" ng-class="{'w3-hide': user.mainOps.indexOf(2) == -1}" ng-cloak>
-      <div id="bgPickTitle" style="text-align:center;"><h2>Chosen Background Image: <small>(click for preview mode)</small></h2><br>
-      </div>
-      <div id="imgNavButtons" class="w3-center">
-        <div class="w3-section">
-          <script>var imgpos = 0;</script>
-          <button class="w3-btn" onclick="imgpos--;$('#imgframe').scrollLeft(imgpos*800)">❮ Prev</button>
-          <button class="w3-btn" onclick="imgpos++;$('#imgframe').scrollLeft(imgpos*800)">Next ❯</button>
-        </div>
-      </div>
-      <div id="img2use" class="w3-center">
-        <div id="bgimg" onclick='document.getElementById("backgroundPreviewModal").style.display = "block"' style="cursor:pointer;">
-          <div id="imgframe" class="imgframe">
-            <a class="w3-btn w3-ripple w3-teal w3-center" style="position:absolute;margin-top:20px" href="" onclick="ipc.send('open-file-bg')"><span class="icon-image2"></span> Select Background Image</a>
-            <img src="../../background/background.png" alt="Choose A Background" title="Your Infotainment Background" onerror="$(this).hide()"/></div>
-        </div>
-      </div>
-      <div id='selected-file'></div>
-      <div id="imgNavButtons" class="w3-center w3-hide">
-        <div class="w3-section">
-          <button class="w3-btn" onclick="imgpos--;$('#imgframe').scrollLeft(imgpos*800)">❮ Prev</button>
-          <button class="w3-btn" onclick="imgpos++;$('#imgframe').scrollLeft(imgpos*800)">Next ❯</button>
-        </div>
-      </div>
-      <br>
-      <br>
+</div-->
+<div class="w3-container w3-row ng-scope w3-center" id="casdkInstallBtns">
+  <div class="btn-group btn-group-justified">
+    <div class="btn-group">
+      <button type="button" id="in-submit" class="btn btn-theme03 w3-ripple w3-hover-green" style="letter-spacing:1.4px;" data-toggle="tooltip" data-placement="bottom" title="" ng-click="user.casdk={uninst:false,inst:true};compileCASDK(user)" onclick="$(this).prop('disabled',true);">INSTALL CASDK!</button>
     </div>
+    <div class="btn-group">
+      <button type="button" id="un-submit" class="btn btn-theme03 w3-ripple w3-hover-amber" style="letter-spacing:1.4px;" data-toggle="tooltip" data-placement="bottom" title="" ng-click="user.casdk={inst:false,uninst:true};compileCASDK(user)">UNINSTALL CASDK!</button>
+    </div>
+    <div class="btn-group">
+      <button type="button" class="btn btn-theme03 dropdown-toggle" data-toggle="dropdown">
+        <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" role="menu">
+        <li class="autorun-link"><a href="#" ng-click="user.autorun.installer = true">Autorun & Recovery</a></li>
+        <li class="fullrestore-link"><a href="#" ng-click="user.restore.full = true">Full System Restore</a></li>
+        <li class="divider"></li>
+        <li class="casdk-link"><a href="#/casdk" ng-click="user.restore.full = user.autorun.installer = false">CASDK</a></li>
+        <li class="home-tweaks"><a href="#" ng-click="user.restore.full = user.autorun.installer = false">Tweaks</a></li>
+      </ul>
+    </div></div></div>
+    <div class="w3-container w3-row w3-section">
+
+      <nav id="sidePanel" class="sidePanel w3-card-4 w3-sidenav w3-white w3-animate-right w3-margin-top-64">
+        <a href="javascript:void(0)" onclick="w3_closeright();" title="Hide Side Panel" class="w3-closebtn w3-closenav w3-large w3-hide-small w3-display-topright">&times;</a>
+        <div class="row">
+
+
+          <div class="col-lg-4 col-md-4 col-sm-4 mb">
+            <div class="content-panel pn">
+              <div id="" class="w3-center w3-header">
+                <h3>MZD-AIO-TI + CASDK</h3>
+                <br>
+                <h6>CASDK Written By: Flyandi</h6>
+                <h6>Integration Into AIO By: Trezdog44</h6>
+              </div>
+              <div class="footer centered">
+                <a href onclick="shell.openExternal('mailto:Trez@MazdaTweaks.com?Subject=CASDK%20Contact')">
+                  <p>Contact Trezdog44</p>
+                  <h6><i class="fa fa-envelope">
+                  </i><br/>Trez@MazdaTweaks.com</h6>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-4 col-sm-4 mb">
+            <div class="content-panel pn">
+              <div id="blog-bg">
+                <!--div class="badge badge-popular">CASDK</div-->
+                <div class="blog-title">What Is CASDK?</div>
+              </div>
+              <div class="blog-text">
+                <p>The Custom Application SDK for Mazda Infotainment System is a micro framework that allows you to write and deploy custom applications which integrate natively into the existing JCI framework without hassle.  This version of CASDK is integrated with AIO to create a unique framework with endless app posibilities.</p>
+              </div>
+            </div>
+          </div><!-- /col-md-4-->
+          <div class="col-lg-4 col-md-4 col-sm-4 mb">
+            <div class="steps pn">
+              <input id='op3' name='op3' type='checkbox' ng-model="apps.simpledashboard" ng-value="apps.simpledashboard"/>
+              <label for='op3'>Simple Dashboard</label>
+              <input id='op2' name='op2' type='checkbox' ng-model="apps.vdd" ng-value="apps.vdd"/>
+              <label for='op2'>VDD (Vehicle Diagnostic Data)</label>
+              <input id='op4' name='op4' type='checkbox' ng-model="apps.gpsspeed" ng-value="apps.gpsspeed"/>
+              <label for='op4'>GPS Speeometer</label>
+              <input id='op1' name='op1' type='checkbox' ng-model="apps.multidash" ng-value="apps.multidash" />
+              <label for='op1'>Multidash</label>
+              <!--input id='op5' name='op5' type='checkbox' ng-model="apps.devtools" ng-value="apps.devtools"/>
+              <label for='op5'>Dev Tools</label-->
+              <input type="button" id="CASDKinfoBtn" class="w3-tooltip w3-btn w3-large w3-green CASDKinfoBtn" value="More Info">
+              <input type="button" class="w3-btn w3-large" onclick="externalLink('casdk')" value="Develop CASDK Apps">
+            </div>
+          </div><!--/col-md-4 -->
+        </div>
+        <!--div class="btn-group btn-group-justified">
+        <div class="btn-group">
+        <button type="button" class="btn btn-theme" ng-model="user.casdk.inst" ng-value="user.casdk.inst">Install CASDK</button>
+      </div>
+      <div class="btn-group">
+      <button type="button" class="btn btn-theme"></button>
+    </div>
+    <div class="btn-group">
+    <button type="button" class="btn btn-theme" ng-model="user.casdk.uninst" ng-value="user.casdk.uninst">Uninstall CASDK</button>
   </div>
-  <nav id="sidePanel" class="sidePanel w3-card-4 w3-sidenav w3-white w3-animate-right">
-    <a href="javascript:void(0)" onclick="w3_closeright();" title="Hide Side Panel" class="w3-closebtn w3-closenav w3-large w3-hide-small">&times;</a>
-    <span id="alltoggle" class="icon-minus-alt" onclick="toggleAllOps()" title="Toggle All Extra Options" style="cursor:pointer"></span>
-    <h3 id="sidePanelTitle">Selected Tweaks:</h3>
-    <ul>
-      <li class="extrasMessage colorScheme" ng-class="{'hide': user.mainOps.indexOf(3) == -1}">
-        <div class="w3-tooltip" onclick="helpMessageFreeze(this)" title="{{menu.clickforhelp.label}}">{{mainOps.colors.label}}
-          <span class="w3-tag w3-text w3-half w3-hlpmsg draggable ui-widget-content" title="{{menu.close.label}}" ng-class="{'w3-hide': user.menu.indexOf(9) != -1}">
-            <span class="w3-closebtn">&times;</span><span class="sfty {{mainOps.colors.safetylvl}}">{{mainOps.colors.safetylvl}}</span><img ng-src='./files/screenshots/{{mainOps.colors.img}}' /><span ng-bind-html="mainOps.colors.toolTip"></span>
-          </span>
-        </div>
-        <div class="useColorBG w3-right"><input class="w3-check" type="checkbox" name="useColorBG" ng-checked="user.useColorBg" ng-model="user.useColorBG"style="width:10%"> Use Color Scheme Background</div>
-        <div class="w3-container" ng-class="{'hide': user.mainOps.indexOf(3) == -1}">
-          <span class="toggleExtra icon-minus-square" onclick="toggleOps(this);$('.useColorBG').toggleClass('w3-hide')" title='Show/Hide'></span>
-          <table ng-include="'opts/coloroptions.htm'" id="colorOptions" class="w3-table w3-bordered w3-card-2 w3-col" style="display:inline-block;">
-          </table>
-        </div>
-      </li>
-      <li class="extrasMessage mainmenu" ng-class="{'hide': user.mainOps.indexOf(8) == -1}">
-        <div class="w3-tooltip" onclick="helpMessageFreeze(this)" title="{{menu.clickforhelp.label}}">{{mainOps.mainmenu.label}}
-          <span class="w3-tag w3-text w3-half w3-hlpmsg draggable ui-widget-content" title="{{menu.close.label}}" ng-class="{'w3-hide': user.menu.indexOf(9) != -1}">
-            <span class="w3-closebtn">&times;</span><span class="sfty {{mainOps.mainmenu.safetylvl}}">{{mainOps.mainmenu.safetylvl}}</span><img ng-src='./files/screenshots/{{mainOps.mainmenu.img}}' /><span ng-bind-html="mainOps.mainmenu.toolTip"></span>
-          </span>
-        </div>
-        <div class="w3-container" ng-class="{'hide': user.mainOps.indexOf(8) == -1}">
-          <span class="toggleExtra icon-minus-square" onclick="toggleOps(this)" title='Show/Hide'></span>
-          <table ng-include="'opts/mainmenuoptions.htm'" id="mainmenuOptions" class="w3-table w3-bordered w3-card-2 w3-col" style="display:inline-block;">
-          </table>
-        </div>
-      </li>
-      <li class="extrasMessage uistyle" ng-class="{'hide': user.mainOps.indexOf(9) == -1}">
-        <div class="w3-tooltip" onclick="helpMessageFreeze(this)" title="{{menu.clickforhelp.label}}">{{mainOps.uistyle.label}}
-          <span class="w3-tag w3-text w3-half w3-hlpmsg draggable ui-widget-content" title="{{menu.close.label}}" ng-class="{'w3-hide': user.menu.indexOf(9) != -1}">
-            <span class="w3-closebtn">&times;</span><span class="sfty {{mainOps.uistyle.safetylvl}}">{{mainOps.uistyle.safetylvl}}</span><img ng-src='./files/screenshots/{{mainOps.uistyle.img}}' /><span ng-bind-html="mainOps.uistyle.toolTip"></span>
-          </span>
-        </div>
-        <div class="w3-container" ng-class="{'hide': user.mainOps.indexOf(9) == -1}">
-          <span class="toggleExtra icon-minus-square" onclick="toggleOps(this)" title='Show/Hide'></span>
-          <table ng-include="'opts/uistyleoptions.htm'" id="uistyleOptions" class="w3-table w3-bordered w3-card-2 w3-col" style="display:inline-block;">
-          </table>
-        </div>
-      </li>
-      <li class="extrasMessage customBackground" ng-class="{'hide': user.mainOps.indexOf(2) == -1}">
-        <div class="w3-tooltip" onclick="helpMessageFreeze(this)" title="{{menu.clickforhelp.label}}">{{mainOps.background.label}}
-          <span class="w3-tag w3-text w3-half w3-hlpmsg draggable ui-widget-content" title="{{menu.close.label}}" ng-class="{'w3-hide': user.menu.indexOf(9) != -1}"  style="width: 500px;">
-            <span class="w3-closebtn ">&times;</span><span class="sfty {{mainOps.background.safetylvl}}">{{mainOps.background.safetylvl}}</span><img ng-src='./files/screenshots/{{mainOps.background.img}}' onerror='$(this).hide()'/><span ng-bind-html="mainOps.background.toolTip"></span><br>
-            <span ng-bind-html="mainOps.backgroundrotator.toolTip"></span><br>
-            <span ng-bind-html="mainOps.offscreenbg.toolTip"></span>
-          </span>
-        </div>
-        <div id="holder" class="w3-container"  ng-class="{'hide': user.mainOps.indexOf(2) == -1}">
-          <span class="toggleExtra icon-minus-square" onclick="toggleOps(this)" title='Show/Hide'></span>
-          <table ng-include="'opts/bgoptions.htm'" id="custbgOptions" class="w3-table w3-bordered w3-card-2 w3-col" style="">
-          </table>
-        </div>
-      </li>
-      <li class="extrasMessage backupJCI" ng-class="{'hide': user.mainOps.indexOf(1) == -1}">
-        <div class="w3-tooltip" onclick="helpMessageFreeze(this)" title="{{menu.clickforhelp.label}}">{{mainOps.backup.label}}
-          <span class="w3-tag w3-text w3-hlpmsg draggable ui-widget-content" title="{{menu.close.label}}" ng-class="{'w3-hide': user.menu.indexOf(9) != -1}" style="width: 400px;">
-            <span class="w3-closebtn">&times;</span><span class="sfty {{mainOps.backup.safetylvl}}">{{mainOps.backup.safetylvl}}</span><span ng-bind-html="mainOps.backup.toolTip"></span>
-          </span>
-        </div>
-      </li>
-      <li class="extrasMessage enableWIFI" ng-class="{'hide': user.mainOps.indexOf(0) == -1}">
-        <div class="w3-tooltip" onclick="helpMessageFreeze(this)" title="{{menu.clickforhelp.label}}">{{mainOps.wifi.label}}
-          <span class="w3-tag w3-text w3-hlpmsg w3-third draggable ui-widget-content" title="{{menu.close.label}}" ng-class="{'w3-hide': user.menu.indexOf(9) != -1}" style="width: 400px;">
-            <span class="w3-closebtn">&times;</span><span class="sfty {{mainOps.wifi.safetylvl}}">{{mainOps.wifi.safetylvl}}</span><span ng-bind-html="mainOps.wifi.toolTip"></span>
-          </span>
-        </div>
-      </li>
-      <li class="extrasMessage sd-cid" ng-class="{'hide': user.mainOps.indexOf(5) == -1}">
-        <div class="w3-tooltip" onclick="helpMessageFreeze(this)" title="{{menu.clickforhelp.label}}">{{mainOps.sdcid.label}}
-          <span class="w3-tag w3-text w3-hlpmsg w3-third draggable ui-widget-content" title="{{menu.close.label}}" ng-class="{'w3-hide': user.menu.indexOf(9) != -1}" style="width: 400px;">
-            <span class="w3-closebtn">&times;</span><span class="sfty {{mainOps.sdcid.safetylvl}}">{{mainOps.sdcid.safetylvl}}</span><span ng-bind-html="mainOps.sdcid.toolTip"></span>
-          </span>
-        </div>
-      </li>
-      <li class="extrasMessage SSHbringback" ng-class="{'hide': user.mainOps.indexOf(4) == -1}">
-        <div class="w3-tooltip" onclick="helpMessageFreeze(this)" title="{{menu.clickforhelp.label}}">{{mainOps.sshbringback.label}}
-          <span class="w3-tag w3-text w3-hlpmsg w3-third draggable ui-widget-content" title="{{menu.close.label}}" ng-class="{'w3-hide': user.menu.indexOf(9) != -1}" style="width: 500px;">
-            <span class="w3-closebtn">&times;</span><span class="sfty {{mainOps.sshbringback.safetylvl}}">{{mainOps.sshbringback.safetylvl}}</span><span ng-bind-html="mainOps.sshbringback.toolTip"></span>
-          </span>
-        </div>
-      </li>
-      <li class="uninstallMessage"
-      ng-repeat="opt in options | filter:twkfltr"
-      ng-class="{'hide': user.options.indexOf(opt.id+100) == -1}">
-      <div class="w3-tooltip" onclick="helpMessageFreeze(this)" title="{{menu.clickforhelp.label}}">{{opt.DEINST}}
-        <span id="un{{opt.id}}-msg" class="w3-tag w3-text w3-hlpmsg draggable ui-widget-content" title="{{menu.close.label}}" ng-class="{'w3-hide': user.menu.indexOf(9) != -1}">
-          <span class="w3-closebtn">&times;</span><span class="sfty {{opt.safetylvl}}">{{opt.safetylvl}}</span><img ng-if='opt.img' ng-src='./files/screenshots/{{opt.img}}'/><span ng-bind-html="opt.toolTip"></span>
-        </span>
-      </div>
-    </li>
-    <li class="installMessage"
-    ng-repeat="opt in options | filter:twkfltr"
-    ng-class="{'hide': user.options.indexOf(opt.id) == -1}">
-    <div class="w3-tooltip" onclick="helpMessageFreeze(this)" title="{{menu.clickforhelp.label}}">{{opt.INST}}
-      <span id="in{{opt.id}}-msg" class="w3-tag w3-text w3-hlpmsg draggable ui-widget-content" title="{{menu.close.label}}" ng-class="{'w3-hide': user.menu.indexOf(9) != -1}">
-        <span class="w3-closebtn">&times;</span><span class="sfty {{opt.safetylvl}}">{{opt.safetylvl}}</span><img ng-if='opt.img' ng-src='./files/screenshots/{{opt.img}}'/><span ng-bind-html="opt.toolTip"></span>
-      </span>
-    </div>
-    <div  ng-if="opt.extraOps" class="w3-container">
-      <span class="toggleExtra icon-minus-square" onclick="toggleOps(this)" title='Show/Hide'></span>
-      <table ng-include="'opts/'+opt.id+'options.htm'" id="custOptions{{opt.id}}" class="w3-bordered w3-card-2 w3-col" style="display:inline-block;">
-      </table>
-    </div>
-  </li>
-</ul>
+</div>
+</div>
+</div-->
 </div>
 </div>
 </nav>
-<div id="backgroundPreviewModal" class="w3-modal" style="">
-  <span id="closePrevew" onclick="$(this).parent().fadeOut(200)" class="w3-closebtn w3-hover-red w3-text-white w3-xxlarge w3-container w3-text-shadow w3-opacity w3-margin hide-sm" data-toggle="tooltip" data-placement="bottom" title="{{menu.close.label}}" style="top:-40px;right:-5px;">×</span>
-  <div class="w3-modal-content w3-animate-zoom">
-    <div id="imgmodal" class="imgframe w3-card-16" width="800" height="480">
-      <img src="../../background/background.png" alt="Choose A Background" title="A Preview of Your Infotainment Background" onerror="$(this).hide()">
-    </div>
-    <div style="position:absolute;margin:auto;text-align:center;right:0;left:0;top:0;height:65px;background-color:rgba(0,0,0,{{user.statusbar.opacity}})"><img src="files/img/statusbar.png" ng-hide="user.statusbar.main" alt=""  onerror="$(this).hide()"></div>
-    <div id="ctxt-ico"><span class="icon-home"></span></div>
-    <div id="ctxt-title" data-toggle="tooltip" data-placement=" auto bottom" title="{{statusbar.app.label}}" style="color:{{user.statusbar.app}}">Speedometer</div>
-    <div id="ctxt-notif" data-toggle="tooltip" data-placement=" auto bottom" title="{{statusbar.notif.label}}" style="color:{{user.statusbar.notif}};display:none;">Western Ave.</div>
-    <div id="date" style="color:{{user.statusbar.clock}}"></div>
-    <div id="clock" data-toggle="tooltip" data-placement=" auto bottom" title="{{statusbar.clock.label}}"  style="color:{{user.statusbar.clock}}"></div>
-    <span id="closePrevew2" onclick="$('#backgroundPreviewModal').fadeOut(400)" class="w3-closebtn w3-hover-deep-orange w3-text-blue w3-xxlarge w3-display-topright w3-margin w3-text-shadow w3-opacity" data-toggle="tooltip" data-placement="bottom" title="{{menu.close.label}}"  style="top:-40px;right:-15px;">×</span>
-  </div>
-  <div id="caption" class="w3-container">
-    <img src="files/img/showcase.png" id="showcase" class="showcase" onerror="$(this).hide()" style="">
-    <div id="imgNavButtons" class="w3-center">
-      <div class="w3-section">
-        <button class="w3-btn w3-card-8 w3-grey w3-hover-teal" onclick="imgpos--;$('#imgmodal').scrollLeft(imgpos*800)">❮ Prev</button>
-        <button class="w3-btn w3-card-8 w3-blue-grey w3-hover-yellow" onclick="$('#imgmodal').toggleClass('slideshow')" id="slideShowBtn">Slideshow</button>
-        <button class="w3-btn w3-card-8 w3-grey w3-hover-teal" onclick="imgpos++;$('#imgmodal').scrollLeft(imgpos*800)">Next ❯</button>
+
+<div class="showback">
+  <div class="centered">
+    <span id="CASDKinfo" class="w3-tag w3-text">
+      <span class="w3-display-topright CASDKinfoBtn w3-closebtn w3-hover-deep-orange w3-text-blue w3-xxlarge w3-display-topright w3-text-shadow w3-opacity w3-padding">&times;</span>
+      <div class="centered">
+        <h2>CASDK</h2>Is a very exciting addition to AIO and opens the door to many possibilities.  Developers can use the npm package "casdk" to create a ready-to-go app template in seconds.  Using JavaScript and CSS, developers can easily build amazing apps on the CASDK framework.
+        <div class="w3-container">
+          <div class="w3-panel w3-center">Here are 2 more apps that can be installed specifically for developers:
+          </div>
+          <span div class="ck-button w3-dropdown-hover">
+            <label>
+              <input type="checkbox" ng-value="apps.terminal" ng-model="apps.terminal">
+              <span>Terminal App</span>
+              <div class="w3-dropdown-content appimg">
+                <img src="files/screenshots/terminal.png" class="" onclick="$(this).parent().hide()">
+              </div>
+            </label>
+          </span>
+          <span div class="ck-button w3-dropdown-hover">
+            <label>
+              <input type="checkbox" ng-value="apps.devtools" ng-model="apps.devtools">
+              <span>Dev Tools App</span>
+              <div class="w3-dropdown-content appimg">
+                <img src="files/screenshots/devtools.png" class="" onclick="$(this).parent().hide()">
+              </div>
+            </label>
+          </span>
+        </div>
+        <div class="w3-panel">The CASDK framework was originally designed to be run entirely from an SD card.  With AIO the framework and apps are installed onto system disk so that apps will be able to run without an SD Card connected.  CASDK apps can still be run from an SD card by selecting the option below.  If the SD card is connected during installation AIO will offer to install the apps directly to the SD card.  Apps can also be installed by copying the app folder to "/apps" on the root of the SD Card.  Also the name of the app folder needs to be added to "/apps/apps.js."  Using this method any CASDK app can be used even one you have developed yourself!</div>
+        <div class="w3-container w3-center">
+          <input id="casdkTOsd" type="checkbox" class="w3-check" ng-value="apps.sdcard" ng-model="apps.sdcard">
+          <label for="casdkTOsd">RUN CASDK APPS FROM SD CARD<label>
+          </div>
+        </span>
+      </div>
+    </div><!-- /showback -->
+    <div class="w3-container w3-card-8 w3-center">
+      <div class="w3-panel">
+        <button id="CASDKinfoBtn" class="w3-tooltip w3-btn w3-green CASDKinfoBtn">More Info.</button>
       </div>
     </div>
-  </div>
-  <div id="closeOverlay" onclick="$(this).parent().hide()" width="5000" height="5000" style="position:fixed;width:100%;height:100%;"></div>
-</div>
-<!-- Test Panel (Remove for distribution version)  - ->
-<div id="TestPanel" class="testpanel w3-display-bottomleft w3-dark-grey w3-padding w3-card-2 draggable w3-hide" style="bottom:-60px;background:rgba(255, 255, 255, 0.8);position:fixed;">
-<span class="w3-closebtn " onclick="$(this).parent().toggleClass('w3-hide')">&times;</span>
-<center style="margin-bottom:100px">
-<a href="" onclick="ipc.send('open-info-window')">INFO</a>
-<div style="white-space:nowrap;" > user.lang {{ user.lang }}</div>
-<div style="white-space:nowrap;" > user.options {{ user.options | json }}</div>
-<div style="white-space:nowrap;" > user.mainOps {{ user.mainOps | json }}</div>
-<div style="white-space:nowrap;" > user.colors {{ user.colors}}</div>
-<div style="white-space:nowrap;" > user.useColorBG {{ user.useColorBG}}</div>
-<div style="white-space:nowrap;" > user.speedcamOps {{ user.speedcamOps}}</div>
-<div style="white-space:nowrap;" > user.d2sbOps {{ user.d2sbOps}}</div>
-<div style="white-space:nowrap;" > user.speedoOps {{ user.speedoOps | json }}</div>
-<p id="demo"></p>
-</center>
+
+    <!--button class="w3-btn w3-large" onclick="externalLink('casdk')">Develop CASDK Apps</button-->
+    <!--h4><i class="fa fa-angle-right"></i> Gritter Examples</h4>
+    <p>Click on below buttons to check it out.</p>
+    <a id="add-regular" class="btn btn-default btn-sm" href="javascript:;">Regular</a>
+    <a id="add-sticky" class="btn btn-success  btn-sm" href="javascript:;">Sticky</a>
+    <a id="add-without-image" class="btn btn-info  btn-sm" href="javascript:;">Imageless</a>
+    <a id="add-gritter-light" class="btn btn-warning  btn-sm" href="javascript:;">Light</a>
+    <a id="remove-all" class="btn btn-danger  btn-sm" href="general.html#">Remove all</a-->
+
+    <!-- Test Panel (Remove for distribution version)  - ->
+    <div id="TestPanel" class="testpanel w3-display-bottomleft w3-dark-grey w3-padding w3-card-2 draggable w3-hide" style="bottom:-60px;background:rgba(255, 255, 255, 0.8);position:fixed;">
+    <span class="w3-closebtn " onclick="$(this).parent().toggleClass('w3-hide')">&times;</span>
+    <center style="margin-bottom:100px">
+    <a href="" onclick="ipc.send('open-info-window')">INFO</a>
+    <div style="white-space:nowrap;" > user.lang {{ user.lang }}</div>
+    <div style="white-space:nowrap;" > user.options {{ user.options | json }}</div>
+    <div style="white-space:nowrap;" > user.mainOps {{ user.mainOps | json }}</div>
+    <div style="white-space:nowrap;" > user.colors {{ user.colors}}</div>
+    <div style="white-space:nowrap;" > user.useColorBG {{ user.useColorBG}}</div>
+    <div style="white-space:nowrap;" > user.speedcamOps {{ user.speedcamOps}}</div>
+    <div style="white-space:nowrap;" > user.d2sbOps {{ user.d2sbOps}}</div>
+    <div style="white-space:nowrap;" > user.speedoOps {{ user.speedoOps | json }}</div>
+    <p id="demo"></p>
+  </center>
 </div>
 <!- - END REMOVE TestPanel -->
 </section>
 </div>
+<script src="./assets/vendor/gritter.js"></script>
+<script src="./assets/js/gritter-conf.js"></script>
+<script>
+$('.CASDKinfoBtn').click(function(){$('#CASDKinfo').toggleClass('w3-show')})
+</script>

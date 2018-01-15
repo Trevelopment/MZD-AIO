@@ -126,7 +126,7 @@ $(document).ready(function(){
     // --------------------------------------------------------------------------
   
 	function retrieveValueAll(action){
-		/*var speedometerWsValue = new ReconnectingWebSocket('ws://127.0.0.1:55554/', null, {debug: false, timeoutInterval: 5000, reconnectInterval: 500});*/
+		/*var speedometerWsValue = new ReconnectingWebSocket('ws://127.0.0.1:9969/', null, {debug: false, timeoutInterval: 5000, reconnectInterval: 500});*/
 		var speedometerWsValue = new WebSocket('ws://127.0.0.1:44944/');
         speedometerWsValue.onmessage = function(event){
 			if(!proc_3_check) proc_3_check = true;

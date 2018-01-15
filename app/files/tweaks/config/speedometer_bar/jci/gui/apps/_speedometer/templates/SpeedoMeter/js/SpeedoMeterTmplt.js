@@ -136,6 +136,11 @@ function SpeedoMeterTmplt(uiaId, parentDiv, templateID, controlProperties)
 '				<legend class="vehDataLegends">Gear Position</legend>' +
 '				<div class="gearPositionValue">0</div>' +
 '			</fieldset>' +
+'			<fieldset id="gearLeverPositionFieldSet" class="' +
+((spdTbl.gearLvr[0]===0) ? "vehDataMain" : "vehDataBar" + spdTbl.gearLvr[1]) + " pos" + spdTbl.gearLvr[2] +'">' +
+'				<legend class="vehDataLegends">Gear Lvr Pos.</legend>' +
+'				<div class="gearLeverPositionValue">0</div>' +
+'			</fieldset>' +
 '     <fieldset id="idleTimeFieldSet" class="'+
 ((spdTbl.trpIdle[0]===0) ? "vehDataMain" : "vehDataBar" + spdTbl.trpIdle[1]) + " pos" + spdTbl.trpIdle[2] +'">' +
 '       <legend class="vehDataLegends">Idle Time</legend>'+
@@ -194,7 +199,17 @@ function SpeedoMeterTmplt(uiaId, parentDiv, templateID, controlProperties)
 '     <fieldset id="engineSpeedTopFieldSet" class="'+
 ((spdTbl.engTop[0]===0) ? "vehDataMain" : "vehDataBar" + spdTbl.engTop[1]) + " pos" + spdTbl.engTop[2] +'">' +
 '       <legend class="vehDataLegends">Eng Top Speed</legend>'+
-'       <div class="engineSpeedTopValue">0:00</div>'+
+'       <div class="engineSpeedTopValue">0</div>'+
+'     </fieldset>'+
+'     <fieldset id="batSOCFieldSet" class="'+
+((spdTbl.batSOC[0]===0) ? "vehDataMain" : "vehDataBar" + spdTbl.batSOC[1]) + " pos" + spdTbl.batSOC[2] +'">' +
+'       <legend class="vehDataLegends">Battery SOC</legend>'+
+'       <div class="batSOCValue">0</div>'+
+'     </fieldset>'+
+'     <fieldset id="engineLoadFieldSet" class="'+
+((spdTbl.engLoad[0]===0) ? "vehDataMain" : "vehDataBar" + spdTbl.engLoad[1]) + " pos" + spdTbl.engLoad[2] +'">' +
+'       <legend class="vehDataLegends">Eng Load</legend>'+
+'       <div class="engineLoadValue">0</div>'+
 '     </fieldset>'+
 '		</div>' +
 '		</div>' +
@@ -228,7 +243,7 @@ $.getScript('apps/_speedometer/js/speedometerUpdate.js', setTimeout(function() {
  		   retValue = "consumed";
  		break;
        case "down":
-       $('#SbSpeedo').click();
+       $('.vehDataMain.pos2').click();
  		   retValue = "consumed";
  		break;
        case "up":

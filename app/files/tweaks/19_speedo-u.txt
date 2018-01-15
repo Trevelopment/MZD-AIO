@@ -94,7 +94,7 @@ then
 	rm -fr /jci/gui/addon-common
 	log_message "===      Removed /jci/gui/addon-common because no more AIO apps       ==="
 fi
-log_message "===                       cleanup old versions                        ==="
+log_message "===                      cleanup old versions                         ==="
 rm -fr /jci/gui/addon-player
 rm -fr /jci/gui/addon-speedometer
 rm -fr /jci/gui/apps/_speedometer

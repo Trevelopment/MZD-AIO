@@ -51,22 +51,24 @@ function VideoPlayerTmplt(uiaId, parentDiv, templateID, controlProperties)
 	'<li id="myVideoPausePlayBtn" style="display: none; background-image: url(apps/_videoplayer/templates/VideoPlayer/images/myVideoPauseBtn.png)"></li>'+
 	'<li id="myVideoRW" style="display: none; background-image: url(apps/_videoplayer/templates/VideoPlayer/images/RW.png)"></li>'+
 	'<li id="myVideoPreviousBtn" style="display: none; background-image: url(apps/_videoplayer/templates/VideoPlayer/images/myVideoPreviousBtn.png)"></li>'+
-	'<li id="myVideoMovieBtn" class="playbackOption" style="background-image: url(apps/_videoplayer/templates/VideoPlayer/images/myVideoMovieBtn.png)"><a>Search Videos</a></li>'+
+
 	'<li id="myVideoFullScrBtn" class="playbackOption"><a>Full Screen</a></li>' +
 	'<li id="myVideoRepeatBtn" class="playbackOption"><a>Repeat 1</a></li>'+
 	'<li id="myVideoShuffleBtn" class="playbackOption"><a>Shuffle</a></li>'+
 	'<li id="myVideoRepeatAllBtn" class="playbackOption"><a>Repeat All</a></li>'+
+	'<li id="myPlayMusicBtn" class="playbackOption"><a>Play Music</a></li>'+
 	'<li id="rebootBtnDiv" class="playbackOption" style="float:left !important; background-image: url(apps/_videoplayer/templates/VideoPlayer/images/rebootSys.png)"></li>'+
 	'</ul>'+
 	'<div id="myVideoName" style="font-style:italic"></div>'+
 	'<div id="myVideoStatus" style="font-style:italic"></div></div>'+
 	'<div id="myVideoList"></div>'+
+	'<div id="myMusicMetadata"></div>'+
 	'<div id="myVideoScroll">'+
-	'<li id="myUnicodeToggle" style="background-image:url(apps/_videoplayer/templates/VideoPlayer/images/uni.png)"></li>'+
 	'<li id="myVideoInfo" class="playbackOption" style="background-image:url(apps/_videoplayer/templates/VideoPlayer/images/Info.png)"></li>'+
 	'<img src="apps/_videoplayer/templates/VideoPlayer/images/myVideoUpBtn.png" id="myVideoScrollUp" />'+
 	'<img src="apps/_videoplayer/templates/VideoPlayer/images/myVideoDownBtn.png" id="myVideoScrollDown" />'+
 	'<li id="toggleBgBtn" class="playbackOption" style="background-image:url(apps/_videoplayer/templates/VideoPlayer/images/bgbtn.png)"></li>'+
+	'<li id="myVideoMovieBtn" class="playbackOption" style="background-image: url(apps/_videoplayer/templates/VideoPlayer/images/myVideoMovieBtn.png)"></li>'+
 	'</div>'+
 	'<div id="videoPlayControl">'+
 	'<ul>'+
@@ -89,8 +91,7 @@ function VideoPlayerTmplt(uiaId, parentDiv, templateID, controlProperties)
 	'<div id="widgetContent">'+
   '<div id="optionTitle">Video Player Options</div>'+
   '<button id="optionTestError" class="panelOption btn">Test Error Message</button>'+
-  '<ul><li id="optionHideUnicodeBtn" class="panelOption"><a>Hide Unicode Button</a></li>' +
-  '<li id="optionStatusbarTitle" class="panelOption"><a>Title to Statusbar</a></li>'+
+  '<ul><li id="optionStatusbarTitle" class="panelOption"><a>Title to Statusbar</a></li>'+
   '<li id="colorThemes" class="panelOption">'+
   '<a class="darkred" style="color:red">red</a>'+
   '<a class="darkblue" style="color:blue">blue</a>'+
@@ -105,17 +106,14 @@ function VideoPlayerTmplt(uiaId, parentDiv, templateID, controlProperties)
 	'<div id="widgetContentState">'+
   '<div id="infoTitle">Video Player Information</div>'+
   '<ul><li>Best Video Format: 360p MP4 H264 AAC</li>'+
-  '<li>Switch To Unicode Mode To Fix Character Isues</li>'+
   '<li>For Hackers:</li>'+
   '<li>https://github.com/Trevelopment/Mazda-Videoplayer</li>'+
 	'</ul></div></aside></div>'+
   '<script src="addon-common/jquery.min.js" type="text/javascript"></script>'+
   '<script src="apps/_videoplayer/js/videoplayer-v2.js" type="text/javascript"></script>';
-  /*if (!window.jQuery) {
-    utility.loadScript("addon-common/jquery.min.js", {}, function(){
-      $.getScript("apps/_videoplayer/js/videoplayer-v2.js");
-    });
-  }*/
+  /* AIO-remove
+  $.getScript("apps/_videoplayer/js/videoplayer-v2.js");
+  AIO-remove */
 }
 
 /*

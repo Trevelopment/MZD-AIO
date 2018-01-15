@@ -55,19 +55,19 @@ then
     if [ "${TRACKORDER_DISCLAIMER}" = "1" ]
     then
       cp -a "${MYDIR}/config/audio_order_AND_no_More_Disclaimer/both/jci/gui/apps/system/js/systemApp.${TRACKORDER_DISCLAIMER_FILE}.js" /jci/gui/apps/system/js/systemApp.js
-      log_message "===  Removed Disclaimer for ${CMU_SW_VER}, audio order still changed  ==="
+      log_message "=== Removed Disclaimer for ${CMU_SW_VER}, audio order still changed ==="
     else
       cp -a "${MYDIR}/config/audio_order_AND_no_More_Disclaimer/both/jci/gui/apps/system/js/systemApp.js" /jci/gui/apps/system/js/
-      log_message "===          Removed Disclaimer, audio order still changed            ==="
+      log_message "===           Removed Disclaimer, audio order still changed           ==="
     fi
   else
     if [ "${TRACKORDER_DISCLAIMER}" = "1" ]
     then
       cp -a "${MYDIR}/config/audio_order_AND_no_More_Disclaimer/only_no_More_Disclaimer/jci/gui/apps/system/js/systemApp.${TRACKORDER_DISCLAIMER_FILE}.js" /jci/gui/apps/system/js/systemApp.js
-      log_message "=== Removed Disclaimer ${CMU_SW_VER} (audio order change was not installed) ==="
+      log_message "=== Removed Disclaimer ${CMU_SW_VER} (audio order change not installed) ==="
     else
       cp -a "${MYDIR}/config/audio_order_AND_no_More_Disclaimer/only_no_More_Disclaimer/jci/gui/apps/system/js/systemApp.js" /jci/gui/apps/system/js/
-      log_message "===        Removed Disclaimer (audio order change was not installed)        ==="
+      log_message "===      Removed Disclaimer (audio order change was not installed)    ==="
     fi
   fi
 else

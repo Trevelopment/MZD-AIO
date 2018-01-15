@@ -1,0 +1,334 @@
+/**
+ * [multidash]
+ *
+ * @version: 0.0.1
+ * @author: Harry multi
+ * @description super simple dash
+ *
+ * [license]
+ */
+
+@font-face {
+    font-family: myriadPro;
+    src: url(fonts/Myriad-Pro_31655.ttf);
+}
+@font-face {
+    font-family: robotoLight;
+    src: url(fonts/Roboto-Light.ttf);
+}
+@font-face {
+    font-family: robotoMedium;
+    src: url(fonts/Roboto-Medium.ttf);
+}
+
+
+[app="app.multidash"] .invisible {
+	visibility: hidden;
+}
+
+[app="app.multidash"] {
+	position: relative;
+	background-color: #000000;
+	-webkit-font-feature-settings: "kern" , "liga" , "pnum";
+	font-feature-settings: "kern" , "liga" , "pnum";
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	font-family: robotoLight,"Helvetica","Roboto","Arial",sans-serif;
+}
+
+
+[app="app.multidash"] #main-container {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	color: rgba(255, 255, 255, 0.9);
+	/*
+	opacity: 0;
+	transform: scale(.95);
+	transition: opacity .6s ease-in-out, transform .4s ease-in-out;
+	*/
+}
+/*
+[app="app.multidash"] #main-container.shown {
+	opacity: 1;
+	transform: scale(1);
+}
+*/
+[app="app.multidash"] #main-container.theme-night-white {
+	color: rgba(255, 255, 255, 0.4);
+}
+[app="app.multidash"] #main-container.theme-blue {
+	color: rgb(79, 166, 246);
+}
+[app="app.multidash"] #main-container.theme-green {
+	color: rgb(0, 227, 36);
+}
+[app="app.multidash"] #main-container.theme-red {
+	color: rgb(255, 0, 0);
+}
+[app="app.multidash"] #main-container.theme-purple {
+	color: rgb(151, 64, 250);
+}
+[app="app.multidash"] #main-container.theme-orange {
+	color: orange;
+}
+[app="app.multidash"] #main-container.theme-yellow {
+	color: yellow;
+}
+[app="app.multidash"] #main-container.theme-pink {
+	color: rgb(232, 92, 255);
+}
+[app="app.multidash"] #main-container.theme-black {
+	color: rgba(0, 0, 0, 1);
+	background-color: #bbbbbb;
+}
+[app="app.multidash"] #main-container.theme-night-black {
+	color: rgba(0, 0, 0, 1);
+	background-color: #777777;
+}
+
+
+[app="app.multidash"] #status-message {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 30px;
+	line-height: 30px;
+	text-align: center;
+	font-size: 13px;
+	font-family: verdana;
+	background-color: rgba(255, 255, 255, .15);
+	opacity: 0;
+	transition: opacity .2s ease-in-out;
+}
+[app="app.multidash"] #status-message.shown {
+	opacity: 1;
+}
+
+[app="app.multidash"] #top-left-con {
+	position: absolute;
+	top: 50px;
+	left: 0;
+	width: 540px;
+	text-align: center;
+}
+[app="app.multidash"] #speedometer .value {
+	display: block;
+	font-size: 240px;
+	line-height: 240px;
+	font-family: robotoMedium,"Helvetica","Roboto","Arial",sans-serif;
+	opacity: .9;
+}
+[app="app.multidash"] #speedometer .label {
+	display: block;
+	margin-top: -12px;
+	margin-bottom: 36px;
+	font-size: 18px;
+	line-height: 18px;
+	text-transform: uppercase;
+	font-weight: bold;
+	opacity: .5;
+}
+
+[app="app.multidash"] #top-speed,
+[app="app.multidash"] #avg-speed {
+	display: inline-block;
+}
+[app="app.multidash"] #top-speed {
+	margin-right: 60px;
+}
+[app="app.multidash"] #top-speed .label,
+[app="app.multidash"] #top-speed .value,
+[app="app.multidash"] #avg-speed .label,
+[app="app.multidash"] #avg-speed .value {
+	display: block;
+}
+
+[app="app.multidash"] #top-speed .label,
+[app="app.multidash"] #avg-speed .label {
+	font-size: 18px;
+	margin-bottom: 5px;
+	opacity: .6;
+}
+
+[app="app.multidash"] #top-speed .value,
+[app="app.multidash"] #avg-speed .value {
+	font-size: 24px;
+	opacity: .7;
+}
+
+
+
+[app="app.multidash"] #top-right-con {
+	position: absolute;
+	top: 40px;
+	right: 55px;
+	text-align: right;
+	opacity: .8;
+}
+[app="app.multidash"] #time-con,
+[app="app.multidash"] #date-con {
+	opacity: 0;
+	transform: scale(.9);
+	transition: opacity .6s linear, transform .4s linear;
+}
+[app="app.multidash"] #time-con.shown,
+[app="app.multidash"] #date-con.shown {
+	opacity: 1;
+	transform: scale(1);
+}
+[app="app.multidash"] #time-con {
+	font-size: 60px;
+	line-height: 60px;
+}
+[app="app.multidash"] #time-con .ampm {
+	font-size: 16px;
+	line-height: 16px;
+	margin-left: 6px;
+	font-weight: bold;
+	opacity: .5;
+}
+[app="app.multidash"] #date-con {
+	margin-top: 10px;
+	margin-bottom: 40px;
+	font-size: 26px;
+	line-height: 26px;
+}
+
+[app="app.multidash"] #temperature {
+	position: relative;
+	opacity: 0;
+	transform: scale(.9);
+	transition: opacity .6s linear, transform .4s linear;
+}
+[app="app.multidash"] #temperature.shown {
+	opacity: 1;
+	transform: scale(1);
+}
+[app="app.multidash"] #temperature .value {
+	display: inline-block;
+	font-size: 70px;
+	line-height: 70px;
+	margin-right: 8px;
+}
+[app="app.multidash"] #temperature:after {
+	position: absolute;
+	content: '\00b0';
+	right: 0;
+	top: 2px;
+	font-size: 40px;
+}
+[app="app.multidash"] #temperature .label {
+	display: inline-block;
+	font-size: 25px;
+	line-height: 25px;
+	text-transform: uppercase;
+	opacity: .5;
+}
+
+[app="app.multidash"] #additional-stats {
+	margin-top: 25px;
+	font-size: 18px;
+	line-height: 34px;
+}
+
+[app="app.multidash"] #heading .label,
+[app="app.multidash"] #avg-fuel-cons .label,
+[app="app.multidash"] #altitude .label,
+[app="app.multidash"] #trip-time .label {
+	float: right;
+	margin-right: 8px;
+	opacity: .7;
+}
+[app="app.multidash"] #heading .value,
+[app="app.multidash"] #avg-fuel-cons .value,
+[app="app.multidash"] #altitude .value,
+[app="app.multidash"] #trip-time .value {
+	float: right;
+	min-width: 50px;
+	clear: right;
+}
+[app="app.multidash"] #altitude .unit {
+	opacity: .7;
+	font-size: 15px;
+}
+
+
+[app="app.multidash"] #bottom-con {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	height: 40px;
+	background-color: rgba(255, 255, 255, 0.07);
+	color: rgba(255, 255, 255, 0.65);
+}
+[app="app.multidash"].theme-black #bottom-con {
+	background-color: rgba(0, 0, 0, 0.1);
+	color: rgba(0, 0, 0, 0.65);
+}
+
+[app="app.multidash"] #bottom-con .fuel-level {
+	position: relative;
+	display: block;
+	background-color: rgba(0, 117, 255, .2);
+	height: 100%;
+	width: 0;
+	transition: width 1.5s linear;
+}
+[app="app.multidash"] #main-container.theme-blue #bottom-con .fuel-level {
+	background-color: rgba(79, 166, 246, .7);
+}
+[app="app.multidash"] #main-container.theme-green #bottom-con .fuel-level {
+	background-color: rgba(0, 227, 36, .5);
+}
+[app="app.multidash"] #main-container.theme-red #bottom-con .fuel-level {
+	background-color: rgba(255, 0, 0, .5);
+}
+[app="app.multidash"] #main-container.theme-purple #bottom-con .fuel-level {
+	background-color: rgba(151, 64, 250, .7);
+}
+[app="app.multidash"] #main-container.theme-orange #bottom-con .fuel-level {
+	background-color: rgba(255, 165, 0, .6);
+}
+[app="app.multidash"] #main-container.theme-yellow #bottom-con .fuel-level {
+	background-color: rgba(255, 255, 0, .5);
+}
+[app="app.multidash"] #main-container.theme-pink #bottom-con .fuel-level {
+	background-color: rgba(232, 92, 255, .6);
+}
+[app="app.multidash"] #bottom-con .fuel-percentage {
+	position: absolute;
+	left: 45px;
+	top: 11px;
+	font-size: 18px;
+	line-height: 18px;
+	opacity: .8;
+	z-index: 1;
+}
+[app="app.multidash"] #main-container.theme-yellow #bottom-con .fuel-percentage {
+	opacity: 1;
+}
+[app="app.multidash"] #bottom-con .fuel-icon {
+	position: absolute;
+	left: 10px;
+	top: 9px;
+	width: 22px;
+	height: 22px;
+	background: url(images/fuel.png) no-repeat center center transparent;
+	background-size: 100% 100%;
+	z-index: 2;
+	opacity: .4;
+}
+[app="app.multidash"] #main-container.theme-black #bottom-con .fuel-icon {
+	opacity: .6;
+	-webkit-filter: invert(100%);
+}
+[app="app.multidash"] #main-container.theme-yellow #bottom-con .fuel-icon {
+	opacity: 1;
+}
+
+[app="app.multidash"] #bottom-con .fuel-level.warning {
+	background-color: rgba(255, 0, 0, .5);
+}

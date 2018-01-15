@@ -391,7 +391,7 @@ function NowPlaying4Ctrl(uiaId, parentDiv, controlId, properties)
                   "_trackDisplay"         : "NowPlaying4CtrlHidden",
                   "_ctrlTitleIconFrameLeft"   : "NowPlaying4CtrlTitleIconFrameLeft",
                   //"_ctrlTitleIconImageLeft"   : "NowPlaying4CtrlTitleIconImageLeft",
-				  "_ctrlTitleIconFrame"   : "NowPlaying4CtrlHidden",
+				          "_ctrlTitleIconFrame"   : "NowPlaying4CtrlHidden",
                   "_ctrlTitleIconImage"   : "NowPlaying4CtrlTitleIconImage",
                   "_hdDisplayFrame"       : "NowPlaying4CtrlHidden",
                   "_hdDisplayIconImage"   : "NowPlaying4CtrlHidden",
@@ -438,7 +438,7 @@ function NowPlaying4Ctrl(uiaId, parentDiv, controlId, properties)
     this.properties = {
     	"ctrlStyle"                 : "",
     	"ctrlTitleObj"              : null,
-        "ctrlSubtitleObj"           : null,
+      "ctrlSubtitleObj"           : null,
     	"hdConfigObj"               : null,
     	"trackCount"                : 0,
     	"currentTrackNum"           : 0,
@@ -447,8 +447,8 @@ function NowPlaying4Ctrl(uiaId, parentDiv, controlId, properties)
     	"detailLine1Obj"            : null,
     	"detailLine2Obj"            : null,
     	"detailLine3Obj"            : null,
-    	"unformattedTextObj"              : null,
-        "artworkImagePath"          : "",
+    	"unformattedTextObj"        : null,
+      "artworkImagePath"          : "",
     	"noArtworkImagePath"        : "",
     	"phoneNumber"               : "",
     	"distanceDirection"         : "",
@@ -487,11 +487,11 @@ NowPlaying4Ctrl.prototype._createStructure = function()
     this._trackDisplay = document.createElement("span");
     this._trackDisplay.className = "NowPlaying4CtrlTrackDisplay";
         this.divElt.appendChild(this._trackDisplay);
-	
-	// ---MZDMOD---	
-	// Only for style8
-	// create div for control title's icon, left most
-	// CSS file also updated to set to left of title
+
+  	// ---MZDMOD---
+  	// Only for style8
+  	// create div for control title's icon, left most
+  	// CSS file also updated to set to left of title
     this._ctrlTitleIconFrameLeft = document.createElement('div');
     this._ctrlTitleIconFrameLeft.className = "NowPlaying4CtrlTitleIconFrameLeft";
         this.divElt.appendChild(this._ctrlTitleIconFrameLeft);
@@ -664,8 +664,8 @@ NowPlaying4Ctrl.prototype._createStructure = function()
         this["_rmStarNum" + rmStarNum].style.left = ((rmStarNum - 1) * 29) + "px";
         this._ratingMeterFrame.appendChild(this["_rmStarNum" + rmStarNum]);
     }
-    
-    // attach control to parent    
+
+    // attach control to parent
     this.parentDiv.appendChild(this.divElt);
 
     log.debug("Instantiating umpCtrl...");
@@ -806,9 +806,9 @@ NowPlaying4Ctrl.prototype.setNowPlayingConfig = function(config)
 
     // workaround for references, loadingIcon through setNowPlayingConfig
     var loadingIcon = false;
-	
-	// ---MZDMOD---
-	// Add style8
+
+    // ---MZDMOD---
+    // Add style8
     // Control style
     if (config.ctrlStyle &&
         ((config.ctrlStyle === "Style0") ||
@@ -819,7 +819,7 @@ NowPlaying4Ctrl.prototype.setNowPlayingConfig = function(config)
          (config.ctrlStyle === "Style5") ||
          (config.ctrlStyle === "Style6") ||
          (config.ctrlStyle === "Style7") ||
-         (config.ctrlStyle === "Style8"))) 
+         (config.ctrlStyle === "Style8")))
     {
         this.properties.ctrlStyle = config.ctrlStyle;
         loadingIcon = config.loadingIcon;
@@ -888,7 +888,7 @@ NowPlaying4Ctrl.prototype.setNowPlayingConfig = function(config)
         // Artwork Image
         this.setArtworkImagePath(config.artworkImagePath);
     }
-    
+
     // Track display
     if (config.currentTrackNum)
     {
@@ -1050,19 +1050,19 @@ NowPlaying4Ctrl.prototype.setCtrlTitle = function(ctrlTitleObj)
 
         if (ctrlTitleObj.ctrlTitleIcon)
         {
-			// ---MZDMOD---
-			
+            // ---MZDMOD---
+
             this.properties.ctrlTitleObj.ctrlTitleIcon = ctrlTitleObj.ctrlTitleIcon;
             //this.setBrandImage(this.properties.ctrlTitleObj.ctrlTitleIcon);
-			//Style8 is only used for USB audio, this will set a left most icon
-			if (this.properties.ctrlStyle === "Style8")
-			{
-				this._ctrlTitleIconFrameLeft.style.backgroundImage = "url(" + this.properties.ctrlTitleObj.ctrlTitleIcon + ")";
-			}
-			else
-			{
-				this.setBrandImage(this.properties.ctrlTitleObj.ctrlTitleIcon);
-			}
+            //Style8 is only used for USB audio, this will set a left most icon
+            if (this.properties.ctrlStyle === "Style8")
+            {
+                this._ctrlTitleIconFrameLeft.style.backgroundImage = "url(" + this.properties.ctrlTitleObj.ctrlTitleIcon + ")";
+            }
+            else
+            {
+                this.setBrandImage(this.properties.ctrlTitleObj.ctrlTitleIcon);
+            }
         }
     }
     else

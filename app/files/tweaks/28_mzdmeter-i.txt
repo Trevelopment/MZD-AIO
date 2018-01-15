@@ -17,20 +17,19 @@ pkill websocketd
 rm -fr /jci/gui/apps/_mzdmeter/ /paa/
 
 # Copies the additionalApps.js
-if [ ! -e /jci/opera/opera_dir/userjs/additionalApps.js ]
+if [ $CASDK_MODE -eq 0 ]
 then
-	cp -a ${MYDIR}/config/mzdmeter/jci/opera/opera_dir/userjs/additionalApps.js /jci/opera/opera_dir/userjs/
+	cp -a ${MYDIR}/config/jci/opera/opera_dir/userjs/additionalApps.js /jci/opera/opera_dir/userjs/ && CASDK_MODE=1
 	chmod 755 /jci/opera/opera_dir/userjs/additionalApps.js
   log_message "===                     Copied additionalApps.js                      ==="
 fi
 
-# It creates its own json file from scratch if the file does not exists
+# create additionalApps.json file from scratch if the file does not exist
 if [ ! -e /jci/opera/opera_dir/userjs/additionalApps.json ]
 then
-	# cp -a ${MYDIR}/config/mzdmeter/jci/opera/opera_dir/userjs/additionalApps.json /jci/opera/opera_dir/userjs/
-	echo "[" > /jci/opera/opera_dir/userjs/additionalApps.json
-	echo "]" >> /jci/opera/opera_dir/userjs/additionalApps.json
-	chmod 755 /jci/opera/opera_dir/userjs/additionalApps.json
+  echo "[" > /jci/opera/opera_dir/userjs/additionalApps.json
+  echo "]" >> /jci/opera/opera_dir/userjs/additionalApps.json
+  chmod 755 /jci/opera/opera_dir/userjs/additionalApps.json
   log_message "===                   Created additionalApps.json                     ==="
 fi
 # Add startup file check for speedometer app too
@@ -43,9 +42,11 @@ else
   log_message "===                   Copied mzdmeter startup file                    ==="
 fi
 # Copies the content of the addon-common folder
-cp -a ${MYDIR}/config/mzdmeter/jci/gui/addon-common/ /jci/gui/
-chmod 755 -R /jci/gui/addon-common/
-log_message "===                     Copied addon-common folder                    ==="
+if [ ! -e /jci/gui/addon-common/websocketd ]  || [ ! -e /jci/gui/addon-common/jquery.min.js ]; then
+  cp -a ${MYDIR}/config/jci/gui/addon-common/ /jci/gui/
+  chmod 755 -R /jci/gui/addon-common/
+  log_message "===                     Copied addon-common folder                    ==="
+fi
 
 count=$(grep -c 'mzdmonitor.sh' /jci/scripts/stage_wifi.sh)
 if [ "$count" = "0" ]
@@ -64,14 +65,6 @@ chmod 755 -R /jci/gui/apps/_mzdmeter/
 
 cp -a ${MYDIR}/config/mzdmeter/paa /
 chmod 755 -R /paa/
-
-# patch systemApp.js if needed for v59+ app list
-if ! grep -Fq "_mzdmeter" /jci/gui/apps/system/js/systemApp.js && [ ${APP_PATCH_59} = 0 ]
-then
-  APP_PATCH_59=1
-  cp ${MYDIR}/config/patch59/systemApp.js /jci/gui/apps/system/js/
-  log_message "===                   Applied App List Patch For V59+                 ==="
-fi
 
 log_message "======************* END INSTALLATION OF MZD METER APP ************======="
 log_message " "

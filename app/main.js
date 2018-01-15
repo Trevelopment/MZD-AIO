@@ -108,13 +108,11 @@ app.setName(pjson.productName || 'MZD-AIO-TI')
 
 function initialize () {
   var shouldQuit = makeSingleInstance()
-  if (shouldQuit) return app.quit()
+  if (shouldQuit) {return app.quit()}
   if (!persistantData.has('copyFolderLocation')) {
     persistantData.set('copyFolderLocation', app.getPath('desktop'))
   }
   function onClosed () {
-    // save some persistant data
-    persistantData.set('visits', Number(persistantData.get('visits')) + 1)
     // Dereference used windows
     downloadwin = null
     mailform = null
@@ -288,9 +286,9 @@ function initialize () {
           ipc.on('update-downloaded', (autoUpdater) => {
             // Elegant solution: display unobtrusive notification messages
             mainWindow.webContents.send('update-downloaded')
-            ipc.on('update-and-restart', () => {
-              autoUpdater.quitAndInstall()
-            })
+          })
+          ipc.on('update-and-restart', () => {
+            autoUpdater.quitAndInstall()
           })
         }
       } catch (e) {
@@ -305,6 +303,12 @@ function initialize () {
     })
 
     app.on('will-quit', () => {})
+
+    app.on('before-quit', () => {
+      var v = Number(persistantData.get('visits')) + 1
+      // save some persistant data
+      persistantData.set('visits', v)
+    })
 
     ipc.on('reset-window-size', () => {
       mainWindow.setSize(1280, 800)
@@ -370,7 +374,7 @@ function initialize () {
   function makeSingleInstance () {
     return app.makeSingleInstance(() => {
       if (mainWindow) {
-        if (mainWindow.isMinimized()) mainWindow.restore()
+        if (mainWindow.isMinimized()) {mainWindow.restore()}
         mainWindow.focus()
       }
     })
@@ -379,32 +383,27 @@ function initialize () {
     var disks = []
     var aioInfo
     var aioBkups = []
+    var aioJSON = null
     drivelist.list((error, dsklst) => {
       if (error) {
-        bootbox.alert({
-          title: 'Error Locating Available USB Drives:',
-          message: `${error}`,
-          callback: function () {
-            bootbox.hideAll()
+        console.error(error)
+        return
+      } else if(typeof dsklst !== "undefined") {
+        dsklst.forEach((drive) => {
+          var sizeGB = Math.round(drive.size / 100000000) / 10
+          if (!drive.system && drive.mountpoints[0]) {
+            console.log(`Raw: ${drive.raw}\n Mountpoint: ${drive.mountpoints[0].path}\n Description: ${drive.description}\n Size: ${sizeGB}GB`)
+            disks.push({'desc': drive.description, 'mp': drive.mountpoints[0].path})
           }
         })
-      }
-      dsklst.forEach((drive) => {
-        var sizeGB = Math.round(drive.size / 100000000) / 10
-        if (!drive.system && drive.mountpoints[0]) {
-          console.log(`Raw: ${drive.raw}\n Mountpoint: ${drive.mountpoints[0].path}\n Description: ${drive.description}\n Size: ${sizeGB}GB`)
-          disks.push({'desc': drive.description, 'mp': drive.mountpoints[0].path})
+        if (disks.length && typeof disks !== "undefined") {
+          disks.forEach((drive) => {
+            if (fs.existsSync(`${drive.mp}/AIO_info.json`)) {
+              console.log(`Found AIO_info.json on USB Drive - ${drive.mp} ${drive.desc}`)
+              aioJSON = fs.readFileSync(`${drive.mp}/AIO_info.json`)
+            }
+          })
         }
-      })
-      if (disks.length) {
-        var aioJSON = null
-        var bkupJSON = persistantData.get('bkup_json')
-        disks.forEach((drive) => {
-          if (fs.existsSync(`${drive.mp}/AIO_info.json`)) {
-            console.log(`Found AIO_info.json on USB Drive - ${drive.mp} ${drive.desc}`)
-            aioJSON = fs.readFileSync(`${drive.mp}/AIO_info.json`)
-          }
-        })
         if (aioJSON) {
           try {
             aioInfo = JSON.parse(aioJSON)
@@ -414,8 +413,7 @@ function initialize () {
             console.log(`AIO_VER: ${aioInfo.info.AIO_VER}`) */
             persistantData.set('FW', aioInfo.info.CMU_SW_VER)
             persistantData.set('last_aio', aioInfo.info.AIO_VER)
-            _.pullAll(aioBkups, bkupJSON)
-            console.log(aioBkups)
+            //_.pullAll(aioBkups)
             mainWindow.webContents.send('aio-info')
           } catch (e) { console.log(e.message) }
         }
@@ -492,7 +490,7 @@ ipc.on('bg-no-resize', (event, arg) => {
     ]
   }, function (files) {
     if (files) {
-      mainWindow.send('selected-joined-bg', files)
+      event.webContents.send('selected-joined-bg', files)
     }
   })
 })

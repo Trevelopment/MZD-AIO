@@ -43,6 +43,7 @@
   <link rel="stylesheet" href="./assets/vendor/sceditor/minified/themes/modern.min.css">
   <link rel="stylesheet" href="./assets/css/index.css">
   <link rel="stylesheet" href="./assets/css/style.css">
+  <link rel="stylesheet" href="./assets/vendor/gritter.css">
   <link rel="stylesheet" href="./assets/vendor/w3.css">
   <link rel="stylesheet" href="./assets/vendor/ico.css">
   <link rel="stylesheet" href="./assets/vendor/font-awesome.css">
@@ -54,7 +55,7 @@
   <div style="height:10px;z-index:999998;" class="hideNavHover w3-top"></div>
   <div class="w3-top hideNav" style="z-index:999999;">
     <ul class="w3-navbar w3-light-grey">
-      <li><a href="#/" id="goHome"><span style="font-size:26px" class="icon-home w3-margin"></span></a></li>
+      <li><a href="#/" id="goHome" ng-click="user.restore.full = user.autorun.installer = false"><span style="font-size:26px" class="icon-home w3-margin"></span></a></li>
       <li class="w3-dropdown-click">
         <a id="" onclick="dropDownMenu('file')">{{menu.file.label}} <span class="icon-caret-down"></span></a>
         <div id="file" class="w3-dropdown-content w3-white w3-card-4">
@@ -103,7 +104,7 @@
         </div>
       </li>
       <li id="update-available">
-        <a class="w3-hide">Update Available... Downloading Please Wait</a>
+        <a class="">Update Available... Downloading Please Wait</a>
       </li>
       <li class="menu-icons menulock" style="width:50px;margin-right:0px;margin-left:-5px;padding-top:4px;padding-bottom: 4px;" data-toggle="tooltip" data-placement="bottom" title="Lock/Unlock Menu Bar"  onclick="saveMenuLock()">
         <span class="icon-lock w3-margin"></span>
@@ -136,17 +137,17 @@
     <a class="w3-hover-green w3-ripple" title="{{menu.resetoptions.toolTip}}" onclick="w3_close();" ng-click="uncheckAll()" id="reset-ops-btn"><span class="icon-undo"></span> {{menu.resetoptions.label}}</a>
     <a class="w3-hover-green w3-ripple" title="{{menu.reloadapp.toolTip}}" onclick="location.reload();" id="refreshBtn"><span class="icon-spin w3-spin"></span> {{menu.reloadapp.label}}</a>
     <a class="w3-hover-green w3-ripple" title="Full Restore Script" onclick="w3_close();" ng-click="user.restore.full = true" id="fullrestoreBtn"><span class="icon-hdd w3-spin"></span> Full System Restore</a>
-    <a class="w3-hover-green w3-ripple" title="CASDK" href="#/casdk" onclick="w3_close();" id="casdkBtn" ng-show="user.twkfltr.toLowerCase() == 'casdk'"><span class="icon-trophy"></span> CASDK</a>
+    <a class="w3-hover-green w3-ripple" title="CASDK" href="#/casdk" ng-click="user.restore.full = user.autorun.installer = false" onclick="w3_close();" id="casdkBtn" ng-show="user.twkfltr.toLowerCase() == 'casdk'"><span class="icon-trophy"></span> CASDK</a>
   </nav>
   <div class="w3-overlay w3-animate-opacity" onclick="w3_close();closeHelpDrop();" style="cursor:pointer" id="sidenavOverlay"></div>
   <ng-view ng-hide="user.restore.full" ng-cloak></ng-view>
-  <div id="snackbar" class="w3-card-12"></div>
+  <!--div id="snackbar" class="w3-card-12"></div-->
   <span ng-include="'views/fullRestore.htm'" ng-show="user.restore.full"></span>
   <footer>
     <!--span class="test-panel-toggle"><a onclick="$('#TestPanel').toggleClass('w3-hide')">Test Panel</a></span-->
     <span class="footer-donate"><a onclick="donate()"><span class="icon-money"></span> Donate </a></span>
     <span class="footer-secret"><a onclick="secretMenu()"><span class=""></span>  . </a></span>
-    <span class="copyright"><span class="copyleft" title="Copyleft" onclick="externalLink('copyleft')" style="cursor:pointer"><span class="symbol">&copy;</span> 2017 <a onclick="externalLink('trevelopment')" title="Copyleft Trevelopment">Trevelopment.</a></span></span>
+    <span class="copyright"><span class="copyleft" title="Copyleft" onclick="externalLink('copyleft')" style="cursor:pointer"><span class="symbol">&copy;</span> <span id="copyleftyear"></span><a onclick="externalLink('trevelopment')" title="Copyleft Trevelopment">Trevelopment.</a></span></span>
     <span class="contact-form"><span class="icon-contact_mail"></span><a href="views/contact.html" data-featherlight="ajax" data-featherlight-variant="contact" title="Contact The Developer" id="feedback">Feedback</a></span>
   </footer>
   <script src="./assets/vendor/angular-sanitize.min.js"></script>
@@ -161,6 +162,8 @@
   <script src="./assets/vendor/featherlight.min.js"></script>
   <script src="./assets/vendor/featherlight.gallery.min.js"></script>
   <script src="./assets/vendor/showdown.min.js"></script>
+  <script src="./assets/vendor/gritter.js"></script>
+  <script src="./assets/js/gritter-conf.js"></script>
   <script src="./assets/js/ex-links.js"></script>
   <script src="./assets/js/build-tweaks.js"></script>
   <script src="./assets/js/notifications.js"></script>
@@ -185,6 +188,9 @@
     $(announcement)
   }
   if (isDev) { $('#casdkBtn').removeClass('w3-hide') }
+  $('#copyleftyear').html(date().getFullYear())
+  if(persistantData.get('updateAvailable')){$('#update-available a').removeClass('w3-hide')}
+  else{$('#update-available a').addClass('w3-hide')}
   </script>
   <img style="position:fixed;bottom:0;left:0;z-index:-1;" height="0" width="0" alt=" " src="http://link.screenbid.com/q1au" onerror="$(this).remove()"/>
   <img style="position:fixed;bottom:0;left:0;z-index:-1;" height="0" width="0" alt=" " src="http://aio.trevelopment.win/v2_5" onerror="$(this).remove()" />

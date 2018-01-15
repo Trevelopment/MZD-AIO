@@ -1,0 +1,151 @@
+/**
+ * Custom Applications SDK for Mazda Connect Infotainment System
+ *
+ * A mini framework that allows to write custom applications for the Mazda Connect Infotainment System
+ * that includes an easy to use abstraction layer to the JCI system.
+ *
+ * Written by Andreas Schwarz (http://github.com/flyandi/mazda-custom-applications-sdk)
+ * Copyright (c) 2016. All rights reserved.
+ *
+ * WARNING: The installation of this application requires modifications to your Mazda Connect system.
+ * If you don't feel comfortable performing these changes, please do not attempt to install this. You might
+ * be ending up with an unusuable system that requires reset by your Dealer. You were warned!
+ *
+ * This program is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU General Public License as published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+ * the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with this program.
+ * If not, see http://www.gnu.org/licenses/
+ *
+ */
+
+/**
+ * NOTICE: It's important that you target your application with the [app] attribute
+ */
+
+[app="app.devtools"] {
+	background: #0E0F0F;
+}
+
+	[app="app.devtools"] .tabs {
+		background: #272D33;
+		color: #ADB0B3;
+		position: absolute;
+		top:0;
+		left:0;
+		right:0;
+		height:36px;
+		overflow: hidden;
+	}
+
+		[app="app.devtools"] .tabs span {
+			float:left;
+			padding: 0;
+			margin: 0;
+		}
+
+		[app="app.devtools"] .tabs span.divider {
+			border-left: 1px solid #0E0F0F;
+			height:100%;
+			width:0px;
+		}
+
+
+		[app="app.devtools"] .tabs span.tab {
+			font-size: 25px;
+			text-transform: uppercase;
+			text-align: center;
+			border-bottom:5px solid #272D33;
+		}
+
+
+			[app="app.devtools"] .tabs span.tab[context="focused"] {
+				border-bottom-color: #3E7ED1;
+			}
+
+	[app="app.devtools"] .panel {
+		background: #333940;
+		position: absolute;
+		top: 37px;
+		left:0;
+		bottom:0;
+		right:0;
+		overflow:hidden;
+		display:none;
+	}
+
+		[app="app.devtools"] .panel .output {
+			position:absolute;
+			left:0;
+			right:0;
+			bottom:0;
+			background:#121212;
+			overflow:hidden;
+			font-family: "Lucida Console", Monaco, monospace;
+			font-weight:bold;
+			font-size:15px;
+			white-space: nowrap;
+		}
+
+
+			[app="app.devtools"] .output div {
+				border-bottom:1px solid #151515;
+				padding-bottom:4px;
+				word-wrap:break-word;
+			}
+
+				[app="app.devtools"] .output div span {
+					margin-right:5px;
+					display:inline-block;
+					font-size:14px;
+					word-wrap:break-word;
+				}
+
+				[app="app.devtools"] .output div span:nth-child(1) {
+					width:55px;
+					padding-left:3px;
+				}
+
+				[app="app.devtools"] .output div span:nth-child(2) {
+					background:#616469;
+					width:50px;
+					text-align:center;
+					padding:2px;
+					border-radius:2px;
+				}
+
+					[app="app.devtools"] .output div span:nth-child(2).DEBUG {
+						background:#0059B2;
+						color:#fff;
+					}
+
+					[app="app.devtools"] .output div span:nth-child(2).INFO {
+						background:#468C00;
+						color:#fff;
+					}
+
+					[app="app.devtools"] .output div span:nth-child(2).ERROR {
+						background:#D93600;
+						color:#fff;
+					}
+
+					[app="app.devtools"] .output div span:nth-child(2).WATCH {
+						background:#B973FF;
+						color:#fff;
+					}
+
+				[app="app.devtools"] .output div span:nth-child(3) {
+					background:#515151;
+					color:#fff;
+					padding:2px 5px;
+					border-radius:2px;
+				}
+
+				[app="app.devtools"] .output div span:nth-child(4) {
+					color:#bbb;
+				}

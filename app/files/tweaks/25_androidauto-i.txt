@@ -66,22 +66,24 @@ chmod 755 /tmp/mnt/data_persist/dev/bin/headunit-wrapper
 log_message "===                Copied Android Auto Headunit App files             ==="
 
 # copy additionalApps.js, if not already present
-if [ ! -e /jci/opera/opera_dir/userjs/additionalApps.js ]
+if [ $CASDK_MODE -eq 0 ]
 then
 	log_message "===           No additionalApps.js available, will copy one           ==="
-	cp -a ${MYDIR}/config/androidauto/jci/opera/opera_dir/userjs/additionalApps.* /jci/opera/opera_dir/userjs/
+	cp -a ${MYDIR}/config/jci/opera/opera_dir/userjs/additionalApps.js /jci/opera/opera_dir/userjs/ && CASDK_MODE=1
 	find /jci/opera/opera_dir/userjs/ -type f -name '*.js' -exec chmod 755 {} \;
+fi
+
+# create additionalApps.json file from scratch if the file does not exist
+if [ ! -e /jci/opera/opera_dir/userjs/additionalApps.json ]
+then
+  echo "[" > /jci/opera/opera_dir/userjs/additionalApps.json
+  echo "]" >> /jci/opera/opera_dir/userjs/additionalApps.json
+  chmod 755 /jci/opera/opera_dir/userjs/additionalApps.json
+  log_message "===                   Created additionalApps.json                     ==="
 fi
 
 # call function add_app_json to modify additionalApps.json
 add_app_json "_androidauto" "Android Auto" "preload.js"
-
-# copy updated additionalApps.js if needed
-if ! grep -q "preloadPath" /jci/opera/opera_dir/userjs/additionalApps.js
-then
-	cp -a ${MYDIR}/config/androidauto/jci/opera/opera_dir/userjs/additionalApps.js /jci/opera/opera_dir/userjs/
-	log_message "===                  Copy New additionalApps.js                       ==="
-fi
 
 # add preload to the AA json entry if needed
 if ! grep -q "preload.js" /jci/opera/opera_dir/userjs/additionalApps.json
@@ -102,14 +104,6 @@ if [ $SOUND_X -eq 1 ]; then
 			log_message "===           Error removing patch from /etc/asound.conf              ==="
 		fi
 	fi
-fi
-
-# patch systemApp.js if needed for v59+ app list
-if ! grep -Fq "_androidauto" /jci/gui/apps/system/js/systemApp.js && [ ${APP_PATCH_59} -eq 0 ]
-then
-	APP_PATCH_59=1
-	cp -a ${MYDIR}/config/patch59/systemApp.js /jci/gui/apps/system/js/
-	log_message "===                 Applied App List Patch For V59+                   ==="
 fi
 
 if [ "${TESTBKUPS}" = "1" ]

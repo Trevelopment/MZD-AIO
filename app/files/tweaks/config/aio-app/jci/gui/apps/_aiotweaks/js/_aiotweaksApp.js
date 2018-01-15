@@ -49,7 +49,8 @@ _aiotweaksApp.prototype.appInit = function()
     {
       //Speed Handlers
       "Global.AtSpeed" : this._AtSpeedMsgHandler.bind(this),
-      "Global.NoSpeed" : this._NoSpeedMsgHandler.bind(this)
+      "Global.NoSpeed" : this._NoSpeedMsgHandler.bind(this),
+      "TimedSbn_CurrentSong": this._TimedSbn_CurrentSongMsgHandler.bind(this)
     };
 };
 
@@ -58,12 +59,21 @@ _aiotweaksApp.prototype.appInit = function()
  * CONTEXT CALLBACKS
  * =========================
  */
-_aiotweaksApp.prototype._AtSpeedMsgHandler = function (msg){
+_aiotweaksApp.prototype._AtSpeedMsgHandler = function (msg) {
   log.info("AIO Tweaks App Received AtSpeedMsg" + msg);
 }
-_aiotweaksApp.prototype._NoSpeedMsgHandler = function (msg){
+_aiotweaksApp.prototype._NoSpeedMsgHandler = function (msg) {
   log.info("AIO Tweaks App Received NoSpeedMsg" + msg);
 }
+// from usbaudioApp - test to see if this works
+_aiotweaksApp.prototype._TimedSbn_CurrentSongMsgHandler = function (msg) {
+    framework.common.startTimedSbn(this.uiaId, 'TimedSbn_UsbAudio_CurrentSong', 'typeE', {
+        sbnStyle : 'Style02',
+        imagePath1 : 'IcnSbnEnt.png',
+        text1 : "USB",
+        text2 : msg.params.payload.title,
+    });
+};
 _aiotweaksApp.prototype._StartContextReady = function ()
 {
   framework.common.setSbDomainIcon("apps/_aiotweaks/app.png");

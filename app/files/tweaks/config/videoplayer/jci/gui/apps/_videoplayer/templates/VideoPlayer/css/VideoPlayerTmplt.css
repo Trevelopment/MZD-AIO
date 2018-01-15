@@ -63,7 +63,8 @@
   height: 100%;
   width: 100%;
 }
-#myVideoControlDiv ul li, #videoInfoPanel ul li{
+#myVideoControlDiv ul li,
+#videoInfoPanel ul li{
   float: right;
   padding-left: 42px;
   margin-right: 12px;
@@ -71,7 +72,8 @@
   background-position: 0 7px;
   height: 100%;
 }
-#myVideoControlDiv ul li a, #videoInfoPanel ul li a {
+#myVideoControlDiv ul li a,
+#videoInfoPanel ul li a {
   display: block;
   color: #cccccc;
   font-size: 16px;
@@ -88,9 +90,22 @@
   background-position: 0 3px;
 }
 
-.rebootBtnDiv {
+.VideoPlayerTmplt .rebootBtnDiv {
   margin-top: 1px;
   margin-left: 10px;
+}
+
+#myMusicMetadata {
+  top:66px;
+  right:100px;
+  bottom:50px;
+  left:20px;
+  position:absolute;
+  font-size: 24px;
+  color: #cccccc;
+  font-family: verdana;
+  overflow: hidden;
+  visibility: hidden;
 }
 
 #myVideoList {
@@ -119,21 +134,17 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
-#myVideoList ul li:focus,  #myVideoList ul li:active {
-  background: linear-gradient(top,rgba(0,139,139,0),rgba(0,139,139,1));
-  background: -webkit-linear-gradient(top,rgba(0,0,0,255), rgba(0,0,139,1));
-}
 #myVideoScroll {
-  top:40px;
+  top:20px;
   right:40px;
   position:absolute;
 }
 #myVideoScroll {
-  margin-top:15px;
+  margin-top:25px;
 }
 #myVideoScroll img, #myVideoScroll li {
   display:block;
-  margin-top:15px;
+  margin-top:25px;
   width:50px;
   height:50px;
   background-repeat:no-repeat;
@@ -216,7 +227,7 @@
   width: 20%;
   height: 45%;
 }
-.videoTouchControls {
+.VideoPlayerTmplt .videoTouchControls {
   z-index: 20200;
   position:absolute;
   background-position: center;
@@ -224,39 +235,46 @@
   background-color: transparent;
   background-image: none;
 }
+#videoInfoPanel ul li#colorThemes {
+  padding-left: 0;
+}
 #videoInfoPanel ul li#colorThemes a {
-  width: 25%;
+  width: 23%;
+  border-width: 2px;
+  border-style: solid;
   float: left;
   text-align: center;
+  margin: 2px;
   padding-bottom: 20px;
 }
-.selectedItemRed {
+.VideoPlayerTmplt .selectedItemRed {
   background: -webkit-linear-gradient(to top,rgba(139,0,0,1) 44%,rgba(0,0,0,0.1));
 }
-.selectedItemBlue {
+.VideoPlayerTmplt .selectedItemBlue {
   background: -webkit-linear-gradient(to top,rgba(0,0,139,1) 44%,rgba(0,0,0,0.1));
 }
-.selectedItemGreen {
+.VideoPlayerTmplt .selectedItemGreen {
   background: -webkit-linear-gradient(to top,rgba(0,100,0,1) 44%,rgba(0,0,0,0.1));
 }
-.selectedItemOrange {
+.VideoPlayerTmplt .selectedItemOrange {
   background: -webkit-linear-gradient(to top,rgba(255,140,0,1) 44%,rgba(0,0,0,0.1));
 }
-.selectedItemTeal {
+.VideoPlayerTmplt .selectedItemTeal {
   background: -webkit-linear-gradient(to top,rgba(0,139,139,1) 44%,rgba(0,0,0,0.1));
 }
-.selectedItemSlate {
+.VideoPlayerTmplt .selectedItemSlate {
   background: -webkit-linear-gradient(to top,rgba(47,79,79,1) 44%,rgba(0,0,0,0.1));
 }
-.selectedItemGold {
+.VideoPlayerTmplt .selectedItemGold {
   background: -webkit-linear-gradient(to top,rgba(184,134,11,1) 44%,rgba(0,0,0,0.1));
 }
-.selectedItemWhite {
+.VideoPlayerTmplt .selectedItemWhite {
   background: -webkit-linear-gradient(to top,rgba(255,255,255,1) 74%,rgba(0,0,0,0.1));
   color: #000!important;
+  text-shadow: 1px 1.5px 1px #eee!important;
 }
-.selectedItemPink,
-.selectedItemViolet {
+.VideoPlayerTmplt .selectedItemPink,
+.VideoPlayerTmplt .selectedItemViolet {
   background: -webkit-linear-gradient(to top,rgba(148,0,211,1) 44%,rgba(0,0,0,0.1));
 }
 #myVideoList .selectedItemRed {
@@ -287,19 +305,7 @@
 #myVideoList .selectedItemWhite {
   background: -webkit-linear-gradient(to left,rgba(255,255,255,0.1),rgba(255,255,255,1) 60%);
   color: #000!important;
-}
-#myVideoContainer .unicodeMessage {
-  position: absolute;
-  font-size: 20px;
-  color: #fff;
-  background: #000;
-  border: 6px double #6fffdf;
-  padding: 15px 0;
-  width: 65%;
-  top: 45%;
-  left: 15%;
-  text-align:center;
-  z-index: 20500;
+  text-shadow: 1px 1.5px 1px #eee!important;
 }
 #myVideoContainer #memErrorMessage {
   position: absolute;
@@ -325,42 +331,41 @@
   padding-left: 42px;
   margin-left: 46.5%;
 }
-.playbackOption.selectedItem {
+.VideoPlayerTmplt  .playbackOption.selectedItem {
   text-shadow: 0 0 5px #fff;
   background: rgba(0, 117, 48, 0.45);
 }
 #videoInfoPanel {
-  display:none;
   position: absolute;
   top: 90px;
   left: 0px;
   right: 0px;
   width: 600px;
-  height: 300px;
-  padding: 0;
+  height: 0;
+  overflow: hidden;
+  transition: 0.2s ease;
+  padding: 0px;
   color: #fff;
   margin: auto;
   background-image: url(../images/Info_BG.png);
-  background-position: center;
-  background-size: contain;
+  background-size: 604px 314px;
+  background-position: -2px -2px;
   background-repeat: no-repeat;
   z-index: 20400;
-  text-shadow: 2px 2px .8px #000;
+  text-shadow: 2px 2px .5px #000;
 }
 #videoInfoPanel.showInfo {
-  display: block;
+  transition: 0.4s;
+  height: 310px;
 }
 aside#widget-content {
   display: block;
   margin: 10px 40px;
   font-size: 13pt;
   height: 235px;
-  overflow-x: hidden;
-  overflow-y: auto;
-}
-#myVideoInfo, #myUnicodeToggle {
-  height: 50px;
-  width: 50px;
+  /*overflow-x: hidden;
+  overflow-y: auto;*/
+  overflow:hidden;
 }
 #infoTitle, #optionTitle {
   font-size: 25px;
@@ -381,10 +386,10 @@ aside#widget-content {
 }
 #myVideoInfoClose a:focus,
 #myVideoInfoClose a:active,
-#myVideoInfoClose a.selectedItem {
-    color:#ff0000;
-    -webkit-transform: rotate(100deg); /* Chrome, Safari, Opera */
-    transform: rotate(100deg);
+#myVideoInfoClose a[class*="selected"] {
+  color:#ff0000;
+  -webkit-transform: rotate(100deg);
+  transform: rotate(100deg);
 }
 #videoInfoPanel #popOptionsTab,
 #videoInfoPanel.state #popInfoTab{
@@ -415,7 +420,10 @@ aside#widget-content {
   font-size:22px;
   width:50%;
 }
-.infoBtn {
+#videoInfoPanel #colorThemes [class*="selected"] {
+  border-style: dashed;
+}
+.VideoPlayerTmplt .infoBtn {
   border: 4px solid #00ff00;
   padding: 2px 90px;
   left: 40px;
@@ -424,13 +432,8 @@ aside#widget-content {
   position: relative;
   font-size: 20px;
 }
-#myVideoScroll #myUnicodeToggle {
-  visibility: visible;
-  margin-top:35px;
-}
-.btn {
+.VideoPlayerTmplt .btn {
   height: 50px;
-  text-shadow: none;
   font-weight: bold;
   font-size: 20px;
   border:none;
@@ -444,10 +447,13 @@ aside#widget-content {
   white-space:nowrap;
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
 }
-#optionTestError{
+.VideoPlayerTmplt #optionTestError{
   float: right;
 }
-li {
+.VideoPlayerTmplt li {
   list-style: none;
   background-repeat:no-repeat;
+}
+.VideoPlayerTmplt li#colorThemes {
+  margin-top: 30px;
 }

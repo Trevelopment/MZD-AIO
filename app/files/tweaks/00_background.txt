@@ -6,8 +6,8 @@ if [ "${KEEPBKUPS}" = 1 ]
 then
   cp -a /jci/gui/common/images/background.png "${MYDIR}/bakups/background.png"
   aio_info \"background.png\",
-  log_message "===              Previous Infotainment Background Saved To:            === "
-  log_message "===                 ${MYDIR}/bakups/background.png                ==="
+  log_message "===             Previous Infotainment Background Saved To:            === "
+  log_message "===                ${MYDIR}/bakups/background.png                ==="
 fi
 cp -a "${MYDIR}/config/background.png" /jci/gui/common/images
 log_message "===                   Background Image Changed                        ==="

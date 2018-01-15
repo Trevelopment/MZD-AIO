@@ -111,6 +111,7 @@ div.phile {
   width: 110px;
   height: 65px;
   border-width: 2px;
+  overflow: hidden;
 }
 #speedometerContainer #vehdataMainDiv fieldset[class*="vehDataMain"] {
   margin-top: 75px;

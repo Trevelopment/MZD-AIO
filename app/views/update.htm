@@ -1,80 +1,17 @@
 <!DOCTYPE html>
 <style>.bootbox.update-info{margin-top: 0px;}</style>
 <p><a href="changelog.htm" data-featherlight="ajax">Full Changelog</a></p>
-<h3 id="2-7-4">2.7.4</h3>
-<h5 id="android-auto-v1-08">Android Auto v1.08</h5>
-<ul>
-<li>Fixed music not resuming after phone calls</li>
-<li>More code optimizations</li>
-<li>All Audio Focus transitions are smooth</li>
-<li>Navigation Fixes
-<li>Option to disable processing car GPS in case there are still navigation issues<ul>
-<li>There may still be navigation issues with FW v56 with a Nav SD card connected <span style="font-size:.8em">(Disconnecting Nav SD card fixes the issue)</span></li></ul></li>
-</ul>
-<h5 id="speedometer-v5-0">Speedometer v5.0</h5>
-<ul>
-<li>Major performance improvements to all styles and variants. <span style="font-size:.8em">(All variants use the same data collection script)</span></li>
-<li>Every variation value is configurable and toggleable<ul>
-<li>Added option for starting temperature (&deg;C &amp; &deg;F)</li>
-<li>and fuel efficiency (km/L &amp; L/100km)</li>
-</ul>
-</li>
-<li><strong>Digital Bar Speedometer Mod</strong><ul>
-<li>4 values in the right column</li>
-<li>Cycle through 3 groups of 5 values on the bottom row.</li>
-<li>Including Main speed that&#39;s 20 values!</li>
-<li>Command knob &quot;select&quot; to change bottom bar values.</li>
-<li>Tilt up to toggle mph &amp; km/h</li>
-<li>Tilt right to<ul>
-<li>Toggle km/L &amp; L/100km (in km/h mode)</li>
-<li>Toggle &deg;C &amp; &deg;F (in mph mode)</li>
-</ul>
-</li>
-<li>Tilt left to toggle background.</li>
-<li>Tilt down to toggle the speedometer in statusbar extra values between Heading/Altitude &amp; Temperature/Fuel Efficiency</li>
-<li>Fully Customizable - Value positions can be customized in and easy and intuitive way, Even the Main speedometer value can be changed to any value<ul>
-<li>Instructions Included in Speedometer Options. <a data-featherlight="views/speed.htm">(View Instructions)</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><strong>Speedometer in Statusbar Alternate Values</strong><ul>
-<li>Outside Temperature &amp; Current Drive Fuel Efficiency</li>
-<li>Tap the statusbar speedometer to toggle the extra values (same as tilt down when speedometer is open)</li>
-</ul>
-</li>
-<li><strong>Digital Clock Mod</strong><ul>
-<li>Use the font from the digital bar speedometer on the statusbar speedometer &amp; clock.</li>
-</ul>
-</li>
-</ul>
-<h5 id="aio-tweaks-v0-4a">AIO Tweaks v0.4a</h5>
-<ul>
-<li>Removed superfluous/experimental code that may be causing the app to freeze for some.</li>
-</ul>
-<h5 id="video-player-v3-2">Video Player v3.2</h5>
-<ul>
-<li>Option to use Unicode Mode by default <span style="font-size:.8em">(still toggleable inside the app)</span></li>
-<li>I need a lot of color in my life so now you can choose between 8!<ul>
-<li>Red, Green, Blue, Violet, Orange, Teal, Slate, and White.</li>
-</ul>
-</li>
-<li>Merged improvements by <em>VIC_BAM85</em><ul>
-<li>Sort order now is case insensitive (only for ASCII mode Not Unicode)</li>
-<li>You start with selection on the last played video</li>
-<li>Small fixes on the FF / RW in order to make only one call</li>
-<li>Added a plugin to the cmu in order to allow fullscreen toggle (commander up while playing) so it changes while playing the video, resize and rotate (not available on the GUI yet)</li>
-<li>Delete the gstreamer registry on start in order to fix the plugin repository <span style="font-size:.8em">(Resets to the one without the codecs at car restart)</span></li>
-</ul>
-</li>
-</ul>
-<h5 id="swapfile">Swapfile</h5>
-<ul>
-<li>Fixed swap memory mounting on boot</li>
-<li>Improvements to how swapfile is mounted and order of apps initializing during boot</li>
-</ul>
-<h5 id="all-apps">All Apps</h5>
-<ul>
-<li>Now use built in framework transitions for smoother opening and closing</li>
-<li>Improvements with initialization methods &amp; startup scripts</li>
-</ul>
+<h3>2.7.6</h3>
+<h3>Video Player v3.3.1</h3>
+<ul><li>Video Name shows in a Statusbar Notification at the beginning of each video</li><li>Now it takes the time from gplay app</li><li>Fixed the unicode list retrieve and removes the &quot;only unicode&quot; method</li><li>Disabled the log functions as they are not needed now</li><li><strong>Music player with MP3 &amp; FLAC support</strong> (From the Music folder on the USB Drive).</li><li>Adds the FLAC codec to the gstreamer libs</li><li>It shows the metadata of the files when playing music</li><li>Other small bug fixes
+<blockquote><em><strong>Pause Audio Hack</strong></em><ul><li><strong>Pressing the &quot;Entertainment&quot; (Music) button will pause audio</strong></li><li><strong>This only works ONCE AFTER OPENING THE VIDEO PLAYER APP AND BEFORE PLAYING THE FIRST VIDEO</strong></li><li><strong>Audio has to be playing from USB or button will function normally</strong></li><li>After it has been done once or the first video is played the entertainment button will function normally</li><li>You will see a split-second context change... that is the only way I could get the audio to pause.</li></ul></li></ul></blockquote>
+<h3>AIO Tweaks App v0.5</h3>
+<ul><li>Fixed The Freezing Issue</li><li>Added SBN Test Button (Status Bar Notification)</li><li>ADB Button ($ adb devices -l)</li></ul>
+<h3>Speedometer v5.1</h3>
+<ul><li>Added values (set in &quot;speedometer-config.js&quot;)<ul><li>Battery SOC (State of charge iStop only)</li><li>Engine Load (Only shows 0 or 1 for now)</li><li>Gear Lever Position</li></ul></li><li>Gear Position will show correct gear for Manual Transmissions (delayed by 1 second)</li><li>Fixed non working values (idle time, engine idle time, engine top speed)</li><li>To reuse current &quot;speedometer-config.js&quot; file just delete &quot;config/speedometer_bar/speedometer-config.js&quot; before installing</li><li>CHANGED: WebSocket port from 55554 =&gt; 9969</li><li>CHANGED: Multicontroller Tilt Down Now Toggles the SPEED BAR from Vehicle Speed to Engine Speed</li></ul>
+<h3>USB Audio MOD</h3>
+<ul><li>Statusbar Notifications On Every Screen At The Start Of Each Song!<ul><li>SBN for 5 Seconds: &quot;Artist - Song&quot;</li><li>Not Android Auto Screens (Sorry its not possible to cross surfaces like that)</li></ul></li><li>Change the &quot;Powered By Gracenote®&quot; flash text to whatever you want!<ul><li>Clear text field blank to disable altogether.</li><li>If flash text is not showing, genre will show on that line for 20 seconds (If it is in the metadata)</li></ul></li></ul>
+<h3>MZD-AIO GUI Changes/Fixes:</h3>
+<ul><li>Fixed &quot;Bootbox is not defined&quot; error preventing AIO from running for some.</li><li>Alternate Layout Toggle (Full Width Tweak Choices &amp; Options)</li><li>Changed Up Notification Style</li><li>Phase 1 of GUI Style Redesign</li><li>Autorun &amp; Recovery and Full System Restore links in dropdown menu by &quot;Start Compilation&quot;</li><li>Home Button brings you back to main page. (if you ever wondered what that was for)</li></ul>
+<h3>Other Changes/Fixes</h3>
+<ul><li><em>Tweak Installer:</em><ul><li>When installing apps, all common files (addon-common and opera folders) for are now in /config/jci/...</li><li>Cleaned up app install scripts to be more uniform and efficient</li><li>No more app list patch for v59! (Apps are added to the app ctxt list dynamically.)</li><li>Log files are saved in bakup folder so they are not lost if install accidently runs twice</li></ul></li><li><em>Other Tweaks:</em><ul><li>Added Language Support for &#39;Reverse Camera Safety Warning&#39; Tweak<ul><li>Ukrainian, Japanese, Chinese, Korean, Thai, Hebrew, Swedish, Slovak</li></ul></li><li>Added Ukrainian to &#39;Remove Message Replies&#39; Tweak</li></ul></li></ul>

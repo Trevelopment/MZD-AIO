@@ -11,7 +11,9 @@
 |* [1, 3, 1] = [Bottom, 3rd Row, First Position (Left Side)]                             *|
 |* [1, 1, 5] = [Bottom, 1st Row, Last Position (Right Side)]                             *|
 |* To Hide a Value = [1, 1, 0] (Any bottom row position 0 will hide the value)           *|
+|* To Change Bottom Row Push Command Knob ("Select")                                     *|
 |* Note: Only numbers inside [] brackets determine position, order in this list DOES NOT *|
+|* ******* DELETE THIS CONFIG FILE TO REUSE YOUR CURRENT CONFIG-SPEEDOMETER.JS ********* *|
 \* ************************************************************************************* */
 var spdTbl = {
   vehSpeed:   [0, 0, 0], //Vehicle Speed
@@ -25,6 +27,7 @@ var spdTbl = {
   inTemp:     [1, 1, 4], //Intake Temperature
   coolTemp:   [1, 1, 5], //Coolant Temperature
   gearPos:    [1, 2, 1], //Gear Position
+  gearLvr:    [1, 1, 0], //Transmission Lever Position
   fuelLvl:    [1, 2, 2], //Fuel Gauge Level
   trpFuel:    [1, 2, 3], //Trip Fuel Economy
   totFuel:    [1, 2, 4], //Total Fuel Economy
@@ -37,4 +40,6 @@ var spdTbl = {
   trpIdle:    [1, 1, 0], //Idle Time
   trpEngIdle: [1, 1, 0], //Engine Idle Time
   engTop:     [1, 1, 0], //Engine Top Speed
+  engLoad:    [1, 1, 0], //Engine Load
+  batSOC:     [1, 1, 0], //Battery Charge State (i-stop)
 };

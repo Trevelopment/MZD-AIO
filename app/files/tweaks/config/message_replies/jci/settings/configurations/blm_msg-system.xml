@@ -765,6 +765,23 @@
             <Node key="14" data="String" value="我需要更多指引。"/>
             <Node key="15" data="String" value=":-)"/>
         </Node>
+        <Node key="Ukrainian">
+            <Node key="1" data="String" value="OK"/>
+            <Node key="2" data="String" value="Так"/>
+            <Node key="3" data="String" value="Ні"/>
+            <Node key="4" data="String" value="Дякую!"/>
+            <Node key="5" data="String" value="Не можу говорити зараз."/>
+            <Node key="6" data="String" value="Будь ласка, зателефонуйте мені."/>
+            <Node key="7" data="String" value="Передзвоню пізніше."/>
+            <Node key="8" data="String" value="Я за кермом."/>
+            <Node key="9" data="String" value="Я в заторі."/>
+            <Node key="10" data="String" value="Буду за 10 хвилин."/>
+            <Node key="11" data="String" value="Буду за 20 хвилин."/>
+            <Node key="12" data="String" value="Чому?"/>
+            <Node key="13" data="String" value="Де ви знаходитесь?"/>
+            <Node key="14" data="String" value="Потрібно більше вказівок."/>
+            <Node key="15" data="String" value=":-)"/>
+        </Node>
     </Node>
 
     <Node key="MaxMAPConnectionRetryCount" data="U32" value="1"/>
@@ -956,6 +973,9 @@
             <Node key="OutgoingMessage" data="String" value=""/>
         </Node>
         <Node key="TW_Mandarin">
+            <Node key="OutgoingMessage" data="String" value=""/>
+        </Node>
+        <Node key="UK_Ukrainian">
             <Node key="OutgoingMessage" data="String" value=""/>
         </Node>
     </Node>
@@ -1230,6 +1250,12 @@
             <Node key="TTSEndEmailMessageTag" data="String" value="電子郵件結尾"/>
             <Node key="TTSEndSMSMessageTag" data="String" value=""/>
             <Node key="TTSSubjectTag" data="String" value="主旨"/>
+        </Node>
+        <Node key="Ukrainian">
+            <Node key="TTSEmailMessageTag" data="String" value="Повідомлення"/>
+            <Node key="TTSEndEmailMessageTag" data="String" value="Кінець електронного листа"/>
+            <Node key="TTSEndSMSMessageTag" data="String" value=""/>
+            <Node key="TTSSubjectTag" data="String" value="Тема"/>
         </Node>
     </Node>
 </Node>

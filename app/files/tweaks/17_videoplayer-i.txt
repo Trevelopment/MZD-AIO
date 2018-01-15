@@ -2,10 +2,10 @@
 # Video_Player by many many people
 # V3.1 - Mods by vic_bam85 & Trezdog44
 #######################################################################
-show_message "VIDEOPLAYER v3.2\nMODS BY VIC_BAM85 & TREZDOG44"
+show_message "VIDEOPLAYER v3.3\nMODS BY VIC_BAM85 & TREZDOG44"
 log_message "============***********   INSTALL VIDEOPLAYER   ************============="
 
-log_message "===             Begin Installation of VideoPlayer V3.2                ==="
+log_message "===             Begin Installation of VideoPlayer V3.3                ==="
 
 if [ "${TESTBKUPS}" = "1" ]
 then
@@ -22,27 +22,31 @@ sed -i '/Video/d' /jci/scripts/stage_wifi.sh
 sed -i '/--port=9998/d' /jci/scripts/stage_wifi.sh
 
 # Copies the additionalApps.js
-if [ ! -e /jci/opera/opera_dir/userjs/additionalApps.js ]
+if [ $CASDK_MODE -eq 0 ]
 then
-	cp -a ${MYDIR}/config/videoplayer/jci/opera/opera_dir/userjs/additionalApps.js /jci/opera/opera_dir/userjs/
+	cp -a ${MYDIR}/config/jci/opera/opera_dir/userjs/additionalApps.js /jci/opera/opera_dir/userjs/ && CASDK_MODE=1
 	chmod 755 /jci/opera/opera_dir/userjs/additionalApps.js
   log_message "===                     Copied  additionalApps.js                     ==="
 fi
 
-# It creates its own json file from scratch if the file does not exists
+# create additionalApps.json file from scratch if the file does not exist
 if [ ! -e /jci/opera/opera_dir/userjs/additionalApps.json ]
 then
-	cp -a ${MYDIR}/config/videoplayer/jci/opera/opera_dir/userjs/additionalApps.json /jci/opera/opera_dir/userjs/
-	# echo "[" > /jci/opera/opera_dir/userjs/additionalApps.json
-	# echo "]" >> /jci/opera/opera_dir/userjs/additionalApps.json
-	chmod 755 /jci/opera/opera_dir/userjs/additionalApps.json
+  echo "[" > /jci/opera/opera_dir/userjs/additionalApps.json
+  echo "]" >> /jci/opera/opera_dir/userjs/additionalApps.json
+  chmod 755 /jci/opera/opera_dir/userjs/additionalApps.json
   log_message "===                   Created additionalApps.json                     ==="
 fi
 
+# Call to the function to populate the json
+add_app_json "_videoplayer" "Video Player"
+
 # Copies the content of the addon-common folder
-cp -a ${MYDIR}/config/videoplayer/jci/gui/addon-common/ /jci/gui/
-chmod 755 -R /jci/gui/addon-common/
-log_message "===                      Copied addon-common folder                   ==="
+if [ ! -e /jci/gui/addon-common/websocketd ]  || [ ! -e /jci/gui/addon-common/jquery.min.js ]; then
+  cp -a ${MYDIR}/config/jci/gui/addon-common/ /jci/gui/
+  chmod 755 -R /jci/gui/addon-common/
+  log_message "===                   Copied addon-common folder                      ==="
+fi
 
 # Remove old port configuration
 count=$(grep -c '/jci/gui/addon-common/websocketd --port=55555 sh' /jci/scripts/stage_wifi.sh)
@@ -50,7 +54,7 @@ if [ "$count" != "0" ]
 then
 	sed -i '/### Video player/d' /jci/scripts/stage_wifi.sh
 	sed -i '/55555/d' /jci/scripts/stage_wifi.sh
-  log_message "===                     Removed Old Configuration                     ==="
+  log_message "===                   Removed Old Configuration                       ==="
 fi
 
 count=$(grep -c '/jci/gui/addon-common/websocketd --port=9998 sh' /jci/scripts/stage_wifi.sh)
@@ -63,43 +67,32 @@ if [ "$count" = "0" ]
     sed -i '/Video player/ i\ ' /jci/scripts/stage_wifi.sh
     sed -i '/Video player/ a\/jci/gui/addon-common/websocketd --port=9998 sh &' /jci/scripts/stage_wifi.sh
     chmod 755 /jci/scripts/stage_wifi.sh
-    log_message "===                      Modified Stage_wifi.sh                       ==="
+    log_message "===                    Modified Stage_wifi.sh                         ==="
 fi
-
-# Call to the function to populate the json
-add_app_json "_videoplayer" "Video Player"
 
 cp -a ${MYDIR}/config/videoplayer/jci/gui/apps/* /jci/gui/apps/
 chmod 755 -R /jci/gui/apps/_videoplayer/
 
-log_message "===                       Copy VideoPlayer Files                      ==="
+log_message "===                    Copy VideoPlayer Files                         ==="
 
 
 cp -a ${MYDIR}/config/videoplayer/usr/lib/gstreamer-0.10/* /usr/lib/gstreamer-0.10/
 chmod 755 -R /usr/lib/gstreamer-0.10/libgstautodetect.so
-log_message "===                Copy libs to usr/lib/gstreamer-0.10                ==="
+log_message "===              Copy libs to usr/lib/gstreamer-0.10                  ==="
 
 
 count=$(grep -c '/imx-mm/video-codec' /etc/profile)
 if [ "$count" = "0" ]
 	then
 		sed -i 's/\/imx-mm\/parser/\/imx-mm\/parser:\/usr\/lib\/imx-mm\/video-codec/g' /etc/profile
-    log_message "===                       Fix exports / codecs                        ==="
+    log_message "===                      Fix exports / codecs                         ==="
 fi
 
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/imx-mm/video-codec
 
 rm -f /tmp/root/.gstreamer-0.10/registry.arm.bin
-/usr/bin/gst-inspect
-log_message "===                     Updated gstreamer registry                    ==="
+/usr/bin/gst-inspect > ${MYDIR}/gst-inspect.log
+log_message "===                  Updated gstreamer registry                       ==="
 
-# patch systemApp.js if needed for v59+ app list
-if ! grep -Fq "_videoplayer" /jci/gui/apps/system/js/systemApp.js && [ ${APP_PATCH_59} -eq 0 ]
-then
-  APP_PATCH_59=1
-  cp ${MYDIR}/config/patch59/systemApp.js /jci/gui/apps/system/js/
-  log_message "===                  Applied App List Patch For V59+                  ==="
-fi
-
-log_message "==========********** END INSTALLATION OF VIDEOPLAYER **********=========="
+log_message "========********** END INSTALLATION OF VIDEOPLAYER ***********==========="
 log_message " "

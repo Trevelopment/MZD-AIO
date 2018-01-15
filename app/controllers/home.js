@@ -47,7 +47,7 @@
       lang: lang,
       options: [],
       menu: [9],
-      mainOps: [0, 4, 5, 7],
+      mainOps: [0, 4, 7],
       disclaimOps: 0,
       fuelOps: 0,
       colors: 1,
@@ -63,6 +63,8 @@
       dataDump: false,
       aaBetaVer: false,
       vpUnicode: false,
+      gracenoteText: "Powered By Gracenote®",
+      altLayout: settings.get('altLayout') || false,
       darkMode: settings.get('darkMode') || false,
       flipOption: settings.get('flipOption') || '',
       transMsg: settings.get('transMsg') || false,
@@ -88,6 +90,7 @@
       inst: false,
       uninst: false
     }
+
     $scope.user.backups = {
       org: settings.get('keepBackups') || false,
       test: settings.get('testBackups') || false,
@@ -301,7 +304,7 @@
           startTime()
         })
       }
-      if (persistantData.get('visits') > 20) {
+      if (persistantData.get('visits') > 10) {
         $scope.user.mainOps = [7]
       }
       if (persistantData.get('menuLock')) {
@@ -507,7 +510,7 @@
             value: 'id7'
           },
           {
-            text: 'Install Automatic Wifi App',
+            text: 'Install Automatic WiFi AP',
             value: 'autow'
           },
           {
@@ -625,7 +628,7 @@
     })
   }
   $scope.compileTweaks = function () {
-    $('#compileButton, #compileAutorun, .checkAutorun').hide()
+    $('#compileButton, #compileAutorun, .btn-group, .btn-group~*, .checkAutorun').hide()
     buildTweakFile($scope.user)
   }
 })
@@ -645,6 +648,10 @@
   .when('/casdk', {
     templateUrl: 'views/casdk.htm',
     controller: 'CasdkCtrl'
+  })
+  .when('/background', {
+    templateUrl: 'views/background.html',
+    controller: 'JoinerCtrl'
   })
   .otherwise({
     template: `<h1>MZD-AIO-TI</h1>`
@@ -693,5 +700,28 @@ function TranslatorCtrl ($scope, $http) {
 }
 function CasdkCtrl ($scope, $http) {
   // $scope.casdk = langObj.casdk
+  $scope.casdk = {
+    install: false,
+    uninstall: false
+  }
+  $scope.apps = {
+    simpledashboard: true,
+    multidash: false,
+    vdd: false,
+    terminal: false,
+    gpsspeed: false,
+    aio: false,
+    speedometer: false,
+    tetris: false,
+    snake: false,
+    breakout: false,
+    background: false,
+    multicontroller: false,
+    devtools: false,
+    sdcard: false
+  }
+  $scope.compileCASDK = function(user) {
+    buildTweakFile(user, $scope.apps)
+  }
 }
 })()

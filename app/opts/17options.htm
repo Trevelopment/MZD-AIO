@@ -9,19 +9,22 @@
 -->
 <table>
 	<tbody class="w3-col">
-		<tr class="w3-hover-pale-blue w3-col w3-third">
-			<td class="speedo-check extrCheck">
-				<input id="vpUnicode" class="w3-check" type="checkbox" name="vpUnicode" ng-model="user.vpUnicode" ng-value="user.vpUnicode" title="Start with Unicode Mode by Default."  data-toggle="tooltip" data-placement="auto bottom"/>
-			</td>
-			<td>
-				<label for="vpUnicode" data-toggle="tooltip" data-placement="auto bottom" title="Start with Unicode Mode by Default">Unicode Mode</label>
-			</td>
-		</tr>
-		<tr class="w3-hover-pale-blue w3-col w3-twothird">
+		<tr class="w3-hover-pale-blue">
 			<td class="w3-bar w3-col">
 				<button id="videoPlayerRepoBtn" data-toggle="tooltip" data-placement="auto bottom" title="Video Player Repository on Github" class="w3-btn w3-green w3-half" onclick="externalLink('videoplayergithub')"><i class="icon-device-camera-video"></i>Github Repo</button>
 				<button id="tchCtrlMapBtn" data-toggle="tooltip" data-placement="auto bottom" title="View the map for touch controls during video playback" class="w3-btn w3-blue w3-half" data-featherlight="./files/img/scrnCtrlMap.jpg"><i class="icon-map"></i>Touch Control Map</button>
 			</td>
 		</tr>
-	</tbody>
+    <tr><td>
+			<div class="vpaudioHack">
+				<h4>Pause Audio Hack</h4>
+				<ul>
+					 <li><b>Pressing the "Entertainment" (Music) button will pause audio</b></li>
+					 <li><b>This only works ONCE AFTER OPENING THE VIDEO PLAYER APP AND BEFORE PLAYING THE FIRST VIDEO</b></li>
+					 <li><b>Audio has to be playing from USB or button will function normally</b></li>
+					 <li>After it has been done once or the first video is played the entertainment button will function normally</li>
+					 <li>You will see a split-second context change... that is the only way I could get the audio to pause.</li>
+					</ul>
+					</div>
+				</td></tr></tbody>
 </table>

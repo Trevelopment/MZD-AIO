@@ -18,7 +18,7 @@ fi
 if grep -Fq '"holdTimeout" : 5000,' /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js
 then
 	echo "exist"
-	log_message "=== /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js not modified ==="
+	log_message "===                   StatusBarCtrl.js not modified                   ==="
 else
 	sed -i 's/"holdTimeout" : 1000,/"holdTimeout" : 5000,/g' /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js
 	log_message "===  Modified /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js  ==="

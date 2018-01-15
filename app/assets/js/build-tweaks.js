@@ -42,12 +42,12 @@ var errFlag = false // Error flag
 var copySwapfile = false // Swapfile flag
 var tweaks2write = [] // Queue for order consistantcy writing tweaks.sh (Always starts with 00_intro.txt)
 var tmpdir = path.normalize(path.join(persistantData.get('copyFolderLocation'), '_copy_to_usb')) // Place to hold USB drive files before copying
-var themeColor = 'Red'
+var themeColor = 'Red' // Default color
 var swapdest = ''
 /*                                      *********\
 |*  START BUILD OF TWEAKS.SH & ASSOCIATED FILES *|
 \**********                                     */
-function buildTweakFile (user) {
+function buildTweakFile (user, apps) {
   /* Set _copy_to_usb folder location */
   tmpdir = path.normalize(path.join(persistantData.get('copyFolderLocation'), '_copy_to_usb'))
   /* Start building tweaks.sh */
@@ -97,8 +97,12 @@ function buildTweakFile (user) {
   }
   /* CASDK Installer */
   if (user.casdk.inst || user.casdk.uninst) {
-    buildCASDK(user)
-    return
+    if(apps) {
+      buildCASDK(user, apps)
+      rimraf.sync(`${tmpdir}/config/`)
+      rimraf.sync(`${tmpdir}/config_org/`)
+      return
+    }
   }
   // first back up JCI folder if chosen
   if (user.mainOps.indexOf(1) !== -1) {
@@ -567,8 +571,7 @@ function buildTweak (user) {
     addTweakDir('get_sd_cid', true)
   }
   if (user.options.indexOf(19) !== -1 || user.options.indexOf(17) !== -1 || user.options.indexOf(25) !== -1 || user.options.indexOf(27) !== -1 || user.options.indexOf(28) !== -1) {
-    addTweakDir('bin', true)
-    addTweakDir('patch59', true)
+    addTweakDir('jci', true)
   }
   // Swapfile tweak has to be last because the final operation
   //  in the script is to remove all of the other tweak files
@@ -756,6 +759,10 @@ function tweakVariables (user) {
     sops += (user.speedoOps.color !== null) ? `${user.speedoOps.color}\n` : `0\n`
     fs.writeFileSync(`${varDir}/bgopacity.txt`, sops)
     tweaks2write.push(`${varDir}/bgopacity.txt`)
+  }
+  if (user.options.indexOf(26) !== -1) {
+    fs.writeFileSync(`${varDir}/gracenote.txt`, `GRACENOTE="${user.gracenoteText}"`)
+    tweaks2write.push(`${varDir}/gracenote.txt`)
   }
 }
 function convert2LF () {
@@ -1142,11 +1149,39 @@ function saveInstallerOps (user) {
 function cleanCopyDir () {
   rimraf(`${tmpdir}`, function () { appendAIOlog(`<li style='color:#ff3366'>Deleted '_copy_to_usb' Folder</li>`) })
 }
-function buildCASDK (user) {
-  mkdirp.sync(`${tmpdir}/casdk/`)
+function casdkAppOptions (apps) {
+  var casdkapps = `APPSIMPLEDASHBOARD=`
+  casdkapps += (apps.simpledashboard) ? `1\n` : `0\n`
+  casdkapps += `APPGPSSPEED=`
+  casdkapps += (apps.gpsspeed) ? `1\n` : `0\n`
+  casdkapps += `APPMULTIDASH=`
+  casdkapps += (apps.multidash) ? `1\n` : `0\n`
+  casdkapps += `APPVDD=`
+  casdkapps += (apps.vdd) ? `1\n` : `0\n`
+  casdkapps += `APPDEVTOOLS=`
+  casdkapps += (apps.devtools) ? `1\n` : `0\n`
+  casdkapps += `APPTERMINAL=`
+  casdkapps += (apps.terminal) ? `1\n` : `0\n`
+  casdkapps += `APPBG=`
+  casdkapps += (apps.background) ? `1\n` : `0\n`
+  casdkapps += `APPTETRIS=`
+  casdkapps += (apps.tetris) ? `1\n` : `0\n`
+  casdkapps += `APPBREAKOUT=`
+  casdkapps += (apps.breakout) ? `1\n` : `0\n`
+  casdkapps += `APPSNAKE=`
+  casdkapps += (apps.snake) ? `1\n` : `0\n`
+  casdkapps += `CASDK_SD=`
+  casdkapps += (apps.sdcard) ? `1\n` : `0\n`
+  fs.writeFileSync(`${varDir}/casdkapps.txt`, casdkapps)
+  tweaks2write.push(`${varDir}/casdkapps.txt`)
+}
+function buildCASDK (user, apps) {
   addRootFiles()
   if (user.casdk.inst) {
+    casdkAppOptions(apps)
+    mkdirp.sync(`${tmpdir}/casdk/`)
     tweaks2write.push(`${builddir}00__casdk-i.txt`)
+    tweaks2write.push(`${builddir}00__casdkapps-i.txt`)
     copydir(`${builddir}casdk`, `${tmpdir}/casdk`, function (err) {
       if (err) {
         aioLog(`File Copy Error: ${err}`, err.message)
@@ -1236,7 +1271,7 @@ function addWifiApp (user) {
     bootbox.hideAll()
     var wificonfig = "# This is your wifiAP.config file\nexport NETWORK_WIFI_SSID=YourSSID\nexport NETWORK_WIFI_PASSWORD=YourSSIDpassword\n"
     bootbox.prompt({
-      title: "You <b>MUST REPLACE THE VALUES</b> <em>'YourSSID'</em> and <em>'YourSSIDPassword'</em> with <b>your own values</b> to run the wifi app!",
+      title: "You <b>MUST REPLACE THE VALUES</b> <em>'YourSSID'</em> and <em>'YourSSIDPassword'</em> with <b>your own values</b> to run the WiFi AP!",
       inputType: 'textarea',
       className: 'wifiSSIDprompt',
       value: wificonfig,
@@ -1246,7 +1281,7 @@ function addWifiApp (user) {
           bootbox.alert({
             size: "small",
             title: "Values Were Not Changed",
-            message: "WiFi App Will not be installed",
+            message: "WiFi AP Will not be installed",
             callback: function() {
               rimraf.sync(`${tmpdir}/00-start-wifiAP/`)
               printAIOlog()

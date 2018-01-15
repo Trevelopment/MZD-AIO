@@ -6,23 +6,35 @@ show_message "===****** UNINSTALLING CASDK ******==="
 log_message "==========************ BEGIN UNINSTALLING CASDK ************==========="
 log_message " "
 
+# mount resources
+mount -o rw,remount /tmp/mnt/resources
+
+# kill all watch processes
+log_message "- Removing watch processes"
+pkill -f watch
+pkill -f 'watch -n 1'
+pkill -f 'watch -n 60'
+pkill -f 'watch -n 300'
+pkill -f 'mzd-casdk.start'
+
 # reset storage
 if [ -e /tmp/mnt/data_persist/storage ]
 then
 	log_message "- Removing storage folder"
 	rm -rf /tmp/mnt/data_persist/storage
 fi
-
-if [ -f /jci/opera/opera_home/pstorage/psindex.dat.org ]
+if [ -e /jci/opera/opera_home/pstorage/psindex.dat ]
 then
-	log_message "- Removing local storage settings"
-	cp -a /jci/opera/opera_home/pstorage/psindex.dat.org /jci/opera/opera_home/pstorage/psindex.dat
-	rm /jci/opera/opera_home/pstorage/psindex.dat.org
+  if [ -f /jci/opera/opera_home/pstorage/psindex.dat.org ]
+  then
+  	log_message "- Removing local storage settings"
+    cp -a /jci/opera/opera_home/pstorage/psindex.dat.org /jci/opera/opera_home/pstorage/psindex.dat
+  	rm /jci/opera/opera_home/pstorage/psindex.dat.org
+  else
+    log_message "- Removing local storage settings and pstorage"
+    rm -rf /jci/opera/opera_home/pstorage
+  fi
 fi
-
-# kill all watch processes
-log_message "- Removing watch processes"
-pkill -f watch
 
 # remove data reader files
 if [ -e /jci/casdk ]
@@ -30,33 +42,58 @@ then
 	log_message "- Removing data script folder /jci/casdk"
 	rm /jci/casdk/*
 	rmdir --ignore-fail-on-non-empty /jci/casdk
+else
+  log_message "- CASDK Data script folder '/jci/casdk' not found"
 fi
 
 # remove initialization file
-if [ -f /jci/scripts/stage_wifi.sh.org ]
+if grep -q "# CASDK" /jci/scripts/stage_wifi.sh
 then
-	log_message "- Removing staging scripts"
-	echo '#!/bin/sh' > /jci/scripts/stage_wifi.sh
-	# cp -a /jci/scripts/stage_wifi.sh.org /jci/scripts/stage_wifi.sh
-	# rm /jci/scripts/stage_wifi.sh.org
+  log_message "- Removing staging scripts"
+  #	echo '#!/bin/sh' > /jci/scripts/stage_wifi.sh
+  sed -i '/# CASDK/d' /jci/scripts/stage_wifi.sh
+  sed -i '/casdk/d' /jci/scripts/stage_wifi.sh
+  sed -i '/################/d' /jci/scripts/stage_wifi.sh
+  sed -i '/# one time/d' /jci/scripts/stage_wifi.sh
+  sed -i '/# 1s update/d' /jci/scripts/stage_wifi.sh
+  sed -i '/# 60s update/d' /jci/scripts/stage_wifi.sh
+  sed -i '/# 300s update/d' /jci/scripts/stage_wifi.sh
+  sed -i '/mzd-casdk.start/d' /jci/scripts/stage_wifi.sh
+else
+	log_message "- No staging scripts fouund in /jci/scripts/stage_wifi.sh"
 fi
 
 # remove proxy
 if [ -f /jci/opera/opera_dir/userjs/CustomApplicationsProxy.js ]
 then
 	log_message "- Removing proxys & startups"
-	rm /jci/opera/opera_dir/userjs/CustomApplicationsProxy.js
-	rm /jci/opera/opera_dir/userjs/additionalApps.*
-	rm /jci/opera/opera_dir/userjs/speedometer-startup.js
+	rm -f /jci/opera/opera_dir/userjs/CustomApplicationsProxy.js
+	rm -f /jci/opera/opera_dir/userjs/nativeApps.js
+fi
+
+if [ -f /jci/opera/opera_dir/userjs/additionalApps.js.org ]
+then
+	log_message "- Restoring additionalApps.js"
+	mv /jci/opera/opera_dir/userjs/additionalApps.js.org /jci/opera/opera_dir/userjs/additionalApps.js
 fi
 
 # delete custom
 if [ -e /jci/gui/apps/custom ]
 then
 	log_message "- Removing custom application folder"
-	rm -rf /jci/gui/apps/custom
+	rm -rf /jci/gui/apps/custom||true
+else
+  log_message "- Custom application folder does not exist"
 fi
 
+if [ -e /tmp/mnt/resources/aio ]
+then
+	log_message "- Removing custom runtime & apps"
+	rm -rf /resources/aio/mzd-casdk||true
+else
+  log_message "- CASDK runtime & apps do not exist"
+fi
+log_message "- Done!"
 sleep 5
 killall jci-dialog
 /jci/tools/jci-dialog --title="CASDK UNINSTALLED" --text="THE CUSTOM APPLICATION RUNTIME WAS SUCCESSFULLY UNINSTALLED.\n\nTHE SYSTEM WILL REBOOT IN A FEW SECONDS." --no-cancel &

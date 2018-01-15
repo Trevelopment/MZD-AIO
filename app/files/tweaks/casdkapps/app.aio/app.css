@@ -1,0 +1,307 @@
+[app="app.aio"] .section {
+	position: absolute;
+	border:1px solid #fff;
+	width:100px;
+	height:100px;
+	line-height:100px;
+}
+
+#mainOpenNav {
+	font-size: 20px;
+	line-height:normal;
+	cursor: pointer;
+	color: #fff;
+	z-index: 99;
+	position: absolute;
+	margin-left: 10px;
+}
+.sidenav {
+	height: 100%;
+	width: 0;
+	position: fixed;
+	top: 0;
+	left: 0;
+	background-color: #111;
+	overflow-x: hidden;
+	transition: 0.5s;
+	padding-top: 15px;
+	margin-top: 59px;
+	z-index: 100;
+}
+.sidenav a {
+	padding: 4px 9px 1px 32px;
+	text-decoration: none;
+	font-size: 25px;
+	color: #818181;
+	display: block;
+	transition: 0.3s;
+	white-space:nowrap;
+}
+.sidenav a:hover, .offcanvas a:focus{
+	color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+	position: absolute;
+	top: 0;
+	right: 25px;
+	font-size: 36px;
+	margin-left: 50px;
+}
+.sidenav #sideNavReboot {
+}
+body.ellipse .MainMenuCtrlEllipse {
+	background-image: none!important;
+}
+/* Remove Button Backgrounds */
+body.no-btn-bg .Ump3CtrlBgArch,
+body.no-btn-bg .Ump3CtrlBackground,
+body.no-btn-bg .Ump3CtrlSeparator {
+	background:none!important;
+}
+/* CSS For Bigger Album Art */
+body.bgrAlbmArt .NowPlaying4CtrlTitleFull {
+	top: 15px;
+	left: 80px;
+}
+body.bgrAlbmArt .NowPlaying4CtrlArtworkImageDiv {
+	top: 61px;
+	left: 580px;
+	width: 210px;
+	height: 210px;
+}
+body.bgrAlbmArt .NowPlaying4CtrlArtworkImage {
+	max-width: 210px;
+	max-height: 210px;
+}
+body.bgrAlbmArt .NowPlaying4CtrlArtworkImageBorder {
+	width: 210px;
+	height: 210px;
+}
+body.bgrAlbmArt .NowPlaying4CtrlInfoBox {
+	top: 61px;
+	left: 14px;
+}
+body.txtShadow {
+	text-shadow: 2px 2px .5px #000;
+}
+body.hideSbn .SbnCtrl {
+	background-image: none;
+	font-size: 30px;
+}
+body.hideStatus .StatusBarCtrl {
+	background-image: none;
+}
+body.star1 .MainMenuCtrlComDiv {
+	top: 30px;
+}
+body.star1 .MainMenuCtrlEntDiv {
+	top: 100px;
+}
+body.star1 .MainMenuCtrlNavDiv {
+	top: 100px;
+}
+body.star1 .MainMenuCtrlAppDiv {
+	left: 250px;
+	top: 220px;
+}
+body.star1 .MainMenuCtrlSetDiv {
+	left: 430px;
+	top: 220px;
+}
+body.star1 .MainMenuCtrlAppHighlight {
+	left: 120px;
+	top: 40px;
+}
+body.star1 .MainMenuCtrlComHighlight {
+	top: -100px;
+}
+body.star1 .MainMenuCtrlNavHighlight {
+	top: -70px;
+	left: 380px;
+}
+body.star1 .MainMenuCtrlEntHighlight {
+	top: -70px;
+	left: 45px;
+}
+body.star1 .MainMenuCtrlSetHighlight {
+	left: 300px;
+	top: 40px;
+}
+body.star1 .MainMenuCtrlIconName {
+	top:345px;
+}
+body.star1 .MainMenuCtrl {
+	overflow: visible;
+}
+body.star1 .MainMenuCtrlSetDiv.MainMenuCtrlCoinFocus,
+body.star1 .MainMenuCtrlAppDiv.MainMenuCtrlCoinFocus {
+	-o-transform: scale(1.2, 1.2) translate(0px, -20px);
+	transform: scale(1.2, 1.2) translate(0px, -20px);
+}
+body.star1 .MainMenuCtrlComDiv.MainMenuCtrlCoinFocus {
+	-o-transform: scale(1.2, 1.2) translate(0px, 25px);
+	transform: scale(1.2, 1.2) translate(0px, 25px);
+}
+body.star1 .MainMenuCtrlEntDiv.MainMenuCtrlCoinFocus {
+	-o-transform: scale(1.2, 1.2) translate(50px, -25px);
+	transform: scale(1.2, 1.2) translate(50px, -25px);
+}
+body.star1 .MainMenuCtrlNavDiv.MainMenuCtrlCoinFocus {
+	-o-transform: scale(1.2, 1.2) translate(-50px, -25px);
+	transform: scale(1.2, 1.2) translate(-50px, -25px);
+}
+body.star2 .MainMenuCtrlComDiv {
+	top: 240px;
+}
+body.star2 .MainMenuCtrlEntDiv {
+	top: 160px;
+}
+body.star2 .MainMenuCtrlNavDiv {
+	top: 160px;
+}
+body.star2 .MainMenuCtrlAppDiv {
+	left: 0;
+	top: 10px;
+}
+body.star2 .MainMenuCtrlSetDiv {
+	top: 10px;
+	left: 675px;
+}
+body.star2 .MainMenuCtrlAppHighlight {
+	top: -110px;
+	left: -100px;
+}
+body.star2 .MainMenuCtrlComHighlight {
+	top: 70px;
+}
+body.star2 .MainMenuCtrlNavHighlight {
+	top: 0px;
+	left: 380px;
+}
+body.star2 .MainMenuCtrlEntHighlight {
+	top: 0px;
+	left: 45px;
+}
+body.star2 .MainMenuCtrlSetHighlight {
+	left: 520px;
+	top: -110px;
+}
+body.star2 .MainMenuCtrlIconName {
+	top:5px;
+}
+body.star2 .MainMenuCtrl {
+	overflow: visible;
+}
+body.star2 .MainMenuCtrlSetDiv.MainMenuCtrlCoinFocus{
+	-o-transform: scale(1.2, 1.2) translate(-20px, 20px);
+	transform: scale(1.2, 1.2) translate(-20px, 20px);
+}
+body.star2 .MainMenuCtrlAppDiv.MainMenuCtrlCoinFocus {
+	-o-transform: scale(1.2, 1.2) translate(20px, 20px);
+	transform: scale(1.2, 1.2) translate(20px, 20px);
+}
+body.star2 .MainMenuCtrlComDiv.MainMenuCtrlCoinFocus {
+	-o-transform: scale(1.2, 1.2) translate(0px, 25px);
+	transform: scale(1.2, 1.2) translate(0px, 25px);
+}
+body.star2 .MainMenuCtrlEntDiv.MainMenuCtrlCoinFocus {
+	-o-transform: scale(1.2, 1.2) translate(50px, -25px);
+	transform: scale(1.2, 1.2) translate(50px, -25px);
+}
+body.star2 .MainMenuCtrlNavDiv.MainMenuCtrlCoinFocus {
+	-o-transform: scale(1.2, 1.2) translate(-50px, -25px);
+	transform: scale(1.2, 1.2) translate(-50px, -25px);
+}
+body.star2 .MainMenuCtrlComDiv.MainMenuCtrlCoinFocus {
+	-o-transform: scale(1.2, 1.2) translate(0px, -10px);
+	transform: scale(1.2, 1.2) translate(0px, -10px);
+}
+/* Alternate Layout Large Star */
+body.star3 .MainMenuCtrlComDiv {
+	top: 30px;
+}
+body.star3 .MainMenuCtrlEntDiv {
+	top: 100px;
+}
+body.star3 .MainMenuCtrlNavDiv {
+	top: 100px;
+}
+body.star3 .MainMenuCtrlAppDiv {
+	left: 250px;
+	top: 280px;
+}
+body.star3 .MainMenuCtrlSetDiv {
+	left: 430px;
+	top: 280px;
+}
+body.star3 .MainMenuCtrlAppHighlight {
+	left: 80px;
+	top: 105px;
+}
+body.star3 .MainMenuCtrlComHighlight {
+	top: -122px;
+}
+body.star3 .MainMenuCtrlNavHighlight {
+	top: -80px;
+	left: 470px;
+}
+body.star3 .MainMenuCtrlEntHighlight {
+	top: -80px;
+	left: -30px;
+}
+body.star3 .MainMenuCtrlSetHighlight {
+	left: 350px;
+	top: 90px;
+}
+body.star3 .MainMenuCtrlIconName {
+	top: 200px;
+}
+body.star3 .MainMenuCtrl {
+	overflow: visible;
+}
+body.star3 .MainMenuCtrlAppDiv.MainMenuCtrlCoinFocus {
+	-o-transform: scale(1.2, 1.2) translate(-40px, -15px);
+	transform: scale(1.2, 1.2) translate(-40px, -15px);
+}
+body.star3 .MainMenuCtrlSetDiv.MainMenuCtrlCoinFocus {
+	-o-transform: scale(1.2, 1.2) translate(40px, -15px);
+	transform: scale(1.2, 1.2) translate(40px, -15px);
+}
+body.star3 .MainMenuCtrlComDiv.MainMenuCtrlCoinFocus {
+	-o-transform: scale(1.2, 1.2) translate(0px, -25px);
+	transform: scale(1.2, 1.2) translate(0px, -25px);
+}
+body.star3 .MainMenuCtrlEntDiv.MainMenuCtrlCoinFocus {
+	-o-transform: scale(1.2, 1.2) translate(-25px, -50px);
+	transform: scale(1.2, 1.2) translate(-25px, -50px);
+}
+body.star3 .MainMenuCtrlNavDiv.MainMenuCtrlCoinFocus {
+	-o-transform: scale(1.2, 1.2) translate(25px, -50px);
+	transform: scale(1.2, 1.2) translate(25px, -50px);
+}
+/* Small Main Menu Coins */
+body.minicoins .MainMenuCtrlAppDiv,
+body.minicoins .MainMenuCtrlNavDiv,
+body.minicoins .MainMenuCtrlComDiv,
+body.minicoins .MainMenuCtrlSetDiv,
+body.minicoins .MainMenuCtrlEntDiv {
+	-o-transform: scale(.5, .5);
+	transform: scale(.5, .5);
+}
+
+/* 3D MAIN MENU TEXT! */
+body.label3d .MainMenuCtrlIconName.Visible {
+	text-shadow: 0 1px 0 #ccc,
+	0 2px 0 #c9c9c9,
+	0 3px 0 #bbb,
+	0 4px 0 #b9b9b9,
+	0 5px 0 #aaa,
+	0 6px 1px rgba(0,0,0,.1),
+	0 0 5px rgba(0,0,0,.1),
+	0 1px 3px rgba(0,0,0,.3),
+	0 3px 5px rgba(0,0,0,.2),
+	0 5px 10px rgba(0,0,0,.25),
+	0 10px 10px rgba(0,0,0,.2),
+	0 20px 20px rgba(0,0,0,.15);
+}

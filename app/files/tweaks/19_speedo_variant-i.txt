@@ -1,5 +1,5 @@
 show_message "INSTALL SPEEDOMETER VARIANT"
-log_message "========****** INSTALL SPEEDOMETER VARIANT ... ******========"
+log_message "========************* INSTALL SPEEDOMETER VARIANT ... ***********========"
 
 # Copy modded speedo files
 cp -a ${MYDIR}/config/speedometer_mod/jci /

@@ -1,0 +1,183 @@
+/**
+ * [myapp]
+ *
+ * @version: 0.0.1
+ * @author: [author]
+ * @description [description]
+ *
+ * [license]
+ */
+
+/**
+ * NOTICE: It's important that you target your application with the [app] attribute
+ */
+
+[app="app.myapp"] {
+	background-color: #000000;
+    color: red;
+	background-image:url('images/background.png');
+	background-position:0;
+	top:0;
+	left:0;
+	margin-left:0;
+	animation: slider 60s infinite;
+}
+[app="app.myapp"] label{
+	position: absolute;
+    top:190px;
+    left:225px;
+	color:white;
+	font-weight:700;
+}
+[app="app.myapp"] div{
+
+}
+@keyframes slider{
+	0%{background-position: 0px;}
+	8%{background-position: 0px;}
+	10%{background-position: -800px;}
+	18%{background-position: -800px;}
+	20%{background-position: -1600px;}
+	28%{background-position: -1600px;}
+	30%{background-position: -2400px;}
+	38%{background-position: -2400px;}
+	40%{background-position: -3200px;}
+	48%{background-position: -3200px;}
+	50%{background-position: -4000px;}
+	58%{background-position: -4000px;}
+	60%{background-position: -4800px;}
+	68%{background-position: -4800px;}
+	70%{background-position: -5600px;}
+	78%{background-position: -5600px;}
+	80%{background-position: -6400px;}
+	88%{background-position: -6400px;}
+	90%{background-position: -7200px;}
+	98%{background-position: -7200px;}
+	100%{background-position: 0px;}
+}
+.rotation.CommonBgImg {
+	background-image: url("images/background5.png")!important;
+}
+.accordion.aio-panel {
+    -webkit-box-shadow: 0px 75px 35px -55px rgba(10, 30, 65, 0.6);
+    -moz-box-shadow: 0px 75px 35px -55px rgba(10, 30, 65, 0.6);
+    box-shadow: 0px 75px 35px -55px rgba(10, 30, 65, 0.6);
+    font-family: Arial, Helvetica, sans-serif;
+    border-color: #16535f;
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 8px;
+    margin: 0 auto;
+    height: 438px;
+    width: 780px;
+}
+
+.accordion.aio-panel > ul > li,
+.aio-panel .accordion-title,
+.aio-panel .accordion-content,
+.aio-panel .accordion-separator {
+    float: none;
+}
+
+.accordion.aio-panel > ul > li {
+    background-color: #1b6d7d;
+    margin-right: -0px;
+    margin-bottom: -310px;
+}
+
+.aio-panel .accordion-select:checked ~ .accordion-separator {
+    margin-right: 0px;
+    margin-bottom: 310px;
+}
+
+.aio-panel .accordion-title,
+.aio-panel .accordion-select  {
+    background-color: #357784;
+    color: #000000;
+    width: 780px;
+    height: 30px;
+    font-size: 19px;
+}
+
+.aio-panel .accordion-title span {
+    margin-bottom: 20px;
+    margin-left: 15px;
+}
+
+.aio-panel .accordion-select:hover ~ .accordion-title,
+.aio-panel .accordion-select:checked ~ .accordion-title {
+    background-color: #3c9bae;
+}
+
+.aio-panel .accordion-title span  {
+    transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -ms-writing-mode: lr-tb;
+    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=0);
+    margin-bottom: 0px;
+    line-height: 30px;
+}
+
+.aio-panel .accordion-content {
+    background-color: #e2e2e2;
+    color: #000000;
+    height: 248px;
+    width: 718px;
+    padding: 31px;
+}
+
+.aio-panel .accordion-title,
+.aio-panel .accordion-select:checked ~ .accordion-content {
+    margin-right: 2px;
+    margin-bottom: 2px;
+}
+
+/* Do not change following properties, they aren't
+generated automatically and are common for each slider. */
+.accordion {
+    overflow: hidden;
+}
+
+.accordion > ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    width: 101%;
+}
+
+.accordion > ul > li,
+.accordion-title {
+    position: relative;
+}
+
+.accordion-select {
+    cursor: pointer;
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    left: 0;
+    margin: 0;
+    z-index: 1;
+}
+
+.accordion-title span {
+    display: block;
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    white-space: nowrap;
+}
+
+.accordion-content {
+    position: relative;
+    overflow: auto;
+}
+
+.accordion-separator {
+    transition: margin 0.3s ease 0.1s;
+    -o-transition: margin 0.3s ease 0.1s;
+    -moz-transition: margin 0.3s ease 0.1s;
+    -webkit-transition: margin 0.3s ease 0.1s;
+}

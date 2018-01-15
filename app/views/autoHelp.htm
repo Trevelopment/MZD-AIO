@@ -1,7 +1,19 @@
-<div id="autoHelp">
-  <div id="id7Help"><b>ID7_recovery scripts -</b> A collection of autorun scripts by id7, made for recovering from a catastrophic event that results in the loss of SSH access and/or the ability to install tweaks with MZD-AIO-TI.  Install recovery pack BEFORE updating firmware and it will automatically detect and restore SSH access if it is lost for any reason.
+<div id="autoHelp" class="w3-container">
+  <div id="id7Help" class="w3-card-4 w3-panel w3-padding"><b>ID7_recovery scripts -</b> A collection of autorun scripts by id7, made for recovering from a catastrophic event that results in the loss of SSH access and/or the ability to install tweaks with MZD-AIO-TI.  Install recovery pack <strong><em>BEFORE updating firmware</em></strong> and it will automatically detect and restore SSH access if it is lost for any reason.
   </div>
-  <div id="autoWifiHelp"><b>Auto WiFi AP -</b> Starts the WiFi AP on boot runs a DHCP server. You <b>MUST CHANGE VALUES 'YourSSID' and 'YourSSIDPassword' to run the wifi app!</b>  The app will not start if the values are not changed.  <br />Parameters of AP: 801.11G, channel=9, WPA2, AES is fixed but can be modified at line ~40 of jci-wifiap.sh<br>CMU IP: 192.168.53.1  open SSH ports 22, 24000, 36000 <a class="unwifiap" onclick="externalLink('unwifi')">SCRIPT TO UNINSTALL WIFI AP ONLY</a></div>
-  <div id="autoADB"><b>Auto ADB -</b> Starts SSH over ADB via port 2222.  You must use an Android device with 'Android Debugging' enabled in 'Developer Options' to make this SSH connection over USB or WiFi. Over USB connect using shell command SSH --host=localhost --port=2222 or SSH client localhost:2222 (or 127.0.0.1:2222)</div>
-  <div id="dryrun"><b>Dryrun Script -</b> This script is used to test and confirm the autorun installation is working properly.  It is recommended to use this after installing autorun for the first time.  This script (run.sh) can be used by itself or it can be moved to an SD card or another USB drive to test after the installation is complete.</div>
+  <div id="autoWifiHelp" class="w3-card-4 w3-panel w3-padding"><b>Auto WiFi AP -</b> Starts the WiFi AP on boot runs a DHCP server.
+    <br>You <b>MUST CHANGE VALUES 'YourSSID' and 'YourSSIDPassword' to run the WiFi AP!</b>  The AP will not start if the values are not changed.
+    <br>Parameters of AP: 801.11G,
+    <br>channel=9,
+    <br>WPA2,
+    <br>AES is fixed but can be modified at line ~40 of jci-wifiap.sh
+    <br>CMU IP: 192.168.53.1
+    <br>Open SSH ports 22, 24000, 36000
+    <br><a class="unwifiap" onclick="externalLink('unwifi')">SCRIPT TO UNINSTALL WIFI AP ONLY</a>
+  </div>
+  <div id="autoADB" class="w3-card-4 w3-panel w3-padding"><b>Auto ADB -</b> Starts SSH over ADB via port 2222.  You must use an Android device with 'Android Debugging' enabled in 'Developer Options' to make this SSH connection over USB or WiFi. Over USB connect using shell command:
+    <br><code>SSH --host=localhost --port=2222 </code>or
+    <br>SSH client - localhost:2222 (or 127.0.0.1:2222)
+  </div>
+  <div id="dryrun" class="w3-card-4 w3-panel w3-padding"><b>Dryrun Script -</b> This script is used to test and confirm the autorun installation is working properly.  It is recommended to use this after installing autorun for the first time.  This script (run.sh) can be used by itself or it can be moved to an SD card or another USB drive to test after the installation is complete.</div>
 </div>

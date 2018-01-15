@@ -1,0 +1,169 @@
+/**
+ * Custom Applications SDK for Mazda Connect Infotainment System
+ *
+ * A mini framework that allows to write custom applications for the Mazda Connect Infotainment System
+ * that includes an easy to use abstraction layer to the JCI system.
+ *
+ * Written by Andreas Schwarz (http://github.com/flyandi/mazda-custom-applications-sdk)
+ * Copyright (c) 2016. All rights reserved.
+ *
+ * WARNING: The installation of this application requires modifications to your Mazda Connect system.
+ * If you don't feel comfortable performing these changes, please do not attempt to install this. You might
+ * be ending up with an unusuable system that requires reset by your Dealer. You were warned!
+ *
+ * This program is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU General Public License as published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+ * the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with this program.
+ * If not, see http://www.gnu.org/licenses/
+ *
+ */
+
+/**
+ * NOTICE: It's important that you target your application with the [app] attribute
+ */
+
+[app="app.vdd"] {
+	background: #0E0F0F;
+}
+
+[app="app.vdd"] .tabs {
+	background: #272D33;
+	color: #ADB0B3;
+	position: absolute;
+	top:0;
+	left:0;
+	right:0;
+	height:36px;
+	overflow: hidden;
+}
+
+	[app="app.vdd"] .tabs span {
+		float:left;
+		padding: 0;
+		margin: 0;
+	}
+
+	[app="app.vdd"] .tabs span.divider {
+		border-left: 1px solid #0E0F0F;
+		height:100%;
+		width:0px;
+	}
+
+
+	[app="app.vdd"] .tabs span.tab {
+		font-size: 25px;
+		text-transform: uppercase;
+		text-align: center;
+		border-bottom:5px solid #272D33;
+	}
+
+
+		[app="app.vdd"] .tabs span.tab[context="focused"] {
+			border-bottom-color: #3E7ED1;
+		}
+
+[app="app.vdd"] .panel {
+	background: #333940;
+	position: absolute;
+	top: 37px;
+	left:0;
+	bottom:0;
+	right:0;
+	overflow:hidden;
+}
+
+	[app="app.vdd"] .panel div.section {
+		padding:2px;
+		display:block;
+		font-size:14px;
+		font-weight: bold;
+		text-transform: uppercase;
+		background:#272D33;
+		padding:5px;
+		border-bottom:1px solid #0E0F0F;
+		padding-left:15px;
+		color:#ADB0B3;
+	}
+
+	[app="app.vdd"] .panel div.item {
+		background:#333940;
+		border-bottom:1px solid #0E0F0F;
+		padding-top:8px;
+		padding-left:10px;
+		height:40px;
+		position:relative;
+		overflow:hidden;
+		width: 100%;
+	}
+
+		[app="app.vdd"] .panel div.item span {
+			display:inline-block;
+			margin-top:2px;
+			float:left;
+		}
+
+			[app="app.vdd"] .panel div.item span:nth-child(1) {
+				padding:3px;
+				color:#fff;
+				border-radius:2px;
+				font-size:18px;
+				text-transform: uppercase;
+				font-weight:normal;
+				margin-right:15px;
+				text-align:center;
+				width:60px;
+				background:#777;
+			}
+
+			[app="app.vdd"] .panel div.item span:nth-child(2) {
+				padding:3px;
+				color:#fff;
+				border-radius:2px;
+				font-size:18px;
+				text-transform: uppercase;
+				font-weight:normal;
+				margin-right:15px;
+				text-align:center;
+				width:40px;
+			}
+
+				[app="app.vdd"] .panel div.item span:nth-child(2).string {
+					background:#0059B2;
+
+				}
+
+				[app="app.vdd"] .panel div.item span:nth-child(2).int {
+					background:#468C00;
+				}
+
+				[app="app.vdd"] .panel div.item span:nth-child(2).double {
+					background:#FF9326;
+				}
+
+			[app="app.vdd"] .panel div.item span:nth-child(3) {
+				font-size:20px;
+				padding:2px;
+				text-overflow: ellipsis;
+				width: 350px;
+				white-space: nowrap;
+				overflow: hidden;
+			}
+
+			[app="app.vdd"] .panel div.item span:nth-child(4) {
+				position:absolute;
+				top:2px;
+				right:20px;
+				padding:4px 10px;
+				background:#1E252B;
+				color:#fff;
+				font-size:25px;
+				width:200px;
+				border-radius:3px;
+				min-height:20px;
+			}

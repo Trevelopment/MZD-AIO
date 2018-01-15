@@ -1,5 +1,5 @@
 #!/bin/sh
-# restore.sh - MZD-AIO-TI Version 2.7.4
+# restore.sh - MZD-AIO-TI Version 2.7.6
 # The Full Restore script for the AIO Tweaks app
 # For more information visit http://mazdatweaks.com
 # By Trezdog44 - Trevelopment.com

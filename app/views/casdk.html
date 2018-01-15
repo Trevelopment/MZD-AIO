@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Application Info</title>
+    <script>
+      const pjson = require('../package.json')
+      const electron = require('electron')
+      const ipc = electron.ipcRenderer
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1><script>document.write(electron.remote.app.getName())</script></h1>
+        <h2>Version <script>document.write(pjson.version)</script></h2>
+      </header>
+      <section class="main">
+        <figure id="videoPlayer">
+          <video controls poster="nambia1.jpg">
+            <source src="../files/vid/boot.mp4" type="video/mp4">
+          </video>
+          <figcaption>
+            <a href="../files/vid/boot1.mp4">Matrix</a>
+            <a href="../files/vid/boot2.mp4">Race</a>
+            <a href="../files/vid/boot3.mp4">Fiat</a>
+          </figcaption>
+        </figure>
+        <ul>
+          <li><strong>Platform</strong>: <script>document.write(process.platform)</script></li>
+          <li><strong>Architecture</strong>: <script>document.write(process.arch)</script></li>
+          <li><strong>OS Release</strong>: <script>document.write(require('os').release())</script></li>
+          <li><strong>Main URL</strong>: <script>document.write(pjson.config.url || 'N.A.')</script></li>
+          <li><strong>Updates URL</strong>: <script>document.write((pjson.config.update && pjson.config.update.url) ? pjson.config.update.url : 'N.A.')</script></li>
+          <li><strong>Node</strong>: <script>document.write(process.versions.node)</script></li>
+          <li><strong>Chrome</strong>: <script>document.write(process.versions.chrome)</script></li>
+          <li><strong>Electron Runtime</strong>: <script>document.write(process.versions.electron)</script></li>
+          <li><strong>Process ID</strong>: <script>document.write(process.pid)</script></li>
+          <li><strong>Memory Usage</strong>: <script>document.write((Math.floor(process.memoryUsage().rss / (1024 * 1024))) + ' MB')</script></li>
+          <li><strong>Debug Mode</strong>: <script>document.write(pjson.config.debug || false)</script></li>
+          <li><strong>Resources Path</strong>: <script>document.write(process.resourcesPath)</script></li>
+          <li><strong>ExecPath</strong>: <script>document.write(process.execPath)</script></li>
+          <li><strong>Env</strong>: <script>document.write(JSON.stringify(process.env))</script></li>
+          <li><strong>Console</strong>: <script>document.write(JSON.stringify(process.stdout))</script></li>
+          <li><strong>Errors</strong>: <script>document.write(JSON.stringify(process.stderr))</script></li>
+        <script>console.log(process.stderr)</script>
+        </ul>
+      </section>
+      <section class="printer-list">
+        <h2>Available Printers</h2>
+        <div id="printers">
+          <p>Searching for printers...</p>
+        </div>
+      </section>
+      <footer>
+        <p>
+          <small>© 2016 Trevelopment</small>
+        </p>
+      </footer>
+      <p><a id="close" href="javascript:window.close()">Close</a></p>
+    </div>
+  </body>
+  <script src="../assets/js/videoplayer.js"></script>
+  <script>
+    // You can also require other files to run in this process
+    require('../assets/js/ex-links.js')
+    // Uncomment below to enable printer management
+    // require('./assets/js/printers.js')
+  </script>
+</html>

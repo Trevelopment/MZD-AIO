@@ -1,4 +1,9 @@
 // Display a notification message when a new version is ready for install
+ipc.on('update-not available', (event) => {
+  setTimeout(function(){
+    $('#update-available a').addClass('w3-hide')
+  }, 2000)
+})
 ipc.on('update-available-alert', (event) => {
   $('#update-available, #update-available a').removeClass('w3-hide')
   var updots = 0
@@ -76,16 +81,26 @@ function showNotification (title, message, fadeouttime, callback) {
 ipc.on('snackbar-msg', (event, message) => {
   snackbar(message)
 })
-function snackbar (message) {
-  $('#snackbar').append('body')
+function snackbar (message, mtime) {
+  /*$('#snackbar').append('body')
   var x = document.getElementById('snackbar')
   x.innerHTML = message
   x.className = 'show w3-card-12'
-  setTimeout(function () { x.className = x.className.replace('show', '') }, 9500)
+  setTimeout(function () { x.className = x.className.replace('show', '') }, 1500)*/
+  $.gritter.add({
+      title: 'MZD-AIO',
+      text: message,
+      time: mtime*1000 || 10000
+  });
 }
 function snackbarstay (message) {
-  $('#snackbar').append('body')
-  var x = document.getElementById('snackbar')
-  x.innerHTML = message + '<div onclick="$(this).parent().removeClass(\'stay\')" class="w3-xxlarge w3-display-topright w3-close-btn w3-hover-text-red" style="margin-top:-15px;cursor:pointer;">&times;</div>'
-  x.className = 'stay w3-card-12'
+  //$('#snackbar').append('body')
+  //var x = document.getElementById('snackbar')
+  //x.innerHTML = message + '<div onclick="$(this).parent().removeClass(\'stay\')" class="w3-xxlarge w3-display-topright w3-close-btn w3-hover-text-red" style="margin-top:-15px;cursor:pointer;">&times;</div>'
+  //x.className = 'stay w3-card-12'
+  $.gritter.add({
+      title: 'MZD-AIO',
+      text: message,
+      sticky:true
+  });
 }

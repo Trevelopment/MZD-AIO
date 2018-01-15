@@ -6,8 +6,8 @@ pkill websocketd
 
 if [ "${TESTBKUPS}" = "1" ]
 then
-	cp /jci/scripts/stage_wifi.sh "${MYDIR}/bakups/test/stage_wifi_aio-before.sh"
-	cp /jci/opera/opera_dir/userjs/additionalApps.json "${MYDIR}/bakups/test/additionalApps_aio_before.json"
+	cp /jci/scripts/stage_wifi.sh "${MYDIR}/bakups/test/stage_wifi-aio_before.sh"
+	cp /jci/opera/opera_dir/userjs/additionalApps.json "${MYDIR}/bakups/test/additionalApps-aio_before.json"
 fi
 
 if [ ! -e /jci/gui/apps/_videoplayer ]
@@ -49,11 +49,19 @@ if [ ! -e /jci/opera/opera_dir/userjs/additionalApps.json ]; then
 	rm -fr /jci/gui/addon-common
 	log_message "===   Removed /jci/gui/addon-common:  no speedometer or videoplayer   ==="
 fi
+
 rm -fr /jci/gui/apps/_aiotweaks
 rm -f /jci/opera/opera_dir/userjs/aio-startup.js
+rm -fr /tmp/mnt/data_persist/dev/system_restore
+log_message "===                     Removed AIO Tweaks App files                  ==="
+
 if [ "${TESTBKUPS}" = "1" ]
 then
-	cp /jci/scripts/stage_wifi.sh "${MYDIR}/bakups/test/stage_wifi_aio-after.sh"
+  cp /jci/scripts/stage_wifi.sh "${MYDIR}/bakups/test/stage_wifi-aio_after.sh"
+  if [ -e /jci/opera/opera_dir/userjs/additionalApps.json ]
+  then
+    cp /jci/opera/opera_dir/userjs/additionalApps.json "${MYDIR}/bakups/test/additionalApps-aio_after.json"
+  fi
 fi
 
 log_message "======*********** END UNINSTALLATION OF AIO TWEAKS APP ***********======="

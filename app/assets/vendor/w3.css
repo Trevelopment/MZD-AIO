@@ -391,6 +391,9 @@ input[type=checkbox].w3-check:disabled+.w3-validate,input[type=radio].w3-radio:d
   font-size: 46px;
   margin-top: 15px;
 }
+.mazda .dropdown-menu{
+  letter-spacing:normal;
+}
 .w3-hlpmsg {
   border: 12px ridge #00858c;
   padding: 5px 15px!important;
@@ -443,14 +446,48 @@ input[type=checkbox].w3-check:disabled+.w3-validate,input[type=radio].w3-radio:d
 }
 /*CSS Animation classes for fade animations*/
 .FadeOut {
-    animation: opacFullToZero 0.3s ease-in-out both;
+  animation: opacFullToZero 0.3s ease-in-out both;
 }
 
 .FadeIn {
-    animation: opacZeroToFull 0.3s ease-in-out both;
+  animation: opacZeroToFull 0.3s ease-in-out both;
 }
 .bootbox .w3-btn:focus,
 .bootbox .btn:focus {
-    outline: none;
-    box-shadow: 0 6px 19px -3px #bf007b, 0 -2px 19px 3px #008c6c;
+  outline: none;
+  box-shadow: 0 6px 19px -3px #bf007b, 0 -2px 19px 3px #008c6c;
+}
+div#fullSystemRestore {
+  max-width: 250px;
+  margin: auto;
+  text-align: left;
+  line-height:20px;
+}
+div#fullSystemRestore input{
+  top:8px;
+  margin-right:16px;
+  text-align:left;
+}
+div#fullSystemRestore label{
+  border-bottom:2px dashed #e40000;
+  padding: 5px;
+  border-radius: 5px;
+  color:#333;
+
+}
+div#fullSystemRestore input:checked + label{
+  background: #ffd5d5;
+  color: #000;
+  border-bottom: 2px solid #000;
+  font-weight: 900;
+}
+ul.dropdown-menu {
+  text-transform: capitalize;
+  min-width: 200px;
+}
+#compileRestore ul.dropdown-menu {
+  width: 240px;
+  right: 0;
+  left: 0;
+  margin: auto;
 }

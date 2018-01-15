@@ -1,18 +1,21 @@
 #diagmenu with 1 sec. press at clock in display settings menu, script made by Sumire_Racing_JPN
 show_message "DIAGMENU W. 1 SEC. PRESS AT CLOCK IN DISPLAY SETTINGS MENU"
-log_message "===*** INSTALL DIAGMENU 1 SEC. PRESS CLOCK IN DISPLAY SETTINGS MENU ...  ***==="
+log_message "===*** INSTALL DIAGMENU 1 SEC. CLOCK PRESS IN DISPLAY SETTINGS ... ***==="
 # Backups
 if [ ! -e /jci/gui/apps/diag/js/diagApp.js.org ]
 then
 	cp -a /jci/gui/apps/diag/diagApp.js /jci/gui/apps/diag/js/diagApp.js.org
+  log_message "===              Backup /jci/gui/apps/diag/js/diagApp.js              ==="
 fi
 if [ ! -e /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js.org ]
 then
 	cp -a /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js.org
+	log_message "===   Backup /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js   ==="
 fi
 if [ ! -e /jci/gui/common/js/Common.js.org ]
 then
 	cp -a /jci/gui/common/js/Common.js /jci/gui/common/js/Common.js.org
+	log_message "===                Backup /jci/gui/common/js/Common.js                ==="
 fi
 if [ "${KEEPBKUPS}" = "1" ]
 then
@@ -32,26 +35,26 @@ fi
 if grep -Fq '"settleTime" : 1000,' /jci/gui/apps/diag/js/diagApp.js
 then
 	echo "exist"
-	log_message "===          Modifications already done to /jci/gui/apps/diag/js/diagApp.js         ==="
+	log_message "===   Modifications already done to /jci/gui/apps/diag/js/diagApp.js  ==="
 else
 	sed -i 's/"settleTime" : 20000,/"settleTime" : 1000,/g' /jci/gui/apps/diag/js/diagApp.js
-	log_message "===                  Modified /jci/gui/apps/diag/js/diagApp.js                      ==="
+	log_message "===              Modified /jci/gui/apps/diag/js/diagApp.js            ==="
 fi
 if grep -Fq '"holdTimeout" : 1000,' /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js
 then
 	echo "exist"
-	log_message "==Modifications already done to /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js="
+	log_message "===          Modifications already done to StatusBarCtrl.js           ==="
 else
 	sed -i 's/"holdTimeout" : 5000,/"holdTimeout" : 1000,/g' /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js
-	log_message "===          Modified /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js        ==="
+	log_message "===                    Modified StatusBarCtrl.js                      ==="
 fi
 if grep -Fq 'framework.sendEventToMmui("syssettings", "SelectDiagnostics"); // Sumire Racing' /jci/gui/common/js/Common.js
 then
 	echo "exist"
-	log_message "===           Modifications already done to /jci/gui/common/js/Common.js            ==="
+	log_message "===     Modifications already done to /jci/gui/common/js/Common.js    ==="
 else
 	sed -i '/this._diagEntrySequence = 1;/ a\framework.sendEventToMmui("syssettings", "SelectDiagnostics"); // Sumire Racing' /jci/gui/common/js/Common.js
-	log_message "===                      Modified /jci/gui/common/js/Common.js                      ==="
+	log_message "===               Modified /jci/gui/common/js/Common.js               ==="
 fi
 if [ "${TESTBKUPS}" = "1" ]
 then
@@ -59,5 +62,5 @@ then
 	cp /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js "${MYDIR}/bakups/test/StatusBarCtrl_diagmenu-after.js"
 	cp /jci/gui/common/js/Common.js "${MYDIR}/bakups/test/Common_diagmenu-after.js"
 fi
-log_message "===*** END INSTALLING DIAGMENU W. 1 SEC. PRESS AT CLOCK IN DISPLAY SETTINGS MENU ***==="
+log_message "==========********* END INSTALLATION OF 1 SEC DIAGMENU  *********========"
 log_message " "

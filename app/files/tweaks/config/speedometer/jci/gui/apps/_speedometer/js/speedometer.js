@@ -32,7 +32,7 @@ $(document).ready(function(){
   // websocket
   // --------------------------------------------------------------------------
   function retrievedata(action){
-    var speedometerWs = new WebSocket('ws://127.0.0.1:55554/');
+    var speedometerWs = new WebSocket('ws://127.0.0.1:9969/');
     speedometerWs.onmessage = function(event){
       var res = event.data.split('#');
       switch(res[0]){

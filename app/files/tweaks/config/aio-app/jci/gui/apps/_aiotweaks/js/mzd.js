@@ -29,11 +29,11 @@ $(document).ready(function(){
   $("#aioInfo").on("click",function(){showAioInfo("<div class='infoMessage'><h1>AIO Tweaks App v0.4a</h1>This is an experimental app by Trezdog44 made to test the capabilities, functionalities, and limitations of apps in the MZD Infotainment System.<br>This app has some useful and fun functions although it is not guaranteed that everything works.  There may be non-functioning or experimental features.</div>");});
   $("#aioReboot").on("click",myRebootSystem);
   //$("#mainMenuLoop").on("click",setMainMenuLoop);
-  //$("#test").on("click",myTest);
+  $("#test").on("click",myTest);
   $("#touchscreenBtn").on("click",enableTouchscreen);
   $("#touchscreenOffBtn").on("click",disableTouchscreen);
   $("#touchscreenCompassBtn").on("click",enableCompass);
-  //$("#messageBtn").on("click",myMessage);
+  $("#adbBtn").on("click",adbDevices);
   $("#messageTestBtn").on("click",messageTest);
   //$("#screenshotBtn").on("click",takeScreenshot);
   //$("#saveScreenshotBtn").on("click",saveScreenshot);
@@ -64,11 +64,12 @@ $(document).ready(function(){
   $("#unmountSwapBtn").on("click",unmountSwap);
   $("#createSwapBtn").on("click",showVehicleType);
   $("#backupCamBtn").on("click",showBodyClassName);
+  $("#errLogBtn").on("click",showErrLog);
   $("#showBgBtn").on("click",function(){$("html").addClass("showBg")});
   $("#twkOut").on("click",function(){framework.sendEventToMmui("common", "Global.IntentHome")});
   $("#usba").on("click",function(){framework.sendEventToMmui("system", "SelectUSBA")});
   $("#usbb").on("click",function(){framework.sendEventToMmui("system", "SelectUSBB")});
-  //$("#BluetoothAudio").on("click",function(){framework.sendEventToMmui("common", "Global.Resume")});
+  $("#pauseBtn").on("click",function(){localStorage.clear();});
   //$("#previousTrackBtn").on("click",function(){framework.sendEventToMmui("common", "Global.PreviousHoldStop")});
   //$("#nextTrackBtn").on("click",function(){framework.sendEventToMmui("common", "Global.NextHoldStop")});
   $("#BluetoothAudio").on("click",function(){framework.sendEventToMmui("system", "SelectBTAudio")});
@@ -121,6 +122,7 @@ function getAppListData(){
       hasAA();
       hasCS();
       hasSwap();
+      hasErrLog();
     });
   } catch (e) {
     showAioInfo('Error: Cannot retrieve AIO app list...  <br>' + e);
@@ -209,8 +211,13 @@ function toggleTSPanel(){
 function closeTSPanel(){
   $("#Opt").click();
 }
+function adbDevices(){
+  showAioInfo("$ adb devices -l");
+  aioWs('adb devices -l', 1);
+}
 function myTest(){
-  aioWs('node -e "console.log(\'Test\')"', 1);
+  framework.common.startTimedSbn(this.uiaId, "SbnAIOTest", "typeE", {sbnStyle : "Style02",imagePath1 : 'apps/_aiotweaks/panda.png', text1 : this.uiaId, text2: "Pandas are coming for you!!"});
+  //aioWs('node -e "console.log(\'Test\')"', 1);
 }
 function chooseBackground(){
   //aioWs('node -e "var fs = require("fs"); var contents = fs.readFileSync("apps/_aiotweaks/test.txt").toString(); console.log(contents);"', 0);
@@ -257,24 +264,45 @@ function hasSwap() {
 function hasCS() {
   aioWs('if [ -e /jci/scripts/cs_receiver_arm ]; then echo AIO_FC_CS; else echo AIO_FC_NOCS; fi ');
 }
+function hasErrLog() {
+  aioWs('if [ -e /tmp/root/casdk-error.log ]; then echo AIO_FC_ERR; else echo AIO_FC_NOERR; fi ');
+}
 function AioFileCheck(fc) {
-  if(fc.indexOf('_NOAA') !== -1) {
+  var FC = fc.substr(fc.lastIndexOf("_"));
+  switch (FC) {
+   case "_NOAA":
     $('#aaTitle, .aaFunc').remove();
     $('#csTitle').addClass('centered');
-  } else if (fc.indexOf('_CS') !== -1) {
+    break;
+   case "_":
+    break;
+    $('#aaTitle, .aaFunc').remove();
+    $('#csTitle').addClass('centered');
+    break;
+   case "_CS":
     appListData.push({"name":"cs","label":"CastScreen Receiver"});
-  } else if (fc.indexOf('_NOCS') !== -1) {
+    break;
+   case "_NOCS":
     $('#csTitle, .csFunc').remove();
     $('#aaTitle').addClass('centered');
-  } else if (fc.indexOf('_SWAP') !== -1) {
+    break;
+   case "_SWAP":
     //$('#mountSwapBtn').html('<a>Mount Swapfile</a>').show();
     //$('#createSwapBtn').off('click').on('click',deleteSwap).html('<a>Delete Swapfile</a>');
-  } else if (fc.indexOf('_NOSWAP') !== -1) {
+    break;
+   case "_NOSWAP":
     $('#mountSwapBtn').remove();
     $('#unmountSwapBtn').remove();
     //$('#mountSwapBtn').html('').hide();
     //$('#createSwapBtn').off('click').on('click',createSwap).html('<a>Create Swapfile</a>');
-  } else {
+    break;
+   case "_ERR":
+    $('#errLogBtn').show();
+    break;
+   case "_NOERR":
+    $('#errLogBtn').remove();
+    break;
+   default:
     showAioInfo('INVALID FILE CHECK: ' + fc);
   }
 }
@@ -330,7 +358,7 @@ function stopCastScreen(){
 /*function startSpeedometer(){
   utility.loadScript('apps/_speedometer/js/speedometer.js');
   $('<div id="SbSpeedo"><div class="gpsAltitudeValue"></div><div class="gpsHeading"></div><div class="gpsSpeedValue">0</div><div class="speedUnit"></div></div>').appendTo('body');
-  aioWs('/jci/gui/addon-common/websocketd --port=55554 /jci/gui/apps/_speedometer/sh/speedometer.sh &', 1);
+  aioWs('/jci/gui/addon-common/websocketd --port=9969 /jci/gui/apps/_speedometer/sh/speedometer.sh &', 1);
 }
 function stopSpeedometer(){
   utility.removeScript('apps/_speedometer/js/speedometer.js');
@@ -358,9 +386,15 @@ function displayOff(){
   //framework.sendEventToMmui("system", "DisplayOffGUIActivity");
 }
 function showHeadunitLog(){
-  showAioInfo("Loading /tmp/mnt/data/headunit.log ...");
+  showFile('/tmp/mnt/data/headunit.log');
+}
+function showErrLog(){
+  showFile('/tmp/root/casdk-error.log');
+}
+function showFile (filepath) {
+  showAioInfo("Loading " + filepath + " ...");
   $.ajax({
-     url : "/tmp/mnt/data/headunit.log",
+     url : filepath,
      dataType: "text",
      success : function (data) {
          $("#AioInformation").html(data);

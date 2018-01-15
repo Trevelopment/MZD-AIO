@@ -21,8 +21,10 @@ then
       RPM=`smdb-read -n vdm_vdt_current_data -e EngineSpeed`
       DIST=`smdb-read -n vdm -e PID_Drv1Dstnc_curr`
       SPEED=`smdb-read -n vdm_vdt_current_data -e VehicleSpeed`
-      echo "vehicleData#${SPEED}#${RPM}#${DIST}#${GPSSPEED}#${ALTITUDE}#${HEADING}#${LATITUDE}#${LONGITUDE}"
-      sleep 0.8
+      ENGLOAD=`smdb-read -n vdm_vdt_current_data -e EngineLoad`
+      LPOS=`smdb-read -n vdm_vdt_current_data -e TransmChangeLeverPosition`
+      echo "vehicleData#${SPEED}#${RPM}#${DIST}#${GPSSPEED}#${ALTITUDE}#${HEADING}#${LATITUDE}#${LONGITUDE}#${ENGLOAD}#${LPOS}"
+      sleep 0.5
     done
 fi
 
@@ -32,15 +34,18 @@ if [ "${action}" == "envData" ]
 then
   while true
   do
-    FUELGUAGE=`smdb-read -n vdm_vdt_current_data -e FuelGaugePosition`
+    FUELGAGE=`smdb-read -n vdm_vdt_current_data -e FuelGaugePosition`
     FUELEFF=`smdb-read -n vdm -e Drv1AvlFuelE`
     TOTFUELEFF=`smdb-read -n vdm_vdt_history_data -e TotAvlFuelE`
     AVGFUEL=`smdb-read -n vdm_history_data -e HVD_CumAvgFuelEff_curr`
     CTMP=`smdb-read -n vdm_vdt_current_data -e EngClnt_Te_Actl`
     ITMP=`smdb-read -n vdm_vdt_current_data -e DR_IntakeAirTemp`
     OTMP=`smdb-read -n vdm_vdt_current_data -e Out-CarTemperature`
+   # LTMP=`smdb-read -n vdm_vdt_current_data -e Out-CarTemperature`
+    BATSOC=`smdb-read -n vdm_vdt_current_data -e Battery_StateOfCharge`
+   # BATSOC=`smdb-read -n vdm_vdt_current_data -e BattTracSoc_Pc_Actl`
     GPOS=`smdb-read -n vdm_vdt_current_data -e TransmissionGearPosition`
-    echo "envData#${FUELEFF}#${TOTFUELEFF}#${AVGFUEL}#${OTMP}#${ITMP}#${CTMP}#${GPOS}#${FUELGUAGE}"
+    echo "envData#${FUELEFF}#${TOTFUELEFF}#${AVGFUEL}#${OTMP}#${ITMP}#${CTMP}#${GPOS}#${FUELGAGE}#${BATSOC}"
     sleep 3.0
   done
 fi
