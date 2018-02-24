@@ -168,7 +168,6 @@
     }
   },
   "devDependencies": {
-    "async": "^2",
     "chai": "^4",
     "chai-as-promised": "^7",
     "dependency-check": "^2",
