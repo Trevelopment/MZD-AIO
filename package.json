@@ -20,7 +20,7 @@
     "url": "https://gitlab.com/Trezdog44/MZD-AIO-TI/issues"
   },
   "engines": {
-    "node": "6.5.x"
+    "node": "^6.5.x"
   },
   "keywords": [
     "Mazda",

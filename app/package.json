@@ -50,7 +50,7 @@
     "rimraf": "^2"
   },
   "engines": {
-    "node": "6.5.x"
+    "node": "^6.5.x"
   },
   "electronVersion": "1.6.11"
 }
