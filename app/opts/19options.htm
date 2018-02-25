@@ -12,18 +12,30 @@
     <tr class="w3-hover-pale-blue w3-row w3-col">
       <td class="w3-row w3-col">
         <span class="speedo-radio">
-          <input id="speedo{{speedoOps.mod.id}}" type="checkbox" name="speedomod" ng-value="user.speedoOps.mod" ng-model="user.speedoOps.mod" ng-disabled="user.speedoOps.simpmod" />
-          <label for="speedo{{speedoOps.mod.id}}" data-toggle="tooltip" data-placement="auto bottom" title="{{speedoOps.mod.label}}">{{speedoOps.mod.label}}</label>
+          <input id="speedoclassic" class="" type="radio" name="speedobarmod" ng-value="false" ng-model="user.speedoOps.simpmod" />
+          <label for="speedoclassic">Start Classic Speedometer</label>
         </span>
         <span class="speedo-radio">
-          <input id="speedosimpmod" class="" type="checkbox" name="speedobarmod" ng-value="user.speedoOps.simpmod" ng-model="user.speedoOps.simpmod" ng-disabled="user.speedoOps.mod" />
-          <label for="speedosimpmod">Digital Bar Speedometer</label>
+          <input id="speedosimpmod" class="" type="radio" name="speedobarmod" ng-value="true" ng-model="user.speedoOps.simpmod" />
+          <label for="speedosimpmod">Start Digital Bar Speedometer</label>
+        </span>
+      </tr>
+    </tr>
+    <tr class="w3-hover-pale-blue w3-row w3-col">
+      <td class="w3-row w3-col">
+        <span class="speedo-radio">
+          <input id="speedo{{speedoOps.modAlt.id}}" type="radio" name="speedomod" ng-value="true" ng-model="user.speedoOps.modAlt" />
+          <label for="speedo{{speedoOps.modAlt.id}}" data-toggle="tooltip" data-placement="auto bottom" title="{{speedoOps.modAlt.label}}">{{speedoOps.modAlt.label}}</label>
+        </span>
+        <span class="speedo-radio">
+          <input id="speedoDigiMod" type="radio" name="speedomod" ng-model="user.speedoOps.modAlt" ng-value="false"/>
+          <label for="speedoDigiMod" data-toggle="tooltip" data-placement="auto bottom" title="{{speedoOps.modAlt.label}}">Digital Classic</label>
         </span>
       </td>
     </tr>
     <tr class="w3-hover-pale-blue w3-tooltip w3-row w3-col speedo-lang">
       <td class="w3-row w3-col">
-        <span  ng-repeat="(key,option) in speedoOps.lang" class="speedo-radio">
+        <span ng-repeat="(key,option) in speedoOps.lang" class="speedo-radio">
           <input id="speedo{{option.id}}" type="radio" name="{{option.spOp}}" ng-model="user.speedoOps.lang.id" ng-value="option.id" />
           <label for="speedo{{option.id}}" data-toggle="tooltip" data-placement="auto bottom" title="{{option.label}}">{{option.label}}</label>
         </span>
@@ -31,7 +43,7 @@
     </tr>
     <tr class="w3-hover-pale-blue w3-tooltip w3-col w3-row speedo-ops">
       <td class="w3-third">
-        <span  ng-repeat="(key,option) in speedoOps.xph" class="speedo-radio">
+        <span ng-repeat="(key,option) in speedoOps.xph" class="speedo-radio">
           <input id="speedo{{option.id}}" type="radio" name="{{option.spOp}}" ng-model="user.speedoOps.xph.id" ng-value="option.id" />
           <label for="speedo{{option.id}}" data-toggle="tooltip" data-placement="auto bottom" title="Speed Unit {{option.label}}">{{option.label}}</label>
         </span>
@@ -44,12 +56,12 @@
       </td>
       <td class="w3-third">
         <span ng-repeat="(key,option) in speedoOps.effic" class="speedo-radio">
-          <input id="speedo{{option.id}}" type="radio" name="{{option.spOp}}" ng-model="user.speedoOps.effic.id" ng-value="option.id" ng-disabled="user.speedoOps.xph.id !== 11" />
+          <input id="speedo{{option.id}}" type="radio" name="{{option.spOp}}" ng-model="user.speedoOps.effic.id" ng-value="option.id"/>
           <label for="speedo{{option.id}}" data-toggle="tooltip" data-placement="auto bottom" title="Fuel Efficiency Unit {{option.label}}">{{option.label}}</label>
         </span>
       </td>
     </tr>
-    <tr class="w3-col w3-row" ng-hide="user.speedoOps.simpmod">
+    <tr class="w3-col w3-row">
       <td class="w3-row w3-col speedo-color">
         <span ng-repeat="option in speedoOps.color" class="speedo-radio">
           <input id="speedo{{option}}" type="radio" name="sbcolor"  ng-model="user.speedoOps.color" ng-value="option"/>
@@ -57,17 +69,22 @@
         </span>
       </td>
     </tr>
-    <tr class="w3-row w3-col w3-half">
+    <tr class="w3-row w3-col w3-third">
       <td>
-        <strong style="font-size: 13px;">Speedometer In Statusbar:</strong>
+        <strong style="font-size: 11px;">Speedometer In Statusbar:</strong>
       </td>
     </tr>
-    <tr class="w3-half">
-      <td class="speedo-check extrCheck">
-        <input id="speedoSbTemp" class="w3-check" type="checkbox" name="speedoSbTemp" ng-disabled="user.speedoOps.sml.id === 22" ng-model="user.speedoOps.sbtemp" ng-value="user.speedoOps.sbtemp" title="Show Outside Temperature and Fuel Efficiency Above the Statusbar Speedometer."  data-toggle="tooltip" data-placement="auto bottom"/>
-      </td>
-      <td>
-        <label for="speedoSbTemp" data-toggle="tooltip" data-placement="auto bottom" title="Show Outside Temperature and Fuel Efficiency Above the Statusbar Speedometer.">Alternate Statusbar Values</label>
+    <tr class="w3-twothird">
+      <td class="w3-col">
+        <span class="speedo-radio">
+          <input id="speedoSbTemp" class="w3-check" type="checkbox" name="speedoSbTemp" ng-disabled="user.speedoOps.sml.id === 22" ng-model="user.speedoOps.sbtemp" ng-value="user.speedoOps.sbtemp" title="Show Outside Temperature and Fuel Efficiency Above the Statusbar Speedometer." data-toggle="tooltip"
+          data-placement="auto bottom" />
+          <label for="speedoSbTemp" data-toggle="tooltip" data-placement="auto bottom" title="Show Outside Temperature and Fuel Efficiency Above the Statusbar Speedometer.">Alternate Statusbar Values</label>
+        </span>
+        <span class="speedo-radio">
+          <input id="DigitalClockFont" class="w3-check" type="checkbox" name="digiclock" ng-disabled="user.speedoOps.sml.id === 22" ng-model="user.speedoOps.digiclock" ng-value="user.speedoOps.digiclock"/>
+          <label for="DigitalClockFont" data-toggle="tooltip" data-placement="auto bottom" title="Change the clock font to a digital clock.">Digital Clock Mod</label>
+        </span>
       </td>
     </tr>
     <tr class="w3-hover-pale-blue w3-tooltip w3-row w3-col">
@@ -86,7 +103,9 @@
         </div>
       </td>
     </tr>
-    <tr ng-hide="user.speedoOps.bg.id == 31" class="w3-half" style="background-color:rgba(0,0,0,{{user.speedoOps.opac}})"><td><strong style="font-size: 14px;color:rgb({{200*user.speedoOps.opac}},{{200*user.speedoOps.opac}},{{200*user.speedoOps.opac}});">Background Opacity: {{user.speedoOps.opac}}</strong></td></tr>
+    <tr ng-hide="user.speedoOps.bg.id == 31" class="w3-half" style="background-color:rgba(0,0,0,{{user.speedoOps.opac}})">
+      <td><strong style="font-size: 14px;color:rgb({{200*user.speedoOps.opac}},{{200*user.speedoOps.opac}},{{200*user.speedoOps.opac}});">Background Opacity: {{user.speedoOps.opac}}</strong></td>
+    </tr>
     <tr ng-hide="user.speedoOps.bg.id == 31" class="w3-hover-pale-blue w3-half" style="display: flex">
       <td style="width:100%">
         <div class="speedo-check extraRange">
@@ -94,19 +113,7 @@
         </div>
       </td>
     </tr>
-    <tr class="w3-row w3-col w3-hover-pale-green">
-      <td class="w3-row w3-col">
-        <span class="speedo-radio">
-          <input id="speedo{{speedoOps.modAlt.id}}" class="w3-third" type="checkbox" name="spaadoType"  ng-disabled="!user.speedoOps.mod" ng-value="user.speedoOps.modAlt"/>
-          <label for="speedo{{speedoOps.modAlt.id}}" data-toggle="tooltip" data-placement="auto bottom" title="{{speedoOps.modAlt.label}}">{{speedoOps.modAlt.label}}</label>
-        </span>
-        <span class="speedo-radio">
-          <input id="DigitalClockFont" class="w3-check" type="checkbox" name="digiclock"  ng-disabled="!user.speedoOps.mod && !user.speedoOps.simpmod" ng-model="user.speedoOps.digiclock" ng-value="user.speedoOps.digiclock"/>
-          <label for="DigitalClockFont" data-toggle="tooltip" data-placement="auto bottom" title="Change the clock font to a digital clock.">Digital Clock Mod</label>
-        </span>
-      </td>
-    </tr>
-    <tr class="w3-row w3-col" ng-show="user.speedoOps.simpmod">
+    <tr class="w3-row w3-col">
       <td class="w3-row w3-col w3-hover-pale-green w3-center">
         <a href="views/speed.htm" data-featherlight class="speedoConfigInstructions w3-center w3-blue w3-hover-green w3-btn">Instructions For Customizing Bar Speedometer</a>
       </td>

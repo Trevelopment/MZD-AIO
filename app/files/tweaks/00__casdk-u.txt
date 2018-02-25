@@ -6,9 +6,6 @@ show_message "===****** UNINSTALLING CASDK ******==="
 log_message "==========************ BEGIN UNINSTALLING CASDK ************==========="
 log_message " "
 
-# mount resources
-mount -o rw,remount /tmp/mnt/resources
-
 # kill all watch processes
 log_message "- Removing watch processes"
 pkill -f watch
@@ -16,6 +13,7 @@ pkill -f 'watch -n 1'
 pkill -f 'watch -n 60'
 pkill -f 'watch -n 300'
 pkill -f 'mzd-casdk.start'
+pkill -f websocketd
 
 # reset storage
 if [ -e /tmp/mnt/data_persist/storage ]
@@ -69,12 +67,16 @@ then
 	log_message "- Removing proxys & startups"
 	rm -f /jci/opera/opera_dir/userjs/CustomApplicationsProxy.js
 	rm -f /jci/opera/opera_dir/userjs/nativeApps.js
+	rm -f /jci/opera/opera_dir/userjs/aio.js
 fi
+sed -i '/Terminal/d' /jci/scripts/stage_wifi.sh
+sed -i '/terminal/d' /jci/scripts/stage_wifi.sh
 
 if [ -f /jci/opera/opera_dir/userjs/additionalApps.js.org ]
 then
 	log_message "- Restoring additionalApps.js"
 	mv /jci/opera/opera_dir/userjs/additionalApps.js.org /jci/opera/opera_dir/userjs/additionalApps.js
+	rm -f /jci/opera/opera_dir/userjs/nativeApps.js
 fi
 
 # delete custom
@@ -96,6 +98,6 @@ fi
 log_message "- Done!"
 sleep 5
 killall jci-dialog
-/jci/tools/jci-dialog --title="CASDK UNINSTALLED" --text="THE CUSTOM APPLICATION RUNTIME WAS SUCCESSFULLY UNINSTALLED.\n\nTHE SYSTEM WILL REBOOT IN A FEW SECONDS." --no-cancel &
+/jci/tools/jci-dialog --title="CASDK UNINSTALLED" --text="THE CUSTOM APPLICATION RUNTIME\nWAS SUCCESSFULLY UNINSTALLED.\n\nTHE SYSTEM WILL REBOOT IN A FEW SECONDS." --no-cancel &
 sleep 10
 reboot

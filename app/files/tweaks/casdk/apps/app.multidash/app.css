@@ -8,7 +8,7 @@
  * [license]
  */
 
-@font-face {
+/*@font-face {
     font-family: myriadPro;
     src: url(fonts/Myriad-Pro_31655.ttf);
 }
@@ -19,7 +19,7 @@
 @font-face {
     font-family: robotoMedium;
     src: url(fonts/Roboto-Medium.ttf);
-}
+}*/
 
 
 [app="app.multidash"] .invisible {
@@ -29,10 +29,6 @@
 [app="app.multidash"] {
 	position: relative;
 	background-color: #000000;
-	-webkit-font-feature-settings: "kern" , "liga" , "pnum";
-	font-feature-settings: "kern" , "liga" , "pnum";
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
 	font-family: robotoLight,"Helvetica","Roboto","Arial",sans-serif;
 }
 
@@ -323,7 +319,6 @@
 }
 [app="app.multidash"] #main-container.theme-black #bottom-con .fuel-icon {
 	opacity: .6;
-	-webkit-filter: invert(100%);
 }
 [app="app.multidash"] #main-container.theme-yellow #bottom-con .fuel-icon {
 	opacity: 1;

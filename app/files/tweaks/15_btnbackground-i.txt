@@ -8,7 +8,7 @@ then
 	cp -a /jci/gui/common/controls/Ump3/css/Ump3Ctrl.css /jci/gui/common/controls/Ump3/css/Ump3Ctrl.css.org
 	log_message "===      Backup of /jci/gui/common/controls/Ump3/css/Ump3Ctrl.css     ==="
 fi
-if [ "${KEEPBKUPS}" = 1 ]
+if [ $KEEPBKUPS -eq 1 ]
 then
 	cp -a /jci/gui/common/controls/Ump3/css/Ump3Ctrl.css.org "${MYDIR}/bakups/"
 	aio_info \"Ump3Ctrl.js.org\",
@@ -18,7 +18,7 @@ sed -i "/.. MZD-AIO-TI NO-BTN-BG ../,/.. END AIO CSS ../d" /jci/gui/common/contr
 # Append css
 echo "/* MZD-AIO-TI NO-BTN-BG */" >> /jci/gui/common/controls/Ump3/css/Ump3Ctrl.css
 
-if [ ${NO_BTN_BG} = 1 ]
+if [ $NO_BTN_BG -eq 1 ]
 then
 		cat <<EOT >> /jci/gui/common/controls/Ump3/css/Ump3Ctrl.css
 	/* Remove Button Backgrounds */
@@ -30,7 +30,7 @@ then
 EOT
 log_message "===                Removed Behind Buttons Background                  ==="
 fi
-if [ ${NO_NP_BG} = 1 ]
+if [ $NO_NP_BG -eq 1 ]
 then
 		cat <<EOT >> /jci/gui/common/controls/Ump3/css/Ump3Ctrl.css
 	/* Remove Now Playing Background*/
@@ -40,7 +40,7 @@ then
 EOT
 log_message "===                  Removed Now Playing Overlay                      ==="
 fi
-if [ ${NO_LIST_BG} = 1 ]
+if [ $NO_LIST_BG -eq 1 ]
 then
 		cat <<EOT >> /jci/gui/common/controls/Ump3/css/Ump3Ctrl.css
 	/* Remove List Background*/
@@ -50,7 +50,7 @@ then
 EOT
 log_message "===                    Removed List View Overlay                      ==="
 fi
-if [ ${NO_CALL_BG} = 1 ]
+if [ $NO_CALL_BG -eq 1 ]
 then
 		cat <<EOT >> /jci/gui/common/controls/Ump3/css/Ump3Ctrl.css
 	/* Remove In Call Background*/
@@ -61,7 +61,7 @@ then
 EOT
 log_message "===                   Removed In-Call Overlay                         ==="
 fi
-if [ ${NO_TEXT_BG} = 1 ]
+if [ $NO_TEXT_BG -eq 1 ]
 then
 		cat <<EOT >> /jci/gui/common/controls/Ump3/css/Ump3Ctrl.css
 	/* Remove In Call Background*/

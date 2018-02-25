@@ -90,15 +90,14 @@ ipc.on('selected-joined-bg', function (event, filepath) {
     icon: 'favicon.ico',
     silent: true
   })
-  bgNotification.onclick = () => {
-  }
+  bgNotification.onclick = () => {}
   ipc.emit('set-bg')
 })
 ipc.on('selected-bg', function (event, filepath) {
   var outFile = `${varDir}/background.png`
   document.getElementById('selected-file').innerHTML = `Your Selected Background Image: ${filepath}`
   var warnMsg = '{{mainOps.retain.toolTip}}'
-  fs.writeFileSync(`${outFile}`,nativeImage.createFromPath(`${filepath}`).resize({'width':800,'height':480}).toPNG())
+  fs.writeFileSync(`${outFile}`, nativeImage.createFromPath(`${filepath}`).resize({ 'width': 800, 'height': 480 }).toPNG())
   let bgNotification = new Notification('Background', {
     body: `Your Infotainment Background Will Be Changed To: ${filepath}`,
     icon: 'favicon.ico',
@@ -111,15 +110,14 @@ ipc.on('selected-bg', function (event, filepath) {
 })
 ipc.on('selected-offscreen-bg', function (event, filepath) {
   var outFile = `${varDir}/OffScreenBackground.png`
-  fs.writeFileSync(`${outFile}`,nativeImage.createFromPath(`${filepath}`).resize({'width':800,'height':480}).toPNG())
-    let bgNotification = new Notification('Background', {
-      body: `Your Off Screen Background Will Be Changed To: ${filepath}`,
-      icon: 'favicon.ico',
-      silent: true
-    })
-    bgNotification.onclick = () => {
-    }
+  fs.writeFileSync(`${outFile}`, nativeImage.createFromPath(`${filepath}`).resize({ 'width': 800, 'height': 480 }).toPNG())
+  let bgNotification = new Notification('Background', {
+    body: `Your Off Screen Background Will Be Changed To: ${filepath}`,
+    icon: 'favicon.ico',
+    silent: true
   })
+  bgNotification.onclick = () => {}
+})
 ipc.on('set-bg', (prev) => {
   var bgNoCache = `${varDir}/background.png?` + new Date().getTime()
   document.getElementById('imgframe').innerHTML = `<img src='${bgNoCache}' />`
@@ -133,7 +131,7 @@ ipc.on('selected-album-art', function (event, filepath) {
   $('.blnk-albm-art').hide()
   $('#blnk-albm-img').show()
   settings.set('blank-album-art', `${filepath}`)
-  fs.writeFileSync(`${outFile}`,nativeImage.createFromPath(`${filepath}`).resize({'width':146,'height':146}).toPNG())
+  fs.writeFileSync(`${outFile}`, nativeImage.createFromPath(`${filepath}`).resize({ 'width': 146, 'height': 146 }).toPNG())
   setTimeout(function () {
     var bgNoCache = `${varDir}/no_artwork_icon.png?` + new Date().getTime()
     document.getElementById('blnk-albm-img').innerHTML = `<img src="${bgNoCache}">`

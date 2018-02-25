@@ -64,6 +64,7 @@
       aaBetaVer: false,
       vpUnicode: false,
       gracenoteText: "Powered By Gracenote®",
+      noNodeInstall: settings.get('noNodeInstall') || false,
       altLayout: settings.get('altLayout') || false,
       darkMode: settings.get('darkMode') || false,
       flipOption: settings.get('flipOption') || '',
@@ -125,9 +126,9 @@
       temperature: {id: 42},
       startbar: {id:45},
       color: null,
-      mod: false,
-      modAlt: false,
-      simpmod: false,
+      mod: true,
+      modAlt: true,
+      simpmod: true,
       sbtemp: false,
       digiclock: false,
       opac: 0
@@ -719,6 +720,22 @@ function CasdkCtrl ($scope, $http) {
     multicontroller: false,
     devtools: false,
     sdcard: false
+  }
+  $scope.visibleApps = {
+    simpledashboard: casdkApps.get('simpledashboard') || true,
+    multidash: casdkApps.get('multidash') || false,
+    vdd: casdkApps.get('vdd') || false,
+    terminal: casdkApps.get('terminal') || false,
+    gpsspeed: casdkApps.get('gpsspeed') || false,
+    aio: casdkApps.get('aio') || false,
+    speedometer: casdkApps.get('speedometer') || false,
+    tetris: casdkApps.get('tetris') || false,
+    snake: casdkApps.get('snake') || false,
+    breakout: casdkApps.get('breakout') || false,
+    background: casdkApps.get('background') || false,
+    multicontroller: casdkApps.get('multicontroller') || false,
+    devtools: casdkApps.get('devtools') || false,
+    sdcard: casdkApps.get('sdcard') || false
   }
   $scope.compileCASDK = function(user) {
     buildTweakFile(user, $scope.apps)

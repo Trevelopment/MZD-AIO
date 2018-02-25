@@ -8,7 +8,7 @@ then
 	cp -a /jci/gui/common/js/Common.js /jci/gui/common/js/Common.js.org
 	log_message "===      Backup of /jci/gui/common/js/Common.js to Common.js.org      ==="
 fi
-if [ "${KEEPBKUPS}" = 1 ]
+if [ $KEEPBKUPS -eq 1 ]
 then
 	cp -a /jci/gui/common/js/Common.js.org "${MYDIR}/bakups/"
 	aio_info \"Common.js.org\",

@@ -15,21 +15,21 @@
 /* jshint -W033 */
 var approot
 if (isDev) {
-  approot = './app/'// for dev
+  approot = './app/' // for dev
 } else {
-  approot = app.getAppPath()// for dist
+  approot = app.getAppPath() // for dist
 }
-var builddir = `${approot}/files/tweaks/`// Location of tweak files (as .txt files)
-var extradir = app.getPath('userData')// Location of downloaded tweak files (userData)
-var logFileName = 'MZD_LOG'// Name of log file (without extension)
+var builddir = `${approot}/files/tweaks/` // Location of tweak files (as .txt files)
+var extradir = app.getPath('userData') // Location of downloaded tweak files (userData)
+var logFileName = 'MZD_LOG' // Name of log file (without extension)
 var varDir = `${extradir}/background/` // Location of files with saved variables
-const appender = require('appender')// Appends the tweak files syncronously
-const crlf = require('crlf')// Converts line endings (from CRLF to LF)
-const copydir = require('copy-dir')// Copys full directories
-const drivelist = require('drivelist')// Module that gets the list of available USB drives
-const extract = require('extract-zip')// For Unzipping
-const mkdirp = require('mkdirp')// Equiv of Unix command mkdir -p
-const rimraf = require('rimraf')// Equiv of Unix command rm -rf
+const appender = require('appender') // Appends the tweak files syncronously
+const crlf = require('crlf') // Converts line endings (from CRLF to LF)
+const copydir = require('copy-dir') // Copys full directories
+const drivelist = require('drivelist') // Module that gets the list of available USB drives
+const extract = require('extract-zip') // For Unzipping
+const mkdirp = require('mkdirp') // Equiv of Unix command mkdir -p
+const rimraf = require('rimraf') // Equiv of Unix command rm -rf
 // First line of AIO log
 var AIO_LOG = `# __MZD-AIO-TI__ ${app.getVersion()}| MZD All In One Tweaks Installer\n#### AIO COMPILATION LOG - ${Date()}\r\n___\n- *START!*\n`
 var AIO_LOG_HTML = `<button class="w3-btn w3-hover-teal w3-display-bottomright w3-margin" onclick="saveAIOLogHTML()">Save Log (HTML)</button><div id="aio-comp-log" class="aio-comp-log"><h1><b>MZD-AIO-TI ${app.getVersion()}</b> | MZD All In One Tweaks Installer</h1><br><h4> AIO COMPILATION LOG - ${Date()}</h4><hr><div><ul><li><b><i>START!</i></b></li>`
@@ -47,7 +47,7 @@ var swapdest = ''
 /*                                      *********\
 |*  START BUILD OF TWEAKS.SH & ASSOCIATED FILES *|
 \**********                                     */
-function buildTweakFile (user, apps) {
+function buildTweakFile(user, apps) {
   /* Set _copy_to_usb folder location */
   tmpdir = path.normalize(path.join(persistantData.get('copyFolderLocation'), '_copy_to_usb'))
   /* Start building tweaks.sh */
@@ -97,7 +97,7 @@ function buildTweakFile (user, apps) {
   }
   /* CASDK Installer */
   if (user.casdk.inst || user.casdk.uninst) {
-    if(apps) {
+    if (apps) {
       buildCASDK(user, apps)
       rimraf.sync(`${tmpdir}/config/`)
       rimraf.sync(`${tmpdir}/config_org/`)
@@ -122,7 +122,7 @@ function buildTweakFile (user, apps) {
   checkForColorScheme(user)
 }
 /* Check For Color Scheme Tweak */
-function checkForColorScheme (user) {
+function checkForColorScheme(user) {
   if (user.mainOps.indexOf(3) !== -1) {
     if (user.colors > 16) {
       customTheme(themeColor, user)
@@ -135,7 +135,8 @@ function checkForColorScheme (user) {
     buildTweak(user)
   }
 }
-function customTheme (color, user) {
+
+function customTheme(color, user) {
   if (user.customTheme) {
     if (user.customTheme[0].substr(user.customTheme.length - 4) === 'jci') {
       aioLog(`Copying ${user.customTheme} Theme Folder`)
@@ -157,9 +158,10 @@ function customTheme (color, user) {
     buildTweak(user)
   }
 }
-function setTheme (color, user) {
+
+function setTheme(color, user) {
   aioLog(`Unzipping ${color} Theme Folder`)
-  extract(`${builddir}/config/themes/${color}.zip`, {dir: `${tmpdir}/config/color-schemes/theme/`}, function (err) {
+  extract(`${builddir}/config/themes/${color}.zip`, { dir: `${tmpdir}/config/color-schemes/theme/` }, function (err) {
     if (err) { aioLog(err, err) }
     aioLog(`${color} Theme Folder Unzipped & Added.`)
     if (!user.useColorBG) {
@@ -177,14 +179,15 @@ function setTheme (color, user) {
     buildTweak(user)
   })
 }
-function setColor (color, user) {
+
+function setColor(color, user) {
   fs.mkdirSync(`${tmpdir}/config/color-schemes`)
   copydir(`${extradir}/color-schemes/speedometer/`, `${tmpdir}/config/color-schemes/speedometer`, function (err) {
     if (err) { aioLog(err, err) }
     aioLog('Speedometer Color Files Copied')
   })
   aioLog(`Unzipping ${color} color theme folder`)
-  extract(`${extradir}/color-schemes/${color}/jci.zip`, {dir: `${tmpdir}/config/color-schemes/${color}`}, function (err) {
+  extract(`${extradir}/color-schemes/${color}/jci.zip`, { dir: `${tmpdir}/config/color-schemes/${color}` }, function (err) {
     if (err) { aioLog(err, err) }
     aioLog(`${color} Color Scheme Folder Unzipped... Continue Build.`)
     if (user.colors === 1) {
@@ -206,7 +209,8 @@ function setColor (color, user) {
     buildTweak(user)
   })
 }
-function buildTweak (user) {
+
+function buildTweak(user) {
   // ****************************************************/
   // **********Write uninstalls first********************/
   // ****************************************************/
@@ -407,6 +411,9 @@ function buildTweak (user) {
     } else if (user.speedoOps.bg.id === 31) {
       addTweak('19_speedo-old_background.txt', true)
     }
+    if (user.speedoOps.mod) {
+      addTweak('19_speedo_variant-i.txt', true)
+    }
     if (user.speedoOps.sbtemp) {
       addTweak('19_speedo-sbtemp.txt', true)
     }
@@ -419,16 +426,11 @@ function buildTweak (user) {
     if (user.speedoOps.digiclock) {
       addTweak('19_speedo-digiclock.txt', true)
     }
-    addTweak('19_speedo-i2.txt', true)
-    addTweakDir('speedometer', true)
-    if (user.speedoOps.mod || user.speedoOps.simpmod) {
-      addTweak('19_speedo_variant-i.txt', true)
-      addTweakDir('speedometer_mod', true)
-    }
     if (user.speedoOps.simpmod) {
       addTweak('19_speedo_bar.txt', true)
-      addTweakDir('speedometer_bar', true)
     }
+    addTweak('19_speedo-i2.txt', true)
+    addTweakDir('speedometer', true)
   }
   if (user.options.indexOf(21) !== -1) {
     addTweak('08_orderflac-i.txt')
@@ -441,7 +443,7 @@ function buildTweak (user) {
   if (user.options.indexOf(25) !== -1) {
     addTweak('25_androidauto-i.txt')
     addTweakDir('androidauto', true)
-    if(user.aaBetaVer) {
+    if (user.aaBetaVer) {
       addTweak('25_androidautob-i.txt')
       addTweakDir('androidautob', true)
     }
@@ -452,6 +454,7 @@ function buildTweak (user) {
   }
   if (user.options.indexOf(12) !== -1) {
     addTweak('12_diag-i.txt')
+    addTweakDir('test_mode', true)
   }
   if (user.options.indexOf(13) !== -1) {
     addTweak('13_boot-i.txt')
@@ -472,7 +475,7 @@ function buildTweak (user) {
   if (user.options.indexOf(17) !== -1) {
     addTweak('17_videoplayer-i.txt')
     addTweakDir('videoplayer', true)
-    if(user.vpUnicode) {
+    if (user.vpUnicode) {
       addTweak('17_videoplayer-unicode.txt')
     }
   }
@@ -543,10 +546,10 @@ function buildTweak (user) {
       inStrOff = fs.createReadStream(`${varDir}/OffScreenBackground.png`)
       addTweak('00_offbackground-i.txt')
     } else {
-      inStrOff = fs.createReadStream(path.resolve(app.getAppPath(),'../background-images/default/OffScreenBackground.png'))
+      inStrOff = fs.createReadStream(path.resolve(app.getAppPath(), '../background-images/default/OffScreenBackground.png'))
       addTweak('00_offbackground-u.txt')
     }
-    var outOff = fs.createWriteStream(`${tmpdir}/config/OffScreenBackground.png`, {flags: 'w'})
+    var outOff = fs.createWriteStream(`${tmpdir}/config/OffScreenBackground.png`, { flags: 'w' })
     outOff.on('close', function () {
       aioLog('Off Screen Background Copy Successful!')
     })
@@ -559,7 +562,7 @@ function buildTweak (user) {
       addTweakDir('BackgroundRotator', true)
     }
     var inStrbg = fs.createReadStream(`${varDir}/background.png`)
-    var out = fs.createWriteStream(`${tmpdir}/config/background.png`, {flags: 'w'})
+    var out = fs.createWriteStream(`${tmpdir}/config/background.png`, { flags: 'w' })
     out.on('close', function () {
       aioLog('Background Copy Successful!')
     })
@@ -572,6 +575,10 @@ function buildTweak (user) {
   }
   if (user.options.indexOf(19) !== -1 || user.options.indexOf(17) !== -1 || user.options.indexOf(25) !== -1 || user.options.indexOf(27) !== -1 || user.options.indexOf(28) !== -1) {
     addTweakDir('jci', true)
+    var noNode = (typeof noNodeInstall !== "undefined") ? noNodeInstall : false
+    if (!noNode) {
+      addTweakDir('bin', true)
+    }
   }
   // Swapfile tweak has to be last because the final operation
   //  in the script is to remove all of the other tweak files
@@ -591,7 +598,7 @@ function buildTweak (user) {
   writeTweaksFile()
 }
 // function to add each tweak to the array
-function addTweak (twk) {
+function addTweak(twk) {
   tweaks2write.push(`${builddir}${twk}`)
   twk = twk.substr(3)
   twk = twk.replace('.txt', '')
@@ -600,14 +607,16 @@ function addTweak (twk) {
   twk = twk.charAt(0).toUpperCase() + twk.slice(1)
   aioLog(`${twk} added successfully.`)
 }
-function writeTweaksFile () {
+
+function writeTweaksFile() {
   // write stream writes tweaks.txt
   var tweaks = fs.createWriteStream(`${tmpdir}/tweaks.txt`)
   // file appender function is given the array and piped to the write stream
   new appender(tweaks2write).pipe(tweaks)
   tweaks.on('close', convert2LF)
 }
-function tweakVariables (user) {
+
+function tweakVariables(user) {
 
   var bak = `KEEPBKUPS=`
   bak += (user.backups.org) ? `1\n` : `0\n`
@@ -765,7 +774,8 @@ function tweakVariables (user) {
     tweaks2write.push(`${varDir}/gracenote.txt`)
   }
 }
-function convert2LF () {
+
+function convert2LF() {
   /* For now the files are pre converted, but this needs to stay in just in case EOL format changes.*********** */
   crlf.set(`${tmpdir}/tweaks.txt`, 'LF', function (err, endingType) {
     if (err) {
@@ -792,7 +802,7 @@ function convert2LF () {
   })
 }
 // Function for copying tweak folders
-function addTweakDir (twk, inst) {
+function addTweakDir(twk, inst) {
   filesComplete = false
   aioLog(`Copying ${twk} files...`)
   fileCount++
@@ -829,7 +839,7 @@ function addTweakDir (twk, inst) {
   }
 }
 // Function copys root files
-function addRootFiles (dataDump) {
+function addRootFiles(dataDump) {
   try {
     copydir(`${approot}/files/tweaks/root`, `${tmpdir}`, function (err) {
       if (err) {
@@ -838,8 +848,7 @@ function addRootFiles (dataDump) {
       } else {
         if (dataDump) {
           copydir(`${tmpdir}/data`, `${tmpdir}`, function (err) {
-            if (err) { errFlag = true }
-            else {
+            if (err) { errFlag = true } else {
               rimraf.sync(`${tmpdir}/data`)
               aioLog('Root files copied successfully!')
             }
@@ -854,7 +863,8 @@ function addRootFiles (dataDump) {
     aioLog(e, e)
   }
 }
-function aioLog (logMsg, err) {
+
+function aioLog(logMsg, err) {
   if (err) {
     errFlag = true
     window.alert(err, 'MZD-AIO-TI ERROR')
@@ -871,16 +881,14 @@ function aioLog (logMsg, err) {
   AIO_LOG += `- ${logMsg}\n`
 }
 // Prints out the log
-function printAIOlog () {
+function printAIOlog() {
   if (filesComplete && opsComplete || errFlag) {
     filesComplete = false
     opsComplete = false
-    fs.writeFile(`${tmpdir}/${logFileName}.md`, AIO_LOG, {flag: 'w'}, (err) => {
-      if (err) { console.log('AIO Could Not Be Saved') }
-      else { console.log('AIO log saved!') }
-      fs.writeFile(path.resolve(path.join(`${approot}`, `../../${logFileName}.htm`)), AIO_LOG_HTML, {flag: 'w'}, (err) => {
-        if (err) { console.log('HTML Log Cannot Be Saved') }
-        else { console.log('AIO log saved! (HTML version)') }
+    fs.writeFile(`${tmpdir}/${logFileName}.md`, AIO_LOG, { flag: 'w' }, (err) => {
+      if (err) { console.log('AIO Could Not Be Saved') } else { console.log('AIO log saved!') }
+      fs.writeFile(path.resolve(path.join(`${approot}`, `../../${logFileName}.htm`)), AIO_LOG_HTML, { flag: 'w' }, (err) => {
+        if (err) { console.log('HTML Log Cannot Be Saved') } else { console.log('AIO log saved! (HTML version)') }
         bootbox.hideAll()
         if (!errFlag) {
           usbDrives()
@@ -891,12 +899,13 @@ function printAIOlog () {
     })
   }
 }
-function appendAIOlog (logMsg) {
-  fs.writeFile(path.resolve(path.join(`${approot}`, `../../${logFileName}.htm`)), logMsg, {flag: 'a'}, (err) => {
+
+function appendAIOlog(logMsg) {
+  fs.writeFile(path.resolve(path.join(`${approot}`, `../../${logFileName}.htm`)), logMsg, { flag: 'a' }, (err) => {
     if (err) {
       console.log(err)
     } else {
-      fs.writeFile(path.resolve(path.join(`${tmpdir}`, `${logFileName}.md`)), `- ${String(logMsg).replace(/<[^>]+>/gm, '')}`, {flag: 'a'}, (err) => {
+      fs.writeFile(path.resolve(path.join(`${tmpdir}`, `${logFileName}.md`)), `- ${String(logMsg).replace(/<[^>]+>/gm, '')}`, { flag: 'a' }, (err) => {
         if (err) {
           console.log(`Log File has been moved: ${err}`)
         }
@@ -905,121 +914,123 @@ function appendAIOlog (logMsg) {
   })
 }
 // Returns the available usb drives
-function usbDrives () {
+function usbDrives() {
   var disks = []
   var usbDriveLst = []
-  drivelist.list((error, dsklst) => {
-    if (error) {
-      bootbox.alert({
-        title: 'Error Locating Available USB Drives',
-        message: `<b>Build has completed successfully</b> although USB drives cannot be found because of an error. This can occur when the filepath to user appdata (${app.getPath('appData')}) contains special characters such as &, %, *, etc.  <br><br>${error}`,
-        callback: function () {
-          bootbox.hideAll()
-          finishedMessage()
+
+  try {
+    drivelist.list((error, dsklst) => {
+      if (error) { throw error }
+      dsklst.forEach((drive) => {
+        if (!drive.isSystem) {
+          disks.push({ 'desc': drive.description, 'mp': `${drive.mountpoints[0].path}` })
+          usbDriveLst.push({ 'text': `<span class='icon-usb'></span> ${drive.mountpoints[0].path.replace('\\','')} ${drive.description.replace(' USB Device', '')}`, 'value': drive.mountpoints[0].path })
         }
       })
-      appendAIOlog(`Error finding USB drives: ${error}`)
-    }
-    try {
-    dsklst.forEach((drive) => {
-      if (!drive.system) {
-        disks.push({'desc': drive.description, 'mp': `${drive.mountpoints[0].path}`})
-        usbDriveLst.push({'text': `<span class='icon-usb'></span> ${drive.mountpoints[0].path} ${drive.description.replace(' USB Device', '')}`, 'value': drive.mountpoints[0].path})
+
+      introJs().hideHints()
+      var usb = disks
+      var lst = ''
+      if (usb.length < 1) {
+        appendAIOlog(`<li style='color:#520086'>No USB Drives Found</li>`)
+        unzipSwapfile(null)
+      } else if (usb.length > 1) {
+        lst += `<h2><b>${usb.length} ${langObj.popupMsgs[6].msg}:</b></h2>`
+        var usbuttons = ''
+        for (var j = 0; j < usb.length; j++) {
+          var mpLocation = (process.platform === 'win32') ? `${usb[j].mp.replace('\\', '/')}` : `${usb[j].mp}`
+          lst += `<h4> ${mpLocation.replace('/','')} ${usb[j].desc} `
+          lst += `<button class="w3-round w3-btn w3-ripple w3-hover-indigo w3-border w3-hover-border-pink w3-large" title='${langObj.popupMsgs[5].msg} ${mpLocation.replace(':/','')}' onclick="shell.showItemInFolder('${mpLocation}')"></span><span class="icon-usb2"></span> ${langObj.popupMsgs[5].msg} ${mpLocation.replace(':/','')}</button></h4>`
+          appendAIOlog(`<li style='color:#005182'>Found USB Drive #${j + 1} - ${mpLocation.replace(':/','')} ${usb[j].desc}</li>`)
+        }
+        lst += `<h5><b>${langObj.popupMsgs[8].msg}:</b></h5>${langObj.popupMsgs[2].msg}`
+        lst += usbuttons
+        lst += `<label class="delCopyMultiLabel w3-display-bottomleft"><input type="checkbox" class="w3-check" id="rmCpDirCheck">${langObj.popupMsgs[21].msg}</label>`
+        bootbox.prompt({
+          title: lst,
+          inputType: 'select',
+          inputOptions: usbDriveLst,
+          className: 'copytoUSBMulti',
+          buttons: {
+            confirm: {
+              label: `<span class='icon-usb'></span> ${langObj.popupMsgs[3].msg}`
+            },
+            cancel: {
+              label: `<span class='icon-x'></span> ${langObj.popupMsgs[4].msg}`
+            }
+          },
+          callback: function (result) {
+            if (!result) {
+              unzipSwapfile(null)
+            } else {
+              settings.set('delCopyFolder', $('#rmCpDirCheck').prop('checked'))
+              copyToUSB(result)
+            }
+          }
+        })
+        $('#rmCpDirCheck').prop('checked', settings.get('delCopyFolder'))
+      } else if (usb.length === 1) {
+        lst = `<h2><b>${langObj.popupMsgs[6].msg}: </b></h2>`
+        for (var k = 0; k < usb.length; k++) {
+          lst += `<h4><b>${usb[k].mp.replace('\\', '')} ${usb[k].desc}</b></h4>`
+          appendAIOlog(`<li style='color:#005182'>USB Drive - ${usb[k].mp.replace('\\', '')} ${usb[k].desc}</li>`)
+        }
+        var mpLocation = (process.platform === 'win32') ? `${usb[0].mp.replace('\\', '/')}` : `${usb[0].mp}`
+        lst += `<b>${langObj.popupMsgs[7].msg} ${mpLocation.replace('/', '')}?</b><br>${langObj.popupMsgs[2].msg}`
+        lst += `<button class="w3-large w3-blue-grey w3-btn w3-ripple w3-hover-teal w3-border w3-border-orange w3-large w3-display-bottomleft" style="margin-bottom: -55px;margin-left: 10px;" title='${langObj.popupMsgs[5].msg}' onclick="shell.showItemInFolder('${mpLocation}')"></span><span class="icon-usb3"></span> ${langObj.popupMsgs[5].msg}</button>`
+        lst += `<label class="delCopyLabel w3-display-bottomright"><input type="checkbox" id="rmCpDirCheck" class="w3-check">${langObj.popupMsgs[21].msg}</label>`
+        bootbox.confirm({
+          title: `Copy files to USB drive?`,
+          message: lst,
+          className: 'copytoUSB1',
+          buttons: {
+            confirm: {
+              label: `<span class='icon-usb'></span> ${langObj.popupMsgs[3].msg}`
+            },
+            cancel: {
+              label: `<span class='icon-x'></span> ${langObj.popupMsgs[4].msg}`
+            }
+          },
+          callback: function (result) {
+            if (!result) {
+              unzipSwapfile(null)
+            } else {
+              settings.set('delCopyFolder', $('#rmCpDirCheck').prop('checked'))
+              copyToUSB(mpLocation)
+            }
+          }
+        })
+        $('#rmCpDirCheck').prop('checked', settings.get('delCopyFolder'))
+        return usb
       }
     })
-  } catch(e) {
-    appendAIOlog("Error: " + e)
-    disks = null
+  } catch (e) {
+    bootbox.alert({
+      title: '<center>Error Locating Available USB Drives</center>',
+      message: `<div>${e.toString()}</div><div class="w3-center w3-large"><h2>Build has completed successfully</h2>Although USB drives cannot be found because of an error.<br>${langObj.popupMsgs[9].msg} <pre>${tmpdir}</pre> ${langObj.popupMsgs[10].msg}. <br><button href='' class='w3-large w3-center w3-black w3-btn w3-ripple nousbbutton' title='Copy These Files To A Blank USB Drive' onclick='openCopyFolder()'>${langObj.menu.copytousb.toolTip}</button></div> `,
+      callback: function () {
+        bootbox.hideAll()
+        finishedMessage()
+      }
+    })
+    appendAIOlog(e)
   }
-
-    introJs().hideHints()
-    var usb = disks
-    var lst = ''
-    if (usb.length < 1) {
-      appendAIOlog(`<li style='color:#520086'>No USB Drives Found</li>`)
-      unzipSwapfile(null)
-    } else if (usb.length > 1) {
-      lst += `<h2><b>${usb.length} ${langObj.popupMsgs[6].msg}:</b></h2>`
-      var usbuttons = ''
-      for (var j = 0; j < usb.length; j++) {
-        lst += `<h4> ${usb[j].mp} ${usb[j].desc} `
-        lst += `<button class="w3-round w3-btn w3-ripple w3-hover-indigo w3-border w3-hover-border-pink w3-large" title='${langObj.popupMsgs[5].msg} ${usb[j].mp}' onclick="shell.showItemInFolder('${usb[j].mp}')"></span><span class="icon-usb2"></span> ${langObj.popupMsgs[5].msg} ${usb[j].mp}</button></h4>`
-        appendAIOlog(`<li style='color:#005182'>Found USB Drive #${j + 1} - ${usb[j].mp} ${usb[j].desc}</li>`)
-      }
-      lst += `<h5><b>${langObj.popupMsgs[8].msg}:</b></h5>${langObj.popupMsgs[2].msg}`
-      lst += usbuttons
-      lst += `<label class="delCopyMultiLabel w3-display-bottomleft"><input type="checkbox" class="w3-check" id="rmCpDirCheck">${langObj.popupMsgs[21].msg}</label>`
-      bootbox.prompt({
-        title: lst,
-        inputType: 'select',
-        inputOptions: usbDriveLst,
-        className: 'copytoUSBMulti',
-        buttons: {
-          confirm: {
-            label: `<span class='icon-usb'></span> ${langObj.popupMsgs[3].msg}`
-          },
-          cancel: {
-            label: `<span class='icon-x'></span> ${langObj.popupMsgs[4].msg}`
-          }
-        },
-        callback: function (result) {
-          if (!result) {
-            unzipSwapfile(null)
-          } else {
-            settings.set('delCopyFolder', $('#rmCpDirCheck').prop('checked'))
-            copyToUSB(result)
-          }
-        }
-      })
-      $('#rmCpDirCheck').prop('checked', settings.get('delCopyFolder'))
-    } else if (usb.length === 1) {
-      lst = `<h2><b>${langObj.popupMsgs[6].msg}: </b></h2>`
-      for (var k = 0; k < usb.length; k++) {
-        lst += `<h4><b>${usb[k].mp} ${usb[k].desc}</b></h4>`
-        appendAIOlog(`<li style='color:#005182'>USB Drive - ${usb[k].mp} ${usb[k].desc}</li>`)
-      }
-      lst += `<b>${langObj.popupMsgs[7].msg} ${usb[0].mp.replace(':', '')}?</b><br>${langObj.popupMsgs[2].msg}`
-      lst += `<button class="w3-large w3-blue-grey w3-btn w3-ripple w3-hover-teal w3-border w3-border-orange w3-large w3-display-bottomleft" style="margin-bottom: -55px;margin-left: 10px;" title='${langObj.popupMsgs[5].msg}' onclick="shell.showItemInFolder('${usb[0].mp}')"></span><span class="icon-usb3"></span> ${langObj.popupMsgs[5].msg}</button>`
-      lst += `<label class="delCopyLabel w3-display-bottomright"><input type="checkbox" id="rmCpDirCheck" class="w3-check">${langObj.popupMsgs[21].msg}</label>`
-      bootbox.confirm({
-        title: `Copy files to USB drive?`,
-        message: lst,
-        className: 'copytoUSB1',
-        buttons: {
-          confirm: {
-            label: `<span class='icon-usb'></span> ${langObj.popupMsgs[3].msg}`
-          },
-          cancel: {
-            label: `<span class='icon-x'></span> ${langObj.popupMsgs[4].msg}`
-          }
-        },
-        callback: function (result) {
-          if (!result) {
-            unzipSwapfile(null)
-          } else {
-            settings.set('delCopyFolder', $('#rmCpDirCheck').prop('checked'))
-            copyToUSB(usb[0].mp)
-          }
-        }
-      })
-      $('#rmCpDirCheck').prop('checked', settings.get('delCopyFolder'))
-      return usb
-    }
-  })
 }
-function noUsbDrive () {
+
+function noUsbDrive() {
   bootbox.hideAll()
   bootbox.alert({
     title: `<h2>Compilation Finished!</h2>`,
     className: `compFinishBox`,
-    message: `${langObj.popupMsgs[9].msg} ${tmpdir} ${langObj.popupMsgs[10].msg}. <br><button href='' class='w3-large w3-center w3-black w3-btn w3-ripple nousbbutton' title='Copy These Files To A Blank USB Drive' onclick='openCopyFolder()'>${langObj.menu.copytousb.toolTip}</button>`,
+    message: `${langObj.popupMsgs[9].msg} <pre>${tmpdir}</pre> ${langObj.popupMsgs[10].msg}. <br><button href='' class='w3-large w3-center w3-black w3-btn w3-ripple nousbbutton' title='Copy These Files To A Blank USB Drive' onclick='openCopyFolder()'>${langObj.menu.copytousb.toolTip}</button>`,
     callback: function () { finishedMessage() }
   })
   appendAIOlog(`<li style='color:#4a0dab'>To Install Tweak Files: Copy Entire Contents of "_copy_to_usb" Onto USB Drive.</li><li style='color:#1a0dab'>Location:<a href='' onclick='openCopyFolder()'><u> ${tmpdir}</u></a></li>`)
 }
-function copyToUSB (mp) {
+
+function copyToUSB(mp) {
   var copyingUSB = bootbox.dialog({
-    message: `<div class='w3-center'><h3>${langObj.popupMsgs[11].msg} ${mp}...  ${langObj.popupMsgs[12].msg}...</h3><br><div id='userLogView' style='text-align:center;' ></div><br><img class='loader' src='./files/img/load-0.gif' alt='...' /></div>`,
+    message: `<div class='w3-center'><h3>${langObj.popupMsgs[11].msg} ${mp.replace(':\\','')}...  ${langObj.popupMsgs[12].msg}...</h3><br><div id='userLogView' style='text-align:center;' ></div><br><img class='loader' src='./files/img/load-0.gif' alt='...' /></div>`,
     className: 'copyingtoUSB',
     closeButton: false
   })
@@ -1043,7 +1054,8 @@ function copyToUSB (mp) {
     appendAIOlog(`<li style='color:#ff0000'>${err} Unable To Copy Files To USB Drive</li>`)
   }
 }
-function unzipSwapfile (dest) {
+
+function unzipSwapfile(dest) {
   var nocopy = false
   if (!dest) {
     nocopy = true
@@ -1052,9 +1064,9 @@ function unzipSwapfile (dest) {
   dest = `${dest}${swapdest}`
   if (copySwapfile) {
     copySwapfile = false
-    appendAIOlog(`<li style='color:#005182'>${langObj.popupMsgs[13].msg}: ${dest.replace(':', '')}</li>`)
+    appendAIOlog(`<li style='color:#005182'>${langObj.popupMsgs[13].msg}: ${dest.replace(':\\', '')}</li>`)
     var swapMsg = bootbox.dialog({
-      message: `<div class='w3-center'><h3>${langObj.popupMsgs[13].msg}: ${dest.replace(':', '')}...  ${langObj.popupMsgs[12].msg}... </h3><br><div id='swapLogView' style='text-align:center;' ></div><br><img class='loader' src='./files/img/load-0.gif' alt='...' /></div>`,
+      message: `<div class='w3-center'><h3>${langObj.popupMsgs[13].msg}: ${dest.replace(':\\', '')}...  ${langObj.popupMsgs[12].msg}... </h3><br><div id='swapLogView' style='text-align:center;' ></div><br><img class='loader' src='./files/img/load-0.gif' alt='...' /></div>`,
       closeButton: false
     })
     setTimeout(function () {
@@ -1077,7 +1089,7 @@ function unzipSwapfile (dest) {
     } catch (e) {
       appendAIOlog(`<li style='color:#ff0000'>${e} Swapfile Already Exists, Overwriting...</li>`)
     }
-    extract(`${approot}/files/tweaks/config/swapfile/swapfile.zip`, {dir: `${dest}`}, function (err) {
+    extract(`${approot}/files/tweaks/config/swapfile/swapfile.zip`, { dir: `${dest}` }, function (err) {
       if (err) {
         appendAIOlog(`<li style='color:#ff0000'>${err} Swapfile Error</li>`)
         console.error(err, err)
@@ -1104,14 +1116,15 @@ var closeApp = `<button class="w3-round-large w3-red w3-btn w3-ripple w3-hover-l
 var cp2usb = `<button class="w3-round-large w3-teal w3-btn w3-ripple w3-hover-pink w3-large w3-border w3-border-indigo" style="letter-spacing:1px" title="Copy These Files To A Blank USB Drive" onclick="openCopyFolder()"><span class="icon-copy2"></span> ${langObj.menu.copytousb.toolTip}</button>`
 var saveBtn = `<button class="w3-round-large w3-purple w3-btn w3-ripple w3-hover-deep-orange w3-large w3-border w3-border-green" style="letter-spacing:.81px" title="Save Options" onclick="$('#save-btn').click()"><span class="icon-floppy-disk"></span> ${langObj.menu.save.toolTip}</button>`
 var openUSB = ''
-function finishedMessage (mp) {
+
+function finishedMessage(mp) {
   // Finished message
   if (mp) {
     if (settings.get('delCopyFolder')) {
       cleanCopyDir()
       cp2usb = ''
     }
-    openUSB = `<h3><button class="w3-round-large w3-amber w3-btn w3-ripple w3-hover-blue w3-large w3-border w3-border-pink" title='${langObj.popupMsgs[5].msg}' onclick="shell.showItemInFolder('${mp}')"></span><span class="icon-usb3"></span> ${langObj.popupMsgs[5].msg}</button></h3>`
+    openUSB = `<h3><button class="w3-round-large w3-amber w3-btn w3-ripple w3-hover-blue w3-large w3-border w3-border-pink" title='${langObj.popupMsgs[5].msg}' onclick="shell.showItemInFolder('${process.platform === 'win32' ? mp.replace('\\','/'): mp}')"></span><span class="icon-usb3"></span>${langObj.popupMsgs[5].msg}</button></h3>`
   }
   bootbox.hideAll()
   if (errFlag) {
@@ -1127,29 +1140,33 @@ function finishedMessage (mp) {
         className: 'finishedMessage',
         closeButton: false
       })
-      finalbox.on('shown.bs.modal',function() {
+      finalbox.on('shown.bs.modal', function () {
         $("#startOver").focus();
       })
     }, 100)
   }
   setTimeout(function () {
     appendAIOlog(`<li style='color:#000000;font-weight:800;'><em>Finished!</em></li></ul></div>`)
-  }, 10000)
+  }, 5000)
 }
-function postInstallTitle () {
+
+function postInstallTitle() {
   bootbox.hideAll()
   $('.twkfltr').hide()
   document.getElementById(`mzd-title`).innerHTML = `${viewLog}${document.getElementById('mzd-title').innerHTML}${strtOver}`
 }
-function saveInstallerOps (user) {
+
+function saveInstallerOps(user) {
   settings.set('keepBackups', user.backups.org)
   settings.set('testBackups', user.backups.test)
   settings.set('skipConfirm', user.backups.skipconfirm)
 }
-function cleanCopyDir () {
+
+function cleanCopyDir() {
   rimraf(`${tmpdir}`, function () { appendAIOlog(`<li style='color:#ff3366'>Deleted '_copy_to_usb' Folder</li>`) })
 }
-function casdkAppOptions (apps) {
+
+function casdkAppOptions(apps) {
   var casdkapps = `APPSIMPLEDASHBOARD=`
   casdkapps += (apps.simpledashboard) ? `1\n` : `0\n`
   casdkapps += `APPGPSSPEED=`
@@ -1175,7 +1192,8 @@ function casdkAppOptions (apps) {
   fs.writeFileSync(`${varDir}/casdkapps.txt`, casdkapps)
   tweaks2write.push(`${varDir}/casdkapps.txt`)
 }
-function buildCASDK (user, apps) {
+
+function buildCASDK(user, apps) {
   addRootFiles()
   if (user.casdk.inst) {
     casdkAppOptions(apps)
@@ -1198,13 +1216,14 @@ function buildCASDK (user, apps) {
   }
   writeTweaksFile()
 }
-function fullSystemRestore (user) {
+
+function fullSystemRestore(user) {
   addRootFiles()
   tweaks2write.push(`${builddir}00___fullRestore.sh`)
-  if(fs.existsSync(`${extradir}/color-schemes/Red/jci.zip`)) {
+  if (fs.existsSync(`${extradir}/color-schemes/Red/jci.zip`)) {
     mkdirp.sync(`${tmpdir}/config/color-schemes/Red`)
     aioLog(`Unzipping Red color theme folder`)
-    extract(`${extradir}/color-schemes/Red/jci.zip`, {dir: `${tmpdir}/config/color-schemes/Red`}, function (err) {
+    extract(`${extradir}/color-schemes/Red/jci.zip`, { dir: `${tmpdir}/config/color-schemes/Red` }, function (err) {
       if (err) { aioLog(err) }
       aioLog(`Red Color Scheme Added Successfully`)
     })
@@ -1218,7 +1237,8 @@ function fullSystemRestore (user) {
   })
   writeTweaksFile()
 }
-function buildAutorunInstaller (user) {
+
+function buildAutorunInstaller(user) {
   copydir(`${approot}/files/tweaks/cmu-autorun/installer`, `${tmpdir}`, function (err) {
     if (err) {
       errFlag = true
@@ -1244,7 +1264,8 @@ function buildAutorunInstaller (user) {
     }
   })
 }
-function addWifiApp (user) {
+
+function addWifiApp(user) {
   filesComplete = true
   opsComplete = true
   if (user.autorun.autoADB || user.autorun.autoWIFI) {
@@ -1282,7 +1303,7 @@ function addWifiApp (user) {
             size: "small",
             title: "Values Were Not Changed",
             message: "WiFi AP Will not be installed",
-            callback: function() {
+            callback: function () {
               rimraf.sync(`${tmpdir}/00-start-wifiAP/`)
               printAIOlog()
             }

@@ -1,32 +1,32 @@
 /**
  * Custom Applications SDK for Mazda Connect Infotainment System
- * 
+ *
  * A mini framework that allows to write custom applications for the Mazda Connect Infotainment System
  * that includes an easy to use abstraction layer to the JCI system.
  *
  * Written by Andreas Schwarz (http://github.com/flyandi/mazda-custom-applications-sdk)
  * Copyright (c) 2016. All rights reserved.
- * 
+ *
  * WARNING: The installation of this application requires modifications to your Mazda Connect system.
  * If you don't feel comfortable performing these changes, please do not attempt to install this. You might
  * be ending up with an unusuable system that requires reset by your Dealer. You were warned!
  *
- * This program is free software: you can redistribute it and/or modify it under the terms of the 
+ * This program is free software: you can redistribute it and/or modify it under the terms of the
  * GNU General Public License as published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even 
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
  * the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
- * 
- * You should have received a copy of the GNU General Public License along with this program. 
+ *
+ * You should have received a copy of the GNU General Public License along with this program.
  * If not, see http://www.gnu.org/licenses/
  *
  */
 
 
 /**
- * HelloWorld Application
+ * Terminal App v0.5
  *
  * This is the main file of the application and contains the required information
  * to run the application on the mini framework.
@@ -141,7 +141,7 @@ CustomApplicationsHandler.register("app.terminal", new CustomApplication({
 		hasMenuCaret: false,
 
 		/**
-		 * (hasRightArc) indicates if the standard right car should be displayed
+		 * (hasRightArc) indicates if the standard right arc should be displayed
 		 */
 
 		hasRightArc: false,
@@ -187,7 +187,7 @@ CustomApplicationsHandler.register("app.terminal", new CustomApplication({
 
   //
   // Update the screen
-  // 
+  //
   update : function ()
   {
     this.screen.get(0).innerHTML = this.buffer + ">" + this.command;
@@ -203,7 +203,7 @@ CustomApplicationsHandler.register("app.terminal", new CustomApplication({
       this.linecount = this.linecount + 1;
       this.buffer += text + "\n";
 
-      // At 160 lines, go back to 80 then buffer will alway have between 80 to 160 lines
+      // At 160 lines, go back to 80 then buffer will always have between 80 to 160 lines
 /*
       if ( this.linecount > 160) {
           var lines = buffer.split('\n');
@@ -216,7 +216,7 @@ CustomApplicationsHandler.register("app.terminal", new CustomApplication({
 
   //
   // Folder has maybe changed
-  // 
+  //
   folderchange : function ()
   {
     /*var c;
@@ -230,7 +230,7 @@ CustomApplicationsHandler.register("app.terminal", new CustomApplication({
   {
     var command = 'echo "Example command : "'
     this.ws.send(command);
-    command = 'echo "opkg list"';
+    command = 'echo "df -h"';
     this.ws.send(command);
   },
 
@@ -239,9 +239,9 @@ CustomApplicationsHandler.register("app.terminal", new CustomApplication({
 
   askiffolderchanged : function  ()
   {
-    var command =  'ls | awk \' BEGIN { ORS = \"\"; print \"'+ this.asklistnumber+'[\"; } { print \"\\\/\\@\"$0\"\\\/\\@\"; } END { print \"]\"; }\' | sed \"s^\\\"^\\\\\\\\\\\"^g;s^\\\/\\@\\\/\\@^\\\", \\\"^g;s^\\\/\\@^\\\"^g\"' 
+    var command =  'ls | awk \' BEGIN { ORS = \"\"; print \"'+ this.asklistnumber+'[\"; } { print \"\\\/\\@\"$0\"\\\/\\@\"; } END { print \"]\"; }\' | sed \"s^\\\"^\\\\\\\\\\\"^g;s^\\\/\\@\\\/\\@^\\\", \\\"^g;s^\\\/\\@^\\\"^g\"'
     this.ws.send(command);
-    var command =  'echo ' + this.askpwdnumber + '$(pwd)' 
+    var command =  'echo ' + this.askpwdnumber + '$(pwd)'
     this.ws.send(command);
   },
 
@@ -249,7 +249,7 @@ CustomApplicationsHandler.register("app.terminal", new CustomApplication({
     var c;
     for(c=0;c<this.buttonlist.length;c++) {
       if( ! this.buttonlist[c].hasAttribute('function')) {
-        if (this.shift) { 
+        if (this.shift) {
           if ( this.buttonlist[c].hasAttribute('shiftkey')) {
             this.buttonlist[c].innerHTML = this.buttonlist[c].getAttribute("shiftkey");
           } else {
@@ -262,7 +262,7 @@ CustomApplicationsHandler.register("app.terminal", new CustomApplication({
       this.buttonlist[c].color = 'white';
     }
 
-    var capslist =  this.keyboard.get(0).getElementsByClassName('caps');   
+    var capslist =  this.keyboard.get(0).getElementsByClassName('caps');
     for (c=0; c < capslist.length ; c++) {
       if (this.caps) {
         $(capslist[c]).addClass('stateon');
@@ -270,7 +270,7 @@ CustomApplicationsHandler.register("app.terminal", new CustomApplication({
         $(capslist[c]).removeClass('stateon');
       }
     }
-    var shiftlist =  this.keyboard.get(0).getElementsByClassName('shift');   
+    var shiftlist =  this.keyboard.get(0).getElementsByClassName('shift');
     for (c=0; c < shiftlist.length ; c++) {
       if (this.shift) {
         $(shiftlist[c]).addClass('stateon');
@@ -278,11 +278,11 @@ CustomApplicationsHandler.register("app.terminal", new CustomApplication({
         $(shiftlist[c]).removeClass('stateon');
       }
     }
-    var alternatelist =  this.keyboard.get(0).getElementsByClassName('alternate');   
+    var alternatelist =  this.keyboard.get(0).getElementsByClassName('alternate');
     for (c=0; c < alternatelist.length ; c++) {
       alternatelist[c].style.color = this.alternate? '#FF0000':'white';
     }
-    var ctrllist =  this.keyboard.get(0).getElementsByClassName('ctrl');   
+    var ctrllist =  this.keyboard.get(0).getElementsByClassName('ctrl');
     for (c=0; c < ctrllist.length ; c++) {
       ctrllist[c].style.color = this.ctrl? '#FF0000':'white';
     }
@@ -292,7 +292,7 @@ CustomApplicationsHandler.register("app.terminal", new CustomApplication({
     switch (char) {
       case  "return":
 
-        switch (this.command) 
+        switch (this.command)
         {
           case "clear":
             this.buffer = "";
@@ -303,6 +303,89 @@ CustomApplicationsHandler.register("app.terminal", new CustomApplication({
 
           case "help":
             this.help();
+            this.command = "";
+            this.update();
+            break;
+
+          case "m/":
+            this.command = "mount -o rw,remount /";
+            this.AddText(">" + this.command);
+            this.ws.send(this.command);
+            this.command = "";
+            this.update();
+            break;
+
+          case "m/r":
+						this.command = "mount -o rw,remount /tmp/mnt/resources";
+            this.AddText(">" + this.command);
+            this.ws.send(this.command);
+            this.command = "";
+            this.update();
+            break;
+          case "m/a":
+						this.command = "mount -o rw,remount /tmp/mnt/sda1";
+            this.AddText(">" + this.command);
+            this.ws.send(this.command);
+            this.command = "";
+            this.update();
+            break;
+          case "m/b":
+						this.command = "mount -o rw,remount /tmp/mnt/sdb1";
+            this.AddText(">" + this.command);
+            this.ws.send(this.command);
+            this.command = "";
+            this.update();
+            break;
+
+          case "tweaks":
+            this.command = "/tmp/mnt/sd*/tweaks.sh";
+            this.AddText(">" + this.command);
+            this.ws.send(this.command);
+            this.command = "";
+            this.update();
+            break;
+          case "apps":
+            this.command = "cd /jci/gui/apps";
+            this.AddText(">" + this.command);
+            this.ws.send(this.command);
+            this.command = "";
+            this.update();
+            break;
+
+          case "r2":
+            this.command = "opkg remove casdk-multidash";
+            this.AddText(">" + this.command);
+            this.ws.send(this.command);
+            this.command = "";
+            this.update();
+            break;
+
+          case "i3":
+            this.command = "opkg install casdk-horloge";
+            this.AddText(">" + this.command);
+            this.ws.send(this.command);
+            this.command = "";
+            this.update();
+            break;
+          case "r3":
+            this.command = "opkg remove casdk-horloge";
+            this.AddText(">" + this.command);
+            this.ws.send(this.command);
+            this.command = "";
+            this.update();
+            break;
+
+          case "i4":
+            this.command = "opkg install casdk-speedthai";
+            this.AddText(">" + this.command);
+            this.ws.send(this.command);
+            this.command = "";
+            this.update();
+            break;
+          case "r4":
+            this.command = "opkg remove casdk-speedthai";
+            this.AddText(">" + this.command);
+            this.ws.send(this.command);
             this.command = "";
             this.update();
             break;
@@ -329,7 +412,7 @@ CustomApplicationsHandler.register("app.terminal", new CustomApplication({
         if ( this.command.length > 0 ) {
           this.command = this.command.slice(0, -1);
           this.update();
-        } 
+        }
         break;
 
       case  "up":
@@ -339,7 +422,7 @@ CustomApplicationsHandler.register("app.terminal", new CustomApplication({
             this.commandstackcounter = 0;
           }
           this.command = this.commandstack[this.commandstackcounter];
-          update();          
+          update();
         }
         break;
 
@@ -348,7 +431,7 @@ CustomApplicationsHandler.register("app.terminal", new CustomApplication({
           this.commandstackcounter ++;
           if ( this.commandstackcounter >=  this.commandstack.length) {
             this.commandstackcounter = this.commandstack.length - 1;
-          } 
+          }
           this.command = this.commandstack[this.commandstackcounter];
           update();
         }
@@ -356,12 +439,15 @@ CustomApplicationsHandler.register("app.terminal", new CustomApplication({
 
 
       case "left":
+
+				break;
+
       case "right":
         break;
 
       case "tab":
         this.asklistfunction ();
-        
+
         break;
 
       default:
@@ -378,14 +464,14 @@ CustomApplicationsHandler.register("app.terminal", new CustomApplication({
           this.command += char;
         }
         this.update();
-    } 
+    }
 
   },
 
   LowLevelKeyboard : function (c) {
 
     this.buttonlist[c].onmousedown=function() {
-   
+
       if (this.buttonlist[c].hasAttribute('function')) {
         var f = this.buttonlist[c].getAttribute("function");
         switch (f) {
@@ -415,11 +501,11 @@ CustomApplicationsHandler.register("app.terminal", new CustomApplication({
             this.SetKeyboardButtonValue();
             break;
           default:
-            
+
             this.HighLevelKeyboard (f);
             break;
         }
-    
+
       } else {
 
         this.HighLevelKeyboard (this.buttonlist[c].innerHTML);
@@ -437,9 +523,9 @@ CustomApplicationsHandler.register("app.terminal", new CustomApplication({
 
 
 
-  /** 
-   * (created) 
-   * 
+  /**
+   * (created)
+   *
    * Executed when the application gets initialized
    *
    * Add any content that will be static here
@@ -449,7 +535,7 @@ CustomApplicationsHandler.register("app.terminal", new CustomApplication({
 
 
     this.screen = this.element("pre", false, 'screen' , false,'');
-    this.keyboard = this.element("div", false, false , false,'' 
+    this.keyboard = this.element("div", false, false , false,''
       +'<div>'
       +'<button class="keyboardbutton row1" type="button" key="`"></button>'
       +'<button class="keyboardbutton row1" type="button" key="1" shiftkey="!"></button>'
@@ -520,20 +606,20 @@ CustomApplicationsHandler.register("app.terminal", new CustomApplication({
       +'<button class="keyboardbutton row5" type="button" function="up">&uarr;</button>'
       +'<button class="keyboardbutton row5" type="button" function="down">&darr;</button>'
       +'<button class="keyboardbutton row5" type="button" function="right">&rarr;</button>'
-      +'</div>' 
+      +'</div>'
     );
 
     this.buttonlist=this.keyboard.get(0).getElementsByClassName('keyboardbutton');
    // Add listener for mouse
     var c, c2;
-   
+
     for(c=0;c<this.buttonlist.length;c++) {
       this.LowLevelKeyboard(c);
-    } 
+    }
     this.SetKeyboardButtonValue();
 
       var originalsize=[];
-    /*  
+    /*
       var maxrow = 0;
       for (c2 = 0; c2 < 5; c2++) {
         var row = this.keyboard.get(0).getElementsByClassName('row' + (c2+1));
@@ -552,7 +638,7 @@ CustomApplicationsHandler.register("app.terminal", new CustomApplication({
         for (c = 0;c < rowadd.length; c ++) {
           rowadd[c].style.width = rowadd[c].offsetWidth + rowaddsize + "px";
         }
-      } 
+      }
 */
 
 
@@ -564,9 +650,9 @@ CustomApplicationsHandler.register("app.terminal", new CustomApplication({
     }.bind(this);
     this.wsonclose = function() {
         this.AddText("[unconnect]");
-        window.setTimeout (function() { 
+        window.setTimeout (function() {
 
-          this.ws = new WebSocket('ws://localhost:9997');
+          this.ws = new WebSocket('ws://localhost:9996');
           this.ws.onopen = this.wsonopen;
           this.ws.onclose = this.wsonclose;
           this.ws.onmessage = this.wsonmessage;
@@ -575,24 +661,24 @@ CustomApplicationsHandler.register("app.terminal", new CustomApplication({
     }.bind(this);
     this.wsonmessage = function(event) {
       if (event.data.substr(0,this.asklistnumber.length) == this.asklistnumber) {
-        this.fileslist = JSON.parse(event.data.substr(this.asklistnumber.length));
+        this.fileslist = event.data.substr(this.asklistnumber.length);
         //fileslist = event.data.substr(asklistnumber.length).split("\n");
         this.folderchange();
       } else if (event.data.substr(0,this.askpwdnumber.length) == this.askpwdnumber) {
         this.path = event.data.substr(this.askpwdnumber.length);
         this.folderchange();
-      } else { 
+      } else {
         this.AddText(event.data);
-      } 
+      }
     }.bind(this);
 
-    this.ws = new WebSocket('ws://localhost:9997');
+    this.ws = new WebSocket('ws://localhost:9996');
     this.ws.onopen = this.wsonopen;
     this.ws.onclose = this.wsonclose;
     this.ws.onmessage = this.wsonmessage;
 
     this.update();
-    
+
   },
 
   /**
@@ -617,7 +703,7 @@ CustomApplicationsHandler.register("app.terminal", new CustomApplication({
    *
    * If you enabled terminateOnLost you may want to save the state of your app here.
    */
-  
+
   lost: function() {
 
   },
@@ -629,7 +715,7 @@ CustomApplicationsHandler.register("app.terminal", new CustomApplication({
   /**
    * (event) onControllerEvent
    *
-   * Called when a new (multi)controller event is available 
+   * Called when a new (multi)controller event is available
    */
 
   onControllerEvent: function(eventId) {
@@ -638,6 +724,61 @@ CustomApplicationsHandler.register("app.terminal", new CustomApplication({
     // Here is where we assign the value!
 
     //this.label.html(eventId);
+    switch(eventId) {
+
+			/*
+			 * MultiController was moved to the left
+			 */
+			case this.LEFT:
+				break;
+
+			/*
+			 * MultiController was moved to the right
+			 */
+			case this.RIGHT:
+				break;
+
+			/*
+			 * MultiController was moved up
+			 */
+			case this.UP:
+				break;
+
+			/*
+			 * MultiController was moved down
+			 */
+			case this.DOWN:
+				break;
+
+			/*
+			 * MultiController Wheel was turned clockwise
+       * Scroll down
+			 */
+			case this.CW:
+        this.screen.get(0).scrollTop += 100;
+				break;
+
+			/*
+			 * MultiController Wheel was turned counter-clockwise
+       * Scroll Up
+			 */
+			case this.CCW:
+        this.screen.get(0).scrollTop -= 100;
+				break;
+
+			/*
+			 * MultiController's center was pushed down
+			 */
+			case this.SELECT:
+
+				break;
+
+			/*
+			 * MultiController hot key "back" was pushed
+			 */
+			case this.BACK:
+				break;
+		}
 
   },
 

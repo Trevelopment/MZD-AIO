@@ -7,7 +7,7 @@ if [ ! -e /jci/gui/common/css/common.css.org ]
 		cp -a /jci/gui/common/css/common.css /jci/gui/common/css/common.css.org
 		log_message "===     Backup of /jci/gui/common/css/common.css to common.css.org    ==="
 fi
-if [ "${KEEPBKUPS}" = 1 ]
+if [ $KEEPBKUPS -eq 1 ]
 then
   aio_info \"common.css.org\",
   cp /jci/gui/common/css/common.css.org "${MYDIR}/bakups/"

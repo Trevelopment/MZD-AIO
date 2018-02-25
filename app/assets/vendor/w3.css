@@ -491,3 +491,6 @@ ul.dropdown-menu {
   left: 0;
   margin: auto;
 }
+input#gracenoteText {
+    cursor: text;
+}

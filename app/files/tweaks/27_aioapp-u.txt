@@ -4,7 +4,7 @@ log_message "=======**************  UNINSTALL AIO TWEAKS APP ... **************=
 ### kills all WebSocket daemons
 pkill websocketd
 
-if [ "${TESTBKUPS}" = "1" ]
+if [ $TESTBKUPS -eq 1 ]
 then
 	cp /jci/scripts/stage_wifi.sh "${MYDIR}/bakups/test/stage_wifi-aio_before.sh"
 	cp /jci/opera/opera_dir/userjs/additionalApps.json "${MYDIR}/bakups/test/additionalApps-aio_before.json"
@@ -36,7 +36,7 @@ then
 	log_message "===           Found mzd meter entry in additionalApps.json            ==="
 	ADDIT_APPS=1
 fi
-if [ ${ADDIT_APPS} = "0" ]
+if [ $ADDIT_APPS -eq 0 ]
 then
 	log_message "===   No more entrys in additionalApps.json, files will be deleted    ==="
 	rm -f /jci/opera/opera_dir/userjs/additionalApps.*
@@ -55,7 +55,7 @@ rm -f /jci/opera/opera_dir/userjs/aio-startup.js
 rm -fr /tmp/mnt/data_persist/dev/system_restore
 log_message "===                     Removed AIO Tweaks App files                  ==="
 
-if [ "${TESTBKUPS}" = "1" ]
+if [ $TESTBKUPS -eq 1 ]
 then
   cp /jci/scripts/stage_wifi.sh "${MYDIR}/bakups/test/stage_wifi-aio_after.sh"
   if [ -e /jci/opera/opera_dir/userjs/additionalApps.json ]

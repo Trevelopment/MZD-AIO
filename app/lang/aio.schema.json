@@ -2584,7 +2584,7 @@
           }
         },
         "mod": {
-          "title":"Speedo Variant",
+          "title":"Modded",
           "type": "object",
           "format": "grid",
           "options": {

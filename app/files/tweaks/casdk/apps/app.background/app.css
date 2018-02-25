@@ -21,10 +21,10 @@
 	height:400px;
 	padding:20px;
 	border:1px solid gray;
-	-webkit-box-sizing:border-box;
-	-moz-box-sizing:border-box;
 	box-sizing:border-box;
 	background: black;
+	/*	-webkit-box-sizing:border-box;
+	-moz-box-sizing:border-box;*/
 }
 [app="app.background"] .image-slider-wrapper{
 	overflow: hidden;

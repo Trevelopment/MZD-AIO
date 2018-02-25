@@ -27,7 +27,7 @@ log_message()
 }
 aio_info()
 {
-  if [ ${KEEPBKUPS} -eq 1 ]
+  if [ $KEEPBKUPS -eq 1 ]
   then
     echo "$*" 1>&2
     echo "$*" >> "${MYDIR}/AIO_info.json"
@@ -39,19 +39,23 @@ MZD_APP_SD=/tmp/mnt/sd_nav
 MZD_APP_DIR=/tmp/mnt/resources/aio/mzd-casdk/apps
 get_casdk_mode()
 {
-  if [ -e /jci/casdk/casdk.aio ]; then
-    echo 1
+  if [ -e /jci/casdk/casdk.aio ]
+  then
+    source /jci/casdk/casdk.aio
+    CASDK_MODE=1
   else
-    echo 0
+    _CASDK_VER=0
+    CASDK_MODE=0
   fi
 }
 add_casdk_app()
 {
   CASDK_APP=${2}
-  if [ ${1} -eq 1 ] && ! grep -Fq "app.${CASDK_APP}" ${MZD_APPS_JS}
+  if [ ${1} -eq 1 ]
   then
-    echo "  \"app.${CASDK_APP}\"," >> ${MZD_APPS_JS}
+    sed -i /${CASDK_APP}/d ${MZD_APPS_JS}
     cp -a ${MYDIR}/casdk/apps/app.${CASDK_APP} ${MZD_APP_DIR}
+    echo "  \"app.${CASDK_APP}\"," >> ${MZD_APPS_JS}
     CASDK_APP="${CASDK_APP}         "
     log_message "===                 Installed CASDK App: ${CASDK_APP:0:10}                   ==="
   fi
@@ -87,7 +91,7 @@ compatibility_check()
       echo 4 && return
     elif [ $_VER_EXT -lt 599 ]
     then
-      echo 5 && return # 59.00.502 is another level because it is not compatible with USB Audio Mod
+      echo 5 && return # 59.00.502+ is another level because it is not compatible with USB Audio Mod
     else
       echo 0 && return
     fi
@@ -132,110 +136,138 @@ show_message_OK()
     exit 0
   fi
 }
-add_app_json()
+# Shotrhand for location of additionalApps.json
+ADDITIONAL_APPS_JSON="/jci/opera/opera_dir/userjs/additionalApps.json"
 # script by vic_bam85
+add_app_json()
 {
-  # check if entry in additionalApps.json still exists, if so nothing is to do
-  count=$(grep -c '{ "name": "'"${1}"'"' /jci/opera/opera_dir/userjs/additionalApps.json)
-  if [ "$count" = "0" ]
+  if which node > /dev/null && which add_app_json.js > /dev/null
   then
-    log_message "===  ${2:0:10} not found in additionalApps.json, first installation  ==="
-    mv /jci/opera/opera_dir/userjs/additionalApps.json /jci/opera/opera_dir/userjs/additionalApps.json.old
-    sleep 2
-    # delete last line with "]" from additionalApps.json
-    grep -v "]" /jci/opera/opera_dir/userjs/additionalApps.json.old > /jci/opera/opera_dir/userjs/additionalApps.json
-    sleep 2
-    cp /jci/opera/opera_dir/userjs/additionalApps.json "${MYDIR}/bakups/test/additionalApps${1}-2._delete_last_line.json"
-    # check, if other entrys exists
-    count=$(grep -c '}' /jci/opera/opera_dir/userjs/additionalApps.json)
-    if [ "$count" != "0" ]
-    then
-      # if so, add "," to the end of last line to additionalApps.json
-      echo "$(cat /jci/opera/opera_dir/userjs/additionalApps.json)", > /jci/opera/opera_dir/userjs/additionalApps.json
-      sleep 2
-      cp /jci/opera/opera_dir/userjs/additionalApps.json "${MYDIR}/bakups/test/additionalApps${1}-3._add_comma_to_last_line.json"
-      log_message "===           Found existing entrys in additionalApps.json            ==="
-    fi
-    # add app entry and "]" again to last line of additionalApps.json
-    log_message "===        Add ${2:0:10} to last line of additionalApps.json         ==="
-    echo '  { "name": "'"${1}"'", "label": "'"${2}"'" }' >> /jci/opera/opera_dir/userjs/additionalApps.json
-    sleep 2
-    if [ ${3} != "" ]
-    then
-      sed -i 's/"label": "'"${2}"'" \}/"label": "'"${2}"'", "preload": "'"${3}"'" \}/g' /jci/opera/opera_dir/userjs/additionalApps.json
-    fi
-    cp /jci/opera/opera_dir/userjs/additionalApps.json "${MYDIR}/bakups/test/additionalApps${1}-4._add_entry_to_last_line.json"
-    echo "]" >> /jci/opera/opera_dir/userjs/additionalApps.json
-    sleep 2
-    cp /jci/opera/opera_dir/userjs/additionalApps.json "${MYDIR}/bakups/test/additionalApps${1}-5._after.json"
-    rm -f /jci/opera/opera_dir/userjs/additionalApps.json.old
+    add_app_json.js ${ADDITIONAL_APPS_JSON} "${1}" "${2}" "${3}" >> ${MYDIR}/node.log 2>&1
+    log_message "===                node add_app_json.js ${2:0:10}                    ==="
+  elif [ -e ${MYDIR}/config/bin/node ] && [ -e ${MYDIR}/config/bin/add_app_json.js ]
+  then
+    ${MYDIR}/config/bin/node ${MYDIR}/config/bin/add_app_json.js ${ADDITIONAL_APPS_JSON} "${1}" "${2}" "${3}" >> ${MYDIR}/node.log 2>&1
+    log_message "===                   Using NodeJS To Add App!!!                      ==="
+    log_message "===   ${MYDIR}/config/bin/node add_app_json.js ${2:0:10}        ==="
   else
-    log_message "===         ${2:0:10} already exists in additionalApps.json          ==="
+    # check if entry in additionalApps.json still exists, if so nothing is to do
+    count=$(grep -c '{ "name": "'"${1}"'"' /jci/opera/opera_dir/userjs/additionalApps.json)
+    if [ $count -eq 0 ]
+    then
+      log_message "===  ${2:0:10} not found in additionalApps.json, first installation  ==="
+      mv /jci/opera/opera_dir/userjs/additionalApps.json /jci/opera/opera_dir/userjs/additionalApps.json.old
+      sleep 2
+      # delete last line with "]" from additionalApps.json
+      grep -v "]" /jci/opera/opera_dir/userjs/additionalApps.json.old > /jci/opera/opera_dir/userjs/additionalApps.json
+      sleep 2
+      cp /jci/opera/opera_dir/userjs/additionalApps.json "${MYDIR}/bakups/test/additionalApps${1}-2._delete_last_line.json"
+      # check, if other entrys exists
+      count=$(grep -c '}' /jci/opera/opera_dir/userjs/additionalApps.json)
+      if [ $count -ne 0 ]
+      then
+        # if so, add "," to the end of last line to additionalApps.json
+        echo "$(cat /jci/opera/opera_dir/userjs/additionalApps.json)", > /jci/opera/opera_dir/userjs/additionalApps.json
+        sleep 2
+        cp /jci/opera/opera_dir/userjs/additionalApps.json "${MYDIR}/bakups/test/additionalApps${1}-3._add_comma_to_last_line.json"
+        log_message "===           Found existing entrys in additionalApps.json            ==="
+      fi
+      # add app entry and "]" again to last line of additionalApps.json
+      log_message "===        Add ${2:0:10} to last line of additionalApps.json         ==="
+      echo '  { "name": "'"${1}"'", "label": "'"${2}"'" }' >> /jci/opera/opera_dir/userjs/additionalApps.json
+      sleep 2
+      if [ ${3} != "" ]
+      then
+        sed -i 's/"label": "'"${2}"'" \}/"label": "'"${2}"'", "preload": "'"${3}"'" \}/g' /jci/opera/opera_dir/userjs/additionalApps.json
+      fi
+      cp /jci/opera/opera_dir/userjs/additionalApps.json "${MYDIR}/bakups/test/additionalApps${1}-4._add_entry_to_last_line.json"
+      echo "]" >> /jci/opera/opera_dir/userjs/additionalApps.json
+      sleep 2
+      cp /jci/opera/opera_dir/userjs/additionalApps.json "${MYDIR}/bakups/test/additionalApps${1}-5._after.json"
+      rm -f /jci/opera/opera_dir/userjs/additionalApps.json.old
+    else
+      log_message "===         ${2:0:10} already exists in additionalApps.json          ==="
+    fi
+    # remove double commas
+    sed -i 's/,,/,/g' ${ADDITIONAL_APPS_JSON}
   fi
   if [ -e /jci/opera/opera_dir/userjs/nativeApps.js ]
   then
-    echo "additionalApps = $(cat /jci/opera/opera_dir/userjs/additionalApps.json)" > /jci/opera/opera_dir/userjs/nativeApps.js
+    echo "additionalApps = $(cat ${ADDITIONAL_APPS_JSON})" > /jci/opera/opera_dir/userjs/nativeApps.js
     log_message "===                    Updated nativeApps.js                          ==="
   fi
 }
 remove_app_json()
 # script by vic_bam85
 {
-  unix2dos /jci/opera/opera_dir/userjs/additionalApps.json
-  # check if app entry in additionalApps.json still exists, if so, then it will be deleted
-  count=$(grep -c '{ "name": "'"${1}"'"' /jci/opera/opera_dir/userjs/additionalApps.json)
-  if [ "$count" -gt "0" ]
+  if which node > /dev/null && which remove_app_json.js > /dev/null
   then
-    log_message "====   Remove ${count} entry(s) of ${1:0:10} found in additionalApps.json   ==="
-    mv /jci/opera/opera_dir/userjs/additionalApps.json /jci/opera/opera_dir/userjs/additionalApps.json.old
-    # delete last line with "]" from additionalApps.json
-    grep -v "]" /jci/opera/opera_dir/userjs/additionalApps.json.old > /jci/opera/opera_dir/userjs/additionalApps.json
-    sleep 2
-    cp /jci/opera/opera_dir/userjs/additionalApps.json "${MYDIR}/bakups/test/additionalApps${1}-2._delete_last_line.json"
-    # delete all app entrys from additionalApps.json
-    sed -i "/${1}/d" /jci/opera/opera_dir/userjs/additionalApps.json
-    sleep 2
-    json="$(cat /jci/opera/opera_dir/userjs/additionalApps.json)"
-    # check if last sign is comma
-    rownend=$(echo -n $json | tail -c 1)
-    if [ "$rownend" = "," ]
-    then
-      # if so, remove "," from back end
-      echo ${json%,*} > /jci/opera/opera_dir/userjs/additionalApps.json
-      sleep 2
-      log_message "===  Found comma at last line of additionalApps.json and deleted it   ==="
-    fi
-    cp /jci/opera/opera_dir/userjs/additionalApps.json "${MYDIR}/bakups/test/additionalApps${1}-3._delete_app_entry.json"
-    # add "]" again to last line of additionalApps.json
-    echo "]" >> /jci/opera/opera_dir/userjs/additionalApps.json
-    sleep 2
-    first=$(head -c 1 /jci/opera/opera_dir/userjs/additionalApps.json)
-    if [ $first != "[" ]
-    then
-      sed -i "1s/^/[\n/" /jci/opera/opera_dir/userjs/additionalApps.json
-      log_message "===             Fixed first line of additionalApps.json               ==="
-    fi
-    rm -f /jci/opera/opera_dir/userjs/additionalApps.json.old
-    cp /jci/opera/opera_dir/userjs/additionalApps.json "${MYDIR}/bakups/test/additionalApps${1}-4._after.json"
+    remove_app_json.js ${ADDITIONAL_APPS_JSON} "${1}" >> ${MYDIR}/node.log 2>&1
+    log_message "===              node remove_app_json.js ${1:1:10}                   ==="
+  elif [ -e ${MYDIR}/config/bin/node ] && [ -e ${MYDIR}/config/bin/remove_app_json.js ]
+  then
+    ${MYDIR}/config/bin/node ${MYDIR}/config/bin/remove_app_json.js ${ADDITIONAL_APPS_JSON} "${1}" >> ${MYDIR}/node.log 2>&1
+    log_message "===                  Using NodeJS To Remove App!!!                    ==="
+    log_message "===    ${MYDIR}/config/bin/node remove_app_json.js ${1:1:10}    ==="
   else
-    log_message "===            ${1:0:10} not found in additionalApps.json            ==="
+    unix2dos ${ADDITIONAL_APPS_JSON}
+    # check if app entry in additionalApps.json still exists, if so, then it will be deleted
+    count=$(grep -c '{ "name": "'"${1}"'"' /jci/opera/opera_dir/userjs/additionalApps.json)
+    if [ "$count" -gt "0" ]
+    then
+      log_message "====   Remove ${count} entry(s) of ${1:0:10} found in additionalApps.json   ==="
+      mv /jci/opera/opera_dir/userjs/additionalApps.json /jci/opera/opera_dir/userjs/additionalApps.json.old
+      # delete last line with "]" from additionalApps.json
+      grep -v "]" /jci/opera/opera_dir/userjs/additionalApps.json.old > /jci/opera/opera_dir/userjs/additionalApps.json
+      sleep 2
+      cp /jci/opera/opera_dir/userjs/additionalApps.json "${MYDIR}/bakups/test/additionalApps${1}-2._delete_last_line.json"
+      # delete all app entrys from additionalApps.json
+      sed -i "/${1}/d" /jci/opera/opera_dir/userjs/additionalApps.json
+      sleep 2
+      json="$(cat /jci/opera/opera_dir/userjs/additionalApps.json)"
+      # check if last sign is comma
+      rownend=$(echo -n $json | tail -c 1)
+      if [ "$rownend" == "," ]
+      then
+        # if so, remove "," from back end
+        echo ${json%,*} > /jci/opera/opera_dir/userjs/additionalApps.json
+        sleep 2
+        log_message "===  Found comma at last line of additionalApps.json and deleted it   ==="
+      fi
+      cp /jci/opera/opera_dir/userjs/additionalApps.json "${MYDIR}/bakups/test/additionalApps${1}-3._delete_app_entry.json"
+      # add "]" again to last line of additionalApps.json
+      echo "]" >> /jci/opera/opera_dir/userjs/additionalApps.json
+      sleep 2
+      first=$(head -c 1 /jci/opera/opera_dir/userjs/additionalApps.json)
+      if [ "$first" != "[" ]
+      then
+        sed -i "1s/^/[\n/" /jci/opera/opera_dir/userjs/additionalApps.json
+        log_message "===             Fixed first line of additionalApps.json               ==="
+      fi
+      rm -f /jci/opera/opera_dir/userjs/additionalApps.json.old
+      cp /jci/opera/opera_dir/userjs/additionalApps.json "${MYDIR}/bakups/test/additionalApps${1}-4._after.json"
+    else
+      log_message "===            ${1:1:10} not found in additionalApps.json            ==="
+    fi
+    dos2unix ${ADDITIONAL_APPS_JSON}
   fi
-  dos2unix /jci/opera/opera_dir/userjs/additionalApps.json
   if [ -e /jci/opera/opera_dir/userjs/nativeApps.js ]
   then
-    echo "additionalApps = $(cat /jci/opera/opera_dir/userjs/additionalApps.json)" > /jci/opera/opera_dir/userjs/nativeApps.js
+    echo "additionalApps = $(cat ${ADDITIONAL_APPS_JSON})" > /jci/opera/opera_dir/userjs/nativeApps.js
     log_message "===                    Updated nativeApps.js                          ==="
   fi
 }
 # disable watchdog and allow write access
 echo 1 > /sys/class/gpio/Watchdog\ Disable/value
 mount -o rw,remount /
+# mount resources
+mount -o rw,remount /tmp/mnt/resources/
 
 MYDIR=$(dirname "$(readlink -f "$0")")
 CMU_VER=$(get_cmu_ver)
 CMU_SW_VER=$(get_cmu_sw_version)
 COMPAT_GROUP=$(compatibility_check)
-CASDK_MODE=$(get_casdk_mode)
+get_casdk_mode
 
 # save logs
 mkdir -p "${MYDIR}/bakups/test/"
@@ -256,7 +288,7 @@ log_message "======================= CMU_SW_VER = ${CMU_SW_VER} ================
 log_message "=======================  COMPATIBILITY_GROUP  = ${COMPAT_GROUP} ======================="
 #log_message "======================== CMU_VER = ${CMU_VER} ====================="
 if [ $CASDK_MODE -eq 1 ]; then
-  log_message "=============================  CASDK MODE ==============================="
+  log_message "============================  CASDK MODE  ==============================="
   WELCOME_MSG="====== MZD-AIO-TI ${AIO_VER} ======\n\n===**** CASDK MODE ****===="
 else
   log_message ""
@@ -297,7 +329,7 @@ fi
  # Compatibility Check
 if [ $COMPAT_GROUP -ne 0 ]
 then
-  if [ ${SKIPCONFIRM} -eq 1 ]
+  if [ $SKIPCONFIRM -eq 1 ]
   then
     show_message "MZD-AIO-TI v.${AIO_VER}\nDetected compatible version ${CMU_SW_VER}\nContinuing Installation..."
     sleep 5
@@ -305,12 +337,6 @@ then
     show_message_OK "MZD-AIO-TI v.${AIO_VER}\nDetected compatible version ${CMU_SW_VER}\n\n To continue installation choose YES\n To abort choose NO"
   fi
   log_message "=======        Detected compatible version ${CMU_SW_VER}          ======="
-  if [ ${COMPAT_GROUP} -eq 1 ]
-  then
-    APP_PATCH_59=1
-  else
-    APP_PATCH_59=0
-  fi
 else
   # Removing the comment (#) from the following line will allow MZD-AIO-TI to run with unknown fw versions ** ONLY MODIFY IF YOU KNOW WHAT YOU ARE DOING **
   # show_message_OK "Detected previously unknown version ${CMU_SW_VER}!\n\n To continue anyway choose YES\n To abort choose NO"
@@ -352,9 +378,9 @@ fi
 sed -i 's/User JavaScript=0/User JavaScript=1/g' /jci/opera/opera_home/opera.ini
 count=$(grep -c "Allow File XMLHttpRequest=" /jci/opera/opera_home/opera.ini)
 skip_opera=$(grep -c "Allow File XMLHttpRequest=1" /jci/opera/opera_home/opera.ini)
-if [ "$skip_opera" -eq "0" ]
+if [ $skip_opera -eq 0 ]
 then
-  if [ "$count" -eq "0" ]
+  if [ $count -eq 0 ]
   then
     sed -i '/User JavaScript=.*/a Allow File XMLHttpRequest=1' /jci/opera/opera_home/opera.ini
   else
@@ -365,8 +391,6 @@ then
 else
   log_message "============== Userjs & File Xmlhttprequest Already Enabled ============="
 fi
-
-# Remove fps.js if still exists
 if [ -e /jci/opera/opera_dir/userjs/fps.js ]
 then
   mv /jci/opera/opera_dir/userjs/fps.js /jci/opera/opera_dir/userjs/fps.js.org
@@ -380,11 +404,9 @@ then
 fi
 log_message "=========************ END PRE-INSTALL OPERATIONS ***************========="
 log_message " "
-log_message "==========************* BEGIN INSTALLING TWEAKS **************==========="
-log_message " "
 
 # start JSON array of backups
-if [ "${KEEPBKUPS}" -eq 1 ]
+if [ $KEEPBKUPS -eq 1 ]
 then
   aio_info '"Backups": ['
 fi

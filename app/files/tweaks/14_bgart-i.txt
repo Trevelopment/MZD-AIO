@@ -8,7 +8,7 @@ then
 	cp -a /jci/gui/common/controls/NowPlaying4/css/NowPlaying4Ctrl.css /jci/gui/common/controls/NowPlaying4/css/NowPlaying4Ctrl.css.org
   log_message "===                  Backup of NowPlaying4Ctrl.css                    ==="
 fi
-if [ ${KEEPBKUPS} = "1" ]
+if [ $KEEPBKUPS -eq 1 ]
 then
 	cp -a /jci/gui/common/controls/NowPlaying4/css/NowPlaying4Ctrl.css.org "${MYDIR}/bakups/"
 	aio_info \"NowPlaying4Ctrl.css.org\",
@@ -26,13 +26,13 @@ echo "/* MZD-AIO-TI BIGGERALBM CSS */" >> /jci/gui/common/controls/NowPlaying4/c
 
 cat ${MYDIR}/config/bigger-album-art/big-albm.css >> /jci/gui/common/controls/NowPlaying4/css/NowPlaying4Ctrl.css
 
-if [ ${FULLTITLES} = "1" ]
+if [ $FULLTITLES -eq 1 ]
 then
 	cat ${MYDIR}/config/bigger-album-art/full-titles.css >> /jci/gui/common/controls/NowPlaying4/css/NowPlaying4Ctrl.css
 	log_message "===                  Added for Full Width Titles                      ==="
 fi
 
-if [ ${NOALBM} = "1" ]
+if [ $NOALBM -eq 1 ]
 then
 	cat ${MYDIR}/config/bigger-album-art/no-albm.css >> /jci/gui/common/controls/NowPlaying4/css/NowPlaying4Ctrl.css
 	log_message "===               Added CSS For Hide Album Art Option                 ==="

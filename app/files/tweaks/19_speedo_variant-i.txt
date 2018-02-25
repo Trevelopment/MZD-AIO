@@ -1,13 +1,3 @@
-show_message "INSTALL SPEEDOMETER VARIANT"
-log_message "========************* INSTALL SPEEDOMETER VARIANT ... ***********========"
-
-# Copy modded speedo files
-cp -a ${MYDIR}/config/speedometer_mod/jci /
-log_message "===                  Speedometer Variant Installed                    ==="
-
-chmod 755 /jci/fonts/Crysta.ttf
-chmod 755 /jci/fonts/CHN/Crysta.ttf
-chmod 755 /jci/fonts/JP/Crysta.ttf
-
-log_message "=======******** END INSTALLATION OF SPEEDOMETER VARIANT *********========"
-log_message " "
+sed -i 's/var speedMod = false;/var speedMod = true;/g' /jci/gui/apps/_speedometer/js/speedometer-startup.js
+log_message "===       Set flag for speedometer mod in speedometer-startup.js      ==="
+chmod -R 755 /jci/fonts

@@ -4,20 +4,20 @@ log_message "=====************    UNINSTALL NO-MORE-DISCLAIMER ...   ***********
 
 TRACKORDER_DISCLAIMER=2
 # Compatibility Check
-if [ "${COMPAT_GROUP}" = "1" ]
+if [ $COMPAT_GROUP -eq 1 ]
 then
   TRACKORDER_DISCLAIMER=0
-elif [ "${COMPAT_GROUP}" = "2" ]
+elif [ $COMPAT_GROUP -eq 2 ]
 then
   TRACKORDER_DISCLAIMER=1
   TRACKORDER_DISCLAIMER_FILE=58.00.250A-NA
   log_message "===       FW ${CMU_SW_VER} detected, copy matching systemApp.js       ==="
-elif [ "${COMPAT_GROUP}" = "3" ] || [ "${COMPAT_GROUP}" = "4" ]
+elif [ $COMPAT_GROUP -eq 3 ] || [ $COMPAT_GROUP -eq 4 ]
 then
   TRACKORDER_DISCLAIMER=1
   TRACKORDER_DISCLAIMER_FILE=59.00.330
   log_message "===       FW ${CMU_SW_VER} detected, copy matching systemApp.js       ==="
-elif [ "${COMPAT_GROUP}" = "5" ]
+elif [ $COMPAT_GROUP -eq 5 ]
 then
   TRACKORDER_DISCLAIMER=1
   TRACKORDER_DISCLAIMER_FILE=59
@@ -29,11 +29,11 @@ fi
 # 59.00.3XX ($COMPAT_GROUP=3)
 # 58.00.XXX ($COMPAT_GROUP=2)
 # 55.XX.XXX - 56.XX.XXX ($COMPAT_GROUP=1)
-if [ ! "${TRACKORDER_DISCLAIMER}" = "2" ]
+if [ ! $TRACKORDER_DISCLAIMER -eq 2 ]
 then
   if [ -e /jci/gui/apps/system/js/systemApp.js.audio ]
   then
-    if [ "${TRACKORDER_DISCLAIMER}" = "1" ]
+    if [ $TRACKORDER_DISCLAIMER -eq 1 ]
     then
       cp -a "${MYDIR}/config_org/audio_order_AND_no_More_Disclaimer/only_change_audio_order/jci/gui/apps/system/js/systemApp.${TRACKORDER_DISCLAIMER_FILE}.js" /jci/gui/apps/system/js/systemApp.js
       log_message "===  Restored Disclaimer for ${CMU_SW_VER}, audio order still changed ==="
@@ -47,7 +47,7 @@ then
       cp -a /jci/gui/apps/system/js/systemApp.js.org /jci/gui/apps/system/js/systemApp.js
       log_message "===                  Restored systemApp.js from backup                ==="
     else
-      if [ "${TRACKORDER_DISCLAIMER}" = "1" ]
+      if [ $TRACKORDER_DISCLAIMER -eq 1 ]
       then
         log_message "===                 No more systemApp.js.org available                ==="
         cp -a "${MYDIR}/config_org/audio_order_AND_no_More_Disclaimer/nothing/jci/gui/apps/system/js/systemApp.${TRACKORDER_DISCLAIMER_FILE}.js" /jci/gui/apps/system/js/systemApp.js

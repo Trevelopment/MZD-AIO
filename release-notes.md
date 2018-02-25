@@ -1,62 +1,49 @@
 [Full Changelog](changelog.htm)  
 
-### 2.7.0
-## The software distribution service bintray.com has cancelled my account because they had recently seen the DMCA Takedown notice in the MZD-AIO-TI GitHub repository from March 6th, 2017.  Although I explained that the NNG files had been removed immediately upon receiving the notice they only agreed to leave the versions that had already been uploaded (Ending with v2.6.8) but would block my account from uploading any future versions. Therefor Automatic updates may of may not work in this version until I find another distribution solution.  So in case new updates do not download automatically "Check For Update" has been added in the top menu bar under the "Download" menu.
+### 2.7.8
 
-##### Android Auto v1.04
-- __*Bluetooth Call Bug Fixed!!!*__ *Big thanks to @lmagder for fixing the headunit code after @Trezdog44 found the root of the issue with the 'Bluetooth call patch'*
-- Video focus is lost at the beginning and end of a call due to the system expecting a context change.  Press the FAV (<span class="icon-star"></span>) Button to get video focus back and AA will function normally.
-- Phone button opens AA phone screen, also call buttons work for answering and ending calls.
-- N\AV button opens the AA home screen
-- Tap the black box on the credit screen to display contents of the headunit.log file.
-- Added the Android Auto Icon to the statusbar
-- (The 'Bluetooth Call Patch' from AA 1.03 is no longer needed from this version on.)
-  - (If it was applied will be reverted back to normal)
-##### VideoPlayer v3.0
-- Gave the VideoPlayer its own Icon
-- Toggle Unicode Mode On/Off with "U" Icon (If you have a lot of videos you will see the difference in load time)
-- Information/Options Panel, Open/Close with "i" Icon
-- Close by pressing command knob
-- Option: Hide/Show Unicode button
-- Video Title to Statusbar
-- Test Error Message
-- I put this in for me to test the error message because all my videos are formatted **360p MP4 H264 AAC** so I rarely hit a memory error.
-- Select options with left/right now includes reboot, show/hide background and info/options button.
-- Memory Error Message is now very informative
-- Offers Suggestions to Avoid Future Errors
-- Changed highlight color to blue
+#### Speedometer v5.5 - All In One Speedometer
+- Analog, Modded and Bar Speedometers are now All In One!
+- All options are available and will be applied to the proper Speedometer
+- Choose which speedometer to start with by default (if starting with Bar Speedometer other options will still determine the starting state of the Classic Speedometer)
+- The speedometer-config.js file now has all the options, set a variable to determine if override values are used or installed options.
+- Invalid Values Show "---" Such As Gear Position/Lever for Manual Transmissions
+- Toggles will Show The Action In A Statusbar Notification
+- Hold "Up" on multicontroller to switch between Classic and Bar Speedometer Mode
+- Hold "Down" in Classic mode to switch between Basic and Modded Speedometer (Basic is only analog with no toggles except long holds to change to Modded or Bar Speedometer)
+- Modded Speedometer (in Classic mode):
+  - Single click "Up" to increase size of values
+  - Multicontroller "Select" toggles between Digital and Analog speed
+  - Single click "Down" to show alternate values
+- Bar Speedometer:
+  - Configure The Amount of Bottom Rows in "speedometer-config.js" (Default 4)
+  - Hold "Down" to show/hide speed bar
+  - **TAP Any 2 Values To Swap Their Positions!**
+    - Any Values Can Be Swapped Even The Main
+    - When The Main Value Is Swapped An SBN Will Show With The Value Name
+    - Tap Below The Bottom Row To Swap Hidden Values In Other Rows
+    - Exiting The App Will Reset Positions To Your Default
+    - Tap Selected Value Again To Cancel
 
-##### AIO Tweaks v0.3
-- Start Headunit Process
-  - Will now successfully Start Android Auto Headunit Process
-  - Also Active Headunit stdout will pop up
-- View Headunit Log
-  - Shows the existing headunit.log file in a window
-- Screen off
-  - Turns the screen off
-- wifiAP
- - Starts Wifi Access Point
-   - (start_wifi.sh; jci-wifiap.sh start)
-- Stop Firewall
- - Stops the firewall
-   - (jci-fw.sh stop)
-- System Restore *WARNING: This will remove all tweaks and uninstall all AIO apps*
-  - Restore you system on the fly with a slimmed down restore script
-  - Removes all tweaks and AIO apps including this one
-  - Does not restore Color Scheme (all those image files take up a lot of space)
-  - Very small and safe only targets and restores from internal backups.
-  - Asks for verification twice to ensure it is not accidentally run.
-- Env - Environment variables
-  - For informational/educational purposes
-  - Also used by developers for fun times
-- Fixed saving issue with the tweak toggle buttons
+#### AIO Tweaks App v0.6
+- "Reverse App List" button - Reverses the Applications List (resets on boot).
 
-- General Improvements/Bug Fixes
- - On Startup looks for some AIO log files loads FW version if found.
-  - If FW version is found An "i" Icon will appear in the top menu bar to the left of the "reload" icon.
-  - Click the icon to show your FW version, future plans to display more pertinent information as well.
- - Added Save Button to Success Dialog
- - Added To Top Menu "Downloads > Check For Update"
- - Small logging fixes in autorun and recovery scripts
- - Fixed WiFiAP files not copying when it was the only autorun script chosen
- - Many other small improvements/fixes
+#### Test Mode (T/M) Button [(Thread)](https://trevelopment.win/jci-test-mode)
+- Included with the **1 Second Diagnostic Menu** tweak because it is part of the Diagnostic App
+- In v59 "JCI Test Mode" was disabled in the Diagnostic App
+  - This tweak brings back Test Mode for v59
+  - Makes it easier to get to in v55-v58 (Just press the T/M button)
+- Once Test Mode is started type 11 to open the well known Test Menu
+- **_BE CAREFUL IN TEST MODE, DON'T DO ANYTHING YOU ARE UNSURE ABOUT!_**
+
+##### Tweak Installer Changes/Fixes
+- App install/uninstall now uses NodeJS to add/remove from app list
+  - Allows for cleaner installations
+  - Backward compatible
+  - Solves the issue of all apps disappearing off the app list when only 1 is uninstalled due to improperly formatted JSON file
+  - "_Legacy App Install_" in install options to use the old method (using bash)
+    - The only reason I can think of for this is if you already have an improperly formatted JSON file then you need to uninstall all apps with legacy installer because the NodeJS code will throw an error.  Other than that the NodeJS code will never cause an improperly formatted JSON file.
+  - *Note: NodeJS will run from the USB drive, Coming Soon: Install NodeJS to the system*
+- Cleaned up installer code
+  - Removed some superfluous code
+  - Fixed many inconsequential errors

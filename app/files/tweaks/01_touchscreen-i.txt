@@ -3,7 +3,7 @@ show_message "ENABLE TOUCHSCREEN ..."
 log_message "=======******** INSTALL REMOVE TOUCHSCREEN RESTRICTION ... *******======="
 
 # Some want to keep the speed restriction to ensure working console compass
-if [ ${KEEP_SPEED_RESTRICT} = "0" ]
+if [ $KEEP_SPEED_RESTRICT -eq 0 ]
 then
   /jci/scripts/set_speed_restriction_config.sh disable
 else

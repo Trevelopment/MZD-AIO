@@ -14,7 +14,7 @@ then
   cp -a /jci/gui/common/controls/NowPlaying4/css/NowPlaying4Ctrl.css /jci/gui/common/controls/NowPlaying4/css/NowPlaying4Ctrl.css.org
   log_message "===                     Backup NowPlaying4Ctrl.css                    ==="
 fi
-if [ ${KEEPBKUPS} = "1" ]
+if [ $KEEPBKUPS -eq 1 ]
 then
   cp -a /jci/gui/common/controls/List2/css/List2Ctrl.css.org "${MYDIR}/bakups/"
   cp -a /jci/gui/common/controls/NowPlaying4/css/NowPlaying4Ctrl.css.org "${MYDIR}/bakups/"
@@ -22,7 +22,7 @@ then
   aio_info \"List2Ctrl.css.org\",
   aio_info \"MainMenuCtrl.css.org\",
 fi
-if [ ${TESTBKUPS} = "1" ]
+if [ $TESTBKUPS -eq 1 ]
 then
   cp -a /jci/gui/common/controls/List2/css/List2Ctrl.css "${MYDIR}/bakups/test/List2Ctrl_before.css"
   cp -a /jci/gui/common/controls/NowPlaying4/css/NowPlaying4Ctrl.css "${MYDIR}/bakups/test/NowPlaying4Ctrl_before.css"
@@ -76,7 +76,14 @@ body {
 }
 /* END AIO UISTYLE CSS */
 EOT
-if [ ${TESTBKUPS} = "1" ]
+# Remove ivalid CSS
+if grep -Fq "o-animation" /jci/gui/common/controls/List2/css/List2Ctrl.css && grep -Fq "webkit-animation" /jci/gui/common/controls/List2/css/List2Ctrl.css
+then
+	sed -i '/-o-animation/d' /jci/gui/common/controls/List2/css/List2Ctrl.css
+	sed -i '/-webkit-animation/d' /jci/gui/common/controls/List2/css/List2Ctrl.css
+	log_message "===                       Removed Obsolete CSS                        ==="
+fi
+if [ $TESTBKUPS -eq 1 ]
 then
   cp -a /jci/gui/common/controls/List2/css/List2Ctrl.css "${MYDIR}/bakups/test/List2Ctrl_after.css"
   cp -a /jci/gui/common/controls/NowPlaying4/css/NowPlaying4Ctrl.css "${MYDIR}/bakups/test/NowPlaying4Ctrl_after.css"

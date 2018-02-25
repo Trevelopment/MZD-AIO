@@ -10,35 +10,35 @@ then
   # Looks for this line of code that doesnt exist in the original file for installations prior to AIO v2.1
 elif grep -Fq 'isMuted ? "Global.Pause" : "Global.Resume"' /jci/gui/common/js/Common.js
 then
-  if [ ${CMU_SW_VER} = "56.00.100A-ADR" ] \
-  || [ ${CMU_SW_VER} = "56.00.230A-ADR" ] \
-  || [ ${CMU_SW_VER} = "56.00.240B-ADR" ] \
-  || [ ${CMU_SW_VER} = "56.00.230A-EU" ] \
-  || [ ${CMU_SW_VER} = "55.00.650A-NA" ] \
-  || [ ${CMU_SW_VER} = "55.00.753A-NA" ] \
-  || [ ${CMU_SW_VER} = "55.00.760A-NA" ] \
-  || [ ${CMU_SW_VER} = "56.00.401A-JP" ]
+  if [ "${CMU_SW_VER}" == "56.00.100A-ADR" ] \
+  || [ "${CMU_SW_VER}" == "56.00.230A-ADR" ] \
+  || [ "${CMU_SW_VER}" == "56.00.240B-ADR" ] \
+  || [ "${CMU_SW_VER}" == "56.00.230A-EU" ] \
+  || [ "${CMU_SW_VER}" == "55.00.650A-NA" ] \
+  || [ "${CMU_SW_VER}" == "55.00.753A-NA" ] \
+  || [ "${CMU_SW_VER}" == "55.00.760A-NA" ] \
+  || [ "${CMU_SW_VER}" == "56.00.401A-JP" ]
   then
     pause_copy=1
     pause_copy_file=56.00.230A-EU
   fi
 
-  if [ ${CMU_SW_VER} = "58.00.250A-NA" ] \
-  || [ ${CMU_SW_VER} = "59.00.326A-ADR" ] \
-  || [ ${CMU_SW_VER} = "59.00.331A-EU" ]
+  if [ "${CMU_SW_VER}" == "58.00.250A-NA" ] \
+  || [ "${CMU_SW_VER}" == "59.00.326A-ADR" ] \
+  || [ "${CMU_SW_VER}" == "59.00.331A-EU" ]
   then
     pause_copy=1
     pause_copy_file=58.00.250A-NA
   fi
 
-  if [ ${CMU_SW_VER} = "56.00.511A-EU" ] \
-  || [ ${CMU_SW_VER} = "56.00.512A-EU" ] \
-  || [ ${CMU_SW_VER} = "56.00.513B-EU" ] \
-  || [ ${CMU_SW_VER} = "56.00.513C-EU" ] \
-  || [ ${CMU_SW_VER} = "56.00.511A-ADR" ] \
-  || [ ${CMU_SW_VER} = "56.00.512A-ADR" ] \
-  || [ ${CMU_SW_VER} = "56.00.513C-ADR" ] \
-  || [ ${CMU_SW_VER} = "56.00.521A-NA" ]
+  if [ "${CMU_SW_VER}" == "56.00.511A-EU" ] \
+  || [ "${CMU_SW_VER}" == "56.00.512A-EU" ] \
+  || [ "${CMU_SW_VER}" == "56.00.513B-EU" ] \
+  || [ "${CMU_SW_VER}" == "56.00.513C-EU" ] \
+  || [ "${CMU_SW_VER}" == "56.00.511A-ADR" ] \
+  || [ "${CMU_SW_VER}" == "56.00.512A-ADR" ] \
+  || [ "${CMU_SW_VER}" == "56.00.513C-ADR" ] \
+  || [ "${CMU_SW_VER}" == "56.00.521A-NA" ]
   then
     pause_copy=1
     pause_copy_file=56.00.511A-EU
@@ -49,7 +49,7 @@ then
     cp -a /jci/gui/common/js/Common.js.org /jci/gui/common/js/Common.js
     log_message "===             Common.js Restored From Original Backup               ==="
     # Fallback only if supported FW version
-  elif [ ${pause_copy} = "1" ]
+  elif [ $pause_copy -eq 1 ]
   then
     log_message "===      No backup of Common.js available, no changes were made       ==="
     # cp -a ${MYDIR}/config_org/pause-on-mute/jci/gui/common/js/Common.js.${pause_copy_file} /jci/gui/common/js/Common.js

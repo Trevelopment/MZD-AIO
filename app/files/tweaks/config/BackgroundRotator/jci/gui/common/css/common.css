@@ -1,4 +1,5 @@
 /* CSS Document */
+
 body {
   /* default text color */
   color: white;
@@ -11,7 +12,6 @@ body {
   /* default text alignment */
   text-align: left;
 }
-
 .CommonBgImg {
   background-image: url("../images/background.png");
   background-repeat: no-repeat;
@@ -21,10 +21,9 @@ body {
   left: 0px;
   top: 0px;
   z-index: 0;
-  background-position:0;
-  animation: slide 600s steps(10,end) infinite;
+  background-position: 0;
+  animation: slide 600s steps(10, end) infinite;
 }
-
 .CommonRightChrome {
   background: url("../controls/LeftBtn/images/ChromeArcRight.png") no-repeat;
   position: absolute;
@@ -34,7 +33,6 @@ body {
   left: 766px;
   z-index: 8;
 }
-
 .CommonNonTransparentDiv {
   background-color: #FFF;
   opacity: 0.01;
@@ -45,13 +43,12 @@ body {
   left: 0px;
   z-index: 0;
 }
-
 /*Keyframe classes for fade animations (W3 Standard) */
+
 @keyframes opacZeroToFull {
   0% {
     opacity: 0;
   }
-
   100% {
     opacity: 1;
   }
@@ -60,22 +57,22 @@ body {
   0% {
     opacity: 1;
   }
-
   100% {
     opacity: 0;
   }
 }
 /*CSS Animation classes for fade animations*/
+
 .FadeOut {
   animation: opacFullToZero 0.3s ease-in-out both;
 }
-
 .FadeIn {
   animation: opacZeroToFull 0.3s ease-in-out both;
 }
 /*Background switch animation for 10 backgrounds 8000px*/
+
 @keyframes slide {
   to {
-    background-position:-8000px;
+    background-position: -8000px;
   }
 }

@@ -9,12 +9,12 @@ then
   cp -a /jci/gui/apps/system/controls/MainMenu/css/MainMenuCtrl.css /jci/gui/apps/system/controls/MainMenu/css/MainMenuCtrl.css.org
   log_message "=== Bakup /jci/gui/apps/system/controls/MainMenu/css/MainMenuCtrl.css ==="
 fi
-if [ ${KEEPBKUPS} = "1" ]
+if [ $KEEPBKUPS -eq 1 ]
 then
   cp -a /jci/gui/apps/system/controls/MainMenu/css/MainMenuCtrl.css.org "${MYDIR}/bakups/"
   aio_info \"MainMenuCtrl.css.org\",
 fi
-if [ ${TESTBKUPS} = "1" ]
+if [ $TESTBKUPS -eq 1 ]
 then
   cp -a /jci/gui/apps/system/controls/MainMenu/css/MainMenuCtrl.css "${MYDIR}/bakups/test/MainMenuCtrl_before.css"
 fi
@@ -23,7 +23,7 @@ remove_aio_css /jci/gui/apps/system/controls/MainMenu/css/MainMenuCtrl.css MAINM
 
 echo "/* MZD-AIO-TI MAINMENU CSS */" >> /jci/gui/apps/system/controls/MainMenu/css/MainMenuCtrl.css
 
-if [ ${UI_STYLE_ELLIPSE} = "1" ]
+if [ $UI_STYLE_ELLIPSE -eq 1 ]
 then
   cat <<EOT >> /jci/gui/apps/system/controls/MainMenu/css/MainMenuCtrl.css
   /* Main Menu Ellipse */
@@ -33,24 +33,24 @@ then
 EOT
   log_message "===                    Removed Main Menu Ellipse                      ==="
 fi
-if [ "${UI_STYLE_ALTLAYOUT}" = "1" ]
+if [ $UI_STYLE_ALTLAYOUT -eq 1 ]
 then
   cat "${MYDIR}/config/MainMenuTweaks/StarA.css" >> /jci/gui/apps/system/controls/MainMenu/css/MainMenuCtrl.css
   log_message "===         Added CSS for Alternative Main Menu (Star Points)         ==="
-elif [ "${UI_STYLE_ALTLAYOUT}" = "2" ]
+elif [ $UI_STYLE_ALTLAYOUT -eq 2 ]
 then
   cat "${MYDIR}/config/MainMenuTweaks/StarB.css" >> /jci/gui/apps/system/controls/MainMenu/css/MainMenuCtrl.css
   log_message "===         Added CSS for Alternative Main Menu (Star Points)         ==="
-elif [ "${UI_STYLE_ALTLAYOUT}" = "3" ]
+elif [ $UI_STYLE_ALTLAYOUT -eq 3 ]
 then
   cat "${MYDIR}/config/MainMenuTweaks/Inverted.css" >> /jci/gui/apps/system/controls/MainMenu/css/MainMenuCtrl.css
   log_message "===           Added CSS for Alternative Main Menu (Inverted)          ==="
-elif [ "${UI_STYLE_ALTLAYOUT}" = "4" ]
+elif [ $UI_STYLE_ALTLAYOUT -eq 4 ]
 then
   cat "${MYDIR}/config/MainMenuTweaks/FlatLine.css" >> /jci/gui/apps/system/controls/MainMenu/css/MainMenuCtrl.css
   log_message "===          Added CSS for Alternative Main Menu (Flatline)           ==="
 fi
-if [ ${UI_STYLE_MINICOINS} = "1" ]
+if [ $UI_STYLE_MINICOINS -eq 1 ]
 then
   cat <<EOT >> /jci/gui/apps/system/controls/MainMenu/css/MainMenuCtrl.css
   /* Small Main Menu Coins */
@@ -65,7 +65,7 @@ then
 EOT
 log_message "===                     Added CSS for Small Coins                     ==="
 fi
-if [ ${UI_STYLE_MINIFOCUS} = "1" ]
+if [ $UI_STYLE_MINIFOCUS -eq 1 ]
 then
   cat <<EOT >> /jci/gui/apps/system/controls/MainMenu/css/MainMenuCtrl.css
   /* Small Main Menu Coins */
@@ -82,16 +82,16 @@ then
     background-position: center 75%;
   }
 EOT
-  if [ "${UI_STYLE_ALTLAYOUT}" = "1" ]
+  if [ $UI_STYLE_ALTLAYOUT -eq 1 ]
   then
     cat "${MYDIR}/config/MainMenuTweaks/StarASmallFocused.css" >> /jci/gui/apps/system/controls/MainMenu/css/MainMenuCtrl.css
-  elif [ "${UI_STYLE_ALTLAYOUT}" = "2" ]
+  elif [ $UI_STYLE_ALTLAYOUT -eq 2 ]
   then
     cat "${MYDIR}/config/MainMenuTweaks/StarBSmallFocused.css" >> /jci/gui/apps/system/controls/MainMenu/css/MainMenuCtrl.css
-  elif [ "${UI_STYLE_ALTLAYOUT}" = "3" ]
+  elif [ $UI_STYLE_ALTLAYOUT -eq 3 ]
   then
     cat "${MYDIR}/config/MainMenuTweaks/InvertedSmallFocused.css" >> /jci/gui/apps/system/controls/MainMenu/css/MainMenuCtrl.css
-  elif [ "${UI_STYLE_ALTLAYOUT}" = "4" ]
+  elif [ $UI_STYLE_ALTLAYOUT -eq 4 ]
   then
     cat "${MYDIR}/config/MainMenuTweaks/FlatLineSmallFocused.css" >> /jci/gui/apps/system/controls/MainMenu/css/MainMenuCtrl.css
   else
@@ -99,7 +99,7 @@ EOT
   fi
   log_message "===                  Added CSS for Small Focused Coin                 ==="
 fi
-if [ ${UI_STYLE_MAIN3D} = "1" ]
+if [ $UI_STYLE_MAIN3D -eq 1 ]
 then
   cat <<EOT >> /jci/gui/apps/system/controls/MainMenu/css/MainMenuCtrl.css
   /* 3D MAIN MENU TEXT! */
@@ -119,7 +119,7 @@ then
   }
 EOT
   log_message "===                  Added CSS for 3D Main Menu Label                 ==="
-elif [ ${UI_STYLE_MAIN3D} = "2" ]
+elif [ $UI_STYLE_MAIN3D -eq 2 ]
 then
   cat <<EOT >> /jci/gui/apps/system/controls/MainMenu/css/MainMenuCtrl.css
   /* HIDE MAIN MENU TEXT! */
@@ -128,7 +128,7 @@ then
   }
 EOT
   log_message "===                 Added CSS for Hide Main Menu Label                ==="
-elif [ ${UI_STYLE_MAIN3D} = "3" ]
+elif [ $UI_STYLE_MAIN3D -eq 3 ]
 then
   cat <<EOT >> /jci/gui/apps/system/controls/MainMenu/css/MainMenuCtrl.css
   /* COLORED MAIN MENU TEXT! */
@@ -136,9 +136,9 @@ then
     color: ${UI_STYLE_LABELCOLOR};
   }
 EOT
-  log_message "===                 Added CSS for Hide Main Menu Label                ==="
+  log_message "===                Added CSS for color Main Menu Label                ==="
 fi
-if [ ${UI_STYLE_NOGLOW} = "1" ]
+if [ $UI_STYLE_NOGLOW -eq 1 ]
 then
   cat <<EOT >> /jci/gui/apps/system/controls/MainMenu/css/MainMenuCtrl.css
   /* Remove Coin Glow */
@@ -151,7 +151,7 @@ fi
 echo "/* END AIO MAINMENU CSS */" >> /jci/gui/apps/system/controls/MainMenu/css/MainMenuCtrl.css
 log_message "===                     Modified  MainMenuCtrl.css                    ==="
 
-if [ ${TESTBKUPS} = "1" ]
+if [ $TESTBKUPS -eq 1 ]
 then
   cp -a /jci/gui/apps/system/controls/MainMenu/css/MainMenuCtrl.css "${MYDIR}/bakups/test/MainMenuCtrl_after.css"
 fi

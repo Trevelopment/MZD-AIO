@@ -17,7 +17,7 @@ then
 	cp -a /jci/gui/common/controls/Sbn/css/SbnCtrl.css /jci/gui/common/controls/Sbn/css/SbnCtrl.css.org
 	log_message "===       Backup of /jci/gui/common/controls/Sbn/css/SbnCtrl.css      ==="
 fi
-if [ ${KEEPBKUPS} = "1" ]
+if [ $KEEPBKUPS -eq 1 ]
 then
 	if [ ! -e "${MYDIR}/bakups/StatusBarCtrl.css.org" ]
 	then

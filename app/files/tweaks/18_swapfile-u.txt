@@ -1,7 +1,7 @@
 # Remove swap file
 show_message "REMOVE SWAP FILE ..."
 log_message "==========***********     UNINSTALL SWAP FILE ...   ***********=========="
-if [ "${TESTBKUPS}" = "1" ]
+if [ $TESTBKUPS -eq 1 ]
 then
   cp /jci/scripts/stage_wifi.sh "${MYDIR}/bakups/test/stage_wifi_swap-before.sh"
 fi
@@ -19,7 +19,7 @@ sed -i '/	fi/d' /jci/scripts/stage_wifi.sh
 sed -i '/	done/d' /jci/scripts/stage_wifi.sh
 sleep 2
 log_message "===       Deleted modifications from /jci/scripts/stage_wifi.sh       ==="
-if [ "${TESTBKUPS}" = "1" ]
+if [ $TESTBKUPS -eq 1 ]
 then
   cp /jci/scripts/stage_wifi.sh "${MYDIR}/bakups/test/stage_wifi_swap-after.sh"
 fi

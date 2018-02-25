@@ -12,7 +12,7 @@ then
 	log_message "===             Leftover code found Restoring common.css              ==="
 	if [ -e /jci/gui/common/css/common.css.org ]
 	then
-		if [ "${KEEPBKUPS}" = 1 ]
+		if [ $KEEPBKUPS -eq 1 ]
 		then
 			cp /jci/gui/common/css/common.css.org "${MYDIR}/bakups/"
 			aio_info \"common.css.org\",

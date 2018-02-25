@@ -1,5 +1,5 @@
 #!/bin/sh
-# 
+#
 # Custom Applications SDK for Mazda Connect Infotainment System
 #
 # A mini framework that allows to write custom applications for the Mazda Connect Infotainment System
@@ -42,4 +42,7 @@ smdb-read -v -n vdm_vdt_current_data -e VehicleSpeed >> ${OUTPUT}-vdt
 smdb-read -v -n vdm_vdt_current_data -e EngineSpeed >> ${OUTPUT}-vdt
 smdb-read -v -n vdm_vdt_current_data -e FuelGaugePosition >> ${OUTPUT}-vdt
 smdb-read -v -n vdm_vdt_current_data -e DR_IntakeAirTemp >> ${OUTPUT}-vdt
+smdb-read -v -n vdm_vdt_current_data -e Out-CarTemperature >> ${OUTPUT}-vdt
+smdb-read -v -n vdm_vdt_current_data -e EngClnt_Te_Actl >> ${OUTPUT}-vdt
+smdb-read -v -n vdm_vdt_current_data -e TransmChangeLeverPosition >> ${OUTPUT}-vdt
 smdb-read -v -n vdm -e Drv1AvlFuelE >> ${OUTPUT}-vdt

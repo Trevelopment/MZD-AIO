@@ -24,7 +24,7 @@ then
       ENGLOAD=`smdb-read -n vdm_vdt_current_data -e EngineLoad`
       LPOS=`smdb-read -n vdm_vdt_current_data -e TransmChangeLeverPosition`
       echo "vehicleData#${SPEED}#${RPM}#${DIST}#${GPSSPEED}#${ALTITUDE}#${HEADING}#${LATITUDE}#${LONGITUDE}#${ENGLOAD}#${LPOS}"
-      sleep 0.5
+      sleep 0.25
     done
 fi
 

@@ -2,7 +2,7 @@ log_message " "
 sleep 2
 log_message "======================= END OF TWEAKS INSTALLATION ======================"
 show_message "========== END OF TWEAKS INSTALLATION =========="
-if [ "${KEEPBKUPS}" = "1" ]
+if [ $KEEPBKUPS -eq 1 ]
 then
   json="$(cat ${MYDIR}/AIO_info.json)"
   rownend=$(echo -n $json | tail -c 1)

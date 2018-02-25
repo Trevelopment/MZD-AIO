@@ -16,69 +16,7 @@
   <h1 id="mzd-title" class="mazda" style="visibility:hidden;">MZD-AIO-TI</h1>
   <span id="openSidePanel" class="w3-opennav w3-xxlarge w3-display-topright w3-padding w3-text-black w3-hide" onclick="w3_openright()" style="position:fixed">&#9776;</span>
 </header>
-<!--div class="w3-container mainContainer casdk" ng-cloak>
-<section id="main" class="main">
-<section id="step3" id="mainOptions" class="options container w3-row">
-<div id="step4" class="w3-container form-group1 col-md-3 col-sm-6 col-xs-12">
-<div class="menuCheck casdk">
-<input type="checkbox" id="casdkinst" name="casdkinst" ng-model="user.casdk.inst" ng-value="user.casdk.inst"/>
-<label for="casdkinst" data-toggle="tooltip" data-placement="auto bottom" title=""></label>
-</div>
-<span class="casdkLabel" style=""><span class="icon-pictures"></span> Install CASDK
-</span>
-<br />
-<div class="menuCheck casdk">
-<input type="checkbox" id="casdkuninst" name="casdkuninst" ng-model="user.casdk.uninst" ng-value="user.casdk.uninstd" />
-<label for="casdkuninst" data-toggle="tooltip" data-placement="auto bottom" title=""></label>
-</div>
-<span class="casdkLabel" style=""><span class="icon-droplet2"></span> Uninstall CASDK
-</div>
-<div class="w3-container col-md-3 col-sm-6 col-xs-6 form-group1">
-<div class="menuCheck statusbar">
-<input type="checkbox" value="statusbar" id="statusbarTweaks" name="statusbarTweaks" checklist-model="user.mainOps" checklist-value="mainOps.mainmenu.id" />
-<label for="statusbarTweaks" data-toggle="tooltip" data-placement="auto bottom" title="{{mainOps.mainmenu.toolTip | htmlToPlaintext}}"></label>
-</div>
-<span class="statusbarlabel" style=""><span class="icon-star2"></span> {{mainOps.mainmenu.label}}
-</span>
-<br />
-<div class="menuCheck uistyle">
-<input type="checkbox" value="uistyle" id="uistyleTweaks" name="uistyle" checklist-model="user.mainOps" checklist-value="mainOps.uistyle.id" />
-<label for="uistyleTweaks" data-toggle="tooltip" data-placement="auto bottom" title="{{mainOps.uistyle.toolTip | htmlToPlaintext}}"></label>
-</div>
-<span class="uistyleLabel" style=""><span class="icon-palette"></span> {{mainOps.uistyle.label}}
-</span>
-</div>
-<div class="w3-container col-md-3 col-sm-6 col-xs-6 form-group1">
-<div class="menuCheck backup">
-<input type="checkbox" value="backup" id="backupJCI" name="backupJCI" checklist-model="user.mainOps" checklist-value="mainOps.backup.id" />
-<label for="backupJCI" data-toggle="tooltip" data-placement="auto bottom" title="{{mainOps.backup.toolTip | htmlToPlaintext}}"></label>
-</div>
-<span class="backupLabel" style=""><span class="icon-save2"></span> {{mainOps.backup.label}}
-</span>
-<br />
-<div class="menuCheck colors">
-<input type="checkbox" value="colors" id="colors" name="colors" checklist-model="user.mainOps" checklist-value="mainOps.colors.id" />
-<label for="colors" data-toggle="tooltip" data-placement="auto bottom" title="{{mainOps.colors.toolTip}}"></label>
-</div>
-<span class="colorLabel" style=""><span class="icon-droplet2"></span> {{mainOps.colors.label}}
-</span>
-</div>
-<div class="w3-container form-group1 col-md-3 col-sm-6 col-xs-6">
-<div class="menuCheck wifi">
-<input type="checkbox" value="wifi" id="wifi" name="wifi" checklist-model="user.mainOps" checklist-value="mainOps.wifi.id" />
-<label for="wifi" data-toggle="tooltip" data-placement="auto bottom" title="{{mainOps.wifi.toolTip | htmlToPlaintext}}"></label>
-</div>
-<span class="wifiLabel" style=""><span class="icon-wifi"></span> {{mainOps.wifi.label}}
-</span>
-<br />
-<div class="menuCheck ssh">
-<input type="checkbox" value="ssh" id="sshbringback" name="sshbringback" checklist-model="user.mainOps" checklist-value="mainOps.sshbringback.id" />
-<label for="sshbringback" data-toggle="tooltip" data-placement="auto bottom" title="{{mainOps.sshbringback.toolTip | htmlToPlaintext}}"></label>
-</div>
-<span class="sshLabel" style=""><span class="icon-podcast"></span> {{mainOps.sshbringback.label}}
-</span>
-</div>
-</div-->
+
 <div class="w3-container w3-row ng-scope w3-center" id="casdkInstallBtns">
   <div class="btn-group btn-group-justified">
     <div class="btn-group">
@@ -137,109 +75,71 @@
           <div class="col-lg-4 col-md-4 col-sm-4 mb">
             <div class="steps pn">
               <input id='op3' name='op3' type='checkbox' ng-model="apps.simpledashboard" ng-value="apps.simpledashboard"/>
-              <label for='op3'>Simple Dashboard</label>
+              <label for='op3' ng-show="visibleApps.simpledashboard">Simple Dashboard</label>
               <input id='op2' name='op2' type='checkbox' ng-model="apps.vdd" ng-value="apps.vdd"/>
-              <label for='op2'>VDD (Vehicle Diagnostic Data)</label>
+              <label for='op2' ng-show="visibleApps.vdd">VDD (Vehicle Diagnostic Data)</label>
               <input id='op4' name='op4' type='checkbox' ng-model="apps.gpsspeed" ng-value="apps.gpsspeed"/>
-              <label for='op4'>GPS Speeometer</label>
-              <input id='op1' name='op1' type='checkbox' ng-model="apps.multidash" ng-value="apps.multidash" />
-              <label for='op1'>Multidash</label>
-              <!--input id='op5' name='op5' type='checkbox' ng-model="apps.devtools" ng-value="apps.devtools"/>
+              <label for='op4' ng-show="visibleApps.gpsspeed">GPS Speeometer</label>
+              <input id='op1' name='op1' type='checkbox' ng-model="apps.multidash" ng-value="apps.multidash"/>
+              <label for='op1' ng-show="visibleApps.multidash">Multidash {{visibleApps.multidash}}</label>
+              <!--input id='op5' name='op5' type='checkbox' ng-model="apps.devtools" ng-value="apps.devtools" ng-show="visibleApps.devtools"/>
               <label for='op5'>Dev Tools</label-->
               <input type="button" id="CASDKinfoBtn" class="w3-tooltip w3-btn w3-large w3-green CASDKinfoBtn" value="More Info">
               <input type="button" class="w3-btn w3-large" onclick="externalLink('casdk')" value="Develop CASDK Apps">
             </div>
           </div><!--/col-md-4 -->
         </div>
-        <!--div class="btn-group btn-group-justified">
-        <div class="btn-group">
-        <button type="button" class="btn btn-theme" ng-model="user.casdk.inst" ng-value="user.casdk.inst">Install CASDK</button>
-      </div>
-      <div class="btn-group">
-      <button type="button" class="btn btn-theme"></button>
-    </div>
-    <div class="btn-group">
-    <button type="button" class="btn btn-theme" ng-model="user.casdk.uninst" ng-value="user.casdk.uninst">Uninstall CASDK</button>
-  </div>
-</div>
-</div>
-</div-->
-</div>
-</div>
-</nav>
 
-<div class="showback">
-  <div class="centered">
-    <span id="CASDKinfo" class="w3-tag w3-text">
-      <span class="w3-display-topright CASDKinfoBtn w3-closebtn w3-hover-deep-orange w3-text-blue w3-xxlarge w3-display-topright w3-text-shadow w3-opacity w3-padding">&times;</span>
-      <div class="centered">
-        <h2>CASDK</h2>Is a very exciting addition to AIO and opens the door to many possibilities.  Developers can use the npm package "casdk" to create a ready-to-go app template in seconds.  Using JavaScript and CSS, developers can easily build amazing apps on the CASDK framework.
-        <div class="w3-container">
-          <div class="w3-panel w3-center">Here are 2 more apps that can be installed specifically for developers:
+      </div>
+    </div>
+  </nav>
+
+  <div class="showback">
+    <div class="centered">
+      <span id="CASDKinfo" class="w3-tag w3-text">
+        <span class="w3-display-topright CASDKinfoBtn w3-closebtn w3-hover-deep-orange w3-text-blue w3-xxlarge w3-display-topright w3-text-shadow w3-opacity w3-padding">&times;</span>
+        <div class="centered">
+          <h2>CASDK</h2>Is a very exciting addition to AIO and opens the door to many possibilities.  Developers can use the npm package "casdk" to create a ready-to-go app template in seconds.  Using JavaScript and CSS, developers can easily build amazing apps on the CASDK framework.
+          <div class="w3-container">
+            <div class="w3-panel w3-center">Here are 2 more apps that can be installed specifically for developers:
+            </div>
+            <span div class="ck-button w3-dropdown-hover">
+              <label  ng-show="visibleApps.terminal">
+                <input type="checkbox" ng-value="apps.terminal" ng-model="apps.terminal">
+                <span>Terminal App</span>
+                <div class="w3-dropdown-content appimg">
+                  <img src="files/screenshots/terminal.png" class="" onclick="$(this).parent().hide()">
+                </div>
+              </label>
+            </span>
+            <span div class="ck-button w3-dropdown-hover">
+              <label ng-show="visibleApps.devtools">
+                <input type="checkbox" ng-value="apps.devtools" ng-model="apps.devtools">
+                <span>Dev Tools App</span>
+                <div class="w3-dropdown-content appimg">
+                  <img src="files/screenshots/devtools.png" class="" onclick="$(this).parent().hide()">
+                </div>
+              </label>
+            </span>
           </div>
-          <span div class="ck-button w3-dropdown-hover">
-            <label>
-              <input type="checkbox" ng-value="apps.terminal" ng-model="apps.terminal">
-              <span>Terminal App</span>
-              <div class="w3-dropdown-content appimg">
-                <img src="files/screenshots/terminal.png" class="" onclick="$(this).parent().hide()">
-              </div>
-            </label>
-          </span>
-          <span div class="ck-button w3-dropdown-hover">
-            <label>
-              <input type="checkbox" ng-value="apps.devtools" ng-model="apps.devtools">
-              <span>Dev Tools App</span>
-              <div class="w3-dropdown-content appimg">
-                <img src="files/screenshots/devtools.png" class="" onclick="$(this).parent().hide()">
-              </div>
-            </label>
+          <div class="w3-panel">The CASDK framework was originally designed to be run entirely from an SD card.  With AIO the framework and apps are installed onto system disk so that apps will be able to run without an SD Card connected.  CASDK apps can still be run from an SD card by selecting the option below.  If the SD card is connected during installation AIO will offer to install the apps directly to the SD card.  Apps can also be installed by copying the app folder to "/apps" on the root of the SD Card.  Also the name of the app folder needs to be added to "/apps/apps.js."  Using this method any CASDK app can be used even one you have developed yourself!</div>
+          <div class="w3-container w3-center">
+            <input id="casdkTOsd" type="checkbox" class="w3-check" ng-value="apps.sdcard" ng-model="apps.sdcard">
+            <label for="casdkTOsd">RUN CASDK APPS FROM SD CARD<label>
+            </div>
           </span>
         </div>
-        <div class="w3-panel">The CASDK framework was originally designed to be run entirely from an SD card.  With AIO the framework and apps are installed onto system disk so that apps will be able to run without an SD Card connected.  CASDK apps can still be run from an SD card by selecting the option below.  If the SD card is connected during installation AIO will offer to install the apps directly to the SD card.  Apps can also be installed by copying the app folder to "/apps" on the root of the SD Card.  Also the name of the app folder needs to be added to "/apps/apps.js."  Using this method any CASDK app can be used even one you have developed yourself!</div>
-        <div class="w3-container w3-center">
-          <input id="casdkTOsd" type="checkbox" class="w3-check" ng-value="apps.sdcard" ng-model="apps.sdcard">
-          <label for="casdkTOsd">RUN CASDK APPS FROM SD CARD<label>
-          </div>
-        </span>
+      </div><!-- /showback -->
+      <div class="w3-container w3-card-8 w3-center">
+        <div class="w3-panel">
+          <button id="CASDKinfoBtn" class="w3-tooltip w3-btn w3-green CASDKinfoBtn">More Info.</button>
+        </div>
       </div>
-    </div><!-- /showback -->
-    <div class="w3-container w3-card-8 w3-center">
-      <div class="w3-panel">
-        <button id="CASDKinfoBtn" class="w3-tooltip w3-btn w3-green CASDKinfoBtn">More Info.</button>
-      </div>
-    </div>
 
-    <!--button class="w3-btn w3-large" onclick="externalLink('casdk')">Develop CASDK Apps</button-->
-    <!--h4><i class="fa fa-angle-right"></i> Gritter Examples</h4>
-    <p>Click on below buttons to check it out.</p>
-    <a id="add-regular" class="btn btn-default btn-sm" href="javascript:;">Regular</a>
-    <a id="add-sticky" class="btn btn-success  btn-sm" href="javascript:;">Sticky</a>
-    <a id="add-without-image" class="btn btn-info  btn-sm" href="javascript:;">Imageless</a>
-    <a id="add-gritter-light" class="btn btn-warning  btn-sm" href="javascript:;">Light</a>
-    <a id="remove-all" class="btn btn-danger  btn-sm" href="general.html#">Remove all</a-->
-
-    <!-- Test Panel (Remove for distribution version)  - ->
-    <div id="TestPanel" class="testpanel w3-display-bottomleft w3-dark-grey w3-padding w3-card-2 draggable w3-hide" style="bottom:-60px;background:rgba(255, 255, 255, 0.8);position:fixed;">
-    <span class="w3-closebtn " onclick="$(this).parent().toggleClass('w3-hide')">&times;</span>
-    <center style="margin-bottom:100px">
-    <a href="" onclick="ipc.send('open-info-window')">INFO</a>
-    <div style="white-space:nowrap;" > user.lang {{ user.lang }}</div>
-    <div style="white-space:nowrap;" > user.options {{ user.options | json }}</div>
-    <div style="white-space:nowrap;" > user.mainOps {{ user.mainOps | json }}</div>
-    <div style="white-space:nowrap;" > user.colors {{ user.colors}}</div>
-    <div style="white-space:nowrap;" > user.useColorBG {{ user.useColorBG}}</div>
-    <div style="white-space:nowrap;" > user.speedcamOps {{ user.speedcamOps}}</div>
-    <div style="white-space:nowrap;" > user.d2sbOps {{ user.d2sbOps}}</div>
-    <div style="white-space:nowrap;" > user.speedoOps {{ user.speedoOps | json }}</div>
-    <p id="demo"></p>
-  </center>
-</div>
-<!- - END REMOVE TestPanel -->
-</section>
-</div>
-<script src="./assets/vendor/gritter.js"></script>
-<script src="./assets/js/gritter-conf.js"></script>
-<script>
-$('.CASDKinfoBtn').click(function(){$('#CASDKinfo').toggleClass('w3-show')})
+    </section>
+  </div>
+  <script src="./assets/vendor/gritter.js"></script>
+  <script src="./assets/js/gritter-conf.js"></script>
+  <script>
+  $('.CASDKinfoBtn').click(function(){$('#CASDKinfo').toggleClass('w3-show')})
 </script>

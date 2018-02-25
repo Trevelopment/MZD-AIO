@@ -16,82 +16,90 @@
 \* ************************************************************************** */
 -->
 <div id="contact-form" class="card card-1">
-	<div>
-		<h1>MZD-AIO-TI Contact Form</h1>
-		<h4>Have a question, suggestion, feedback, or just want to say hi?</h4>
-	</div>
-	<p id="failure">Message Was Not Sent. Try Again..</p>
-	<p id="success">Your message was sent successfully. Thank you!</p>
+  <div>
+    <h1>MZD-AIO-TI Contact Form</h1>
+    <h4>Have a question, suggestion, feedback, or just want to say hi?</h4>
+    <h5>Please check the <a href onclick="externalLink('faqs')">FAQ page</a> before asking for help</h5>
+    <h5>That is what it is there for</h5>
+  </div>
+  <p id="failure">Message Was Not Sent. Try Again..</p>
+  <p id="success">Your message was sent successfully. Thank you!</p>
 
-	<form id="form1" class="form" action="https://trevelopment.com/mzdmail.php" method="post" target="mailform">
-		<div>
-			<label for="name" class="w3-label">
-				<span class="required">Name: *</span>
-				<input class="w3-input" type="text" id="name" name="name" value="" placeholder="Your Name" required="required" tabindex="1" />
-			</label>
-		</div>
-		<div>
-			<label for="email" class="w3-label">
-				<span class="required">Email: *</span>
-				<input class="w3-input" type="email" id="email" name="email" value="" placeholder="Your Email" tabindex="2" required="required" />
-			</label>
-		</div>
-		<div>
-			<label for="subject" class="w3-label">
-				<span>Subject: </span>
-				<select class="w3-select" id="subject" name="subject" tabindex="4">
-					<option value="Feedback">Feedback</option>
-					<option value="Question">Question</option>
-					<option value="Suggestion">Suggestion</option>
-					<option value="General">General</option>
-					<option value="Help">Help</option>
-					<option value="Bug">Bug</option>
-				</select>
-			</label>
-		</div>
-		<div>
-			<label for="message" class="w3-label">
-				<span class="required">Message: *</span>
-				<textarea class="w3-input" id="message" name="message" placeholder="Do you love MZD-AIO-TI?  Have you developed a tweak that should be included?  Did you find a bug?  Type your message here.
-**IF YOU ARE ASKING FOR HELP: Please include FIRMWARE VERSION and what TWEAKS you have INSTALLED in your message to help me dignose and resolve your issue.
+  <form id="form1" class="form" action="https://trevelopment.com/mzdmail.php" method="post" target="mailform">
+    <div>
+      <label for="name" class="w3-label">
+        <span class="required">Name: *</span>
+        <input class="w3-input" type="text" id="name" name="name" value="" placeholder="Your Name" required="required" tabindex="1" />
+      </label>
+    </div>
+    <div>
+      <label for="email" class="w3-label">
+        <span class="required">Email: *</span>
+        <input class="w3-input" type="email" id="email" name="email" value="" placeholder="Your Email" tabindex="2" required="required" />
+      </label>
+    </div>
+    <div>
+      <label for="subject" class="w3-label">
+        <span>Subject: </span>
+        <select class="w3-select" id="subject" name="subject" tabindex="4">
+          <option value="Feedback">Feedback</option>
+          <option value="Question">Question</option>
+          <option value="Suggestion">Suggestion</option>
+          <option value="General">General</option>
+          <option value="Help">Help</option>
+          <option value="Bug">Bug</option>
+        </select>
+      </label>
+    </div>
+    <div>
+      <label for="message" class="w3-label">
+        <span class="required">Message: *</span>
+        <textarea class="w3-input" id="message" name="message" placeholder="Do you love MZD-AIO-TI?  Have you developed a tweak that should be included?  Did you find a bug?  Type your message here.
+**IF YOU ARE ASKING FOR HELP:
+Please check the mazdatweaks.com FAQ page first.**
 ~Trez" tabindex="3" required="required"></textarea>
-			</label>
-		</div>
-		<input class="w3-hide" name="AIOver" id="AIOver">
-		<script>
-			$(function(){
-				$('#AIOver').val(getAIOver());
-				$('[type="submit"]').click(function(){
-					if (validateForm()) {
-						$('.featherlight').hide();
-					}
-				})
-		})
-		function validateForm()
-		{
-		  "use strict";
-		  var title = $("#name").val();
-		  var err=true;
-		  if (title=="" || title==null) {
-		    $("#name").addClass("validation");
+      </label>
+    </div>
+    <input class="w3-hide" name="AIOver" id="AIOver">
+    <script>
+    $(function(){
+      $('#AIOver').val(getAIOver());
+      $('[type="submit"]').click(function(){
+        if (validateForm()) {
+          $('.featherlight').hide();
+        }
+      })
+      $('#subject').change(function () {
+        if ($('#subject option:selected').val() === "Help") {
+          externalLink('faqs')
+        }
+      })
+    })
+    function validateForm()
+    {
+      "use strict";
+      var title = $("#name").val();
+      var err=true;
+      if (title=="" || title==null) {
+        $("#name").addClass("validation");
 
-		    var err= false;
-		  } else {  $("#name").removeClass("validation");}
-		  var email = $("#email").val();
-		  if (!(/(.+)@(.+){2,}\.(.+){2,}/.test(email))) {
-		    $("#email").addClass("validation");
+        var err= false;
+      } else {  $("#name").removeClass("validation");}
+      var email = $("#email").val();
+      if (!(/(.+)@(.+){2,}\.(.+){2,}/.test(email))) {
+        $("#email").addClass("validation");
 
-		    var err= false;
-		  } else {  $("#email").removeClass("validation"); }
-		  var title = $("#message").val();
-		  if (title=="" || title==null) {
-		    $("#message").addClass("validation");
-		    var err= false;
-		  } else{ $("#message").removeClass("validation"); }
-		  return err;
-		}
-		</script>
-		<input class="w3-btn w3-blue w3-hover-green" tabindex="5" type="submit" id="sendmail" name="sendmail" value="SEND">
-		<div class="realMail">Or you can send an email to <a href="" onclick="shell.openExternal('mailto:aio@mazdatweaks.com?subject=MZD-AIO-TI%20v2.7.6')">aio@mazdatweaks.com</a></div>
-	</form>
+        var err= false;
+      } else {  $("#email").removeClass("validation"); }
+      var title = $("#message").val();
+      if (title=="" || title==null) {
+        $("#message").addClass("validation");
+        var err= false;
+      } else{ $("#message").removeClass("validation"); }
+      return err;
+    }
+    </script>
+    <input class="w3-btn w3-blue w3-hover-green" tabindex="5" type="submit" id="sendmail" name="sendmail" value="SEND">
+    <div class="realMail">Or you can send an email to <a href="" onclick="shell.openExternal('mailto:aio@mazdatweaks.com?subject=MZD-AIO-TI%20v2.7.8')">aio@mazdatweaks.com</a></div>
+  </form>
 </div>

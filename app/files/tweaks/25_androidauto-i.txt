@@ -1,9 +1,8 @@
 # Install Android Auto Headunit App
-show_message "INSTALL ANDROID AUTO HEADUNIT APP ..."
-log_message "====************  INSTALL ANDROID AUTO HEADUNIT APP v1.08...*********===="
-log_message "===          Begin Installation Of Android Auto Headunit App          ==="
+show_message "INSTALL ANDROID AUTO HEADUNIT APP v${AA_VER} ..."
+log_message "====************  INSTALL ANDROID AUTO HEADUNIT APP v${AA_VER}...*********===="
 TESTBKUPS=1
-if [ "${TESTBKUPS}" = "1" ]
+if [ $TESTBKUPS -eq 1 ]
 then
 	cp /jci/scripts/stage_wifi.sh "${MYDIR}/bakups/test/stage_wifi_androidauto-before.sh"
 	cp /jci/opera/opera_dir/userjs/additionalApps.json "${MYDIR}/bakups/test/additionalApps_androidauto-1_before.json"
@@ -106,7 +105,7 @@ if [ $SOUND_X -eq 1 ]; then
 	fi
 fi
 
-if [ "${TESTBKUPS}" = "1" ]
+if [ $TESTBKUPS -eq 1 ]
 then
 	cp -a /jci/scripts/stage_wifi.sh ${MYDIR}/bakups/test/stage_wifi_androidauto-after.sh
 	cp -a /jci/opera/opera_dir/userjs/additionalApps.json "${MYDIR}/bakups/test/additionalApps_after-AA.json"

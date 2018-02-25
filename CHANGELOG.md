@@ -1,9 +1,175 @@
 # MZD-AIO-TI 2.x.x CHANGELOG  [![Download](https://api.bintray.com/packages/trevelopment/MZD-AIO-TI/AIO/images/download.svg?version=MZD-AIO-TI)](http://dl.mazdatweaks.win)
 ##### FOR [AIO v1.x.x CHANGELOG](https://github.com/Siutsch/AIO---All-in-one-tweaks/blob/master/CHANGELOG.md) or visit [MazdaTweaks.com]
-[Full Changelog](changelog.htm)  
-### 2.7.0
 
-## The software distribution service bintray.com has cancelled my account because they had recently seen the DMCA Takedown notice in the MZD-AIO-TI GitHub repository from March 6th, 2017.  Although I explained that the NNG files had been removed immediately upon receiving the notice they only agreed to leave the versions that had already been uploaded (Ending with v2.6.8) but would block my account from uploading any future versions. Therefor Automatic updates may of may not work in this version until I find another distribution solution.  So in case new updates do not download automatically "Check For Update" has been added in the top menu bar under the "Download" menu.
+### 2.7.6
+
+### MZD-AIO GUI Changes/Fixes:
+- Fixed "Bootbox is not defined" error preventing AIO from running for some.
+- Alternate Layout Toggle (Full Width Tweak Choices & Options)
+- Changed Up Notification Style
+- Phase 1 of GUI Style Redesign
+- Autorun & Recovery and Full System Restore links in dropdown menu by "Start Compilation"
+- Home Button brings you back to main page. (if you ever wondered what that was for)
+
+### Video Player v3.3.1
+* Fixed the unicode list retrieve and removes the "only unicode" method
+*	Disabled the log functions as they are not needed now
+* Video Name shows in a Statusbar Notification at the beginning of each video
+*	Now it takes the time from gplay app
+*	**Music player with MP3 & FLAC support** (From the Music folder on the USB Drive).
+*	Adds the FLAC codec to the gstreamer libs
+*	It shows the metadata of the files when playing music
+*   Other small bug fixes
+> * __*Pause Audio Hack*__
+      * **Pressing the "Entertainment" (Music) button will pause audio**
+      * **This only works ONCE AFTER OPENING THE VIDEO PLAYER APP AND BEFORE PLAYING THE FIRST VIDEO**
+      * **Audio has to be playing from USB or button will function normally**
+      * After it has been done once or the first video is played the entertainment button will function normally
+      * You will see a split-second context change... that is the only way I could get the audio to pause.
+
+### AIO Tweaks App v0.5
+- Fixed The Freezing Issue
+- Added SBN Test Button (Status Bar Notification)
+- ADB Button ($ adb devices -l)
+
+### Speedometer v5.1
+- Added values (set in "speedometer-config.js")
+  - Battery SOC (State of charge iStop only)
+  - Engine Load (Only shows 0 or 1 for now)
+  - Gear Lever Position
+- Gear Position will show correct gear for Manual Transmissions (delayed by 1 second)
+- Fixed non working values (idle time, engine idle time, engine top speed)
+- To reuse current "speedometer-config.js" file just delete "config/speedometer_bar/speedometer-config.js" before installing
+- CHANGED: WebSocket port from 55554 => 9969
+- CHANGED: Multicontroller Tilt Down Now Toggles the SPEED BAR from Vehicle Speed to Engine Speed
+
+### USB Audio MOD
+- Statusbar Notifications On Every Screen At The Start Of Each Song!
+  - SBN for 5 Seconds: "Artist - Song"
+  - Not Android Auto Screens (Sorry its not possible to cross surfaces like that)
+- Change the "Powered By Gracenote®" flash text to whatever you want!
+  - Clear text field blank to disable altogether.
+  - If flash text is not showing, genre will show on that line for about 10 seconds (If it is in the metadata)
+
+### Other Changes/Fixes
+- *Tweak Installer:*
+  - When installing apps, all common files (addon-common and opera folders) for are now in /config/jci/...
+  - Cleaned up app install scripts to be more uniform and efficient
+  - No more app list patch for v59! (Apps are added to the app ctxt list dynamically.)
+  - Log files are saved in bakup folder so they are not lost if install accidently runs twice
+- *Other Tweaks:*
+  - Added Language Support for 'Reverse Camera Safety Warning' Tweak
+    - Ukrainian, Japanese, Chinese, Korean, Thai, Hebrew, Swedish, Slovak
+  - Added Ukrainian to 'Remove Message Replies' Tweak
+
+### 2.7.4
+
+##### Android Auto v1.08
+- Fixed music not resuming after phone calls
+- More code optimizations
+- Navigation Fixes
+- All Audio Focus transitions are smooth
+
+##### Speedometer v5.0  
+- Major performance improvements to all styles and variants. (All variants use the same data collection script)
+- Every variation value is configurable and toggleable
+  - Added option for starting temperature (&deg;C &amp; &deg;F)
+  - and fuel efficiency (km/L &amp; L/100km)
+- **Digital Bar Speedometer Mod**
+  - 4 values in the right column
+  - Cycle through 3 groups of 5 values on the bottom row.
+  - Including Main speed that's 20 values!
+  - Command knob "select" to change bottom bar values.
+  - Tilt up to toggle mph & km/h
+  - Tilt right to
+    - Toggle km/L & L/100km (in km/h mode)
+    - Toggle &deg;C &amp; &deg;F (in mph mode)
+  - Tilt left to toggle background.
+  - Tilt down to toggle the speedometer in statusbar extra values between Heading/Altitude & Temperature/Fuel Efficiency
+  - Fully Customizable - Value positions can be customized in and easy and intuitive way
+    - Instructions Included in Speedometer Options (When Bar Speedometer is Selected)
+- **Speedometer in Statusbar Alternate Values**
+  - Outside Temperature & Current Drive Fuel Efficiency
+  - Tap the statusbar speedometer to toggle the extra values (same as tilt down when speedometer is open)
+- **Digital Clock Mod**
+  - Use the font from the digital bar speedometer on the statusbar speedometer & clock.
+
+##### Video Player v3.2
+*	I need a lot of color in my life so now you can choose between 8!
+  * Red, Green, Blue, Violet, Orange, Teal, Slate, and White.
+* Merged improvements by *VIC_BAM85*
+  *	Sort order now is case insensitive (only for ASCII mode Not Unicode)
+  *	You start with selection on the last played video
+  *	Small fixes on the FF / RW in order to make only one call
+  *	Added a plugin to the cmu in order to allow fullscreen toggle (commander up while playing) so it changes while playing the video, resize and rotate (not available on the GUI yet)
+  *	Delete the gstreamer registry on start in order to fix the plugin repository (Resets to the one without the codecs at car restart)
+
+##### Swapfile
+- Fixed swap memory mounting on boot
+- Improvements to how swapfile is mounted and order of apps initializing during boot
+
+##### All Apps
+- Now use built in framework transitions for smoother opening and closing
+- Improvements with initialization methods & startup scripts
+
+### 2.7.2
+
+##### Android Auto v1.07
+- Bluetoth Calling & Video Focus Issues *__fixed__*
+- Making and receiving calls work perfectly
+- Release Audio Focus (To Radio, USB Audio, etc.) with FAV (<span class="icon-star"></span>) Button
+- Control USB Audio with Next/Prev steering wheel buttons when it has Audio Focus
+- Fix for GPS, Mazda Navigation and HUD features will now function correctly
+- Black screen issues are memory related and can be avoided by minimizing the amount of memory being used by the system. This can be done by:
+  - Removing Nav SD card and other connected USB devices.
+  - Speedometer and CastScreen apps use active memory, uninstalling them will improve AA performance.
+  - Reboot the system, connect your phone after reboot.
+  - Use the Swapfile for additional memory.
+
+##### VideoPlayer v3.1
+- Fully Multicontroller Navigable
+- Navigate "Video Options/Info" panel with Control Knob.
+  - Rotate to choose
+  - Push to toggle option
+  - Tilt up/down to close options/info panel
+  - Tilt left right to choose between info and options
+- Change Highlight Color
+  - Choices: Red, Blue, Green, Pink
+- Fixed bug: random never played the last video in the list
+
+##### AIO Tweaks v0.4
+- Mount SwapFile
+  - Mount an unmounted SwapFile
+- Some shell commands with output (command shown in message when one is used)
+  - Running Processes: ps
+  - Disk Space: df -h
+  - Memory Info: cat /proc/swaps && cat /proc/meminfo
+  - E-mail me for requests/suggestions
+- Select Tweaks with command knob
+  - Rotate to choose
+  - Push to Select
+- Scroll message box by rotating/tilting command knob
+  - Tilt up at the top and pushing select close the message box
+  - Tilt up to reopen
+  - Works well when checking headunit.log
+- Irrelevant options are now hidden
+  - Ex: If CastScreen is not installed the CastScreen Start/Stop options will be hidden
+- General little fixes
+###### There are MANY failed legitimate attempts in the AIO Tweaks App code, most notable of which include "Show Backup Camera," "Take Screenshot" and global "Pause/Play Music". If you think you can get something to work that I have not, go for it!
+
+##### Speedometer to StatusBar
+- Now Speedometer to StatusBar moves the 'volume meter' and 'contact loading meter' a little bit to the left so they do not overlap the numbers.
+
+#### Swapfile
+- Choose to mount on boot (on by default) or copy without mounting.
+  - Mounted automatically when starting the VideoPlayer App
+  - Can be mounted manually with the AIO Tweaks App
+  - **Swapfile can be copied by itself onto the root of a separate USB drive containing music and/or videos and mounted during run-time as needed**
+
+#### App Changes
+- Skip Confirmation choice will persist
+
+### 2.7.0
 
 ##### Android Auto v1.04
 - __*Bluetooth Call Bug Fixed!!!*__ *Big thanks to @lmagder for fixing the headunit code after @Trezdog44 found the root of the issue with the 'Bluetooth call patch'*
@@ -72,8 +238,8 @@
 - Autorun Change: Choose options after pressing 'autorun' button.
   - Options:
     - ID7_Recovery Scripts Pack
-    - **Automatic WiFi App**
-      - Starts WiFi app on boot starts DHCP Server IP: 192.168.53.1
+    - **Automatic WiFi AP**
+      - Starts WiFi AP on boot starts DHCP Server IP: 192.168.53.1
       - MUST change values for 'YourSSID' &amp; 'YourSSIDPassword' to run.
         - AIO will prompt for these values and apply them while building installer.
     - **SSH Over ADB**

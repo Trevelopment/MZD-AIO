@@ -25,7 +25,7 @@ module.exports = function update (options) {
     autoUpdater.checkForUpdates()
   } catch (e) {
     console.error(e.message)
-    //throw e
+    // throw e
   }
 
   autoUpdater.on('error', (e) => {
@@ -41,7 +41,7 @@ module.exports = function update (options) {
   })
 
   autoUpdater.on('update-available', () => {
-    while(win === null) {
+    if (win === null) {
       win = BrowserWindow.getFocusedWindow()
     }
     console.info('Found available update!')
@@ -51,7 +51,7 @@ module.exports = function update (options) {
   })
 
   autoUpdater.on('update-not-available', () => {
-    while(win === null) {
+    if (win === null) {
       win = BrowserWindow.getFocusedWindow()
     }
     win.webContents.send('update-not-available')
@@ -60,7 +60,6 @@ module.exports = function update (options) {
 
   autoUpdater.on('update-downloaded', () => {
     console.info('Update package downloaded')
-    win.webContents.send('update-downloaded')
     ipc.emit('update-downloaded', autoUpdater)
   })
 }

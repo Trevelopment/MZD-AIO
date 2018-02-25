@@ -108,7 +108,7 @@ CustomApplicationsHandler.register("app.multidash", new CustomApplication({
 		 * (statusbarHideHomeButton) hides the home button in the statusbar
 		 */
 
-		// statusbarHideHomeButton: false,
+		 statusbarHideHomeButton: false,
 
 		/**
 		 * (hasLeftButton) indicates if the UI left button / return button should be shown

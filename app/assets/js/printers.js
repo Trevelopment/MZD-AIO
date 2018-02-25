@@ -8,12 +8,12 @@ window.addEventListener('load', () => {
 })
 
 // Send printer events
-function printTXTTest (i) {
+function printTXTTest(i) {
   console.log('Printing TXT test on', window.printers[i].name)
   ipc.send('print-txt-test', window.printers[i])
 }
 
-function printPDFTest (i) {
+function printPDFTest(i) {
   console.log('Printing PDF test on', window.printers[i].name)
   ipc.send('print-pdf-test', window.printers[i])
 }

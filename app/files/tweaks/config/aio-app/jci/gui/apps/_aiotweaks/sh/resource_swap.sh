@@ -11,8 +11,8 @@ show_message()
 
 CMD="$1"
 shift
-
-if [ "$CMD" = "" ] || ["$CMD" = "mount" ] ; then
+echo $CMD
+if [ "$CMD" == "" ] || [ "$CMD" == "mount" ] ; then
   USBDRV="resources $(ls /mnt | grep sd)"
   for USB in ${USBDRV}
   do
@@ -30,7 +30,7 @@ if [ "$CMD" = "" ] || ["$CMD" = "mount" ] ; then
   exit 0
 fi
 
-if ["$CMD" = "unmount" ] ; then
+if [ "$CMD" == "unmount" ] ; then
   USBDRV="resources $(ls /mnt | grep sd)"
   for USB in ${USBDRV}
   do

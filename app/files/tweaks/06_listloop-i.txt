@@ -5,15 +5,15 @@ log_message "=========************** INSTALL LIST_LOOP_MOD ... *************====
 TRACKORDER_LIST=0
 # Compatibility Check
 log_message "===       FW ${CMU_SW_VER} detected, copy matching List2Ctrl.js       ==="
-if [ "${COMPAT_GROUP}" = "4" ] || [ "${COMPAT_GROUP}" = "5" ]
+if [ $COMPAT_GROUP -eq 4 ] || [ $COMPAT_GROUP -eq 5 ]
 then
 	TRACKORDER_LIST=1
 	TRACKORDER_LIST_FILE="59"
-elif [ "${COMPAT_GROUP}" = "3" ]
+elif [ $COMPAT_GROUP -eq 3 ]
 then
 	TRACKORDER_LIST=1
 	TRACKORDER_LIST_FILE="59.330"
-elif [ "${COMPAT_GROUP}" = "2" ]
+elif [ $COMPAT_GROUP -eq 2 ]
 then
 	TRACKORDER_LIST=1
 	TRACKORDER_LIST_FILE="58"
@@ -25,19 +25,23 @@ then
 	cp -a /jci/gui/common/controls/List2/js/List2Ctrl.js /jci/gui/common/controls/List2/js/List2Ctrl.js.org
 	log_message "===      Backup of /jci/gui/common/controls/List2/js/List2Ctrl.js     ==="
 fi
-if [ "${KEEPBKUPS}" = "1" ]
+if [ $KEEPBKUPS -eq 1 ]
 then
 	cp -a /jci/gui/common/controls/List2/js/List2Ctrl.js.org "${MYDIR}/bakups/"
 	aio_info \"List2Ctrl.js.org\",
 fi
 # Check for Remove Beep and Shorter Delay Mods to reapply after copying List2Crl.js
-if grep "No More Beep" /jci/gui/common/controls/List2/js/List2Ctrl.js
+if grep -q "No More Beep" /jci/gui/common/controls/List2/js/List2Ctrl.js
 then
 	REMOVE_BEEP=1
+else
+	REMOVE_BEEP=0
 fi
-if grep "Shorter Delay Mod" /jci/gui/common/controls/List2/js/List2Ctrl.js
+if grep -q "Shorter Delay Mod" /jci/gui/common/controls/List2/js/List2Ctrl.js
 then
 	SHORTER_DELAY_MOD=1
+else
+	SHORTER_DELAY_MOD=0
 fi
 
 # Compatibility check falls into 4 groups:
@@ -46,11 +50,11 @@ fi
 # 58.00.XXX ($COMPAT_GROUP=2)
 # 55.XX.XXX - 56.XX.XXX ($COMPAT_GROUP=1)
 # If your firmware version falls out of those ranges email the address below
-if [ "${TRACKORDER_LIST}" = "1" ]
+if [ $TRACKORDER_LIST -eq 1 ]
 then
 	cp -a "${MYDIR}/config/list-loop/jci/gui/common/controls/List2/js/List2Ctrl.${TRACKORDER_LIST_FILE}.js" /jci/gui/common/controls/List2/js/List2Ctrl.js
 	log_message "=== Copied /jci/gui/common/controls/List2/js/List2Ctrl.js from SD card for ${CMU_SW_VER} ==="
-elif [ "${COMPAT_GROUP}" = "1" ]
+elif [ $COMPAT_GROUP -eq 1 ]
 then
 cp -a "${MYDIR}/config/list-loop/jci/gui/common/controls/List2/js/List2Ctrl.js" /jci/gui/common/controls/List2/js/
 log_message "===  Copied /jci/gui/common/controls/List2/js/List2Ctrl.js from USB   ==="
@@ -59,12 +63,12 @@ else
 	log_message "===          E-mail aio@mazdatweaks.com for Compatibility Check       ==="
 fi
 # Re-apply these if they were installed before
-if [ "${REMOVE_BEEP}" = "1" ]
+if [ $REMOVE_BEEP -eq 1 ]
 then
 	sed -i 's/return framework.common.beep(pressType, eventCause);/\/\/ return framework.common.beep(pressType, eventCause); \/\/No More Beeps/g' /jci/gui/common/controls/List2/js/List2Ctrl.js
 	log_message "===              Reapplied Disable Beeps in List2Ctrl.js              ==="
 fi
-if [ "${SHORTER_DELAY_MOD}" = "1" ]
+if [ $SHORTER_DELAY_MOD -eq 1 ]
 then
 	sed -i 's/autoscrollTier1Timeout :                1500,/autoscrollTier1Timeout :                150,/g' /jci/gui/common/controls/List2/js/List2Ctrl.js
 	sed -i 's/autoscrollTier2Timeout :                5000,/autoscrollTier2Timeout :                300,/g' /jci/gui/common/controls/List2/js/List2Ctrl.js
@@ -73,5 +77,6 @@ then
 	sed -i '/autoscrollTier2Interval :               300,/ a\        \/\/Shorter Delay Mod' /jci/gui/common/controls/List2/js/List2Ctrl.js
 	log_message "===                  Modified Delay in List2Ctrl.js                   ==="
 fi
+
 log_message "=======************ END INSTALLATION OF LIST_LOOP_MOD ************======="
 log_message " "

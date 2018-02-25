@@ -1,4 +1,5 @@
 /* CSS For Full Width Titles */
+
 .NowPlaying4CtrlAudioTitle,
 .NowPlaying4CtrlAudioTitleStyle3,
 .NowPlaying4CtrlAudioTitleBlock,
@@ -13,5 +14,5 @@
 .NowPlaying4CtrlDetailLine1Full,
 .NowPlaying4CtrlDetailLine2Full,
 .NowPlaying4CtrlDetailLine3Full {
-	width: 740px;
+  width: 740px;
 }

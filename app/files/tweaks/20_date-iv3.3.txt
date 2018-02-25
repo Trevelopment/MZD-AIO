@@ -10,12 +10,12 @@ log_message "=====*********    INSTALL DATE_TO_STATUSBAR MOD V3.3 ...   ********
 
 STATUSBAR_COPY=0
 # Strict Compatability Check
-if [ "${COMPAT_GROUP}" = "1" ]
+if [ $COMPAT_GROUP -eq 1 ]
 then
 	STATUSBAR_COPY=1
 	log_message "===           FW ${CMU_SW_VER} detected, copy matching files          ==="
 # This Compatability Check is VERY important for v58+ Copying the wrong file will cause a bootloop
-elif [ "${COMPAT_GROUP}" -gt "1" ]
+elif [ $COMPAT_GROUP -gt 1 ]
 then
 	STATUSBAR_COPY=2
 	log_message "===           FW ${CMU_SW_VER} detected, copy matching files          ==="
@@ -53,7 +53,7 @@ then
 	cp -a /jci/gui/framework/js/Utility.js /jci/gui/framework/js/Utility.js.org
 	log_message "===    Backup of /jci/gui/framework/js/Utility.js to Utility.js.org   ==="
 fi
-if [ "${KEEPBKUPS}" = "1" ]
+if [ $KEEPBKUPS -eq 1 ]
 then
 	cp -a /jci/gui/common/controls/Sbn/css/SbnCtrl.css.org "${MYDIR}/bakups/"
 	cp -a /jci/gui/common/controls/StatusBar/css/StatusBarCtrl.css.org "${MYDIR}/bakups/"
@@ -142,33 +142,33 @@ cp -a "${MYDIR}/config/date-to-statusbar_mod/jci/gui/common/images/icons/IcnSbRo
 log_message "===      Copied /jci/gui/common/images/icons/IcnSbRoaming.png         ==="
 
 # Utility.js determines the date format
-if [ "${DATE_FORMAT}" = "2" ]
+if [ $DATE_FORMAT -eq 2 ]
 then
 	# For mm/dd
 	cp -a "${MYDIR}/config/date-to-statusbar_mod/jci/gui/framework/js/Utility.v2.3.js" /jci/gui/framework/js/Utility.js
 	log_message "===    Copied /jci/gui/framework/js/Utility.js (Date Format mm/dd)    ==="
-elif [ "${DATE_FORMAT}" = "1" ]
+elif [ $DATE_FORMAT -eq 1 ]
 then
 	# For dd.mm.
 	cp -a "${MYDIR}/config/date-to-statusbar_mod/jci/gui/framework/js/Utility.v2.2.js" /jci/gui/framework/js/Utility.js
 	log_message "===   Copied /jci/gui/framework/js/Utility.js (Date Format dd.mm.)    ==="
-else # if [ "${DATE_FORMAT}" = "0" ]
+else # if [ $DATE_FORMAT -eq 0 ]
 	# For Localized Date (Fallback)
 	cp -a "${MYDIR}/config/date-to-statusbar_mod/jci/gui/framework/js/Utility.v2.1.js" /jci/gui/framework/js/Utility.js
 	log_message "===  Copied /jci/gui/framework/js/Utility.js (Date Format Localized)  ==="
 fi
 
 # StatusBarCtrl.js is the file that needs to be compatability checked because of minor changes in FW v59+
-if [ ${STATUSBAR_COPY} = "1" ]
+if [ $STATUSBAR_COPY -eq 1 ]
 then
 	cp -a "${MYDIR}/config/date-to-statusbar_mod/jci/gui/common/controls/StatusBar/js/StatusBarCtrl.v2.2.js" /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js
 	log_message "===   Copied /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js   ==="
-elif [ ${STATUSBAR_COPY} = "2" ]
+elif [ $STATUSBAR_COPY -eq 2 ]
 then
 	cp -a "${MYDIR}/config/date-to-statusbar_mod/jci/gui/common/controls/StatusBar/js/StatusBarCtrl.v2.2.v59.js" /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js
 	log_message "===            Copied StatusBarCtrl.js for FW ${CMU_SW_VER}           ==="
 	# All known FW versions should pass the compatability check
-else # if [ ${STATUSBAR_COPY} = "0" ]
+else # if [ $STATUSBAR_COPY -eq 0 ]
 	log_message "***** date_to_statusbar_mod v3.3 not compatible to your FW, no installation made! ******"
 	log_message "*********** Please email your FW version:${CMU_SW_VER} to aio@mazdatweaks.com **********"
 fi

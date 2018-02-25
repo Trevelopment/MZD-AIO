@@ -4,7 +4,7 @@ log_message "=======***************  UNINSTALL SPEEDOMETER ... ****************=
 
 log_message "===                   kill all WebSocket daemons                      ==="
 pkill websocketd
-if [ "${TESTBKUPS}" = "1" ]
+if [ $TESTBKUPS -eq 1 ]
 then
 	cp /jci/scripts/stage_wifi.sh "${MYDIR}/bakups/test/stage_wifi_speedometer-before.sh"
 	cp /jci/opera/opera_dir/userjs/additionalApps.json "${MYDIR}/bakups/test/additionalApps_speedometer-1._before.json"
@@ -43,15 +43,15 @@ sed -i '/addon-speedometer.sh &/d' /jci/scripts/stage_wifi.sh
 sed -i '/speedometer.sh &/d' /jci/scripts/stage_wifi.sh
 sed -i '/addon-player.sh &/d' /jci/scripts/stage_wifi.sh
 sed -i '/mount of SD card/d' /jci/scripts/stage_wifi.sh
+sed -i '/umount -l/d' /jci/scripts/stage_wifi.sh
 sed -i '/sleep 40/d' /jci/scripts/stage_wifi.sh
 sed -i '/sleep 55/d' /jci/scripts/stage_wifi.sh
 sed -i '/sleep 50/d' /jci/scripts/stage_wifi.sh
-sed -i '/umount -l/d' /jci/scripts/stage_wifi.sh
 sed -i '/sleep 25/d' /jci/scripts/stage_wifi.sh
-sed -i '#mount /dev/sda1#d' /jci/scripts/stage_wifi.sh
-
 sed -i '/sleep 4/d' /jci/scripts/stage_wifi.sh
 sed -i '/sleep 6/d' /jci/scripts/stage_wifi.sh
+sed -i '/9969/d' /jci/scripts/stage_wifi.sh
+sed -i '/55554/d' /jci/scripts/stage_wifi.sh
 
 ADDIT_APPS=0
 if grep -Fq "_aiotweaks" /jci/opera/opera_dir/userjs/additionalApps.json
@@ -71,7 +71,7 @@ then
 	log_message "===           Found mzd meter entry in additionalApps.json            ==="
 	ADDIT_APPS=1
 fi
-if [ ${ADDIT_APPS} = "0" ]
+if [ $ADDIT_APPS -eq 0 ]
 then
 	log_message "===    No more entrys in additionalApps.json, files will be deleted   ==="
 	rm -f /jci/opera/opera_dir/userjs/additionalApps.*
@@ -109,7 +109,7 @@ rm -f /jci/scripts/get-engine-speed.sh
 rm -f /jci/scripts/get-gear-position.sh
 rm -f /jci/scripts/get-temp.sh
 
-if [ "${TESTBKUPS}" = "1" ]
+if [ $TESTBKUPS -eq 1 ]
 then
 	cp /jci/scripts/stage_wifi.sh "${MYDIR}/bakups/test/stage_wifi_speedometer-after.sh"
 fi

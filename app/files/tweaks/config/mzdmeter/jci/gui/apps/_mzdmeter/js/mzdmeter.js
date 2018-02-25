@@ -4,6 +4,7 @@ var speedTop = 0;
 var speedAvg = 0;
 var GPSAltitudeCur = 0;
 var FuelEfficiency = 0;
+var AvgFuelEfficiency = 0;
 var TotFuelEfficiency = 0;
 var idleTimeValue = '0:00';
 var lastGPSheadingValue = 999;
@@ -124,14 +125,14 @@ $(document).ready(function(){
 
 	// websocket : always on
     // --------------------------------------------------------------------------
-  
+
 	function retrieveValueAll(action){
 		/*var speedometerWsValue = new ReconnectingWebSocket('ws://127.0.0.1:9969/', null, {debug: false, timeoutInterval: 5000, reconnectInterval: 500});*/
 		var speedometerWsValue = new WebSocket('ws://127.0.0.1:44944/');
         speedometerWsValue.onmessage = function(event){
 			if(!proc_3_check) proc_3_check = true;
             var res = event.data.split('#');
-			
+
 			if(sResetDistance) {
 				var a = res[2];
 				var b = res[4];
@@ -182,8 +183,8 @@ $(document).ready(function(){
 				}
 				updateSpeedRestrictFlag(speedRestrict120);
 			}
-			
-			
+
+
 			individualLogoDetected = parseInt(res[10]);
 
 			updateAllFuelEfficiency(res[0],res[1]);
@@ -208,7 +209,7 @@ $(document).ready(function(){
 			proc_3_check = false;
 		}
     }
-	
+
 	function retrievedataHS(action){
 		/*var speedometerWsHS = new ReconnectingWebSocket('ws://127.0.0.1:55544/', null, {debug: false, timeoutInterval: 5000, reconnectInterval: 500});*/
 		/*var speedometerWsHS = new WebSocket('ws://127.0.0.1:55544/');*/
@@ -246,7 +247,7 @@ $(document).ready(function(){
 			var RPM = parseInt(res[1])*2;
 			updateEngineRPM(RPM);
 			updateVehicleSpeed(speed);
-			
+
         }
         speedometerWsVih.onopen = function(){
             speedometerWsVih.send(action);
@@ -295,13 +296,13 @@ $(document).ready(function(){
 		$('.bathPerLite').html(parseFloat(valueIn).toFixed(2));
 
     }
-	
+
 	function updateMoneyOfTrip(valueIn, valueInB){
 		valueIn = $.trim(valueIn);
 		valueInB = $.trim(valueInB);
 		$('.tripMoney').html(parseFloat(valueIn).toFixed(2));
 		$('#tripBMoneyValue').html('Baht <span class="tripBMoney">&nbsp;'+parseFloat(valueInB).toFixed(2)+'&nbsp;</span>');
-		
+
 	}
 
 	function updateBahtPerKm(valueIn){
@@ -314,7 +315,7 @@ $(document).ready(function(){
 		valueInB = $.trim(valueInB);
 		$('.tripDistance').html(valueIn);
 		$('#tripBDistanceValue').html('Km <span class="tripBDistance">&nbsp;'+valueInB+'&nbsp;</span>');
-		
+
     }
 
 	function updateAllFuelEfficiency(valueIn1, valueIn2){
@@ -440,10 +441,10 @@ $(document).ready(function(){
 			// At Idle time warmed up Normally Outdor temp is (30-48): testd on outdoor=36, intake temp=35 : So, M range should be = 35 - 45
 			// So,
 			// < 5 = L   ( 5 -> 35 ) = 30 step => x1.5 degree/step
-			// range 35 <-> 45 = M 
+			// range 35 <-> 45 = M
 			// > 60 = H   (45 - 60) = 15 step => x3 degree/step
 
-			
+
 			if(IntakeAirTempC < 5) {
 				IntakeAirTempC = 5;
 			}
@@ -466,16 +467,16 @@ $(document).ready(function(){
 		engineTemp = parseInt(engineTemp);
 		engineTempC = Math.round((engineTemp - 32) * 0.556).toFixed(0); // c0nvert to degree C
 		engineTempGauge = engineTempC;
-		
+
 		// **** Unit is Farenhi
 		// (F  -  32)  x  5/9 = C
 		//-45 - 0 - 45
 		// At Idle time warmed up Normally Outdor temp is (30-48): testd on outdoor=36, engine temp=54.4 : So, M range = 50 - 60
 		// So,
 		// < 5 = L   ( 5 -> 50 ) = 45 step => x1.44 degree/step
-		// range 50 <-> 58 = M 
+		// range 50 <-> 58 = M
 		// > 75 = H   (58 - 75) = 17 step => x2.647degree/step
-		
+
 		if(engineTempC < egt_temp_lowest) {
 			engineTempC = egt_temp_lowest;
 		}
@@ -526,7 +527,7 @@ $(document).ready(function(){
 		}
 	}
 
-	
+
 
     // update drive time
     // --------------------------------------------------------------------------
@@ -642,7 +643,7 @@ $(document).ready(function(){
 	function updateVehicleSpeed(currentSpeed){
 		var currentSpeedUse = $.trim(currentSpeed);
 		speedCurrent = Math.ceil(parseInt(currentSpeedUse) * 0.01);
-		
+
 		if(speedCurrent > 120) {
 			speedCurrent = speedCurrent + 3;
 		} else if (speedCurrent > 90) {
@@ -681,7 +682,7 @@ $(document).ready(function(){
 		} else {
 			$('.speedNeedle').css("transform","rotate("+(-120+speedCurrent)+"deg)");
 		}
-		
+
 		if(showSpeed) {
             $('.txtSpeed').text(speedCurrent.toString());
 		}
@@ -692,7 +693,7 @@ $(document).ready(function(){
 	function updateEngineRPM(currentRPM){
 		var currentRPMShow = -120 + parseInt((currentRPM * 0.03).toFixed(0));
 		$('.rpmNeedle').css("transform","rotate("+currentRPMShow+"deg)");
-		
+
 		//*** FOR DEBUG VALUE : Enable html code in MZDMeterTmplt.js before use this
 		//$('.txtSpeedUnit').text("rpm = " + currentRPM);
 
@@ -707,7 +708,7 @@ $(document).ready(function(){
 		var currentRPMLimitShow = -120 + parseInt((rpmAlarmLimitValue * 0.03).toFixed(0));
 		$('.topRPMNeedle').css("transform","rotate("+currentRPMLimitShow+"deg)");
 	}
-    
+
     // --------------------------------------------------------------------------
 
     // --------------------------------------------------------------------------
@@ -852,7 +853,7 @@ $(document).ready(function(){
 				}
 				bRefreshSpeedRestrict120 = false;
 			}
-			
+
 			if(!vehicleSpeedLock) {
 				vehicleSpeedLock = true;
 				setTimeout(function(){
@@ -871,7 +872,7 @@ $(document).ready(function(){
 		}, 500);
 
 	//==================================================================================
- 
+
     setInterval(function () {
         updateTripTime();
     }, 1000);
@@ -887,7 +888,7 @@ $(document).ready(function(){
 		$('.idleTimeValue').html(showIdleTime + '<span class="idleTimeBValue">&nbsp;'+showIdleTimeB+'&nbsp;</span>');
     }, 1000);
 
-	
+
 	setInterval(function () {
 		if(rpmLimitFg) {
 			$("#rpmLimitAlarmDiv").css("visibility","visible");
@@ -896,7 +897,7 @@ $(document).ready(function(){
 				$('#rpmLimitAlarmDiv').addClass('swirlAura');
 				$('#rpmLimitAlarmDiv2').addClass('swirlAura2');
 			}
-			//framework.common.beep("Long", "Multicontroller");	
+			//framework.common.beep("Long", "Multicontroller");
 		    framework.sendEventToMmui("audiosettings", "PlayAudioBeep", rpm_args);
 		} else {
 			$("#rpmLimitAlarmDiv").css("visibility","hidden");
@@ -921,7 +922,7 @@ $(document).ready(function(){
 		}
     }, 500);
 
-	
+
 	setInterval(function () {
 		msgDebug = "Daemon-status [ ";
 		if(proc_1_check) {
@@ -941,7 +942,7 @@ $(document).ready(function(){
 		}
 		$('.monitorText').html(msgDebug);
 	}, 2000);
-		
+
 	setTimeout(function(){
 		retrievedataVihicleSpeedAndRPM('speed_rpm');
         retrievedataHS('gear_stwhl');

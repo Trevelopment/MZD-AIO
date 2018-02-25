@@ -2,7 +2,7 @@
 show_message "INSTALL FUEL CONSUMPTION TWEAK ..."
 log_message "=======************  INSTALL FUEL CONSUMPTION TWEAK ... **********======="
 
-if [ "${TESTBKUPS}" = "1" ]
+if [ $TESTBKUPS -eq 1 ]
 then
 	cp /jci/gui/apps/ecoenergy/controls/FuelConsumption/css/FuelConsumptionCtrl.css "${MYDIR}/bakups/test/FuelConsumptionCtrl-before.css"
 	cp /jci/gui/apps/ecoenergy/controls/FuelConsumption/js/FuelConsumptionCtrl.js "${MYDIR}/bakups/test/FuelConsumptionCtrl-before.js"
@@ -30,9 +30,9 @@ cp -a "${MYDIR}/config/FuelConsumptionTweak/jci/gui/apps/ecoenergy/controls/Fuel
 log_message "===                   Copied images/FuelConsBG.png                    ==="
 cp -a "${MYDIR}/config/FuelConsumptionTweak/jci/gui/apps/ecoenergy/controls/FuelConsumption/js/FuelConsumptionCtrl.MPG.js" /jci/gui/apps/ecoenergy/controls/FuelConsumption/js/FuelConsumptionCtrl.js
 log_message "===                 Copied js/FuelConsumptionCtrl.js                  ==="
-if [ "${TESTBKUPS}" = "1" ]
+if [ $TESTBKUPS -eq 1 ]
 then
-	cp /jci/gui/apps/ecoenergy/controls/FuelConsumption/css/FuelConsumptionCtrl.css" ${MYDIR}/bakups/test/FuelConsumptionCtrl-after.css"
+	cp /jci/gui/apps/ecoenergy/controls/FuelConsumption/css/FuelConsumptionCtrl.css "${MYDIR}/bakups/test/FuelConsumptionCtrl-after.css"
 	cp /jci/gui/apps/ecoenergy/controls/FuelConsumption/js/FuelConsumptionCtrl.js "${MYDIR}/bakups/test/FuelConsumptionCtrl-after.js"
 fi
 

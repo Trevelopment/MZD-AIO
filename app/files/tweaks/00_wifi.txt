@@ -6,7 +6,7 @@ if [ ! -e /jci/gui/apps/syssettings/js/syssettingsApp.js.org ]
 then
   cp /jci/gui/apps/syssettings/js/syssettingsApp.js /jci/gui/apps/syssettings/js/syssettingsApp.js.org
 fi
-if [ "${KEEPBKUPS}" = 1 ]
+if [ $KEEPBKUPS -eq 1 ]
 then
   cp /jci/gui/apps/syssettings/js/syssettingsApp.js.org "${MYDIR}/bakups/"
   aio_info \"syssettingsApp.js.org\",
@@ -21,13 +21,12 @@ then
     # This is a Better way to enable Wifi for all
     sed -i "/(framework.localize.REGIONS\['NorthAmerica'\]/c\            if(true)" /jci/gui/apps/syssettings/js/syssettingsApp.js
     log_message "===                      Wifi for NA enabled                          ==="
-    show_message "=== Wifi for NA enabled ==="
+    show_message "=== Wifi enabled ==="
   else
     log_message "===               ERROR: Line For Wifi Fix Not Found                  ==="
   fi
   cp /jci/gui/apps/syssettings/js/syssettingsApp.js "${MYDIR}/bakups/test/syssettingsApp_WIFI-after.js"
 else
-  echo "exist"
   log_message "===                       Wifi already active                         ==="
 
 fi

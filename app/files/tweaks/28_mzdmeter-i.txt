@@ -4,7 +4,7 @@
 show_message "INSTALLING MZD METER ..."
 log_message "=========***************   INSTALL MZD METER   ***************==========="
 
-if [ "${TESTBKUPS}" = "1" ]
+if [ $TESTBKUPS -eq 1 ]
 then
   cp /jci/scripts/stage_wifi.sh "${MYDIR}/bakups/test/stage_wifi_mzd-before.sh"
   cp /jci/opera/opera_dir/userjs/additionalApps.json "${MYDIR}/bakups/test/additionalApps_mzd_before.json"
@@ -21,6 +21,7 @@ if [ $CASDK_MODE -eq 0 ]
 then
 	cp -a ${MYDIR}/config/jci/opera/opera_dir/userjs/additionalApps.js /jci/opera/opera_dir/userjs/ && CASDK_MODE=1
 	chmod 755 /jci/opera/opera_dir/userjs/additionalApps.js
+ chown 1018:3015 /jci/opera/opera_dir/userjs/additionalApps.js
   log_message "===                     Copied additionalApps.js                      ==="
 fi
 

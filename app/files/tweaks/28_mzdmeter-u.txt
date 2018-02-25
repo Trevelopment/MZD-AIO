@@ -4,7 +4,7 @@ log_message "========****************  UNINSTALL MZD METER ... ****************=
 ### kills all WebSocket daemons
 pkill websocketd
 
-if [ "${TESTBKUPS}" = "1" ]
+if [ $TESTBKUPS -eq 1 ]
 then
 	cp /jci/scripts/stage_wifi.sh "${MYDIR}/bakups/test/stage_wifi_mzd-before.sh"
 	cp /jci/opera/opera_dir/userjs/additionalApps.json "${MYDIR}/bakups/test/additionalApps_mzd_before.json"
@@ -32,7 +32,7 @@ then
 	log_message "===          Found aiotweaksapp entry in additionalApps.json          ==="
 	ADDIT_APPS=1
 fi
-if [ ${ADDIT_APPS} = "0" ]
+if [ $ADDIT_APPS -eq 0 ]
 then
 	log_message "===    No more entrys in additionalApps.json, files will be deleted   ==="
 	rm -f /jci/opera/opera_dir/userjs/additionalApps.*
@@ -55,7 +55,7 @@ fi
 rm -fr /jci/gui/apps/_mzdmeter
 rm -fr /paa
 
-if [ "${TESTBKUPS}" = "1" ]
+if [ $TESTBKUPS -eq 1 ]
 then
 	cp /jci/scripts/stage_wifi.sh "${MYDIR}/bakups/test/stage_wifi_mzd-after.sh"
 fi

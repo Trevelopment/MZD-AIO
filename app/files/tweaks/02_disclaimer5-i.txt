@@ -9,9 +9,9 @@ then
 	cp -a /jci/gui/apps/system/js/systemApp.js /jci/gui/apps/system/js/systemApp.js.org
 	log_message "===          Backup of /jci/gui/apps/system/js/systemApp.js           ==="
 fi
-if  [ "${KEEPBKUPS}" = 1 ]
+if  [ $KEEPBKUPS -eq 1 ]
 then
-	cp -a /jci/gui/apps/system/js/systemApp.js.org `${MYDIR}/bakups/`
+	cp -a /jci/gui/apps/system/js/systemApp.js.org "${MYDIR}/bakups/"
 	aio_info \"systemApp.js.org\",
 fi
 

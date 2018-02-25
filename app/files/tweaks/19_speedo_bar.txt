@@ -1,24 +1,5 @@
-# Speedometer v5.0
-show_message "INSTALL DIGITAL BAR SPEEDOMETER VARIANT ..."
-log_message "=========********** INSTALL DIGITAL BAR SPEEDOMETER ************========="
-
-cp -a ${MYDIR}/config/speedometer_bar/jci /
-log_message "===                 Speedometer Bar Variant Installed                 ==="
-
-sed -i 's/var barSpeedometerMod = false;/var barSpeedometerMod = true;/g' /jci/gui/apps/_speedometer/js/speedometer-startup.js
+# Set the Bar Speedometer flag
+sed -i 's/var barSpeedometerMod = false;/var barSpeedometerMod = true;/g' /jci/gui/apps/_speedometer/js/speedometer-startup.js 
 log_message "===       Set flag for bar speedometer in speedometer-startup.js      ==="
 
-if [ -e ${MYDIR}/config/speedometer_bar/speedometer-config.js ]
-then
-  cp -a ${MYDIR}/config/speedometer_bar/speedometer-config.js /jci/gui/apps/_speedometer/js
-  log_message "===                  Copied Speedometer Config File                   ==="
-elif [ -e /tmp/root/speedometer-config.js ]
-then
-  cp -a /tmp/root/speedometer-config.js /jci/gui/apps/_speedometer/js
-  log_message "===               Reuse Previous Speedometer Config File              ==="
-else
-  log_message "===       NO 'speedometer-config.js' FILE FOUND... USING DEFAULT      ==="
-fi
-
-log_message "=========************ END DIGITAL BAR SPEEDOMETER **************========="
-log_message " "
+chmod -R 755 /jci/gui/apps/_speedometer/

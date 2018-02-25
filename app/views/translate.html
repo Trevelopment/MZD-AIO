@@ -2,28 +2,56 @@
   <title>MZD-AIO-TI v{{appVer}} | Language Translator</title>
   <link rel="stylesheet" href="./assets/css/translator.css">
 </head>
+
 <body ng-cloak>
   <div id="header" style="" class="w3-orange">
-    <a href="./index.html"><span style="font-size:26px" class="icon-arrow-left w3-margin w3-xxlarge w3-display-topleft w3-padding w3-text-black w3-tooltip"><span class="w3-tag w3-text" style="position: relative;width: 151px;border: none;color: #000;margin: -10px -5px;background: transparent;font-family: mazda;transition: .52s ease-in .15s;">{{trans[13].label}}</span></span></a>
+    <a href="./index.html">
+      <span style="font-size:26px" class="icon-arrow-left w3-margin w3-xxlarge w3-display-topleft w3-padding w3-text-black w3-tooltip">
+        <span class="w3-tag w3-text" style="position: relative;width: 151px;border: none;color: #000;margin: -10px -5px;background: transparent;font-family: mazda;transition: .52s ease-in .15s;">{{trans[13].label}}</span>
+      </span>
+    </a>
     <!--span id="openNav" class="w3-opennav w3-xxlarge w3-display-topleft w3-padding w3-text-black" onclick="w3_open()" style="position:fixed">&#9776;</span-->
-    <h1 id="mzd-title" class="mazda"> MZD-AIO-TI <small><i>v</i>{{appVer}}</small></h1>
-    <div class="w3-display-topright"><span style="white-space:nowrap"><a class="goog-logo-link w3-xlarge w3-hover-text-white w3-hover-shadow  w3-btn w3-text-grey w3-white  w3-padding w3-margin w3-hover-black" href="https://translate.google.com" target="google_translate">Use <img src="https://www.gstatic.com/images/branding/googlelogo/2x/googlelogo_color_42x16dp.png" style="padding-right: 3px;padding-left:3px;" alt="Google Translate">Translate</a></span></div>
+    <h1 id="mzd-title" class="mazda"> MZD-AIO-TI
+      <small><i>v</i>{{appVer}}</small>
+    </h1>
+    <div class="w3-display-topright">
+      <span style="white-space:nowrap"><a class="goog-logo-link w3-xlarge w3-hover-text-white w3-hover-shadow  w3-btn w3-text-grey w3-white  w3-padding w3-margin w3-hover-black" href="https://translate.google.com" target="google_translate">Use <img src="https://www.gstatic.com/images/branding/googlelogo/2x/googlelogo_color_42x16dp.png" style="padding-right: 3px;padding-left:3px;" alt="Google Translate">Translate</a></span>
+    </div>
     <div id="autosave" style="display:none" class="w3-green w3-text-blue">{{trans[15].label}}</div>
     <div id="chooseEditLanguage" class="w3-right w3-margin">
+    </div>
   </div>
-</div>
-<div class="main w3-container">
-  <h1>MZD-AIO-TI {{trans[0].label}}</h1>
-  <p class="w3-panel w3-blue-grey w3-padding" ng-class="{'w3-hide': user.transMsg}"><span class="w3-closebtn" onclick="$(this).parent().hide();settings.set('transMsg',true);" ng-click="">&times;</span>{{trans[10].label}}<br>HINT: Double click to paste to a text field. (only works for single line text boxes for now)</p>
-  <input type="text" placeholder="{{trans[12].label}}" ng-model="newLanguage" id="newFileName" class="w3-input w3-half"><label for="newFileName" class="w3-padding newfile" style="" ng-cloak> {{trans[2].label}} <span style="text-transform: lowercase;">{{newLanguage}}.aio.json</span> {{trans[3].label}})</label>
-  <br>
-  <button id='submit'></button>
-  <button id='restore'></button>
-  <button id='import'></button>
-  <span class="submissionInstructions">{{trans[4].label}} <a href="" ng-click="shell.openExternal('mailto:aio@mazdatweaks.com?subject={{newLanguage}}%20Translation&body=Hi%20Trez,%0A%0AAttached%20is%20a%20translation%20of%20MZD-AIO-TI%20into%20{{newLanguage}}.')"><b>aio@mazdatweaks.com</b></a> or open a <a href="" onclick="externalLink('pullrequest')"><b>{{trans[5].label}}</b></a> on GitHub.</span>
-  <span id='valid_indicator'></span>
+  <div class="main w3-container">
+    <h1>MZD-AIO-TI {{trans[0].label}}</h1>
+    <p class="w3-panel w3-blue-grey w3-padding" ng-class="{'w3-hide': user.transMsg}">
+      <span class="w3-closebtn" onclick="$(this).parent().hide();settings.set('transMsg',true);" ng-click="">&times;</span>{{trans[10].label}}
+      <br>HINT: Double click to paste to a text field. (only works for single line text boxes for now)</p>
+    <input type="text" placeholder="{{trans[12].label}}" ng-model="newLanguage" id="newFileName" class="w3-input w3-half">
+    <label for="newFileName" class="w3-padding newfile" style="" ng-cloak> {{trans[2].label}}
+      <span style="text-transform: lowercase;">{{newLanguage}}.aio.json</span> {{trans[3].label}})</label>
+    <br>
+    <button id='submit'></button>
+    <button id='restore'></button>
+    <button id='import'></button>
+    <span class="submissionInstructions">{{trans[4].label}}
+      <a href="" ng-click="shell.openExternal('mailto:aio@mazdatweaks.com?subject={{newLanguage}}%20Translation&body=Hi%20Trez,%0A%0AAttached%20is%20a%20translation%20of%20MZD-AIO-TI%20into%20{{newLanguage}}.')">
+        <b>aio@mazdatweaks.com</b>
+      </a> or open a
+      <a href="" onclick="externalLink('pullrequest')">
+        <b>{{trans[5].label}}</b>
+      </a> on GitHub.</span>
+    <span id='valid_indicator'></span>
 
-  <div id='editor_holder'><h1><span id="loading"> {{trans[6].label}} <span id='loadLang'></span><img src="files/img/loading-bar.gif" alt="Loading..." title="Loading..."></span></h1></div>
-</div>
-<div style="display:none"><button id="cpyBtn" class="w3-btn w3-hover-text-black w3-blue w3-hover-green w3-padding-large" onclick="clipboard.writeText($(this).val())">Copy</button></div>
-<span id="SourceMode" class="w3-large w3-padding w3-text-black w3-btn w3-indigo w3-hover-yellow" onclick="$('.sceditor-button-source').click()" style="">Toggle Source</span>
+    <div id='editor_holder'>
+      <h1>
+        <span id="loading"> {{trans[6].label}}
+          <span id='loadLang'></span>
+          <img src="files/img/loading-bar.gif" alt="Loading..." title="Loading...">
+        </span>
+      </h1>
+    </div>
+  </div>
+  <div style="display:none">
+    <button id="cpyBtn" class="w3-btn w3-hover-text-black w3-blue w3-hover-green w3-padding-large" onclick="clipboard.writeText($(this).val())">Copy</button>
+  </div>
+  <span id="SourceMode" class="w3-large w3-padding w3-text-black w3-btn w3-indigo w3-hover-yellow" onclick="$('.sceditor-button-source').click()" style="">Toggle Source</span>

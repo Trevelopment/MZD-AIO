@@ -4,20 +4,20 @@ log_message "========***********    INSTALL NO-MORE-DISCLAIMER ... ***********==
 
 TRACKORDER_DISCLAIMER=2
 # Compatibility Check
-if [ "${COMPAT_GROUP}" = "1" ]
+if [ $COMPAT_GROUP -eq 1 ]
 then
   TRACKORDER_DISCLAIMER=0
-elif [ "${COMPAT_GROUP}" = "2" ]
+elif [ $COMPAT_GROUP -eq 2 ]
 then
   TRACKORDER_DISCLAIMER=1
   TRACKORDER_DISCLAIMER_FILE=58.00.250A-NA
   log_message "===       FW ${CMU_SW_VER} detected, copy matching systemApp.js       ==="
-elif [ "${COMPAT_GROUP}" = "3" ] || [ "${COMPAT_GROUP}" = "4" ]
+elif [ $COMPAT_GROUP -eq 3 ] || [ $COMPAT_GROUP -eq 4 ]
 then
   TRACKORDER_DISCLAIMER=1
   TRACKORDER_DISCLAIMER_FILE=59.00.330
   log_message "===       FW ${CMU_SW_VER} detected, copy matching systemApp.js       ==="
-elif [ "${COMPAT_GROUP}" = "5" ]
+elif [ $COMPAT_GROUP -eq 5 ]
 then
   TRACKORDER_DISCLAIMER=1
   TRACKORDER_DISCLAIMER_FILE=59
@@ -29,12 +29,12 @@ then
   cp -a /jci/gui/apps/system/js/systemApp.js /jci/gui/apps/system/js/systemApp.js.org
   log_message "===  Backup of /jci/gui/apps/system/js/systemApp.js to systemApp.js   ==="
 fi
-if  [ "${KEEPBKUPS}" = 1 ]
+if  [ $KEEPBKUPS -eq 1 ]
 then
   cp -a /jci/gui/apps/system/js/systemApp.js.org "${MYDIR}/bakups/"
   aio_info \"systemApp.js.org\",
 fi
-if [ "${TESTBKUPS}" = 1 ]
+if [ $TESTBKUPS -eq 1 ]
 then
   cp -a /jci/gui/apps/system/js/systemApp.js "${MYDIR}/bakups/test/systemApp_before-disclaimer.js"
 fi
@@ -45,14 +45,14 @@ fi
 # 58.00.XXX ($COMPAT_GROUP=2)
 # 55.XX.XXX - 56.XX.XXX ($COMPAT_GROUP=1)
 # If your firmware version falls out of those ranges email the address below
-if [ ! "${TRACKORDER_DISCLAIMER}" = "2" ]
+if [ ! $TRACKORDER_DISCLAIMER -eq 2 ]
 then
   cp -a "${MYDIR}/config/audio_order_AND_no_More_Disclaimer/systemApp.js.disclaimer" /jci/gui/apps/system/js/
   log_message "===               Added marker 'systemApp.js.disclaimer'              ==="
 
   if [ -e /jci/gui/apps/system/js/systemApp.js.audio ]
   then
-    if [ "${TRACKORDER_DISCLAIMER}" = "1" ]
+    if [ $TRACKORDER_DISCLAIMER -eq 1 ]
     then
       cp -a "${MYDIR}/config/audio_order_AND_no_More_Disclaimer/both/jci/gui/apps/system/js/systemApp.${TRACKORDER_DISCLAIMER_FILE}.js" /jci/gui/apps/system/js/systemApp.js
       log_message "=== Removed Disclaimer for ${CMU_SW_VER}, audio order still changed ==="
@@ -61,7 +61,7 @@ then
       log_message "===           Removed Disclaimer, audio order still changed           ==="
     fi
   else
-    if [ "${TRACKORDER_DISCLAIMER}" = "1" ]
+    if [ $TRACKORDER_DISCLAIMER -eq 1 ]
     then
       cp -a "${MYDIR}/config/audio_order_AND_no_More_Disclaimer/only_no_More_Disclaimer/jci/gui/apps/system/js/systemApp.${TRACKORDER_DISCLAIMER_FILE}.js" /jci/gui/apps/system/js/systemApp.js
       log_message "=== Removed Disclaimer ${CMU_SW_VER} (audio order change not installed) ==="
@@ -78,7 +78,7 @@ else
   log_message "********** Please Email ${MYDIR}/systemApp.js FW:${CMU_SW_VER} to aio@mazdatweaks.com  **********"
   cp -a /jci/gui/apps/system/js/systemApp.js "${MYDIR}/"
 fi
-if [ "${TESTBKUPS}" = 1 ]
+if [ $TESTBKUPS = 1 ]
 then
   cp -a /jci/gui/apps/system/js/systemApp.js "${MYDIR}/bakups/test/systemApp_after-disclaimer.js"
 fi

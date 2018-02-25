@@ -3,11 +3,11 @@ const ipc = electron.ipcRenderer
 const webFrame = electron.webFrame
 const maximumZoomLevel = 3
 
-const {Menu} = electron.remote
+const { Menu } = electron.remote
 
 var currentZoomLevel, zoomMenuItems
 
-function getZoomUI () {
+function getZoomUI() {
   const menu = Menu.getApplicationMenu()
   var menuItems = []
   menu.items.forEach((item) => {
@@ -22,13 +22,13 @@ function getZoomUI () {
   return menuItems
 }
 
-function enableZoomUI () {
+function enableZoomUI() {
   zoomMenuItems.forEach((item) => {
     item.enabled = true
   })
 }
 
-function disableZoomUI () {
+function disableZoomUI() {
   zoomMenuItems.forEach((item) => {
     item.enabled = false
   })

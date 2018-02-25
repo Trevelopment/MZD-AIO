@@ -1,6 +1,7 @@
 window.URL = window.URL || window.webkitURL || window.mozURL || window.msURL
 window.saveAs = window.saveAs || window.webkitSaveAs || window.mozSaveAs || window.msSaveAs
-function saveCanvas (canvas, filename, fileformat) {
+
+function saveCanvas(canvas, filename, fileformat) {
   if (navigator.msSaveBlob || window.URL || window.saveAs) {
     if (canvas.toBlob) {
       canvas.toBlob(function (blob) {
@@ -14,7 +15,7 @@ function saveCanvas (canvas, filename, fileformat) {
   }
 }
 
-function dataURLToBlob (dataURL) {
+function dataURLToBlob(dataURL) {
   var index = dataURL.indexOf(',')
   var meta = dataURL.substring(0, index)
   var data = dataURL.substring(index + 1)
@@ -33,10 +34,10 @@ function dataURLToBlob (dataURL) {
     data = decodeURIComponent(data)
   }
 
-  return new Blob([data], {type: contentType})
+  return new Blob([data], { type: contentType })
 }
 
-function saveBlob (blob, filename) {
+function saveBlob(blob, filename) {
   if (navigator.msSaveBlob) {
     navigator.msSaveBlob(blob, filename)
   } else if (window.saveAs) {
@@ -52,7 +53,7 @@ function saveBlob (blob, filename) {
   }
 }
 
-function saveUrl (url, filename) {
+function saveUrl(url, filename) {
   var link = document.createElement('a')
   if ('download' in link) {
     link.download = filename
@@ -60,14 +61,14 @@ function saveUrl (url, filename) {
     link.style.position = 'absolute'
     link.style.left = '0'
     link.style.top = '0'
-		// some browsers need it to be in the document
+    // some browsers need it to be in the document
     document.body.appendChild(link)
     link.click()
     setTimeout(function () {
       document.body.removeChild(link)
     }, 250)
   } else {
-		// async callback -> window.open() will fail
+    // async callback -> window.open() will fail
     window.location = url
   }
 }

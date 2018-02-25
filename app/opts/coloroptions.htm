@@ -8,16 +8,12 @@
 -
 -->
 <tbody class="hasColorFiles w3-col">
-	<tr ng-repeat="(key,option) in colors" class="w3-hover-pale-blue w3-half side-colors">
-		<td>
-			<div class="color-check extraRadio">
-				<input id="color{{option.id}}" type="radio" name="{{option.label}}" ng-model="user.colors" ng-value="option.id">
-				<label for="color{{option.id}}" data-toggle="tooltip" data-placement="auto bottom" title="{{option.label}}" class="{{option.label}}"></label>
-			</div>
-		</td>
-		<td>
-			<label for="color{{option.id}}" data-toggle="tooltip" data-placement="auto bottom" title="{{option.label}}">{{option.label}}
-			</label>
+	<tr class="w3-col w3-row">
+		<td class="w3-hover-pale-blue w3-row w3-col speedo-color">
+			<span ng-repeat="(key,option) in colors" class="speedo-radio">
+				<input id="color{{option.id}}" class="" type="radio" name="{{option.label}}" ng-model="user.colors" ng-value="option.id">
+				<label for="color{{option.id}}" data-toggle="tooltip" ng-style="{'background-color' : key.replace('smooth','')}" data-placement="auto bottom" title="{{option.label}}" class="{{option.label}}">{{option.label}}</label>
+			</span>
 		</td>
 	</tr>
 	<tr id="customThemeOps" ng-show="user.colors === 17" class="w3-hover-pale-green w3-row w3-col w3-tooltip" style="">
