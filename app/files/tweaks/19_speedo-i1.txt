@@ -1,9 +1,9 @@
 # Speedometer v4.8
-show_message "INSTALL SPEEDOMETER v5.1 ..."
+show_message "INSTALL SPEEDOMETER v${SPD_VER} ..."
 log_message "==========**************** INSTALL SPEEDOMETER *****************========="
 
 log_message "===                 Begin Installation of Speedometer                 ==="
-if [ "${TESTBKUPS}" = "1" ]
+if [ $TESTBKUPS -eq 1 ]
 then
   cp /jci/scripts/stage_wifi.sh "${MYDIR}/bakups/test/stage_wifi_speedometer-before.sh"
   cp /jci/opera/opera_dir/userjs/additionalApps.json "${MYDIR}/bakups/test/additionalApps_speedometer-1._before.json"
@@ -16,7 +16,7 @@ pkill websocketd
 if [ -e /jci/gui/apps/_speedometer/js/speedometer-config.js ]
 then
   cp -a /jci/gui/apps/_speedometer/js/speedometer-config.js /tmp/root
-  log_message "===             Save Temporary Copy of speedometer-config.js          ==="
+  log_message "===            Save Temporary Copy of speedometer-config.js           ==="
 fi
 
 ### cleanup old versions
@@ -76,6 +76,18 @@ cp -a ${MYDIR}/config/speedometer/jci/gui/apps/* /jci/gui/apps/
 log_message "===             Copied folder /jci/gui/apps/_speedometer              ==="
 find /jci/gui/apps/_*/ -type f -name '*.js' -exec chmod 755 {} \;
 find /jci/gui/apps/_*/ -type f -name '*.sh' -exec chmod 755 {} \;
+
+if [ -e ${MYDIR}/config/speedometer/speedometer-config.js ]
+then
+  cp -a ${MYDIR}/config/speedometer/speedometer-config.js /jci/gui/apps/_speedometer/js
+  log_message "===                  Copied Speedometer Config File                   ==="
+elif [ -e /tmp/root/speedometer-config.js ]
+then
+  cp -a /tmp/root/speedometer-config.js /jci/gui/apps/_speedometer/js
+  log_message "===               Reuse Previous Speedometer Config File              ==="
+else
+  log_message "===       NO 'speedometer-config.js' FILE FOUND... USING DEFAULT      ==="
+fi
 
 if [ ! -e /jci/gui/addon-common/websocketd ]  || [ ! -e /jci/gui/addon-common/cufon-yui.js ]; then
   cp -a "${MYDIR}/config/jci/gui/addon-common/" /jci/gui/
@@ -138,12 +150,12 @@ then
 fi
 
 # change compass rotating depending on NAV SD card inside or not
-if [ ! -d /mnt/sd_nav/content/speedcam ] || [ ${COMPAT_GROUP} -ne 1  ]
+if [ ! -d /mnt/sd_nav/content/speedcam ] || [ $COMPAT_GROUP -ne 1  ]
 then
   sed -i 's/var noNavSD = false;/var noNavSD = true;/g' /jci/gui/apps/_speedometer/js/speedometer-startup.js
   log_message "===    Changed compass rotating, because no NAV SD card is inside     ==="
 fi
-if [ ${SPEEDCOLOR} != 0 ]
+if [ "${SPEEDCOLOR}" != "0" ]
 then
   rm -f /jci/gui/common/images/*.aio
   touch /jci/gui/common/images/${SPEEDCOLOR}.aio

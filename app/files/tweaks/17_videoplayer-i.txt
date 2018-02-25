@@ -1,13 +1,13 @@
 #######################################################################
 # Video_Player by many many people
-# V3.1 - Mods by vic_bam85 & Trezdog44
+# Mods by vic_bam85 & Trezdog44
 #######################################################################
-show_message "VIDEOPLAYER v3.3\nMODS BY VIC_BAM85 & TREZDOG44"
+show_message "VIDEOPLAYER v${VP_VER}\nMODS BY VIC_BAM85 & TREZDOG44"
 log_message "============***********   INSTALL VIDEOPLAYER   ************============="
 
-log_message "===             Begin Installation of VideoPlayer V3.3                ==="
+log_message "===             Begin Installation of VideoPlayer V${VP_VER}                ==="
 
-if [ "${TESTBKUPS}" = "1" ]
+if [ $TESTBKUPS -eq 1 ]
 then
   cp /jci/scripts/stage_wifi.sh "${MYDIR}/bakups/test/stage_wifi_videoplayer-before.sh"
   cp /jci/opera/opera_dir/userjs/additionalApps.json "${MYDIR}/bakups/test/additionalApps_videoplayer-1._before.json"
@@ -24,8 +24,9 @@ sed -i '/--port=9998/d' /jci/scripts/stage_wifi.sh
 # Copies the additionalApps.js
 if [ $CASDK_MODE -eq 0 ]
 then
-	cp -a ${MYDIR}/config/jci/opera/opera_dir/userjs/additionalApps.js /jci/opera/opera_dir/userjs/ && CASDK_MODE=1
-	chmod 755 /jci/opera/opera_dir/userjs/additionalApps.js
+  cp -a ${MYDIR}/config/jci/opera/opera_dir/userjs/additionalApps.js /jci/opera/opera_dir/userjs/ && CASDK_MODE=1
+  chmod 755 /jci/opera/opera_dir/userjs/additionalApps.js
+  chown 1018:3015 /jci/opera/opera_dir/userjs/additionalApps.js
   log_message "===                     Copied  additionalApps.js                     ==="
 fi
 
@@ -50,24 +51,24 @@ fi
 
 # Remove old port configuration
 count=$(grep -c '/jci/gui/addon-common/websocketd --port=55555 sh' /jci/scripts/stage_wifi.sh)
-if [ "$count" != "0" ]
+if [ $count -ne 0 ]
 then
-	sed -i '/### Video player/d' /jci/scripts/stage_wifi.sh
-	sed -i '/55555/d' /jci/scripts/stage_wifi.sh
+  sed -i '/### Video player/d' /jci/scripts/stage_wifi.sh
+  sed -i '/55555/d' /jci/scripts/stage_wifi.sh
   log_message "===                   Removed Old Configuration                       ==="
 fi
 
 count=$(grep -c '/jci/gui/addon-common/websocketd --port=9998 sh' /jci/scripts/stage_wifi.sh)
-if [ "$count" = "0" ]
-	then
-		#echo -e '\n\n\n### Video player' >> /jci/scripts/stage_wifi.sh
-		#echo -e '\n/jci/gui/addon-common/websocketd --port=9998 sh &' >> /jci/scripts/stage_wifi.sh
-    sed -i '/#!/ a\### Video player' /jci/scripts/stage_wifi.sh
-    sleep 1
-    sed -i '/Video player/ i\ ' /jci/scripts/stage_wifi.sh
-    sed -i '/Video player/ a\/jci/gui/addon-common/websocketd --port=9998 sh &' /jci/scripts/stage_wifi.sh
-    chmod 755 /jci/scripts/stage_wifi.sh
-    log_message "===                    Modified Stage_wifi.sh                         ==="
+if [ $count -eq 0 ]
+then
+  #echo -e '\n\n\n### Video player' >> /jci/scripts/stage_wifi.sh
+  #echo -e '\n/jci/gui/addon-common/websocketd --port=9998 sh &' >> /jci/scripts/stage_wifi.sh
+  sed -i '/#!/ a\### Video player' /jci/scripts/stage_wifi.sh
+  sleep 1
+  sed -i '/Video player/ i\ ' /jci/scripts/stage_wifi.sh
+  sed -i '/Video player/ a\/jci/gui/addon-common/websocketd --port=9998 sh &' /jci/scripts/stage_wifi.sh
+  chmod 755 /jci/scripts/stage_wifi.sh
+  log_message "===                    Modified Stage_wifi.sh                         ==="
 fi
 
 cp -a ${MYDIR}/config/videoplayer/jci/gui/apps/* /jci/gui/apps/
@@ -82,10 +83,10 @@ log_message "===              Copy libs to usr/lib/gstreamer-0.10               
 
 
 count=$(grep -c '/imx-mm/video-codec' /etc/profile)
-if [ "$count" = "0" ]
-	then
-		sed -i 's/\/imx-mm\/parser/\/imx-mm\/parser:\/usr\/lib\/imx-mm\/video-codec/g' /etc/profile
-    log_message "===                      Fix exports / codecs                         ==="
+if [ $count -eq 0 ]
+then
+  sed -i 's/\/imx-mm\/parser/\/imx-mm\/parser:\/usr\/lib\/imx-mm\/video-codec/g' /etc/profile
+  log_message "===                      Fix exports / codecs                         ==="
 fi
 
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/imx-mm/video-codec

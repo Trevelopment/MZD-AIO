@@ -1,0 +1,6 @@
+mkdir -p /tmp/mnt/resources/dev/bin/
+
+# nodeJS for cleaner app installations!
+[ ! -e /tmp/mnt/resources/dev/bin/node ] && cp -a ${MYDIR}/config/bin/node /tmp/mnt/resources/dev/bin/ && echo "...NodeJS Installed..." >> ${MYDIR}/node.log 2>&1
+[ ! -e /tmp/mnt/resources/dev/bin/add_app_json.js ] && cp -a ${MYDIR}/config/bin/add_app_json.js /tmp/mnt/resources/dev/bin/ && echo "...add_app_json.js Installed..." >> ${MYDIR}/node.log 2>&1
+[ ! -e /tmp/mnt/resources/dev/bin/remove_app_json.js ] && cp -a ${MYDIR}/config/bin/remove_app_json.js /tmp/mnt/resources/dev/bin/ && echo "...remove_app_json.js Installed..." >> ${MYDIR}/node.log 2>&1

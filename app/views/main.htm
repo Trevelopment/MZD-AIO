@@ -318,7 +318,7 @@
   </div>
   <!--div id="closeOverlay" onclick="$(this).parent().hide()" width="5000" height="5000" style="position:fixed;width:100%;height:100%;"></div-->
 </div>
-<div class="slide-out-div" ng-cloak>
+<div class="slide-out-div" style="display:none" ng-cloak>
   <a class="handle" href="">Install Options</a>
   <div id="bkupchks" class="w3-container" ng-cloak>
     <input id="dataDump" name="dataDump" type="checkbox" class="w3-check w3-margin" ng-model="user.dataDump" ng-value="user.dataDump">
@@ -331,6 +331,8 @@
     <label for="keepBackups" class="w3-validate">{{mainOps.retain.label}}</label>
     <input type="checkbox" id="testBackups" name="testBackups" class="w3-check w3-margin" ng-model="user.backups.test" ng-value="user.backups.test">
     <label for="testBackups" class="w3-validate">{{mainOps.retain.testlabel}}</label>
+    <input type="checkbox" id="legacyAppInst" name="legacyAppInst" class="w3-check w3-margin" ng-model="user.noNodeInstall" ng-value="user.noNodeInstall">
+    <label for="legacyAppInst" class="w3-validate">Use Legacy App Install</label>
     <input type="checkbox" id="advancedOptions" name="advancedOptions" class="w3-check w3-margin" ng-model="user.advancedOps" ng-value="user.advancedOps">
     <label for="advancedOptions" class="w3-validate">Disabled Tweaks</label>
   </div>

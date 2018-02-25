@@ -2735,7 +2735,7 @@ usbaudioApp.prototype._PlaybackStatusMsgHandler = function (msg)
 
 usbaudioApp.prototype._NowPlayingDataMsgHandler = function (msg)
 {
-  console.log("Inside _NowPlayingDataMsgHandler with msg : ", msg );
+  log.debug("Inside _NowPlayingDataMsgHandler with msg : ", msg );
   if (!this._currentContext){
     log.debug('No this._currentContext !!!');
   }
@@ -2824,13 +2824,21 @@ usbaudioApp.prototype._ObjectInfoMsgHandler = function (msg)
                 this._currentContextTemplate.nowPlaying4Ctrl.setDetailLine3({detailText: AIO_gracenoteText});
                 this._gracenoteTimeout = setTimeout(this._removeGracenote.bind(this), this._gracenoteTimeoutTime);
             }
+            else // ---MZDMOD--- setDetailLine3 to genre about 10 seconds
+            {
+                if (this._cachedSongDetails.genre)
+                {
+                    this._currentContextTemplate.nowPlaying4Ctrl.setDetailLine3({detailText: this._cachedSongDetails.genre});
+                    this._genreTimeout = setTimeout(this._removeGenre.bind(this), 10000);
+                }
+            }
         }
-        else // ---MZDMOD--- setDetailLine3 to genre for 20 seconds
+        else // ---MZDMOD--- setDetailLine3 to genre about 10 seconds
         {
             if (this._cachedSongDetails.genre)
             {
                 this._currentContextTemplate.nowPlaying4Ctrl.setDetailLine3({detailText: this._cachedSongDetails.genre});
-                this._genreTimeout = setTimeout(this._removeGenre.bind(this), 20000);
+                this._genreTimeout = setTimeout(this._removeGenre.bind(this), 10000);
             }
         }
     }
@@ -2890,7 +2898,7 @@ usbaudioApp.prototype._PlayerStateMsgHandler = function (msg)
 };
 usbaudioApp.prototype._changePlayButton = function(nextButtonStatus)
 {
-    console.log("ENTER _changePlayButton, value:[" +nextButtonStatus+ "]");
+    log.debug("ENTER _changePlayButton, value:[" +nextButtonStatus+ "]");
     if (this._currentContext && this._currentContextTemplate && this._currentContext.ctxtId == "NowPlaying")
     {
         this._currentContextTemplate.nowPlaying4Ctrl.umpCtrl.setButtonState("playpause", nextButtonStatus);
@@ -3188,13 +3196,16 @@ usbaudioApp.prototype._getItemsCallback = function (index, dataList, action, fro
       			// ---MZDMOD---
       			// Remove the '/' character off the folder string by cutting last char
       			var renamedItem = params.params.folder_inf.name;
-      			if (renamedItem.length > 1)
-      			{
-      				renamedItem = renamedItem.slice(0,-1);
-      			}
-            else if (renamedItem.length === 1)
+            if (renamedItem.slice(-1) === '/')
             {
-              renamedItem = "";
+              if (renamedItem.length > 1)
+              {
+                renamedItem = renamedItem.slice(0,-1);
+              }
+              else if (renamedItem.length === 1)
+              {
+                renamedItem = "";
+              }
             }
             if (this._currentContext && this._currentContext.ctxtId == "NowPlaying" && this._currentContextTemplate)
             {
@@ -3446,7 +3457,10 @@ usbaudioApp.prototype._populateFolders = function (tmplt, data, dataList, index,
 		var itemPress = "shortPressOnly";
 		if (items[j].type == 1 && renamedItem.length > 1)
 		{
-			renamedItem = renamedItem.slice(0,-1);
+      if (renamedItem.slice(-1) === '/')
+      {
+        renamedItem = renamedItem.slice(0,-1);
+      }
 			itemPress = "shortAndLong";
 		}
         listConfig.dataList.items[i] = {

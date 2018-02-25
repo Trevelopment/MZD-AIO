@@ -13,7 +13,7 @@ chmod 755 /jci/scripts/cs_receiver_arm
 chmod 755 /jci/scripts/mirroring.sh
 chmod 755 /jci/scripts/adb
 chmod 755 /usr/bin/adb
-if [ "${TESTBKUPS}" = "1" ]
+if [ $TESTBKUPS -eq 1 ]
 then
 	cp /jci/scripts/stage_wifi.sh ${MYDIR}/bakups/test/stage_wifi_castscreen-before.sh
 fi
@@ -32,7 +32,7 @@ then
     sed -i '/Castscreen receiver/ i\ ' /jci/scripts/stage_wifi.sh
     sed -i '/Castscreen receiver/ a\watch /jci/scripts/mirroring.sh &' /jci/scripts/stage_wifi.sh
     log_message "===             Castscreen Receiver added to stage_wifi.sh            ==="
-		if [ "${TESTBKUPS}" = "1" ]
+		if [ $TESTBKUPS -eq 1 ]
 		then
 			cp /jci/scripts/stage_wifi.sh ${MYDIR}/bakups/test/stage_wifi_castscreen-after.sh
 		fi

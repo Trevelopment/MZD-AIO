@@ -1,9 +1,8 @@
-# MZD-AIO-TI 2.7 [![Download](https://api.bintray.com/packages/trevelopment/MZD-AIO-TI/AIO/images/download.svg?version=MZD-AIO-TI) ](http://dl.mazdatweaks.win)
+# MZD-AIO-TI 2.5 [![Download](https://api.bintray.com/packages/trevelopment/MZD-AIO-TI/AIO/images/download.svg?version=MZD-AIO-TI) ](http://dl.mazdatweaks.win)
 
 ## MZD All In One tweaks Installer
 
 #### Installer and uninstaller for several different system tweaks for Mazda MZD Infotainment System
-
 
 ##### App Size ~ 260MB
 AIO Rebuilt with [Electron] & [AngularJS]
@@ -106,9 +105,6 @@ This Project has 2 particular aspects, user interface and the custom built insta
 
 ###### Before Car Installation:
 - unplug any other USB drives from the car except this flash drive.  
--
-For installation of speedcam patch (see below), the NAVI SD card must remain in the car, because speedcam.txt file will be copied directly to SD card.  
-- For installation of speedometer, the NAVI SD card must remain in the car too, without NAVI SD card a special patch will be installed, otherwise the compass is rotated 180 degrees.  
 - In general, the SD card can remain in the car during the tweak installations.  
 
 #### Installation Into MZD Infotainment System:

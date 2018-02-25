@@ -71,7 +71,7 @@ then
 	cp -a /jci/gui/framework/js/Utility.js /jci/gui/framework/js/Utility.js.org
 	log_message "===   Backup of /jci/gui/framework/js/Utility.js to Utility.js.org    ==="
 fi
-if [ ${KEEPBKUPS} = "1" ]
+if [ $KEEPBKUPS -eq 1 ]
 then
 	cp -a /jci/gui/common/controls/Sbn/css/SbnCtrl.css.org "${MYDIR}/bakups/"
 	cp -a /jci/gui/common/controls/StatusBar/css/StatusBarCtrl.css.org "${MYDIR}/bakups/"
@@ -87,7 +87,7 @@ then
 	aio_info \"Utility.js.org\",
 fi
 
-if [ ${statusbar_copy} = "1" ]
+if [ $statusbar_copy -eq 1 ]
 then
 	cp -a ${MYDIR}/config/date-to-statusbar_mod/jci/gui/common/controls/StatusBar/css/StatusBarCtrl.v1.css /jci/gui/common/controls/StatusBar/css/StatusBarCtrl.css
 	log_message "===  Copied /jci/gui/common/controls/StatusBar/css/StatusBarCtrl.css  ==="
@@ -99,7 +99,7 @@ then
 	log_message "===              Copied /jci/gui/framework/js/Utility.js              ==="
 fi
 
-if [ ${statusbar_copy} = "0" ]
+if [ $statusbar_copy -eq 0 ]
 then
 	log_message "=== date_to_statusbar_mod v1 not compatible to your FW, no installation made! ==="
 fi

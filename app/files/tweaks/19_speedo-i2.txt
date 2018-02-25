@@ -1,4 +1,4 @@
-if [ ${TESTBKUPS} = "1" ]
+if [ $TESTBKUPS -eq 1 ]
 then
   cp -a /jci/gui/apps/_speedometer/js/speedometer-startup.js ${MYDIR}/bakups/test/
   cp -a /jci/scripts/stage_wifi.sh ${MYDIR}/bakups/test/stage_wifi-after_speedo.sh

@@ -1,8 +1,7 @@
-function startTour (tourMsgs) {
-  var tour = introJs().setOptions({ 'skipLabel': 'Skip Tour', 'doneLabel': 'Start!', 'tooltipClass': 'w3-pale-green w3-center', 'showStepNumbers': false, 'scrollToItem': true, 'exitOnOverlayClick': false, 'hideNext': true, 'hidePrev': true})
+function startTour(tourMsgs) {
+  var tour = introJs().setOptions({ 'skipLabel': 'Skip Tour', 'doneLabel': 'Start!', 'tooltipClass': 'w3-pale-green w3-center', 'showStepNumbers': false, 'scrollToItem': true, 'exitOnOverlayClick': false, 'hideNext': true, 'hidePrev': true })
   tour.setOptions({
-    steps: [
-      {
+    steps: [{
         intro: tourMsgs[0].msg,
         class: 'large-box'
       },
@@ -51,15 +50,14 @@ function startTour (tourMsgs) {
   })
   tour.start()
 }
-function AndroidAutoChoice () {
-  var AAchoice = introJs().setOptions({'doneLabel': 'Got It!', 'tooltipClass': 'w3-pale-green w3-center', 'showStepNumbers': false, 'scrollToItem': true, 'exitOnOverlayClick': false, 'hideNext': true, 'hidePrev': true})
+
+function AndroidAutoChoice() {
+  var AAchoice = introJs().setOptions({ 'doneLabel': 'Got It!', 'tooltipClass': 'w3-pale-green w3-center', 'showStepNumbers': false, 'scrollToItem': true, 'exitOnOverlayClick': false, 'hideNext': true, 'hidePrev': true })
   AAchoice.setOptions({
-    steps: [
-      {
-        element: document.querySelector('#options'),
-        intro: tourMsgs[1].msg,
-        position: 'auto'
-      }
-    ]
+    steps: [{
+      element: document.querySelector('#options'),
+      intro: tourMsgs[1].msg,
+      position: 'auto'
+    }]
   });
 }

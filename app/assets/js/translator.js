@@ -1,14 +1,15 @@
-var translateData = new Config({'name': 'aio-translate-save'})
+var translateData = new Config({ 'name': 'aio-translate-save' })
 document.getElementById('submit').innerHTML = langObj.translatorWindow[14].label
 
 // Hook up the Restore to Default button
 document.getElementById('restore').addEventListener('click', function () {
-  editor.setValue(JSON.parse(fs.readFileSync(`${langPath}`, {encoding: 'utf8'})))
+  editor.setValue(JSON.parse(fs.readFileSync(`${langPath}`, { encoding: 'utf8' })))
   translateData.set('data', editor.getValue())
 })
 document.getElementById('restore').innerHTML = langObj.translatorWindow[1].label + ` (${lang})`
 document.getElementById('loadLang').innerHTML = `${lang}`
-function gotoTranslator () {
+
+function gotoTranslator() {
   $(this).hide()
 }
 // This is the starting value for the editor
@@ -18,7 +19,7 @@ var startingValue
 if (translateData.has('data')) {
   startingValue = translateData.get('data')
 } else {
-  startingValue = JSON.parse(fs.readFileSync(`${langPath}`, {encoding: 'utf8'}))
+  startingValue = JSON.parse(fs.readFileSync(`${langPath}`, { encoding: 'utf8' }))
 }
 
 // Initialize the editor
@@ -82,7 +83,7 @@ document.getElementById('import').addEventListener('click', function () {
     ]
   }, function (files) {
     if (files) {
-      jsonData = fs.readFileSync(files[0], {encoding: 'utf8'})
+      jsonData = fs.readFileSync(files[0], { encoding: 'utf8' })
       editor.setValue(JSON.parse(jsonData))
     }
   })
@@ -92,7 +93,7 @@ ipc.on('translate-file', function (data) {
   if (data) {
     console.log(data[0])
     console.log(data[0].toString())
-    var loadSaved = fs.readFileSync(data[0], {encoding: 'utf8'})
+    var loadSaved = fs.readFileSync(data[0], { encoding: 'utf8' })
     console.log(loadSaved)
     editor.setValue(JSON.parse(loadSaved))
   }
@@ -100,7 +101,7 @@ ipc.on('translate-file', function (data) {
 
 document.getElementById('import').innerHTML = langObj.translatorWindow[9].label
 
-function gotoTranslator () {
+function gotoTranslator() {
   $(this).hide()
 }
 
@@ -144,7 +145,7 @@ $(function () {
     editor.getEditor($(this).parent().parent().attr('data-schemapath')).setValue(clipboard.readText())
   })
   $('input, textarea').click(function () {
-    $('#cpyBtn').insertAfter($(this))// $(this).val()
+    $('#cpyBtn').insertAfter($(this)) // $(this).val()
     $('#cpyBtn').val($(this).val())
   })
 

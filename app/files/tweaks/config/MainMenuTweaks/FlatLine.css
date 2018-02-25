@@ -1,10 +1,11 @@
-  /* Alternate Layout Flatline */
-  .MainMenuCtrlComDiv {
+/* Alternate Layout Flatline */
+
+.MainMenuCtrlComDiv {
   top: 280px;
 }
 .MainMenuCtrlEntDiv {
   top: 280px;
-  left:160px;
+  left: 160px;
 }
 .MainMenuCtrlNavDiv {
   top: 280px;
@@ -40,12 +41,12 @@
   top: 80px;
 }
 .MainMenuCtrlIconName {
-  top:5px;
+  top: 5px;
 }
 .MainMenuCtrl {
   overflow: visible;
 }
-.MainMenuCtrlSetDiv.MainMenuCtrlCoinFocus{
+.MainMenuCtrlSetDiv.MainMenuCtrlCoinFocus {
   -o-transform: scale(1.4, 1.4) translate(0px, -50px);
   transform: scale(1.4, 1.4) translate(0px, -50px);
 }

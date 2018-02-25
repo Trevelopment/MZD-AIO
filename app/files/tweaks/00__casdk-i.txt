@@ -6,16 +6,16 @@ show_message "===***   INSTALLING CASDK   ***==="
 log_message "  "
 log_message "==========************* BEGIN INSTALLING CASDK ***************==========="
 
-mount -o rw,remount /tmp/mnt/resources
-
 pkill -f 'watch -n 1'
 pkill -f 'watch -n 60'
 pkill -f 'watch -n 300'
 pkill -f 'mzd-casdk.start'
+pkill -f websocketd
+log_message "===                        CASDK VER ${_CASDK_VER}                            ==="
 
 # enable javascript logging
 JSLOGGING=$(grep -c "casdk-error.log" /jci/opera/opera_home/opera.ini)
-if [ "$JSLOGGING" -eq "0" ]
+if [ $JSLOGGING -eq 0 ]
 then
   sed -i 's/Console Error Log Enabled=0/Console Error Log Enabled=1/g' /jci/opera/opera_home/opera.ini
   sed -i 's/Console Error Log=$OPERA_HOME\/error.log/Console Error Log=\/tmp\/root\/casdk-error.log/g' /jci/opera/opera_home/opera.ini
@@ -52,7 +52,7 @@ else
 fi
 
 # install data reader files
-if [ ! -e /jci/casdk ]
+if [ ! -e /jci/casdk ] || [[ "${_CASDK_VER}" < "${CASDK_VER}" ]]
 then
 	mkdir -p /jci/casdk
 	cp -a ${MYDIR}/casdk/scripts/* /jci/casdk
@@ -85,16 +85,19 @@ fi
 
 chmod 755 /jci/scripts/stage_wifi.sh
 
-# copy CustomApplicationsProxy
+# copy CustomApplicationsProxy and aio.js
 cp -a ${MYDIR}/casdk/proxy/CustomApplicationsProxy.js /jci/opera/opera_dir/userjs/
+cp -a ${MYDIR}/casdk/proxy/aio.js /jci/opera/opera_dir/userjs/
+chmod 755 /jci/opera/opera_dir/userjs/aio.js
 chmod 755 /jci/opera/opera_dir/userjs/CustomApplicationsProxy.js
+chown 1018:3015 /jci/opera/opera_dir/userjs/aio.js
 chown 1018:3015 /jci/opera/opera_dir/userjs/CustomApplicationsProxy.js
 log_message "===               Copied CustomApplicationsProxy.js                   ==="
 
 if [ -e /jci/opera/opera_dir/userjs/additionalApps.js ]
 then
   mv /jci/opera/opera_dir/userjs/additionalApps.js /jci/opera/opera_dir/userjs/additionalApps.js.org
-  log_message "===                   Disable AdditionalApps.js                      ==="
+  log_message "===                   Disable AdditionalApps.js                       ==="
 fi
 
 if [ -e /jci/opera/opera_dir/userjs/additionalApps.json ]
@@ -108,10 +111,13 @@ else
 fi
 
 # install CASDK runtime
-if [ ! -e /tmp/mnt/resources/aio/mzd-casdk/runtime ]
+if [ ! -e /tmp/mnt/resources/aio/mzd-casdk/runtime ] || [[ "${_CASDK_VER}" < "${CASDK_VER}" ]]
 then
   cp -a ${MYDIR}/casdk/resources /tmp/mnt
   chmod -R 755 /tmp/mnt/resources/aio
+  chmod -R 755 /tmp/mnt/resources/dev/bin
+  echo "_AIO_VER=${AIO_VER}" > /jci/casdk/casdk.aio
+  echo "_CASDK_VER=${CASDK_VER}" >> /jci/casdk/casdk.aio
   log_message "===                  Installed CASDK Runtime                          ==="
 else
   log_message "===              CASDK Runtime Already Installed                      ==="

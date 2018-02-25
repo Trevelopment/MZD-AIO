@@ -183,7 +183,7 @@ CustomApplicationsHandler.register("app.devtools", new CustomApplication({
     },
 
     focused: function() {
-        
+
         console.log(JSON.stringify(framework._sharedDataAttributes));
     },
 
@@ -305,7 +305,7 @@ CustomApplicationsHandler.register("app.devtools", new CustomApplication({
         this.menu.find("span.tab").css("width", tabWidth);
 
         // remove last divider
-        this.menu.find("span.divider:last").remove();
+        this.menu.find("span.divider:last-of-type").remove();
     },
 
     /**

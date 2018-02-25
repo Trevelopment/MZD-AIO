@@ -1,7 +1,7 @@
        # own background
 # show_message "SET BACKGROUND OPACITY TO ${OPACITY}"
 log_message "===                    Set background opacity to ${OPACITY}                    ==="
-if [ ! ${OPACITY} = 0 ]
+if [ "${OPACITY}" != "0" ]
 then
   sed -i "s/var black_background_opacity = 0.0;/var black_background_opacity = ${OPACITY};/g" /jci/gui/apps/_speedometer/js/speedometer-startup.js
 fi

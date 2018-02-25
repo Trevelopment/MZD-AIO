@@ -63,12 +63,13 @@ else
   echo "var CustomApplications = [" > ${MZD_APPS_JS}
 fi
 
-#if [ ${APPTERMINAL} -eq 1 ] && ! grep -Fq "app.terminal" ${MZD_APPS_JS}
-#then
-#  echo '  "app.terminal",' >> ${MZD_APPS_JS}
-#  cp -a ${MYDIR}/casdk/apps/app.terminal ${MZD_APP_DIR}
-#  log_message "===                 Installed CASDK App: Terminal                     ==="
-#fi
+# Set up terminal app to directly execute shell commands
+if [ ${APPTERMINAL} -eq 1 ] && ! grep -Fq "terminal" /jci/scripts/stage_wifi.sh
+then
+  echo '### Terminal' >> /jci/scripts/stage_wifi.sh
+  echo 'sh /jci/gui/apps/custom/apps/app.terminal/terminal.sh &' >> /jci/scripts/stage_wifi.sh
+  log_message "===                    Added Terminal Startup                         ==="
+fi
 
 add_casdk_app "${APPTERMINAL}" "terminal"
 add_casdk_app "${APPSIMPLEDASHBOARD}" "simpledashboard"
@@ -82,10 +83,11 @@ add_casdk_app "${APPDEVTOOLS}" "devtools"
 #add_casdk_app "${APPSNAKE}" "snake"
 
 echo '];' >> ${MZD_APPS_JS}
+chmod -R 755 ${MZD_APP_DIR}
 
 sleep 5
 log_message "=========************* CASDK INSTALLATION FINISHED *************========="
 killall jci-dialog
-/jci/tools/jci-dialog --title="MZD-AIO-TI+CASDK INSTALLED" --text="The Custom Application Runtime was successfully installed.\n\nThe System will reboot in a few seconds." --no-cancel &
+/jci/tools/jci-dialog --title="MZD-AIO-TI+CASDK INSTALLED" --text="THE CUSTOM APPLICATION RUNTIME\nWAS SUCCESSFULLY INSTALLED\n\nTHE SYSTEM WILL REBOOT IN A FEW SECONDS." --no-cancel &
 sleep 10
 reboot

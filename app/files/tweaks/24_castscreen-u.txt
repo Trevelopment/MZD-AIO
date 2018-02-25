@@ -2,7 +2,7 @@
 show_message "REMOVE CASTSCREEN-RECEIVER ..."
 log_message "=====*************  UNINSTALL CASTSCREEN-RECEIVER ...   ************====="
 
-if [ "${TESTBKUPS}" = "1" ]
+if [ $TESTBKUPS -eq 1 ]
 then
   cp /jci/scripts/stage_wifi.sh "${MYDIR}/bakups/test/stage_wifi_castscreen-before.sh"
 fi
@@ -16,7 +16,7 @@ rm -f /jci/scripts/stage_wifi.sh.org2
 sed -i '/Castscreen/d' /jci/scripts/stage_wifi.sh
 sed -i '/mirroring.sh/d' /jci/scripts/stage_wifi.sh
 
-if [ "${TESTBKUPS}" = "1" ]
+if [ $TESTBKUPS -eq 1 ]
 then
   cp /jci/scripts/stage_wifi.sh "${MYDIR}/bakups/test/stage_wifi_castscreen-after.sh"
 fi

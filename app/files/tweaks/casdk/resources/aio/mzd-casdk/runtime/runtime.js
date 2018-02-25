@@ -1,37 +1,7 @@
-/**
+/* *
  * Custom Application SDK for Mazda Connect Infotainment System
- * 
+ *
  * A micro framework that allows to write custom applications for the Mazda Connect Infotainment System
- * that includes an easy to use abstraction layer to the JCI system.
- *
- * Written by Andreas Schwarz (http://github.com/flyandi/mazda-custom-applications-sdk)
- * Copyright (c) 2016. All rights reserved.
- * 
- * WARNING: The installation of this application requires modifications to your Mazda Connect system.
- * If you don't feel comfortable performing these changes, please do not attempt to install this. You might
- * be ending up with an unusuable system that requires reset by your Dealer. You were warned!
- *
- * This program is free software: you can redistribute it and/or modify it under the terms of the 
- * GNU General Public License as published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even 
- * the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
- * License for more details.
- * 
- * You should have received a copy of the GNU General Public License along with this program. 
- * If not, see http://www.gnu.org/licenses/
- *
- */
-
-/**
- * This is the main mini framework file that contains everything to run the custom application environment
- */
-
-var CUSTOM_APPLICATION_VERSION='0.0.1';/*
- * Custom Applications SDK for Mazda Connect Infotainment System
- *
- * A mini framework that allows to write custom applications for the Mazda Connect Infotainment System
  * that includes an easy to use abstraction layer to the JCI system.
  *
  * Written by Andreas Schwarz (http://github.com/flyandi/mazda-custom-applications-sdk)
@@ -53,6 +23,13 @@ var CUSTOM_APPLICATION_VERSION='0.0.1';/*
  * If not, see http://www.gnu.org/licenses/
  *
  */
+
+/**
+ * This is the main mini framework file that contains everything to run the custom application environment
+ */
+
+var CUSTOM_APPLICATION_VERSION='0.0.4';
+
 
 var CustomApplication = (function(){
 
@@ -1051,18 +1028,19 @@ var CustomApplication = (function(){
 
 	    /**
 	     * Enables WiFi and tries to obtain an internet connection
-	     * 
+	     *
 	     * @param function callback - A callback that is executed once the internet connection is established
 	     * @return void
 	     */
 
 	    requireInternet: function() {
-	    	/* from netmgmtApp.ks
-	    	SelectNetworkManagement
-	    	
-	    	var params = { payload : { offOn : offOn } };
-                framework.sendEventToMmui(this.uiaId, 'SetWifiConnection', params);
-             */
+
+	    	/* from netmgmtApp.js
+	    	*  SelectNetworkManagement
+        */
+				var offOn = 0;
+				var params = { payload : { offOn : offOn } };
+				framework.sendEventToMmui(this.uiaId, 'SetWifiConnection', params);
 	    }
 
 	};
@@ -1134,8 +1112,8 @@ var VehicleData = {
 	 */
 
 	general: {
-		brand: {id:'VDTSBrand', friendlyName: 'Vehicle Brand', input: 'list', values: VehicleDataBrand},
-		type: {id:'VDTSVehicle_Type', friendlyName: 'Vehicle Type', input: 'list', values: VehicleDataVehicleType},
+		brand: {id:'VDSBrand', friendlyName: 'Vehicle Brand', input: 'list', values: VehicleDataBrand},
+		type: {id:'VDSVehicle_Type', friendlyName: 'Vehicle Type', input: 'list', values: VehicleDataVehicleType},
 		region: {id: 'SYSRegion', friendlyName: 'Region', input: 'list', values: VehicleDataRegion},
 	},
 
@@ -1146,12 +1124,12 @@ var VehicleData = {
 	vehicle: {
 		speed: {id: 'VDTVehicleSpeed', friendlyName: 'Vehicle Speed', input: 'range', min: 0, max: 240, factor: 0.01},
 		rpm: {id: 'VDTEngineSpeed', friendlyName: 'Engine RPM', input: 'range', min: 0, max: 8000, factor: 2.25},
-		odometer: {id: 'VDTCOdocount', friendlyName: 'Odocount'},
-		batterylevel: {id: 'VDTCBattery_StateOfCharge', friendlyName: 'Battery Level'},
+		odometer: {id: 'VDCOdocount', friendlyName: 'Odocount'},
+		batterylevel: {id: 'VDCBattery_StateOfCharge', friendlyName: 'Battery Level'},
 
 	//Peter-dk added
-	//	latAcc: {id: 'VDTCLateralAcceleration', friendlyName: 'Lateral acceleration', input: 'range', min: 3000, max: 5000, factor: 1},
-	//	lonAcc: {id: 'VDTCLongitudinalAccelerometer', friendlyName: 'Longitudinal acceleration', input: 'range', min: 3000, max: 5000, factor: 1},
+	//	latAcc: {id: 'VDCLateralAcceleration', friendlyName: 'Lateral acceleration', input: 'range', min: 3000, max: 5000, factor: 1},
+	//	lonAcc: {id: 'VDCLongitudinalAccelerometer', friendlyName: 'Longitudinal acceleration', input: 'range', min: 3000, max: 5000, factor: 1},
 		startTime: {id: 'PIDGlobalRealTime_Start', friendlyName: 'Start time'},
 		curTime: {id: 'PIDCrntReadTm', friendlyName: 'Current time'},
 		drv1dstnc: {id: 'VDTPID_Drv1Dstnc_curr', friendlyName: 'Drive Distance'},
@@ -1179,9 +1157,9 @@ var VehicleData = {
 	 */
 
 	temperature: {
-		outside: {id: 'VDTCOut-CarTemperature', friendlyName: 'Outside Temperature'},
+		outside: {id: 'VDTOut-CarTemperature', friendlyName: 'Outside Temperature'},
 		intake: {id: 'VDTDR_IntakeAirTemp', friendlyName: 'Intake Air Temperature'},
-		coolant: {id: 'PIDEngineCoolantTemperature', friendlyName: 'Engine Coolant Temperature'},
+		coolant: {id: 'VDTEngClnt_Te_Actl', friendlyName: 'Engine Coolant Temperature'},
 	},
 
 
@@ -1219,11 +1197,11 @@ var CustomApplicationDataProcessors = {
 	},
 
 /*Peter-dk added
-	LateralAcceleration: function(value) { 
+	LateralAcceleration: function(value) {
 		return Math.round(value * 0.1);
 	},
 
-	LongitudinalAccelerometer: function(value) { 
+	LongitudinalAccelerometer: function(value) {
 		return Math.round(value * 0.1);
 	},
 */
@@ -1298,8 +1276,8 @@ var CustomApplicationDataHandler = {
 		// Vehicle Data Transfer data
 		{table: 'vdtpid', prefix: 'PID', enabled: true, file: true, update: 60},
 
-		// Vehicle Data Transfer data
-		{table: 'vdtcurrent', prefix: 'VDTC', enabled: true, file: true, update: 60},  // Peter-dk, "always: true" does not work
+		// Vehicle Data Transfer data Trez - changed VDTC to VDC to make it unique from VDT prefix above
+		{table: 'vdtcurrent', prefix: 'VDC', enabled: true, file: true, update: 60},  // Peter-dk, "always: true" does not work
 
 
 		/**
@@ -1318,7 +1296,7 @@ var CustomApplicationDataHandler = {
 		 */
 
 		// Vehicle Setting
-		{table: 'vdtsettings', prefix: 'VDTS', enabled: true, file: true, update: false},
+		{table: 'vdtsettings', prefix: 'VDS', enabled: true, file: true, update: false},
 
 		// Ignition Diagnostic Monitor (disabled)
 		{table: 'idm', prefix: 'IDM', enabled: true, file: true, update: false},

@@ -3,32 +3,32 @@ show_message "INSTALL TRACK-ORDER AND FLAC SUPPORT ..."
 log_message "=====****** INSTALL TRACK-ORDER AND FLAC SUPPORT ... ******===="
 
 TRACKORDER_FLAC=0
-if [ ${CMU_SW_VER} = "56.00.100A-ADR" ] \
-|| [ ${CMU_SW_VER} = "56.00.240B-ADR" ] \
-|| [ ${CMU_SW_VER} = "56.00.230A-EU" ] \
-|| [ ${CMU_SW_VER} = "55.00.650A-NA" ] \
-|| [ ${CMU_SW_VER} = "55.00.753A-NA" ] \
-|| [ ${CMU_SW_VER} = "55.00.760A-NA" ]
+if [ "${CMU_SW_VER}" == "56.00.100A-ADR" ] \
+|| [ "${CMU_SW_VER}" == "56.00.240B-ADR" ] \
+|| [ "${CMU_SW_VER}" == "56.00.230A-EU" ] \
+|| [ "${CMU_SW_VER}" == "55.00.650A-NA" ] \
+|| [ "${CMU_SW_VER}" == "55.00.753A-NA" ] \
+|| [ "${CMU_SW_VER}" == "55.00.760A-NA" ]
 then
   TRACKORDER_FLAC=1
   TRACKORDER_FLAC_FILE=230A-EU
 fi
-if [ ${CMU_SW_VER} = "56.00.511A-EU" ] \
-|| [ ${CMU_SW_VER} = "56.00.512A-EU" ] \
-|| [ ${CMU_SW_VER} = "58.00.250A-NA" ] \
-|| [ ${CMU_SW_VER} = "56.00.513C-EU" ] \
-|| [ ${CMU_SW_VER} = "56.00.513B-EU" ] \
-|| [ ${CMU_SW_VER} = "56.00.513C-ADR" ] \
-|| [ ${CMU_SW_VER} = "56.00.521A-NA" ]
+if [ "${CMU_SW_VER}" == "56.00.511A-EU" ] \
+|| [ "${CMU_SW_VER}" == "56.00.512A-EU" ] \
+|| [ "${CMU_SW_VER}" == "58.00.250A-NA" ] \
+|| [ "${CMU_SW_VER}" == "56.00.513C-EU" ] \
+|| [ "${CMU_SW_VER}" == "56.00.513B-EU" ] \
+|| [ "${CMU_SW_VER}" == "56.00.513C-ADR" ] \
+|| [ "${CMU_SW_VER}" == "56.00.521A-NA" ]
 then
   TRACKORDER_FLAC=1
   TRACKORDER_FLAC_FILE=511A-EU
-elif [ ${CMU_SW_VER} = "59.00.326A-ADR" ] \
-|| [ ${CMU_SW_VER} = "59.00.330A-ADR" ] \
-|| [ ${CMU_SW_VER} = "59.00.342A-ADR" ] \
-|| [ ${CMU_SW_VER} = "59.00.441A-NA" ] \
-|| [ ${CMU_SW_VER} = "59.00.443C-EU" ] \
-|| [ ${CMU_SW_VER} = "59.00.331A-EU" ]
+elif [ "${CMU_SW_VER}" == "59.00.326A-ADR" ] \
+|| [ "${CMU_SW_VER}" == "59.00.330A-ADR" ] \
+|| [ "${CMU_SW_VER}" == "59.00.342A-ADR" ] \
+|| [ "${CMU_SW_VER}" == "59.00.441A-NA" ] \
+|| [ "${CMU_SW_VER}" == "59.00.443C-EU" ] \
+|| [ "${CMU_SW_VER}" == "59.00.331A-EU" ]
 then
   TRACKORDER_FLAC=1
   TRACKORDER_FLAC_FILE=326A-ADR
@@ -41,11 +41,11 @@ then
   log_message "===  Backup of /jci/lib/libmc_user.so to libmc_user.so.org  ==="
 fi
 
-if [ "${TRACKORDER_FLAC}" = "0" ]
+if [ $TRACKORDER_FLAC -eq 0 ]
 then
   log_message "===     Your firmware is not compatible with this tweak     ==="
 else
-  if [ "${TRACKORDER_FLAC}" = "1" ]
+  if [ $TRACKORDER_FLAC -eq 1 ]
   then
     cp -a ${MYDIR}/config/media-order-patching/jci/lib/libmc_user.${TRACKORDER_FLAC_FILE}.so /jci/lib/libmc_user.so
     cp -a ${MYDIR}/config/media-order-patching/usr/lib/gstreamer-0.10/libgstflac.so /usr/lib/gstreamer-0.10
@@ -54,7 +54,7 @@ else
     /bin/fsync /jci/lib/libmc_user.so
   fi
 
-  if [ "${TRACKORDER_FLAC}" = "1" ]
+  if [ $TRACKORDER_FLAC -eq 1 ]
   then
     for I in 1 2 3
     do

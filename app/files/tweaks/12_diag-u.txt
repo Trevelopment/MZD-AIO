@@ -1,7 +1,7 @@
 #remove diagmenu with 1 sec. press at clock in display settings menu, script made by Sumire_Racing_JPN
 show_message "REMOVE DIAGMENU W. 1 SEC. PRESS AT CLOCK \nIN DISPLAY SETTINGS MENU"
 log_message "===*** UNINSTALL DIAGMENU W. AT CLOCK IN DISPLAY SETTINGS MENU ... ***==="
-if [ "${TESTBKUPS}" = "1" ]
+if [ $TESTBKUPS -eq 1 ]
 then
 	cp /jci/gui/apps/diag/js/diagApp.js "${MYDIR}/bakups/test/diagApp_diagmenu-before.js"
 	cp /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js "${MYDIR}/bakups/test/StatusBarCtrl_diagmenu-before.js"
@@ -30,7 +30,17 @@ then
 else
 	log_message "===          /jci/gui/common/js/Common.js was not modified            ==="
 fi
-if [ "${TESTBKUPS}" = "1" ]
+if [ -e /jci/gui/apps/diag/controls/Test/js/TestCtrl.js.org ]
+then
+	cp -a /jci/gui/apps/diag/controls/Test/js/TestCtrl.js.org /jci/gui/apps/diag/controls/Test/js/TestCtrl.js
+	log_message "===                Restored  TestCtrl.js  From  Backup                ==="
+fi
+if [ -e /jci/gui/apps/diag/controls/Test/css/TestCtrl.css.org ]
+then
+	cp -a /jci/gui/apps/diag/controls/Test/css/TestCtrl.css.org /jci/gui/apps/diag/controls/Test/css/TestCtrl.css
+	log_message "===                Restored  TestCtrl.css From  Backup                ==="
+fi
+if [ $TESTBKUPS -eq 1 ]
 then
 	cp /jci/gui/apps/diag/js/diagApp.js "${MYDIR}/bakups/test/diagApp_diagmenu-after.js"
 	cp /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js "${MYDIR}/bakups/test/StatusBarCtrl_diagmenu-after.js"

@@ -1,30 +1,122 @@
 <!DOCTYPE html>
 <h1 id="">MZD-AIO-TI v2 CHANGELOG</h1>
+<h3>2.7.8</h3>
 
+<h4>Speedometer v5.5 - All In One Speedometer</h4>
+
+<ul>
+  <li>Analog, Modded and Bar Speedometers are now All In One!</li>
+  <li>All options are available and will be applied to the proper Speedometer</li>
+  <li>Choose which speedometer to start with by default (if starting with Bar Speedometer other options will still determine the starting state of the Classic Speedometer)</li>
+  <li>The speedometer-config.js file now has all the options, set a variable to determine if override values are used or installed options.</li>
+  <li>Invalid Values Show &quot;---&quot; Such As Gear Position/Lever for Manual Transmissions</li>
+  <li>Gear Lever Shows P - R - N - D</li>
+  <li>Toggles will Show The Action In A Statusbar Notification</li>
+  <li>Hold &quot;Up&quot; on multicontroller to switch between Classic and Bar Speedometer Mode</li>
+  <li>Hold &quot;Down&quot; in Classic mode to disable single click toggles (Basic Mode))</li>
+  <li>Modded Speedometer (in Classic mode):
+    <ul>
+      <li>Single click &quot;Up&quot; to increase size of values</li>
+      <li>Multicontroller &quot;Select&quot; toggles between Digital and Analog speed</li>
+      <li>Single click &quot;Down&quot; to show alternate values</li>
+    </ul>
+  </li>
+  <li>Bar Speedometer:
+    <ul>
+      <li>Configure The Amount of Bottom Rows in &quot;speedometer-config.js&quot; (Default 4)</li>
+      <li>Hold &quot;Down&quot; to show/hide speed bar</li>
+      <li>
+        <strong>TAP Any 2 Values To Swap Their Positions!</strong>
+        <ul>
+          <li>Any Values Can Be Swapped Even The Main</li>
+          <li>When The Main Value Is Swapped An SBN Will Show With The Value Name</li>
+          <li>Tap Below The Bottom Row To Swap Hidden Values In Other Rows</li>
+          <li>Exiting The App Will Reset Positions To Your Default</li>
+          <li>Tap Selected Value Again To Cancel</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+<a href="" onclick="externalLink('speedorepo')">
+  <h2>For More Info Check Out The Speedometer Repository
+    <span class="icon-github"></span>
+  </h2>
+</a>
+<h4>AIO Tweaks App v0.6</h4>
+
+<ul>
+  <li>&quot;Reverse App List&quot; button - Reverses the Applications List (resets on boot).</li>
+  <li>&quot;Unmount Swap&quot; button - Unmount the mounted swapfile.</li>
+</ul>
+
+<h4>Test Mode (T/M) Button <a href="" onclick="externalLink('jci-test-mode')">(Thread)</a></h4>
+
+<ul>
+  <li>Included with the
+    <strong>1 Second Diagnostic Menu</strong> tweak because it is part of the Diagnostic App</li>
+  <li>In v59 &quot;JCI Test Mode&quot; was disabled in the Diagnostic App
+    <ul>
+      <li>This tweak brings back Test Mode for v59</li>
+      <li>Makes it easier to get to in v55-v58 (Just press the T/M button)</li>
+    </ul>
+  </li>
+  <li>Once Test Mode is started type 11 to open the well known Test Menu</li>
+  <li>
+    <strong>
+      <em>BE CAREFUL IN TEST MODE, DON&#39;T DO ANYTHING YOU ARE UNSURE ABOUT!</em>
+    </strong>
+  </li>
+</ul>
+
+<h5>Tweak Installer Changes/Fixes</h5>
+
+<ul>
+  <li>App install/uninstall now uses NodeJS to add/remove from app list
+    <ul>
+      <li>Allows for cleaner installations</li>
+      <li>Backward compatible</li>
+      <li>Solves the issue of all apps disappearing off the app list when only 1 is uninstalled due to improperly formatted JSON file</li>
+      <li>&quot;
+        <em>Legacy App Install</em>&quot; in install options to use the old method (using bash)
+        <ul>
+          <li>The only reason I can think of for this is if you already have an improperly formatted JSON file then you need to uninstall all apps with legacy installer because the NodeJS code will throw an error. Other than that the NodeJS code will never
+            cause an improperly formatted JSON file.</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Cleaned up installer code
+    <ul>
+      <li>Removed some superfluous code</li>
+      <li>Fixed many inconsequential errors</li>
+    </ul>
+  </li>
+</ul>
 <h3>2.7.6</h3>
 
-<h3>MZD-AIO GUI Changes/Fixes:</h3>
+<h5>MZD-AIO GUI Changes/Fixes:</h5>
 
 <ul><li>Fixed &quot;Bootbox is not defined&quot; error preventing AIO from running for some.</li><li>Alternate Layout Toggle (Full Width Tweak Choices &amp; Options)</li><li>Changed Up Notification Style</li><li>Phase 1 of GUI Style Redesign</li><li>Autorun &amp; Recovery and Full System Restore links in dropdown menu by &quot;Start Compilation&quot;</li><li>Home Button brings you back to main page. (if you ever wondered what that was for)</li></ul>
 
-<h3>Video Player v3.3.1</h3>
+<h5>Video Player v3.3.1</h5>
 
 <ul><li>Fixed the unicode list retrieve and removes the &quot;only unicode&quot; method</li><li>Disabled the log functions as they are not needed now</li><li>Video Name shows in a Statusbar Notification at the beginning of each video</li><li>Now it takes the time from gplay app</li><li><strong>Music player with MP3 &amp; FLAC support</strong> (From the Music folder on the USB Drive).</li><li>Adds the FLAC codec to the gstreamer libs</li><li>It shows the metadata of the files when playing music</li><li>Other small bug fixes
 <blockquote><em><strong>Pause Audio Hack</strong></em><ul><li><strong>Pressing the &quot;Entertainment&quot; (Music) button will pause audio</strong></li><li><strong>This only works ONCE AFTER OPENING THE VIDEO PLAYER APP AND BEFORE PLAYING THE FIRST VIDEO</strong></li><li><strong>Audio has to be playing from USB or button will function normally</strong></li><li>After it has been done once or the first video is played the entertainment button will function normally</li><li>You will see a split-second context change... that is the only way I could get the audio to pause.</li></ul></li></ul></blockquote>
 
-<h3>AIO Tweaks App v0.5</h3>
+<h5>AIO Tweaks App v0.5</h5>
 
 <ul><li>Fixed The Freezing Issue</li><li>Added SBN Test Button (Status Bar Notification)</li><li>ADB Button ($ adb devices -l)</li></ul>
 
-<h3>Speedometer v5.1</h3>
+<h5>Speedometer v5.1</h5>
 
 <ul><li>Added values (set in &quot;speedometer-config.js&quot;)<ul><li>Battery SOC (State of charge iStop only)</li><li>Engine Load (Only shows 0 or 1 for now)</li><li>Gear Lever Position</li></ul></li><li>Gear Position will show correct gear for Manual Transmissions (delayed by 1 second)</li><li>Fixed non working values (idle time, engine idle time, engine top speed)</li><li>To reuse current &quot;speedometer-config.js&quot; file just delete &quot;config/speedometer_bar/speedometer-config.js&quot; before installing</li><li>CHANGED: WebSocket port from 55554 =&gt; 9969</li><li>CHANGED: Multicontroller Tilt Down Now Toggles the SPEED BAR from Vehicle Speed to Engine Speed</li></ul>
 
-<h3>USB Audio MOD</h3>
+<h5>USB Audio MOD</h5>
 
 <ul><li>Statusbar Notifications On Every Screen At The Start Of Each Song!<ul><li>SBN for 5 Seconds: &quot;Artist - Song&quot;</li><li>Not Android Auto Screens (Sorry its not possible to cross surfaces like that)</li></ul></li><li>Change the &quot;Powered By Gracenote®&quot; flash text to whatever you want!<ul><li>Clear text field blank to disable altogether.</li><li>If flash text is not showing, genre will show on that line for 20 seconds (If it is in the metadata)</li></ul></li></ul>
 
-<h3>Other Changes/Fixes</h3>
+<h5>Other Changes/Fixes</h5>
 
 <ul><li><em>Tweak Installer:</em><ul><li>When installing apps, all common files (addon-common and opera folders) for are now in /config/jci/...</li><li>Cleaned up app install scripts to be more uniform and efficient</li><li>No more app list patch for v59! (Apps are added to the app ctxt list dynamically.)</li><li>Log files are saved in bakup folder so they are not lost if install accidently runs twice</li></ul></li><li><em>Other Tweaks:</em><ul><li>Added Language Support for &#39;Reverse Camera Safety Warning&#39; Tweak<ul><li>Ukrainian, Japanese, Chinese, Korean, Thai, Hebrew, Swedish, Slovak</li></ul></li><li>Added Ukrainian to &#39;Remove Message Replies&#39; Tweak</li></ul></li></ul>
 
@@ -183,7 +275,7 @@
 <li>Support for v59.00.504*</li>
 <li>Skip Confirmation choice will persist</li>
 </ul>
-<h4>2.7.0</h4>
+<h3>2.7.0</h3>
 
 <h5>Android Auto v1.04</h5>
 <ul><li><strong><em>Bluetooth Call Bug Fixed!!!</em></strong> <em>Big thanks to @lmagder for fixing the headunit code after @Trezdog44 found the root of the issue with the &#39;Bluetooth call patch&#39;</em></li><li>Video focus is lost at the beginning and end of a call due to the system expecting a context change.  Press the FAV (&lt;span class=&quot;icon-star&quot;&gt;&lt;/span&gt;) Button to get video focus back and AA will function normally.</li><li>Phone button opens AA phone screen, also call buttons work for answering and ending calls.</li><li>N\AV button opens the AA home screen</li><li>Tap the black box on the credit screen to display contents of the headunit.log file.</li><li>Added the Android Auto Icon to the statusbar</li><li>(The &#39;Bluetooth Call Patch&#39; from AA 1.03 is no longer needed from this version on.)<ul><li>(If it was applied will be reverted back to normal)</li></ul></li></ul>
@@ -194,7 +286,7 @@
 <h5>AIO Tweaks v0.3</h5>
 <ul><li>Start Headunit Process<ul><li>Will now successfully Start Android Auto Headunit Process</li><li>Also Active Headunit stdout will pop up</li></ul></li><li>View Headunit Log<ul><li>Shows the existing headunit.log file in a window</li></ul></li><li>Screen off<ul><li>Turns the screen off</li></ul></li><li>wifiAP<ul><li>Starts Wifi Access Point</li><li>(start_wifi.sh; jci-wifiap.sh start)</li></ul></li><li>Stop Firewall<ul><li>Stops the firewall</li><li>(jci-fw.sh stop)</li></ul></li><li>System Restore <em>WARNING: This will remove all tweaks and uninstall all AIO apps</em><ul><li>Restore you system on the fly with a slimmed down restore script</li><li>Removes all tweaks and AIO apps including this one</li><li>Does not restore Color Scheme (all those image files take up a lot of space)</li><li>Very small and safe only targets and restores from internal backups.</li><li>Asks for verification twice to ensure it is not accidentally run.</li></ul></li><li>Env - Environment variables<ul><li>For informational/educational purposes</li><li>Also used by developers for fun times</li></ul></li><li><p>Fixed saving issue with the tweak toggle buttons</p></li><li><p>General Improvements/Bug Fixes</p><ul><li>On Startup looks for some AIO log files loads FW version if found.</li><li>If FW version is found An &quot;i&quot; Icon will appear in the top menu bar to the left of the &quot;reload&quot; icon.</li><li>Click the icon to show your FW version, future plans to display more pertinent information as well.</li><li>Added Save Button to Success Dialog</li><li>Added To Top Menu &quot;Downloads &gt; Check For Update&quot;</li><li>Small logging fixes in autorun and recovery scripts</li><li>Fixed WiFiAP files not copying when it was the only autorun script chosen</li><li>Many other small improvements/fixes</li></ul></li></ul>
 
-<h4 id="2-6-8">v2.6.8</h4>
+<h3 id="2-6-8">v2.6.8</h3>
 <ul>
   <li style="list-style:none;margin-left: -40px;"><span class="icon-arrow-left-alt1"></span> New Install Option: <strong>Retrieve CMU Data</strong><ul>
     <li>Changes the &#39;no&#39;s to &#39;yes&#39; in dataRetrieval_config.txt</li>
@@ -245,12 +337,12 @@
   </ul>
 </li>
 </ul>
-<h4 id="2-6-6">v2.6.6</h4>
+<h3 id="2-6-6">v2.6.6</h3>
 <h5 id="id7_recovery">ID7_Recovery Pack - A collection of autorun scripts that will lay dormant until needed for recovery. Upon detected configuration change automatically applies SSH_bringback with additional recovery features, it is the easyest way to maintain system access.</h5>
 <ul><li>ID7_Recovery - Fixed Install not showing dialog to reboot</li>
    <ul><li>Fixed cmu user/pass</li><li>Configuration Improvements - Opens Ports 22, 24000, &amp; 36000 for SSH access</li><ul><li> (**SSH_Bringback also opens additional ports 24000 &amp; 36000**)</li></ul><li>(Recomended Update if already installed)</li></ul><li>Fixed these release notes popping up every time AIO is opened</li>
    <li>Added some images and info in help messages</li></ul>
-<h4 id="2-6-5">v2.6.5</h4>
+<h3 id="2-6-5">v2.6.5</h3>
 <strong>ID7_Recovery will persist through a Firmware update.  On each boot checks, and if necessary repairs the following:</strong>
 <ul>
 <li>SSH access<ul>
@@ -270,7 +362,7 @@
 </li>
 </ul>
 <em><strong>It is recommended to install this pack BEFORE updating firmware or anytime as a safety net.  This script will ensure that SSH access will be automatically restored if it is lost for any reason.</strong></em>
-<h4>v2.6.4</h4>
+<h3>v2.6.4</h3>
 <h3>CMU-Autorun - <em>For Testing and <strong>Recovery</strong></em></h3>
 <ul><li>Autorun Installer - Install the autorun script <strong>BEFORE</strong> updating to v59.00.502 to <strong>recover your system</strong> and regain access after the update is complete.</li><li>There is <em>no harm, performance impact, or danger</em> installing the autorun script and not using it until it is needed.</li><li>If there is no <code>run.sh</code> script file available at the root of the SD card or USB drives the script silently does nothing.  </li><li>Ultimately it is a good idea for everyone to install because it provides an additional layer of safety for system recovery in any situation.</li><li>More to come in the next AIO update, for SD card scripts to use with autorun check out the <a href="" onclick="externalLink('cmu-autorun')" title="CMU-autorun Repo">CMU-autorun repository</a></li><li><em>Make sure you check the forums</em> before allowing an update to an unknown firmware version to ensure this and other known workarounds have not been closed.</li></ul>
 <h4>AIO Tweaks App!</h4>
@@ -286,7 +378,7 @@
 <ul><li>Press Command Knob or Tap &#39;Total Time&#39;:  Reset &#39;Total Time,&#39; (to 0) &#39;Ave. Speed,&#39; &#39;Top Speed,&#39; (to 0 or current speed) and both idle time fields (reset to 0 view will reset when vehicle is idle again).</li><li>Tilt-Down or Tap &#39;Top Speed&#39;: Toggle hide/show for both idle times and increase the font-size of all other fields.</li><li>Tilt-Left: Digital Speedometer</li><li>Tilt-Right: Analog Speedometer</li><li>Tilt-Up: Toggle between mph and km/h</li></ul>
 <h3>Bug Fixes</h3>
 <ul><li>Fixed Bug with Apps randomly disappearing from App Menu effecting v59.00.400 - v59.00.450</li><li>Fixed bug where after running the &#39;Full Restore&#39; Script, &#39;Android Auto&#39; could not be reinstalled.<ul><li>Applied fix to both the &#39;Full Restore&#39; Script and &#39;Android Auto&#39; Install Script</li></ul></li></ul>
-<h4 id="2-6-1">v2.6.1</h4>
+<h3 id="2-6-1">v2.6.1</h3>
 <h6 id="cmu-autorun">CMU-Autorun</h6>
 <ul>
 <li>Linked in the &quot;download&quot; menu &amp; &quot;Help Panel &gt; Tips &amp; Tricks&quot; - Installer/Uninstaller is in one script.</li>
@@ -300,7 +392,7 @@
 <li>Fixed Smooth color themes changing background when &quot;Use Color Scheme Background&quot; option is not checked.</li>
 <li>Applying color scheme will no longer overwrite custom blank album art or custom off-screen background.</li>
 </ul>
-<h4 id="2-6-0">v2.6.0</h4>
+<h3 id="2-6-0">v2.6.0</h3>
 <h3 id="new-tweaks"><strong>NEW TWEAKS:</strong></h3>
 <ul>
 <li><p><strong style="font-size:1.2em">USB Audio Mod</strong> | <em>By: Enlsen</em></p>
@@ -391,7 +483,7 @@
 <li>  Adjusted CastScreen, may fix issues for some.</li>
 <li>  Added compatible firmware 59.00.445A-JP</li>
 </ul>
-<h4 id="v2-5-9">v2.5.9</h4>
+<h3 id="v2-5-9">v2.5.9</h3>
 <h4 id="ssh_bringback-">SSH_Bringback:</h4>
 <ul>
 <li>A second root user/pass - jci/jci is now added.</li>
@@ -423,7 +515,7 @@
 </ul>
 </li>
 </ul>
-<h4 id="v2-5-6">v2.5.6</h4>
+<h3 id="v2-5-6">v2.5.6</h3>
 <ul>
 <li>PATCHES:<ul>
 <li>Fixed the Error Message Display in the VideoPlayer<ul>
@@ -441,7 +533,7 @@
 </ul>
 </li>
 </ul>
-<h4 id="v2-5-5">v2.5.5</h4>
+<h3 id="v2-5-5">v2.5.5</h3>
 <ul><li><strong>VIDEO PLAYER V2.9</strong><ul><li>Full multicontroller functionality<ul><li>Scroll and Select Video List (cw/ccw - select)</li><li>List looping in selection and playback</li><li>Scroll and Select Options (tile-right/left - select)</li></ul></li><li>Previous track<ul><li>Play Previous Video</li></ul></li><li>Repeat all option<ul><li>Recently Played Videos are not repeated in shuffle mode until the entire list is played.</li><li>Toggling Repeat All will clear recently played videos list.</li></ul></li><li>Save Configuration To Local Storage<ul><li>Utilize the CMU&#39;s Local Storage to save options even after a reboot.</li><li>All option choices AND recently played video list are saved to local storage.</li></ul></li><li>More Touch Controls During playback<ul><li>Control next/prev/ff/rw and more by tapping sections of the touch screen.</li><li>See  <a href="" onclick="$('#tchCtrlMapBtn').click()">Touch Screen Control Map</a> for details</li></ul></li><li>Removing Navigation SD card <strong>will improve video player performance</strong> this is due to the memory issues that exist within the MZD system.</li><li>Installation of the swapfile will also improve performance, swap mounting has been improved.</li></ul></li></ul>
 <h5>Want more info on the Video Player? Check out the <a href="" onclick="externalLink('videoplayergithub')">Video Player Repository</a></h5>
 <ul><li><strong>CUSTOM BOOT ANIMATIONS (Big Thanks to hrangel)</strong><ul><li>Change all or part of the boot animation (Default &#39;Disabled&#39; Animation Uses Default LoopLogo for all 3 parts of the sequence allowing for the shortest boot time the illusion of no boot animation)</li><li>Boot Animation Sequence Goes: LoopLogo[1] =&gt; TranLogo[2] =&gt; TranLogoEnd[3]</li><li>Choices:<ul><li>Mazda Logo (Default LoopLogo) [All]</li><li>Matrix [All]</li><li>Mazda Z Loop [All]</li><li>Large Mazda Tran [All]</li><li>Mazda Cinema [Loop - 1 &amp; 2, end 3]</li><li>Criss Cross [Loop - 1 &amp; 2, end 3]</li><li>Mazda Race [Loop - 1 &amp; 2, end 3]</li><li>Fiat Logo [1]</li><li>Spider 124 Tran [2]</li><li>MZD Title Slam [3]</li><li>MZD Space Logo [3]</li><li>Car Flash [3]</li><li>Default Animations Are Also Included As Choices</li></ul></li><li><em><a class="w3-btn" href="" onclick="$('#bootPrev').click()">In App Preview</a> of Boot Animations</em></li></ul></li></ul>
@@ -450,11 +542,11 @@
 </li></ul>
 <ul>
   <li><strong>Unconfirmed Fix For CastScreen - Adds Port 53515 (ADB Default Port) To Firewall IPTables Accepted Connections</strong></li><ul><li>If this fix works for anyone let me know.</li><li><a href="" onclick="openApkFolder()">New APK for Android v 7.0 (castscreen-1.0.1.apk)</a></li></ul></ul>
-<h4 id="v2-5-0">v2.5.0</h4>
+<h3 id="v2-5-0">v2.5.0</h3>
 <strong><h2 id="important-">IMPORTANT: DUE TO A <a href="" onclick="externalLink('DMCA')">DMCA TAKEDOWN</a> </h2>ALL FILES ASSOCIATED WITH THE SPEEDCAM PATCH, NNG, IGO AND ANY NAVIGATION PATCHING TOOLS ARE NO LONGER AVAILABLE WITH MZD-AIO-TI.</strong>
 <p class="w3-large" id="this-">This will allow for continued development of this project without infringing on the copyrights of NNG Kft. and potentially causing the company to target developers and/or users to sue for Copyright Infringement.  <br>Additionally, no information regarding speedcam or navigation patching will be available or provided through MZD-AIO-TI or any associated developer of MZD-AIO-TI.</p>
 <h5 id="-uninstall"><strong>Uninstall for speedcam patch will be available but is <em class="w3-xlarge" style="text-transform: uppercase;">deprecated</em> and will eventually be removed</strong></h5>
-<h4 id="2-4-3">2.4.3</h4>
+<h3 id="2-4-3">2.4.3</h3>
 <ul><h4>Video Player 2.8</h4>
 <li>Did somebody say <strong>VIDEO PLAYER MUTICONTROLLER SUPPORT??</strong> YES I DID!<ul>
 <li>ButtonPress = Play/Pause</li>
@@ -475,7 +567,7 @@
 <li>Fixed a little bug where SSH_bringback wasn't being added to compilation when autoselected.</li>
 </ul>
 <h5 id="for-aio-v1">FOR <a href="" onclick="shell.openExternal('https://github.com/Siutsch/AIO---All-in-one-tweaks/blob/master/CHANGELOG.md')">AIO v1.x.x CHANGELOG</a> or visit <a href="" onclick="externalLink('mazdatweaks')">MazdaTweaks.com</a></h5>
-<h4 id="2-4-2">v2.4.2</h4>
+<h3 id="2-4-2">v2.4.2</h3>
 <ul>
 <li>Reverted Compatibility for &#39;Media Order Patch &amp; FLAC Support&#39; tweak.<ul>
 <li>Compatibilities with issues are neatly commented out in the code for  testing purposes.</li>
@@ -486,7 +578,7 @@
 <li>Choosing &#39;Media Order Patch &amp; FLAC Support&#39; will auto-choose SSH_Bringback (It can be unselected but that is not recommended).</li>
 <li>Speedcam Patch Compatibility should be ok but should be <strong>considered a beta test for FW. ver. 59.00.411A-NA &amp; 59.00.443C-EU.</strong></li>
 </ul>
-<h4 id="2-4-0-release">v2.4.0</h4>
+<h3 id="2-4-0-release">v2.4.0</h3>
 <ul>
 <li><strong>Android Auto Bugfixes</strong><ul>
 <li>re-enables the dialer interface if the phone is paired and connected to the headunit via BT (Not Completely fixed, Still an Issue)</li>
@@ -533,23 +625,23 @@
 <li>Bits of Resizing and shifting.</li>
 <li>Font change.</li>
 </ul>
-<h4 id="2-3-4">v2.3.4</h4>
+<h3 id="2-3-4">v2.3.4</h3>
 <ul>
 <li><h5>Added Speedometer Variant By: pnedkov </h5><ul>
 <li>Tap Screen To Switch Between Analog &amp; Digital Style Speedometer
 </li></ul></li></ul>
 <li>Re-enabled SSH Bringback</li>
 
-<h4 id="2-3-3">v2.3.3</h4>
+<h3 id="2-3-3">v2.3.3</h3>
 <ul><li>Moved Backup options to a Pop-out 'Install Options' panel on the top-left side</li><li>Added a 'Skip Confirmation' Option (Also in the Install Options Pop-out Panel)</li><li>Added a 'Compatibility Check' view to clarify Compatibilities (Under the 'Help' Menu) </li></ul>
-<h4 id="v2.3-2">v2.3.2:</h4>
+<h3 id="v2.3-2">v2.3.2:</h3>
 <li>Disabled SSH bringback untill issue is resolved</li>
-<h4 id="v2.3-1">v2.3.1:</h4>
+<h3 id="v2.3-1">v2.3.1:</h3>
 <ul>
 <li>Fix Bug with Compass and Speedometer in v59+ (noNavSD = true;)</li>
 <li>Added 'Remove List Loop Beep' Option</li>
 </ul>
-<h4 id="2-3-0-">v2.3.0:</h4>
+<h3 id="2-3-0-">v2.3.0:</h3>
 <h5 id="video-player-v2-7-update-is-awesome-thank-you-vic_bam85-">Video Player v2.7 Update - IS AWESOME THANK YOU VIC_BAM85!!!</h5>
 <ul>
 <li>New Controls in full screen mode:<ul>
@@ -617,7 +709,7 @@
 <li>Some Tweaks not showing for certain languages</li>
 </ul>
 <p><strong>Compatible Firmware Version: 56.00.514A-ADR</strong></p>
-<h4 id="2-2-4-">v2.2.4:</h4>
+<h3 id="2-2-4-">v2.2.4:</h3>
 <ul>
 <li>Better Comments - If You Like To Look At The Code</li>
 <li>Fallbacks Are Commented Out - So If You Really Need One You Can Get It<ul>
@@ -655,7 +747,7 @@
 </ul>
 </li>
 </ul>
-<h4 id="2-2-0-">v2.2.0:</h4>
+<h3 id="2-2-0-">v2.2.0:</h3>
 <p><strong>MAJOR CODE REFACTORING</strong></p>
 <h6 id="tweak-files-all-around-improvements-in-coding-style-efficiency-logging-compatibility-commenting-and-error-handling">Tweak Files - All around improvements in coding style, efficiency, logging, compatibility, commenting, and error handling</h6>
 <h6 id="if-you-have-previously-installed-no-more-disclaimer-order-of-audio-source-list-or-improved-list-loop-mod-on-fw-v59-please-reinstall-or-uninstall-because-the-files-used-in-your-installation-were-not-updated-to-your-firmware-">IF YOU HAVE PREVIOUSLY INSTALLED NO-MORE-DISCLAIMER, ORDER OF AUDIO SOURCE LIST, OR IMPROVED LIST LOOP MOD ON FW V59 PLEASE REINSTALL (OR UNINSTALL) BECAUSE THE FILES USED IN YOUR INSTALLATION WERE NOT UPDATED TO YOUR FIRMWARE.</h6>
@@ -701,12 +793,12 @@
 </ul>
 <li>Mini Speedometer automatically hides the notification border without date to statusbar mod</li>
 <li>Fixed a typo causing the blue nav color scheme to fail to uninstall.  Now it is removed when changing back to default (red).</li>
-<h3 id="suggestions">I Will take suggestions for main menu layouts, Just mock up your Idea in Photoshop or paint or, for you software freedom lovers, <a href="" onclick="externalLink('gimp')"><span class="icon-rocket4"></span> GIMP2</a> <span class="icon-heart"></span></h3>
+<h4 id="suggestions">I Will take suggestions for main menu layouts, Just mock up your Idea in Photoshop or paint or, for you software freedom lovers, <a href="" onclick="externalLink('gimp')"><span class="icon-rocket4"></span> GIMP2</a> <span class="icon-heart"></span></h4>
 <h4 id="-star-points-layout-"><strong><span class="icon-star-empty"></span> 'Star Points' Layout</strong>:</h4>
 <center><img src="files/screenshots/Alt-layout.jpg" alt="Star Points Layout" style="max-width:400px"></center>
 <h4 id="-inverted-layout-"><strong><span class="icon-diamond3"></span> 'Inverted' Layout</strong>:</h4>
 <center><img src="files/screenshots/Alt-layou-ut.jpg" alt="Inverted Layout" style="max-width:400px"><br>(Main Menu Label On Top Of The Screen Under Statusbar)</center>
-<h4 id="v2-1-5">v2.1.5:</h4>
+<h3 id="v2-1-5">v2.1.5:</h3>
 <ul>
   <li><h4> UI Style Tweaks:</h4>
     <ul>
@@ -726,7 +818,7 @@
   <li>Blue Color Scheme Now Includes Blue Navigation Color Scheme</li>
   <li>Android Auto Install Works!</li>
 </ul>
-<h4 id="v2-1-3">v2.1.3:</h4>
+<h3 id="v2-1-3">v2.1.3:</h3>
 <ul>
   <li>Fixed The Issue causing installation to fail to start in the car.</li>
   <li>Window state is now saved on exit and restored upon reopening. For real this time.<ul>
@@ -739,7 +831,7 @@
     can use EVIOCGRAB to consume input events before the CMU UI without the
     /dev/uinput trickery." /cc @lmagder <span class="icon-thumbs-up"></span> <span class="icon-thumbs-up"></span>
     <small><a href="" onclick="externalLink(`gartneraheadunitcommit`)">https://github.com/gartnera/headunit/commit/70958cf33c9facaed11f4b59c11f</a></small></strong></center>
-    <h4 id="v2-1-2">v2.1.2:</h4>
+    <h3 id="v2-1-2">v2.1.2:</h3>
     <ul>
       <li>Background Rotator will now rotate up to 50 backgrounds (More backgrounds will take longer to load)<ul>
         <li>Also set the number of seconds each background will show: from 10 - 300 seconds (5 minutes)</li>
@@ -752,7 +844,7 @@
     <li>Window state is now saved on exit and restored upon reopening.</li>
     <li>Some more bug and formatting fixes.</li>
   </ul>
-  <h4 id="v2-1-0">v2.1.0:</h4>
+  <h3 id="v2-1-0">v2.1.0:</h3>
   <ul>
     <li><strong>NEW TWEAKS!!</strong><ul>
       <li>Statusbar Tweaks</li>
@@ -777,7 +869,7 @@
 <li>Retrieves FW version from previously used USB drive</li>
 <li>French Translation By: Salegosse (Mazda3revolution.com)</li>
 </ul>
-<h4 id="v2-0-6">v2.0.6:</h4>
+<h3 id="v2-0-6">v2.0.6:</h3>
 <ul>
   <li>Copy buttons for text fields on translator page.</li>
   <li>Added a top bar and clock to the background preview.</li>
@@ -785,7 +877,7 @@
   <li>Fixed Castscreen Receiver</li>
   <li>Fixed Android Auto</li>
 </ul>
-<h4 id="v2-0-5">v2.0.5:</h4>
+<h3 id="v2-0-5">v2.0.5:</h3>
 <ul>
   <li>Initial language chosen for Speedometer Tweak based on locale (Fallback to English if locale does not match any provided translations or is not found.)</li>
   <li>Speedometer: Km/h selected by default except en-US (mph if locale = en-US).</li>
@@ -795,7 +887,7 @@
   <li>Added some HINT messages during Compilation</li>
   <li>Added Infotainment Frame to background preview</li>
 </ul>
-<h4 id="v2-0-4">v2.0.4:</h4>
+<h3 id="v2-0-4">v2.0.4:</h3>
 <ul>
   <li>Fixed bug when choosing Swapfile tweak and not copying directly to USB Drive.</li>
   <li>Fixed bug where Patched files were not copying for Speedcam Patch</li>
@@ -820,7 +912,7 @@
 </ul>
 </li>
 </ul>
-<h4 id="v2-0-3">v2.0.3:</h4>
+<h3 id="v2-0-3">v2.0.3:</h3>
 <ul>
   <li>Updated Patching Tool v2.3 (Thanks Modfreakz!).</li>
   <li>Added Compatible fw v.56.00.100A-EU.</li>
@@ -833,12 +925,12 @@
   <li><strong>EXPERIMENTAL FEATURE: GOOGLE TRANSLATE</strong> Can be found in Help &amp; Settings Menu. (Some languages will break the formatting)</li>
   <li>GOOGLE TRANSLATE pop-up on the translator page to assist with translations.</li>
 </ul>
-<h4 id="v2-0-2">v2.0.2:</h4>
+<h3 id="v2-0-2">v2.0.2:</h3>
 <ul>
   <li>Clean up code/Improvements in logging</li>
   <li><strong>Updated Android Auto</strong> with the latest binaries.  Should be stable now but needs additional testing to confirm</li>
 </ul>
-<h4 id="v2-0-1">v2.0.1:</h4>
+<h3 id="v2-0-1">v2.0.1:</h3>
 <ul>
   <li>Automatic Updates</li>
   <li>Delete <em>copy to usb</em> folder after copying to USB Drive option  </li>

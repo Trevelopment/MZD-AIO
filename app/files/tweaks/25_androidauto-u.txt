@@ -6,7 +6,7 @@ log_message "========********  UNINSTALL ANDROID AUTO HEADUNIT APP ... *******==
 killall -q -9 headunit
 pkill websocketd
 
-if [ "${TESTBKUPS}" = "1" ]
+if [ $TESTBKUPS -eq 1 ]
 then
   cp /jci/scripts/stage_wifi.sh "${MYDIR}/bakups/test/stage_wifi_androidauto-before.sh"
   cp /jci/opera/opera_dir/userjs/additionalApps.json "${MYDIR}/bakups/test/additionalApps_androidauto-1._before.json"
@@ -25,17 +25,18 @@ rm -f /tmp/mnt/data/input_filter
 #rm -f /usr/lib/gstreamer-0.10/libgsth264parse.so
 log_message "===             Removed files for Android Auto Headunit App           ==="
 
-if [ -e /usr/lib/gstreamer-0.10/libgstalsa.so.org ]
-then
+#if [ -e /usr/lib/gstreamer-0.10/libgstalsa.so.org ]
+#then
   #rm -f /usr/lib/gstreamer-0.10/libgstalsa.so
-  log_message "===         Original libgstalsa.so is available as backup             ==="
+  #log_message "===         Original libgstalsa.so is available as backup             ==="
   #mv /usr/lib/gstreamer-0.10/libgstalsa.so.org /usr/lib/gstreamer-0.10/libgstalsa.so
-  /bin/fsync /usr/lib/gstreamer-0.10/libgstalsa.so
-else
-  log_message "===         No backup found. Copying fallback of libgstalsa.so        ==="
+  #/bin/fsync /usr/lib/gstreamer-0.10/libgstalsa.so
+#else
+  #log_message "===         No backup found. Copying fallback of libgstalsa.so        ==="
   # cp -a ${MYDIR}/config_org/androidauto/usr/lib/gstreamer-0.10/libgstalsa.so /usr/lib/gstreamer-0.10/
   # chmod 755 /usr/lib/gstreamer-0.10/libgstalsa.so
-fi
+#fi
+
 # delete Android Auto entry from /jci/opera/opera_dir/userjs/additionalApps.json
 ADDIT_APPS=0
 if grep -Fq "_aiotweaks" /jci/opera/opera_dir/userjs/additionalApps.json
@@ -55,7 +56,7 @@ then
   log_message "===           Found mzd meter entry in additionalApps.json            ==="
   ADDIT_APPS=1
 fi
-if [ ${ADDIT_APPS} = "0" ]
+if [ $ADDIT_APPS -eq 0 ]
 then
   log_message "===    No more entrys in additionalApps.json, files will be deleted   ==="
   rm -f /jci/opera/opera_dir/userjs/additionalApps.*
@@ -86,7 +87,7 @@ fi
 rm -f /jci/scripts/stage_wifi.sh.org3
 rm -f /jci/scripts/stage_wifi.sh.AA
 
-if [ "${TESTBKUPS}" = "1" ]
+if [ $TESTBKUPS -eq 1 ]
 then
   cp /jci/scripts/stage_wifi.sh "${MYDIR}/bakups/test/stage_wifi_androidauto-after.sh"
   cp /jci/sm/sm.conf "${MYDIR}/bakups/test/sm_androidauto-after.conf"

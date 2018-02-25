@@ -81,7 +81,7 @@ if [ ! -e /jci/gui/framework/js/Utility.js.org ]
 		cp -a /jci/gui/framework/js/Utility.js /jci/gui/framework/js/Utility.js.org
 		log_message "=== Backup of /jci/gui/framework/js/Utility.js to Utility.js.org ==="
 fi
-if [ ${KEEPBKUPS} = "1" ]
+if [ $KEEPBKUPS -eq 1 ]
 then
 	cp -a /jci/gui/common/controls/Sbn/css/SbnCtrl.css.org "${MYDIR}/bakups/"
 	cp -a /jci/gui/common/controls/StatusBar/css/StatusBarCtrl.css.org "${MYDIR}/bakups/"

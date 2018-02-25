@@ -3,20 +3,20 @@ show_message "RESTORE ORDER OF AUDIO SOURCE LIST TO ORIGINAL ..."
 log_message "========*******  UNINSTALL ORDER OF AUDIO SOURCE LIST ... *******========"
 TRACKORDER_AUDIO=2
 # Compatibility Check
-if [ "${COMPAT_GROUP}" = "1" ]
+if [ $COMPAT_GROUP -eq 1 ]
 then
   TRACKORDER_AUDIO=0
-elif [ "${COMPAT_GROUP}" = "2" ]
+elif [ $COMPAT_GROUP -eq 2 ]
 then
   TRACKORDER_AUDIO=1
   TRACKORDER_AUDIO_FILE=58.00.250A-NA
   log_message "===       FW ${CMU_SW_VER} detected, copy matching systemApp.js       ==="
-elif [ "${COMPAT_GROUP}" = "3" ] || [ "${COMPAT_GROUP}" = "4" ]
+elif [ $COMPAT_GROUP -eq 3 ] || [ $COMPAT_GROUP -eq 4 ]
 then
   TRACKORDER_AUDIO=1
   TRACKORDER_AUDIO_FILE=59.00.330
   log_message "===       FW ${CMU_SW_VER} detected, copy matching systemApp.js       ==="
-elif [ "${COMPAT_GROUP}" = "5" ]
+elif [ $COMPAT_GROUP -eq 5 ]
 then
   TRACKORDER_AUDIO=1
   TRACKORDER_AUDIO_FILE=59
@@ -29,7 +29,7 @@ fi
 # 58.00.XXX ($COMPAT_GROUP=2)
 # 55.XX.XXX - 56.XX.XXX ($COMPAT_GROUP=1)
 
-if [ ! "${TRACKORDER_AUDIO}" = "2" ]
+if [ ! $TRACKORDER_AUDIO -eq 2 ]
 then
   if [ -e /jci/gui/apps/system/js/systemApp.js.org ]
   then
@@ -40,7 +40,7 @@ then
   fi
   if [ -e /jci/gui/apps/system/js/systemApp.js.disclaimer ]
   then
-    if [ "${TRACKORDER_AUDIO}" = "1" ]
+    if [ $TRACKORDER_AUDIO -eq 1 ]
     then
       cp -a ${MYDIR}/config_org/audio_order_AND_no_More_Disclaimer/only_no_More_Disclaimer/jci/gui/apps/system/js/systemApp.${TRACKORDER_AUDIO_FILE}.js /jci/gui/apps/system/js/systemApp.js
       log_message "===     Restored order of audio source list, disclaimer still gone    ==="
@@ -49,7 +49,7 @@ then
       log_message "===    Restored order of audio source list, disclaimer still gone     ==="
     fi
   else
-    if [ "${TRACKORDER_AUDIO}" = "1" ]
+    if [ $TRACKORDER_AUDIO -eq 1 ]
     then
       cp -a ${MYDIR}/config_org/audio_order_AND_no_More_Disclaimer/nothing/jci/gui/apps/system/js/systemApp.${TRACKORDER_AUDIO_FILE}.js /jci/gui/apps/system/js/systemApp.js
       log_message "===        Restored order of audio source list for ${CMU_SW_VER}      ==="

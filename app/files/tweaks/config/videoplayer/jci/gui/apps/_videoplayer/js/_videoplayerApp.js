@@ -8,13 +8,12 @@
 
 log.addSrcFile("_videoplayerApp.js", "_videoplayer");
 
-function _videoplayerApp(uiaId)
-{
-    log.debug("Constructor called.");
+function _videoplayerApp(uiaId) {
+  log.debug("Constructor called.");
 
-    // Base application functionality is provided in a common location via this call to baseApp.init().
-    // See framework/js/BaseApp.js for details.
-    baseApp.init(this, uiaId);
+  // Base application functionality is provided in a common location via this call to baseApp.init().
+  // See framework/js/BaseApp.js for details.
+  baseApp.init(this, uiaId);
 }
 
 
@@ -27,32 +26,31 @@ function _videoplayerApp(uiaId)
  * Called just after the app is instantiated by framework.
  * All variables local to this app should be declared in this function
  */
-var  musicIsPaused = musicIsPaused || false;
-_videoplayerApp.prototype.appInit = function()
-{
-    log.debug("_videoplayerApp appInit  called...");
+var musicIsPaused = musicIsPaused || false;
+_videoplayerApp.prototype.appInit = function () {
+  log.debug("_videoplayerApp appInit  called...");
 
 
-    //Context table
-    //@formatter:off
+  //Context table
+  //@formatter:off
 
-    this._contextTable = {
-        "Start": { // initial context must be called "Start"
-            "sbName": "Video Player",
-            "template": "VideoPlayerTmplt",
-            "templatePath": "apps/_videoplayer/templates/VideoPlayer", //only needed for app-specific templates
-            "readyFunction": this._StartContextReady.bind(this),
-            "contextOutFunction" : this._StartContextOut.bind(this),
-            "noLongerDisplayedFunction" : this._noLongerDisplayed.bind(this)
-        } // end of "VideoPlayer"
-    }; // end of this.contextTable object
-    //@formatter:on
+  this._contextTable = {
+    "Start": { // initial context must be called "Start"
+      "sbName": "Video Player",
+      "template": "VideoPlayerTmplt",
+      "templatePath": "apps/_videoplayer/templates/VideoPlayer", //only needed for app-specific templates
+      "readyFunction": this._StartContextReady.bind(this),
+      "contextOutFunction": this._StartContextOut.bind(this),
+      "noLongerDisplayedFunction": this._noLongerDisplayed.bind(this)
+    } // end of "VideoPlayer"
+  }; // end of this.contextTable object
+  //@formatter:on
 
-    //@formatter:off
-    this._messageTable = {
-        // haven't yet been able to receive messages from MMUI
-    };
-    //@formatter:on
+  //@formatter:off
+  this._messageTable = {
+    // haven't yet been able to receive messages from MMUI
+  };
+  //@formatter:on
 };
 
 /**
@@ -60,50 +58,22 @@ _videoplayerApp.prototype.appInit = function()
  * CONTEXT CALLBACKS
  * =========================
  */
-_videoplayerApp.prototype._StartContextReady = function ()
-{
+_videoplayerApp.prototype._StartContextReady = function () {
   framework.common.setSbDomainIcon("apps/_videoplayer/templates/VideoPlayer/images/icon.png");
   framework.transitionsObj._genObj._TEMPLATE_CATEGORIES_TABLE.VideoPlayerTmplt = "Detail with UMP";
 };
-/* This didnt work could not get it to automatically go to USB Audio Context
-_videoplayerApp.prototype._pauseUSBAudio = function () {
-  if(!musicIsPaused) {
-    framework.sendEventToMmui('system','SelectUSBAudio');
-    framework.sendEventToMmui('usbaudio','SelectUSBA');
-    setTimeout(function(){
-      if(framework.getCurrentApp() === 'usbaudio') {
-        framework.sendEventToMmui('Common','Global.Pause');
-        framework.sendEventToMmui('Common','Global.GoBack');
-        musicIsPaused = true;
-      }
-      if(!musicIsPaused) {
-        framework.sendEventToMmui('usbaudio','SelectUSBB');
-        setTimeout(function(){
-          if(framework.getCurrentApp() === 'usbaudio') {
-            framework.sendEventToMmui('Common','Global.Pause');
-            framework.sendEventToMmui('Common','Global.GoBack');
-            musicIsPaused = true;
-          }
-        }, 200);
-      }
-    }, 200);
-  }
-}
-*/
-_videoplayerApp.prototype._StartContextOut = function ()
-{
+_videoplayerApp.prototype._StartContextOut = function () {
   framework.common.setSbName('');
   // Try to pause audio in _noLongerDisplayed()
 };
 
-_videoplayerApp.prototype._noLongerDisplayed = function ()
-{
+_videoplayerApp.prototype._noLongerDisplayed = function () {
   // If we press the 'Entertainment' button we will be runing this in the 'usbaudio' context
-  if(!musicIsPaused) {
-    setTimeout(function(){
-      if(framework.getCurrentApp() === 'usbaudio') {
-        framework.sendEventToMmui('Common','Global.Pause');
-        framework.sendEventToMmui('Common','Global.GoBack');
+  if (!musicIsPaused) {
+    setTimeout(function () {
+      if (framework.getCurrentApp() === 'usbaudio') {
+        framework.sendEventToMmui('Common', 'Global.Pause');
+        framework.sendEventToMmui('Common', 'Global.GoBack');
         musicIsPaused = true; // Only run this once
       }
     }, 100);

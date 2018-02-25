@@ -1,67 +1,68 @@
-  /* Alternate Layout Inverted */
-  .MainMenuCtrlComDiv {
-    top: 240px;
-  }
-  .MainMenuCtrlEntDiv {
-    top: 160px;
-  }
-  .MainMenuCtrlNavDiv {
-    top: 160px;
-  }
-  .MainMenuCtrlAppDiv {
-    left: 0;
-    top: 10px;
-  }
-  .MainMenuCtrlSetDiv {
-    top: 10px;
-    left: 675px;
-  }
-  .MainMenuCtrlAppHighlight {
-    top: -110px;
-    left: -100px;
-  }
-  .MainMenuCtrlComHighlight {
-    top: 70px;
-  }
-  .MainMenuCtrlNavHighlight {
-    top: 0px;
-    left: 380px;
-  }
-  .MainMenuCtrlEntHighlight {
-    top: 0px;
-    left: 45px;
-  }
-  .MainMenuCtrlSetHighlight {
-    left: 520px;
-    top: -110px;
-  }
-  .MainMenuCtrlIconName {
-    top:5px;
-  }
-  .MainMenuCtrl {
-    overflow: visible;
-  }
-  .MainMenuCtrlSetDiv.MainMenuCtrlCoinFocus{
-    -o-transform: scale(1.2, 1.2) translate(-20px, 20px);
-    transform: scale(1.2, 1.2) translate(-20px, 20px);
-  }
-  .MainMenuCtrlAppDiv.MainMenuCtrlCoinFocus {
-    -o-transform: scale(1.2, 1.2) translate(20px, 20px);
-    transform: scale(1.2, 1.2) translate(20px, 20px);
-  }
-  .MainMenuCtrlComDiv.MainMenuCtrlCoinFocus {
-    -o-transform: scale(1.2, 1.2) translate(0px, 25px);
-    transform: scale(1.2, 1.2) translate(0px, 25px);
-  }
-  .MainMenuCtrlEntDiv.MainMenuCtrlCoinFocus {
-    -o-transform: scale(1.2, 1.2) translate(50px, -25px);
-    transform: scale(1.2, 1.2) translate(50px, -25px);
-  }
-  .MainMenuCtrlNavDiv.MainMenuCtrlCoinFocus {
-    -o-transform: scale(1.2, 1.2) translate(-50px, -25px);
-    transform: scale(1.2, 1.2) translate(-50px, -25px);
-  }
-  .MainMenuCtrlComDiv.MainMenuCtrlCoinFocus {
-    -o-transform: scale(1.2, 1.2) translate(0px, -10px);
-    transform: scale(1.2, 1.2) translate(0px, -10px);
-  }
+/* Alternate Layout Inverted */
+
+.MainMenuCtrlComDiv {
+  top: 240px;
+}
+.MainMenuCtrlEntDiv {
+  top: 160px;
+}
+.MainMenuCtrlNavDiv {
+  top: 160px;
+}
+.MainMenuCtrlAppDiv {
+  left: 0;
+  top: 10px;
+}
+.MainMenuCtrlSetDiv {
+  top: 10px;
+  left: 675px;
+}
+.MainMenuCtrlAppHighlight {
+  top: -110px;
+  left: -100px;
+}
+.MainMenuCtrlComHighlight {
+  top: 70px;
+}
+.MainMenuCtrlNavHighlight {
+  top: 0px;
+  left: 380px;
+}
+.MainMenuCtrlEntHighlight {
+  top: 0px;
+  left: 45px;
+}
+.MainMenuCtrlSetHighlight {
+  left: 520px;
+  top: -110px;
+}
+.MainMenuCtrlIconName {
+  top: 5px;
+}
+.MainMenuCtrl {
+  overflow: visible;
+}
+.MainMenuCtrlSetDiv.MainMenuCtrlCoinFocus {
+  -o-transform: scale(1.2, 1.2) translate(-20px, 20px);
+  transform: scale(1.2, 1.2) translate(-20px, 20px);
+}
+.MainMenuCtrlAppDiv.MainMenuCtrlCoinFocus {
+  -o-transform: scale(1.2, 1.2) translate(20px, 20px);
+  transform: scale(1.2, 1.2) translate(20px, 20px);
+}
+.MainMenuCtrlComDiv.MainMenuCtrlCoinFocus {
+  -o-transform: scale(1.2, 1.2) translate(0px, 25px);
+  transform: scale(1.2, 1.2) translate(0px, 25px);
+}
+.MainMenuCtrlEntDiv.MainMenuCtrlCoinFocus {
+  -o-transform: scale(1.2, 1.2) translate(50px, -25px);
+  transform: scale(1.2, 1.2) translate(50px, -25px);
+}
+.MainMenuCtrlNavDiv.MainMenuCtrlCoinFocus {
+  -o-transform: scale(1.2, 1.2) translate(-50px, -25px);
+  transform: scale(1.2, 1.2) translate(-50px, -25px);
+}
+.MainMenuCtrlComDiv.MainMenuCtrlCoinFocus {
+  -o-transform: scale(1.2, 1.2) translate(0px, -10px);
+  transform: scale(1.2, 1.2) translate(0px, -10px);
+}

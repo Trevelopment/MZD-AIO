@@ -1,6 +1,6 @@
 // Open all external links outside the app
 // Credit: Electron API Demos app
-const links = document.querySelectorAll('a[href]')
+const links = document.querySelectorAll('a.link')
 
 Array.prototype.forEach.call(links, function (link) {
   const url = link.getAttribute('href')

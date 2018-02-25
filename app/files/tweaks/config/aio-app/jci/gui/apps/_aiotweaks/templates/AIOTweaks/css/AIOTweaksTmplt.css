@@ -9,17 +9,17 @@
   overflow: hidden;
   border: 1px solid #ccc;
   background-color: #f1f1f1;
-  box-shadow:0 8px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19)!important;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
 }
-
 /* Float the list items side by side */
+
 .AIOTweaksTmplt ul.tab li {
   width: 33%;
   height: 50px;
   float: left;
 }
-
 /* Style the links inside the list items */
+
 .AIOTweaksTmplt ul.tab li a {
   display: inline-block;
   color: black;
@@ -32,13 +32,13 @@
   width: 100%;
   font-weight: bold;
 }
-
 /* Change background color of links on hover */
+
 .AIOTweaksTmplt ul.tab li a:hover {
   background-color: #ddd;
 }
-
 /* Create an active/current tablink class */
+
 .AIOTweaksTmplt ul.tab li a:focus, .active-tab {
   background-color: #009090;
 }
@@ -46,6 +46,7 @@
   height: 350px;
 }
 /* Style the tab content */
+
 .AIOTweaksTmplt .tabcontent {
   display: none;
   padding: 6px 12px;
@@ -61,37 +62,43 @@
   text-shadow: none;
   font-weight: bold;
   font-size: 20px;
-  border:none;
-  outline:0;
-  padding:6px 10px;
+  border: none;
+  outline: 0;
+  padding: 6px 10px;
   margin: 3px;
-  vertical-align:middle;
-  overflow:hidden;
-  color:#fff;
-  background-color:#000;
-  white-space:nowrap;
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+  vertical-align: middle;
+  overflow: hidden;
+  color: #fff;
+  background-color: #000;
+  white-space: nowrap;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
-.AIOTweaksTmplt button.fullRestoreBtn {
+.AIOTweaksTmplt button.confirmKeyboardBtn, .AIOTweaksTmplt button.confirmTerminalBtn, .AIOTweaksTmplt button.fullRestoreBtn {
   background: #6b1a28;
   border-radius: 6px;
-  padding: 3px!important;
-  text-shadow: 0px 4px 3px rgba(0,0,0,0.4),0px 8px 13px rgba(0,0,0,0.2),0px 18px 23px rgba(0,0,0,0.2);
+  padding: 3px !important;
+  text-shadow: 0px 4px 3px rgba(0, 0, 0, 0.4), 0px 8px 13px rgba(0, 0, 0, 0.2), 0px 18px 23px rgba(0, 0, 0, 0.2);
 }
-.AIOTweaksTmplt #errLogBtn,
-.AIOTweaksTmplt .tablinks {
+.AIOTweaksTmplt #errLogBtn, .AIOTweaksTmplt .tablinks {
   text-shadow: none;
 }
-
 .AIOTweaksTmplt .tabcontent button:focus {
   background: blue;
   /*border: 2px dotted #fff;*/
   border-radius: 5px;
-  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
 }
-.animate-zoom {animation:animatezoom 0.6s}
-@keyframes animatezoom{from{transform:scale(0)} to{transform:scale(1)}}
-
+.animate-zoom {
+  animation: animatezoom 0.6s
+}
+@keyframes animatezoom {
+  from {
+    transform: scale(0)
+  }
+  to {
+    transform: scale(1)
+  }
+}
 .AIOTweaksTmplt .sidenav {
   height: 100%;
   width: 0;
@@ -105,7 +112,6 @@
   padding-top: 60px;
   margin-top: 59px;
 }
-
 .AIOTweaksTmplt .sidenav a {
   padding: 8px 8px 8px 32px;
   text-decoration: none;
@@ -114,11 +120,9 @@
   display: block;
   transition: 0.3s
 }
-
-.AIOTweaksTmplt .sidenav a:hover, .offcanvas a:focus{
+.AIOTweaksTmplt .sidenav a:hover, .offcanvas a:focus {
   color: #f1f1f1;
 }
-
 .AIOTweaksTmplt .sidenav .closebtn {
   position: absolute;
   top: 0;
@@ -126,16 +130,17 @@
   font-size: 36px;
   margin-left: 50px;
 }
-
 .AIOTweaksTmplt #AIO-Main {
   transition: margin-left .5s;
 }
 .AIOTweaksTmplt #StatusBar_ButtonCtrl1.hidden {
-  display: none!important;
+  display: none !important;
 }
-@media screen and (max-height: 450px) {
-  .AIOTweaksTmplt .sidenav {padding-top: 15px;}
-  .AIOTweaksTmplt  .sidenav a {font-size: 18px;}
+.AIOTweaksTmplt .sidenav {
+  padding-top: 15px;
+}
+.AIOTweaksTmplt .sidenav a {
+  font-size: 18px;
 }
 .AIOTweaksTmplt #Options {
   columns: 2;
@@ -143,19 +148,18 @@
 .AIOTweaksTmplt #MainMenu {
   columns: 3;
 }
-.AIOTweaksTmplt .audioSources{
-  width:150px;
-  margin-bottom:20px;
+.AIOTweaksTmplt .audioSources {
+  width: 150px;
+  margin-bottom: 20px;
 }
-.AIOTweaksTmplt .audioCtrls{
-  float:left;
-  width:125px;
+.AIOTweaksTmplt .audioCtrls {
+  float: left;
+  width: 125px;
 }
 [id*="TrackBtn"] {
   width: 180px;
 }
-.AIOTweaksTmplt #aaTitle,
-.AIOTweaksTmplt #csTitle {
+.AIOTweaksTmplt #aaTitle, .AIOTweaksTmplt #csTitle {
   position: absolute;
   bottom: 15px;
   padding: 5px;
@@ -167,16 +171,15 @@
   outline: 6px dashed #fff;
 }
 .AIOTweaksTmplt #csTitle {
-  left:410px;
+  left: 410px;
 }
-.AIOTweaksTmplt .aaFunc,
-.AIOTweaksTmplt .csFunc {
+.AIOTweaksTmplt .aaFunc, .AIOTweaksTmplt .csFunc {
   position: absolute;
   bottom: 20px;
   width: 150px;
 }
 .AIOTweaksTmplt .spFunc {
-  width:150px;
+  width: 150px;
   margin: -10px 40px;
 }
 .AIOTweaksTmplt button#AAstart {
@@ -191,22 +194,19 @@
 .AIOTweaksTmplt button#CSstop {
   left: 600px;
 }
-.AIOTweaksTmplt .fnStop{
+.AIOTweaksTmplt .fnStop {
   background: #ff0000;
 }
 .AIOTweaksTmplt .fnStart {
   background: green;
 }
-.AIOTweaksTmplt .fnStart:focus,
-.AIOTweaksTmplt .fnStart:active {
+.AIOTweaksTmplt .fnStart:focus, .AIOTweaksTmplt .fnStart:active {
   background: #001680;
 }
-.AIOTweaksTmplt .fnStop:focus,
-.AIOTweaksTmplt .fnStop:active {
+.AIOTweaksTmplt .fnStop:focus, .AIOTweaksTmplt .fnStop:active {
   background: #670092;
 }
-.AIOTweaksTmplt #csTitle.centered,
-.AIOTweaksTmplt #aaTitle.centered {
+.AIOTweaksTmplt #csTitle.centered, .AIOTweaksTmplt #aaTitle.centered {
   margin: auto;
   left: 0;
   right: 0;
@@ -225,10 +225,7 @@
   width: 240px;
   text-overflow: ellipsis;
 }
-.AIOTweaksTmplt button#showPSBtn,
-.AIOTweaksTmplt button#hideMusicBg,
-.AIOTweaksTmplt button#hideSbn,
-.AIOTweaksTmplt button#noBgBtn {
+.AIOTweaksTmplt button#showPSBtn, .AIOTweaksTmplt button#hideMusicBg, .AIOTweaksTmplt button#hideSbn, .AIOTweaksTmplt button#noBgBtn {
   font-size: 1rem;
 }
 .AIOTweaksTmplt #touchscreenPanel {
@@ -269,7 +266,7 @@
   background: #000;
   max-height: 360px;
   min-height: 96px;
-  overflow-y:auto;
+  overflow-y: auto;
   text-align: left;
   white-space: pre;
 }
@@ -281,23 +278,21 @@
   padding: 0;
   display: none;
 }
-.AIOTweaksTmplt #AioInfoPanel.opened,
-.AIOTweaksTmplt #AioInfoPanel.opened.scrollers ~ .AIO-scroller {
-  display:block;
+.AIOTweaksTmplt #AioInfoPanel.opened, .AIOTweaksTmplt #AioInfoPanel.opened.scrollers~.AIO-scroller {
+  display: block;
 }
 .AIOTweaksTmplt #AioInfoPanel .infoMessage {
   text-align: center;
   white-space: normal;
   font-size: 24px;
 }
-.AIOTweaksTmplt #scrollUpBtn{
+.AIOTweaksTmplt #scrollUpBtn {
   top: 200px;
 }
-.AIOTweaksTmplt #scrollDownBtn{
+.AIOTweaksTmplt #scrollDownBtn {
   top: 260px;
 }
-.AIOTweaksTmplt #closeAioInfo,
-.AIOTweaksTmplt #closeTouchPanel {
+.AIOTweaksTmplt #closeAioInfo, .AIOTweaksTmplt #closeTouchPanel {
   position: absolute;
   top: 0;
   right: 0;
@@ -312,13 +307,13 @@
   z-index: 9998;
   line-height: 0;
 }
-.AIOTweaksTmplt #closeTouchPanel.selectedItem{
-  opacity:0.8;
+.AIOTweaksTmplt #closeTouchPanel.selectedItem {
+  opacity: 0.8;
   border-color: #ff0000;
   color: #fff;
 }
 .AIOTweaksTmplt .Touch {
-  z-index:9999;
+  z-index: 9999;
 }
 .AIOTweaksTmplt #MainMenuMsg {
   background: #000;
@@ -327,6 +322,9 @@
   margin: auto;
 }
 .AIOTweaksTmplt button.selectedItem {
-  background: -o-linear-gradient(top,rgba(0,0,0,0.5),rgba(0,0,255,1));
-  background: -webkit-linear-gradient(top,rgba(0,0,0,0.5),rgba(0,0,255,1));
+  background: -o-linear-gradient(top, rgba(0, 0, 0, 0.5), rgba(0, 0, 255, 1));
+  background: -webkit-linear-gradient(top, rgba(0, 0, 0, 0.5), rgba(0, 0, 255, 1));
+}
+.AIOTweaksTmplt .devTools {
+  display: none;
 }

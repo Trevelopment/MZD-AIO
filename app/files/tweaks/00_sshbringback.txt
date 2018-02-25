@@ -5,31 +5,31 @@
 # Added force SSH option to force update SSH settings
 SSH_COPY=0
 log_message "=======*************   START INSTALL SSH BRINGBACK   ************========"
-if [ ${CMU_SW_VER} = "56.00.511A-EU" ] \
-|| [ ${CMU_SW_VER} = "56.00.512A-EU" ] \
-|| [ ${CMU_SW_VER} = "56.00.513B-EU" ] \
-|| [ ${CMU_SW_VER} = "56.00.511A-ADR" ] \
-|| [ ${CMU_SW_VER} = "56.00.512A-ADR" ] \
-|| [ ${CMU_SW_VER} = "56.00.513C-ADR" ] \
-|| [ ${CMU_SW_VER} = "56.00.514A-ADR" ] \
-|| [ ${CMU_SW_VER} = "56.00.521A-EU" ] \
-|| [ ${CMU_SW_VER} = "56.00.513C-EU" ] \
-|| [ ${COMPAT_GROUP} -ne "1" ] \
-|| [ ${FORCESSH} -eq "1" ]
+if [ "${CMU_SW_VER}" == "56.00.511A-EU" ] \
+|| [ "${CMU_SW_VER}" == "56.00.512A-EU" ] \
+|| [ "${CMU_SW_VER}" == "56.00.513B-EU" ] \
+|| [ "${CMU_SW_VER}" == "56.00.511A-ADR" ] \
+|| [ "${CMU_SW_VER}" == "56.00.512A-ADR" ] \
+|| [ "${CMU_SW_VER}" == "56.00.513C-ADR" ] \
+|| [ "${CMU_SW_VER}" == "56.00.514A-ADR" ] \
+|| [ "${CMU_SW_VER}" == "56.00.521A-EU" ] \
+|| [ "${CMU_SW_VER}" == "56.00.513C-EU" ] \
+|| [ $COMPAT_GROUP -ne 1 ] \
+|| [ $FORCESSH -eq 1 ]
 then
 	SSH_COPY=1
 fi
-if [ ${SSH_COPY} -eq "1" ]
+if [ $SSH_COPY -eq 1 ]
 then
 	show_message "${CMU_SW_VER} DETECTED: SSH_BRINGBACK WILL BE INSTALLED ..."
 	cp /jci/scripts/jci-fw.sh ${MYDIR}/config/jci-fw.sh.test
-	if grep -Fq 'Disable ICMP services CI-2952' ${MYDIR}/config/jci-fw.sh.test || [ ${FORCESSH} -eq "1" ]
+	if grep -Fq 'Disable ICMP services CI-2952' ${MYDIR}/config/jci-fw.sh.test || [ $FORCESSH -eq 1 ]
 	then
 		cp -a ${MYDIR}/config/ssh_bringback/jci-fw.sh /jci/scripts
 		chmod 755 /jci/scripts/jci-fw.sh
 		log_message "===                 Fixed firewall settings in jci-fw.sh              ==="
 	fi
-	if ! grep -q '^jci:' /config-mfg/passwd || [ ${FORCESSH} -eq "1" ]
+	if ! grep -q '^jci:' /config-mfg/passwd || [ $FORCESSH -eq 1 ]
 	then
 		cp -a ${MYDIR}/config/ssh_bringback/passwd /tmp
 		cp -a ${MYDIR}/config/ssh_bringback/authorized_keys /tmp

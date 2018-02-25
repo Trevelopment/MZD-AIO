@@ -2,7 +2,7 @@
 show_message "CHANGING BACKGROUND IMAGE ..."
 log_message "=======*********  INSTALL CHANGE BACKGROUND IMAGE ...   *********========"
 
-if [ "${KEEPBKUPS}" = 1 ]
+if [ $KEEPBKUPS -eq 1 ]
 then
   cp -a /jci/gui/common/images/background.png "${MYDIR}/bakups/background.png"
   aio_info \"background.png\",

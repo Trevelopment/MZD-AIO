@@ -286,9 +286,9 @@ function initialize () {
           ipc.on('update-downloaded', (autoUpdater) => {
             // Elegant solution: display unobtrusive notification messages
             mainWindow.webContents.send('update-downloaded')
-          })
-          ipc.on('update-and-restart', () => {
-            autoUpdater.quitAndInstall()
+            ipc.on('update-and-restart', () => {
+              autoUpdater.quitAndInstall()
+            })
           })
         }
       } catch (e) {

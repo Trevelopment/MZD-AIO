@@ -2,14 +2,9 @@
 show_message "REMOVE LIST_LOOP_MOD  ..."
 log_message "========*********      UNINSTALL LIST_LOOP_MOD ...      ********========="
 # Check for Remove Beep and Shorter Delay Mods to reapply after copying List2Crl.js
-if grep "No More Beep" /jci/gui/common/controls/List2/js/List2Ctrl.js
-then
-	REMOVE_BEEP=1
-fi
-if grep "Shorter Delay Mod" /jci/gui/common/controls/List2/js/List2Ctrl.js
-then
-	SHORTER_DELAY_MOD=1
-fi
+grep -q "No More Beep" /jci/gui/common/controls/List2/js/List2Ctrl.js && REMOVE_BEEP=1 || REMOVE_BEEP=0
+
+grep -q "Shorter Delay Mod" /jci/gui/common/controls/List2/js/List2Ctrl.js && SHORTER_DELAY_MOD=1 || SHORTER_DELAY_MOD=0
 # If Backup is available, then we are done.
 if [ -e /jci/gui/common/controls/List2/js/List2Ctrl.js.org ]
 then
@@ -21,26 +16,26 @@ else
 	TRACKORDER_LIST=0
 	# Compatibility Check
 	log_message "===       FW ${CMU_SW_VER} detected, copy matching List2Ctrl.js       ==="
-	if [ "${COMPAT_GROUP}" = "4" ]
+	if [ $COMPAT_GROUP -eq 4 ]
 	then
 		TRACKORDER_LIST=1
 		TRACKORDER_LIST_FILE="59"
-	elif [ "${COMPAT_GROUP}" = "3" ]
+	elif [ $COMPAT_GROUP -eq 3 ]
 	then
 		TRACKORDER_LIST=1
 		TRACKORDER_LIST_FILE="59.330"
-	elif [ "${COMPAT_GROUP}" = "2" ]
+	elif [ $COMPAT_GROUP -eq 2 ]
 	then
 		TRACKORDER_LIST=1
 		TRACKORDER_LIST_FILE="58"
 	fi
 
-	if [ "${COMPAT_GROUP}" = "1" ]
+	if [ $COMPAT_GROUP -eq 1 ]
 	then
 		# Uncomment the following line if you need the fallback file (v55-56)
 		# cp -a "${MYDIR}/config_org/list-loop/jci/gui/common/controls/List2/js/List2Ctrl.js" /jci/gui/common/controls/List2/js/
 		log_message "===     No backup of List2Ctrl.js available, No changes were made     ==="
-	elif [ "${TRACKORDER_LIST}" = "1" ]
+	elif [ $TRACKORDER_LIST -eq 1 ]
 	then
 		# Uncomment the following line if you need the fallback file (v58+)
 		# cp -a "${MYDIR}/config_org/list-loop/jci/gui/common/controls/List2/js/List2Ctrl.${TRACKORDER_LIST_FILE}.js" /jci/gui/common/controls/List2/js/List2Ctrl.js
@@ -52,12 +47,12 @@ else
 	fi
 fi
 # Reapply tweaks
-if [ "${REMOVE_BEEP}" = "1" ]
+if [ $REMOVE_BEEP -eq 1 ]
 then
 	sed -i 's/return framework.common.beep(pressType, eventCause);/\/\/ return framework.common.beep(pressType, eventCause); \/\/No More Beeps/g' /jci/gui/common/controls/List2/js/List2Ctrl.js
 	log_message "===               Reapplied Disable Beeps in List2Ctrl.js             ==="
 fi
-if [ "${SHORTER_DELAY_MOD}" = "1" ]
+if [ $SHORTER_DELAY_MOD -eq 1 ]
 then
 	sed -i 's/autoscrollTier1Timeout :                1500,/autoscrollTier1Timeout :                150,/g' /jci/gui/common/controls/List2/js/List2Ctrl.js
 	sed -i 's/autoscrollTier2Timeout :                5000,/autoscrollTier2Timeout :                300,/g' /jci/gui/common/controls/List2/js/List2Ctrl.js

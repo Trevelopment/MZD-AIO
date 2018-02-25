@@ -4,7 +4,7 @@ log_message "===*** INSTALL DIAGMENU 1 SEC. CLOCK PRESS IN DISPLAY SETTINGS ... 
 # Backups
 if [ ! -e /jci/gui/apps/diag/js/diagApp.js.org ]
 then
-	cp -a /jci/gui/apps/diag/diagApp.js /jci/gui/apps/diag/js/diagApp.js.org
+	cp -a /jci/gui/apps/diag/js/diagApp.js /jci/gui/apps/diag/js/diagApp.js.org
   log_message "===              Backup /jci/gui/apps/diag/js/diagApp.js              ==="
 fi
 if [ ! -e /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js.org ]
@@ -17,13 +17,26 @@ then
 	cp -a /jci/gui/common/js/Common.js /jci/gui/common/js/Common.js.org
 	log_message "===                Backup /jci/gui/common/js/Common.js                ==="
 fi
-if [ "${KEEPBKUPS}" = "1" ]
+if [ ! -e /jci/gui/apps/diag/controls/Test/js/TestCtrl.js.org ]
+then
+	cp -a /jci/gui/apps/diag/controls/Test/js/TestCtrl.js /jci/gui/apps/diag/controls/Test/js/TestCtrl.js.org
+	log_message "===       Backup /jci/gui/apps/diag/controls/Test/js/TestCtrl.js      ==="
+fi
+if [ ! -e /jci/gui/apps/diag/controls/Test/css/TestCtrl.css.org ]
+then
+	cp -a /jci/gui/apps/diag/controls/Test/css/TestCtrl.css /jci/gui/apps/diag/controls/Test/css/TestCtrl.css.org
+	log_message "===      Backup /jci/gui/apps/diag/controls/Test/css/TestCtrl.css     ==="
+fi
+
+if [ $KEEPBKUPS -eq 1 ]
 then
 	cp /jci/gui/apps/diag/js/diagApp.js.org "${MYDIR}/bakups/"
 	cp /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js.org "${MYDIR}/bakups/"
 	cp /jci/gui/common/js/Common.js.org "${MYDIR}/bakups/"
+	cp /jci/gui/apps/diag/controls/Test/css/TestCtrl.css.org  "${MYDIR}/bakups/"
+	cp /jci/gui/apps/diag/controls/Test/js/TestCtrl.js.org  "${MYDIR}/bakups/"
 fi
-if [ "${TESTBKUPS}" = "1" ]
+if [ $TESTBKUPS -eq 1 ]
 then
 	cp /jci/gui/apps/diag/js/diagApp.js "${MYDIR}/bakups/test/diagApp_diagmenu-before.js"
 	cp /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js "${MYDIR}/bakups/test/StatusBarCtrl_diagmenu-before.js"
@@ -34,7 +47,6 @@ then
 fi
 if grep -Fq '"settleTime" : 1000,' /jci/gui/apps/diag/js/diagApp.js
 then
-	echo "exist"
 	log_message "===   Modifications already done to /jci/gui/apps/diag/js/diagApp.js  ==="
 else
 	sed -i 's/"settleTime" : 20000,/"settleTime" : 1000,/g' /jci/gui/apps/diag/js/diagApp.js
@@ -42,7 +54,6 @@ else
 fi
 if grep -Fq '"holdTimeout" : 1000,' /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js
 then
-	echo "exist"
 	log_message "===          Modifications already done to StatusBarCtrl.js           ==="
 else
 	sed -i 's/"holdTimeout" : 5000,/"holdTimeout" : 1000,/g' /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js
@@ -50,13 +61,15 @@ else
 fi
 if grep -Fq 'framework.sendEventToMmui("syssettings", "SelectDiagnostics"); // Sumire Racing' /jci/gui/common/js/Common.js
 then
-	echo "exist"
 	log_message "===     Modifications already done to /jci/gui/common/js/Common.js    ==="
 else
 	sed -i '/this._diagEntrySequence = 1;/ a\framework.sendEventToMmui("syssettings", "SelectDiagnostics"); // Sumire Racing' /jci/gui/common/js/Common.js
 	log_message "===               Modified /jci/gui/common/js/Common.js               ==="
 fi
-if [ "${TESTBKUPS}" = "1" ]
+cp -a ${MYDIR}/config/test_mode/controls /jci/gui/apps/diag
+log_message "===              Added Test Mode (T/M) Button To Diag App             ==="
+
+if [ $TESTBKUPS -eq 1 ]
 then
 	cp /jci/gui/apps/diag/js/diagApp.js "${MYDIR}/bakups/test/diagApp_diagmenu-after.js"
 	cp /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js "${MYDIR}/bakups/test/StatusBarCtrl_diagmenu-after.js"

@@ -1,114 +1,102 @@
 #SbSpeedo {
-    font-family:Tipperary,verdana;
-    color: white;
-    height: 64px;
-    position: absolute;
-    right: 115px;
-    top: 0px;
-    width: 84px;
-    z-index: 20200;
-    /* text-shadow: 1px 0 0 #000, -1px 0 0 #000, 0 1px 0 #000, 0 -1px 0 #000; */
+  font-family: Tipperary, verdana;
+  color: white;
+  height: 64px;
+  position: absolute;
+  right: 115px;
+  top: 0px;
+  width: 84px;
+  z-index: 20200;
+  /* text-shadow: 1px 0 0 #000, -1px 0 0 #000, 0 1px 0 #000, 0 -1px 0 #000; */
 }
-#SbSpeedo .gpsSpeedValue,
-#SbSpeedo .outsideTempValue,
-#SbSpeedo .Drv1AvlFuelEValue,
-#SbSpeedo .gpsAltitudeValue,
-#SbSpeedo .gpsHeading {
-    text-align: right;
-    position: absolute;
+#SbSpeedo .gpsSpeedValue, #SbSpeedo .outsideTempValue, #SbSpeedo .Drv1AvlFuelEValue, #SbSpeedo .gpsAltitudeValue, #SbSpeedo .gpsHeading {
+  text-align: right;
+  position: absolute;
 }
 #SbSpeedo .gpsSpeedValue {
-    font-size: 40px;
-    line-height: 40px;
-    height: 40px;
-    top: 23px;
-    right: 16px;
-    width: 100%;
+  font-size: 40px;
+  line-height: 40px;
+  height: 40px;
+  top: 23px;
+  right: 16px;
+  width: 100%;
 }
 #SbSpeedo .speedUnit {
-    color: #DDDDDD;
-    font-size: 12px;
-    position: absolute;
-    width: 30px;
-    right: -8px;
-    transform: rotate(-90deg);
-    bottom: 12px;
-    white-space: nowrap;
+  color: #DDDDDD;
+  font-size: 12px;
+  position: absolute;
+  width: 30px;
+  right: -8px;
+  transform: rotate(-90deg);
+  bottom: 12px;
+  white-space: nowrap;
 }
-#SbSpeedo .outsideTempValue,
-#SbSpeedo .Drv1AvlFuelEValue,
-#SbSpeedo .gpsAltitudeValue,
-#SbSpeedo .gpsHeading {
-    padding-right: 24px;
-    background: transparent url('IcnCompass.png') no-repeat scroll right 0px / 18px 18px;
-    font-size: 17px;
-    line-height: 17px;
-    height: 20px;
-    top: 6px;
-    right: 17px;
+#SbSpeedo .outsideTempValue, #SbSpeedo .Drv1AvlFuelEValue, #SbSpeedo .gpsAltitudeValue, #SbSpeedo .gpsHeading {
+  padding-right: 24px;
+  background: transparent url('IcnCompass.png') no-repeat scroll right 0px / 18px 18px;
+  font-size: 17px;
+  line-height: 17px;
+  height: 20px;
+  top: 6px;
+  right: 17px;
 }
 #SbSpeedo .outsideTempValue {
   background-image: url('IcnTemp.png');
 }
 #SbSpeedo .gpsAltitudeValue {
-    display: none;
-    background-image: url('IcnMountain.png');
+  display: none;
+  background-image: url('IcnMountain.png');
 }
 #SbSpeedo .Drv1AvlFuelEValue {
   display: none;
   background-image: url('IcnFuel.png')
 }
-
 /*** Statusbar speedo style if more than 3 SbIcons ***/
-#SbSpeedo.morespace .Drv1AvlFuelEValue,
-#SbSpeedo.morespace .outsideTempValue,
-#SbSpeedo.morespace .gpsAltitudeValue,
-#SbSpeedo.morespace .gpsHeading {
-    right: 40px;
-}
 
+#SbSpeedo.morespace .Drv1AvlFuelEValue, #SbSpeedo.morespace .outsideTempValue, #SbSpeedo.morespace .gpsAltitudeValue, #SbSpeedo.morespace .gpsHeading {
+  right: 40px;
+}
 /*** Statusbar speedo style inside backupparking app ***/
+
 #SbSpeedo.parking {
-    width: 160px;
-    height: 45px;
-    right: 320px;
-    /* opacity: 0.8; */
-    background-color: rgba(0, 0, 0, 0.7);
-    border-radius: 0 0 5px 5px;
+  width: 160px;
+  height: 45px;
+  right: 320px;
+  /* opacity: 0.8; */
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 0 0 5px 5px;
 }
 #SbSpeedo.parking .gpsSpeedValue {
-    right: 19px;
-    top: 3px;
+  right: 19px;
+  top: 3px;
 }
 #SbSpeedo.parking .speedUnit {
-    right: -5px;
-    bottom: 15px;
+  right: -5px;
+  bottom: 15px;
 }
-#SbSpeedo.parking .outsideTempValue,
-#SbSpeedo.parking .gpsAltitudeValue {
-    display: block !important;
-    right: 88px;
+#SbSpeedo.parking .outsideTempValue, #SbSpeedo.parking .gpsAltitudeValue {
+  display: block !important;
+  right: 88px;
 }
-#SbSpeedo.parking .Drv1AvlFuelEValue,
-#SbSpeedo.parking .gpsHeading {
-    display: block !important;
-    right: 88px;
-    top: 23px;
+#SbSpeedo.parking .Drv1AvlFuelEValue, #SbSpeedo.parking .gpsHeading {
+  display: block !important;
+  right: 88px;
+  top: 23px;
 }
 /* *** Statusbar adjustments *** */
+
 .SbnCtrl {
-	background-image: none !important;
+  background-image: none !important;
 }
 .SbnCtrl_Style03_Meter {
-	left: 110px !important;
+  left: 110px !important;
 }
 .SbnCtrl_Style06_Meter {
   left: 270px !important;
 }
-
 /* Digital Clock Mod - Remove this to apply
 #SbSpeedo, .StatusBarCtrlDate, .StatusBarCtrlClock {
-    font-family: "Crystal";
+    font-family: "Crystal"!important;
     text-transform: uppercase;
 }
 Remove this */

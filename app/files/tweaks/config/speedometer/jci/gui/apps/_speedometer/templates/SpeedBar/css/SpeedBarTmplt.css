@@ -1,0 +1,397 @@
+#speedBarContainer {
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 20001;
+  position: absolute;
+}
+#speedBarContainer #speedometerMainDiv {
+  width: 700px;
+  height: 395px;
+  top: 10px;
+  left: 50px;
+  position: absolute;
+}
+#speedBarContainer #speedbarMainDiv {
+  width: 510px;
+  height: 275px;
+  top: 8px;
+  left: 0px;
+  position: absolute;
+  margin: auto;
+}
+#speedBarContainer #vehdataMainDiv {
+  width: 700px;
+  height: 120px;
+  top: 290px;
+  left: 0px;
+  position: absolute;
+}
+#speedBarContainer div.phile {
+  width: 700px;
+  border: 1px dotted #EFFBF8;
+}
+#speedBarContainer #speeddataMainDiv {
+  width: 210px;
+  height: 270px;
+  top: 0px;
+  left: 490px;
+  position: absolute;
+}
+#speedBarContainer .vehDataLegends {
+  padding-left: 1px;
+  padding-right: 1px;
+  border-left: 0px;
+  font-size: 18px;
+  margin: auto;
+  overflow: hidden;
+  max-width: 110px;
+  text-overflow: ellipsis;
+  text-align: center !important;
+}
+#speedBarContainer .vehDataMain .vehDataLegends {
+  max-width: 150px;
+}
+#speedBarContainer #vehdataMainDiv fieldset {
+  position: fixed;
+  right: 0;
+  width: 170px;
+  height: 50px;
+  color: #ccc;
+  white-space: nowrap;
+  text-align: center !important;
+  border-width: 0;
+  opacity: 0;
+  bottom: -40px;
+  transition: .6s ease-out .2s;
+  text-align: center !important;
+}
+#speedBarContainer #vehdataMainDiv fieldset div {
+  font-family: "Crystal", Arial, Helvetica, sans-serif;
+  text-transform: uppercase;
+  /*font-stretch: condensed;*/
+  vertical-align: middle;
+  font-weight: normal;
+  font-style: normal;
+  margin-top: 5px;
+  font-size: 35px;
+  color: white;
+  transition: .8s ease-in .1s;
+  border: 2px dashed transparent;
+}
+#speedBarContainer #vehdataMainDiv [class*="vehDataMain"] div {
+  margin-top: 2px;
+  font-size: 35px;
+  transition: .8s ease-out .1s;
+}
+#speedBarContainer .speedTopValue span {
+  display: none;
+}
+#speedBarContainer #vehdataMainDiv fieldset div.batSOCValue .istoperr {
+  font-size: 22px;
+}
+#speedBarContainer #vehdataMainDiv fieldset div[class*=dleTimeValue] {
+  font-size: 30px;
+}
+#speedBarContainer #vehdataMainDiv fieldset span.idlePercent {
+  padding-right: 2px;
+  font-size: 12px;
+}
+#speedBarContainer #vehdataMainDiv fieldset div .idleHours {
+  font-size: 22px;
+}
+#speedBarContainer .Drv1AvlFuelEValue span {
+  padding-right: 6px;
+  font-size: 12px;
+}
+#speedBarContainer #vehdataMainDiv fieldset .gpsLatitudeValue, #speedBarContainer #vehdataMainDiv fieldset .gpsLongitudeValue, #speedBarContainer #vehdataMainDiv fieldset .gpsAltitudeMinMax {
+  font-size: 22px;
+  margin-top: 11px;
+  white-space: nowrap;
+}
+#speedBarContainer #vehdataMainDiv fieldset.activeDataBar {
+  opacity: 1;
+  margin-top: 0;
+  transition: .8s ease-in .1s;
+  bottom: 40px;
+  margin-top: 0;
+}
+#speedBarContainer #vehdataMainDiv fieldset[class*="vehDataBar"] {
+  margin-top: 100px;
+  width: 120px;
+  height: 65px;
+  border-width: 2px;
+}
+#speedBarContainer #vehdataMainDiv fieldset[class*="vehDataMain"] {
+  margin-top: 75px;
+  margin-left: 0px;
+  padding-left: 5px;
+  padding-right: 5px;
+  font-size: 20px;
+  opacity: 1;
+  left: 610px;
+  width: 150px;
+  border-width: 2px 0 0 0;
+  transition: .8s ease-in .1s;
+}
+/* Pos 1 */
+
+#speedBarContainer #vehdataMainDiv [class*="vehDataBar"].pos1 {
+  left: 25px;
+}
+/* Pos 2 */
+
+#speedBarContainer #vehdataMainDiv [class*="vehDataBar"].pos2 {
+  left: 175px;
+}
+/* Pos 3 */
+
+#speedBarContainer #vehdataMainDiv [class*="vehDataBar"].pos3 {
+  left: 325px;
+}
+/* Pos 4 */
+
+#speedBarContainer #vehdataMainDiv [class*="vehDataBar"].pos4 {
+  left: 475px;
+}
+/* Pos 5 */
+
+#speedBarContainer #vehdataMainDiv [class*="vehDataBar"].pos5 {
+  left: 625px;
+}
+/* Main Data 1 */
+
+#speedBarContainer #vehdataMainDiv [class*="vehDataMain"].pos1 {
+  bottom: 340px;
+}
+/* Main Data 2 */
+
+#speedBarContainer #vehdataMainDiv [class*="vehDataMain"].pos2 {
+  bottom: 260px;
+}
+/* Main Data 3 */
+
+#speedBarContainer #vehdataMainDiv [class*="vehDataMain"].pos3 {
+  bottom: 190px;
+}
+/* Main Data 4 */
+
+#speedBarContainer #vehdataMainDiv [class*="vehDataMain"].pos4 {
+  bottom: 120px;
+}
+#speedBarContainer .vehDataLegends span.spunit {
+  font-size: 14px;
+}
+#speedBarContainer .vehDataLegends span.fuelEffUnit {
+  font-size: 12px;
+}
+#speedBarContainer #vehdataMainDiv [class*="vehDataMain"].pos0 {
+  border: 2px dashed transparent;
+  left: 360px;
+  bottom: 180px;
+  position: fixed;
+}
+#speedBarContainer #vehdataMainDiv [class*="vehDataMain"].pos0 div {
+  transform: translate(-50%, -50%);
+  position: fixed;
+  font-family: "Crystal", Arial, Helvetica, sans-serif;
+  font-weight: normal;
+  color: white;
+  font-style: normal;
+  text-align: center !important;
+  font-size: 135px;
+  padding: 0 50px;
+  border: 2px dashed transparent;
+}
+#speedBarContainer #vehdataMainDiv [id*=gear].pos0, #speedBarContainer #vehdataMainDiv [id*=speed].pos0, #speedBarContainer #vehdataMainDiv [id*=gpsSpeed].pos0 {
+  bottom: 200px;
+}
+#speedBarContainer #vehdataMainDiv [class*="vehDataMain"].pos0 div[class*=gear], #speedBarContainer #vehdataMainDiv [class*="vehDataMain"].pos0 div[class*=speed], #speedBarContainer #vehdataMainDiv [class*="vehDataMain"].pos0 div[class*=vehicleSpeed], #speedBarContainer #vehdataMainDiv [class*="vehDataMain"].pos0 div[class*=gpsSpeed] {
+  font-size: 225px;
+}
+#speedBarContainer #vehdataMainDiv [class*="vehDataMain"].pos0 div[class$=dleTimeValue] {
+  font-size: 120px;
+}
+#speedBarContainer #vehdataMainDiv [class*="vehDataMain"].pos0 div .idleHours, #speedBarContainer #vehdataMainDiv [class*="vehDataMain"].pos0 div[class^=gpsL], #speedBarContainer #vehdataMainDiv [class*="vehDataMain"].pos0 div.gpsAltitudeMinMax {
+  font-size: 90px;
+}
+#speedBarContainer #vehdataMainDiv [class*="vehDataMain"].pos0 legend {
+  visibility: hidden;
+}
+#speedBarContainer #vehdataMainDiv [class*="vehDataMain"].pos0 legend .fuelEffUnit, #speedBarContainer #vehdataMainDiv [class*="vehDataMain"].pos0 legend .spunit span {
+  width: 100px;
+  transform: translate(-50%, -50%);
+  position: fixed;
+  color: white;
+  font-size: 35px;
+  text-align: center;
+  white-space: nowrap;
+  visibility: visible;
+  opacity: 1;
+  left: 560px;
+  bottom: 140px;
+}
+#speedBarContainer #vehdataMainDiv [class*="vehDataMain"].pos0 span.idlePercent {
+  position: fixed;
+  font-size: 24px;
+  transform: translate(-50%, -50%);
+  right: -60px;
+  bottom: 10px;
+  text-align: center;
+  white-space: nowrap;
+}
+#speedBarContainer #vehdataMainDiv [class*="vehDataMain"].pos0 legend .fuelEffUnit {
+  left: 560px;
+  font-size: 20px;
+}
+#speedBarContainer #vehdataMainDiv #gpsSpeedFieldSet[class*="vehDataBar"] .spunit, #speedBarContainer #vehdataMainDiv #speedCurrentFieldSet[class*="vehDataBar"] .spunit, #speedBarContainer #vehdataMainDiv fieldset[class*="vehDataBar"].pos0, #speedBarContainer #vehdataMainDiv fieldset.hidden {
+  display: none !important;
+}
+/*#speedBarContainer fieldset div {
+  border: none;
+}*/
+
+#speedBarContainer .pos0 div {
+  border-radius: 50px;
+}
+#speedBarContainer #vehdataMainDiv fieldset[class*="vehDataMain"].swapOut {
+  border-bottom: none;
+  border-right: none;
+  border-left: none;
+}
+#speedBarContainer #vehdataMainDiv .swapOut, #speedBarContainer #vehdataMainDiv [class*="vehDataMain"].pos0 div.swapOut {
+  background: -webkit-linear-gradient(rgba(255, 255, 255, .25) 25%, rgba(0, 28, 107, .5));
+  border: 2px dashed threedface;
+}
+#speedBarContainer #speedbarMainDiv [class^=speedBar] {
+  height: 6px;
+  margin-top: 2px;
+  border-top: 0px !important;
+}
+#speedBarContainer #speedbarMainDiv div.speedBar_5 {
+  width: 38px;
+  margin-left: 4px;
+}
+#speedBarContainer #speedbarMainDiv div.speedBar_10 {
+  width: 38px;
+  margin-left: 5px;
+}
+#speedBarContainer #speedbarMainDiv div.speedBar_15 {
+  width: 39px;
+  margin-left: 6px;
+}
+#speedBarContainer #speedbarMainDiv div.speedBar_20 {
+  width: 40px;
+  margin-left: 7px;
+}
+#speedBarContainer #speedbarMainDiv div.speedBar_25 {
+  width: 41px;
+  margin-left: 8px;
+}
+#speedBarContainer #speedbarMainDiv div.speedBar_30 {
+  width: 42px;
+  margin-left: 9px;
+}
+#speedBarContainer #speedbarMainDiv div.speedBar_35 {
+  width: 43px;
+  margin-left: 11px;
+}
+#speedBarContainer #speedbarMainDiv div.speedBar_40 {
+  width: 44px;
+  margin-left: 12px;
+}
+#speedBarContainer #speedbarMainDiv div.speedBar_45 {
+  width: 45px;
+  margin-left: 14px;
+}
+#speedBarContainer #speedbarMainDiv div.speedBar_50 {
+  width: 46px;
+  margin-left: 16px;
+}
+#speedBarContainer #speedbarMainDiv div.speedBar_55 {
+  width: 47px;
+  margin-left: 18px;
+}
+#speedBarContainer #speedbarMainDiv div.speedBar_60 {
+  width: 48px;
+  margin-left: 21px;
+}
+#speedBarContainer #speedbarMainDiv div.speedBar_65 {
+  width: 50px;
+  margin-left: 24px;
+}
+#speedBarContainer #speedbarMainDiv div.speedBar_70 {
+  width: 52px;
+  margin-left: 27px;
+}
+#speedBarContainer #speedbarMainDiv div.speedBar_75 {
+  width: 54px;
+  margin-left: 31px;
+}
+#speedBarContainer #speedbarMainDiv div.speedBar_80 {
+  width: 56px;
+  margin-left: 35px;
+}
+#speedBarContainer #speedbarMainDiv div.speedBar_85 {
+  width: 58px;
+  margin-left: 40px;
+}
+#speedBarContainer #speedbarMainDiv div.speedBar_90 {
+  width: 60px;
+  margin-left: 45px;
+}
+#speedBarContainer #speedbarMainDiv div.speedBar_95 {
+  width: 65px;
+  margin-left: 50px;
+}
+#speedBarContainer #speedbarMainDiv div.speedBar_100 {
+  width: 70px;
+  margin-left: 56px;
+}
+#speedBarContainer #speedbarMainDiv div.speedBar_105 {
+  width: 77px;
+  margin-left: 62px;
+}
+#speedBarContainer #speedbarMainDiv div.speedBar_110 {
+  width: 85px;
+  margin-left: 70px;
+}
+#speedBarContainer #speedbarMainDiv div.speedBar_115 {
+  width: 100px;
+  margin-left: 80px;
+}
+#speedBarContainer #speedbarMainDiv div.speedBar_120 {
+  width: 120px;
+  margin-left: 90px;
+}
+#speedBarContainer #speedbarMainDiv div.speedBar_125 {
+  width: 140px;
+  margin-left: 100px;
+}
+#speedBarContainer #speedbarMainDiv div.speedBar_130 {
+  width: 160px;
+  margin-left: 115px;
+}
+#speedBarContainer #speedbarMainDiv div.speedBar_135 {
+  width: 180px;
+  margin-left: 135px;
+}
+#speedBarContainer #speedbarMainDiv div.speedBar_140 {
+  width: 210px;
+  margin-left: 160px;
+}
+#speedBarContainer #speedbarMainDiv div.speedBar_145 {
+  width: 240px;
+  margin-left: 186px;
+}
+#speedBarContainer #speedbarMainDiv div.speedBar_150 {
+  width: 275px;
+  margin-left: 220px;
+}
+div.flot-tick-label {
+  color: #999999;
+  font-family: Verdana;
+  font-size: 12px;
+}

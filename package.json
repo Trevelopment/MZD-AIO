@@ -2,7 +2,7 @@
   "name": "MZD-AIO-TI",
   "productName": "MZD All In One Tweaks Installer",
   "description": "An Installer/Uninstaller for Over 50 System Tweaks for the Mazda MZD Infotainment System.",
-  "version": "2.7.0",
+  "version": "2.7.7",
   "homepage": "http://mazdatweaks.com",
   "license": "GPL-3.0",
   "main": "main.js",
@@ -14,13 +14,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://gitlab.com/Trezdog44/MZD-AIO-TI"
+    "url": "https://github.com/Trevelopment/MZD-AIO"
   },
   "bugs": {
-    "url": "https://gitlab.com/Trezdog44/MZD-AIO-TI/issues"
+    "url": "https://github.com/Trevelopment/MZD-AIO/issues"
   },
   "engines": {
-    "node": "6.5.x"
+    "node": "^8.2.x"
   },
   "keywords": [
     "Mazda",
@@ -95,7 +95,7 @@
   "build": {
     "appId": "com.trevelopment.mzd-aio-ti",
     "productName": "MZD-AIO-TI",
-    "copyright": "© 2017 Trevelopment By Trevor G Martin",
+    "copyright": "© 2018 Trevelopment By Trevor G Martin",
     "artifactName": "${productName}-${os}_${version}.${ext}",
     "extraResources": [
       "background-images/**/*",
@@ -168,34 +168,35 @@
     }
   },
   "devDependencies": {
-    "async": "^2",
-    "chai": "^4",
-    "chai-as-promised": "^7",
-    "dependency-check": "^2",
+    "async": "^2.6.0",
+    "chai": "^4.1.2",
+    "chai-as-promised": "^7.1.1",
+    "dependency-check": "^3",
     "devtron": "^1",
-    "electron": "^1.6.11",
-    "electron-builder": "^19.11.1",
-    "electron-debug": "^1",
+    "electron": "^1.8.2",
+    "electron-builder": "^20.0.8",
+    "electron-debug": "^1.5.0",
     "electron-is-dev": "^0.3",
+    "electron-rebuild": "^1.7.3",
     "istanbul": "^0.4",
-    "mocha": "^3",
-    "rimraf": "^2",
-    "shelljs": "^0.7",
-    "spectron": "^3",
-    "standard": "^10"
+    "mocha": "^5",
+    "rimraf": "^2.6.2",
+    "shelljs": "^0.8",
+    "spectron": "^3.8.0",
+    "standard": "^11.0.0"
   },
   "dependencies": {
     "angular-dragula": "^1.2.8",
     "appender": "^0.0.2",
-    "async": "^2.1.4",
     "copy-dir": "^0.3.0",
-    "crlf": "^1.1.0",
-    "drivelist": "5.0.22",
+    "crlf": "^1.1.1",
+    "drivelist": "^6.0.4",
     "electron-context-menu": "^0.9.1",
     "electron-image-resize": "^1.2.4",
-    "electron-store": "^1.0.0",
-    "extract-zip": "^1.6.5",
-    "jquery": "^3.2.1",
-    "mkdirp": "^0.5.1"
+    "electron-store": "^1.3.0",
+    "extract-zip": "^1.6.6",
+    "jquery": "^3.3.1",
+    "mkdirp": "^0.5.1",
+    "sort-array": "^2.0.0"
   }
 }

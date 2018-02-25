@@ -1,17 +1,103 @@
 <!DOCTYPE html>
-<style>.bootbox.update-info{margin-top: 0px;}</style>
+<style>
+.bootbox.update-info {
+  margin-top: 0px;
+}
+
+</style>
 <p><a href="changelog.htm" data-featherlight="ajax">Full Changelog</a></p>
-<h3>2.7.6</h3>
-<h3>Video Player v3.3.1</h3>
-<ul><li>Video Name shows in a Statusbar Notification at the beginning of each video</li><li>Now it takes the time from gplay app</li><li>Fixed the unicode list retrieve and removes the &quot;only unicode&quot; method</li><li>Disabled the log functions as they are not needed now</li><li><strong>Music player with MP3 &amp; FLAC support</strong> (From the Music folder on the USB Drive).</li><li>Adds the FLAC codec to the gstreamer libs</li><li>It shows the metadata of the files when playing music</li><li>Other small bug fixes
-<blockquote><em><strong>Pause Audio Hack</strong></em><ul><li><strong>Pressing the &quot;Entertainment&quot; (Music) button will pause audio</strong></li><li><strong>This only works ONCE AFTER OPENING THE VIDEO PLAYER APP AND BEFORE PLAYING THE FIRST VIDEO</strong></li><li><strong>Audio has to be playing from USB or button will function normally</strong></li><li>After it has been done once or the first video is played the entertainment button will function normally</li><li>You will see a split-second context change... that is the only way I could get the audio to pause.</li></ul></li></ul></blockquote>
-<h3>AIO Tweaks App v0.5</h3>
-<ul><li>Fixed The Freezing Issue</li><li>Added SBN Test Button (Status Bar Notification)</li><li>ADB Button ($ adb devices -l)</li></ul>
-<h3>Speedometer v5.1</h3>
-<ul><li>Added values (set in &quot;speedometer-config.js&quot;)<ul><li>Battery SOC (State of charge iStop only)</li><li>Engine Load (Only shows 0 or 1 for now)</li><li>Gear Lever Position</li></ul></li><li>Gear Position will show correct gear for Manual Transmissions (delayed by 1 second)</li><li>Fixed non working values (idle time, engine idle time, engine top speed)</li><li>To reuse current &quot;speedometer-config.js&quot; file just delete &quot;config/speedometer_bar/speedometer-config.js&quot; before installing</li><li>CHANGED: WebSocket port from 55554 =&gt; 9969</li><li>CHANGED: Multicontroller Tilt Down Now Toggles the SPEED BAR from Vehicle Speed to Engine Speed</li></ul>
-<h3>USB Audio MOD</h3>
-<ul><li>Statusbar Notifications On Every Screen At The Start Of Each Song!<ul><li>SBN for 5 Seconds: &quot;Artist - Song&quot;</li><li>Not Android Auto Screens (Sorry its not possible to cross surfaces like that)</li></ul></li><li>Change the &quot;Powered By Gracenote®&quot; flash text to whatever you want!<ul><li>Clear text field blank to disable altogether.</li><li>If flash text is not showing, genre will show on that line for 20 seconds (If it is in the metadata)</li></ul></li></ul>
-<h3>MZD-AIO GUI Changes/Fixes:</h3>
-<ul><li>Fixed &quot;Bootbox is not defined&quot; error preventing AIO from running for some.</li><li>Alternate Layout Toggle (Full Width Tweak Choices &amp; Options)</li><li>Changed Up Notification Style</li><li>Phase 1 of GUI Style Redesign</li><li>Autorun &amp; Recovery and Full System Restore links in dropdown menu by &quot;Start Compilation&quot;</li><li>Home Button brings you back to main page. (if you ever wondered what that was for)</li></ul>
-<h3>Other Changes/Fixes</h3>
-<ul><li><em>Tweak Installer:</em><ul><li>When installing apps, all common files (addon-common and opera folders) for are now in /config/jci/...</li><li>Cleaned up app install scripts to be more uniform and efficient</li><li>No more app list patch for v59! (Apps are added to the app ctxt list dynamically.)</li><li>Log files are saved in bakup folder so they are not lost if install accidently runs twice</li></ul></li><li><em>Other Tweaks:</em><ul><li>Added Language Support for &#39;Reverse Camera Safety Warning&#39; Tweak<ul><li>Ukrainian, Japanese, Chinese, Korean, Thai, Hebrew, Swedish, Slovak</li></ul></li><li>Added Ukrainian to &#39;Remove Message Replies&#39; Tweak</li></ul></li></ul>
+
+<h3>2.7.8</h3>
+
+<h4>Speedometer v5.5 - All In One Speedometer</h4>
+
+<ul>
+  <li>Analog, Modded and Bar Speedometers are now All In One!</li>
+  <li>All options are available and will be applied to the proper Speedometer</li>
+  <li>Choose which speedometer to start with by default (if starting with Bar Speedometer other options will still determine the starting state of the Classic Speedometer)</li>
+  <li>The speedometer-config.js file now has all the options, set a variable to determine if override values are used or installed options.</li>
+  <li>Invalid Values Show &quot;---&quot; Such As Gear Position/Lever for Manual Transmissions</li>
+  <li>Gear Lever Shows P - R - N - D</li>
+  <li>Toggles will Show The Action In A Statusbar Notification</li>
+  <li>Hold &quot;Up&quot; on multicontroller to switch between Classic and Bar Speedometer Mode</li>
+  <li>Hold &quot;Down&quot; toggles "Basic Speedo" to disable single click toggles (in Classic mode)</li>
+  <li>Modded Speedo (in Classic mode):
+    <ul>
+      <li>Single click &quot;Up&quot; to increase size of values</li>
+      <li>Multicontroller &quot;Select&quot; toggles between Digital and Analog speed</li>
+      <li>Single click &quot;Down&quot; to show alternate values</li>
+    </ul>
+  </li>
+  <li>Bar Speedometer:
+    <ul>
+      <li>Configure The Amount of Bottom Rows in &quot;speedometer-config.js&quot; (Default 4)</li>
+      <li>Hold &quot;Down&quot; to show/hide speed bar</li>
+      <li>
+        <strong>TAP Any 2 Values To Swap Their Positions!</strong>
+        <ul>
+          <li>Any Values Can Be Swapped Even The Main</li>
+          <li>When The Main Value Is Swapped An SBN Will Show With The Value Name</li>
+          <li>Tap Below The Bottom Row To Swap Hidden Values In Other Rows</li>
+          <li>Exiting The App Will Reset Positions To Your Default</li>
+          <li>Tap Selected Value Again To Cancel</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+<h2>
+  <a href="" onclick="externalLink('speedorepo')" style="border-bottom: 1px dashed #490aff;">
+    For More Info Check Out The Speedometer Repository
+    <span class="icon-github"></span>
+  </a>
+</h2>
+<h4>AIO Tweaks App v0.6</h4>
+
+<ul>
+  <li>&quot;Reverse App List&quot; button - Reverses the Applications List (resets on boot).</li>
+  <li>&quot;Unmount Swap&quot; button - Unmount a mounted swapfile.</li>
+</ul>
+
+<h4>Test Mode (T/M) Button <a href="" onclick="externalLink('jci-test-mode')">(Thread)</a></h4>
+
+<ul>
+  <li>Included with the
+    <strong>1 Second Diagnostic Menu</strong> tweak because it is part of the Diagnostic App</li>
+    <li>In v59 &quot;JCI Test Mode&quot; was disabled in the Diagnostic App
+      <ul>
+        <li>This tweak brings back Test Mode for v59</li>
+        <li>Makes it easier to get to in v55-v58 (Just press the T/M button)</li>
+      </ul>
+    </li>
+    <li>Once Test Mode is started type 11 to open the well known Test Menu</li>
+    <li>
+      <strong>
+        <em>BE CAREFUL IN TEST MODE, DON&#39;T DO ANYTHING YOU ARE UNSURE ABOUT!</em>
+      </strong>
+    </li>
+  </ul>
+
+  <h5>Tweak Installer Changes/Fixes</h5>
+
+  <ul>
+    <li>App install/uninstall now uses NodeJS to add/remove from app list
+      <ul>
+        <li>Allows for cleaner installations</li>
+        <li>Backward compatible</li>
+        <li>Solves the issue of all apps disappearing off the app list when only 1 is uninstalled due to improperly formatted JSON file</li>
+        <li>&quot;
+          <em>Legacy App Install</em>&quot; in install options to use the old method (using bash)
+          <ul>
+            <li>The only reason I can think of for this is if you already have an improperly formatted JSON file then you need to uninstall all apps with legacy installer because the NodeJS code will throw an error. Other than that the NodeJS code will never
+              cause an improperly formatted JSON file.</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>Cleaned up installer code
+        <ul>
+          <li>Removed some superfluous code</li>
+          <li>Fixed many inconsequential errors</li>
+        </ul>
+      </li>
+    </ul>

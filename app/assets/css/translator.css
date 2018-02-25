@@ -1,8 +1,8 @@
 .main {
-  margin-top:85px;
+  margin-top: 85px;
   margin-bottom: 50px;
 }
-.showNav ~ .main {
+.showNav~.main {
   margin-top: 120px;
 }
 .tabs.list-group.col-md-2 {
@@ -12,14 +12,14 @@
   width: 68.333333%;
 }
 .list-group-item {
-  border-radius:4px;
-  margin-bottom:1px;
+  border-radius: 4px;
+  margin-bottom: 1px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 .w3-navbar li:first-child {
-  margin:0;
+  margin: 0;
 }
 .w3-navbar li:first-child a {
   padding: 6px 0px 3px 2px;
@@ -45,7 +45,7 @@ textarea.form-control {
   font-weight: 600;
 }
 input[type=checkbox].w3-check, input[type=radio].w3-radio {
-  width: 24px!important;
+  width: 24px !important;
   height: 24px;
   margin-right: 10px;
   top: -5px;
@@ -70,11 +70,11 @@ input[type=checkbox].w3-check, input[type=radio].w3-radio {
 .newfile {
   width: 43.33333%;
   text-transform: capitalize;
-  padding-top:0!important;
+  padding-top: 0 !important;
 }
 #cpyBtn {
-  position:absolute;
-  z-index:9999;
+  position: absolute;
+  z-index: 9999;
 }
 span#SourceMode {
   position: fixed;
@@ -84,9 +84,9 @@ span#SourceMode {
 left: 200px;
 top: 55px;
 position: fixed;
-@media (max-width:992px){
+@media (max-width:992px) {
   .newfile {
-    width:100%;
+    width: 100%;
   }
   .tabs.list-group.col-md-2 {
     display: initial;
@@ -99,16 +99,14 @@ position: fixed;
     overflow-x: hidden;
   }
   .goog-logo-link {
-    font-size: 20px!important;
+    font-size: 20px !important;
   }
   [data-schemapath*="root.mainOps."] {
-    float: none!important;
+    float: none !important;
   }
-  [data-schemapath="root.menu"] [class*="col-md-"]:not(.col-md-12),
-  [data-schemapath="root.colors"] [class*="col-md-"]:not(.col-md-12),
-  [data-schemapath="root.languages"] [class*="col-md-"]:not(.col-md-12) {
-    width:50%;
-    float:left;
+  [data-schemapath="root.menu"] [class*="col-md-"]:not(.col-md-12), [data-schemapath="root.colors"] [class*="col-md-"]:not(.col-md-12), [data-schemapath="root.languages"] [class*="col-md-"]:not(.col-md-12) {
+    width: 50%;
+    float: left;
   }
   .rows .col-md-10 {
     width: 100%;
