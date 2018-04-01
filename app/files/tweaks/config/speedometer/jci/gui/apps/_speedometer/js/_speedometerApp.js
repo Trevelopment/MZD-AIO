@@ -26,7 +26,7 @@ function _speedometerApp(uiaId) {
  * Called just after the app is instantiated by framework.
  * All variables local to this app should be declared in this function
  */
-_speedometerApp.prototype.appInit = function () {
+_speedometerApp.prototype.appInit = function() {
   log.debug("_speedometerApp appInit  called...");
   //Context table
   //@formatter:off
@@ -51,7 +51,7 @@ _speedometerApp.prototype.appInit = function () {
       "templatePath": "apps/_speedometer/templates/SpeedBar",
       "readyFunction": this._SpeedoContextReady.bind(this),
       "contextInFunction": this._BarCtxtInFunction.bind(this),
-      "contextOutFunction": this._BarCtxtOutFunction.bind(this)
+      "contextOutFunction": this._BarCtxtOutFunction.bind(this),
     } // end of "SpeedBar"
   }; // end of this.contextTable object
   //@formatter:on
@@ -68,21 +68,29 @@ _speedometerApp.prototype.appInit = function () {
  * CONTEXT CALLBACKS
  * =========================
  */
-_speedometerApp.prototype._StartContextReady = function () {
+_speedometerApp.prototype._StartContextReady = function() {
   barSpeedometerMod ? aioMagicRoute("_speedometer", "SpeedBar") : aioMagicRoute("_speedometer", "SpeedClassic");
 };
-_speedometerApp.prototype._SpeedoContextReady = function () {
+_speedometerApp.prototype._SpeedoContextReady = function() {
   framework.common.setSbDomainIcon("apps/_speedometer/IcnSbnSpeedometer.png");
-}
-_speedometerApp.prototype._SpeedCtxtInFunction = function () {
+  if (barSpeedometerMod) {
+    LoadSpeedBarLayout();
+  } else {
+    LoadSpeedoClassicLayout();
+  }
+  if (sbHideInApp) {
+    $('#SbSpeedo, #Sbfuel-bar-wrapper').fadeOut();
+  }
+};
+_speedometerApp.prototype._SpeedCtxtInFunction = function() {
   barSpeedometerMod = false;
-}
-_speedometerApp.prototype._BarCtxtInFunction = function () {
+};
+_speedometerApp.prototype._BarCtxtInFunction = function() {
   barSpeedometerMod = true;
-}
-_speedometerApp.prototype._BarCtxtOutFunction = function () {
+};
+_speedometerApp.prototype._BarCtxtOutFunction = function() {
   //TODO: Save changed layout to load when bar speedometer is reopened
-}
+};
 
 /**
  * =========================

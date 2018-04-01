@@ -38,91 +38,90 @@ log.addSrcFile("SurfaceTmplt.js", "SurfaceTmpl");
  * (Constructor)
  */
 
-function SurfaceTmplt(uiaId, parentDiv, templateID, controlProperties)
-{
-	$('#SbSpeedo').fadeOut();
-    // create the div for template
-    this.divElt = document.createElement('div');
-    this.divElt.id = templateID;
+function SurfaceTmplt(uiaId, parentDiv, templateID, controlProperties) {
+  $('#SbSpeedo, #Sbfuel-bar-wrapper').fadeOut();
+  // create the div for template
+  this.divElt = document.createElement('div');
+  this.divElt.id = templateID;
 
-    this.templateName = "SurfaceTmplt";
+  this.templateName = "SurfaceTmplt";
 
-    this.onScreenClass = "TestTemplateWithStatusLeft";
-    this.offScreenLeftClass = "TestTemplateWithStatusLeft-OffscreenLeft";
-    this.offScreenRightClass = "TestTemplateWithStatusLeft-OffscreenRight";
+  this.onScreenClass = "TestTemplateWithStatusLeft";
+  this.offScreenLeftClass = "TestTemplateWithStatusLeft-OffscreenLeft";
+  this.offScreenRightClass = "TestTemplateWithStatusLeft-OffscreenRight";
 
-    this.slideOutLeftClass = "TemplateWithStatusLeft-SlideOutLeftClass";
-    this.slideInRightClass = "TemplateWithStatusLeft-SlideInRightClass";
-    this.slideInLeftClass = "TemplateWithStatusLeft-SlideInLeftClass";
-    this.slideOutRightClass = "TemplateWithStatusLeft-SlideOutRightClass";
+  this.slideOutLeftClass = "TemplateWithStatusLeft-SlideOutLeftClass";
+  this.slideInRightClass = "TemplateWithStatusLeft-SlideInRightClass";
+  this.slideInLeftClass = "TemplateWithStatusLeft-SlideInLeftClass";
+  this.slideOutRightClass = "TemplateWithStatusLeft-SlideOutRightClass";
 
-    log.debug("templateID in SurfaceTmplt constructor: " + templateID);
+  log.debug("templateID in SurfaceTmplt constructor: " + templateID);
 
-    // reset
-    this.properties = {};
+  // reset
+  this.properties = {};
 
-    // clear app
-    this.application = null;
+  // clear app
+  this.application = null;
 
-    // get active application
-    this.application = CustomApplicationsHandler.getCurrentApplication(true);
+  // get active application
+  this.application = CustomApplicationsHandler.getCurrentApplication(true);
 
-    if(!this.application) {
+  if (!this.application) {
 
-        // todo: show a error message here that no active application launch was launched
+    // todo: show a error message here that no active application launch was launched
 
-        return false;
+    return false;
+  }
+
+  //set the template properties
+  this.properties = {
+    "statusBarVisible": this.application.getStatusbar(),
+    "leftButtonVisible": this.application.getHasLeftButton(),
+    "rightChromeVisible": this.application.getHasRightArc(),
+    "hasActivePanel": false,
+    "isDialog": false
+  };
+
+  // set the correct template class
+  switch (true) {
+
+    case this.properties.leftButtonVisible:
+      this.divElt.className = "TemplateWithStatusLeft";
+      break;
+
+    case this.properties.statusBarVisible:
+      this.divElt.className = "TemplateWithStatus";
+      break;
+
+    default:
+      this.divElt.className = "TemplateFull";
+      break;
+  }
+
+  // assign to parent
+  parentDiv.appendChild(this.divElt);
+
+  // wakeup
+  this.application.__wakeup(this.divElt);
+
+  // set framework specifics
+  setTimeout(function() {
+
+    if (this.properties.statusBarVisible) {
+
+      // execute statusbar handler
+      framework.common.statusBar.setAppName(this.application.getStatusbarTitle());
+
+      // execute custom icon
+      var icon = this.application.getStatusbarIcon();
+
+      if (icon) framework.common.statusBar.setDomainIcon(icon);
+
+      // adjust home button
+      framework.common.statusBar.showHomeBtn(this.application.getStatusbarHomeButton());
+
     }
-
-    //set the template properties
-    this.properties = {
-        "statusBarVisible" : this.application.getStatusbar(),
-        "leftButtonVisible" : this.application.getHasLeftButton(),
-        "rightChromeVisible" : this.application.getHasRightArc(),
-        "hasActivePanel" : false,
-        "isDialog" : false
-    };
-
-    // set the correct template class
-    switch(true) {
-
-        case this.properties.leftButtonVisible:
-            this.divElt.className = "TemplateWithStatusLeft";
-            break;
-
-        case this.properties.statusBarVisible:
-            this.divElt.className = "TemplateWithStatus";
-            break;
-
-        default:
-            this.divElt.className = "TemplateFull";
-            break;
-    }
-
-    // assign to parent
-    parentDiv.appendChild(this.divElt);
-
-    // wakeup
-    this.application.__wakeup(this.divElt);
-
-    // set framework specifics
-    setTimeout(function() {
-
-        if(this.properties.statusBarVisible) {
-
-            // execute statusbar handler
-            framework.common.statusBar.setAppName(this.application.getStatusbarTitle());
-
-            // execute custom icon
-            var icon = this.application.getStatusbarIcon();
-
-            if(icon) framework.common.statusBar.setDomainIcon(icon);
-
-            // adjust home button
-            framework.common.statusBar.showHomeBtn(this.application.getStatusbarHomeButton());
-
-        }
-    }.bind(this), 85);
+  }.bind(this), 85);
 }
 
 
@@ -130,27 +129,25 @@ function SurfaceTmplt(uiaId, parentDiv, templateID, controlProperties)
  * CleanUp
  */
 
-SurfaceTmplt.prototype.cleanUp = function()
-{
-    // kill application
-    if(this.application) {
-        CustomApplicationsHandler.sleep(this.application);
-    }
+SurfaceTmplt.prototype.cleanUp = function() {
+  // kill application
+  if (this.application) {
+    CustomApplicationsHandler.sleep(this.application);
+  }
 
-    // clear app
-    this.application = null;
-	$('#SbSpeedo').fadeIn();
+  // clear app
+  this.application = null;
+  $('#SbSpeedo, #Sbfuel-bar-wrapper').fadeIn();
 }
 
 /**
  * MultiController
  */
 
-SurfaceTmplt.prototype.handleControllerEvent = function(eventID)
-{
-    if(this.application) {
-        this.application.__handleControllerEvent(eventID);
-    }
+SurfaceTmplt.prototype.handleControllerEvent = function(eventID) {
+  if (this.application) {
+    this.application.__handleControllerEvent(eventID);
+  }
 }
 
 

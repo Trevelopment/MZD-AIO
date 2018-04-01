@@ -18,7 +18,9 @@ function SpeedoMeterTmplt(uiaId, parentDiv, templateID, controlProperties) {
   this.longholdTimeout = null;
   this.divElt = null;
   this.templateName = "SpeedoMeterTmplt";
-
+  this.btns = spdBtn.classic;
+  this.classicTemplate = classicSpeedoTmplt;
+  this.valuetable = '';
   this.onScreenClass = "SpeedoMeterTmplt";
 
   log.debug("  templateID in SpeedoMeterTmplt constructor: " + templateID);
@@ -42,84 +44,21 @@ function SpeedoMeterTmplt(uiaId, parentDiv, templateID, controlProperties) {
   parentDiv.appendChild(this.divElt);
 
   // do whatever you want here
-  this.divElt.innerHTML = '<!-- MZD Speedometer v5.0 - Variant Mod  -->' +
+  this.divElt.innerHTML = '<!-- MZD Speedometer v5 - Variant Mod  -->' +
     '<div id="speedometerContainer">' +
     '<div id="hideIdleBtn"></div>' +
-    ' <div class="spdBtn0"></div>' +
-    ' <div class="spdBtn1"></div>' +
-    ' <div class="spdBtn2"></div>' +
-    ' <div class="spdBtn3"></div>' +
-    ' <div class="spdBtn4"></div>' +
+    ' <div class="spdBtn' + this.btns.select + ' spdBtnSelect"></div>' +
+    ' <div class="spdBtn' + this.btns.up + ' spdBtnUp"></div>' +
+    ' <div class="spdBtn' + this.btns.down + ' spdBtnDown"></div>' +
+    ' <div class="spdBtn' + this.btns.right + ' spdBtnRight"></div>' +
+    ' <div class="spdBtn' + this.btns.left + ' spdBtnLeft"></div>' +
+    ' <div class="spdBtn' + this.btns.hold.select + ' spdBtnSelecth"></div>' +
+    ' <div class="spdBtn' + this.btns.hold.up + ' spdBtnUph"></div>' +
+    ' <div class="spdBtn' + this.btns.hold.down + ' spdBtnDownh"></div>' +
+    ' <div class="spdBtn' + this.btns.hold.right + ' spdBtnRighth"></div>' +
+    ' <div class="spdBtn' + this.btns.hold.left + ' spdBtnLefth"></div>' +
     '<div id="table_bg">' +
     '<div id="valuetable">' +
-    '<fieldset id="tripDistFieldSet">' +
-    '<legend>Trip Dist. <span class="spunit">(<span class="distUnit">km</span>)<span></legend>' +
-    '<div class="tripDistance">0.00</div>' +
-    '</fieldset>' +
-    '<fieldset id="speedTopFieldSet">' +
-    '<legend>Top Speed</legend>' +
-    '<div class="speedTopValue">0</div>' +
-    '</fieldset>' +
-    '<fieldset id="speedAvgFieldSet">' +
-    '<legend>Avg. Speed</legend>' +
-    '<div class="speedAvgValue">0</div>' +
-    '</fieldset>' +
-    '<fieldset id="gpsAltitudeFieldSet">' +
-    '<legend>Altitude <span class="spunit">(<span class="altUnit">m</span>)<span></legend></legend>' +
-    '<div class="gpsAltitudeValue">-</div>' +
-    '</fieldset>' +
-    // '<fieldset id="gpsAltitudeMinFieldSet">'+
-    //     '<legend>Altitude <span>min</span></legend>'+
-    //     '<div class="gpsAltitudeMin">-</div>'+
-    // '</fieldset>'+
-    // '<fieldset id="gpsAltitudeMaxFieldSet">'+
-    //     '<legend>Altitude <span>max</span></legend>'+
-    //     '<div class="gpsAltitudeMax">-</div>'+
-    // '</fieldset>'+
-    '<fieldset id="gpsAltitudeMinMaxFieldSet">' +
-    '<legend><span>min/max</span></legend>' +
-    '<div class="gpsAltitudeMinMax">---/---</div>' +
-    '</fieldset>' +
-    '<fieldset id="gpsLatitudeFieldSet">' +
-    '<legend>Lat.</legend>' +
-    '<div class="gpsLatitudeValue">---</div>' +
-    '</fieldset>' +
-    '<fieldset id="gpsLongitudeFieldSet">' +
-    '<legend>Lon.</legend>' +
-    '<div class="gpsLongitudeValue">---</div>' +
-    '</fieldset>' +
-    '<fieldset id="tripTimeFieldSet">' +
-    '<legend>Total Time</legend>' +
-    '<div class="tripTimeValue">0:00</div>' +
-    '</fieldset>' +
-    '<fieldset id="idleTimeFieldSet">' +
-    '<legend>Idle Time</legend>' +
-    '<div class="idleTimeValue">0:00</div>' +
-    '</fieldset>' +
-    '<fieldset id="engIdleTimeFieldSet">' +
-    '<legend>Engine Idle</legend>' +
-    '<div class="engineIdleTimeValue">0:00</div>' +
-    '</fieldset>' +
-    '<fieldset id="Drv1AvlFuelEFieldSet">' +
-    '<legend><span class="fuelEffUnit"></span></legend>' +
-    '<div class="Drv1AvlFuelEValue"><span>(0)</span>0</div>' +
-    '</fieldset>' +
-    '<fieldset id="outsideTempFieldSet">' +
-    '<legend>Outside <span class="spunit">(&deg;<span class="tempUnit"></span>)</span></legend>' +
-    '<div class="outsideTempValue">0</div>' +
-    '</fieldset>' +
-    '<fieldset id="intakeTempFieldSet">' +
-    '<legend>Intake <span class="spunit">(&deg;<span class="tempUnit"></span>)</span></legend>' +
-    '<div class="intakeTempValue">0</div>' +
-    '</fieldset>' +
-    '<fieldset id="coolantTempFieldSet">' +
-    '<legend>Coolant <span class="spunit">(&deg;<span class="tempUnit"></span>)</span></legend>' +
-    '<div class="coolantTempValue">0</div>' +
-    '</fieldset>' +
-    '<fieldset id="gearPositionFieldSet">' +
-    '<legend>Gear Position</legend>' +
-    '<div class="gearPositionValue">0</div>' +
-    '</fieldset>' +
     '</div>' +
     '</div>' +
     '<div id="analog">' +
@@ -175,30 +114,59 @@ function SpeedoMeterTmplt(uiaId, parentDiv, templateID, controlProperties) {
     '<legend class="vehDataLegends">Veh Speed <span class="spunit">(<span class="speedUnit">---</span>)<span></legend>' +
     '<div class="vehicleSpeed">0</div>' +
     '</fieldset>' +
-    //'<div class="vehicleSpeed pos0">0</div>' +
-    //'<div class="speedUnit">---</div>' +
+    '<div id="speedo-fuel-bar-wrapper" class="fuel-bar-wrapper">' +
+    '<div id="speedo-fuel-bar-container" class="fuel-bar-container">' +
+    '<span id="speedo-fuel-bar" class="fuel-bar" style="width: 100%;">' +
+    '</span></div></div>' +
+    //'<div class="vehicleSpeed pos0">0</div>'+
+    //'<div class="speedUnit">---</div>'+
     '</div>';
-  $.getScript('apps/_speedometer/js/speedometerUpdate.js', setTimeout(function () {
+  for (speedo in this.classicTemplate) {
+    this.valuetable += '<fieldset id="' + this.classicTemplate[speedo].id + '">' +
+      '<legend>' + this.classicTemplate[speedo].name;
+    if (this.classicTemplate[speedo].unitClass !== null) {
+      this.valuetable += '<span class="spunit">(<span class="' + this.classicTemplate[speedo].unitClass + '"></span>)<span>';
+    }
+    this.valuetable += '</legend>' +
+      '<div class="' + this.classicTemplate[speedo].class + '">' + this.classicTemplate[speedo].starting + '</div>' +
+      '</fieldset>';
+  }
+
+  // '<fieldset id="gpsAltitudeMinFieldSet">'+
+  //     '<legend>Altitude <span>min</span></legend>'+
+  //     '<div class="gpsAltitudeMin">-</div>'+
+  // '</fieldset>'+
+  // '<fieldset id="gpsAltitudeMaxFieldSet">'+
+  //     '<legend>Altitude <span>max</span></legend>'+
+  //     '<div class="gpsAltitudeMax">-</div>'+
+  // '</fieldset>'+
+
+  document.getElementById('valuetable').innerHTML = this.valuetable;
+  //$.getScript('apps/_speedometer/js/speedometerUpdate.js',
+  setTimeout(function() {
     updateSpeedoApp();
-  }, 700));
+  }, 700); //);
 }
 
 /*
  *  @param clickTarget (jQuery Object) The jQuery Object to click on a single click action
- *  clickTarget can also be a function
+ *  clickTarget can also be a function or a string of the DOM node to make the jQuery Object
  */
-SpeedoMeterTmplt.prototype.singleClick = function (clickTarget) {
+SpeedoMeterTmplt.prototype.singleClick = function(clickTarget) {
+  if (typeof clickTarget === "string") { clickTarget = $(clickTarget) }
   (speedometerLonghold) ? speedometerLonghold = false: (typeof clickTarget === "function") ? clickTarget() : clickTarget.click();
   clearTimeout(this.longholdTimeout);
   this.longholdTimeout = null;
 }
 /*
  *  @param clickFunction (function) Function to run on a long click
+ *  clickFunction can also be a a string of the DOM node or jQuery Object to click
  */
-SpeedoMeterTmplt.prototype.longClick = function (clickFunction) {
-  this.longholdTimeout = setTimeout(function () {
+SpeedoMeterTmplt.prototype.longClick = function(clickFunction) {
+  if (typeof clickFunction === "string") { clickFunction = $(clickFunction) }
+  this.longholdTimeout = setTimeout(function() {
     speedometerLonghold = true;
-    clickFunction();
+    (typeof clickFunction === "function") ? clickFunction(): clickFunction.click();
   }, 1200);
 }
 /*
@@ -211,73 +179,58 @@ SpeedoMeterTmplt.prototype.longClick = function (clickFunction) {
  * Handles multicontroller events.
  * @param   eventID (string) any of the “Internal event name” values in IHU_GUI_MulticontrollerSimulation.docx (e.g. 'cw',
  * 'ccw', 'select')
+ * Controller functions are defined in speedometerUpdate.js
  */
-SpeedoMeterTmplt.prototype.handleControllerEvent = function (eventID) {
+SpeedoMeterTmplt.prototype.handleControllerEvent = function(eventID) {
   log.debug("handleController() called, eventID: " + eventID);
 
   var retValue = 'giveFocusLeft';
 
   switch (eventID) {
-  case "upStart":
-    this.longClick(function () {
-      AIO_SBN("Digital Bar Speedometer", "apps/_speedometer/templates/SpeedoMeter/images/digital.png");
-      aioMagicRoute("_speedometer", "SpeedBar");
-    });
-    retValue = "consumed";
-    break;
-  case "up":
-    this.singleClick($('.spdBtn3'));
-    retValue = "consumed";
-    break;
-  case "downStart":
-    this.longClick(function () {
-      AIO_SBN((speedMod ? "Basic" : "Modded") + " Speedometer", (speedMod ? "apps/_speedometer/templates/SpeedoMeter/images/speed.png" : "apps/_speedometer/templates/SpeedoMeter/images/digital.png"));
-      speedMod = !speedMod;
-      updateSpeedoApp();
-    });
-    retValue = "consumed";
-    break;
-  case "down":
-    this.singleClick($('.spdBtn2'));
-    retValue = "consumed";
-    break;
-  case "selectStart":
-    this.longClick(function () {
-      // Placeholder for holding select
-      $('.spdBtn0').click(); // for now just dos the same thing as click
-    });
-    retValue = "consumed";
-    break;
-  case "select":
-    this.singleClick($('.spdBtn0'));
-    retValue = "consumed";
-    break;
-  case "rightStart":
-    this.longClick(function () {
-      // Placeholder for holding right
-      $('.spdBtn1').click(); // for now just does the same thing as click
-    });
-    retValue = "consumed";
-    break;
-  case "right":
-    this.singleClick($('.spdBtn1'));
-    retValue = "consumed";
-    break;
-  case "leftStart":
-    this.longClick(function () {
-      // Placeholder for holding left
-      $('.spdBtn4').click(); // for now just does the same thing as click
-    });
-    retValue = "consumed";
-    break;
-  case "left":
-    this.singleClick($('.spdBtn4'));
-    retValue = "consumed";
-    break;
-    //  case "cw":
-    //  case "ccw":
-  default:
-    retValue = "ignored";
+    case "upStart":
+      this.longClick('.spdBtnUph');
+      retValue = "consumed";
+      break;
+    case "up":
+      this.singleClick('.spdBtnUp');
+      retValue = "consumed";
+      break;
+    case "downStart":
+      this.longClick('.spdBtnDownh');
+      retValue = "consumed";
+      break;
+    case "down":
+      this.singleClick('.spdBtnDown');
+      retValue = "consumed";
+      break;
+    case "selectStart":
+      this.longClick('.spdBtnSelecth');
+      retValue = "consumed";
+      break;
+    case "select":
+      this.singleClick('.spdBtnSelect');
+      retValue = "consumed";
+      break;
+    case "rightStart":
+      this.longClick('.spdBtnRighth');
+      retValue = "consumed";
+      break;
+    case "right":
+      this.singleClick('.spdBtnRight');
+      retValue = "consumed";
+      break;
+    case "leftStart":
+      this.longClick('.spdBtnLefth');
+      retValue = "consumed";
+      break;
+    case "left":
+      this.singleClick('.spdBtnLeft');
+      retValue = "consumed";
+      break;
+      //  case "cw":
+      //  case "ccw":
+    default:
+      retValue = "ignored";
   }
 
   return retValue;
@@ -286,8 +239,10 @@ SpeedoMeterTmplt.prototype.handleControllerEvent = function (eventID) {
  * Called by the app during templateNoLongerDisplayed. Used to perform garbage collection procedures on the template and
  * its controls.
  */
-SpeedoMeterTmplt.prototype.cleanUp = function () {
-
+SpeedoMeterTmplt.prototype.cleanUp = function() {
+  if (framework.getCurrentApp() !== "_speedometer") {
+    $('#SbSpeedo, #Sbfuel-bar-wrapper').fadeIn();
+  }
 };
 
 framework.registerTmpltLoaded("SpeedoMeterTmplt");

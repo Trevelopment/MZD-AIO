@@ -36,6 +36,7 @@ var lastGearPositionValue = "---";
 var lastGearLeverPositionValue = "---";
 var fuelGaugeMax = 184;
 var lastFuelGaugeValue = 0;
+var lastFuelGaugePercent = 0;
 var BatSOC = 0;
 var BatSOCmax = 200;
 var lastEngineLoadValue = 0;
@@ -44,69 +45,68 @@ var currDataBar = 1;
 var backgroundColor = '';
 var automaticTrans = false;
 var speedometerLonghold = false;
+var hideSpeedFuel = false;
 var speedometerLayout = null;
+var speedoClassicLayout = null;
 
 $.ajax({
   url: 'addon-common/cufon-yui.js',
   dataType: 'script',
-  success: function (data) {
+  success: function(data) {
     $.ajax({
       url: 'addon-common/jquery.flot.min.js',
       dataType: 'script',
-      success: function (data) {
+      success: function(data) {
         Cufon.now();
       },
-      complete: function () {}
+      complete: function() {}
     });
   }
 });
-
-$(document).ready(function () {
-
+$(document).ready(function() {
   // websocket
   // --------------------------------------------------------------------------
   function retrievedata(action) {
     var speedometerWs = new WebSocket('ws://127.0.0.1:9969/');
-    speedometerWs.onmessage = function (event) {
+    speedometerWs.onmessage = function(event) {
       var res = event.data.split('#');
       switch (res[0]) {
-      case 'vehicleData':
-        updateVehicleSpeed(res[1]);
-        updateEngineSpeed(res[2]);
-        updateTripDist(res[3]);
-        updateGPSSpeed(res[4]);
-        updateGPSAltitude(res[5]);
-        updateGPSHeading(res[6]);
-        updateGPSLatitude(res[7]);
-        updateGPSLongitude(res[8]);
-        updateEngineLoad(res[9]);
-        updateGearLeverPos(res[10]);
-        break;
-      case 'envData':
-        updateFuelEfficiency(res[1]);
-        updateTotFuelEfficiency(res[2]);
-        updateAvgFuelEfficiency(res[3]);
-        updateOutsideTemp(res[4]);
-        updateIntakeTemp(res[5]);
-        updateCoolantTemp(res[6]);
-        updateGearPos(res[7]);
-        updateFuelGauge(res[8]);
-        updateBatSOC(res[9]);
-        break;
-      default:
-        break;
+        case 'vehicleData':
+          updateVehicleSpeed(res[1]);
+          updateEngineSpeed(res[2]);
+          updateTripDist(res[3]);
+          updateGPSSpeed(res[4]);
+          updateGPSAltitude(res[5]);
+          updateGPSHeading(res[6]);
+          updateGPSLatitude(res[7]);
+          updateGPSLongitude(res[8]);
+          updateEngineLoad(res[9]);
+          updateGearLeverPos(res[10]);
+          break;
+        case 'envData':
+          updateFuelEfficiency(res[1]);
+          updateTotFuelEfficiency(res[2]);
+          updateAvgFuelEfficiency(res[3]);
+          updateOutsideTemp(res[4]);
+          updateIntakeTemp(res[5]);
+          updateCoolantTemp(res[6]);
+          updateGearPos(res[7]);
+          updateFuelGauge(res[8]);
+          updateBatSOC(res[9]);
+          break;
+        default:
+          break;
       }
     };
-    speedometerWs.onopen = function () {
+    speedometerWs.onopen = function() {
       speedometerWs.send(action);
     };
-    speedometerWs.onerror = function (e) {
+    speedometerWs.onerror = function(e) {
       console.log("err: " + e.toString());
     };
   }
   // --------------------------------------------------------------------------
   // websocket end
-
   // update trip time
   // --------------------------------------------------------------------------
   function updateTripTime() {
@@ -114,7 +114,6 @@ $(document).ready(function () {
     var hours = Math.floor(totalTripSeconds / 3600);
     var minutes = Math.floor((totalTripSeconds - (hours * 3600)) / 60);
     var seconds = totalTripSeconds - (hours * 3600) - (minutes * 60);
-
     if (hours > 0 && minutes < 10) { minutes = "0" + minutes; }
     if (seconds < 10) { seconds = "0" + seconds; }
     if (hours > 0) {
@@ -132,7 +131,6 @@ $(document).ready(function () {
     }
   }
   // --------------------------------------------------------------------------
-
   // update idle times
   // --------------------------------------------------------------------------
   function updateIdleTime(speed) {
@@ -143,7 +141,6 @@ $(document).ready(function () {
       var hours = Math.floor(totalIdleSeconds / 3600);
       var minutes = Math.floor((totalIdleSeconds - (hours * 3600)) / 60);
       var seconds = totalIdleSeconds - (hours * 3600) - (minutes * 60);
-
       if (hours > 0 && minutes < 10) { minutes = "0" + minutes; }
       if (seconds < 10) { seconds = "0" + seconds; }
       if (hours > 0) {
@@ -152,7 +149,6 @@ $(document).ready(function () {
         idleTimeValue = (minutes + ':' + seconds);
       }
     }
-
     // update engine idle time
     // --------------------------------------------------------------------------
     if (speed === 0 && engineSpeedCurrent > 0 && totalTripSeconds > 21) {
@@ -160,7 +156,6 @@ $(document).ready(function () {
       var hoursE = Math.floor(totalEngineOnSeconds / 3600);
       var minutesE = Math.floor((totalEngineOnSeconds - (hoursE * 3600)) / 60);
       var secondsE = totalEngineOnSeconds - (hoursE * 3600) - (minutesE * 60);
-
       if (hoursE > 0 && minutesE < 10) { minutesE = "0" + minutesE; }
       if (secondsE < 10) { secondsE = "0" + secondsE; }
       if (hoursE > 0) {
@@ -171,7 +166,6 @@ $(document).ready(function () {
     }
   }
   // --------------------------------------------------------------------------
-
   // update vehicle speed
   // --------------------------------------------------------------------------
   function updateVehicleSpeed(currentSpeed) {
@@ -182,7 +176,6 @@ $(document).ready(function () {
       } else {
         speedCurrent = Math.ceil(currentSpeed * 0.01);
       }
-
       // update vehicle top speed
       // --------------------------------------------------------------------------
       if (speedCurrent > speedTop) {
@@ -200,7 +193,6 @@ $(document).ready(function () {
         }
       }
       // --------------------------------------------------------------------------
-
       // update vehicle average speed
       // --------------------------------------------------------------------------
       if (speedCurrent > 0) {
@@ -213,7 +205,6 @@ $(document).ready(function () {
         }
       }
       // --------------------------------------------------------------------------
-
       // update vehicle current speed
       // --------------------------------------------------------------------------
       if (!barSpeedometerMod) {
@@ -223,12 +214,12 @@ $(document).ready(function () {
           $('.speedIndicator').css("transform", "rotate(" + (-120 + speedCurrent) + "deg)");
         }
       }
-      $('.vehicleSpeed').each(function () {
+      $('.vehicleSpeed').each(function() {
         var $this = $(this);
         $({ Counter: $this.text() }).animate({ Counter: speedCurrent }, {
           duration: 950,
           easing: 'linear',
-          step: function (now) {
+          step: function(now) {
             var speedCurr = Math.ceil(now);
             if (speedAnimation) {
               $this.text(speedCurr);
@@ -237,7 +228,7 @@ $(document).ready(function () {
               updateSpeedBar(Math.ceil(isMPH ? speedCurr * 1.6 : speedCurr));
             }
           },
-          complete: function () {}
+          complete: function() {}
         });
       });
       if (!speedAnimation) {
@@ -250,12 +241,11 @@ $(document).ready(function () {
     }
   }
   // --------------------------------------------------------------------------
-
   // update total fuel efficiency
   // --------------------------------------------------------------------------
   function updateTotFuelEfficiency(totfuelEff) {
     totfuelEff = $.trim(totfuelEff);
-    if ($.isNumeric(totfuelEff) && totfuelEff !== 0) {
+    if ($.isNumeric(totfuelEff) && totfuelEff !== "0") {
       if (isMPH) {
         // 1 km/L = 2.3521458 US MPG
         TotFuelEfficiency = (Math.round(totfuelEff * 2.3521458) / 10);
@@ -276,12 +266,11 @@ $(document).ready(function () {
     }
   }
   // --------------------------------------------------------------------------
-
   // update fuel efficiency
   // --------------------------------------------------------------------------
   function updateFuelEfficiency(currentfuelEff) {
     currentfuelEff = $.trim(currentfuelEff);
-    if ($.isNumeric(currentfuelEff) && currentfuelEff !== 0) {
+    if ($.isNumeric(currentfuelEff) && currentfuelEff !== "0") {
       if (isMPH) {
         // 1 km/L = 2.3521458 US MPG
         FuelEfficiency = (Math.round(currentfuelEff * 2.3521458) / 10);
@@ -301,15 +290,16 @@ $(document).ready(function () {
       } else {
         $('.Drv1AvlFuelEValue').html('<span>(' + TotFuelEfficiency + ')</span>' + FuelEfficiency);
       }
+    } else {
+      $('.Drv1AvlFuelEValue').html("---");
     }
   }
   // --------------------------------------------------------------------------
-
   // update average fuel efficiency
   // --------------------------------------------------------------------------
   function updateAvgFuelEfficiency(avgfuelEff) {
     avgfuelEff = $.trim(avgfuelEff);
-    if ($.isNumeric(avgfuelEff) && avgfuelEff !== 0) {
+    if ($.isNumeric(avgfuelEff) && avgfuelEff !== "0") {
       if (isMPH) {
         // 1 km/L = 2.3521458 US MPG
         AvgFuelEfficiency = (Math.round(avgfuelEff * 2.3521458) / 100);
@@ -328,7 +318,6 @@ $(document).ready(function () {
     }
   }
   // --------------------------------------------------------------------------
-
   // update trip distance
   // --------------------------------------------------------------------------
   function updateTripDist(currtripDist) {
@@ -343,7 +332,6 @@ $(document).ready(function () {
       if (currtripDist >= 0 && currtripDist <= 2 && prevTripDist > 0) {
         tripDistBkp = prevTripDist;
       }
-
       if (isMPH) {
         tripDist = parseFloat((tripDistCurrent * 0.02 * 0.6213712).toFixed(2));
       } else {
@@ -356,7 +344,6 @@ $(document).ready(function () {
     }
   }
   // --------------------------------------------------------------------------
-
   // update GPS speed
   // --------------------------------------------------------------------------
   function updateGPSSpeed(currentGPSSpeed) {
@@ -368,15 +355,15 @@ $(document).ready(function () {
         GPSspeedCurrent = Math.floor(currentGPSSpeed);
       }
       if (speedAnimation) {
-        $('.gpsSpeedValue').each(function () {
+        $('.gpsSpeedValue').each(function() {
           var $this = $(this);
           $({ Counter: $this.text() }).animate({ Counter: GPSspeedCurrent }, {
             duration: 950,
             easing: 'linear',
-            step: function (now) {
+            step: function(now) {
               $this.text(Math.ceil(now));
             },
-            complete: function () {}
+            complete: function() {}
           });
         });
       } else {
@@ -385,7 +372,6 @@ $(document).ready(function () {
     }
   }
   // --------------------------------------------------------------------------
-
   // update GPS altitude
   // --------------------------------------------------------------------------
   function updateGPSAltitude(currentGPSalt) {
@@ -396,7 +382,6 @@ $(document).ready(function () {
       } else {
         GPSaltCurrent = Math.round(currentGPSalt);
       }
-
       // update max altitude
       // --------------------------------------------------------------------------
       if (GPSaltCurrent > altGPSmax) {
@@ -404,7 +389,6 @@ $(document).ready(function () {
         // $('.gpsAltitudeMax').text(altGPSmax);
       }
       // --------------------------------------------------------------------------
-
       // update min altitude
       // --------------------------------------------------------------------------
       if (GPSaltCurrent < altGPSmin && GPSaltCurrent !== 0) {
@@ -412,11 +396,9 @@ $(document).ready(function () {
         // $('.gpsAltitudeMin').text(altGPSmin);
       }
       // --------------------------------------------------------------------------
-
       if (altGPSmin !== 9999) {
         $('.gpsAltitudeMinMax').html(altGPSmin + ' / ' + altGPSmax);
       }
-
       // update current altitude
       // --------------------------------------------------------------------------
       $('.gpsAltitudeValue').html(GPSaltCurrent);
@@ -424,7 +406,6 @@ $(document).ready(function () {
     }
   }
   // --------------------------------------------------------------------------
-
   // update GPS Heading
   // --------------------------------------------------------------------------
   function updateGPSHeading(currentGPShead) {
@@ -438,53 +419,53 @@ $(document).ready(function () {
           headingSwitchValue = Math.round(currentGPShead / 22.5);
           // Close enough
           switch (headingSwitchValue) {
-          case 1:
-            direction = "NNE";
-            break;
-          case 2:
-            direction = "NE";
-            break;
-          case 3:
-            direction = "ENE";
-            break;
-          case 4:
-            direction = "E";
-            break;
-          case 5:
-            direction = "ESE";
-            break;
-          case 6:
-            direction = "SE";
-            break;
-          case 7:
-            direction = "SSE";
-            break;
-          case 8:
-            direction = "S";
-            break;
-          case 9:
-            direction = "SSW";
-            break;
-          case 10:
-            direction = "SW";
-            break;
-          case 11:
-            direction = "WSW";
-            break;
-          case 12:
-            direction = "W";
-            break;
-          case 13:
-            direction = "WNW";
-            break;
-          case 14:
-            direction = "NW";
-            break;
-          case 15:
-            direction = "NNW";
-            break;
-          default:
-            direction = "N";
+            case 1:
+              direction = "NNE";
+              break;
+            case 2:
+              direction = "NE";
+              break;
+            case 3:
+              direction = "ENE";
+              break;
+            case 4:
+              direction = "E";
+              break;
+            case 5:
+              direction = "ESE";
+              break;
+            case 6:
+              direction = "SE";
+              break;
+            case 7:
+              direction = "SSE";
+              break;
+            case 8:
+              direction = "S";
+              break;
+            case 9:
+              direction = "SSW";
+              break;
+            case 10:
+              direction = "SW";
+              break;
+            case 11:
+              direction = "WSW";
+              break;
+            case 12:
+              direction = "W";
+              break;
+            case 13:
+              direction = "WNW";
+              break;
+            case 14:
+              direction = "NW";
+              break;
+            case 15:
+              direction = "NNW";
+              break;
+            default:
+              direction = "N";
           }
           if (language === 'DE') {
             direction = direction.replace(/E/g, "O");
@@ -508,53 +489,53 @@ $(document).ready(function () {
         headingSwitchValue = Math.round(currentGPShead / 22.5);
         // Close enough
         switch (headingSwitchValue) {
-        case 1:
-          direction = "SSW";
-          break;
-        case 2:
-          direction = "SW";
-          break;
-        case 3:
-          direction = "WSW";
-          break;
-        case 4:
-          direction = "W";
-          break;
-        case 5:
-          direction = "WNW";
-          break;
-        case 6:
-          direction = "NW";
-          break;
-        case 7:
-          direction = "NNW";
-          break;
-        case 8:
-          direction = "N";
-          break;
-        case 9:
-          direction = "NNE";
-          break;
-        case 10:
-          direction = "NE";
-          break;
-        case 11:
-          direction = "ENE";
-          break;
-        case 12:
-          direction = "E";
-          break;
-        case 13:
-          direction = "ESE";
-          break;
-        case 14:
-          direction = "SE";
-          break;
-        case 15:
-          direction = "SSE";
-          break;
-        default:
-          direction = "S";
+          case 1:
+            direction = "SSW";
+            break;
+          case 2:
+            direction = "SW";
+            break;
+          case 3:
+            direction = "WSW";
+            break;
+          case 4:
+            direction = "W";
+            break;
+          case 5:
+            direction = "WNW";
+            break;
+          case 6:
+            direction = "NW";
+            break;
+          case 7:
+            direction = "NNW";
+            break;
+          case 8:
+            direction = "N";
+            break;
+          case 9:
+            direction = "NNE";
+            break;
+          case 10:
+            direction = "NE";
+            break;
+          case 11:
+            direction = "ENE";
+            break;
+          case 12:
+            direction = "E";
+            break;
+          case 13:
+            direction = "ESE";
+            break;
+          case 14:
+            direction = "SE";
+            break;
+          case 15:
+            direction = "SSE";
+            break;
+          default:
+            direction = "S";
         }
         if (language === 'DE') {
           direction = direction.replace(/E/g, "O");
@@ -574,7 +555,6 @@ $(document).ready(function () {
     }
   }
   // --------------------------------------------------------------------------
-
   // update GPS latitude
   // --------------------------------------------------------------------------
   function updateGPSLatitude(currentGPSlat) {
@@ -594,7 +574,6 @@ $(document).ready(function () {
     }
   }
   // --------------------------------------------------------------------------
-
   // update GPS longitude
   // --------------------------------------------------------------------------
   function updateGPSLongitude(currentGPSlon) {
@@ -620,7 +599,6 @@ $(document).ready(function () {
     }
   }
   // --------------------------------------------------------------------------
-
   // update Engine Speed
   // --------------------------------------------------------------------------
   function updateEngineSpeed(currentEngineSpeed) {
@@ -628,7 +606,6 @@ $(document).ready(function () {
     if ($.isNumeric(currentEngineSpeed)) {
       engineSpeedCurrent = Math.round(currentEngineSpeed * 2);
       if (engineSpeedCurrent <= 8000) {
-
         // update engine top speed
         // --------------------------------------------------------------------------
         if (engineSpeedCurrent > engineSpeedTop) {
@@ -640,18 +617,17 @@ $(document).ready(function () {
             $('.speedTopValue').html('<span>(' + engineSpeedTop + ')</span>' + speedTop);
           }
         }
-
         // update engine speed
         // --------------------------------------------------------------------------
         if (!barSpeedometerMod) {
           $('.RPMIndicator').css("transform", "rotate(" + (-145 - engineSpeedCurrent * 0.01) + "deg)");
         }
-        $('.engineSpeedValue').each(function () {
+        $('.engineSpeedValue').each(function() {
           var $this = $(this);
           $({ Counter: $this.text() }).animate({ Counter: engineSpeedCurrent }, {
             duration: 950,
             easing: 'linear',
-            step: function (now) {
+            step: function(now) {
               var engineSpeedCurr = Math.ceil(now);
               if (speedAnimation) {
                 $this.text(engineSpeedCurr);
@@ -660,7 +636,7 @@ $(document).ready(function () {
                 updateSpeedBar(Math.ceil(engineSpeedCurr / 45));
               }
             },
-            complete: function () {
+            complete: function() {
               // do nothing
             }
           });
@@ -672,7 +648,6 @@ $(document).ready(function () {
     }
   }
   // --------------------------------------------------------------------------
-
   // Update Outside Temperature
   // --------------------------------------------------------------------------
   function updateOutsideTemp(outTemp) {
@@ -690,7 +665,6 @@ $(document).ready(function () {
     $('.outsideTempValue').html(outsideTemp);
   }
   // --------------------------------------------------------------------------
-
   // Update Intake Temperature
   // --------------------------------------------------------------------------
   function updateIntakeTemp(inTemp) {
@@ -708,7 +682,6 @@ $(document).ready(function () {
     $('.intakeTempValue').html(intakeTemp);
   }
   // --------------------------------------------------------------------------
-
   // Update Coolant Temperature
   // --------------------------------------------------------------------------
   function updateCoolantTemp(coolTemp) {
@@ -742,41 +715,54 @@ $(document).ready(function () {
     gearLeverPos = $.trim(gearLeverPos);
     if ($.isNumeric(gearLeverPos) && gearLeverPos !== "0") {
       switch (gearLeverPos) {
-      case "1":
-        lastGearLeverPositionValue = "P";
-        break;
-      case "2":
-        lastGearLeverPositionValue = "R";
-        break;
-      case "3":
-        lastGearLeverPositionValue = "N";
-        break;
-      case "4":
-        lastGearLeverPositionValue = "D";
-        break;
-      default:
+        case "1":
+          lastGearLeverPositionValue = "P";
+          break;
+        case "2":
+          lastGearLeverPositionValue = "R";
+          break;
+        case "3":
+          lastGearLeverPositionValue = "N";
+          break;
+        case "4":
+          lastGearLeverPositionValue = "D";
+          break;
+        default:
       }
       $('.gearLeverPositionValue').html(lastGearLeverPositionValue);
       automaticTrans = true;
     }
   }
   // --------------------------------------------------------------------------
-
   // Update Fuel Gauge
   // --------------------------------------------------------------------------
   function updateFuelGauge(fuelGaugeVal) {
     fuelGaugeVal = $.trim(fuelGaugeVal);
     if ($.isNumeric(fuelGaugeVal)) {
-      lastFuelGaugeValue = Math.round((fuelGaugeVal / fuelGaugeMax) * 100);
-      if (lastFuelGaugeValue > 100) {
-        fuelGaugeMax = Math.round(fuelGaugeVal);
-        lastFuelGaugeValue = 100;
+      if (fuelGaugeVal > fuelGaugeMax) {
+        fuelGaugeMax = Math.ceil(fuelGaugeVal);
       }
-      $('.fuelGaugeValue').html(lastFuelGaugeValue + "%");
+      var nextFuelPer = Math.round((fuelGaugeVal / fuelGaugeMax) * 100);
+      lastFuelGaugePercent = Math.abs(lastFuelGaugePercent - nextFuelPer) < 3 || lastFuelGaugePercent === 0 ? nextFuelPer : (nextFuelPer < lastFuelGaugePercent ? lastFuelGaugePercent - 3 : lastFuelGaugePercent + 3);;
+      lastFuelGaugeValue = parseFloat((Math.round((fuelGaugeFactor / 10) * lastFuelGaugePercent) / 10).toFixed(1));
+      $('.fuelGaugeValue').html(lastFuelGaugeValue + (fuelGaugeValueSuffix === "%" ? "%" : ""));
+      $('.fuel-bar').css('width', lastFuelGaugePercent + "%");
+      if (lastFuelGaugePercent > 80) {
+        $('.fuel-bar').css('background-color', fuelBarColor_80to100);
+      } else if (lastFuelGaugePercent > 60) {
+        $('.fuel-bar').css('background-color', fuelBarColor_60to80);
+      } else if (lastFuelGaugePercent > 40) {
+        $('.fuel-bar').css('background-color', fuelBarColor_40to60);
+      } else if (lastFuelGaugePercent > 20) {
+        $('.fuel-bar').css('background-color', fuelBarColor_20to40);
+      } else {
+        $('.fuel-bar').css('background-color', fuelBarColor_0to20);
+      }
     }
   }
-  // --------------------------------------------------------------------------
 
+
+  // --------------------------------------------------------------------------
   // Update Battery Charge
   // --------------------------------------------------------------------------
   function updateBatSOC(currBatSOC) {
@@ -796,7 +782,6 @@ $(document).ready(function () {
     }
   }
   // --------------------------------------------------------------------------
-
   // Update Engine Load
   // --------------------------------------------------------------------------
   function updateEngineLoad(engineLoadVal) {
@@ -807,17 +792,15 @@ $(document).ready(function () {
     }
   }
   // --------------------------------------------------------------------------
-
-  setInterval(function () {
+  setInterval(function() {
     updateTripTime();
     if (speedCurrent === 0) {
       updateIdleTime(speedCurrent);
     }
     if ((enableSmallSbSpeedo) && (!$('#SbSpeedo').hasClass('parking'))) {
       var visibleIcons = 0;
-      $('.StatusBarCtrlIconContainer .StatusBarCtrlIcon').each(function (index) {
-        if ($(this).css('display').indexOf('inline-block') !== -1)
-          visibleIcons++;
+      $('.StatusBarCtrlIconContainer .StatusBarCtrlIcon').each(function(index) {
+        if ($(this).css('display').indexOf('inline-block') !== -1) visibleIcons++;
       });
       if (visibleIcons > 3) {
         $('#SbSpeedo').addClass('morespace');
@@ -826,19 +809,20 @@ $(document).ready(function () {
       }
     }
   }, 1000);
-
-  setInterval(function () {
-    var sbSpeedoVal1 = (sbTemp) ? $('#SbSpeedo .outsideTempValue') : $('#SbSpeedo .gpsHeading');
-    var sbSpeedoVal2 = (sbTemp) ? $('#SbSpeedo .Drv1AvlFuelEValue') : $('#SbSpeedo .gpsAltitudeValue');
-    if ((enableSmallSbSpeedo) && (!$('#SbSpeedo').hasClass('parking'))) {
-      sbSpeedoVal1.fadeOut();
-      sbSpeedoVal2.fadeIn();
-      setTimeout(function () {
-        sbSpeedoVal2.fadeOut();
-        sbSpeedoVal1.fadeIn();
-      }, 2000);
-    }
-  }, 4000);
+  if (SbVal1 !== 'hidden' && SbVal2 !== 'hidden') {
+    setInterval(function() {
+      var sbSpeedoVal1 = $('#SbSpeedo .' + SbVal1);
+      var sbSpeedoVal2 = $('#SbSpeedo .' + SbVal2);
+      if ((enableSmallSbSpeedo) && (!$('#SbSpeedo').hasClass('parking'))) {
+        sbSpeedoVal1.fadeOut();
+        sbSpeedoVal2.fadeIn();
+        setTimeout(function() {
+          sbSpeedoVal2.fadeOut();
+          sbSpeedoVal1.fadeIn();
+        }, sbInterval);
+      }
+    }, sbInterval * 2);
+  }
 
   function updateSpeedBar(speed) {
     if (barSpeedometerMod) {
@@ -846,36 +830,36 @@ $(document).ready(function () {
         var barClassName = '.speedBar_' + i;
         if (speed >= i) {
           switch (i) {
-          case 150:
-            backgroundColor = '#FF0000';
-            break;
-          case 145:
-            backgroundColor = '#FF0000';
-            break;
-          case 140:
-            backgroundColor = '#FF0000';
-            break;
-          case 135:
-            backgroundColor = '#FF0000';
-            break;
-          case 130:
-            backgroundColor = '#FF0000';
-            break;
-          case 125:
-            backgroundColor = '#FE2E2E';
-            break;
-          case 120:
-            backgroundColor = '#FF451C';
-            break;
-          case 115:
-            backgroundColor = '#FF6932';
-            break;
-          case 110:
-            backgroundColor = '#FE9A2E';
-            break;
-          case 105:
-            backgroundColor = '#FECC20';
-            break;
+            case 150:
+              backgroundColor = '#FF0000';
+              break;
+            case 145:
+              backgroundColor = '#FF0000';
+              break;
+            case 140:
+              backgroundColor = '#FF0000';
+              break;
+            case 135:
+              backgroundColor = '#FF0000';
+              break;
+            case 130:
+              backgroundColor = '#FF0000';
+              break;
+            case 125:
+              backgroundColor = '#FE2E2E';
+              break;
+            case 120:
+              backgroundColor = '#FF451C';
+              break;
+            case 115:
+              backgroundColor = '#FF6932';
+              break;
+            case 110:
+              backgroundColor = '#FE9A2E';
+              break;
+            case 105:
+              backgroundColor = '#FECC20';
+              break;
           }
           $(barClassName).css({ 'background-color': backgroundColor });
         } else {
@@ -886,36 +870,36 @@ $(document).ready(function () {
         var barClassName2 = '.speedBar_' + j;
         if (speed >= j) {
           switch (j) {
-          case 100:
-            backgroundColor = '#FFED2E';
-            break;
-          case 95:
-            backgroundColor = '#FFF430';
-            break;
-          case 90:
-            backgroundColor = '#F7FE2E';
-            break;
-          case 85:
-            backgroundColor = '#C8FE2E';
-            break;
-          case 80:
-            backgroundColor = '#9AFE2E';
-            break;
-          case 75:
-            backgroundColor = '#64FE2E';
-            break;
-          case 70:
-            backgroundColor = '#2EFE2E';
-            break;
-          case 65:
-            backgroundColor = '#2EFE64';
-            break;
-          case 60:
-            backgroundColor = '#2EFE9A';
-            break;
-          case 55:
-            backgroundColor = '#58FAD0';
-            break;
+            case 100:
+              backgroundColor = '#FFED2E';
+              break;
+            case 95:
+              backgroundColor = '#FFF430';
+              break;
+            case 90:
+              backgroundColor = '#F7FE2E';
+              break;
+            case 85:
+              backgroundColor = '#C8FE2E';
+              break;
+            case 80:
+              backgroundColor = '#9AFE2E';
+              break;
+            case 75:
+              backgroundColor = '#64FE2E';
+              break;
+            case 70:
+              backgroundColor = '#2EFE2E';
+              break;
+            case 65:
+              backgroundColor = '#2EFE64';
+              break;
+            case 60:
+              backgroundColor = '#2EFE9A';
+              break;
+            case 55:
+              backgroundColor = '#58FAD0';
+              break;
           }
           $(barClassName2).css({ 'background-color': backgroundColor });
         } else {
@@ -926,36 +910,36 @@ $(document).ready(function () {
         var barClassName3 = '.speedBar_' + k;
         if (speed >= k) {
           switch (k) {
-          case 50:
-            backgroundColor = '#58FAD0';
-            break;
-          case 45:
-            backgroundColor = '#58FAD0';
-            break;
-          case 40:
-            backgroundColor = '#58FAD0';
-            break;
-          case 35:
-            backgroundColor = '#58FAD0';
-            break;
-          case 30:
-            backgroundColor = '#58FAD0';
-            break;
-          case 25:
-            backgroundColor = '#81F7D8';
-            break;
-          case 20:
-            backgroundColor = '#A9F5E1';
-            break;
-          case 15:
-            backgroundColor = '#CEF6EC';
-            break;
-          case 10:
-            backgroundColor = '#E0F8F1';
-            break;
-          case 5:
-            backgroundColor = '#EFFBF8';
-            break;
+            case 50:
+              backgroundColor = '#58FAD0';
+              break;
+            case 45:
+              backgroundColor = '#58FAD0';
+              break;
+            case 40:
+              backgroundColor = '#58FAD0';
+              break;
+            case 35:
+              backgroundColor = '#58FAD0';
+              break;
+            case 30:
+              backgroundColor = '#58FAD0';
+              break;
+            case 25:
+              backgroundColor = '#81F7D8';
+              break;
+            case 20:
+              backgroundColor = '#A9F5E1';
+              break;
+            case 15:
+              backgroundColor = '#CEF6EC';
+              break;
+            case 10:
+              backgroundColor = '#E0F8F1';
+              break;
+            case 5:
+              backgroundColor = '#EFFBF8';
+              break;
           }
           $(barClassName3).css({ 'background-color': backgroundColor });
         } else {
@@ -965,13 +949,11 @@ $(document).ready(function () {
     }
   }
   // Start data retrieval
-  setTimeout(function () {
+  setTimeout(function() {
     retrievedata('vehicleData');
     retrievedata('envData');
   }, 15000);
-
 });
-
 // Loads the override values from speedometer-config.js
 function SpeedometerOverRide(over) {
   if (over) {
@@ -988,17 +970,20 @@ function SpeedometerOverRide(over) {
     hideSpeedBar = SORV.hideSpeedBar;
     tempIsF = SORV.tempIsF;
     speedAnimation = SORV.speedAnimation;
+    analogColor = SORV.analogColor;
+    speedometerTheme = SORV.barTheme;
     if (!SORV.StatusBarSpeedometer) {
       enableSmallSbSpeedo = false;
       $('#SbSpeedo').remove();
     }
+    fuelGaugeFactor = SORV.fuelGaugeFactor;
+    fuelGaugeValueSuffix = SORV.fuelGaugeValueSuffix;
   }
 }
-
 // Swap FieldSets ~ by Trezdog44
 // Tap 2 values in the Bar Speedometer to switch their positions
-function speedoSwapFieldSets() {
-  $('[id*=FieldSet]').click(function (evt) {
+function SpeedoSwapFieldSets() {
+  $('[id*=FieldSet]').click(function(evt) {
     if (swapOut) {
       swapOut.removeClass("swapOut");
       swapOut.children().removeClass("swapOut");
@@ -1010,6 +995,8 @@ function speedoSwapFieldSets() {
       if (temp.hasClass('pos0') || swapOut.hasClass('pos0')) {
         AIO_SBN((temp.hasClass('pos0')) ? temp.children('legend').text() : swapOut.children('legend').text(), "apps/_speedometer/IcnSbnSpeedometer.png");
       }
+      // Save the layout
+      SaveSpeedBarLayout();
       swapOut = null;
     } else {
       swapOut = $(this);
@@ -1018,12 +1005,55 @@ function speedoSwapFieldSets() {
   });
 }
 
-function loadSpeedoTemplate() {
+function LoadSpeedoTemplate() {
+  // load configuable controls
+  if (typeof spdBtn === "undefined") {
+    $.getScript('apps/_speedometer/js/speedometer-controls.js', function(data) {
+      $('body').prepend("<script>" + data + "</script>");
+    }).fail(function(jqxhr, settings, exception) {
+      // in case of failure
+      $('body').prepend("<script>var spdBtn={classic:{select:0,up:1,down:2,right:3,left:4,hold:{select:5,up:6,down:7,right:8,left:9}},bar:{select:0,up:1,down:2,right:3,left:4,hold:{select:5,up:6,down:7,right:8,left:9}}};</script>");
+    });
+  }
   // check that we have loaded our initial template and settings
   if (typeof spdTbl === "undefined") {
-    $.getScript('apps/_speedometer/js/speedometer-config.js', function (data) {
+    $.getScript('apps/_speedometer/js/speedometer-config.js', function(data) {
       $('body').prepend("<script>" + data + "</script>");
       SpeedometerOverRide(overRideSpeed);
+      classicSpeedoTmplt.sort(function(a, b) {
+        return a.pos - b.pos
+      })
     });
   }
 }
+
+function SaveSpeedoClassicLayout() {
+  speedoClassicLayout = DOMtoJSON(document.getElementById('valuetable'));
+}
+
+function SaveSpeedBarLayout() {
+  speedometerLayout = DOMtoJSON(document.getElementById('barlayout'));
+}
+
+function LoadSpeedoClassicLayout() {
+  if (speedoClassicLayout !== null) {
+    $('#table_bg').html(JSONtoDOM(speedoClassicLayout));
+  }
+}
+
+function LoadSpeedBarLayout() {
+  if (speedometerLayout !== null) {
+    $('#vehdataMainDiv').html(JSONtoDOM(speedometerLayout));
+  }
+}
+
+function ClearSpeedBarLayout() {
+  if (speedometerLayout !== null) {
+    speedometerLayout = null;
+    $('.activeDataBar').removeClass('activeDataBar');
+    AIO_SBN("Layout Reset", "apps/_speedometer/IcnSbnSpeedometer.png");
+    aioMagicRoute("_speedometer", "Start");
+  }
+}
+
+utility.loadScript('apps/_speedometer/js/speedometerUpdate.js')

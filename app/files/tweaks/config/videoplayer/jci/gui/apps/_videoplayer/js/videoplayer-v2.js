@@ -110,7 +110,7 @@ var wsVideo = null;
 
 $(document).ready(function () {
   try {
-    $('#SbSpeedo').fadeOut();
+$('#SbSpeedo, #Sbfuel-bar-wrapper').fadeOut();
     if (localStorage.getItem('videoplayer.colortheme')) {
       var colorPick = JSON.parse(localStorage.getItem('videoplayer.colortheme')) || null;
       if (utility.toType(colorPick) === "array") {

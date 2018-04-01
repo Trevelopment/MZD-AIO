@@ -20,7 +20,7 @@
 <div class="w3-container w3-row ng-scope w3-center" id="casdkInstallBtns">
   <div class="btn-group btn-group-justified">
     <div class="btn-group">
-      <button type="button" id="in-submit" class="btn btn-theme03 w3-ripple w3-hover-green" style="letter-spacing:1.4px;" data-toggle="tooltip" data-placement="bottom" title="" ng-click="user.casdk={uninst:false,inst:true};compileCASDK(user)" onclick="$(this).prop('disabled',true);">INSTALL CASDK!</button>
+      <button type="button" id="in-submit" class="btn btn-theme03 w3-ripple w3-hover-green" style="letter-spacing:1.4px;" data-toggle="tooltip" data-placement="bottom" title="" ng-click="user.casdk={uninst:false,inst:true};" onclick="$(this).prop('disabled',true);$('#casdk-install-info').show();casdkInstBtn()">INSTALL CASDK!</button>
     </div>
     <div class="btn-group">
       <button type="button" id="un-submit" class="btn btn-theme03 w3-ripple w3-hover-amber" style="letter-spacing:1.4px;" data-toggle="tooltip" data-placement="bottom" title="" ng-click="user.casdk={inst:false,uninst:true};compileCASDK(user)">UNINSTALL CASDK!</button>
@@ -52,8 +52,10 @@
                 <h6>CASDK Written By: Flyandi</h6>
                 <h6>Integration Into AIO By: Trezdog44</h6>
               </div>
+              <div class="content-panel pn">
+              <div class="secretCodes w3-center"><button class="w3-btn" onclick="$('#secretCodeInput').toggle()">Codes</button></div></div>
               <div class="footer centered">
-                <a href onclick="shell.openExternal('mailto:Trez@MazdaTweaks.com?Subject=CASDK%20Contact')">
+                <a href="mailto:Trez@MazdaTweaks.com?Subject=CASDK%20Contact" class="link">
                   <p>Contact Trezdog44</p>
                   <h6><i class="fa fa-envelope">
                   </i><br/>Trez@MazdaTweaks.com</h6>
@@ -81,7 +83,7 @@
               <input id='op4' name='op4' type='checkbox' ng-model="apps.gpsspeed" ng-value="apps.gpsspeed"/>
               <label for='op4' ng-show="visibleApps.gpsspeed">GPS Speeometer</label>
               <input id='op1' name='op1' type='checkbox' ng-model="apps.multidash" ng-value="apps.multidash"/>
-              <label for='op1' ng-show="visibleApps.multidash">Multidash {{visibleApps.multidash}}</label>
+              <label for='op1' ng-show="visibleApps.multidash">Multidash</label>
               <!--input id='op5' name='op5' type='checkbox' ng-model="apps.devtools" ng-value="apps.devtools" ng-show="visibleApps.devtools"/>
               <label for='op5'>Dev Tools</label-->
               <input type="button" id="CASDKinfoBtn" class="w3-tooltip w3-btn w3-large w3-green CASDKinfoBtn" value="More Info">
@@ -93,53 +95,100 @@
       </div>
     </div>
   </nav>
-
-  <div class="showback">
-    <div class="centered">
-      <span id="CASDKinfo" class="w3-tag w3-text">
-        <span class="w3-display-topright CASDKinfoBtn w3-closebtn w3-hover-deep-orange w3-text-blue w3-xxlarge w3-display-topright w3-text-shadow w3-opacity w3-padding">&times;</span>
-        <div class="centered">
-          <h2>CASDK</h2>Is a very exciting addition to AIO and opens the door to many possibilities.  Developers can use the npm package "casdk" to create a ready-to-go app template in seconds.  Using JavaScript and CSS, developers can easily build amazing apps on the CASDK framework.
-          <div class="w3-container">
-            <div class="w3-panel w3-center">Here are 2 more apps that can be installed specifically for developers:
+  <div id="casdk-install-info" class="w3-modal">
+    <div class="w3-modal-content w3-card-4">
+      <header class="w3-container w3-cyan">
+        <span onclick="document.getElementById('casdk-install-info').style.display='none'"
+        class="closeBtn">&times;</span>
+        <h1>CASDK will alter your entire framework!</h1>
+      </header>
+      <div class="w3-container"><h5>CASDK comes with:</h5>
+        <li><b>CASDK Proxy</b> - Proxy registers both CASDK and AIO apps and replaces "additionalApps.js".</li>
+        <li><b>Custom Application Runtime</b> - A microframework that handles the custom applications during runtime. </li>
+        <li><b>Data Readers</b> - Poll vehicle data an certain intervals (1s, 60s, & 300s) </li>
+        <li><b>JS logging</b> - JavaScript (and CSS) console log is written to /tmp/root/casdk-error.log </li>
+        <li><b>LocalStorage</b> - Moves the save locaton of localStorage to /tmp/mnt/data_persist/storage/ </li>
+        <li><b>NodeJS</b> - Powerful Server-side JavaScript.</li>
+        <li><b>ADB</b> - Android Debug Bridge for Android devices.</li>
+        <li><b>Custom Applications</b> - Apps that run on the CASDK framework</li>
+        <b>CASDK Framework and Apps are installed internally to the 'resources' partition by default, optinally CASDK apps can be run from an SD Card. </b>
+        <div> Native apps such as those installed with AIO will run on the CASDK framework although apps are installed differently with CASDK. The AIO Tweak installer will detect if CASDK is installed when running tweaks and adjust the installation accordingly but older app installers will not work while CASDK is installed.</div>
+      </div>
+      <footer>
+        <button id="casdkInstallBtn" class="w3-btn w3-green w3-hover-red w3-center" style="display:none" ng-click="compileCASDK(user)" onclick="$('#casdk-install-info').hide()">Install CASDK!!</button>
+      </footer>
+      </div>
+    </div>
+  <div id="secretCodeInput" class="w3-modal">
+    <div class="w3-modal-content w3-card-4 w3-center">
+      <header class="w3-container w3-green">
+        <span onclick="document.getElementById('secretCodeInput').style.display='none'"
+        class="closeBtn">&times;</span>
+        <h2>Enter a Code</h2>
+      </header>
+      <span class="casdkCodes"><input id="casdkInput" type="text" ng-model="user.twkfltr" class="w3-input" placeholder="CODE" /></span>
+      <footer>
+        <button class="w3-btn w3-center" id="secretCodeSubmit" ng-disabled="user.twkfltr===''" ng-click="secretCodes(user.twkfltr);user.twkfltr=''">Submit</button>
+        <button class="w3-btn w3-green w3-hover-red w3-center" style="display:none" ng-click="compileCASDK(user)" onclick="$('#casdk-install-info').hide()">Install CASDK!!</button>
+      </footer>
+      </div>
+    </div>
+    <div class="showback">
+      <div class="centered">
+        <span id="CASDKinfo" class="w3-tag w3-text">
+          <span class="w3-display-topright CASDKinfoBtn w3-closebtn w3-hover-deep-orange w3-text-blue w3-xxlarge w3-display-topright w3-text-shadow w3-opacity w3-padding">&times;</span>
+          <div class="centered">
+            <h2>CASDK</h2>Is a very exciting addition to AIO and opens the door to many possibilities.  Developers can use the npm package "casdk" to create a ready-to-go app template in seconds.  Using JavaScript and CSS, developers can easily build amazing apps on the CASDK framework.
+            <div class="w3-container">
+              <div class="w3-panel w3-center">Here are 2 more apps that can be installed specifically for developers:
+              </div>
+              <span div class="ck-button w3-dropdown-hover">
+                <label ng-show="visibleApps.terminal">
+                  <input type="checkbox" ng-value="apps.terminal" ng-model="apps.terminal">
+                  <span>Terminal App</span>
+                  <div class="w3-dropdown-content appimg">
+                    <img src="files/screenshots/terminal.png" class="" onclick="$(this).parent().hide()">
+                  </div>
+                </label>
+              </span>
+              <span div class="ck-button w3-dropdown-hover">
+                <label ng-show="visibleApps.devtools">
+                  <input type="checkbox" ng-value="apps.devtools" ng-model="apps.devtools">
+                  <span>Dev Tools App</span>
+                  <div class="w3-dropdown-content appimg">
+                    <img src="files/screenshots/devtools.png" class="" onclick="$(this).parent().hide()">
+                  </div>
+                </label>
+              </span>
             </div>
-            <span div class="ck-button w3-dropdown-hover">
-              <label  ng-show="visibleApps.terminal">
-                <input type="checkbox" ng-value="apps.terminal" ng-model="apps.terminal">
-                <span>Terminal App</span>
-                <div class="w3-dropdown-content appimg">
-                  <img src="files/screenshots/terminal.png" class="" onclick="$(this).parent().hide()">
-                </div>
-              </label>
-            </span>
-            <span div class="ck-button w3-dropdown-hover">
-              <label ng-show="visibleApps.devtools">
-                <input type="checkbox" ng-value="apps.devtools" ng-model="apps.devtools">
-                <span>Dev Tools App</span>
-                <div class="w3-dropdown-content appimg">
-                  <img src="files/screenshots/devtools.png" class="" onclick="$(this).parent().hide()">
-                </div>
-              </label>
+
+            <div class="w3-panel">The CASDK framework was originally designed to be run entirely from an SD card.  With AIO the framework and apps are installed onto system disk so that apps will be able to run without an SD Card connected.  CASDK apps can still be run from an SD card by selecting the option below.  If the SD card is connected during installation, AIO will offer to install the apps directly to the SD card.  Apps can also be installed by copying the app folder to "/apps" on the root of the SD Card.  Also, the name of the app folder needs to be added to "/apps/apps.js."  Using this method any CASDK app can be used even one you have developed yourself!</div>
+            <div class="w3-container w3-center">
+              <input id="casdkTOsd" type="checkbox" class="w3-check" ng-value="apps.sdcard" ng-model="apps.sdcard">
+              <label for="casdkTOsd">RUN CASDK APPS FROM SD CARD<label>
+              </div>
             </span>
           </div>
-          <div class="w3-panel">The CASDK framework was originally designed to be run entirely from an SD card.  With AIO the framework and apps are installed onto system disk so that apps will be able to run without an SD Card connected.  CASDK apps can still be run from an SD card by selecting the option below.  If the SD card is connected during installation AIO will offer to install the apps directly to the SD card.  Apps can also be installed by copying the app folder to "/apps" on the root of the SD Card.  Also the name of the app folder needs to be added to "/apps/apps.js."  Using this method any CASDK app can be used even one you have developed yourself!</div>
-          <div class="w3-container w3-center">
-            <input id="casdkTOsd" type="checkbox" class="w3-check" ng-value="apps.sdcard" ng-model="apps.sdcard">
-            <label for="casdkTOsd">RUN CASDK APPS FROM SD CARD<label>
-            </div>
-          </span>
+        </div><!-- /showback -->
+        <div class="w3-container w3-card-8 w3-center">
+          <div class="w3-panel">
+            <button id="CASDKinfoBtn" class="w3-tooltip w3-btn w3-green CASDKinfoBtn">More Info.</button>
+          </div>
         </div>
-      </div><!-- /showback -->
-      <div class="w3-container w3-card-8 w3-center">
-        <div class="w3-panel">
-          <button id="CASDKinfoBtn" class="w3-tooltip w3-btn w3-green CASDKinfoBtn">More Info.</button>
-        </div>
-      </div>
 
-    </section>
-  </div>
-  <script src="./assets/vendor/gritter.js"></script>
-  <script src="./assets/js/gritter-conf.js"></script>
-  <script>
-  $('.CASDKinfoBtn').click(function(){$('#CASDKinfo').toggleClass('w3-show')})
-</script>
+      </section>
+    </div>
+    <script src="./assets/vendor/gritter.js"></script>
+    <script src="./assets/js/gritter-conf.js"></script>
+    <script>
+    $('.CASDKinfoBtn').click(function(){$('#CASDKinfo').toggleClass('w3-show')})
+    $('#secretCodeSubmit').click(function(x){
+      var secret = $(this).val();
+      console.log(secret,x);
+    })
+    function casdkInstBtn(){
+      casdkTimeout = setTimeout(function(){
+        $('#casdkInstallBtn').fadeIn(5000);
+      }, 5000)
+    }
+  </script>

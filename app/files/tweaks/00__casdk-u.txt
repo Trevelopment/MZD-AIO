@@ -67,7 +67,6 @@ then
 	log_message "- Removing proxys & startups"
 	rm -f /jci/opera/opera_dir/userjs/CustomApplicationsProxy.js
 	rm -f /jci/opera/opera_dir/userjs/nativeApps.js
-	rm -f /jci/opera/opera_dir/userjs/aio.js
 fi
 sed -i '/Terminal/d' /jci/scripts/stage_wifi.sh
 sed -i '/terminal/d' /jci/scripts/stage_wifi.sh
@@ -76,7 +75,6 @@ if [ -f /jci/opera/opera_dir/userjs/additionalApps.js.org ]
 then
 	log_message "- Restoring additionalApps.js"
 	mv /jci/opera/opera_dir/userjs/additionalApps.js.org /jci/opera/opera_dir/userjs/additionalApps.js
-	rm -f /jci/opera/opera_dir/userjs/nativeApps.js
 fi
 
 # delete custom

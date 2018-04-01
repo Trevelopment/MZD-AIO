@@ -1081,3 +1081,6 @@ input[type="checkbox"]#casdkTOsd {
 .ck-button label {
   overflow: visible;
 }
+.modal-footer .btn+.btn {
+  margin-left: 0;
+}

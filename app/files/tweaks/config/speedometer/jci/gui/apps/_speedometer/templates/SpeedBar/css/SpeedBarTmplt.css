@@ -47,7 +47,7 @@
   font-size: 18px;
   margin: auto;
   overflow: hidden;
-  max-width: 110px;
+  max-width: 120px;
   text-overflow: ellipsis;
   text-align: center !important;
 }
@@ -184,6 +184,7 @@
 #speedBarContainer .vehDataLegends span.spunit {
   font-size: 14px;
 }
+#speedBarContainer #fuelGaugeFieldSet .vehDataLegends span,
 #speedBarContainer .vehDataLegends span.fuelEffUnit {
   font-size: 12px;
 }
@@ -232,6 +233,7 @@
   opacity: 1;
   left: 560px;
   bottom: 140px;
+  transition: .6s ease-in-out .3s;
 }
 #speedBarContainer #vehdataMainDiv [class*="vehDataMain"].pos0 span.idlePercent {
   position: fixed;

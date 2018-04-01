@@ -248,7 +248,7 @@
       "testlabel": "Test Backups",
       "skipconfirm": "Skip Confirmation",
       "safetylvl": "safe",
-      "toolTip": "<h5>Retrieve CMU Data</h5><p>Dump diagnostic files from the CMU to the USB Drive.  Cleans out error files and core dumps from the system.</p><h5>Skip Confirmation</h5><p>Allows for the installation to run without prompting for confirmation to begin the install. Mainly this is used for recovering when the touchscreen is not responding.  </p><h5>Copy Backups:</h5> <p> Copy original backups of modified system files, for safe keeping. </p><h5>Test Backups:</h5> <p>Some tweaks have before and after copys of the files modified during the instalation.  If you like that kind of thing they will copied to your-usb/bakups/test/.</p><p><h5>Use Legacy App Install</h5>The new and improved way to install apps is done with NodeJS. Check to use the old method of installing apps using bash.</p>"
+      "toolTip": "<h5>Retrieve CMU Data</h5><p>Dump diagnostic files from the CMU to the USB Drive.  Cleans out error files and core dumps from the system.</p><h5>Skip Confirmation</h5><p>Allows for the installation to run without prompting for confirmation to begin the install. Mainly this is used for recovering when the touchscreen is not responding.  </p><h5>Copy Backups:</h5> <p> Copy original backups of modified system files, for safe keeping. </p><h5>Test Backups:</h5> <p>Some tweaks have before and after copys of the files modified during the instalation.  If you like that kind of thing they will copied to your-usb/bakups/test/.</p>"
     },
     "mainmenu": {
       "id": 8,
@@ -886,7 +886,7 @@
     "toolTip": "<h5>Hangforrások listájának rendezése </h5> THangforrás lista rendezése:<ui></ui><li>FMRadio</li><ui></ui><li>DAB</li><ui> </ui><li>USB_A</li><ui> </ui><li>USB_B</li><ui> </ui><li>BT_audio</li><ui></ui><li>CD</li><ui></ui><li>SatRadio</li><ui></ui><li>AhaRadio</li><ui></ui><li>Pandora</li><ui></ui><li>Stitcher</li><ui></ui><li>AuxIn</li><ui></ui><li>AMradio</li><ui></ui><li>DVD</li><ui></ui><li>TV</li><ui></ui>",
     "img": "",
     "safetylvl": "warning",
-    "extraOps": false,
+    "extraOps": true,
     "advancedOp": false
   }, {
     "id": 10,
@@ -1014,7 +1014,7 @@
     "INST": "Fogyasztás Tweak telepítése",
     "DEINST": "Fogyasztás Tweak visszaállítása",
     "toolTip": "<h5>Fogyasztás Tweak </h5> Fogyasztás mutatása KM/L-ben (vagy MPG-ben)",
-    "img": "FuelConsumtionTweak.jpg",
+    "img": "FuelConsumptionTweak.jpg",
     "safetylvl": "safe",
     "extraOps": true,
     "advancedOp": false

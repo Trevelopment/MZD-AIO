@@ -9,6 +9,7 @@
 -->
 <table>
   <tbody class="w3-row w3-col">
+    <span ng-click="reset_speedoOps()" class="resetBtn mainReset"><i class="icon-reload" title="Reset To Default"></i></span>
     <tr class="w3-hover-pale-blue w3-row w3-col">
       <td class="w3-row w3-col">
         <span class="speedo-radio">
@@ -19,7 +20,7 @@
           <input id="speedosimpmod" class="" type="radio" name="speedobarmod" ng-value="true" ng-model="user.speedoOps.simpmod" />
           <label for="speedosimpmod">Start Digital Bar Speedometer</label>
         </span>
-      </tr>
+    </tr>
     </tr>
     <tr class="w3-hover-pale-blue w3-row w3-col">
       <td class="w3-row w3-col">
@@ -28,17 +29,21 @@
           <label for="speedo{{speedoOps.modAlt.id}}" data-toggle="tooltip" data-placement="auto bottom" title="{{speedoOps.modAlt.label}}">{{speedoOps.modAlt.label}}</label>
         </span>
         <span class="speedo-radio">
-          <input id="speedoDigiMod" type="radio" name="speedomod" ng-model="user.speedoOps.modAlt" ng-value="false"/>
+          <input id="speedoDigiMod" type="radio" name="speedomod" ng-model="user.speedoOps.modAlt" ng-value="false" />
           <label for="speedoDigiMod" data-toggle="tooltip" data-placement="auto bottom" title="{{speedoOps.modAlt.label}}">Digital Classic</label>
         </span>
       </td>
     </tr>
     <tr class="w3-hover-pale-blue w3-tooltip w3-row w3-col speedo-lang">
-      <td class="w3-row w3-col">
-        <span ng-repeat="(key,option) in speedoOps.lang" class="speedo-radio">
-          <input id="speedo{{option.id}}" type="radio" name="{{option.spOp}}" ng-model="user.speedoOps.lang.id" ng-value="option.id" />
-          <label for="speedo{{option.id}}" data-toggle="tooltip" data-placement="auto bottom" title="{{option.label}}">{{option.label}}</label>
-        </span>
+      <td class="w3-half">
+        <select class="w3-select" ng-model="user.speedoOps.lang.id" ng-value="user.speedoOps.lang.id" ng-options="option.id as option.label for (key,option) in speedoOps.lang">
+          <option selected="selected" disabled="disabled" class="" value="">--- Language ---</option>
+        </select>
+      </td>
+      <td class="w3-half">
+        <select class="w3-select" ng-model="user.speedoOps.color" ng-value="user.speedoOps.color" ng-options="x for x in speedoOps.color">
+          <option value="" disabled="disabled" selected="selected" class="">--- Analog Speedometer Color ---</option>
+        </select>
       </td>
     </tr>
     <tr class="w3-hover-pale-blue w3-tooltip w3-col w3-row speedo-ops">
@@ -56,42 +61,8 @@
       </td>
       <td class="w3-third">
         <span ng-repeat="(key,option) in speedoOps.effic" class="speedo-radio">
-          <input id="speedo{{option.id}}" type="radio" name="{{option.spOp}}" ng-model="user.speedoOps.effic.id" ng-value="option.id"/>
+          <input id="speedo{{option.id}}" type="radio" name="{{option.spOp}}" ng-model="user.speedoOps.effic.id" ng-value="option.id" />
           <label for="speedo{{option.id}}" data-toggle="tooltip" data-placement="auto bottom" title="Fuel Efficiency Unit {{option.label}}">{{option.label}}</label>
-        </span>
-      </td>
-    </tr>
-    <tr class="w3-col w3-row">
-      <td class="w3-row w3-col speedo-color">
-        <span ng-repeat="option in speedoOps.color" class="speedo-radio">
-          <input id="speedo{{option}}" type="radio" name="sbcolor"  ng-model="user.speedoOps.color" ng-value="option"/>
-          <label for="speedo{{option}}" data-toggle="tooltip" data-placement="auto bottom" ng-style="{'background-color' : option}" title="{{option}}">{{option}}</label>
-        </span>
-      </td>
-    </tr>
-    <tr class="w3-row w3-col w3-third">
-      <td>
-        <strong style="font-size: 11px;">Speedometer In Statusbar:</strong>
-      </td>
-    </tr>
-    <tr class="w3-twothird">
-      <td class="w3-col">
-        <span class="speedo-radio">
-          <input id="speedoSbTemp" class="w3-check" type="checkbox" name="speedoSbTemp" ng-disabled="user.speedoOps.sml.id === 22" ng-model="user.speedoOps.sbtemp" ng-value="user.speedoOps.sbtemp" title="Show Outside Temperature and Fuel Efficiency Above the Statusbar Speedometer." data-toggle="tooltip"
-          data-placement="auto bottom" />
-          <label for="speedoSbTemp" data-toggle="tooltip" data-placement="auto bottom" title="Show Outside Temperature and Fuel Efficiency Above the Statusbar Speedometer.">Alternate Statusbar Values</label>
-        </span>
-        <span class="speedo-radio">
-          <input id="DigitalClockFont" class="w3-check" type="checkbox" name="digiclock" ng-disabled="user.speedoOps.sml.id === 22" ng-model="user.speedoOps.digiclock" ng-value="user.speedoOps.digiclock"/>
-          <label for="DigitalClockFont" data-toggle="tooltip" data-placement="auto bottom" title="Change the clock font to a digital clock.">Digital Clock Mod</label>
-        </span>
-      </td>
-    </tr>
-    <tr class="w3-hover-pale-blue w3-tooltip w3-row w3-col">
-      <td class="w3-row w3-col sbspeedo">
-        <span ng-repeat="(key,option) in speedoOps.sml" class="speedo-radio">
-          <input id="speedo{{option.id}}" type="radio" name="{{option.spOp}}" ng-model="user.speedoOps.sml.id" ng-value="option.id" ng-click="miniSpeedo()"/>
-          <label for="speedo{{option.id}}" data-toggle="tooltip" data-placement="auto bottom" title="{{option.label}}">{{option.label}}</label>
         </span>
       </td>
     </tr>
@@ -104,7 +75,9 @@
       </td>
     </tr>
     <tr ng-hide="user.speedoOps.bg.id == 31" class="w3-half" style="background-color:rgba(0,0,0,{{user.speedoOps.opac}})">
-      <td><strong style="font-size: 14px;color:rgb({{200*user.speedoOps.opac}},{{200*user.speedoOps.opac}},{{200*user.speedoOps.opac}});">Background Opacity: {{user.speedoOps.opac}}</strong></td>
+      <td>
+        <strong style="font-size: 14px;color:rgb({{200*user.speedoOps.opac}},{{200*user.speedoOps.opac}},{{200*user.speedoOps.opac}});">Background Opacity: {{user.speedoOps.opac}}</strong>
+      </td>
     </tr>
     <tr ng-hide="user.speedoOps.bg.id == 31" class="w3-hover-pale-blue w3-half" style="display: flex">
       <td style="width:100%">
@@ -114,9 +87,225 @@
       </td>
     </tr>
     <tr class="w3-row w3-col">
-      <td class="w3-row w3-col w3-hover-pale-green w3-center">
-        <a href="views/speed.htm" data-featherlight class="speedoConfigInstructions w3-center w3-blue w3-hover-green w3-btn">Instructions For Customizing Bar Speedometer</a>
+      <td class="w3-third w3-col w3-hover-pale-green w3-center">
+        <!--a href="views/speed-themes.htm"  data-toggle="tooltip" data-placement="auto top" title="Instructions For Customizing Bar Speedometer Color Themes" data-featherlight class="spdConfigInst w3-center w3-blue w3-hover-green w3-btn">Bar Color Themes</a-->
+        <a id="SbSpeedoOpsBtn" data-toggle="tooltip" data-placement="auto top" title="StatusBar Speedonmeter Options" data-featherlight class="spdConfigInst w3-center w3-blue w3-hover-green w3-btn">StatusBar Speedometer</a>
+      </td>
+      <td class="w3-third w3-col w3-hover-pale-green w3-center">
+        <!--a href="views/speed-themes.htm"  data-toggle="tooltip" data-placement="auto top" title="Instructions For Customizing Bar Speedometer Color Themes" data-featherlight class="spdConfigInst w3-center w3-blue w3-hover-green w3-btn">Bar Color Themes</a-->
+        <a id="ClassicSpeedoOpsBtn" data-toggle="tooltip" data-placement="auto top" title="Customize The Classic Speedometer Layout" data-featherlight class="spdConfigInst w3-center w3-blue w3-hover-green w3-btn">Classic Speedometer Layout</a>
+      </td>
+      <td class="w3-third w3-col w3-hover-pale-green w3-center">
+        <!-- a onclick="('#BarColorOps').fadeIn()" href="views/speed.htm"  data-toggle="tooltip" data-placement="auto top" title="Instructions For Customizing Bar Speedometer Layout" data-featherlight class="spdConfigInst w3-center w3-blue w3-hover-green w3-btn">Bar Speedometer Layout</a-->
+        <a id="SpeedoOpsBtn" data-toggle="tooltip" data-placement="auto top" title="Customize The Bar Speedometer Layout" data-featherlight class="spdConfigInst w3-center w3-blue w3-hover-green w3-btn">Bar Speedometer Layout</a>
+      </td>
+    </tr>
+    <tr class="w3-row w3-col">
+      <td class="w3-third w3-col w3-hover-pale-green w3-center">
+        <!--a href="views/speed-themes.htm"  data-toggle="tooltip" data-placement="auto top" title="Instructions For Customizing Bar Speedometer Color Themes" data-featherlight class="spdConfigInst w3-center w3-blue w3-hover-green w3-btn">Bar Color Themes</a-->
+        <a id="BarColorOpsBtn" data-toggle="tooltip" data-placement="auto top" title="Customize Bar Speedometer Color Themes" data-featherlight class="spdConfigInst w3-center w3-blue w3-hover-green w3-btn">Bar Color Themes</a>
+      </td>
+      <td class="w3-third w3-col w3-hover-pale-green w3-center">
+        <!--a href="views/speed-controls.htm"  data-toggle="tooltip" data-placement="auto top" title="Instructions For Customizing Speedometer Multicontroller Functions" data-featherlight class="spdConfigInst w3-center w3-blue w3-hover-green w3-btn">Multicontroller Functions</a-->
+        <a id="SpeedoControlOpsBtn" data-toggle="tooltip" data-placement="auto top" title="Customize Speedometer Multicontroller Functions" data-featherlight class="spdConfigInst w3-center w3-blue w3-hover-green w3-btn">Multicontroller Functions</a>
+      </td>
+      <td class="w3-third w3-col w3-hover-pale-green w3-center">
+        <!--a href="views/speed-controls.htm"  data-toggle="tooltip" data-placement="auto top" title="Instructions For Customizing Speedometer Multicontroller Functions" data-featherlight class="spdConfigInst w3-center w3-blue w3-hover-green w3-btn">Multicontroller Functions</a-->
+        <a id="SpdExtraOpsBtn" data-toggle="tooltip" data-placement="auto top" title="Customize Speedometer" data-featherlight class="spdConfigInst w3-center w3-blue w3-hover-green w3-btn">Extra Options</a>
       </td>
     </tr>
   </tbody>
 </table>
+<div id="SbSpeedoOps" class="spdOpsPanel w3-display-middle w3-black w3-row w3-col w3-padding" style="display:none"></div>
+<div id="SpeedoControlOps" class="spdOpsPanel w3-display-middle w3-indigo w3-row w3-col w3-padding" style="display:none;"></div>
+<div id="SpdExtraOps" class="spdOpsPanel w3-display-middle w3-blue w3-row w3-col w3-padding" style="display:none">
+  <span onclick="$('#SpdExtraOps').fadeOut()" class="closeBtn">&times;</span>
+  <span onclick="toggleTips()" class="toggleTipsBtn"><i class="icon-question2" title="Tips"></i></span>
+  <span ng-click="reset_spdExtra()" class="resetBtn"><i class="icon-reload" title="Reset To Default"></i></span>
+  <header class="w3-row w3-col w3-large">Extra Speedometer Options: </header>
+  <div class="w3-row">
+    <div class="spdExtraOp w3-half w3-col">
+      <span class="w3-half">Fuel Gauge Type:</span>
+      <select ng-value="user.spdExtra.fuelGaugeValueSuffix" ng-model="user.spdExtra.fuelGaugeValueSuffix" class="gauge-type">
+        <option value="%">%</option>
+        <option value="Gal">Gallons</option>
+        <option value="L">Liters</option>
+      </select>
+    </div>
+    <div class="spdExtraOp w3-half w3-col">
+      <label for="fuelGaugeFactor" class="w3-threequarter fueltanks" data-toggle="popover" data-placement="top" title="Approximate Fuel Tank Capacities" data-content="<div class='w3-medium'>- Model --- Liters --- Gallons -</div>Mazda3 --- 50 L --- 13.2 Gal<br>Mazda6 --- 62 L --- 16.4 Gal<br>Miada MX-5 - 45 L - 11.9 Gal<br>CX-3 --- 46 L --- 12.3 Gal<br>CX-5 --- 57 L --- 15 Gal<br>CX-9 --- 72 L --- 19 Gal">Fuel Tank Capacity ({{user.spdExtra.fuelGaugeValueSuffix}}):</label>
+      <input id="fuelGaugeFactor" class="w3-quarter" type="number" ng-step="0.1" step="0.1" min="1" ng-min="1" ng-max="user.spdExtra.fuelGaugeValueSuffix === '%' ? 100 : 80" max="100" ng-value="user.spdExtra.fuelGaugeValueSuffix === '%' ? user.spdExtra.fuelGaugeFactor = 100 : 50" ng-model="user.spdExtra.fuelGaugeFactor" ng-disabled="user.spdExtra.fuelGaugeValueSuffix === '%'">
+    </div>
+  </div>
+  <div class="w3-row">
+    <div class="spdExtraOp w3-third">
+      <input type="checkbox" class="w3-check" id="engineSpeedBar" ng-model="user.spdExtra.engineSpeedBar" ng-value="user.spdExtra.engineSpeedBar">
+      <label for="engineSpeedBar" data-toggle="tooltip" data-placement="auto top" title="Colored Bar Shows RPM Instead of Speed (Bar Speedometer)">SpeedBar Show RPM</label>
+    </div>
+    <div class="spdExtraOp w3-third">
+      <input type="checkbox" class="w3-check" id="hideSpeedBar" ng-model="user.spdExtra.hideSpeedBar" ng-value="user.spdExtra.hideSpeedBar">
+      <label for="hideSpeedBar" data-toggle="tooltip" data-placement="auto top" title="Hide The Colored Bar By Default (Bar Speedometer)">Hide SpeedBar</label>
+    </div>
+    <div class="spdExtraOp w3-third">
+      <input type="checkbox" class="w3-check" id="speedAnimation" ng-model="user.spdExtra.speedAnimation" ng-value="user.spdExtra.speedAnimation">
+      <label for="speedAnimation" data-toggle="tooltip" data-placement="auto top" title="Digital Speedometers Will 'Animate' Counting To The Current Speed (Delays Output By 1 Second Because The Animation Cannot Predict The Future)">Counter Animation</label>
+    </div>
+  </div>
+</div>
+<div id="ClassicSpeedoOps" class="spdOpsPanel w3-display-middle w3-pale-green w3-row w3-col w3-padding" style="display:none">
+  <header class="w3-large w3-purple w3-row w3-col">
+    <span class="w3-row w3-col">Classic Speedometer Layout</span>
+    <span onclick="$('#ClassicSpeedoOps').fadeOut()" class="closeBtn">&times;</span>
+    <span ng-click="toggleAutoSortBy()" class="autoSortBtn"><i class="icon-sort-numeric-asc" title="Toggle Auto-Sort"></i></span>
+    <span onclick="toggleTips()" class="toggleTipsBtn"><i class="icon-question2" title="Tips"></i></span>
+    <span ng-click="reset_classicSpeed()" class="resetBtn"><i class="icon-reload" title="Reset To Default"></i></span>
+  </header>
+  <div class="w3-container w3-medium w3-padding-16">
+    <div class="w3-row w3-col">
+      <label for="classicLargeText" class="w3-col w3-padding-bottom w3-center">
+        <input id="classicLargeText" type="checkbox" class="w3-check" ng-model="user.speedoOps.classicLargeText" ng-value="user.speedoOps.classicLargeText" />
+        <span>Larger Text</span>
+      </label>
+    </div>
+    <div ng-repeat="sp in user.classicSpeed" class="w3-row 3-col">
+      <span class="w3-half" compile="sp.name"></span>
+      <input type="number" min="0" max="99" class="spdOp-classicLayout" ng-model="sp.pos" ng-value="sp.pos" ng-change="autoSortBy()" class="w3-half" />
+    </div>
+  </div>
+</div>
+<div id="BarColorOps" class="spdOpsPanel w3-display-middle w3-green w3-row w3-col w3-padding w3-xlarge" style="display:none">
+  <header class="w3-row w3-col w3-cyan w3-xlarge">
+    <span class="w3-threequarter">Bar Speedometer Theme Colors:</span>
+    <span class="w3-quarter w3-medium">
+      <span class="w3-half">Starting Theme:</span>
+      <select id="spdOp-barThemeStart" ng-model="user.spdExtra.barThemeStart" class="w3-half">
+        <option value="0">Default</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
+    </span>
+    <span onclick="$('#BarColorOps').fadeOut()" class="closeBtn">&times;</span>
+    <span onclick="toggleTips()" class="toggleTipsBtn"><i class="icon-question2" title="Tips"></i></span>
+    <span ng-click="randomColorMap()" class="colorMapBtn"><i class="icon-randcolor" title="Random Colors"></i></span>
+    <span ng-click="reset_barThemeColors()" class="resetBtn"><i class="icon-reload" title="Reset To Default"></i></span>
+  </header>
+  <div class="barThemeColors w3-row w3-col w3-padding w3-black">
+    <div class="barTheme" ng-repeat="bt in user.barThemeColors">
+      Theme #{{bt.num}}:
+      <div>Primary:
+        <input id="bt.main" type="color" ng-model="bt.main" ng-value="bt.main" />
+        <br> Secondary:
+        <input id="bt.secondary" type="color" ng-model="bt.secondary" ng-value="bt.secondary" />
+        <br> Borders:
+        <input id="bt.border" type="color" ng-model="bt.border" ng-value="bt.border" />
+        <br>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="SpeedoOps" class="spdOpsPanel w3-pale-blue w3-col w3-padding w3-display-middle w3-large" style="display:none;">
+  <header class="w3-row w3-col w3-teal">
+    <span class="w3-threequarter w3-xlarge">Bar Speedometer Layout:</span>
+    <span class="w3-quarter">
+      <span onclick="$('#SpeedoOps').fadeOut()" class="closeBtn">&times;</span>
+      <span onclick="toggleTips()" class="toggleTipsBtn"><i class="icon-question2" title="Tips"></i></span>
+      <span ng-click="toggleBarAutoSortBy()" class="autoSortBtn"><i class="icon-sort-numeric-asc" title="Toggle Auto-Sort"></i></span>
+      <span ng-click="reset_spdValues()" class="resetBtn"><i class="icon-reload" title="Reset To Default"></i></span>
+      <span class="w3-threequarter">Bottom Rows: </span>
+      <select id="spdOp-rows" ng-model="user.spdExtra.barSpeedoRows" class="w3-quarter">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+      </select>
+    </span>
+  </header>
+  <div class="w3-container">
+    <span class="spdOps w3-row" ng-repeat="val in user.spdValues">
+      <span id="spdOp-{{val.elmnt}}" class="w3-quarter">{{val.label}}:</span>
+      <select id="spdOp-{{val.elmnt}}0" ng-model="val.pos[0]" ng-change="checkForMain(val)">
+        <option value="0">Main/Side Column</option>
+        <option value="1">Bottom Bar</option>
+        <option value="2">Hidden</option>
+      </select>
+      <select id="spdOp-{{val.elmnt}}1" ng-model="val.pos[1]" ng-show="val.pos[0]==='0'" ng-change="checkForMain(val)">
+        <option value="0">Center Value</option>
+        <option value="1">Side Column</option>
+      </select>
+      <select id="spdOp-{{val.elmnt}}1" ng-model="val.pos[1]" ng-show="val.pos[0]==='1'" ng-change="checkForMain(val)">
+        <option value="1">Row: 1</option>
+        <option value="2">Row: 2</option>
+        <option value="3">Row: 3</option>
+        <option value="4">Row: 4</option>
+      </select>
+      <select id="spdOp-{{val.elmnt}}2" ng-model="val.pos[2]" ng-show="val.pos[0]==='1'" ng-change="checkForMain(val)">
+        <option value="1">Pos: 1 (Left)</option>
+        <option value="2">Pos: 2</option>
+        <option value="3">Pos: 3 (Center)</option>
+        <option value="4">Pos: 4</option>
+        <option value="5">Pos: 5 (Right)</option>
+      </select>
+      <select id="spdOp-{{val.elmnt}}2" ng-model="val.pos[2]" ng-show="val.pos[0]==='0' && val.pos[1]==='1'" ng-change="checkForMain(val)">
+        <option value="1">Pos: 1 (Top)</option>
+        <option value="2">Pos: 2</option>
+        <option value="3">Pos: 3</option>
+        <option value="4">Pos: 4 (Bottom)</option>
+      </select>
+    </span>
+  </div>
+</div>
+<div id="SpdOpsTips" class="spdOpsTips w3-display-right w3-panel w3-row w3-col w3-card-16 w3-padding draggable-handle">
+  <span onclick="toggleTips()" class="closeBtn">&times;</span>
+  <header class="w3-teal w3-large w3-row w3-col move-handle">Tips:</header>
+  <div class="w3-container w3-padding">
+    <div class="SpeedoTips w3-row w3-card-16 w3-padding">
+      VALUES WITH SAME POSITION WILL OVERLAP EACH OTHER!
+    </div>
+    <div class="ClassicSpeedoTips w3-row w3-card-16 w3-padding">
+      Using the same number multiple times is OK because the values will stack<br>
+    </div>
+    <div class="SpeedoTips ClassicSpeedoTips w3-row w3-card-16 w3-padding">
+      Turn on "AutoSort" to reorder the list when you make a change. Click the  &nbsp;<span style="color:orange" class="icon-sort-numeric-asc"></span>&nbsp; icon to toggle AutoSort.
+    </div>
+    <div class="SbSpeedoTips w3-row w3-card-16 w3-padding">
+      To show only 1 extra value above the Statusbar Speedometer hide one of the 2 rotating values.
+    </div>
+    <div class="SpdExtraTips w3-row w3-card-16 w3-padding">
+      If you change the Fuel Gauge Type to L or Gal, be sure to change the Fuel Tank Capacity to match your vehicles fuel tank.<br><a class="w3-btn" onclick="$('.fueltanks').click()">Fuel Tank Capacities</a>
+    </div>
+    <div class="SpeedoControlTips w3-row w3-card-16 w3-padding">
+      Set Controls for Classic & Bar Speedometers Indepentently<br>
+      To disable a Multi-controller function, set the control to "Disable"
+    </div>
+    <div class="BarColorTips w3-row w3-card-16 w3-padding">
+      <span class="w3-large">Click the <i class="icon-randcolor intips"></i> icon to randomize colors</span>
+    </div>
+  </div>
+</div>
+<script>
+  var showSpdHints = persistantData.get('showSpdHints') || true
+  $('#SbSpeedoOps').html(SbOpsHTML)
+  $('#SpeedoControlOps').html(spdCtrlHTML)
+  //$('#SpdExtraOps').html(spdExtraOptions.join(''))
+  $('.closeBtn').click(function() {
+    $('#SpdOpsTips').slideUp()
+    //$('#SpdOpsTips').effect('explode', 3000)
+  })
+  $('.spdConfigInst').click(function() {
+    var thisId = $(this).attr('id')
+    if (!$('#' + thisId.replace(/Btn/, '')).is(':visible')) {
+      $('.spdOpsPanel, .spdOpsTips .w3-card-16').hide()
+      $('#' + thisId.replace(/Btn/, '')).fadeIn()
+      $('.' + thisId.replace(/OpsBtn/, 'Tips')).fadeIn()
+      if (showSpdHints) {
+        $('#SpdOpsTips').slideDown()
+      } else {
+        $('#SpdOpsTips').slideUp()
+      }
+    }
+  })
+  $('.draggable-handle').draggable({ scroll: false, distance: 40, cursorAt: { top: -80, left: 150 } })
+</script>

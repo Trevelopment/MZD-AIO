@@ -1,49 +1,69 @@
 [Full Changelog](changelog.htm)  
 
-### 2.7.8
+### 2.7.9
 
-#### Speedometer v5.5 - All In One Speedometer
-- Analog, Modded and Bar Speedometers are now All In One!
-- All options are available and will be applied to the proper Speedometer
-- Choose which speedometer to start with by default (if starting with Bar Speedometer other options will still determine the starting state of the Classic Speedometer)
-- The speedometer-config.js file now has all the options, set a variable to determine if override values are used or installed options.
-- Invalid Values Show "---" Such As Gear Position/Lever for Manual Transmissions
-- Toggles will Show The Action In A Statusbar Notification
-- Hold "Up" on multicontroller to switch between Classic and Bar Speedometer Mode
-- Hold "Down" in Classic mode to switch between Basic and Modded Speedometer (Basic is only analog with no toggles except long holds to change to Modded or Bar Speedometer)
-- Modded Speedometer (in Classic mode):
-  - Single click "Up" to increase size of values
-  - Multicontroller "Select" toggles between Digital and Analog speed
-  - Single click "Down" to show alternate values
-- Bar Speedometer:
-  - Configure The Amount of Bottom Rows in "speedometer-config.js" (Default 4)
-  - Hold "Down" to show/hide speed bar
-  - **TAP Any 2 Values To Swap Their Positions!**
-    - Any Values Can Be Swapped Even The Main
-    - When The Main Value Is Swapped An SBN Will Show With The Value Name
-    - Tap Below The Bottom Row To Swap Hidden Values In Other Rows
-    - Exiting The App Will Reset Positions To Your Default
-    - Tap Selected Value Again To Cancel
+#### Order Audio Source List:
 
-#### AIO Tweaks App v0.6
-- "Reverse App List" button - Reverses the Applications List (resets on boot).
+-   Order Your Audio Source List With In AIO
+    -   _Finally!!_ No more manually editing the systemApp.js
+    -   **NOTE: Although you will be able to order all the values, Some list items may not show for your particular vehicle or region**
 
-#### Test Mode (T/M) Button [(Thread)](https://trevelopment.win/jci-test-mode)
-- Included with the **1 Second Diagnostic Menu** tweak because it is part of the Diagnostic App
-- In v59 "JCI Test Mode" was disabled in the Diagnostic App
-  - This tweak brings back Test Mode for v59
-  - Makes it easier to get to in v55-v58 (Just press the T/M button)
-- Once Test Mode is started type 11 to open the well known Test Menu
-- **_BE CAREFUL IN TEST MODE, DON'T DO ANYTHING YOU ARE UNSURE ABOUT!_**
+#### Speedometer v5.6
+
+-   **Edit all customizations from the AIO interface** - **_Option Panels:_**
+    -   StatusBar Speedometer & Fuel Bar
+    -   Bar Speedometer Layout
+    -   Classic Speedometer Layout
+    -   Bar Speedometer Color Themes
+    -   Multicontroller Functions
+    -   Extra Options
+-   Statusbar Speedometer Options
+    -   Set all 3 Statusbar Speedometer Values To Anything!
+        -   NOTE: There are only 7 icons for 21 values so they are all reused. If someone wants to contribute, some white 32x32px icons would be cool!
+    -   Set Interval Of Rotating Values Or Set Only 1 Extra Value to stop the rotation interval
+    -   Option To Hide In Reverse - reverse adjusted to accommodate all extra values
+    -   Option To Hide When Speedometer App is Open - true by default
+    -   Statusbar Fuel Gauge
+        -   Positions: Top of Screen, Bottom of Screen, or Below Statusbar
+        -   Customize Colors For Each 20% Interval
+-   **Bar Speedometer:** layout changes are remembered until reboot
+    -   Multicontroller: Hold.select (default) to reset to your default layout
+    -   5 Customizable Color Themes
+        -   Randomize Colors Button
+-   **The Classic Speedometer:** has a different design structure as the Bar Speedometer in that instead of each position being mapped to a location on the screen, it is essentially a stack inside a table.
+    -   Customize order of value table stack
+    -   Added Fuel Bar to the Digital Speedometer in Classic Mode (bottom left in the previously unused space)
+    -   In accordance with the stack model, values are "popped" off the top of the value table and appended to the bottom
+        -   Multicontroller: hold.select (default)
+        -   Tap the top value will also pop it
+-   Extra Options:
+    -   Hide Speed Bar in Bar Mode
+    -   Start with Speed Bar in RPM Mode
+    -   Turn on Counter Animation (Makes output lag by about 1 second because the counter cannot predict the future so it is always a little bit behind while chasing the dragon)
+    -   Fuel Gauge Type: (experimental) Fuel Gauge reading will show approximate Gallons or Liters remaining
+        -   % (default)
+        -   L - Liters
+        -   Gal. - Gallons
+    -   Fuel Tank Capacity - The Fuel Tank Capacity of your Vehicle in Gal/L (From Fuel Gauge Type)
+-   **UX**: Toggle sorting lists by the order number (Auto Sorts when position numbers change)
+-   Each panel is saved when compile is run.
+-   Each panel can be reset individually or "Reset Options" in the top/side menus will reset all the panels.
+-   Dutch Translation by: Taeke
+
+#### Autorun & Recovery - For Serial Connection
+
+-   Recovery files will be copied to "XX" folder be used with &lt;a onclick="externalLink('serial')"these instructions</a>
+-   No installer is included, files need to be manually copied from USB Drive to CMU using a connected computer.
+-   **Only for gaining access via serial connection.**
 
 ##### Tweak Installer Changes/Fixes
-- App install/uninstall now uses NodeJS to add/remove from app list
-  - Allows for cleaner installations
-  - Backward compatible
-  - Solves the issue of all apps disappearing off the app list when only 1 is uninstalled due to improperly formatted JSON file
-  - "_Legacy App Install_" in install options to use the old method (using bash)
-    - The only reason I can think of for this is if you already have an improperly formatted JSON file then you need to uninstall all apps with legacy installer because the NodeJS code will throw an error.  Other than that the NodeJS code will never cause an improperly formatted JSON file.
-  - *Note: NodeJS will run from the USB drive, Coming Soon: Install NodeJS to the system*
-- Cleaned up installer code
-  - Removed some superfluous code
-  - Fixed many inconsequential errors
+
+-   Fixed the NodeJS code to handle all errors and repair broken installations
+    -   Removed the short lived "Use legacy install" because the new method will repair errors if they exist.
+    -   This should solve the apps disappearing from the app list issues and fix all other app installation/uninstallation issues too.
+-   One additional file (/jci/opera/opera_dir/userjs/aio.js) is installed with apps containing some global AIO helper functions
+    -   Separated from additionalApps.js to maintain backward and cross compatibility (with CASDK, cmu-opkg, and other older community developed mods/apps that install old versions of additionalApps.js will not break the new apps)
+
+##### One More Thing
+
+-   Added "Load Last Compile" to the top menu and context (right-click) menu.

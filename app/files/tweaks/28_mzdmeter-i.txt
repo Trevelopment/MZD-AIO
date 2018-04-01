@@ -19,9 +19,9 @@ rm -fr /jci/gui/apps/_mzdmeter/ /paa/
 # Copies the additionalApps.js
 if [ $CASDK_MODE -eq 0 ]
 then
-	cp -a ${MYDIR}/config/jci/opera/opera_dir/userjs/additionalApps.js /jci/opera/opera_dir/userjs/ && CASDK_MODE=1
+	cp -a ${MYDIR}/config/jci/opera/opera_dir/userjs/*.js /jci/opera/opera_dir/userjs/ && CASDK_MODE=1
 	chmod 755 /jci/opera/opera_dir/userjs/additionalApps.js
- chown 1018:3015 /jci/opera/opera_dir/userjs/additionalApps.js
+  chown 1018:3015 /jci/opera/opera_dir/userjs/additionalApps.js
   log_message "===                     Copied additionalApps.js                      ==="
 fi
 

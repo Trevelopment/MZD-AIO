@@ -27,7 +27,7 @@
     </tr>
     <tr id="uistyle-mainlabel" ng-hide="user.uistyle.uninstmain" class="w3-hover-pale-green w3-tooltip w3-half mainmenuoptions" ng-class="{'color': user.uistyle.mainlabel === 3}">
       <td>
-        <select ng-model="user.uistyle.mainlabel" class="w3-select" ng-options="x.id as x.label for x in uistyle.mainlabel">
+        <select ng-model="user.uistyle.mainlabel" ng-options="x.id as x.label for x in uistyle.mainlabel">
           <option value="" selected="selected">--- Main Menu Text ---</option>
         </select>
         <input id="mainlabelcolor" type="color" ng-model="user.uistyle.labelcolor" ng-value="user.uistyle.listitem" />
@@ -35,7 +35,7 @@
     </tr>
     <tr id="uistyle-altlayout" ng-hide="user.uistyle.uninstmain" class="w3-hover-pale-green w3-tooltip w3-half mainmenuoptions">
       <td>
-        <select ng-model="user.uistyle.layout" class="w3-select" ng-options="x.id as x.label for x in uistyle.layout">
+        <select ng-model="user.uistyle.layout" ng-options="x.id as x.label for x in uistyle.layout">
           <option value="" selected="selected">--- Main Menu Layout ---</option>
         </select>
       </td>

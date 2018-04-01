@@ -158,16 +158,16 @@ function AIOTweaksTmplt(uiaId, parentDiv, templateID, controlProperties) {
   //{Buttons:[{tag:'button',id:'twkOut',label:'Home',tab:'Tweaks',classes:"mainApps audioSources"},]}
   //}
   // Tabs
-  $("#Main").on('click', function () {
+  $("#Main").on('click', function() {
     AIOTabs("#MainMenu", "#Main");
   });
-  $("#Twk").on('click', function () {
+  $("#Twk").on('click', function() {
     AIOTabs("#Tweaks", "#Twk");
   });
-  $("#Opt").on('click', function () {
+  $("#Opt").on('click', function() {
     AIOTabs("#Options", "#Opt");
   });
-  $("#Tst").on('click', function () {
+  $("#Tst").on('click', function() {
     AIOTabs("#touchscreenPanel", "#Tst");
   });
 
@@ -187,6 +187,28 @@ function AIOTweaksTmplt(uiaId, parentDiv, templateID, controlProperties) {
 }
 
 /*
+ *  @param clickTarget (jQuery Object) The jQuery Object to click on a single click action
+ *  clickTarget can also be a function or a string of the DOM node to make the jQuery Object
+ */
+AIOTweaksTmplt.prototype.singleClick = function(clickTarget) {
+  if (typeof clickTarget === "string") { clickTarget = $(clickTarget) }
+  (speedometerLonghold) ? speedometerLonghold = false: (typeof clickTarget === "function") ? clickTarget() : clickTarget.click();
+  clearTimeout(this.longholdTimeout);
+  this.longholdTimeout = null;
+}
+/*
+ *  @param clickFunction (function) Function to run on a long click
+ *  clickFunction can also be a a string of the DOM node or jQuery Object to click
+ */
+AIOTweaksTmplt.prototype.longClick = function(clickFunction) {
+  if (typeof clickFunction === "string") { clickFunction = $(clickFunction) }
+  this.longholdTimeout = setTimeout(function() {
+    speedometerLonghold = true;
+    (typeof clickFunction === "function") ? clickFunction(): clickFunction.click();
+  }, 1200);
+}
+
+/*
  * =========================
  * Standard Template API functions
  * =========================
@@ -197,82 +219,90 @@ function AIOTweaksTmplt(uiaId, parentDiv, templateID, controlProperties) {
  * @param   eventID (string) any of the “Internal event name” values in IHU_GUI_MulticontrollerSimulation.docx (e.g. 'cw',
  * 'ccw', 'select')
  */
-AIOTweaksTmplt.prototype.handleControllerEvent = function (eventID) {
+AIOTweaksTmplt.prototype.handleControllerEvent = function(eventID) {
   log.debug("handleController() called, eventID: " + eventID);
 
   var retValue = null;
   switch (eventID) {
-  case "ccw":
-    if ($("#AioInfoPanel").hasClass("opened")) {
-      document.getElementById("AioInformation").scrollTop -= 200;
-    } else {
-      $("button").removeClass("selectedItem");
-      (selectedItem < 0) ? selectedItem = maxButtons: selectedItem--;
-      $(currTab + " a").eq(selectedItem).parent().addClass("selectedItem");
-    }
-    break;
-  case "cw":
-    if ($("#AioInfoPanel").hasClass("opened")) {
-      document.getElementById("AioInformation").scrollTop += 200;
-    } else {
-      $("button").removeClass("selectedItem");
-      (selectedItem > maxButtons) ? selectedItem = 0: selectedItem++;
-      $(currTab + " a").eq(selectedItem).parent().addClass("selectedItem");
-    }
-    break;
-  case "up":
-    if ($("#AioInfoPanel").hasClass("opened")) {
-      if (document.getElementById("AioInformation").scrollTop === 0) {
-        $("#closeAioInfo").click();
+    case "ccw":
+      if ($("#AioInfoPanel").hasClass("opened")) {
+        document.getElementById("AioInformation").scrollTop -= 200;
+      } else {
+        $("button").removeClass("selectedItem");
+        (selectedItem < 0) ? selectedItem = maxButtons: selectedItem--;
+        $(currTab + " a").eq(selectedItem).parent().addClass("selectedItem");
       }
-      document.getElementById("AioInformation").scrollTop = 0;
-      document.getElementById("AioInformation").scrollLeft = 0;
-    } else {
-      showAioInfo("", true);
-    }
-    retValue = "consumed";
-    break;
-  case "down":
-    if ($("#AioInfoPanel").hasClass("opened")) {
-      document.getElementById("AioInformation").scrollTop += 2500;
-    } else {
-      retValue = $("#Main").click();
-    }
-    break;
-  case "left":
-    if ($("#AioInfoPanel").hasClass("opened")) {
-      document.getElementById("AioInformation").scrollLeft -= 1000;
-    } else {
-      $("#Twk").click();
-    }
-    retValue = null;
-    break;
-  case "right":
-    if ($("#AioInfoPanel").hasClass("opened")) {
-      document.getElementById("AioInformation").scrollLeft += 500;
-    } else {
-      $("#Opt").click();
-    }
-    retValue = "consumed";
-    break;
-  case "select":
-    if ($("#AioInfoPanel").hasClass("opened")) {
-      $("#closeAioInfo").click();
-    } else {
-      $(currTab + " a").eq(selectedItem).parent().click();
-    }
-    retValue = "consumed";
-    break;
-  case "downStart":
-  case "upStart":
-  case "leftStart":
-  case "rightStart":
-  case "selectStart":
-    retValue = "ignored";
-    break;
-  default:
-    retValue = "giveFocusLeft";
-    break;
+      break;
+    case "cw":
+      if ($("#AioInfoPanel").hasClass("opened")) {
+        document.getElementById("AioInformation").scrollTop += 200;
+      } else {
+        $("button").removeClass("selectedItem");
+        (selectedItem > maxButtons) ? selectedItem = 0: selectedItem++;
+        $(currTab + " a").eq(selectedItem).parent().addClass("selectedItem");
+      }
+      break;
+    case "upStart":
+      this.longHold(function() {
+        //do the same as up
+        this.handleControllerEvent("up");
+      })
+    case "up":
+      this.singleClick(function() {
+
+        if ($("#AioInfoPanel").hasClass("opened")) {
+          if (document.getElementById("AioInformation").scrollTop === 0) {
+            $("#closeAioInfo").click();
+          }
+          document.getElementById("AioInformation").scrollTop = 0;
+          document.getElementById("AioInformation").scrollLeft = 0;
+        } else {
+          showAioInfo("", true);
+        }
+      })
+      retValue = "consumed";
+      break;
+    case "down":
+      if ($("#AioInfoPanel").hasClass("opened")) {
+        document.getElementById("AioInformation").scrollTop += 2500;
+      } else {
+        retValue = $("#Main").click();
+      }
+      break;
+    case "left":
+      if ($("#AioInfoPanel").hasClass("opened")) {
+        document.getElementById("AioInformation").scrollLeft -= 1000;
+      } else {
+        $("#Twk").click();
+      }
+      retValue = null;
+      break;
+    case "right":
+      if ($("#AioInfoPanel").hasClass("opened")) {
+        document.getElementById("AioInformation").scrollLeft += 500;
+      } else {
+        $("#Opt").click();
+      }
+      retValue = "consumed";
+      break;
+    case "select":
+      if ($("#AioInfoPanel").hasClass("opened")) {
+        $("#closeAioInfo").click();
+      } else {
+        $(currTab + " a").eq(selectedItem).parent().click();
+      }
+      retValue = "consumed";
+      break;
+    case "downStart":
+    case "upStart":
+    case "leftStart":
+    case "rightStart":
+    case "selectStart":
+      retValue = "ignored";
+      break;
+    default:
+      retValue = "giveFocusLeft";
+      break;
   }
   $("button").blur();
   $("html").removeClass("showBg");
@@ -282,11 +312,10 @@ AIOTweaksTmplt.prototype.handleControllerEvent = function (eventID) {
  * Called by the app during templateNoLongerDisplayed. Used to perform garbage collection procedures on the template and
  * its controls.
  */
-AIOTweaksTmplt.prototype.cleanUp = function () {
+AIOTweaksTmplt.prototype.cleanUp = function() {
   $(".AIOTweaksTmplt").remove();
-  //utility.removeScript("apps/_aiotweaks/js/mzd.js");
   $("html").removeClass("showBg");
-  $("#SbSpeedo").fadeIn();
+  $('#SbSpeedo, #Sbfuel-bar-wrapper').fadeIn();
 };
 
 framework.registerTmpltLoaded("AIOTweaksTmplt");

@@ -2,7 +2,7 @@
   <h1 id="mzd-title" class="mazda">MZD-AIO <small><i>v</i>{{appVer}}</small>
     <!-- Split button -->
     <div class="btn-group">
-      <button type="button" id="compileButton" class="btn btn-theme03 w3-shadow w3-green w3-small w3-ripple w3-hover-light-blue" ng-hide="user.autorun.installer" style="letter-spacing:1.4px;" data-toggle="tooltip" data-placement="bottom" title="{{menu.start.toolTip}}" ng-click="startCompile()"><span class="icon-genius"></span> {{menu.start.label}} <span class="icon-lab2"></span></button>
+      <button type="button" id="compileButton" class="btn btn-theme03 w3-shadow w3-green w3-small w3-ripple w3-hover-light-blue" ng-show="!user.autorun.installer" style="letter-spacing:1.4px;" data-toggle="tooltip" data-placement="bottom" title="{{menu.start.toolTip}}" ng-click="startCompile()"><span class="icon-genius"></span> {{menu.start.label}} <span class="icon-lab2"></span></button>
       <button type="button" id="compileAutorun" class="btn btn-theme03 w3-shadow w3-pale-blue w3-small w3-ripple w3-hover-indigo" ng-show="user.autorun.installer" style="letter-spacing:1.4px;" data-toggle="tooltip" data-placement="bottom" title="Install CMU-autorun" ng-click="startAutorunCompile()">
         <span class="icon-genius"></span> Autorun <span class="icon-lab2"></span>
       </button>
@@ -21,6 +21,7 @@
       <label class="layoutSwitch switch w3-ripple"  data-toggle="tooltip" data-placement="bottom" title="<h5>Toggle Alternate Layout</h5>" >
         <input id="altlyt" type="checkbox" ng-model="user.altLayout" ng-value="user.altLayout" onclick="settings.set('altLayout',$(this).prop('checked'))">
         <span class="slider"></span>
+      </label>
       </h1>
       <span id="update-ready" class="w3-hide"><a href="" onclick="ipc.send('update-and-restart')" class="w3-btn w3-padding w3-hover-text-light-green">UPDATE &amp; RESTART</a></span>
       <button id="helpDropBtn" onclick="helpDropdown()" class="w3-btn w3-large helphints"><span class="icon-cog3"></span></button>
@@ -34,11 +35,12 @@
       <h1 id="mzd-title-hidden" class="mazda" style="visibility:hidden;">MZD-AIO-TI</h1>
       <span id="openSidePanel" class="w3-opennav w3-xxlarge w3-display-topright w3-padding w3-text-black w3-hide" onclick="w3_openright()" style="position:fixed">&#9776;</span>
     </header>
-    <label for="checkAutorun" class="w3-label checkAutorun"><input type="checkbox" id="checkAutorun" data-toggle="tooltip" data-placement="bottom"  title="CMU-autorun - Scripts For Testing and Recovery" class="w3-check w3-padding" name="checkAutorun" ng-value="user.autorun.installer" ng-model="user.autorun.installer"/><span ng-hide="user.autorun.installer"> Autorun &amp;<br><span class="icon-medkit"></span>&nbsp;&nbsp;Recovery</span></label>
-    <div class="w3-container autorunContainer" ng-show="user.autorun.installer">
-      <div class="autorun-and-recovery" ng-include="'views/autoHelp.htm'"></div>
+    <label id="autorunCheck" for="checkAutorun" class="w3-label checkAutorun" ng-show="!user.autorun.installer" ><input type="checkbox" id="checkAutorun" data-toggle="tooltip" data-placement="bottom"  title="CMU-autorun - Scripts For Testing and Recovery" class="w3-check w3-padding" name="checkAutorun" ng-value="user.autorun.installer" ng-model="user.autorun.installer"/> Autorun &amp;<br>
+      <span class="icon-medkit"></span>&nbsp;&nbsp;Recovery</label>
+    <div class="w3-container autorunContainer">
+      <div class="autorun-and-recovery" ng-include="'views/autoHelp.htm'" ng-show="user.autorun.installer"></div>
     </div>
-    <div class="w3-container mainContainer" ng-hide="user.autorun.installer">
+    <div class="w3-container mainContainer" ng-show="!user.autorun.installer">
       <section id="main" class="main" ng-class="{'alt-layout': user.altLayout}">
         <section id="mainOptions" class="options container w3-row">
           <div id="step4" class="w3-container form-group1 col-md-3 col-sm-6 col-xs-12">
@@ -318,6 +320,7 @@
   </div>
   <!--div id="closeOverlay" onclick="$(this).parent().hide()" width="5000" height="5000" style="position:fixed;width:100%;height:100%;"></div-->
 </div>
+
 <div class="slide-out-div" style="display:none" ng-cloak>
   <a class="handle" href="">Install Options</a>
   <div id="bkupchks" class="w3-container" ng-cloak>
@@ -331,8 +334,8 @@
     <label for="keepBackups" class="w3-validate">{{mainOps.retain.label}}</label>
     <input type="checkbox" id="testBackups" name="testBackups" class="w3-check w3-margin" ng-model="user.backups.test" ng-value="user.backups.test">
     <label for="testBackups" class="w3-validate">{{mainOps.retain.testlabel}}</label>
-    <input type="checkbox" id="legacyAppInst" name="legacyAppInst" class="w3-check w3-margin" ng-model="user.noNodeInstall" ng-value="user.noNodeInstall">
-    <label for="legacyAppInst" class="w3-validate">Use Legacy App Install</label>
+    <!--input type="checkbox" id="legacyAppInst" name="legacyAppInst" class="w3-check w3-margin" ng-model="user.noNodeInstall" ng-value="user.noNodeInstall">
+    <label for="legacyAppInst" class="w3-validate">Use Legacy App Install</label -->
     <input type="checkbox" id="advancedOptions" name="advancedOptions" class="w3-check w3-margin" ng-model="user.advancedOps" ng-value="user.advancedOps">
     <label for="advancedOptions" class="w3-validate">Disabled Tweaks</label>
   </div>

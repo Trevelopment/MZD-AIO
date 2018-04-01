@@ -1,3 +1,20 @@
+// This is a failsafe
+if (typeof FmRadioPos === 'undefined') {
+  FmRadioPos = 1;
+  AmRadioPos = 2;
+  UsbAudioAPos = 4;
+  UsbAudioBPos = 5;
+  AuxInPos = 6;
+  BluetoothPos = 7;
+  SdarsRadioPos = 8;
+  DabRadioPos = 7;
+  AhaRadioPos = 8;
+  PandoraPos = 9;
+  StitcherItemPos = 10;
+  CdPlayerPos = 11;
+  DVDItemPos = 12;
+  TVItemPos = 13;
+}
 /*
  Copyright 2012 by Johnson Controls
  __________________________________________________________________________
@@ -17,7 +34,6 @@
  v0.1 - 08-May-2012  Integrated mainMenuControl. Fixed issues with DOM ready
  v0.2 - 10-May-2012  Added ActivePanel, LeftButton, StatusBar
  v0.3 - 11-May-2012  Merged transitions.js code into framework. System App Prototype now shows transitions between
-                     contexts.
  v0.4 - 17-May-2012  Reworked functionality of Active Panel Content to handle transitions. Added alerts.
  v0.5 - 14-June-2012 Language Localization added to ListCtrls
  v0.6 - 20-June-2012 Fixed buggy ActivePanel behavior related to new "pop transitions"
@@ -53,7 +69,7 @@ log.addSrcFile("systemApp.js", "system");
 
 /**********************************************
  * Start of Base App Implementation
- *             
+ *
  * Code in this section should not be modified
  * except for function names based on the appname
  *********************************************/
@@ -61,12 +77,12 @@ log.addSrcFile("systemApp.js", "system");
 function systemApp(uiaId)
 {
     log.debug("constructor called...");
-    
+
     // Base application functionality is provided in a common location via this call to baseApp.init().
     // See framework/js/BaseApp.js for details.
     baseApp.init(this, uiaId);
-    
-    // All feature-specific initialization is done in appInit()    
+
+    // All feature-specific initialization is done in appInit()
 }
 
 /*
@@ -79,13 +95,13 @@ systemApp.prototype.appInit = function()
     {
         utility.loadScript("apps/system/test/systemAppTest.js");
     }
-        
+
     //@formatter:off
 
     this._initEntertainmentDataList();
     this._initApplicationsDataList();
     this._initCommunicationsDataList();
-    
+
     this._contextTable = {
 
         "HomeScreen" : {
@@ -93,9 +109,9 @@ systemApp.prototype.appInit = function()
             "template" : "MainMenuTmplt",
             "templatePath": "apps/system/templates/MainMenu", //only needed for app-specific templates
             "controlProperties": {
-                "MainMenuCtrl" : {                  
+                "MainMenuCtrl" : {
                     "selectCallback":this._selectCallbackHomeScreen.bind(this),
-                } // end of properties for "MainMenuCtrl"                                       
+                } // end of properties for "MainMenuCtrl"
             }, // end of list of controlProperties
         }, // end of "systemAppContext1"
 
@@ -104,12 +120,12 @@ systemApp.prototype.appInit = function()
             "sbNameId" : "Communication",
             "template" : "List2Tmplt",
             "controlProperties": {
-                "List2Ctrl" : {                                                            
+                "List2Ctrl" : {
                     "dataList": this._communicationsDataList,
                     titleConfiguration : 'noTitle',
                     numberedList : false,
-                    selectCallback : this._menuItemSelectCallback.bind(this), 
-                } // end of properties for "List2Ctrl"                                       
+                    selectCallback : this._menuItemSelectCallback.bind(this),
+                } // end of properties for "List2Ctrl"
             }, // end of list of controlProperties
             "readyFunction" : this._readyCommunication.bind(this),
             "contextInFunction" : this._CommCtxtContextIn.bind(this),
@@ -124,48 +140,48 @@ systemApp.prototype.appInit = function()
                     "dataList": null,
                     titleConfiguration : 'noTitle',
                     numberedList : false,
-                    selectCallback : this._menuItemSelectCallback.bind(this), 
-                } // end of properties for "List2Ctrl"                                       
+                    selectCallback : this._menuItemSelectCallback.bind(this),
+                } // end of properties for "List2Ctrl"
             }, // end of list of controlProperties
             "readyFunction" : this._readyEntertainment.bind(this),
-        }, // end of "Entertainment"  
-         
+        }, // end of "Entertainment"
+
         "Applications" : {
             "leftBtnStyle" : "goBack",
             "sbNameId" : "Applications",
             "template" : "List2Tmplt",
             "controlProperties": {
-                "List2Ctrl" : {                                                            
+                "List2Ctrl" : {
                     "dataList": null,
                     titleConfiguration : 'noTitle',
                     numberedList : true,
-                    selectCallback : this._menuItemSelectCallback.bind(this), 
+                    selectCallback : this._menuItemSelectCallback.bind(this),
                 } // end of properties for "List2Ctrl"
             }, // end of list of controlProperties
             "readyFunction" : this._readyApplications.bind(this),
         }, // end of "Applications"
-        
+
         "NoConnectionNotify" : {
             "template" : "Dialog3Tmplt",
             "controlProperties": {
                 "Dialog3Ctrl" : {
-                    contentStyle : "style13", 
-                    defaultSelectCallback :  this._selectCallbackNoConnectionNotify.bind(this), 
+                    contentStyle : "style13",
+                    defaultSelectCallback :  this._selectCallbackNoConnectionNotify.bind(this),
                     buttonCount : 2,
                     initialFocus : 1,
                     buttonConfig : {
                         button1 : {
-                            labelId : "common.No", 
-                            appData : "Global.No" 
+                            labelId : "common.No",
+                            appData : "Global.No"
                         },
                         button2 : {
-                            labelId : "Connect", 
-                            appData : "SelectConnect" 
+                            labelId : "Connect",
+                            appData : "SelectConnect"
                         },
                     },
-                    text1Id : 'NoConnectionNotifyTitle',     
-                    text2Id : 'NoConnectionNotifyText',     
-                } // end of properties for "DialogCtrl"                                       
+                    text1Id : 'NoConnectionNotifyTitle',
+                    text2Id : 'NoConnectionNotifyText',
+                } // end of properties for "DialogCtrl"
             }, // end of list of controlProperties
         }, // end of "NoConnectionNotify"
 
@@ -198,7 +214,7 @@ systemApp.prototype.appInit = function()
                     "text1Id" : "NotifyIncomingMsg",
                     "text2" : "",
                     "text3Id" : "NotifyReadNow",
-                } // end of properties for dialog                                      
+                } // end of properties for dialog
             }, // end of controlProperties
         }, // end of "NotifyDialog"
 
@@ -223,22 +239,22 @@ systemApp.prototype.appInit = function()
             "template" : "Dialog3Tmplt",
             "controlProperties": {
                 "Dialog3Ctrl" : {
-                    contentStyle : "style02", 
-                    defaultSelectCallback :  this._selectCallbackNotificationListRetry.bind(this), 
+                    contentStyle : "style02",
+                    defaultSelectCallback :  this._selectCallbackNotificationListRetry.bind(this),
                     buttonCount : 2,
                     initialFocus : 1,
                     buttonConfig : {
                         button1 : {
-                            labelId : "common.Cancel", 
-                            appData : "Global.Cancel" 
+                            labelId : "common.Cancel",
+                            appData : "Global.Cancel"
                         },
                         button2 : {
-                            labelId : "RetryLabel", 
-                            appData : "SelectRetry" 
+                            labelId : "RetryLabel",
+                            appData : "SelectRetry"
                         },
                     },
                     text1Id : 'FailedNotificationRetrieval',
-                } // end of properties for "DialogCtrl"                                       
+                } // end of properties for "DialogCtrl"
             }, // end of list of controlProperties
         }, // end of NotificationListRetry
 
@@ -246,23 +262,23 @@ systemApp.prototype.appInit = function()
             "template" : "Dialog3Tmplt",
             "controlProperties": {
                 "Dialog3Ctrl" : {
-                    contentStyle : "style13", 
-                    defaultSelectCallback :  this._selectCallbackNoDevice.bind(this), 
+                    contentStyle : "style13",
+                    defaultSelectCallback :  this._selectCallbackNoDevice.bind(this),
                     buttonCount : 2,
                     initialFocus : 1,
                     buttonConfig : {
                         button1 : {
-                            labelId : "common.No", 
-                            appData : "Global.GoBack" 
+                            labelId : "common.No",
+                            appData : "Global.GoBack"
                         },
                         button2 : {
-                            labelId : "Connect", 
-                            appData : "SelectConnect" 
+                            labelId : "Connect",
+                            appData : "SelectConnect"
                         },
                     },
-                    text1Id : 'NoDeviceTitle',     
-                    text2Id : 'NoDeviceText',     
-                } // end of properties for "DialogCtrl"                                       
+                    text1Id : 'NoDeviceTitle',
+                    text2Id : 'NoDeviceText',
+                } // end of properties for "DialogCtrl"
             }, // end of list of controlProperties
         }, // end of "NoConnectionNotify"
 
@@ -276,25 +292,25 @@ systemApp.prototype.appInit = function()
                     showClock : true,
                 }
             },
-        }, // end of "DisplayOff" 
+        }, // end of "DisplayOff"
 
         "Disclaimer" : {
             "template" : "Dialog3Tmplt",
             "controlProperties": {
                 "Dialog3Ctrl" : {
-                    titleStyle : "titleStyle01", 
-                    titleId : "WarningTitle", 
-                    contentStyle : "style02", 
+                    titleStyle : "titleStyle01",
+                    titleId : "WarningTitle",
+                    contentStyle : "style02",
                     fullScreen : true,
                     defaultSelectCallback :  this._selectCallbackDisclaimer.bind(this),
                     buttonCount : 1,
                     buttonConfig : {
                         button1 : {
-                            labelId : "agree", 
-                            appData : "Global.Yes" 
+                            labelId : "agree",
+                            appData : "Global.Yes"
                         },
                     },
-                    text1Id : 'DisclaimerText',     
+                    text1Id : 'DisclaimerText',
                 }
             },
             "displayedFunction" : this._displayedDisclaimer.bind(this),
@@ -306,15 +322,15 @@ systemApp.prototype.appInit = function()
             "template" : "Dialog3Tmplt",
             "controlProperties": {
                 "Dialog3Ctrl" : {
-                    titleStyle : "titleStyle01", 
-                    titleId : "TempWarning", 
-                    contentStyle : "style02", 
+                    titleStyle : "titleStyle01",
+                    titleId : "TempWarning",
+                    contentStyle : "style02",
                     defaultSelectCallback :  this._selectCallbackSystemWarning.bind(this),
                     buttonCount : 1,
                     buttonConfig : {
                         button1 : {
-                            labelId : "common.Ok", 
-                            appData : "Global.Yes" 
+                            labelId : "common.Ok",
+                            appData : "Global.Yes"
                         },
                     },
                     text1Id : "TempWarningText",
@@ -334,13 +350,13 @@ systemApp.prototype.appInit = function()
                     "buttonCount" : 1,
                     "buttonConfig" : {
                         button1 : {
-                            labelId : "ReconnectEntMenuButton", 
-                            appData : "SelectEntertainmentMenu" 
+                            labelId : "ReconnectEntMenuButton",
+                            appData : "SelectEntertainmentMenu"
                         },
                     },
                 }
             },
-            "readyFunction" : this._readySourceReconnect.bind(this),          
+            "readyFunction" : this._readySourceReconnect.bind(this),
         },
 
         "SourceReconnectFailed" : {
@@ -354,8 +370,8 @@ systemApp.prototype.appInit = function()
                     "buttonCount" : 1,
                     "buttonConfig" : {
                         button1 : {
-                            labelId : "common.Ok", 
-                            appData : "Global.Yes" 
+                            labelId : "common.Ok",
+                            appData : "Global.Yes"
                         },
                     },
                 }
@@ -367,7 +383,7 @@ systemApp.prototype.appInit = function()
             "hideHomeBtn" : true,
             "template" : "NoCtrlTmplt",
             "properties": {
-                "visibleSurfaces" : ["TRANLOGO_SURFACE", "TRANLOGOEND_SURFACE"], 
+                "visibleSurfaces" : ["TRANLOGO_SURFACE", "TRANLOGOEND_SURFACE"],
                 "statusBarVisible" : false,
                 "customBgImage" : "common/images/FullTransparent.png",
             },
@@ -416,18 +432,18 @@ systemApp.prototype.appInit = function()
                 }
             },
         },
-        
+
         "EnableRVR" : {
             "template" : "Dialog3Tmplt",
             "controlProperties": {
                 "Dialog3Ctrl" : {
-                    contentStyle : "style02", 
+                    contentStyle : "style02",
                     defaultSelectCallback :  this._selectCallbackEnableRVR.bind(this),
                     buttonCount : 1,
                     buttonConfig : {
                         button1 : {
-                            labelId : "common.Ok", 
-                            appData : "Global.Yes" 
+                            labelId : "common.Ok",
+                            appData : "Global.Yes"
                         },
                     },
                     text1Id : "SiriDisabled",
@@ -435,32 +451,32 @@ systemApp.prototype.appInit = function()
             },
 			"readyFunction" : this._readyEnableRVR.bind(this),
         },
-        
+
         "RVRInstructions" : {
             "template" : "Dialog3Tmplt",
             "controlProperties": {
                 "Dialog3Ctrl" : {
-                    contentStyle : "style02", 
+                    contentStyle : "style02",
                     defaultSelectCallback :  this._selectCallbackRVRInstructions.bind(this),
                     buttonCount : 1,
                     buttonConfig : {
                         button1 : {
-                            labelId : "common.Ok", 
-                            appData : "Global.Yes" 
+                            labelId : "common.Ok",
+                            appData : "Global.Yes"
                         },
                     },
                     text1Id : "InitiateSiri",
                 }
             },
         },
-       
+
 		"SiriInSession" : {
             "template" : "Dialog3Tmplt",
             "controlProperties": {
                 "Dialog3Ctrl" : {
-                    titleStyle : "titleStyle01", 
+                    titleStyle : "titleStyle01",
                     titleId : "Siri",
-                    contentStyle : "style14", 
+                    contentStyle : "style14",
 					"meter" : {"meterType":"indeterminate", "meterPath":"apps/system/images/IcnSiri.png"}
                 }
             },
@@ -470,15 +486,15 @@ systemApp.prototype.appInit = function()
             "template" : "Dialog3Tmplt",
             "controlProperties": {
                 "Dialog3Ctrl" : {
-                    //titleStyle : "titleStyle01", 
+                    //titleStyle : "titleStyle01",
                    // titleId : "Siri",
-                    contentStyle : "style02", 
+                    contentStyle : "style02",
                     defaultSelectCallback :  this._selectCallbackRVRInstructions.bind(this),
                     buttonCount : 1,
                     buttonConfig : {
                         button1 : {
-                            labelId : "common.Ok", 
-                            appData : "Global.Yes" 
+                            labelId : "common.Ok",
+                            appData : "Global.Yes"
                         },
                     },
                     text1Id : "DisconnectThenReconnect",
@@ -491,13 +507,13 @@ systemApp.prototype.appInit = function()
     //@formatter:off
     this._messageTable = {
         // Indicates Available / Unavailable for (most) apps, communication items, entertainment items, navi, and settings.
-        "StatusMenu"                  : this._StatusMenuMsgHandler.bind(this),  
+        "StatusMenu"                  : this._StatusMenuMsgHandler.bind(this),
 
         // Add or remove certain menu items.
         "StatusMenuVisible"           : this._StatusMenuVisibleMsgHandler.bind(this),
 
         // Indicates Available / Unavailable and device name for USB1 and USB2 audio
-        "StatusMenuUSBAudio"          : this._StatusMenuUSBAudioMsgHandler.bind(this), 
+        "StatusMenuUSBAudio"          : this._StatusMenuUSBAudioMsgHandler.bind(this),
 
         // Indicates Available / Unavailable and device name for BTAudio
         "StatusMenuBTAudio"           : this._StatusMenuBTAudioMsgHandler.bind(this),
@@ -525,28 +541,28 @@ systemApp.prototype.appInit = function()
 
         // Update whether scheduled maintenance is due
         "StatusUpdateSchedMaint"      : this._StatusUpdateSchedMaintHandler.bind(this),
-		
+
 		// Show an Siri SBN
 		"ShowStateSBN_SiriActive"	  : this._ShowStateSBN_SiriActiveMsgHandler.bind(this),
-		
+
 		// Show an Siri Error SBN
 		"TimedSBN_SiriError"		  : this._TimedSBN_SiriErrorMsgHandler.bind(this),
-		
+
 		// Remove an Siri SBN
 		"RemoveStateSBN_SiriActive"	  : this._RemoveStateSBN_SiriActiveMsgHandler.bind(this),
-		
+
 		//Show timed SBN Voice not supported
 		"TimedSBN_VoiceNotSupported"  : this._TimedSBN_VoiceNotSupportedMsgHandler.bind(this),
-		
-		//At Speed Restriction 
+
+		//At Speed Restriction
 		"Global.AtSpeed"			  : this._AtSpeedMsgHandler.bind(this),
-		
-		//At No Speed 
+
+		//At No Speed
 		"Global.NoSpeed"	          : this._NoSpeedMsgHandler.bind(this),
     };
     //@formatter:on
 
-    // (Object) Related values needed to implement the Disclaimer timeout. From the requirements: 
+    // (Object) Related values needed to implement the Disclaimer timeout. From the requirements:
     //      "Note:  The Disclaimer Screen Timer is paused if covered up by another screen."
     // The Disclaimer screen might be shown a second time during a quick start sequence that follows a normal start sequence
     // so the remaining time must be restarted when this happens.
@@ -555,20 +571,20 @@ systemApp.prototype.appInit = function()
         // (Boolean) If true when showing the Disclaimer we should reset the default remaining time. The reset
         // flag is set true after a the timer times out or the user hits the OK button.
         reset : true,
-        
+
         // (Number) Milliseconds remaining to show the Disclaimer.
         remaining : 0,
-        
+
         // (Number) Millisecond timestamp when the Disclaimer was first shown.
         whenStarted : 0,
-        
+
         // (Handle) setTimeout ID
         timeoutId : null
     };
-	
-	// Array containing the appName of the list which supports Speed Restriction. 
+
+	// Array containing the appName of the list which supports Speed Restriction.
 	//@appName = appName of the item , @status = default value of disabled property for particular appName
-	this._SpeedRestrictedApps = [ {appName : "vdt_settings",status : true}];	
+	this._SpeedRestrictedApps = [ {appName : "vdt_settings",status : true}];
 };
 
 /**************************
@@ -615,29 +631,32 @@ systemApp.prototype._initEntertainmentDataList = function()
 
     if (framework.localize.getRegion() === framework.localize.REGIONS.Japan)
     {
-        // Traffic alert is Japan only. We do not get a separate StatusMenuVisible for this so we only 
+        // Traffic alert is Japan only. We do not get a separate StatusMenuVisible for this so we only
         // add it if the region is Japan.
-        items.push({ appData : { appName : 'amradio', isVisible : true, audioSourceId : 'TrafficInfo' , mmuiEvent : 'SelectTrafficAlert' }, text1Id : 'TrafficAlertsItem', disabled : true, itemStyle : 'style01', hasCaret: false });
+        items.push({ appData : { appName : 'amradio', isVisible : true, audioSourceId : 'TrafficInfo' , mmuiEvent : 'SelectTrafficAlert' }, text1Id : 'TrafficAlertsItem', disabled : true, itemStyle : 'style01', hasCaret: false, pos: '0' });
     }
-
+    
     items.push(
-        { appData : { appName : '',         isVisible : true,  audioSourceId : 'USB_A',     mmuiEvent : 'SelectUSBA'     }, text1Id : 'UsbAudioA',     disabled : true,   itemStyle : 'style01',   hasCaret: false },
-        { appData : { appName : '',         isVisible : true,  audioSourceId : 'USB_B',     mmuiEvent : 'SelectUSBB'     }, text1Id : 'UsbAudioB',     disabled : true,   itemStyle : 'style01',   hasCaret: false },
-        { appData : { appName : 'btaudio',  isVisible : true,  audioSourceId : 'BTAudio',   mmuiEvent : 'SelectBTAudio'  }, text1Id : 'Bluetooth',     disabled : false,  itemStyle : 'style01',   hasCaret: false },
-        { appData : { appName : 'auxin',    isVisible : true,  audioSourceId : 'AuxIn',     mmuiEvent : 'SelectAuxIn'    }, text1Id : 'AuxIn',         disabled : true,   itemStyle : 'style01',   hasCaret: false },
-        { appData : { appName : 'fmradio',  isVisible : true,  audioSourceId : 'FMRadio',   mmuiEvent : 'SelectRadioFM'  }, text1Id : 'FmRadio',       disabled : true,   itemStyle : 'style01',   hasCaret: false },
-        { appData : { appName : 'pandora',  isVisible : false, audioSourceId : 'Pandora',   mmuiEvent : 'SelectPandora'  }, text1Id : 'Pandora',       disabled : true,   itemStyle : 'style01',   hasCaret: false },
-        { appData : { appName : 'stitcher', isVisible : true,  audioSourceId : 'Stitcher',  mmuiEvent : 'SelectStitcher' }, text1Id : 'StitcherItem',  disabled : true,   itemStyle : 'style01',   hasCaret: false },
-        { appData : { appName : 'aharadio', isVisible : false, audioSourceId : 'AhaRadio',  mmuiEvent : 'SelectAhaRadio' }, text1Id : 'AhaRadio',      disabled : true,   itemStyle : 'style01',   hasCaret: false },
-        { appData : { appName : 'cd',       isVisible : false, audioSourceId : 'CD',        mmuiEvent : 'SelectCD'       }, text1Id : 'CdPlayer',      disabled : true,   itemStyle : 'style01',   hasCaret: false },
-        { appData : { appName : 'dvd',      isVisible : false, audioSourceId : 'DVD',       mmuiEvent : 'SelectDVD'      }, text1Id : 'DVDItem',       disabled : true,   itemStyle : 'style01',   hasCaret: false },
-        { appData : { appName : 'amradio',  isVisible : true,  audioSourceId : 'AMRadio',   mmuiEvent : 'SelectRadioAM'  }, text1Id : 'AmRadio',       disabled : true,   itemStyle : 'style01',   hasCaret: false },
-        { appData : { appName : 'satradio', isVisible : false, audioSourceId : 'SatRadio',  mmuiEvent : 'SelectSatRadio' }, text1Id : 'SdarsRadio',    disabled : true,   itemStyle : 'style01',   hasCaret: false },
-        { appData : { appName : 'dab',      isVisible : false, audioSourceId : 'DAB',       mmuiEvent : 'SelectDAB'      }, text1Id : 'DabRadio',      disabled : true,   itemStyle : 'style01',   hasCaret: false },
-        { appData : { appName : 'tv',       isVisible : false, audioSourceId : 'TV',        mmuiEvent : 'SelectTV'       }, text1Id : 'TVItem',        disabled : true,   itemStyle : 'style01',   hasCaret: false }
+        { appData : { appName : 'fmradio',  isVisible : true,  audioSourceId : 'FMRadio',   mmuiEvent : 'SelectRadioFM'  }, text1Id : 'FmRadio',       disabled : true,   itemStyle : 'style01',   hasCaret: false, pos: FmRadioPos },
+        { appData : { appName : 'amradio',  isVisible : true,  audioSourceId : 'AMRadio',   mmuiEvent : 'SelectRadioAM'  }, text1Id : 'AmRadio',       disabled : true,   itemStyle : 'style01',   hasCaret: false, pos: AmRadioPos },
+        { appData : { appName : 'dab',      isVisible : false, audioSourceId : 'DAB',       mmuiEvent : 'SelectDAB'      }, text1Id : 'DabRadio',      disabled : true,   itemStyle : 'style01',   hasCaret: false, pos: DabRadioPos },
+        { appData : { appName : 'satradio', isVisible : false, audioSourceId : 'SatRadio',  mmuiEvent : 'SelectSatRadio' }, text1Id : 'SdarsRadio',    disabled : true,   itemStyle : 'style01',   hasCaret: false, pos: SdarsRadioPos },
+        { appData : { appName : 'aharadio', isVisible : false, audioSourceId : 'AhaRadio',  mmuiEvent : 'SelectAhaRadio' }, text1Id : 'AhaRadio',      disabled : true,   itemStyle : 'style01',   hasCaret: false, pos: AhaRadioPos },
+        { appData : { appName : 'pandora',  isVisible : false, audioSourceId : 'Pandora',   mmuiEvent : 'SelectPandora'  }, text1Id : 'Pandora',       disabled : true,   itemStyle : 'style01',   hasCaret: false, pos: PandoraPos },
+        { appData : { appName : 'stitcher', isVisible : true,  audioSourceId : 'Stitcher',  mmuiEvent : 'SelectStitcher' }, text1Id : 'StitcherItem',  disabled : true,   itemStyle : 'style01',   hasCaret: false, pos: StitcherItemPos },
+        { appData : { appName : 'btaudio',  isVisible : true,  audioSourceId : 'BTAudio',   mmuiEvent : 'SelectBTAudio'  }, text1Id : 'Bluetooth',     disabled : false,  itemStyle : 'style01',   hasCaret: false, pos: BluetoothPos },
+        { appData : { appName : '',         isVisible : true,  audioSourceId : 'USB_A',     mmuiEvent : 'SelectUSBA'     }, text1Id : 'UsbAudioA',     disabled : true,   itemStyle : 'style01',   hasCaret: false, pos: UsbAudioAPos },
+        { appData : { appName : '',         isVisible : true,  audioSourceId : 'USB_B',     mmuiEvent : 'SelectUSBB'     }, text1Id : 'UsbAudioB',     disabled : true,   itemStyle : 'style01',   hasCaret: false, pos: UsbAudioBPos },
+        { appData : { appName : 'cd',       isVisible : false, audioSourceId : 'CD',        mmuiEvent : 'SelectCD'       }, text1Id : 'CdPlayer',      disabled : true,   itemStyle : 'style01',   hasCaret: false, pos: CdPlayerPos },
+        { appData : { appName : 'auxin',    isVisible : true,  audioSourceId : 'AuxIn',     mmuiEvent : 'SelectAuxIn'    }, text1Id : 'AuxIn',         disabled : true,   itemStyle : 'style01',   hasCaret: false, pos: AuxInPos },
+        { appData : { appName : 'dvd',      isVisible : false, audioSourceId : 'DVD',       mmuiEvent : 'SelectDVD'      }, text1Id : 'DVDItem',       disabled : true,   itemStyle : 'style01',   hasCaret: false, pos: DVDItemPos },
+        { appData : { appName : 'tv',       isVisible : false, audioSourceId : 'TV',        mmuiEvent : 'SelectTV'       }, text1Id : 'TVItem',        disabled : true,   itemStyle : 'style01',   hasCaret: false, pos: TVItemPos }
     );
+    items.sort(function(a, b) {
+      return a.pos - b.pos;
+    })
 
-    // All Entertainment list items are kept in _masterEntertainmentDataList, including items that may or may not be present on a specific vehicle. 
+    // All Entertainment list items are kept in _masterEntertainmentDataList, including items that may or may not be present on a specific vehicle.
     //
     // MMUI will send a StatusMenuVisible message to show or hide a particular item. The message handler will update the isVisible flag in the appData above.
     // During Entertainment contexts readyFunction in we build a shallow copy of the master data and set it on the list.
@@ -665,7 +684,7 @@ systemApp.prototype._initApplicationsDataList = function()
 
     );
 
-    // All Application list items are kept in _masterApplicationDataList, including items that may or may not be present on a specific vehicle. 
+    // All Application list items are kept in _masterApplicationDataList, including items that may or may not be present on a specific vehicle.
     //
     // MMUI will send a StatusMenuVisible message to show or hide a particular item. The message handler will update the isVisible flag in the appData above.
     // During Application contexts readyFunction in we build a shallow copy of the master data and set it on the list.
@@ -691,15 +710,15 @@ systemApp.prototype._initCommunicationsDataList = function()
         { appData : { appName : 'syssettings', isVisible : true,  mmuiEvent : 'SelectSettings'      }, text1Id : 'SettingsCommunication', disabled : true,  itemStyle : 'style01', hasCaret : false }
     );
 
-    // All Communication list items are kept in _masterCommunicationDataList, including items that may or may not be present on a specific vehicle. 
+    // All Communication list items are kept in _masterCommunicationDataList, including items that may or may not be present on a specific vehicle.
     //
     // MMUI will send a StatusMenuVisible message to show or hide a particular item. The message handler will update the isVisible flag in the appData above.
     // During Communication contexts readyFunction in we build a shallow copy of the master data and set it on the list.
 
     this._communicationsDataList = {
-    
+
         items: items
-     
+
     };
 };
 
@@ -746,10 +765,10 @@ systemApp.prototype._StatusMenuMsgHandler = function(msg)
 
     var appName = msg.params.payload.statusMenu.appName;
     var isDisabled = msg.params.payload.statusMenu.appStatus !== "Available";
-	
-	//Update the Availability Status of Speed Restricted Apps 
+
+	//Update the Availability Status of Speed Restricted Apps
 	this._StatusMenuChanged(appName,isDisabled);
-	
+
     // Update the static menu lists so they are correctly enable next time the context is shown
 	this._enableAppListItem(appName, isDisabled, this._masterApplicationDataList);
 	this._enableAppListItem(appName, isDisabled, this._communicationsDataList);
@@ -774,7 +793,7 @@ systemApp.prototype._StatusMenuMsgHandler = function(msg)
 							{
 								var speedRestrictedAppName = null;
 								var isNoAppAtSpeed = true;
-								
+
 								for(var j = 0; j < this._SpeedRestrictedApps.length; ++j)
 								{
 									speedRestrictedAppName = this._SpeedRestrictedApps[j].appName;
@@ -884,9 +903,9 @@ systemApp.prototype._StatusMenuVisibleMsgHandler = function(msg)
         }
 
         // Update the Entertainment context if it is currently displayed.
-        if (isEntertainmentDirty 
-            && this._currentContext 
-            && this._currentContext.ctxtId === "Entertainment" 
+        if (isEntertainmentDirty
+            && this._currentContext
+            && this._currentContext.ctxtId === "Entertainment"
             && this._currentContextTemplate)
         {
             var dataList = this._buildEntertainmentDataList();
@@ -907,9 +926,9 @@ systemApp.prototype._StatusMenuVisibleMsgHandler = function(msg)
         }
 
         // Update the Applications context if it is currently displayed.
-        if (isApplicationsDirty 
-            && this._currentContext 
-            && this._currentContext.ctxtId === "Applications" 
+        if (isApplicationsDirty
+            && this._currentContext
+            && this._currentContext.ctxtId === "Applications"
             && this._currentContextTemplate)
         {
             var dataList = this._buildApplicationsDataList();
@@ -933,11 +952,11 @@ systemApp.prototype._StatusMenuVisibleMsgHandler = function(msg)
                     this._communicationsDataList.items[i].appData.isVisible = isVisible;
                 }
             }
-    
+
             // Update the Communication context if it is currently displayed.
-            if (isCommunicationDirty 
-                && this._currentContext 
-                && this._currentContext.ctxtId === "Communication" 
+            if (isCommunicationDirty
+                && this._currentContext
+                && this._currentContext.ctxtId === "Communication"
                 && this._currentContextTemplate)
             {
                 var dataList = this._buildCommunicationDataList();
@@ -1031,9 +1050,9 @@ systemApp.prototype._StatusMenuBTAudioMsgHandler = function(msg)
                 var isAvailable = msg.params.payload.appStatus === "Available";
                 var deviceName = msg.params.payload.deviceName;
 
-                // NOTE: This message does not enable/disable the BTAudio menu item. 
+                // NOTE: This message does not enable/disable the BTAudio menu item.
                 // (The StatusMenu message will enable it on startup.)
-                
+
                 if (isAvailable && typeof deviceName === "string" && deviceName.length > 0)
                 {
                     this._masterEntertainmentDataList.items[i].text1Id = "BluetoothWithDevice";
@@ -1104,9 +1123,9 @@ systemApp.prototype._StatusUpdateEcoEnergyMsgHandler = function(msg)
         }
 
         // Update the Applications context if it is currently displayed.
-        if (isApplicationsDirty 
-            && this._currentContext 
-            && this._currentContext.ctxtId === "Applications" 
+        if (isApplicationsDirty
+            && this._currentContext
+            && this._currentContext.ctxtId === "Applications"
             && this._currentContextTemplate)
         {
             var dataList = this._buildApplicationsDataList();
@@ -1216,7 +1235,7 @@ systemApp.prototype._TimedSBN_SourceNotAvailableMsgHandler = function(msg)
             case "USBAudio":
             case "USB_A":
             case "USB_B":
-                params.text1Id = "AudioSourceNotAvailableUSB";   
+                params.text1Id = "AudioSourceNotAvailableUSB";
                 break;
 
             case "CD":
@@ -1421,14 +1440,14 @@ systemApp.prototype._NoSpeedMsgHandler = function(msg)
 systemApp.prototype._selectCallbackHomeScreen = function(mainMenuCtrlObj, appData, params)
 {
     log.debug("_selectCallbackHomeScreen() called for icon: " + params.icon);
-    
+
     var icon = params.icon;
-    
+
     switch(icon)
     {
         case "app":
             framework.sendEventToMmui(this.uiaId, "SelectApplications");
-            break;   
+            break;
         case "com":
             framework.sendEventToMmui(this.uiaId, "SelectCommunication");
             break;
@@ -1438,9 +1457,9 @@ systemApp.prototype._selectCallbackHomeScreen = function(mainMenuCtrlObj, appDat
         case "nav":
             framework.sendEventToMmui(this.uiaId, "SelectNavigation");
             break;
-        case "set": 
-            framework.sendEventToMmui(this.uiaId, "SelectSettings");  
-            break; 
+        case "set":
+            framework.sendEventToMmui(this.uiaId, "SelectSettings");
+            break;
     }
 };
 
@@ -1460,7 +1479,7 @@ systemApp.prototype._menuItemSelectCallback = function(listCtrlObj, appData, par
 systemApp.prototype._CommCtxtContextIn = function()
 {
     var scrollTo = 0;
-    
+
     // We cannot use the data list in the current context here, becuase it doesn't exist yet
     // so we use _buildCommunicationDataList() just like _readyCommunications() will
     var dataList = this._buildCommunicationDataList();
@@ -1497,11 +1516,11 @@ systemApp.prototype._readyApplications = function()
     if (this._currentContext && this._currentContextTemplate)
     {
         this._AtSpeedDisabled = framework.common.getAtSpeedValue();
-		
+
 		var dataList = this._buildApplicationsDataList();
         this._currentContextTemplate.list2Ctrl.setDataList(dataList);
         this._currentContextTemplate.list2Ctrl.updateItems(0, dataList.items.length - 1);
-		
+
 		// Checking for Speed Restricted Items For Applications Screen
 		this._updateSpeedRestrictedApps(this._AtSpeedDisabled);
     }
@@ -1542,7 +1561,7 @@ systemApp.prototype._readyEntertainment = function()
 		var dataList = this._buildEntertainmentDataList();
         this._currentContextTemplate.list2Ctrl.setDataList(dataList);
         this._currentContextTemplate.list2Ctrl.updateItems(0, dataList.items.length - 1);
-		
+
 		// Checking for Speed Restricted Items For Entertainment Screen
 		this._updateSpeedRestrictedApps(this._AtSpeedDisabled);
     }
@@ -1584,7 +1603,7 @@ systemApp.prototype._readyCommunication = function()
 		var dataList = this._buildCommunicationDataList();
         this._currentContextTemplate.list2Ctrl.setDataList(dataList);
         this._currentContextTemplate.list2Ctrl.updateItems(0, dataList.items.length - 1);
-		
+
 		// Checking for Speed Restricted Items For Communication Screen
 		this._updateSpeedRestrictedApps(this._AtSpeedDisabled);
     }
@@ -1625,14 +1644,14 @@ systemApp.prototype._selectCallbackNoConnectionNotify = function(dialogBtnCtrlOb
             switch(appData)
             {
                 case 'SelectConnect':
-                    framework.sendEventToMmui("system", appData); 
+                    framework.sendEventToMmui("system", appData);
                     break;
 
-                case 'Global.No': 
-                    framework.sendEventToMmui("common", appData); 
+                case 'Global.No':
+                    framework.sendEventToMmui("common", appData);
                     break;
             }
-            break; 
+            break;
         }
 };
 
@@ -1768,7 +1787,7 @@ systemApp.prototype._msgConnectCallback = function(msg)
     {
         this._msgApiConnection = msg.params.connection;
         var params = {
-            "connection_in" : this._msgApiConnection, 
+            "connection_in" : this._msgApiConnection,
             "context_in" : 0,
             "request_type" : 3, // MSG_REQUEST_NEW_DATA_STORE_AND_RETRIEVE
         };
@@ -1793,31 +1812,31 @@ systemApp.prototype._msgGetNewMessagesListCallback = function(msg)
             {
                 log.info("####AppSDK Success####");
                 this._closeMsgApiConnection();
-        
+
                 var messages = msg.params.message_list.messages;
-        
+
                 var dataList = {
                     itemCountKnown : true,
                     itemCount : 0,
                     items: [],
                     vuiSupport: true
                 };
-        
+
                 for (var i = 0; i < messages.length; i++)
                 {
                     var item = {
                         appData: { messageId: messages[i].id, name: messages[i].sender },
-                        itemStyle : 'style07', 
+                        itemStyle : 'style07',
                         styleMod : 'bold',
                         hasCaret : false,
                         text1: messages[i].sender,
-                        image1 : '', 
+                        image1 : '',
                         label1 : utility.formatSmartDateTime(messages[i].datetime, false),
                         label2 : '', // label2 is only set for email's below and left blank for sms.
                         labelWidth : 'wide',
                     };
-        
-                    // Set image1 and set appData event name. 
+
+                    // Set image1 and set appData event name.
                     switch (messages[i].clientType)
                     {
                         // MSG_CLIENT_EMAIL
@@ -1826,19 +1845,19 @@ systemApp.prototype._msgGetNewMessagesListCallback = function(msg)
                             item.image1 = 'common/images/icons/IcnListEmail_En.png';
                             item.label2 = messages[i].instance;
                             break;
-        
+
                         // MSG_CLIENT_SMS
                         case 2:
                             item.appData.eventId = 'SelectMessageSMS';
                             item.image1 = 'common/images/icons/IcnListSms_En.png';
                             break;
                     }
-        
+
                     dataList.items.push(item);
                 }
-        
+
                 dataList.itemCount = dataList.items.length;
-        
+
                 if (this._currentContextTemplate && this._currentContextTemplate.list2Ctrl)
                 {
                     this._currentContextTemplate.list2Ctrl.setDataList(dataList);
@@ -1855,7 +1874,7 @@ systemApp.prototype._msgGetNewMessagesListCallback = function(msg)
                 if (this._currentContextTemplate && this._currentContextTemplate.list2Ctrl)
                 {
                     this._currentContextTemplate.list2Ctrl.setLoading(false);
-                }        
+                }
                 break;
             }
 
@@ -1866,7 +1885,7 @@ systemApp.prototype._msgGetNewMessagesListCallback = function(msg)
                 if (this._currentContextTemplate && this._currentContextTemplate.list2Ctrl)
                 {
                     this._currentContextTemplate.list2Ctrl.setLoading(false);
-                }        
+                }
                 framework.sendEventToMmui(this.uiaId, "NotificationListRetrieveFailure");
                 this._closeMsgApiConnection();
                 break;
@@ -1879,7 +1898,7 @@ systemApp.prototype._msgGetNewMessagesListCallback = function(msg)
         if (this._currentContextTemplate && this._currentContextTemplate.list2Ctrl)
         {
             this._currentContextTemplate.list2Ctrl.setLoading(false);
-        }        
+        }
         framework.sendEventToMmui(this.uiaId, "NotificationListRetrieveFailure");
         this._closeMsgApiConnection();
     }
@@ -1890,8 +1909,8 @@ systemApp.prototype._closeMsgApiConnection = function()
     if (this._msgApiConnection)
     {
         var params = {
-            "connection_in" : this._msgApiConnection, 
-            "context_in" : 0,          
+            "connection_in" : this._msgApiConnection,
+            "context_in" : 0,
         };
         framework.sendRequestToAppsdk(this.uiaId, function(){}, "msg", "Disconnect", params);
         this._msgApiConnection = null;
@@ -1905,7 +1924,7 @@ systemApp.prototype._selectNotificationListItem = function(controlRef, appData, 
         switch (appData.eventId)
         {
             case 'SelectMessageEmail':
-                var stuff = { 
+                var stuff = {
                     payload : {
                         messageId : appData.messageId,
                     }
@@ -1914,7 +1933,7 @@ systemApp.prototype._selectNotificationListItem = function(controlRef, appData, 
                 break;
 
             case 'SelectMessageSMS':
-                var stuff = { 
+                var stuff = {
                     payload : {
                         messageId : appData.messageId,
                     }
@@ -1923,7 +1942,7 @@ systemApp.prototype._selectNotificationListItem = function(controlRef, appData, 
                 break;
 
             case 'SelectMissedCall':
-                var stuff = { 
+                var stuff = {
                     payload : {
                         messageId : appData.messageId,
                     }
@@ -2009,7 +2028,7 @@ systemApp.prototype._disclaimerTimedout = function()
     {
         framework.sendEventToMmui(this.uiaId, "Timeout");
     }
-	
+
 	//Incase after Timeout Disclaimer screen didnt remove then sends start the timer again
 	if (this._disclaimerTime.reset)
     {
@@ -2092,7 +2111,7 @@ systemApp.prototype._selectCallbackRVRInstructions = function(controlRef, appDat
 
 systemApp.prototype._readySourceReconnect = function()
 {
-    if (this._currentContext.params && 
+    if (this._currentContext.params &&
         this._currentContext.params.payload &&
         this._currentContextTemplate &&
         this._currentContextTemplate.dialog3Ctrl)
@@ -2155,7 +2174,7 @@ systemApp.prototype._selectSourceReconnect = function(controlRef, appData, param
 
 systemApp.prototype._readySourceReconnectFailed = function()
 {
-	if (this._currentContext.params && 
+	if (this._currentContext.params &&
         this._currentContext.params.payload &&
         this._currentContextTemplate &&
         this._currentContextTemplate.dialog3Ctrl)
@@ -2196,7 +2215,7 @@ systemApp.prototype._readySourceReconnectFailed = function()
 //Siri EnableRVR context ready to Display Function
 systemApp.prototype._readyEnableRVR = function()
 {
-    if (this._currentContext.params && 
+    if (this._currentContext.params &&
         this._currentContext.params.payload &&
         this._currentContextTemplate &&
         this._currentContextTemplate.dialog3Ctrl)
@@ -2204,14 +2223,14 @@ systemApp.prototype._readyEnableRVR = function()
         this._CachedDeviceName = this._currentContext.params.payload.deviceName;
 		var subMapObj = {nameOfDevice : this._CachedDeviceName}
 		this._currentContextTemplate.dialog3Ctrl.setText1Id("SiriDisabled",subMapObj);
-		
+
     }
 };
 
 //Siri SiriLaunchingError context ready to Display Function
 systemApp.prototype._readySiriLaunchingError = function()
 {
-    if (this._currentContext.params && 
+    if (this._currentContext.params &&
         this._currentContext.params.payload &&
         this._currentContextTemplate &&
         this._currentContextTemplate.dialog3Ctrl)
@@ -2219,7 +2238,7 @@ systemApp.prototype._readySiriLaunchingError = function()
         this._CachedDeviceName = this._currentContext.params.payload.deviceName;
 		var subMapObj = {nameOfDevice : this._CachedDeviceName}
 		this._currentContextTemplate.dialog3Ctrl.setText1Id("DisconnectThenReconnect",subMapObj);
-		
+
     }
 };
 
@@ -2233,7 +2252,7 @@ systemApp.prototype._selectSourceReconnectFailed = function(controlRef, appData,
     }
 };
 
-// Store the Availability Status of Speed Restricted Apps 
+// Store the Availability Status of Speed Restricted Apps
 systemApp.prototype._StatusMenuChanged = function(appName, isDisabled)
 {
     for(var i = 0; i < this._SpeedRestrictedApps.length; ++i)
@@ -2255,9 +2274,9 @@ systemApp.prototype._updateSpeedRestrictedApps = function(isDisabled)
 	{
 		appName = this._SpeedRestrictedApps[i].appName;
 		status  =  this._SpeedRestrictedApps[i].status;
-		
+
 		log.info("AppName : "+appName+" is available or unavailable - (true/false)" +status);
-		
+
 		//Checks for Status Availability for the respective AppName
 		if(!status)
 		{

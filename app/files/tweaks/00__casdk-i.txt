@@ -52,7 +52,7 @@ else
 fi
 
 # install data reader files
-if [ ! -e /jci/casdk ] || [[ "${_CASDK_VER}" < "${CASDK_VER}" ]]
+if [ ! -e /jci/casdk ]
 then
 	mkdir -p /jci/casdk
 	cp -a ${MYDIR}/casdk/scripts/* /jci/casdk

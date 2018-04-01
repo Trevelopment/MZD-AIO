@@ -54,7 +54,11 @@ sed -i '/9969/d' /jci/scripts/stage_wifi.sh
 sed -i '/55554/d' /jci/scripts/stage_wifi.sh
 
 ADDIT_APPS=0
-if grep -Fq "_aiotweaks" /jci/opera/opera_dir/userjs/additionalApps.json
+if [ -e /jci/opera/opera_dir/userjs/CustomApplicationsProxy.js ] || [ -e /jci/opera/opera_dir/userjs/nativeApps.js ]
+then
+  log_message "===                          Found CASDK                              ==="
+  ADDIT_APPS=1
+elif grep -Fq "_aiotweaks" /jci/opera/opera_dir/userjs/additionalApps.json
 then
 	log_message "===          Found AIOTweaksApp entry in additionalApps.json          ==="
 	ADDIT_APPS=1
@@ -75,6 +79,7 @@ if [ $ADDIT_APPS -eq 0 ]
 then
 	log_message "===    No more entrys in additionalApps.json, files will be deleted   ==="
 	rm -f /jci/opera/opera_dir/userjs/additionalApps.*
+  rm -f /jci/opera/opera_dir/userjs/app.js
 else
 	log_message "===          delete speedometer entry from additionalApps.json        ==="
 	remove_app_json "_speedometer"

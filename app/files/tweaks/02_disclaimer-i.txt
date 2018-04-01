@@ -38,6 +38,9 @@ if [ $TESTBKUPS -eq 1 ]
 then
   cp -a /jci/gui/apps/system/js/systemApp.js "${MYDIR}/bakups/test/systemApp_before-disclaimer.js"
 fi
+# To reuse prevous audio order when installing disclaimer on top of already changed order
+#AUDIO_VARS="${MYDIR}/config/audio_order_AND_no_More_Disclaimer/systemAppVars.js"
+#if grep -q "^var FmRadioPos" systemAppVars.js
 
 # Compatibility check falls into 4 groups:
 # 59.00.4XX ($COMPAT_GROUP=4)
@@ -50,14 +53,16 @@ then
   cp -a "${MYDIR}/config/audio_order_AND_no_More_Disclaimer/systemApp.js.disclaimer" /jci/gui/apps/system/js/
   log_message "===               Added marker 'systemApp.js.disclaimer'              ==="
 
-  if [ -e /jci/gui/apps/system/js/systemApp.js.audio ]
+  if [ -e /jci/gui/apps/system/js/systemApp.js.audio ] && grep -q "^var FmRadioPos" /jci/gui/apps/system/js/systemApp.js.audio
   then
     if [ $TRACKORDER_DISCLAIMER -eq 1 ]
     then
-      cp -a "${MYDIR}/config/audio_order_AND_no_More_Disclaimer/both/jci/gui/apps/system/js/systemApp.${TRACKORDER_DISCLAIMER_FILE}.js" /jci/gui/apps/system/js/systemApp.js
+      #cp -a "${MYDIR}/config/audio_order_AND_no_More_Disclaimer/both/jci/gui/apps/system/js/systemApp.${TRACKORDER_DISCLAIMER_FILE}.js" /jci/gui/apps/system/js/systemApp.js
+      cat /jci/gui/apps/system/js/systemApp.js.audio  "${MYDIR}/config/audio_order_AND_no_More_Disclaimer/both/jci/gui/apps/system/js/systemApp.${TRACKORDER_DISCLAIMER_FILE}.js" > /jci/gui/apps/system/js/systemApp.js
       log_message "=== Removed Disclaimer for ${CMU_SW_VER}, audio order still changed ==="
     else
-      cp -a "${MYDIR}/config/audio_order_AND_no_More_Disclaimer/both/jci/gui/apps/system/js/systemApp.js" /jci/gui/apps/system/js/
+      #cp -a "${MYDIR}/config/audio_order_AND_no_More_Disclaimer/both/jci/gui/apps/system/js/systemApp.js" /jci/gui/apps/system/js/
+      cat /jci/gui/apps/system/js/systemApp.js.audio "${MYDIR}/config/audio_order_AND_no_More_Disclaimer/both/jci/gui/apps/system/js/systemApp.js" > /jci/gui/apps/system/js/systemApp.js
       log_message "===           Removed Disclaimer, audio order still changed           ==="
     fi
   else

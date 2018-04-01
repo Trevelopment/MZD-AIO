@@ -1,0 +1,31 @@
+<div id="patcherPrompt" class="w3-modal">
+  <div class="w3-modal-content w3-card-4">
+    <header class="w3-container w3-indigo">
+      <span onclick="document.getElementById('patcherPrompt').style.display='none'" class="closeBtn">&times;</span>
+      <h2>AA Patcher - Patch 3rd Party Android Auto Compatible Apps to Work With AA v3</h2>
+    </header>
+    <div class="w3-container">
+      <ul>
+        <h5>1. First, uninstall from your phone the app you are going to patch.</h5>
+        <h5>2. Enable adb debugging in developer options on your phone. </h5>
+        <h5>3. Connect your phone to your PC with a USB cable. </h5>
+        <h5>4. Choose an app to patch below or copy any<b> AA compatible apk file</b> to your <b>desktop</b> and <b>rename the file:</b> <code>my.apk</code></h5>
+      </ul>
+      <div class="w3-medium">
+        <div class=""> <a class="w3-btn w3-hover-blue aapatcher-btn" href onclick="runAAPatcher('aamirror.apk')">AA Mirror</a> - Phone Screen Mirror To AA</div>
+        <div class=""> <a class="w3-btn w3-hover-blue aapatcher-btn" href onclick="runAAPatcher('youtubeauto.apk')">Car Stream</a> - Previously 'YouTube Auto' - Plays Videos</div>
+        <div class=""> <a class="w3-btn w3-hover-blue aapatcher-btn" href onclick="runAAPatcher('widgets.apk')">Widgets for Auto</a> - Display Widgets From Apps On Your Phone</div>
+        <div class=""> <a class="w3-btn w3-hover-blue aapatcher-btn" href onclick="runAAPatcher()">my.apk</a> - Any Android Auto Compatible App <br>(Make sure 'my.apk' is on your Desktop here: <b><span class="desktop-location"></span>)</b></div>
+      </div>
+    </div>
+    <footer class="w3-container w3-red">
+      <p class="w3-panel">I DID NOT DEVELOP THESE ANDROID APPS AND TAKE NO RESPONSIBILITY FOR THEM. THEY ARE ALL OPEN SOURCE PROJECTS MORE INFORMATION ABOUT THEM CAN BE FOUND ON <a href="https://github.com" class="link">GITHUB.</a></p>
+    </footer>
+  </div>
+</div>
+<script>
+  $(function() {
+    $('.desktop-location').text(app.getPath('desktop'))
+  })
+ // require('assets/js/ex-links.js')
+</script>

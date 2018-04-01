@@ -578,6 +578,15 @@
 .icon-droplet:before {
   content: "\e9b7";
 }
+.icon-randcolor:before {
+  content: "\f074";
+}
+.icon-randcolor:hover:before {
+  content: "\e9b7";
+}
+i.icon-randcolor.intips {
+    margin-left: 10px;
+}
 .icon-paint-format:before {
   content: "\e9b8";
 }
@@ -3225,6 +3234,7 @@
 .icon-file-text:before {
   content: "\f15c";
 }
+.icon-sort-numeric-asc:hover:before,
 .icon-sort-alpha-asc:before {
   content: "\f15d";
 }

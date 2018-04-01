@@ -625,21 +625,24 @@ systemApp.prototype._initEntertainmentDataList = function()
   }
 
   items.push(
-    { appData : { appName : 'fmradio',  isVisible : true,  audioSourceId : 'FMRadio',   mmuiEvent : 'SelectRadioFM'  }, text1Id : 'FmRadio',       disabled : true,   itemStyle : 'style01',   hasCaret: false },
-    { appData : { appName : 'amradio',  isVisible : true,  audioSourceId : 'AMRadio',   mmuiEvent : 'SelectRadioAM'  }, text1Id : 'AmRadio',       disabled : true,   itemStyle : 'style01',   hasCaret: false },
-    { appData : { appName : 'dab',      isVisible : false, audioSourceId : 'DAB',       mmuiEvent : 'SelectDAB'      }, text1Id : 'DabRadio',      disabled : true,   itemStyle : 'style01',   hasCaret: false },
-    { appData : { appName : 'satradio', isVisible : false, audioSourceId : 'SatRadio',  mmuiEvent : 'SelectSatRadio' }, text1Id : 'SdarsRadio',    disabled : true,   itemStyle : 'style01',   hasCaret: false },
-    { appData : { appName : 'aharadio', isVisible : false, audioSourceId : 'AhaRadio',  mmuiEvent : 'SelectAhaRadio' }, text1Id : 'AhaRadio',      disabled : true,   itemStyle : 'style01',   hasCaret: false },
-    { appData : { appName : 'pandora',  isVisible : false, audioSourceId : 'Pandora',   mmuiEvent : 'SelectPandora'  }, text1Id : 'Pandora',       disabled : true,   itemStyle : 'style01',   hasCaret: false },
-    { appData : { appName : 'stitcher', isVisible : true,  audioSourceId : 'Stitcher',  mmuiEvent : 'SelectStitcher' }, text1Id : 'StitcherItem',  disabled : true,   itemStyle : 'style01',   hasCaret: false },
-    { appData : { appName : 'btaudio',  isVisible : true,  audioSourceId : 'BTAudio',   mmuiEvent : 'SelectBTAudio'  }, text1Id : 'Bluetooth',     disabled : false,  itemStyle : 'style01',   hasCaret: false },
-    { appData : { appName : '',         isVisible : true,  audioSourceId : 'USB_A',     mmuiEvent : 'SelectUSBA'     }, text1Id : 'UsbAudioA',     disabled : true,   itemStyle : 'style01',   hasCaret: false },
-    { appData : { appName : '',         isVisible : true,  audioSourceId : 'USB_B',     mmuiEvent : 'SelectUSBB'     }, text1Id : 'UsbAudioB',     disabled : true,   itemStyle : 'style01',   hasCaret: false },
-    { appData : { appName : 'cd',       isVisible : false, audioSourceId : 'CD',        mmuiEvent : 'SelectCD'       }, text1Id : 'CdPlayer',      disabled : true,   itemStyle : 'style01',   hasCaret: false },
-    { appData : { appName : 'auxin',    isVisible : true,  audioSourceId : 'AuxIn',     mmuiEvent : 'SelectAuxIn'    }, text1Id : 'AuxIn',         disabled : true,   itemStyle : 'style01',   hasCaret: false },
-    { appData : { appName : 'dvd',      isVisible : false, audioSourceId : 'DVD',       mmuiEvent : 'SelectDVD'      }, text1Id : 'DVDItem',       disabled : true,   itemStyle : 'style01',   hasCaret: false },
-    { appData : { appName : 'tv',       isVisible : false, audioSourceId : 'TV',        mmuiEvent : 'SelectTV'       }, text1Id : 'TVItem',        disabled : true,   itemStyle : 'style01',   hasCaret: false }
+      { appData : { appName : 'fmradio',  isVisible : true,  audioSourceId : 'FMRadio',   mmuiEvent : 'SelectRadioFM'  }, text1Id : 'FmRadio',       disabled : true,   itemStyle : 'style01',   hasCaret: false },
+      { appData : { appName : 'amradio',  isVisible : true,  audioSourceId : 'AMRadio',   mmuiEvent : 'SelectRadioAM'  }, text1Id : 'AmRadio',       disabled : true,   itemStyle : 'style01',   hasCaret: false },
+      { appData : { appName : 'dab',      isVisible : false, audioSourceId : 'DAB',       mmuiEvent : 'SelectDAB'      }, text1Id : 'DabRadio',      disabled : true,   itemStyle : 'style01',   hasCaret: false },
+      { appData : { appName : 'satradio', isVisible : false, audioSourceId : 'SatRadio',  mmuiEvent : 'SelectSatRadio' }, text1Id : 'SdarsRadio',    disabled : true,   itemStyle : 'style01',   hasCaret: false },
+      { appData : { appName : 'aharadio', isVisible : false, audioSourceId : 'AhaRadio',  mmuiEvent : 'SelectAhaRadio' }, text1Id : 'AhaRadio',      disabled : true,   itemStyle : 'style01',   hasCaret: false },
+      { appData : { appName : 'pandora',  isVisible : false, audioSourceId : 'Pandora',   mmuiEvent : 'SelectPandora'  }, text1Id : 'Pandora',       disabled : true,   itemStyle : 'style01',   hasCaret: false },
+      { appData : { appName : 'stitcher', isVisible : true,  audioSourceId : 'Stitcher',  mmuiEvent : 'SelectStitcher' }, text1Id : 'StitcherItem',  disabled : true,   itemStyle : 'style01',   hasCaret: false },
+      { appData : { appName : 'btaudio',  isVisible : true,  audioSourceId : 'BTAudio',   mmuiEvent : 'SelectBTAudio'  }, text1Id : 'Bluetooth',     disabled : false,  itemStyle : 'style01',   hasCaret: false },
+      { appData : { appName : '',         isVisible : true,  audioSourceId : 'USB_A',     mmuiEvent : 'SelectUSBA'     }, text1Id : 'UsbAudioA',     disabled : true,   itemStyle : 'style01',   hasCaret: false },
+      { appData : { appName : '',         isVisible : true,  audioSourceId : 'USB_B',     mmuiEvent : 'SelectUSBB'     }, text1Id : 'UsbAudioB',     disabled : true,   itemStyle : 'style01',   hasCaret: false },
+      { appData : { appName : 'cd',       isVisible : false, audioSourceId : 'CD',        mmuiEvent : 'SelectCD'       }, text1Id : 'CdPlayer',      disabled : true,   itemStyle : 'style01',   hasCaret: false },
+      { appData : { appName : 'auxin',    isVisible : true,  audioSourceId : 'AuxIn',     mmuiEvent : 'SelectAuxIn'    }, text1Id : 'AuxIn',         disabled : true,   itemStyle : 'style01',   hasCaret: false },
+      { appData : { appName : 'dvd',      isVisible : false, audioSourceId : 'DVD',       mmuiEvent : 'SelectDVD'      }, text1Id : 'DVDItem',       disabled : true,   itemStyle : 'style01',   hasCaret: false },
+      { appData : { appName : 'tv',       isVisible : false, audioSourceId : 'TV',        mmuiEvent : 'SelectTV'       }, text1Id : 'TVItem',        disabled : true,   itemStyle : 'style01',   hasCaret: false }
   );
+  items.sort(function(a, b) {
+    return a.pos - b.pos;
+  })
 
   // All Entertainment list items are kept in _masterEntertainmentDataList, including items that may or may not be present on a specific vehicle.
   //
@@ -682,7 +685,7 @@ systemApp.prototype._initApplicationsDataList = function()
   //We have two different context (Applications and VehicleStatusMonitor) for displaying Appication item(s),so context wise storing the array of appName(s) to be displayed on corresponding Context.
   this._applicationsCtxtWiseAppNames = {
     //Context Name :  // [appName,appName....]
-    "Applications"            : ["hdtrafficimage","idm","ecoenergy","driverid","vehicleStatus","vdt_settings","vdt","carplay","androidauto"],
+    "Applications"            : ["hdtrafficimage","idm","ecoenergy","driverid","vehicleStatus","vdt_settings","vdt","carplay","androidauto","_androidauto","_videoplayer","_aiotweaks","_speedometer"],
     "VehicleStatusMonitor"    : ["warnguide","vsm","schedmaint"]
   };
 };

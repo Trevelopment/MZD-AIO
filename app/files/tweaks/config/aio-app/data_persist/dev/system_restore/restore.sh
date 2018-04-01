@@ -1,5 +1,5 @@
 #!/bin/sh
-# restore.sh - MZD-AIO-TI Version 2.7.8
+# restore.sh - MZD-AIO-TI Version 2.7.9
 # The Full Restore script for the AIO Tweaks app
 # For more information visit http://mazdatweaks.com
 # By Trezdog44 - Trevelopment.com
@@ -673,7 +673,7 @@ rm -fr /jci/gui/apps/_videoplayer
 rm -fr /jci/gui/apps/_aiotweaks
 rm -fr /jci/gui/apps/_androidauto
 rm -fr /jci/gui/apps/_*
-rm -f /jci/opera/opera_dir/userjs/aio-startup.js
+rm -f /jci/opera/opera_dir/userjs/aio*js
 rm -f /jci/opera/opera_dir/userjs/addon-startup.js
 rm -f /jci/opera/opera_dir/userjs/mySpeedometer*
 rm -f /jci/opera/opera_dir/userjs/speedometer*

@@ -9,63 +9,15 @@
 -->
 <table>
   <tbody class="w3-col">
-    <tr class="w3-twothird"><td><strong style="font-size: 17px;">Speedometer Language: </strong></td></tr>
-    <tr ng-repeat="option in speedoOps | limitTo : 7 | filter:twkfltr" class="w3-hover-pale-blue w3-tooltip w3-third">
-      <td>
-        <div class="speedo-check extraRadio">
-          <input id="speedo{{option.id}}" type="radio" name="{{option.spOp}}" ng-model="user.speedoOps.lang" ng-value="option.id" />
-          <label for="speedo{{option.id}}" data-toggle="tooltip" data-placement="auto bottom" title="{{option.label}}" class="{{option.label}}"></label>
+    <div id="audioSourceOrder" class="w3-row w3-col w3-padding">
+      <!--span class="resetBtn"><i class="icon-reload" title="Reset To Default" ng-click="reset_entertainmentItems()"></i></span-->
+      <div class="w3-container w3-medium">
+        <div ng-repeat="sp in user.entertainmentItems | orderBy: 'pos'" class="w3-row 3-col audio-order">
+          <span class="w3-half">{{sp.label}}:</span>
+          <input type="number" min="0" max="99" ng-model="sp.pos" ng-value="sp.pos" class="w3-half" />
         </div>
-      </td>
-      <td>
-        <label for="speedo{{option.id}}" data-toggle="tooltip" data-placement="auto bottom" title="{{option.label}}">{{option.label}}</label>
-      </td>
-    </tr>
-    <tr class="w3-col w3-row"><td><strong style="font-size: 17px;">MPH or KM/H: </strong></td></tr>
-    <tr ng-repeat="option in speedoOps | limitTo : 2 : 7 | filter:twkfltr" class="w3-hover-pale-blue w3-tooltip w3-half">
-      <td>
-        <div class="speedo-check extraRadio">
-          <input id="speedo{{option.id}}" type="radio" name="{{option.spOp}}" ng-model="user.speedoOps.xph" ng-value="option.id" />
-          <label for="speedo{{option.id}}" data-toggle="tooltip" data-placement="auto bottom" title="{{option.label}}" class="{{option.label}}"></label>
-        </div>
-      </td>
-      <td>
-        <label for="speedo{{option.id}}" data-toggle="tooltip" data-placement="auto bottom" title="{{option.label}}">{{option.label}}</label>
-      </td>
-    </tr>
-    <tr class="w3-row w3-col"><td><strong style="font-size: 17px;">Speedometer In Statusbar: {{user.speedoOps.sml.code}}</strong></td></tr>
-    <tr ng-repeat="option in speedoOps | limitTo : 3 : 9 | filter:twkfltr" class="w3-hover-pale-blue w3-tooltip w3-third">
-      <td>
-        <div class="speedo-check extraRadio">
-          <input id="speedo{{option.id}}" type="radio" name="{{option.spOp}}" ng-model="user.speedoOps.sml" ng-value="option.id" />
-          <label for="speedo{{option.id}}" data-toggle="tooltip" data-placement="auto bottom" title="{{option.label}}" class="{{option.label}}"></label>
-        </div>
-      </td>
-      <td>
-        <label for="speedo{{option.id}}" data-toggle="tooltip" data-placement="auto bottom" title="{{option.label}}">{{option.label}}</label>
-      </td>
-    </tr>
-    <tr class="w3-row w3-col"><td><strong style="font-size: 17px;">Speedometer Background: {{user.speedoOps.bg}}</strong></td></tr>
-    <tr ng-repeat="option in speedoOps | limitTo : 2 : 12 | filter:twkfltr" class="w3-hover-pale-blue w3-tooltip w3-half">
-      <td>
-        <div class="speedo-check extraRadio">
-          <input id="speedo{{option.id}}" type="radio" name="{{option.spOp}}" ng-model="user.speedoOps.bg" ng-value="option.id" />
-          <label for="speedo{{option.id}}" data-toggle="tooltip" data-placement="auto bottom" title="{{option.label}}" class="{{option.label}}"></label>
-        </div>
-      </td>
-      <td>
-        <label for="speedo{{option.id}}" data-toggle="tooltip" data-placement="auto bottom" title="{{option.label}}">{{option.label}}</label>
-      </td>
-    </tr>
-    <tr ng-hide="user.speedoOps.bg == 31" class="w3-row w3-col"><td><strong style="font-size: 17px;">Background Opacity: {{user.speedoOps.opac}}</strong></td></tr>
-    <tr ng-hide="user.speedoOps.bg == 31" ng-repeat="option in speedoOps | limitTo : 1 : 14 | filter:twkfltr" class="w3-hover-pale-blue w3-tooltip w3-row">
-      <td>
-        <div class="speedo-check extraRange">
-          <input id="speedo{{option.id}}" type="range" name="{{option.spOp}}" ng-model="user.speedoOps.opac" min="0" max="1" step=".1" ng-value="option.val" />
-          <!--label for="speedo{{option.id}}" data-toggle="tooltip" data-placement="auto bottom" title="{{option.label}}" class="{{option.label}}"></label-->
-        </div>
-        <label for="speedo{{option.id}}" data-toggle="tooltip" data-placement="auto bottom" title="{{option.label}}">{{option.label}}</label>
-      </td>
-    </tr>
+      </div>
+    </div>
+    <div class="w3-panel">NOTE: This will no show hidden values for your vehicle/region.</div>
   </tbody>
 </table>

@@ -148,49 +148,46 @@ add_app_json()
   elif [ -e ${MYDIR}/config/bin/node ] && [ -e ${MYDIR}/config/bin/add_app_json.js ]
   then
     ${MYDIR}/config/bin/node ${MYDIR}/config/bin/add_app_json.js ${ADDITIONAL_APPS_JSON} "${1}" "${2}" "${3}" >> ${MYDIR}/node.log 2>&1
-    log_message "===                   Using NodeJS To Add App!!!                      ==="
     log_message "===   ${MYDIR}/config/bin/node add_app_json.js ${2:0:10}        ==="
   else
     # check if entry in additionalApps.json still exists, if so nothing is to do
-    count=$(grep -c '{ "name": "'"${1}"'"' /jci/opera/opera_dir/userjs/additionalApps.json)
+    count=$(grep -c '{ "name": "'"${1}"'"' ${ADDITIONAL_APPS_JSON})
     if [ $count -eq 0 ]
     then
       log_message "===  ${2:0:10} not found in additionalApps.json, first installation  ==="
-      mv /jci/opera/opera_dir/userjs/additionalApps.json /jci/opera/opera_dir/userjs/additionalApps.json.old
+      mv ${ADDITIONAL_APPS_JSON} ${ADDITIONAL_APPS_JSON}.old
       sleep 2
       # delete last line with "]" from additionalApps.json
-      grep -v "]" /jci/opera/opera_dir/userjs/additionalApps.json.old > /jci/opera/opera_dir/userjs/additionalApps.json
+      grep -v "]" ${ADDITIONAL_APPS_JSON}.old > ${ADDITIONAL_APPS_JSON}
       sleep 2
-      cp /jci/opera/opera_dir/userjs/additionalApps.json "${MYDIR}/bakups/test/additionalApps${1}-2._delete_last_line.json"
+      cp ${ADDITIONAL_APPS_JSON} "${MYDIR}/bakups/test/additionalApps${1}-2._delete_last_line.json"
       # check, if other entrys exists
-      count=$(grep -c '}' /jci/opera/opera_dir/userjs/additionalApps.json)
+      count=$(grep -c '}' ${ADDITIONAL_APPS_JSON})
       if [ $count -ne 0 ]
       then
         # if so, add "," to the end of last line to additionalApps.json
-        echo "$(cat /jci/opera/opera_dir/userjs/additionalApps.json)", > /jci/opera/opera_dir/userjs/additionalApps.json
+        echo "$(cat ${ADDITIONAL_APPS_JSON})", > ${ADDITIONAL_APPS_JSON}
         sleep 2
-        cp /jci/opera/opera_dir/userjs/additionalApps.json "${MYDIR}/bakups/test/additionalApps${1}-3._add_comma_to_last_line.json"
+        cp ${ADDITIONAL_APPS_JSON} "${MYDIR}/bakups/test/additionalApps${1}-3._add_comma_to_last_line.json"
         log_message "===           Found existing entrys in additionalApps.json            ==="
       fi
       # add app entry and "]" again to last line of additionalApps.json
       log_message "===        Add ${2:0:10} to last line of additionalApps.json         ==="
-      echo '  { "name": "'"${1}"'", "label": "'"${2}"'" }' >> /jci/opera/opera_dir/userjs/additionalApps.json
+      echo '  { "name": "'"${1}"'", "label": "'"${2}"'" }' >> ${ADDITIONAL_APPS_JSON}
       sleep 2
       if [ ${3} != "" ]
       then
-        sed -i 's/"label": "'"${2}"'" \}/"label": "'"${2}"'", "preload": "'"${3}"'" \}/g' /jci/opera/opera_dir/userjs/additionalApps.json
+        sed -i 's/"label": "'"${2}"'" \}/"label": "'"${2}"'", "preload": "'"${3}"'" \}/g' ${ADDITIONAL_APPS_JSON}
       fi
-      cp /jci/opera/opera_dir/userjs/additionalApps.json "${MYDIR}/bakups/test/additionalApps${1}-4._add_entry_to_last_line.json"
-      echo "]" >> /jci/opera/opera_dir/userjs/additionalApps.json
+      cp ${ADDITIONAL_APPS_JSON} "${MYDIR}/bakups/test/additionalApps${1}-4._add_entry_to_last_line.json"
+      echo "]" >> ${ADDITIONAL_APPS_JSON}
       sleep 2
-      cp /jci/opera/opera_dir/userjs/additionalApps.json "${MYDIR}/bakups/test/additionalApps${1}-5._after.json"
-      rm -f /jci/opera/opera_dir/userjs/additionalApps.json.old
+      rm -f ${ADDITIONAL_APPS_JSON}.old
     else
       log_message "===         ${2:0:10} already exists in additionalApps.json          ==="
     fi
-    # remove double commas
-    sed -i 's/,,/,/g' ${ADDITIONAL_APPS_JSON}
   fi
+  cp ${ADDITIONAL_APPS_JSON} "${MYDIR}/bakups/test/additionalApps${1}-5._after.json"
   if [ -e /jci/opera/opera_dir/userjs/nativeApps.js ]
   then
     echo "additionalApps = $(cat ${ADDITIONAL_APPS_JSON})" > /jci/opera/opera_dir/userjs/nativeApps.js
@@ -207,50 +204,49 @@ remove_app_json()
   elif [ -e ${MYDIR}/config/bin/node ] && [ -e ${MYDIR}/config/bin/remove_app_json.js ]
   then
     ${MYDIR}/config/bin/node ${MYDIR}/config/bin/remove_app_json.js ${ADDITIONAL_APPS_JSON} "${1}" >> ${MYDIR}/node.log 2>&1
-    log_message "===                  Using NodeJS To Remove App!!!                    ==="
     log_message "===    ${MYDIR}/config/bin/node remove_app_json.js ${1:1:10}    ==="
   else
-    unix2dos ${ADDITIONAL_APPS_JSON}
     # check if app entry in additionalApps.json still exists, if so, then it will be deleted
-    count=$(grep -c '{ "name": "'"${1}"'"' /jci/opera/opera_dir/userjs/additionalApps.json)
+    count=$(grep -c '{ "name": "'"${1}"'"' ${ADDITIONAL_APPS_JSON})
     if [ "$count" -gt "0" ]
     then
       log_message "====   Remove ${count} entry(s) of ${1:0:10} found in additionalApps.json   ==="
-      mv /jci/opera/opera_dir/userjs/additionalApps.json /jci/opera/opera_dir/userjs/additionalApps.json.old
+      mv ${ADDITIONAL_APPS_JSON} ${ADDITIONAL_APPS_JSON}.old
       # delete last line with "]" from additionalApps.json
-      grep -v "]" /jci/opera/opera_dir/userjs/additionalApps.json.old > /jci/opera/opera_dir/userjs/additionalApps.json
+      grep -v "]" ${ADDITIONAL_APPS_JSON}.old > ${ADDITIONAL_APPS_JSON}
       sleep 2
-      cp /jci/opera/opera_dir/userjs/additionalApps.json "${MYDIR}/bakups/test/additionalApps${1}-2._delete_last_line.json"
+      cp ${ADDITIONAL_APPS_JSON} "${MYDIR}/bakups/test/additionalApps${1}-2._delete_last_line.json"
       # delete all app entrys from additionalApps.json
-      sed -i "/${1}/d" /jci/opera/opera_dir/userjs/additionalApps.json
+      sed -i "/${1}/d" ${ADDITIONAL_APPS_JSON}
       sleep 2
-      json="$(cat /jci/opera/opera_dir/userjs/additionalApps.json)"
+      json="$(cat ${ADDITIONAL_APPS_JSON})"
       # check if last sign is comma
       rownend=$(echo -n $json | tail -c 1)
       if [ "$rownend" == "," ]
       then
         # if so, remove "," from back end
-        echo ${json%,*} > /jci/opera/opera_dir/userjs/additionalApps.json
+        echo ${json%,*} > ${ADDITIONAL_APPS_JSON}
         sleep 2
         log_message "===  Found comma at last line of additionalApps.json and deleted it   ==="
       fi
-      cp /jci/opera/opera_dir/userjs/additionalApps.json "${MYDIR}/bakups/test/additionalApps${1}-3._delete_app_entry.json"
+      cp ${ADDITIONAL_APPS_JSON} "${MYDIR}/bakups/test/additionalApps${1}-3._delete_app_entry.json"
       # add "]" again to last line of additionalApps.json
-      echo "]" >> /jci/opera/opera_dir/userjs/additionalApps.json
+      echo "]" >> ${ADDITIONAL_APPS_JSON}
       sleep 2
-      first=$(head -c 1 /jci/opera/opera_dir/userjs/additionalApps.json)
+      first=$(head -c 1 ${ADDITIONAL_APPS_JSON})
       if [ "$first" != "[" ]
       then
-        sed -i "1s/^/[\n/" /jci/opera/opera_dir/userjs/additionalApps.json
+        sed -i "1s/^/[\n/" ${ADDITIONAL_APPS_JSON}
         log_message "===             Fixed first line of additionalApps.json               ==="
+      else
+        sed -i "1s/\[/\[\n/" ${ADDITIONAL_APPS_JSON}
       fi
-      rm -f /jci/opera/opera_dir/userjs/additionalApps.json.old
-      cp /jci/opera/opera_dir/userjs/additionalApps.json "${MYDIR}/bakups/test/additionalApps${1}-4._after.json"
+      rm -f ${ADDITIONAL_APPS_JSON}.old
     else
       log_message "===            ${1:1:10} not found in additionalApps.json            ==="
     fi
-    dos2unix ${ADDITIONAL_APPS_JSON}
   fi
+  cp ${ADDITIONAL_APPS_JSON} "${MYDIR}/bakups/test/additionalApps${1}-4._after.json"
   if [ -e /jci/opera/opera_dir/userjs/nativeApps.js ]
   then
     echo "additionalApps = $(cat ${ADDITIONAL_APPS_JSON})" > /jci/opera/opera_dir/userjs/nativeApps.js
@@ -401,6 +397,12 @@ if [ ! -e /tmp/mnt/data_persist/dev/bin/ ]
 then
   mkdir -p /tmp/mnt/data_persist/dev/bin/
   log_message "======== Restored Missing Folder /tmp/mnt/data_persist/dev/bin/ ========="
+fi
+if grep -Fq ,, ${ADDITIONAL_APPS_JSON}
+then
+  # remove double commas
+  sed -i 's/,,/,/g' ${ADDITIONAL_APPS_JSON}
+  log_message "================ Fixed Issue with additionalApps.json ==================="
 fi
 log_message "=========************ END PRE-INSTALL OPERATIONS ***************========="
 log_message " "

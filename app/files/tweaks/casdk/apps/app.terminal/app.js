@@ -37,129 +37,129 @@
 CustomApplicationsHandler.register("app.terminal", new CustomApplication({
 
 
-	/**
-	 * (require)
-	 *
-	 * An object array that defines resources to be loaded such as javascript's, css's, images, etc
-	 *
-	 * All resources are relative to the applications root path
-	 */
+  /**
+   * (require)
+   *
+   * An object array that defines resources to be loaded such as javascript's, css's, images, etc
+   *
+   * All resources are relative to the applications root path
+   */
 
-	require: {
+  require: {
 
-		/**
-		 * (js) defines javascript includes
-		 */
+    /**
+     * (js) defines javascript includes
+     */
 
-		js: [],
+    js: [],
 
-		/**
-		 * (css) defines css includes
-		 */
+    /**
+     * (css) defines css includes
+     */
 
-		css: ['app.css'],
+    css: ['app.css'],
 
-		/**
-		 * (images) defines images that are being preloaded
-		 *
-		 * Images are assigned to an id
-		 */
+    /**
+     * (images) defines images that are being preloaded
+     *
+     * Images are assigned to an id
+     */
 
-		images: {
-
-
-
-		},
-	},
+    images: {
 
 
-	/**
-	 * (settings)
-	 *
-	 * An object that defines application settings
-	 */
 
-	settings: {
-
-		/**
-		 * (terminateOnLost)
-		 *
-		 * If set to 'true' this will remove the stateless life cycle and always
-		 * recreate the application once the focus is lost. Otherwise by default
-		 * the inital created state will stay alive across the systems runtime.
-		 *
-		 * Default is false or not set
-		 * /
-
-		// terminateOnLost: false,
-
-		/**
-		 * (title) The title of the application in the Application menu
-		 */
-
-		title: 'Terminal',
-
-		/**
-		 * (statusbar) Defines if the statusbar should be shown
-		 */
-
-		statusbar: true,
-
-		/**
-		 * (statusbarIcon) defines the status bar icon
-		 *
-		 * Set to true to display the default icon app.png or set a string to display
-		 * a fully custom icon.
-		 *
-		 * Icons need to be 37x37
-		 */
-
-		statusbarIcon: true,
-
-		/**
-		 * (statusbarTitle) overrides the statusbar title, otherwise title is used
-		 */
-
-		statusbarTitle: false,
-
-		/**
-		 * (statusbarHideHomeButton) hides the home button in the statusbar
-		 */
-
-		// statusbarHideHomeButton: false,
-
-		/**
-		 * (hasLeftButton) indicates if the UI left button / return button should be shown
-		 */
-
-		hasLeftButton: false,
-
-		/**
-		 * (hasMenuCaret) indicates if the menu item should be displayed with an caret
-		 */
-
-		hasMenuCaret: false,
-
-		/**
-		 * (hasRightArc) indicates if the standard right arc should be displayed
-		 */
-
-		hasRightArc: false,
-
-	},
+    },
+  },
 
 
-	/***
-	 *** User Interface Life Cycles
-	 ***/
+  /**
+   * (settings)
+   *
+   * An object that defines application settings
+   */
 
-	/**
-	 * (created)
-	 *
-	 * Executed when the application gets initialized
-	 *
-	 * Add any content that will be static here
-	 */
+  settings: {
+
+    /**
+     * (terminateOnLost)
+     *
+     * If set to 'true' this will remove the stateless life cycle and always
+     * recreate the application once the focus is lost. Otherwise by default
+     * the inital created state will stay alive across the systems runtime.
+     *
+     * Default is false or not set
+     * /
+
+    // terminateOnLost: false,
+
+    /**
+     * (title) The title of the application in the Application menu
+     */
+
+    title: 'Terminal',
+
+    /**
+     * (statusbar) Defines if the statusbar should be shown
+     */
+
+    statusbar: true,
+
+    /**
+     * (statusbarIcon) defines the status bar icon
+     *
+     * Set to true to display the default icon app.png or set a string to display
+     * a fully custom icon.
+     *
+     * Icons need to be 37x37
+     */
+
+    statusbarIcon: true,
+
+    /**
+     * (statusbarTitle) overrides the statusbar title, otherwise title is used
+     */
+
+    statusbarTitle: false,
+
+    /**
+     * (statusbarHideHomeButton) hides the home button in the statusbar
+     */
+
+    // statusbarHideHomeButton: false,
+
+    /**
+     * (hasLeftButton) indicates if the UI left button / return button should be shown
+     */
+
+    hasLeftButton: false,
+
+    /**
+     * (hasMenuCaret) indicates if the menu item should be displayed with an caret
+     */
+
+    hasMenuCaret: false,
+
+    /**
+     * (hasRightArc) indicates if the standard right arc should be displayed
+     */
+
+    hasRightArc: false,
+
+  },
+
+
+  /***
+   *** User Interface Life Cycles
+   ***/
+
+  /**
+   * (created)
+   *
+   * Executed when the application gets initialized
+   *
+   * Add any content that will be static here
+   */
 
 
 
@@ -167,29 +167,28 @@ CustomApplicationsHandler.register("app.terminal", new CustomApplication({
    *** User Interface Life Cycles
    ***/
 
-  keyboard : null,
+  keyboard: null,
   screen: null,
 
-  shift : false,
-  caps : false,
-  ctrl :false,
-  alternate : false,
+  shift: false,
+  caps: false,
+  ctrl: false,
+  alternate: false,
 
   ws: null,
-  fileslist :[],
-  path : "",
+  fileslist: [],
+  path: "",
 
-  command : "",
-  buffer : "",
-  linecount : 0,
-  commandstack : [],
-  commandstackcounter : -1,
+  command: "",
+  buffer: "",
+  linecount: 0,
+  commandstack: [],
+  commandstackcounter: -1,
 
   //
   // Update the screen
   //
-  update : function ()
-  {
+  update: function() {
     this.screen.get(0).innerHTML = this.buffer + ">" + this.command;
     this.screen.get(0).scrollTop = this.screen.get(0).scrollHeight;
   },
@@ -198,27 +197,25 @@ CustomApplicationsHandler.register("app.terminal", new CustomApplication({
   // Add some text to screen
   //
 
-  AddText : function (text)
-  {
-      this.linecount = this.linecount + 1;
-      this.buffer += text + "\n";
+  AddText: function(text) {
+    this.linecount = this.linecount + 1;
+    this.buffer += text + "\n";
 
-      // At 160 lines, go back to 80 then buffer will always have between 80 to 160 lines
-/*
-      if ( this.linecount > 160) {
-          var lines = buffer.split('\n');
-          lines.splice(0,80);
-          this.buffer = lines.join('\n');
-      }
-*/
-      this.update();
+    // At 160 lines, go back to 80 then buffer will always have between 80 to 160 lines
+    /*
+          if ( this.linecount > 160) {
+              var lines = buffer.split('\n');
+              lines.splice(0,80);
+              this.buffer = lines.join('\n');
+          }
+    */
+    this.update();
   },
 
   //
   // Folder has maybe changed
   //
-  folderchange : function ()
-  {
+  folderchange: function() {
     /*var c;
     debug.innerHTML = path + "\n"
     for (c=0; c< fileslist.length; c++) {
@@ -226,31 +223,29 @@ CustomApplicationsHandler.register("app.terminal", new CustomApplication({
     } */
   },
 
-  help : function ()
-  {
+  help: function() {
     var command = 'echo "Example command : "'
     this.ws.send(command);
     command = 'echo "df -h"';
     this.ws.send(command);
   },
 
-  asklistnumber : "TERMINAL84723423940147",
-  askpwdnumber : "TERMINAL2472323489823",
+  asklistnumber: "TERMINAL84723423940147",
+  askpwdnumber: "TERMINAL2472323489823",
 
-  askiffolderchanged : function  ()
-  {
-    var command =  'ls | awk \' BEGIN { ORS = \"\"; print \"'+ this.asklistnumber+'[\"; } { print \"\\\/\\@\"$0\"\\\/\\@\"; } END { print \"]\"; }\' | sed \"s^\\\"^\\\\\\\\\\\"^g;s^\\\/\\@\\\/\\@^\\\", \\\"^g;s^\\\/\\@^\\\"^g\"'
+  askiffolderchanged: function() {
+    var command = 'ls | awk \' BEGIN { ORS = \"\"; print \"' + this.asklistnumber + '[\"; } { print \"\\\/\\@\"$0\"\\\/\\@\"; } END { print \"]\"; }\' | sed \"s^\\\"^\\\\\\\\\\\"^g;s^\\\/\\@\\\/\\@^\\\", \\\"^g;s^\\\/\\@^\\\"^g\"'
     this.ws.send(command);
-    var command =  'echo ' + this.askpwdnumber + '$(pwd)'
+    var command = 'echo ' + this.askpwdnumber + '$(pwd)'
     this.ws.send(command);
   },
 
-  SetKeyboardButtonValue : function() {
+  SetKeyboardButtonValue: function() {
     var c;
-    for(c=0;c<this.buttonlist.length;c++) {
-      if( ! this.buttonlist[c].hasAttribute('function')) {
+    for (c = 0; c < this.buttonlist.length; c++) {
+      if (!this.buttonlist[c].hasAttribute('function')) {
         if (this.shift) {
-          if ( this.buttonlist[c].hasAttribute('shiftkey')) {
+          if (this.buttonlist[c].hasAttribute('shiftkey')) {
             this.buttonlist[c].innerHTML = this.buttonlist[c].getAttribute("shiftkey");
           } else {
             this.buttonlist[c].innerHTML = this.buttonlist[c].getAttribute("key").toUpperCase();;
@@ -262,38 +257,37 @@ CustomApplicationsHandler.register("app.terminal", new CustomApplication({
       this.buttonlist[c].color = 'white';
     }
 
-    var capslist =  this.keyboard.get(0).getElementsByClassName('caps');
-    for (c=0; c < capslist.length ; c++) {
+    var capslist = this.keyboard.get(0).getElementsByClassName('caps');
+    for (c = 0; c < capslist.length; c++) {
       if (this.caps) {
         $(capslist[c]).addClass('stateon');
       } else {
         $(capslist[c]).removeClass('stateon');
       }
     }
-    var shiftlist =  this.keyboard.get(0).getElementsByClassName('shift');
-    for (c=0; c < shiftlist.length ; c++) {
+    var shiftlist = this.keyboard.get(0).getElementsByClassName('shift');
+    for (c = 0; c < shiftlist.length; c++) {
       if (this.shift) {
         $(shiftlist[c]).addClass('stateon');
       } else {
         $(shiftlist[c]).removeClass('stateon');
       }
     }
-    var alternatelist =  this.keyboard.get(0).getElementsByClassName('alternate');
-    for (c=0; c < alternatelist.length ; c++) {
-      alternatelist[c].style.color = this.alternate? '#FF0000':'white';
+    var alternatelist = this.keyboard.get(0).getElementsByClassName('alternate');
+    for (c = 0; c < alternatelist.length; c++) {
+      alternatelist[c].style.color = this.alternate ? '#FF0000' : 'white';
     }
-    var ctrllist =  this.keyboard.get(0).getElementsByClassName('ctrl');
-    for (c=0; c < ctrllist.length ; c++) {
-      ctrllist[c].style.color = this.ctrl? '#FF0000':'white';
+    var ctrllist = this.keyboard.get(0).getElementsByClassName('ctrl');
+    for (c = 0; c < ctrllist.length; c++) {
+      ctrllist[c].style.color = this.ctrl ? '#FF0000' : 'white';
     }
   },
 
-  HighLevelKeyboard : function (char) {
+  HighLevelKeyboard: function(char) {
     switch (char) {
-      case  "return":
+      case "return":
 
-        switch (this.command)
-        {
+        switch (this.command) {
           case "clear":
             this.buffer = "";
             this.linecount = 0;
@@ -316,21 +310,21 @@ CustomApplicationsHandler.register("app.terminal", new CustomApplication({
             break;
 
           case "m/r":
-						this.command = "mount -o rw,remount /tmp/mnt/resources";
+            this.command = "mount -o rw,remount /tmp/mnt/resources";
             this.AddText(">" + this.command);
             this.ws.send(this.command);
             this.command = "";
             this.update();
             break;
           case "m/a":
-						this.command = "mount -o rw,remount /tmp/mnt/sda1";
+            this.command = "mount -o rw,remount /tmp/mnt/sda1";
             this.AddText(">" + this.command);
             this.ws.send(this.command);
             this.command = "";
             this.update();
             break;
           case "m/b":
-						this.command = "mount -o rw,remount /tmp/mnt/sdb1";
+            this.command = "mount -o rw,remount /tmp/mnt/sdb1";
             this.AddText(">" + this.command);
             this.ws.send(this.command);
             this.command = "";
@@ -344,6 +338,7 @@ CustomApplicationsHandler.register("app.terminal", new CustomApplication({
             this.command = "";
             this.update();
             break;
+
           case "apps":
             this.command = "cd /jci/gui/apps";
             this.AddText(">" + this.command);
@@ -397,28 +392,28 @@ CustomApplicationsHandler.register("app.terminal", new CustomApplication({
             this.commandstackcounter = this.commandstack.length;
             this.command = "";
             this.update();
-            this.askiffolderchanged ();
+            this.askiffolderchanged();
             break;
 
         }
         break;
 
-      case"space":
+      case "space":
         this.command += ' ';
         this.update();
         break;
 
       case "delete":
-        if ( this.command.length > 0 ) {
+        if (this.command.length > 0) {
           this.command = this.command.slice(0, -1);
           this.update();
         }
         break;
 
-      case  "up":
+      case "up":
         if (this.commandstack.length != 0) {
-          this.commandstackcounter --;
-          if ( this.commandstackcounter <  0 ) {
+          this.commandstackcounter--;
+          if (this.commandstackcounter < 0) {
             this.commandstackcounter = 0;
           }
           this.command = this.commandstack[this.commandstackcounter];
@@ -428,8 +423,8 @@ CustomApplicationsHandler.register("app.terminal", new CustomApplication({
 
       case "down":
         if (this.commandstack.length != 0) {
-          this.commandstackcounter ++;
-          if ( this.commandstackcounter >=  this.commandstack.length) {
+          this.commandstackcounter++;
+          if (this.commandstackcounter >= this.commandstack.length) {
             this.commandstackcounter = this.commandstack.length - 1;
           }
           this.command = this.commandstack[this.commandstackcounter];
@@ -440,25 +435,25 @@ CustomApplicationsHandler.register("app.terminal", new CustomApplication({
 
       case "left":
 
-				break;
+        break;
 
       case "right":
         break;
 
       case "tab":
-        this.asklistfunction ();
+        this.asklistfunction();
 
         break;
 
       default:
-        if ( this.ctrl ) {
-          if (this.char == 'k' || this.char == 'l' ) {
+        if (this.ctrl) {
+          if (this.char == 'k' || this.char == 'l') {
             this.buffer = "";
             this.linecount = 0;
             this.command = "";
           }
 
-        } else if ( this.alternate ) {
+        } else if (this.alternate) {
 
         } else {
           this.command += char;
@@ -468,9 +463,9 @@ CustomApplicationsHandler.register("app.terminal", new CustomApplication({
 
   },
 
-  LowLevelKeyboard : function (c) {
+  LowLevelKeyboard: function(c) {
 
-    this.buttonlist[c].onmousedown=function() {
+    this.buttonlist[c].onmousedown = function() {
 
       if (this.buttonlist[c].hasAttribute('function')) {
         var f = this.buttonlist[c].getAttribute("function");
@@ -502,13 +497,13 @@ CustomApplicationsHandler.register("app.terminal", new CustomApplication({
             break;
           default:
 
-            this.HighLevelKeyboard (f);
+            this.HighLevelKeyboard(f);
             break;
         }
 
       } else {
 
-        this.HighLevelKeyboard (this.buttonlist[c].innerHTML);
+        this.HighLevelKeyboard(this.buttonlist[c].innerHTML);
 
         if (!this.caps && this.shift || this.ctrl || this.alternate) {
           this.ctrl = false;
@@ -534,91 +529,91 @@ CustomApplicationsHandler.register("app.terminal", new CustomApplication({
   created: function() {
 
 
-    this.screen = this.element("pre", false, 'screen' , false,'');
-    this.keyboard = this.element("div", false, false , false,''
-      +'<div>'
-      +'<button class="keyboardbutton row1" type="button" key="`"></button>'
-      +'<button class="keyboardbutton row1" type="button" key="1" shiftkey="!"></button>'
-      +'<button class="keyboardbutton row1" type="button" key="2" shiftkey="@"></button>'
-      +'<button class="keyboardbutton row1" type="button" key="3" shiftkey="#"></button>'
-      +'<button class="keyboardbutton row1" type="button" key="4" shiftkey="$"></button>'
-      +'<button class="keyboardbutton row1" type="button" key="5" shiftkey="%"></button>'
-      +'<button class="keyboardbutton row1" type="button" key="6" shiftkey="^"></button>'
-      +'<button class="keyboardbutton row1" type="button" key="7" shiftkey="&"></button>'
-      +'<button class="keyboardbutton row1" type="button" key="8" shiftkey="*"></button>'
-      +'<button class="keyboardbutton row1" type="button" key="9" shiftkey="("></button>'
-      +'<button class="keyboardbutton row1" type="button" key="0" shiftkey=")"></button>'
-      +'<button class="keyboardbutton row1" type="button" key="-" shiftkey="_"></button>'
-      +'<button class="keyboardbutton row1" type="button" key="=" shiftkey="+"></button>'
-      +'<button class="keyboardbutton row1 row1add" type="button" function="delete" >del</button>'
-      +'</div>'
-      +'<div>'
-      +'<button class="keyboardbutton row2 row2add" type="button" function = "tab">tab</button>'
-      +'<button class="keyboardbutton row2" type="button" key="Q"></button>'
-      +'<button class="keyboardbutton row2" type="button" key="W"></button>'
-      +'<button class="keyboardbutton row2" type="button" key="E"></button>'
-      +'<button class="keyboardbutton row2" type="button" key="R"></button>'
-      +'<button class="keyboardbutton row2" type="button" key="T"></button>'
-      +'<button class="keyboardbutton row2" type="button" key="Y"></button>'
-      +'<button class="keyboardbutton row2" type="button" key="U"></button>'
-      +'<button class="keyboardbutton row2" type="button" key="I"></button>'
-      +'<button class="keyboardbutton row2" type="button" key="O"></button>'
-      +'<button class="keyboardbutton row2" type="button" key="P"></button>'
-      +'<button class="keyboardbutton row2" type="button" key="[" shiftkey="{"></button>'
-      +'<button class="keyboardbutton row2" type="button" key="]" shiftkey="}"></button>'
-      +'<button class="keyboardbutton row2" type="button" key="\\" shiftkey="|"></button>'
-      +'</div>'
-      +'<div>'
-      +'<button class="keyboardbutton row3 row3add " type="button" function="caps" >caps</button>'
-      +'<button class="keyboardbutton row3" type="button" key="A"></button>'
-      +'<button class="keyboardbutton row3" type="button" key="S"></button>'
-      +'<button class="keyboardbutton row3" type="button" key="D"></button>'
-      +'<button class="keyboardbutton row3" type="button" key="F"></button>'
-      +'<button class="keyboardbutton row3" type="button" key="G"></button>'
-      +'<button class="keyboardbutton row3" type="button" key="H"></button>'
-      +'<button class="keyboardbutton row3" type="button" key="J"></button>'
-      +'<button class="keyboardbutton row3" type="button" key="K"></button>'
-      +'<button class="keyboardbutton row3" type="button" key="L"></button>'
-      +'<button class="keyboardbutton row3" type="button" key=";" shiftkey=":"></button>'
-      +'<button class="keyboardbutton row3" type="button" key="\'" shiftkey=\'"\'></button>'
-      +'<button class="keyboardbutton row3 row3add" type="button" function = "return" >ret</button>'
-      +'</div>'
-      +'<div>'
-      +'<button class="keyboardbutton row4 row4add" type="button" function="shift" >shift</button>'
-      +'<button class="keyboardbutton row4" type="button" key="Z"></button>'
-      +'<button class="keyboardbutton row4" type="button" key="X"></button>'
-      +'<button class="keyboardbutton row4" type="button" key="C"></button>'
-      +'<button class="keyboardbutton row4" type="button" key="V"></button>'
-      +'<button class="keyboardbutton row4" type="button" key="B"></button>'
-      +'<button class="keyboardbutton row4" type="button" key="N"></button>'
-      +'<button class="keyboardbutton row4" type="button" key="M"></button>'
-      +'<button class="keyboardbutton row4" type="button" key="," shiftkey="<"></button>'
-      +'<button class="keyboardbutton row4" type="button" key="." shiftkey=">"></button>'
-      +'<button class="keyboardbutton row4" type="button" key="/" shiftkey="?"></button>'
-      +'<button class="keyboardbutton row4 row4add" type="button" function="shift">shift</button>'
-      +'</div>'
-      +'<div>'
-      +'<button class="keyboardbutton row5" type="button" function="fn" >fn</button>'
-      +'<button class="keyboardbutton row5" type="button" function="ctrl">ctrl</button>'
-      +'<button class="keyboardbutton row5" type="button" function="alt">alt</button>'
-      +'<button class="keyboardbutton row5 row5add" type="button" function="space">space</button>'
-      +'<button class="keyboardbutton row5" type="button" function="left">&larr;</button>'
-      +'<button class="keyboardbutton row5" type="button" function="up">&uarr;</button>'
-      +'<button class="keyboardbutton row5" type="button" function="down">&darr;</button>'
-      +'<button class="keyboardbutton row5" type="button" function="right">&rarr;</button>'
-      +'</div>'
+    this.screen = this.element("pre", false, 'screen', false, '');
+    this.keyboard = this.element("div", false, false, false, '' +
+      '<div>' +
+      '<button class="keyboardbutton row1" type="button" key="`"></button>' +
+      '<button class="keyboardbutton row1" type="button" key="1" shiftkey="!"></button>' +
+      '<button class="keyboardbutton row1" type="button" key="2" shiftkey="@"></button>' +
+      '<button class="keyboardbutton row1" type="button" key="3" shiftkey="#"></button>' +
+      '<button class="keyboardbutton row1" type="button" key="4" shiftkey="$"></button>' +
+      '<button class="keyboardbutton row1" type="button" key="5" shiftkey="%"></button>' +
+      '<button class="keyboardbutton row1" type="button" key="6" shiftkey="^"></button>' +
+      '<button class="keyboardbutton row1" type="button" key="7" shiftkey="&"></button>' +
+      '<button class="keyboardbutton row1" type="button" key="8" shiftkey="*"></button>' +
+      '<button class="keyboardbutton row1" type="button" key="9" shiftkey="("></button>' +
+      '<button class="keyboardbutton row1" type="button" key="0" shiftkey=")"></button>' +
+      '<button class="keyboardbutton row1" type="button" key="-" shiftkey="_"></button>' +
+      '<button class="keyboardbutton row1" type="button" key="=" shiftkey="+"></button>' +
+      '<button class="keyboardbutton row1 row1add" type="button" function="delete" >del</button>' +
+      '</div>' +
+      '<div>' +
+      '<button class="keyboardbutton row2 row2add" type="button" function = "tab">tab</button>' +
+      '<button class="keyboardbutton row2" type="button" key="Q"></button>' +
+      '<button class="keyboardbutton row2" type="button" key="W"></button>' +
+      '<button class="keyboardbutton row2" type="button" key="E"></button>' +
+      '<button class="keyboardbutton row2" type="button" key="R"></button>' +
+      '<button class="keyboardbutton row2" type="button" key="T"></button>' +
+      '<button class="keyboardbutton row2" type="button" key="Y"></button>' +
+      '<button class="keyboardbutton row2" type="button" key="U"></button>' +
+      '<button class="keyboardbutton row2" type="button" key="I"></button>' +
+      '<button class="keyboardbutton row2" type="button" key="O"></button>' +
+      '<button class="keyboardbutton row2" type="button" key="P"></button>' +
+      '<button class="keyboardbutton row2" type="button" key="[" shiftkey="{"></button>' +
+      '<button class="keyboardbutton row2" type="button" key="]" shiftkey="}"></button>' +
+      '<button class="keyboardbutton row2" type="button" key="\\" shiftkey="|"></button>' +
+      '</div>' +
+      '<div>' +
+      '<button class="keyboardbutton row3 row3add " type="button" function="caps" >caps</button>' +
+      '<button class="keyboardbutton row3" type="button" key="A"></button>' +
+      '<button class="keyboardbutton row3" type="button" key="S"></button>' +
+      '<button class="keyboardbutton row3" type="button" key="D"></button>' +
+      '<button class="keyboardbutton row3" type="button" key="F"></button>' +
+      '<button class="keyboardbutton row3" type="button" key="G"></button>' +
+      '<button class="keyboardbutton row3" type="button" key="H"></button>' +
+      '<button class="keyboardbutton row3" type="button" key="J"></button>' +
+      '<button class="keyboardbutton row3" type="button" key="K"></button>' +
+      '<button class="keyboardbutton row3" type="button" key="L"></button>' +
+      '<button class="keyboardbutton row3" type="button" key=";" shiftkey=":"></button>' +
+      '<button class="keyboardbutton row3" type="button" key="\'" shiftkey=\'"\'></button>' +
+      '<button class="keyboardbutton row3 row3add" type="button" function = "return" >ret</button>' +
+      '</div>' +
+      '<div>' +
+      '<button class="keyboardbutton row4 row4add" type="button" function="shift" >shift</button>' +
+      '<button class="keyboardbutton row4" type="button" key="Z"></button>' +
+      '<button class="keyboardbutton row4" type="button" key="X"></button>' +
+      '<button class="keyboardbutton row4" type="button" key="C"></button>' +
+      '<button class="keyboardbutton row4" type="button" key="V"></button>' +
+      '<button class="keyboardbutton row4" type="button" key="B"></button>' +
+      '<button class="keyboardbutton row4" type="button" key="N"></button>' +
+      '<button class="keyboardbutton row4" type="button" key="M"></button>' +
+      '<button class="keyboardbutton row4" type="button" key="," shiftkey="<"></button>' +
+      '<button class="keyboardbutton row4" type="button" key="." shiftkey=">"></button>' +
+      '<button class="keyboardbutton row4" type="button" key="/" shiftkey="?"></button>' +
+      '<button class="keyboardbutton row4 row4add" type="button" function="shift">shift</button>' +
+      '</div>' +
+      '<div>' +
+      '<button class="keyboardbutton row5" type="button" function="fn" >fn</button>' +
+      '<button class="keyboardbutton row5" type="button" function="ctrl">ctrl</button>' +
+      '<button class="keyboardbutton row5" type="button" function="alt">alt</button>' +
+      '<button class="keyboardbutton row5 row5add" type="button" function="space">space</button>' +
+      '<button class="keyboardbutton row5" type="button" function="left">&larr;</button>' +
+      '<button class="keyboardbutton row5" type="button" function="up">&uarr;</button>' +
+      '<button class="keyboardbutton row5" type="button" function="down">&darr;</button>' +
+      '<button class="keyboardbutton row5" type="button" function="right">&rarr;</button>' +
+      '</div>'
     );
 
-    this.buttonlist=this.keyboard.get(0).getElementsByClassName('keyboardbutton');
-   // Add listener for mouse
+    this.buttonlist = this.keyboard.get(0).getElementsByClassName('keyboardbutton');
+    // Add listener for mouse
     var c, c2;
 
-    for(c=0;c<this.buttonlist.length;c++) {
+    for (c = 0; c < this.buttonlist.length; c++) {
       this.LowLevelKeyboard(c);
     }
     this.SetKeyboardButtonValue();
 
-      var originalsize=[];
+    var originalsize = [];
     /*
       var maxrow = 0;
       for (c2 = 0; c2 < 5; c2++) {
@@ -644,27 +639,28 @@ CustomApplicationsHandler.register("app.terminal", new CustomApplication({
 
 
     this.wsonopen = function() {
-        this.AddText("[connect]\nhelp=Help");
-        this.askiffolderchanged ();
-        this.ws.send("cd /tmp/root\n");
+      this.AddText("[connect]\nhelp=Help");
+      this.askiffolderchanged();
+      this.ws.send("cd /tmp/root\n");
     }.bind(this);
     this.wsonclose = function() {
-        this.AddText("[unconnect]");
-        window.setTimeout (function() {
+      this.AddText("[unconnect]");
+      window.setTimeout(function() {
 
-          this.ws = new WebSocket('ws://localhost:9996');
-          this.ws.onopen = this.wsonopen;
-          this.ws.onclose = this.wsonclose;
-          this.ws.onmessage = this.wsonmessage;
+        this.ws = new WebSocket('ws://localhost:9996');
+        this.ws.onopen = this.wsonopen;
+        this.ws.onclose = this.wsonclose;
+        this.ws.onmessage = this.wsonmessage;
 
-        }.bind(this), 5000);
+      }.bind(this), 5000);
     }.bind(this);
     this.wsonmessage = function(event) {
-      if (event.data.substr(0,this.asklistnumber.length) == this.asklistnumber) {
+      AIO_SBN(JSON.stringify(event));
+      if (event.data.substr(0, this.asklistnumber.length) == this.asklistnumber) {
         this.fileslist = event.data.substr(this.asklistnumber.length);
         //fileslist = event.data.substr(asklistnumber.length).split("\n");
         this.folderchange();
-      } else if (event.data.substr(0,this.askpwdnumber.length) == this.askpwdnumber) {
+      } else if (event.data.substr(0, this.askpwdnumber.length) == this.askpwdnumber) {
         this.path = event.data.substr(this.askpwdnumber.length);
         this.folderchange();
       } else {
@@ -724,61 +720,61 @@ CustomApplicationsHandler.register("app.terminal", new CustomApplication({
     // Here is where we assign the value!
 
     //this.label.html(eventId);
-    switch(eventId) {
+    switch (eventId) {
 
-			/*
-			 * MultiController was moved to the left
-			 */
-			case this.LEFT:
-				break;
+      /*
+       * MultiController was moved to the left
+       */
+      case this.LEFT:
+        break;
 
-			/*
-			 * MultiController was moved to the right
-			 */
-			case this.RIGHT:
-				break;
+        /*
+         * MultiController was moved to the right
+         */
+      case this.RIGHT:
+        break;
 
-			/*
-			 * MultiController was moved up
-			 */
-			case this.UP:
-				break;
+        /*
+         * MultiController was moved up
+         */
+      case this.UP:
+        break;
 
-			/*
-			 * MultiController was moved down
-			 */
-			case this.DOWN:
-				break;
+        /*
+         * MultiController was moved down
+         */
+      case this.DOWN:
+        break;
 
-			/*
-			 * MultiController Wheel was turned clockwise
-       * Scroll down
-			 */
-			case this.CW:
+        /*
+         * MultiController Wheel was turned clockwise
+         * Scroll down
+         */
+      case this.CW:
         this.screen.get(0).scrollTop += 100;
-				break;
+        break;
 
-			/*
-			 * MultiController Wheel was turned counter-clockwise
-       * Scroll Up
-			 */
-			case this.CCW:
+        /*
+         * MultiController Wheel was turned counter-clockwise
+         * Scroll Up
+         */
+      case this.CCW:
         this.screen.get(0).scrollTop -= 100;
-				break;
+        break;
 
-			/*
-			 * MultiController's center was pushed down
-			 */
-			case this.SELECT:
+        /*
+         * MultiController's center was pushed down
+         */
+      case this.SELECT:
 
-				break;
+        break;
 
-			/*
-			 * MultiController hot key "back" was pushed
-			 */
-			case this.BACK:
-				break;
-		}
+        /*
+         * MultiController hot key "back" was pushed
+         */
+      case this.BACK:
+        break;
+    }
 
   },
 

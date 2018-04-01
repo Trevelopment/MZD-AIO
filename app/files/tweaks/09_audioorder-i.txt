@@ -53,19 +53,23 @@ then
   then
     if [ $TRACKORDER_AUDIO -eq 1 ]
     then
-      cp -a "${MYDIR}/config/audio_order_AND_no_More_Disclaimer/both/jci/gui/apps/system/js/systemApp.${TRACKORDER_AUDIO_FILE}.js" /jci/gui/apps/system/js/systemApp.js
+      #cp -a "${MYDIR}/config/audio_order_AND_no_More_Disclaimer/systemApp.js.audio" /jci/gui/apps/system/js/
+      cat "${MYDIR}/config/audio_order_AND_no_More_Disclaimer/systemApp.js.audio" "${MYDIR}/config/audio_order_AND_no_More_Disclaimer/both/jci/gui/apps/system/js/systemApp.${TRACKORDER_AUDIO_FILE}.js" > /jci/gui/apps/system/js/systemApp.js
       log_message "===     Changed order of audio source list, disclaimer still gone     ==="
     else
-      cp -a "${MYDIR}/config/audio_order_AND_no_More_Disclaimer/both/jci/gui/apps/system/js/systemApp.js" /jci/gui/apps/system/js/
+      #cp -a "${MYDIR}/config/audio_order_AND_no_More_Disclaimer/systemApp.js.audio" /jci/gui/apps/system/js/systemApp.js
+      cat "${MYDIR}/config/audio_order_AND_no_More_Disclaimer/systemApp.js.audio" "${MYDIR}/config/audio_order_AND_no_More_Disclaimer/both/jci/gui/apps/system/js/systemApp.js" > /jci/gui/apps/system/js/systemApp.js
       log_message "===     Changed order of audio source list, disclaimer still gone     ==="
     fi
   else
     if [ $TRACKORDER_AUDIO -eq 1 ]
     then
-      cp -a "${MYDIR}/config/audio_order_AND_no_More_Disclaimer/only_change_audio_order/jci/gui/apps/system/js/systemApp.${TRACKORDER_AUDIO_FILE}.js" /jci/gui/apps/system/js/systemApp.js
+     #cp -a "${MYDIR}/config/audio_order_AND_no_More_Disclaimer/systemApp.js.audio" /jci/gui/apps/system/js/
+      cat "${MYDIR}/config/audio_order_AND_no_More_Disclaimer/systemApp.js.audio" "${MYDIR}/config/audio_order_AND_no_More_Disclaimer/only_change_audio_order/jci/gui/apps/system/js/systemApp.${TRACKORDER_AUDIO_FILE}.js" > /jci/gui/apps/system/js/systemApp.js
       log_message "===      Changed order of audio source list (no no-more-disclaimer)   ==="
     else
-      cp -a "${MYDIR}/config/audio_order_AND_no_More_Disclaimer/only_change_audio_order/jci/gui/apps/system/js/systemApp.js" /jci/gui/apps/system/js/
+      #cp -a "${MYDIR}/config/audio_order_AND_no_More_Disclaimer/only_change_audio_order/jci/gui/apps/system/js/systemApp.js" /jci/gui/apps/system/js/systemApp.js
+      cat "${MYDIR}/config/audio_order_AND_no_More_Disclaimer/systemApp.js.audio" "${MYDIR}/config/audio_order_AND_no_More_Disclaimer/only_change_audio_order/jci/gui/apps/system/js/systemApp.js" > /jci/gui/apps/system/js/systemApp.js
       log_message "===     Changed order of audio source list (no no-more-disclaimer)    ==="
     fi
   fi

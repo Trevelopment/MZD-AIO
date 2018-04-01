@@ -1,4 +1,4 @@
 # change to polish version
 # show_message "CHANGE SPEEDOMETER TO POLISH..."
-sed -i 's/var language = "DE";/var language = "PL";/g' /jci/gui/apps/_speedometer/js/speedometer-startup.js
+sed -i "s/var language = '.*;/var language = 'PL';/g" /jci/gui/apps/_speedometer/js/speedometer-startup.js
 log_message "===               CHANGED SPEEDOMETER TO POLISH VERSION               ==="

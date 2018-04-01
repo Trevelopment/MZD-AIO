@@ -126,7 +126,7 @@ function VideoPlayerTmplt(uiaId, parentDiv, templateID, controlProperties) {
  * @param   eventID (string) any of the Internal event name values in IHU_GUI_MulticontrollerSimulation.docx (e.g. 'cw',
  * 'ccw', 'select')
  */
-VideoPlayerTmplt.prototype.handleControllerEvent = function (eventID) {
+VideoPlayerTmplt.prototype.handleControllerEvent = function(eventID) {
   log.debug("handleController() called, eventID: " + eventID);
 
   var retValue = handleCommander(eventID);
@@ -158,13 +158,13 @@ VideoPlayerTmplt.prototype.handleControllerEvent = function (eventID) {
  * Called by the app during templateNoLongerDisplayed. Used to perform garbage collection procedures on the template and
  * its controls.
  */
-VideoPlayerTmplt.prototype.cleanUp = function () {
+VideoPlayerTmplt.prototype.cleanUp = function() {
   var child = document.getElementById(this.divElt.id);
   child.parentNode.removeChild(child);
 
   this.divElt = null;
   child = null;
-  $('#SbSpeedo').fadeIn();
+  $('#SbSpeedo, #Sbfuel-bar-wrapper').fadeIn();
 };
 
 framework.registerTmpltLoaded("VideoPlayerTmplt");

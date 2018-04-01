@@ -1,0 +1,4 @@
+# change to Dutch version
+# show_message "CHANGE SPEEDOMETER TO DUTCH..."
+sed -i "s/var language = '.*;/var language = 'NL';/g" /jci/gui/apps/_speedometer/js/speedometer-startup.js
+log_message "===                 CHANGED SPEEDOMETER TO DUTCH VERSION               ==="

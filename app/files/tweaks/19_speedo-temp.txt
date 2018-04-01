@@ -1,3 +1,3 @@
 # change temp from C to F
-sed -i 's/var tempIsF = false;/var tempIsF = true;/g' /jci/gui/apps/_speedometer/js/speedometer-startup.js
+sed -i 's/var tempIsF = .*;/var tempIsF = true;/g' /jci/gui/apps/_speedometer/js/speedometer-startup.js
 log_message "===                   TEMPERATURE SET TO FAHRENHEIT                   ==="

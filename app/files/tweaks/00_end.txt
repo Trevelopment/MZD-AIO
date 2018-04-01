@@ -1,3 +1,9 @@
+if [ -e ${ADDITIONAL_APPS_JSON} ]
+then
+  # Delete Blank Lines In additionalApps.json
+  sed -i '/^ *$/ d' ${ADDITIONAL_APPS_JSON}
+  cp ${ADDITIONAL_APPS_JSON} "${MYDIR}/bakups/test/additionalApps.after.json"
+fi
 log_message " "
 sleep 2
 log_message "======================= END OF TWEAKS INSTALLATION ======================"

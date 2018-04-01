@@ -1,0 +1,3 @@
+# Don't hide statusbar speedometer when speedometer app is open
+sed -i "s/var sbHideInApp = .*;/var sbHideInApp = false;/g" /jci/gui/apps/_speedometer/js/speedometer-startup.js
+log_message "===                 SHOW STATUSBAR SPEEDOMETER IN APP                 ==="

@@ -5,9 +5,9 @@
 /* jshint -W097*/
 const selectBgDir = $('.menuCheck.bg input')
 const selectColorsDL = $('.menuCheck.colors input')
-$(function () {
+$(function() {
   /* Attempt to download color scheme files if they don't exist */
-  selectColorsDL.on('click', function () {
+  selectColorsDL.on('click', function() {
     if (selectColorsDL.hasClass('ng-pristine') && !hasColorFiles) {
       bootbox.confirm({
         title: 'The Color Scheme Tweak Requires Additional Files.',
@@ -20,7 +20,7 @@ $(function () {
             label: 'Cancel'
           }
         },
-        callback: function (result) {
+        callback: function(result) {
           if (result) {
             ipc.send('download-aio-files', 'color-schemes.zip')
           } else {
@@ -32,7 +32,7 @@ $(function () {
     }
   })
   /* Attempt to download speedcam patch files if they don't exist */
-  angular.element($('.install-check input#IN23')).on('click', function () {
+  angular.element($('.install-check input#IN23')).on('click', function() {
     if ($('.install-check input#IN23, .uninstall-check input#UN23').hasClass('ng-pristine') && !hasSpeedCamFiles) {
       bootbox.confirm({
         title: 'The Color Scheme Tweak Requires Additional Files.',
@@ -45,7 +45,7 @@ $(function () {
             label: 'Cancel'
           }
         },
-        callback: function (result) {
+        callback: function(result) {
           if (result) {
             ipc.send('download-aio-files', 'speedcam-patch.zip')
           } else {
@@ -57,7 +57,7 @@ $(function () {
     }
   })
 })
-ipc.on('already-downloaded', function (event, filename) {
+ipc.on('already-downloaded', function(event, filename) {
   bootbox.confirm({
     message: 'You have already downloaded these files! Would you like to redownload and overwrite files?',
     buttons: {
@@ -70,7 +70,7 @@ ipc.on('already-downloaded', function (event, filename) {
         className: 'btn-danger'
       }
     },
-    callback: function (result) {
+    callback: function(result) {
       if (result) {
         ipc.send('resume-dl')
       } else {
@@ -79,7 +79,7 @@ ipc.on('already-downloaded', function (event, filename) {
     }
   })
 })
-ipc.on('selected-joined-bg', function (event, filepath) {
+ipc.on('selected-joined-bg', function(event, filepath) {
   var outFile = `${varDir}/background.png`
   document.getElementById('selected-file').innerHTML = `Your Selected Background Image: ${filepath}`
   clipboard.writeImage(filepath[0])
@@ -93,7 +93,7 @@ ipc.on('selected-joined-bg', function (event, filepath) {
   bgNotification.onclick = () => {}
   ipc.emit('set-bg')
 })
-ipc.on('selected-bg', function (event, filepath) {
+ipc.on('selected-bg', function(event, filepath) {
   var outFile = `${varDir}/background.png`
   document.getElementById('selected-file').innerHTML = `Your Selected Background Image: ${filepath}`
   var warnMsg = '{{mainOps.retain.toolTip}}'
@@ -108,7 +108,7 @@ ipc.on('selected-bg', function (event, filepath) {
   }
   ipc.emit('set-bg')
 })
-ipc.on('selected-offscreen-bg', function (event, filepath) {
+ipc.on('selected-offscreen-bg', function(event, filepath) {
   var outFile = `${varDir}/OffScreenBackground.png`
   fs.writeFileSync(`${outFile}`, nativeImage.createFromPath(`${filepath}`).resize({ 'width': 800, 'height': 480 }).toPNG())
   let bgNotification = new Notification('Background', {
@@ -126,29 +126,29 @@ ipc.on('set-bg', (prev) => {
     $('#imgframe').click()
   }
 })
-ipc.on('selected-album-art', function (event, filepath) {
+ipc.on('selected-album-art', function(event, filepath) {
   var outFile = `${varDir}/no_artwork_icon.png`
   $('.blnk-albm-art').hide()
   $('#blnk-albm-img').show()
   settings.set('blank-album-art', `${filepath}`)
   fs.writeFileSync(`${outFile}`, nativeImage.createFromPath(`${filepath}`).resize({ 'width': 146, 'height': 146 }).toPNG())
-  setTimeout(function () {
+  setTimeout(function() {
     var bgNoCache = `${varDir}/no_artwork_icon.png?` + new Date().getTime()
     document.getElementById('blnk-albm-img').innerHTML = `<img src="${bgNoCache}">`
   }, 2000)
 })
-ipc.on('aio-info', function (event) {
+ipc.on('aio-info', function(event) {
   $('#FW_VER').attr('data-content', `FW_VERSION: ${persistantData.get('FW')}`)
   $('#FW_VER').show()
 })
-ipc.on('close-featherlight', function (event) {
+ipc.on('close-featherlight', function(event) {
   $.featherlight.current().close()
 })
-ipc.on('open-translator', function () {
+ipc.on('open-translator', function() {
   remote.BrowserWindow.fromId(1).focus()
   $('#openTranslator').click()
 })
-ipc.on('go-home', function () {
+ipc.on('go-home', function() {
   remote.BrowserWindow.fromId(1).focus()
   $('#goHome').click()
 })

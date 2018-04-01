@@ -1,0 +1,3 @@
+# Hide statusbar speedometer in reverse
+sed -i 's/.*hide in reverse.*/#SbSpeedo.parking, #Sbfuel-bar-wrapper.parking{display:none!important}/g' /jci/gui/apps/_speedometer/css/StatusBarSpeedometer.css
+log_message "===               HIDE STATUSBAR SPEEDOMETER IN REVERSE               ==="

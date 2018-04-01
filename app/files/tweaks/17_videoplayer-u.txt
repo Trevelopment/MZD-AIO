@@ -39,7 +39,11 @@ sed -i '/--port=9998/d' /jci/scripts/stage_wifi.sh
 
 # delete videoplayer entry from /jci/opera/opera_dir/userjs/additionalApps.json
 ADDIT_APPS=0
-if grep -Fq "_aiotweaks" /jci/opera/opera_dir/userjs/additionalApps.json
+if [ -e /jci/opera/opera_dir/userjs/CustomApplicationsProxy.js ] || [ -e /jci/opera/opera_dir/userjs/nativeApps.js ]
+then
+  log_message "===                          Found CASDK                              ==="
+  ADDIT_APPS=1
+elif grep -Fq "_aiotweaks" /jci/opera/opera_dir/userjs/additionalApps.json
 then
 	log_message "===          Found AIOTweaksApp entry in additionalApps.json          ==="
 	ADDIT_APPS=1
@@ -60,6 +64,7 @@ if [ $ADDIT_APPS -eq 0 ]
 then
 	log_message "===    No more entrys in additionalApps.json, files will be deleted   ==="
 	rm -f /jci/opera/opera_dir/userjs/additionalApps.*
+	rm -f /jci/opera/opera_dir/userjs/app.js
 else
 	remove_app_json "_videoplayer"
 fi

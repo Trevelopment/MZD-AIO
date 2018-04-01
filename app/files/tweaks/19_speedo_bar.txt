@@ -1,5 +1,6 @@
 # Set the Bar Speedometer flag
-sed -i 's/var barSpeedometerMod = false;/var barSpeedometerMod = true;/g' /jci/gui/apps/_speedometer/js/speedometer-startup.js 
-log_message "===       Set flag for bar speedometer in speedometer-startup.js      ==="
+sed -i 's/var barSpeedometerMod = .*;/var barSpeedometerMod = true;/g' /jci/gui/apps/_speedometer/js/speedometer-startup.js
+log_message "===                    START IN BAR SPEEDOMETER MODE                  ==="
+chmod -R 755 /jci/fonts
 
 chmod -R 755 /jci/gui/apps/_speedometer/

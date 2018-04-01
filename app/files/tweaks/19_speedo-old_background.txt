@@ -1,4 +1,4 @@
 # Original speedometer background
 # show_message "SET ORIGINAL SPEEDOMETER BACKGROUND ..."
-sed -i 's/var original_background_image = false;/var original_background_image = true;/g' /jci/gui/apps/_speedometer/js/speedometer-startup.js
+sed -i 's/var original_background_image = .*;/var original_background_image = true;/g' /jci/gui/apps/_speedometer/js/speedometer-startup.js
 log_message "===                SET ORIGINAL SPEEDOMETER BACKGROUND                ==="

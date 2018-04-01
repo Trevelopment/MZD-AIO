@@ -682,7 +682,7 @@ systemApp.prototype._initApplicationsDataList = function()
     //We have two different context (Applications and VehicleStatusMonitor) for displaying Appication item(s),so context wise storing the array of appName(s) to be displayed on corresponding Context.
     this._applicationsCtxtWiseAppNames = {
       //Context Name :  // [appName,appName....]
-      "Applications"            : ["hdtrafficimage","idm","ecoenergy","driverid","vehicleStatus","vdt_settings","vdt","carplay","androidauto"],
+      "Applications"            : ["hdtrafficimage","idm","ecoenergy","driverid","vehicleStatus","vdt_settings","vdt","carplay","androidauto","_androidauto","_videoplayer","_aiotweaks","_speedometer"],
       "VehicleStatusMonitor"    : ["warnguide","vsm","schedmaint"]
     };
 };

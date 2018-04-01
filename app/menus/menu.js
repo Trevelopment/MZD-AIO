@@ -75,7 +75,7 @@ let template = [
         label: 'Save',
         accelerator: 'CmdOrCtrl+s',
         role: 'save',
-        click: function (item, focusedWindow) {
+        click: function(item, focusedWindow) {
           sendAction('save-options')
         }
       },
@@ -83,7 +83,7 @@ let template = [
         label: 'Load',
         accelerator: 'CmdOrCtrl+l',
         role: 'load',
-        click: function (item, focusedWindow) {
+        click: function(item, focusedWindow) {
           sendAction('load-options')
         }
       },
@@ -109,7 +109,7 @@ let template = [
         label: 'Select All',
         accelerator: 'CmdOrCtrl+A',
         role: 'selectall'
-      }
+      },
     ]
   }, {
     label: 'Window',
@@ -118,16 +118,21 @@ let template = [
       {
         label: 'Reload',
         accelerator: 'CmdOrCtrl+R',
-        click: function (item, focusedWindow) {
-          if (focusedWindow) { focusedWindow.reload() }
+        click: function(item, focusedWindow) {
+          if (focusedWindow)
+          focusedWindow.reload();
         }
       }, {
         label: 'Full Screen',
-        accelerator: (function () {
-          if (process.platform === 'darwin') { return 'Ctrl+Command+F' } else { return 'F11' }
+        accelerator: (function() {
+          if (process.platform === 'darwin')
+          return 'Ctrl+Command+F';
+          else
+          return 'F11';
         })(),
-        click: function (item, focusedWindow) {
-          if (focusedWindow) { focusedWindow.setFullScreen(!focusedWindow.isFullScreen()) }
+        click: function(item, focusedWindow) {
+          if (focusedWindow)
+          focusedWindow.setFullScreen(!focusedWindow.isFullScreen());
         }
       }, {
         label: 'Minimize',
@@ -142,20 +147,20 @@ let template = [
       {
         label: 'Reset Zoom',
         accelerator: '=',
-        role: 'resetzoom'
+        role: "resetzoom"
       },
       {
         label: 'Zoom In',
         accelerator: 'Plus',
-        role: 'zoomin'
+        role: "zoomin"
       },
       {
         label: 'Zoom Out',
         accelerator: '-',
-        role: 'zoomout'
+        role: "zoomout"
       }
     ]
-  }, {
+  },{
     label: 'Help',
     role: 'help',
     submenu: [
@@ -164,18 +169,18 @@ let template = [
       click: () => {
       ipc.emit('open-info-window')
     }
-  }, */
-      {
-        label: 'Learn More: MazdaTweaks.com',
-        click: function () { shell.openExternal('http://aio.trevelopment.win/mazdatweaks') }
-      },
-      {
-        label: 'Forum: Mazda3Revolution.com',
-        click: function () { shell.openExternal('http://aio.trevelopment.win/mazda3revolution') }
-      }
-    ]
+  },*/
+  {
+    label: 'Learn More: MazdaTweaks.com',
+    click: function() { shell.openExternal('http://aio.trevelopment.win/mazdatweaks') }
   },
-/* {
+  {
+    label: 'Forum: Mazda3Revolution.com',
+    click: function() { shell.openExternal('http://aio.trevelopment.win/mazda3revolution') }
+  }
+]
+},
+/*{
   label: 'Back',
   accelerator: 'CmdOrCtrl+B',
   click: function (item, focusedWindow) {
@@ -188,14 +193,14 @@ let template = [
   label: 'Close',
   accelerator: 'CmdOrCtrl+W',
   role: 'close'
-}, */
-  {
-    label: 'Quit',
-    accelerator: 'CmdOrCtrl+Q',
-    role: 'quit'
-  }
-]
-/* if (process.platform === 'darwin') {
+},*/
+{
+  label: 'Quit',
+  accelerator: 'CmdOrCtrl+Q',
+  role: 'quit'
+}
+];
+/*if (process.platform === 'darwin') {
   const name = app.getName();
   template.unshift({
     label: name,
@@ -250,12 +255,12 @@ let template = [
         role: 'front'
       });
     }
-  } */
-app.on('ready', function () {
-  const menu = Menu.buildFromTemplate(template)
-  Menu.setApplicationMenu(menu)
-  return template
-})
+  }*/
+  app.on('ready', function () {
+    const menu = Menu.buildFromTemplate(template)
+    Menu.setApplicationMenu(menu)
+    return template;
+  })
   /*
   app.on('browser-window-created', function () {
   let reopenMenuItem = findReopenMenuItem()
@@ -265,4 +270,4 @@ app.on('ready', function () {
 app.on('window-all-closed', function () {
 let reopenMenuItem = findReopenMenuItem()
 if (reopenMenuItem) reopenMenuItem.enabled = true
-}) */
+})*/

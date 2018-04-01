@@ -9,15 +9,22 @@
 -->
 <table>
 	<tbody class="w3-col">
-		<tr class="w3-hover-pale-blue w3-ro"><!--ng-hide="user.aaBetaVer"-->
-			<td class="aa-side w3-col" style="font-size:15px;"><b><span class="icon-android"></span>AA v1.08</b>
+		<tr class="w3-hover-pale-blue w3-row"><!--ng-hide="user.aaBetaVer"-->
+			<td class="aa-side w3-col w3-half" style="font-size:15px;"><b><span class="icon-android"></span>AA v1.08</b>
 			</td>
+			<!--td class="aa-side w3-col w3-half" style="font-size:15px;"><a href class="w3-btn w3-blue w3-hover-yellow" onclick='document.getElementById("patcherPrompt").style.display="block"'><b><span class="icon-android2"></span>  AA-APK-PATCH  <span class="icon-phone_android"></span></b></a>
+		</td-->
 		</tr>
     <tr><td>
 		<div class="AAmsg">
       <input class="w3-check" id="aaBetaVer" type="checkbox" name="aaBetaVer" ng-model="user.aaBetaVer" ng-value="user.aaBetaVer">
-    <label for="aaBetaVer" data-toggle="tooltip" data-placement="auto bottom" title="Install Android Auto v1.07a"><b style="font-size:15px">Disable Car Navigation Data</b></label><br>
-      If you experience navigaion issues choose this option to force AA to use phone GPS data only.<br>
+    <label for="aaBetaVer" data-toggle="tooltip" data-placement="auto bottom" title="Install Android Auto v1.07a"><b style="font-size:15px">AA-v1.09-beta</b></label><br>
+      If you experience "reversed compass" navigaion issue v1.09-beta flips the heading data 180° while still utilizing the car and phone GPS together.  <b>You may get a reversed heading when the Nav SD card is removed or if you are not having the reversed heading issue to begin with.</b><br>
     <div>For more information, previous releases, or to check for new releases visit the <a href onclick="externalLink('aainfo')">Headunit Info Page</a> and the <a href onclick="externalLink('aarepo')">Headunit Repository</a>
-	<h5>Android Auto App. </h5><a href onclick='externalLink(`AA-app`)'><span class='icon-star-full'></span>Install the Android app from google play store: HERE.</a></div></td></tr></tbody>
+	<!--span class="aapatcher-message"><h5><b>NOTE: Android Auto App v3.0+ Disables All Non-Approved 3rd party Apps. </b></h5><b>To Patch Compatible APKs To Work Android Auto v3 <a href class="aapatcher" onclick='document.getElementById("patcherPrompt").style.display="block"'><span class='icon-star-full'></span> AA+APK+Patch</a></b></span--></div></td></tr></tbody>
 </table>
+<script>
+if(os.platform()!=='win32'){
+  $('.aapatcher-message').hide()
+}
+</script>

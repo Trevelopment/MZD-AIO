@@ -11,9 +11,9 @@ var appListData = [];
 //var wsAIO = null;
 //var aioWsVideo = null;
 //var AIOvideo = false;
-$(document).ready(function () {
+$(document).ready(function() {
   try {
-    $("#SbSpeedo").fadeOut();
+$('#SbSpeedo, #Sbfuel-bar-wrapper').fadeOut();
     //framework.sendEventToMmui("common", "SelectBTAudio");
   } catch (err) {
 
@@ -23,11 +23,11 @@ $(document).ready(function () {
   // *****************************
   // AIO info
   getAppListData();
-  $('button').on('click', function () {
+  $('button').on('click', function() {
     $('button').removeClass('selectedItem');
     $(this).addClass('selectedItem')
   });
-  $("#aioInfo").on("click", function () { showAioInfo("<div class='infoMessage'><h1>AIO Tweaks App v" + aioTweaksVer + " </h1>This is an experimental app by Trezdog44 made to test the capabilities, functionalities, and limitations of apps in the MZD Infotainment System.<br>This app has some useful and fun functions although it is not guaranteed that everything works.  There may be non-functioning or experimental features.</div>"); });
+  $("#aioInfo").on("click", function() { showAioInfo("<div class='infoMessage'><h1>AIO Tweaks App v" + aioTweaksVer + " </h1>This is an experimental app by Trezdog44 made to test the capabilities, functionalities, and limitations of apps in the MZD Infotainment System.<br>This app has some useful and fun functions although it is not guaranteed that everything works.  There may be non-functioning or experimental features.</div>"); });
   $("#aioReboot").on("click", myRebootSystem);
   //$("#mainMenuLoop").on("click",setMainMenuLoop);
   $("#test").on("click", myTest);
@@ -67,29 +67,29 @@ $(document).ready(function () {
   $("#backupCamBtn").on("click", showBodyClassName);
   $("#errLogBtn").on("click", showErrLog);
   $("#runTerminalBtn").on("click", TerminalConfirm);
-  $("#runCheckIPBtn").on("click", chooseBackground);
+  $("#runCheckIPBtn").on("click", RunCheckIP);
   $("#reverseAppListBtn").on("click", reverseApplicationList);
   $("#shiftEntListBtn").on("click", shiftEntertainmentList);
   $("#devModeSecretBtn").on("click", toggleDevMode);
-  $("#showBgBtn").on("click", function () { $("html").addClass("showBg") });
-  $("#twkOut").on("click", function () { framework.sendEventToMmui("common", "Global.IntentHome") });
-  $("#usba").on("click", function () { framework.sendEventToMmui("system", "SelectUSBA") });
-  $("#usbb").on("click", function () { framework.sendEventToMmui("system", "SelectUSBB") });
-  $("#pauseBtn").on("click", function () { localStorage.clear(); });
+  $("#showBgBtn").on("click", function() { $("html").addClass("showBg") });
+  $("#twkOut").on("click", function() { framework.sendEventToMmui("common", "Global.IntentHome") });
+  $("#usba").on("click", function() { framework.sendEventToMmui("system", "SelectUSBA") });
+  $("#usbb").on("click", function() { framework.sendEventToMmui("system", "SelectUSBB") });
+  $("#pauseBtn").on("click", function() { localStorage.clear(); });
   //$("#previousTrackBtn").on("click",function(){framework.sendEventToMmui("common", "Global.PreviousHoldStop")});
   //$("#nextTrackBtn").on("click",function(){framework.sendEventToMmui("common", "Global.NextHoldStop")});
-  $("#BluetoothAudio").on("click", function () { framework.sendEventToMmui("system", "SelectBTAudio") });
-  $("#previousTrackBtn").on("click", function () { framework.sendEventToMmui("Common", "Global.Previous") });
-  $("#nextTrackBtn").on("click", function () { framework.sendEventToMmui("Common", "Global.Next") });
-  $(".mmLayout").on("click", function () {
+  $("#BluetoothAudio").on("click", function() { framework.sendEventToMmui("system", "SelectBTAudio") });
+  $("#previousTrackBtn").on("click", function() { framework.sendEventToMmui("Common", "Global.Previous") });
+  $("#nextTrackBtn").on("click", function() { framework.sendEventToMmui("Common", "Global.Next") });
+  $(".mmLayout").on("click", function() {
     changeLayout($(this).attr("id"));
     $("#MainMenuMsg").html($(this).text());
   });
-  $(".toggleTweaks").on("click", function () {
+  $(".toggleTweaks").on("click", function() {
     $("body").toggleClass($(this).attr("id"));
     $("#MainMenuMsg").html($(this).text());
   });
-  $("#clearTweaksBtn").on("click", function () {
+  $("#clearTweaksBtn").on("click", function() {
     $("body").attr("class", "");
     $("#MainMenuMsg").text("Main Menu Restored");
     localStorage.removeItem("aio.tweaks");
@@ -98,15 +98,15 @@ $(document).ready(function () {
   $("#closeTouchPanel").on("click", closeTSPanel);
   // Tab select & localStrage save on each button press
   $(".toggleTweaks").on("click", saveTweaks);
-  $(".tablinks").on("click", function () {
+  $(".tablinks").on("click", function() {
     $("#MainMenuMsg").html("");
     localStorage.setItem("aio.prevtab", JSON.stringify($(this).attr("id")));
   });
-  $("#openNav").on("click", function () {
+  $("#openNav").on("click", function() {
     document.getElementById("mySidenav").style.width = "250px";
     document.getElementById("main").style.marginLeft = "250px";
   });
-  $("#closeNav").on("click", function () {
+  $("#closeNav").on("click", function() {
     document.getElementById("mySidenav").style.width = "0";
     document.getElementById("main").style.marginLeft = "0";
   });
@@ -135,7 +135,7 @@ function changeLayout(newlayout) {
 
 function getAppListData() {
   try {
-    $.getJSON("../opera/opera_dir/userjs/additionalApps.json", function (data) {
+    $.getJSON("../opera/opera_dir/userjs/additionalApps.json", function(data) {
       appListData = data;
       hasAA();
       hasCS();
@@ -153,7 +153,7 @@ function setMainMenuLoop() {
   MainMenuCtrl.prototype._offsetFocus = this._MainMenuLoop;
   $('#MainMenuMsg').text('Main Menu Loop');
 }
-_MainMenuLoop = function (direction) {
+_MainMenuLoop = function(direction) {
   var index = this._getFocus();
   index += direction;
 
@@ -203,7 +203,7 @@ function showEnvVar() {
 
 function takeScreenshot() {
   showAioInfo('Screenshot in 10 Seconds');
-  setTimeout(function () {
+  setTimeout(function() {
     closeAioInfo(true);
     showSaveScreenshotBtn();
   }, 10000);
@@ -267,7 +267,7 @@ function adbDevices() {
 }
 
 function TerminalConfirm() {
-  showAioInfo('<div class="infoMessage"><div style="font-weight:bold;font-size:40px;">FOR ADVANCED USERS ONLYD</div>TO USE THE TERMINAL CONNECT A USB KEYBOAR<br>RUNNING THE TERMINAL DISABLES THE MULTICONTROLLER REBOOT TO RE-ENABLE MULTICONTROLLER FUNCTION<br><br>MAKE SURE YOUR USB KEYBOARD IS CONNECTED!!!<br><button class="confirmKeyboardBtn" onclick="$(this).fadeOut(\'1500\');$(\'.confirmTerminalBtn\').fadeIn(\'1500\')">MY USB KEYBOARD IS CONNECTED</button><button class="confirmTerminalBtn" style="display:none" onclick="$(this).hide();RunTerminal();">START TERMINAL</button><br>THIS TERMINAL HAS FULL ROOT ACCESS, DO NOT TYPE A COMMAND UNLESS YOU KNOW WHAT IT DOES!!!</div>');
+  showAioInfo('<div class="infoMessage"><div style="font-weight:bold;font-size:40px;">FOR ADVANCED USERS ONLY</div>TO USE THE TERMINAL CONNECT A USB KEYBOARD<br>RUNNING THE TERMINAL DISABLES THE MULTICONTROLLER REBOOT TO RE-ENABLE MULTICONTROLLER FUNCTION<br><br>MAKE SURE YOUR USB KEYBOARD IS CONNECTED!!!<br><button class="confirmKeyboardBtn" onclick="$(this).fadeOut(\'1500\');$(\'.confirmTerminalBtn\').fadeIn(\'1500\')">MY USB KEYBOARD IS CONNECTED</button><button class="confirmTerminalBtn" style="display:none" onclick="$(this).hide();RunTerminal();">START TERMINAL</button><br>THIS TERMINAL HAS FULL ROOT ACCESS, DO NOT TYPE A COMMAND UNLESS YOU KNOW WHAT IT DOES!!!</div>');
 }
 
 function RunTerminal() {
@@ -319,7 +319,7 @@ function stopFirewall() {
 }*/
 function hasAA() {
   var AA = false;
-  $.each(appListData, function (key, val) {
+  $.each(appListData, function(key, val) {
     if (val.name === "_androidauto") {
       AA = true;
     }
@@ -342,37 +342,37 @@ function hasErrLog() {
 function AioFileCheck(fc) {
   var FC = fc.substr(fc.lastIndexOf("_"));
   switch (FC) {
-  case "_NOAA":
-    $('#aaTitle, .aaFunc').remove();
-    $('#csTitle').addClass('centered');
-    break;
-  case "_CS":
-    appListData.push({ "name": "cs", "label": "CastScreen Receiver" });
-    break;
-  case "_NOCS":
-    $('#csTitle, .csFunc').remove();
-    $('#aaTitle').addClass('centered');
-    break;
-  case "_SWAP":
-    //$('#mountSwapBtn').html('<a>Mount Swapfile</a>').show();
-    //$('#createSwapBtn').off('click').on('click',deleteSwap).html('<a>Delete Swapfile</a>');
-    $('#mountSwapBtn').show();
-    $('#unmountSwapBtn').show();
-    break;
-  case "_NOSWAP":
-    $('#mountSwapBtn').remove();
-    $('#unmountSwapBtn').remove();
-    //$('#mountSwapBtn').html('').hide();
-    //$('#createSwapBtn').off('click').on('click',createSwap).html('<a>Create Swapfile</a>');
-    break;
-  case "_ERR":
-    $('#errLogBtn').show();
-    break;
-  case "_NOERR":
-    $('#errLogBtn').remove();
-    break;
-  default:
-    showAioInfo('INVALID FILE CHECK: ' + fc);
+    case "_NOAA":
+      $('#aaTitle, .aaFunc').remove();
+      $('#csTitle').addClass('centered');
+      break;
+    case "_CS":
+      appListData.push({ "name": "cs", "label": "CastScreen Receiver" });
+      break;
+    case "_NOCS":
+      $('#csTitle, .csFunc').remove();
+      $('#aaTitle').addClass('centered');
+      break;
+    case "_SWAP":
+      //$('#mountSwapBtn').html('<a>Mount Swapfile</a>').show();
+      //$('#createSwapBtn').off('click').on('click',deleteSwap).html('<a>Delete Swapfile</a>');
+      $('#mountSwapBtn').show();
+      $('#unmountSwapBtn').show();
+      break;
+    case "_NOSWAP":
+      $('#mountSwapBtn').remove();
+      $('#unmountSwapBtn').remove();
+      //$('#mountSwapBtn').html('').hide();
+      //$('#createSwapBtn').off('click').on('click',createSwap).html('<a>Create Swapfile</a>');
+      break;
+    case "_ERR":
+      $('#errLogBtn').show();
+      break;
+    case "_NOERR":
+      $('#errLogBtn').remove();
+      break;
+    default:
+      showAioInfo('INVALID FILE CHECK: ' + fc);
   }
 }
 
@@ -391,7 +391,7 @@ function showVehicleType() {
 
 function showAppList() {
   var items = [];
-  $.each(appListData, function (key, val) {
+  $.each(appListData, function(key, val) {
     items.push("<li id='" + key + "'>" + val.label + "</li>");
   });
   showAioInfo('Installed AIO Apps');
@@ -485,10 +485,10 @@ function showFile(filepath) {
   $.ajax({
     url: filepath,
     dataType: "text",
-    success: function (data) {
+    success: function(data) {
       $("#AioInformation").html(data);
     },
-    error: function (e) {
+    error: function(e) {
       showAioInfo("ERROR: " + e);
     }
   });
@@ -573,7 +573,7 @@ function aioWs(action, waitMessage) {
   var ws = new WebSocket('ws://127.0.0.1:9997/');
 
   var focusBtn = $('button.selectedItem');
-  ws.onmessage = function (event) {
+  ws.onmessage = function(event) {
     var res = event.data;
     //console.log(res);
     if (res.indexOf('AIO_FC_') !== -1) {
@@ -591,7 +591,7 @@ function aioWs(action, waitMessage) {
     msgnum++;
     if (msgnum > waitMessage || res.indexOf('DONE') !== -1) {
       focusBtn.css({ 'background': '-o-linear-gradient(top,rgba(0,0,0,0),rgba(0,0,0,1))', 'color': '#fff' });
-      setTimeout(function () {
+      setTimeout(function() {
         if (ws !== null) {
           ws.close();
           ws = null;
@@ -602,12 +602,12 @@ function aioWs(action, waitMessage) {
     }
   };
 
-  ws.onopen = function () {
+  ws.onopen = function() {
     ws.send(action);
     focusBtn.css({ 'background': '-o-linear-gradient(top,rgba(255,255,255,.5),rgba(255,255,255,1))', 'color': '#000' });
     //console.info(action);
     if (waitMessage < 1) {
-      setTimeout(function () {
+      setTimeout(function() {
         if (ws !== null) {
           ws.close();
           ws = null;
@@ -615,7 +615,7 @@ function aioWs(action, waitMessage) {
       }, 4000);
     }
   };
-  ws.onclose = function () {
+  ws.onclose = function() {
     $('button').css({ 'background': '', 'color': '' });
   };
 }

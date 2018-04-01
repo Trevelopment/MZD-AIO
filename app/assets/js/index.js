@@ -22,9 +22,11 @@ const dataObj = new Config({ 'name': 'aio-data-obj' })
 const lastView = new Config({ 'name': 'aio-last' })
 const userThemes = new Config({ 'name': 'user-themes' })
 const casdkApps = new Config({ 'name': 'casdk' })
+const speedoSave = new Config({ 'name': 'MZD_Speedometer' })
 const { writeFileSync } = require('fs')
 const isDev = require('electron-is-dev')
 const path = require('path')
+const os = require('os')
 var copyFolderLocation = persistantData.get('copyFolderLocation')
 var visits = persistantData.get('visits') || 0
 var hasColorFiles = fs.existsSync(`${app.getPath('userData')}/color-schemes/`)
@@ -150,16 +152,17 @@ function updateNotes () {
     size: 'large',
     closeButton: true
   })
-  setTimeout(function () {
+  setTimeout(function() {
     $('.modal-dialog').animate({ 'margin-top': '40px', 'margin-bottom': '60px' }, 3000)
     $('#newVerBtn').fadeIn(5000)
   }, 2000)
 }
 
 function firstTimeVisit() {
-  if (!persistantData.has('updateVer') || persistantData.get('updateVer') < 278) {
+  if (!persistantData.has('updateVer') || persistantData.get('updateVer') < 279) {
     myStance()
-    persistantData.set('updateVer', 278)
+    settings.set('reset', true)
+    persistantData.set('updateVer', 279)
     persistantData.set('updated', false)
     persistantData.delete('ver270')
     persistantData.delete('message-502')
@@ -307,17 +310,9 @@ function donate() {
 // Returns list of USB Drives
 function getUSBDrives() {
   var disks = []
-  drivelist.list(function (error, dsklst) {
+  drivelist.list(function(error, dsklst) {
     if (error) {
       console.error('Error finding USB drives')
-      /*bootbox.alert({
-        title: 'Error',
-        message: 'Error finding USB drives: ' + error,
-        callback: function () {
-          bootbox.hideAll()
-        }
-      })*/
-      //throw error
     }
     for (var i = 0; i < dsklst.length; i++) {
       if (!dsklst[i].system) {
@@ -376,7 +371,7 @@ function saveAIOLogHTML() {
 }
 
 function checkForUpdate(ver) {
-  $.featherlight(`https://aio.trevelopment.com/update.php?ver=278`, { closeSpeed: 100, variant: 'checkForUpdate' })
+  $.featherlight(`https://aio.trevelopment.com/update.php?ver=279`, { closeSpeed: 100, variant: 'checkForUpdate' })
 }
 
 function formatDateCustom(dateFormatType) {
@@ -422,16 +417,28 @@ function showCompatibility() {
   <h3 style="text-transform: capitalize;">NOTE: FW v59.00.502+ <a href="" onclick="externalLink('im-super-serial')">Requires Additional Steps To Install Tweaks.</a>  If updating to v59.00.502+ install Autorun & Recovery Scripts to allow Tweaks to be installed after updating.</h3>
   </div>`).insertAfter($('#mzd-title'))
 }
-$(function () {
+$(function() {
   $('.toggleExtra.1').addClass('icon-plus-square').removeClass('icon-minus-square')
-  setTimeout(function () {
-    $('#IN21').click(function () {
+  setTimeout(function() {
+    $('#IN21').click(function() {
       snackbar('THERE MAY BE ISSUES REGARDING COMPATIBILITY WITH THIS TWEAK. AFTER INSTALLING, YOUR USB PORTS MAY BECOME UNREADABLE TO THE CMU. <h3>AUTORUN-RECOVERY SCRIPT WILL BE INSTALLED IN CASE RECOVERY BY SD CARD SLOT IS NEEDED TO RECOVER USB FUNCTION</h3>')
     })
-    $('#advancedOptions').click(function () {
+    $('#advancedOptions').click(function() {
       $('.advancedOp, #twkOpsTitle').toggle()
       $('.sidePanel').toggleClass('adv')
       if ($('#IN21').prop('checked')) { $('#IN21').click() }
     })
   }, 1000)
 })
+
+function toggleTips() {
+  showSpdHints = !showSpdHints
+  showSpdHints ? $('#SpdOpsTips').slideDown() : $('#SpdOpsTips').slideUp()
+}
+
+function numberReplacer(key, value) {
+  if (key === "pos" && value !== null) {
+    value = value.toString();
+  }
+  return value;
+}

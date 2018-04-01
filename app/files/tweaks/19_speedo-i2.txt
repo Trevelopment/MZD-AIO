@@ -1,3 +1,48 @@
+if [ "${SBMAIN}" != "" ]
+then
+  sed -i "s/var SbMain = '.*/var SbMain = '${SBMAIN}';/g" /jci/gui/apps/_speedometer/js/speedometer-startup.js
+  log_message "===               SET STATUSBAR SPEDOMETER MAIN VALUE                 ==="
+fi
+if [ "${SBVAL1}" != "" ]
+then
+  sed -i "s/var SbVal1 = '.*/var SbVal1 = '${SBVAL1}';/g" /jci/gui/apps/_speedometer/js/speedometer-startup.js
+  log_message "===              SET STATUSBAR SPEDOMETER EXTRA VALUE 1               ==="
+fi
+if [ "${SBVAL2}" != "" ]
+then
+  sed -i "s/var SbVal2 = '.*/var SbVal2 = '${SBVAL2}';/g" /jci/gui/apps/_speedometer/js/speedometer-startup.js
+  log_message "===              SET STATUSBAR SPEDOMETER EXTRA VALUE 2               ==="
+fi
+if [ "${SBINT}" != "" ]
+then
+  sed -i "s/var sbInterval =.*/var sbInterval = '${SBINT}';/g" /jci/gui/apps/_speedometer/js/speedometer.js
+  log_message "===      SET STATUSBAR SPEDOMETER EXTRA VALUE ROTATION INTERVAL       ==="
+fi
+if [ "${SPD_XTRA_FUEL_SUFF}" != "%" ]
+then
+	sed -i "s/var fuelGaugeValueSuffix = \"%\";/var fuelGaugeValueSuffix = \"${SPD_XTRA_FUEL_SUFF}\";/g" /jci/gui/apps/_speedometer/js/speedometer-startup.js
+  log_message "===                      SET FUEL GAUGE SUFFIX                        ==="
+fi
+if [ "${SPD_XTRA_FUEL_FACT}" != "100" ]
+then
+	sed -i "s/var fuelGaugeFactor = 100;/var fuelGaugeFactor = ${SPD_XTRA_FUEL_FACT};/g" /jci/gui/apps/_speedometer/js/speedometer-startup.js
+  log_message "===                     SET FUEL GAUGE FACTOR                         ==="
+fi
+if [ "${SPD_BAR_RPM}" = "1" ]
+then
+	sed -i "s/var engineSpeedBar = false;/var engineSpeedBar = true;/g" /jci/gui/apps/_speedometer/js/speedometer-startup.js
+  log_message "===                   SPEED BAR SET TO ENGINE RPM                     ==="
+fi
+if [ "${SPD_BAR_HIDE}" = "1" ]
+then
+	sed -i "s/var hideSpeedBar = false;/var hideSpeedBar = true;/g" /jci/gui/apps/_speedometer/js/speedometer-startup.js
+  log_message "===                    SPEEDBAR HIDDEN BY DEFAULT                     ==="
+fi
+if [ "${SPD_COUNTER}" = "1" ]
+then
+	sed -i "s/var speedAnimation = false;/var speedAnimation = true;/g" /jci/gui/apps/_speedometer/js/speedometer-startup.js
+  log_message "===                  TURNED COUNTER ANIMATION ON                      ==="
+fi
 if [ $TESTBKUPS -eq 1 ]
 then
   cp -a /jci/gui/apps/_speedometer/js/speedometer-startup.js ${MYDIR}/bakups/test/

@@ -887,7 +887,7 @@
     "toolTip": "<h5>Anordnung der Audioquellen ändern.  </h5> Die Reihenfolge der Audioquellen wird sinnvoll angeordnet:<ui> </ui><li>USB_A</li><ui> </ui><li>USB_B</li><ui> </ui><li>btaudio</li><ui></ui><li>AUX</li><ui></ui><li><p style=\"\" class=\"\">FMRadio</p></li> <li>DAB</li><ui></ui><li>CD</li><ui></ui><li>SatRadio</li><ui></ui><li>AhaRadio</li><ui></ui><li>Pandora</li><ui></ui><li>Stitcher</li><ui>  </ui><li>amradio</li><ui></ui><li>DVD</li><ui> </ui><li>TV</li><ui></ui>",
     "img": "",
     "safetylvl": "warning",
-    "extraOps": false,
+    "extraOps": true,
     "advancedOp": false
   }, {
     "id": 10,
@@ -1011,11 +1011,11 @@
     "advancedOp": false
   }, {
     "id": 22,
-    "OpName": "FuelConsumtion Tweak",
+    "OpName": "FuelConsumption Tweak",
     "INST": "Installiert Fuel Consumption Tweak",
     "DEINST": "Entfernt Fuel Consumption Tweak",
     "toolTip": "<h5>Fuel Consumption Tweak. </h5> Zusätzliche Anzeige von  km/l (oder MPG).",
-    "img": "FuelConsumtionTweak.jpg",
+    "img": "FuelConsumptionTweak.jpg",
     "safetylvl": "safe",
     "extraOps": true,
     "advancedOp": false

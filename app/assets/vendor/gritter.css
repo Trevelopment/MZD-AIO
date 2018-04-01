@@ -25,7 +25,7 @@
 .gritter-item-wrapper {
 	position:relative;
 	margin:0 0 10px 0;
-	background:url('../images/ie-spacer.gif'); /* ie7/8 fix */ 
+	background:url('../images/ie-spacer.gif'); /* ie7/8 fix */
 }
 .gritter-top {
 	background:url(../images/gritter.png) no-repeat left -30px;
@@ -47,7 +47,7 @@
 	background:url(../images/gritter.png) no-repeat left -40px;
 	color:#eee;
 	padding:2px 11px 8px 11px;
-	font-size: 11px;
+	font-size: 13px;
 	font-family:verdana;
 }
 .hover .gritter-item {

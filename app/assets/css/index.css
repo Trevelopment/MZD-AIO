@@ -216,6 +216,9 @@ tr:hover td .inline-safety {
 span.w3-closebtn {
   line-height: normal;
   z-index: 9;
+  height: 45px;
+  width: 45px;
+  text-align: center;
 }
 .hide {
   display: none;
@@ -262,7 +265,7 @@ nav#mySidenav {
 header {
   /*background-color: #2f3241;
 	border-bottom: 1px solid #1a1b23;*/
-  color: #9feaf9;
+  color: #000;
   padding: 10px 30px;
   text-align: center;
   font-family: "mazda";
@@ -420,7 +423,7 @@ section.options {
 .form-group1:hover {
   /*text-overflow: clip;*/
   overflow: visible;
-  z-index: 4;
+  /*z-index: 4;*/
 }
 .form-group1 [class*="abel"]:hover {
   background-color: #fefefe;
@@ -547,6 +550,9 @@ ul ul {
   margin: 10px 0 4px 15px;
   font-weight: 700;
   font-size: 15px;
+}
+.sidePanel .popover h3 {
+  padding-left: 10px;
 }
 tr#custThemeHelp {
   height: auto;
@@ -898,6 +904,10 @@ label.w3-validate+.tooltip>.tooltip-inner {
   color: #fff !important;
   border-top-color: #5f5f5f;
 }
+h3.popover-title, h3.popover-title+div {
+  color: #000;
+  text-align: center;
+}
 body.w3-black {
   background-color: #111 !important;
 }
@@ -1161,13 +1171,13 @@ a:active {
 #compatibilityCheck::-webkit-scrollbar-button:single-button {
   display: none;
 }
-::-webkit-scrollbar-button:single-button:start {
+body::-webkit-scrollbar-button:single-button:start {
   display: block;
   height: 80px;
   background: #009688;
   box-shadow: 0px 3px 5px 1px rgba(100, 100, 100, 0.70);
 }
-.featherlight ::-webkit-scrollbar-button, textarea::-webkit-scrollbar-button:single-button {
+.featherlight::-webkit-scrollbar-button, textarea::-webkit-scrollbar-button:single-button {
   display: none !important;
 }
 .showNav::-webkit-scrollbar-button:single-button:start {
@@ -1176,7 +1186,7 @@ a:active {
   background: linear-gradient(#f1f1f1 38px, #000 38px, #009688 39px);
   box-shadow: 0px 3px 5px 1px rgba(100, 100, 100, 0.70);
 }
-::-webkit-scrollbar-button:single-button:end {
+body::-webkit-scrollbar-button:single-button:end {
   display: block;
   height: 40px;
   border-top: 1px solid #e0e5e6;
@@ -1219,8 +1229,8 @@ div#thumbs::-webkit-scrollbar-thumb:hover {
 .featherlight-content::-webkit-scrollbar-button:single-button, div#thumbs::-webkit-scrollbar-button:single-button {
   display: none;
 }
-.aio-help::-webkit-scrollbar-button:single-button:start, .aio-help::-webkit-scrollbar-button:single-button:end {
-  display: none
+.w3-container::-webkit-scrollbar-button:single-button:start, .w3-container::-webkit-scrollbar-button:single-button:end, .aio-help::-webkit-scrollbar-button:single-button:start, .aio-help::-webkit-scrollbar-button:single-button:end {
+  display: none;
 }
 div#thumbs {
   cursor: pointer;
@@ -1329,7 +1339,7 @@ top: 30%;
   right: 0;
   left: 0;
   margin: 50px auto;
-  width: 205px;
+  width: 225px;
 }
 th#twkOpsTitle {
   font-size: 24px;
@@ -1455,6 +1465,151 @@ tr#uistyle-mainlabel.color td input[type="color"] {
     }
   }
 }
+header.handle {
+  cursor: move;
+}
+.w3-modal footer {
+  position: relative;
+  height: 100%;
+}
+.spdOpsPanel .autoSortBtn i, #BarColorOps .colorMapBtn i, #custOptions19 .resetBtn.mainReset i, #audioSourceOrder .resetBtn i, .spdOpsPanel .resetBtn i, .spdOpsTips .closeBtn, .spdOpsPanel .toggleTipsBtn i, .spdOpsPanel .closeBtn {
+  cursor: pointer;
+  position: absolute;
+  right: 0;
+  top: 0;
+  outline-offset: -7px;
+  transition: 1s ease-in-out .5s;
+  font-size: 24px;
+  border: none;
+  display: inline-block;
+  outline: 0;
+  padding: 6px 16px;
+  vertical-align: middle;
+  overflow: hidden;
+  text-decoration: none !important;
+  color: #fff;
+  background-color: rgba(0, 0, 0, 0.5);
+  text-align: center;
+  white-space: nowrap;
+}
+#custOptions19 .resetBtn.mainReset i {
+  top: initial;
+  right: initial;
+}
+#custOptions19 .resetBtn.mainReset i:hover {
+  background-color: rgb(255, 155, 0);
+  color: rgb(0, 0, 0)
+}
+#audioSourceOrder .resetBtn i, .spdOpsPanel .resetBtn i, .spdOpsPanel .toggleTipsBtn i {
+  left: 10px;
+  padding: 10px;
+  width: 40px;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+#SpdExtraOps {
+  width: 600px;
+  overflow: visible !important;
+}
+#SpdExtraOps input[type=checkbox].w3-check {
+  top: 6px;
+}
+#SpdExtraOps * {
+  font-size: 16px;
+  font-weight: 500;
+}
+#SpdExtraOps input[type=checkbox]:checked+label {
+  color: #fff900;
+}
+#SpdExtraOps .spdExtraOp .popover .popover-title {
+  font-size: 14px;
+}
+#SpdExtraOps .w3-half {
+  width: 49.99999% !important;
+}
+#SpdExtraOps .w3-quarter {
+  width: 24.99999% !important;
+}
+#SpdExtraOps .w3-third {
+  width: 33.333% !important;
+}
+#SpdExtraOps .w3-threequarter {
+  width: 60%;
+}
+.spdOpsPanel input[type=number] {
+  color: #000;
+  font-size: 16px;
+  font-weight: 500;
+}
+.spdOpsPanel select:disabled, .spdOpsPanel input:disabled {
+  background: #a2a2a2;
+  color: #404040;
+}
+.spdOpsPanel .resetBtn i {
+  left: 50px
+}
+.spdOpsPanel .autoSortBtn i:hover, .spdOpsPanel .resetBtn i:hover, #BarColorOps .colorMapBtn i:hover, .spdOpsPanel .toggleTipsBtn i:hover, .spdOpsPanel .closeBtn:hover {
+  background-color: #000;
+  color: #ff0000;
+}
+.spdOpsPanel .autoSortBtn i, #BarColorOps .colorMapBtn i {
+  padding: 10px;
+  width: 50px;
+  height: 48px;
+  right: 45px;
+}
+#audioSourceOrder .resetBtn {
+  position: relative;
+}
+#custOptions19 .spdOpsPanel {
+  z-index: 999;
+  position: fixed;
+  overflow-y: auto;
+}
+.spdOpsPanel select {
+  outline: 1px solid;
+  outline-offset: -2px;
+}
+.spdOps>* {
+  width: 24.5% !important;
+  line-height: 1;
+  border-top: 1px solid;
+}
+#SpeedoOps {
+  width: 800px;
+  margin-top: 3%;
+}
+#SpeedoOps span[id*=spdOp-] {
+  font-weight: 700;
+  font-size: 16px;
+  white-space: nowrap;
+  padding-top: 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+#SpeedoOps .w3-container {
+  height: 550px;
+  overflow: auto;
+  padding-bottom: 80px;
+}
+#custOptions19 #SpeedoOps.spdOpsPanel {
+  overflow-y: hidden;
+}
+.spdOpsPanel input[type=number].w3-quarter {
+  width: 24.555%;
+}
+.speedo-lang select, .speedo-lang select option {
+  font-weight: 600;
+  font-size: 15px;
+}
+select#spdOp-barThemeStart {
+  max-width: 25%;
+}
+#SpdOpsTips .w3-container div {
+  display: none;
+}
+.gauge-type {
+  width: 40%;
+}
 /* @media Queries */
 
 @media only screen and (min-width: 801px) {
@@ -1530,6 +1685,9 @@ tr#uistyle-mainlabel.color td input[type="color"] {
     }
     #sidePanel .AAmsg, #sidePanel td.aa-side.w3-col label {
       font-size: 16px;
+    }
+    #SpdExtraOps .w3-threequarter {
+      width: 67.999%;
     }
     @media only screen and (min-width: 1400px) {
       div#options, #extraOptions {
@@ -1659,6 +1817,9 @@ tr#uistyle-mainlabel.color td input[type="color"] {
     .w3-quarter {
       width: 49.999% !important;
     }
+    #SpeedoOps .w3-quarter {
+      width: 24.59% !important;
+    }
     #sidePanel {
       min-height: 1040px;
     }
@@ -1696,6 +1857,9 @@ tr#uistyle-mainlabel.color td input[type="color"] {
       }
       #compatibilityCheck {
         max-height: 450px;
+      }
+      label#autorunCheck {
+        display: none;
       }
       @media (max-width:800px) {
         .showcase {
@@ -1755,6 +1919,20 @@ tr#uistyle-mainlabel.color td input[type="color"] {
     }
   }
 }
+@media only screen and (max-height: 740px) {
+  #SpeedoOps {
+    height: 530px;
+  }
+  #SpeedoOps .w3-container {
+    height: 400px;
+  }
+  .spdOpsPanel {
+    max-height: 75%;
+  }
+  #SpeedoOps .w3-container {
+    height: 450px;
+  }
+}
 #imgmodal.slideshow img {
   left: 0px;
   animation: slideshow 30s steps(10, end) infinite;
@@ -1787,11 +1965,17 @@ a#update-available {
 .w3-navbar li#update-available:hover {
   background-color: #f1f1f2;
 }
-div#changelog td {
+#changelog {
+  text-transform: capitalize;
+}
+span.nocap {
+  text-transform: none;
+}
+#changelog td {
   border: 2px dotted #000;
   padding: 17px;
 }
-div#changelog tr th {
+#changelog tr th {
   text-align: center;
 }
 #sidePanel a.w3-btn, .help-messages a.w3-btn {
@@ -1893,8 +2077,22 @@ script.featherlight-inner {
 }
 #autoHelp {
   max-width: 95%;
-  margin: 25px auto;
+  margin: 65px auto;
   width: 900px;
+  columns: 2;
+  height: 600px;
+}
+#autoHelp div {
+  -webkit-column-break-inside: avoid;
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+#autoHelp div:first-of-type {
+  height: 34%;
+  margin-top: 0 !important;
+}
+#autoHelp div:nth-of-type(2) {
+  height: 50%;
 }
 .featherlight.autoHelpBox .featherlight-content #autoHelp {
   margin-top: 0;
@@ -1915,7 +2113,7 @@ span.icon-star.featherlight-inner {
 #autoHelp div {
   margin-bottom: 21px;
 }
-#sidePanel .w3-select {
+#sidePanel select {
   padding: 6px 0;
 }
 input#checkAutorun {
@@ -1931,6 +2129,16 @@ a.autorunHelp {
   right: 50px;
   z-index: 1000;
   font-size: 36px;
+}
+.serial-warning {
+  display: none;
+}
+.serial-warning a {
+  text-decoration: underline;
+  color: blue;
+}
+input[type*=checkbox]:checked+.serial-warning {
+  display: block;
 }
 #header .w3-label {
   letter-spacing: normal;
@@ -2019,6 +2227,7 @@ label.w3-label.checkAutorun {
 }
 .showNav label.w3-label.checkAutorun {
   top: 125px;
+  z-index: 1;
 }
 .w3-navbar *, .w3-sidenav * {
   cursor: pointer;
@@ -2039,6 +2248,235 @@ button#compileAutorun {
 .pace .pace-progress[data-progress="99"], .pace .pace-progress[data-progress="99"]~.pace-activity {
   opacity: 0;
   transition: 10s ease-out .3s;
+}
+.aapatcher-btn {
+  right: 0;
+  left: 0;
+  min-width: 100px;
+  display: block;
+  margin: 10px auto;
+}
+.aapatcher-btn:hover {
+  border: red 2px dotted;
+}
+#audioSourceOrder .w3-container {
+  columns: 2;
+}
+#audioSourceOrder input[type=number] {
+  width: 25%;
+  text-align: center;
+}
+#SbSpeedoOps {
+  font-size: 16px;
+  max-width: 600px;
+  margin-top: 40px;
+}
+#SbSpeedoOps label {
+  color: #000;
+  margin-top: 5px;
+}
+#SbSpeedoOps .w3-quarter .w3-half {
+  width: 49.999% !important;
+}
+input#spdOp-interval {
+  color: #000;
+  font-size: 17px;
+  text-align: right;
+}
+#BarColorOps {
+  max-width: 800px;
+}
+#BarColorOps input[type=color] {
+  float: right;
+  width: 200px;
+  height: 30px;
+}
+.barThemeColors {
+  columns: 2;
+}
+.barTheme {
+  -webkit-column-break-inside: avoid;
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+.barTheme div {
+  border: 2px solid;
+}
+.sbFuelBarColors {
+  display: inline-table;
+  width: 20%;
+}
+#ClassicSpeedoOps {
+  width: 400px;
+  height: 525px;
+  margin-top: 30px;
+  max-height: 75%;
+  overflow: hidden;
+}
+#ClassicSpeedoOps header, #ClassicSpeedoOps header .w3-threequarter {
+  margin-top: 10px
+}
+.spdOpsPanel header>.w3-threequarter {
+  width: 74.55555% !important;
+  white-space: nowrap;
+}
+.spdOpsPanel header .w3-quarter {
+  width: 24.55555% !important;
+}
+#SpeedoOps.spdOpsPanel header .w3-threequarter {
+  width: 70% !important;
+}
+.spdOpsPanel {
+  margin-top: 30px;
+  max-height: 75%;
+  overflow: hidden;
+}
+.spdOpsPanel header span, #SpeedoControlOps header b {
+  font-family: mazda;
+  letter-spacing: 2px;
+}
+#ClassicSpeedoOps .w3-container {
+  overflow: auto;
+  height: 425px;
+}
+#ClassicSpeedoOps .w3-container .w3-row>span.w3-half {
+  text-align: right;
+  margin-right: 5px;
+  vertical-align: middle;
+  width: 49.95% !important;
+  padding-top: 10px;
+}
+#ClassicSpeedoOps .w3-container .w3-row input[type=number].w3-half {
+  width: 49.95% !important;
+}
+#ClassicSpeedoOps .w3-container .w3-row>span:after {
+  content: ":"
+}
+#SbSpeedoOps input[type=number], #ClassicSpeedoOps input[type=number] {
+  width: 40%;
+}
+#ClassicSpeedoOps input[type=checkbox].w3-check {
+  top: 6px;
+}
+#ClassicSpeedoOps input[type=checkbox].w3-check+span {
+  transition: 1.2s ease;
+}
+#ClassicSpeedoOps input[type=checkbox].w3-check:checked+span {
+  color: #120eff;
+  font-size: 18px;
+}
+#SbSpeedoOps label.w3-row.w3-col {
+  max-width: 100%;
+  min-width: 100%;
+  margin-top: 8px;
+  right: 0;
+  position: absolute;
+  left: 0;
+  color: black;
+}
+#SpeedoControlOps {
+  height: 400px;
+  width: 750px;
+}
+#SpeedoControlOps div {
+  position: absolute;
+  text-align: right;
+  font-size: 16px;
+  width: 250px;
+}
+#SpeedoControlOps [class*=multictrl] {
+  color: #fff;
+  font-weight: 700;
+}
+#SpeedoControlOps div {
+  text-shadow: 2px 2px 1px #000;
+}
+#SpeedoControlOps div select {
+  width: 150px;
+}
+#SpeedoControlOps .speedo-radio {
+  color: #000;
+}
+#sidePanel #SpeedoControlOps .speedo-radio label {
+  width: 100%
+}
+#SpdOpsTips header, #SpdExtraOps header, #SpeedoControlOps header {
+  background: #e2e42c;
+  letter-spacing: 2px;
+  margin-bottom: 10px
+}
+#SpdOpsTips {
+  width: 300px;
+  right: 0;
+  min-height: 200px;
+  display: none;
+  font-size: 14px;
+  z-index: 999;
+  transition: background 4s ease-in 5s;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.65);
+}
+#SpdOpsTips:hover {
+  background: rgb(50, 50, 50);
+  transition: background .4s ease-out .2s;
+}
+.move-handle {
+  cursor: move;
+}
+.multictrl-right, .multictrl-holdright {
+  top: 45%;
+  right: 0px;
+  margin-right: 10px;
+}
+.multictrl-left, .multictrl-holdleft {
+  top: 45%;
+  right: 70%;
+  margin-left: 10px;
+}
+.multictrl-up, .multictrl-holdup {
+  top: 80px;
+  right: 35%;
+  margin: auto;
+}
+.multictrl-down, .multictrl-holddown {
+  top: 70%;
+  right: 35%;
+  margin: auto;
+}
+.multictrl-select, .multictrl-holdselect {
+  top: 45%;
+  right: 35%;
+  margin: auto;
+}
+[class^="multictrl-hold"] {
+  margin-top: 50px;
+}
+.mc-wheel {
+  position: absolute;
+  margin: auto;
+  right: 0;
+  left: 0;
+  top: 35%;
+}
+#serialConnection .link {
+  color: blue;
+  border-bottom: 1px dashed green;
+}
+.ng-invalid {
+  background: #920000 !important;
+  color: #fff !important;
+  outline: 2px solid #000;
+  outline-offset: -3px;
+  cursor: cell;
+}
+.ng-invalid:hover, .ng-invalid:focus {
+  background: initial;
+  color: initial;
+  outlline: none;
+  cursor: auto;
+}
+input:disabled {
+  cursor: not-allowed;
 }
 /* ******* REMOVE FOR VERSION 2.8.0 ******** */
 

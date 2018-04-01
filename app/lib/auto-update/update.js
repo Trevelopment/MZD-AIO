@@ -5,32 +5,33 @@ const ipc = require('electron').ipcMain
 const BrowserWindow = require('electron').BrowserWindow
 const platform = os.platform() + '_' + os.arch()
 const Config = require('electron-store')
-const persistantData = new Config({'name': 'aio-persist'})
+const persistantData = new Config({ 'name': 'aio-persist' })
 
 // const { autoUpdater } = require('electron')
 const { autoUpdater } = require('electron-updater')
 
 let win = BrowserWindow.fromId(1)
 
-module.exports = function update (options) {
+module.exports = function update(options) {
   /* if (!options.url) {
   console.log('Automatic updates disabled')
   return
 } */
-// var updaterFeedUrl = options.url // + platform + '/' + options.version
+  // var updaterFeedUrl = options.url // + platform + '/' + options.version
 
-// console.info('Running version %s on platform %s', options.version, platform, " execPAth", process.execPath, "?", process.execPath.match(/[\\\/]electron/), "!", process.execPath.includes('electron'))
+  // console.info('Running version %s on platform %s', options.version, platform, " execPAth", process.execPath, "?", process.execPath.match(/[\\\/]electron/), "!", process.execPath.includes('electron'))
 
   try {
     autoUpdater.checkForUpdates()
   } catch (e) {
     console.error(e.message)
-    // throw e
+    //throw e
   }
 
   autoUpdater.on('error', (e) => {
     console.error(e.message)
     ipc.emit('update-err', autoUpdater)
+    win.webContents.send('update-err')
     win.webContents.send('update-not-available')
     persistantData.set('updateAvailable', false)
   })

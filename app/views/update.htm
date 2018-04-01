@@ -1,103 +1,124 @@
 <!DOCTYPE html>
 <style>
-.bootbox.update-info {
-  margin-top: 0px;
-}
-
+  .bootbox.update-info {
+    margin-top: 0px;
+  }
 </style>
 <p><a href="changelog.htm" data-featherlight="ajax">Full Changelog</a></p>
 
-<h3>2.7.8</h3>
+<h3>2.7.9</h3>
 
-<h4>Speedometer v5.5 - All In One Speedometer</h4>
+<h4>Order Audio Source List:</h4>
 
 <ul>
-  <li>Analog, Modded and Bar Speedometers are now All In One!</li>
-  <li>All options are available and will be applied to the proper Speedometer</li>
-  <li>Choose which speedometer to start with by default (if starting with Bar Speedometer other options will still determine the starting state of the Classic Speedometer)</li>
-  <li>The speedometer-config.js file now has all the options, set a variable to determine if override values are used or installed options.</li>
-  <li>Invalid Values Show &quot;---&quot; Such As Gear Position/Lever for Manual Transmissions</li>
-  <li>Gear Lever Shows P - R - N - D</li>
-  <li>Toggles will Show The Action In A Statusbar Notification</li>
-  <li>Hold &quot;Up&quot; on multicontroller to switch between Classic and Bar Speedometer Mode</li>
-  <li>Hold &quot;Down&quot; toggles "Basic Speedo" to disable single click toggles (in Classic mode)</li>
-  <li>Modded Speedo (in Classic mode):
+  <li>Set Your Audio Source List Order With AIO
     <ul>
-      <li>Single click &quot;Up&quot; to increase size of values</li>
-      <li>Multicontroller &quot;Select&quot; toggles between Digital and Analog speed</li>
-      <li>Single click &quot;Down&quot; to show alternate values</li>
-    </ul>
-  </li>
-  <li>Bar Speedometer:
-    <ul>
-      <li>Configure The Amount of Bottom Rows in &quot;speedometer-config.js&quot; (Default 4)</li>
-      <li>Hold &quot;Down&quot; to show/hide speed bar</li>
-      <li>
-        <strong>TAP Any 2 Values To Swap Their Positions!</strong>
-        <ul>
-          <li>Any Values Can Be Swapped Even The Main</li>
-          <li>When The Main Value Is Swapped An SBN Will Show With The Value Name</li>
-          <li>Tap Below The Bottom Row To Swap Hidden Values In Other Rows</li>
-          <li>Exiting The App Will Reset Positions To Your Default</li>
-          <li>Tap Selected Value Again To Cancel</li>
-        </ul>
-      </li>
+      <li><em>Finally!!</em> No more manually editing the systemApp.js</li>
+      <li><strong>NOTE: Although you will be able to order all the values, this will not show hidden list items for your particular vehicle or region</strong></li>
     </ul>
   </li>
 </ul>
-<h2>
-  <a href="" onclick="externalLink('speedorepo')" style="border-bottom: 1px dashed #490aff;">
-    For More Info Check Out The Speedometer Repository
-    <span class="icon-github"></span>
-  </a>
-</h2>
-<h4>AIO Tweaks App v0.6</h4>
+
+<h4>Speedometer v5.6</h4>
 
 <ul>
-  <li>&quot;Reverse App List&quot; button - Reverses the Applications List (resets on boot).</li>
-  <li>&quot;Unmount Swap&quot; button - Unmount a mounted swapfile.</li>
-</ul>
-
-<h4>Test Mode (T/M) Button <a href="" onclick="externalLink('jci-test-mode')">(Thread)</a></h4>
-
-<ul>
-  <li>Included with the
-    <strong>1 Second Diagnostic Menu</strong> tweak because it is part of the Diagnostic App</li>
-    <li>In v59 &quot;JCI Test Mode&quot; was disabled in the Diagnostic App
-      <ul>
-        <li>This tweak brings back Test Mode for v59</li>
-        <li>Makes it easier to get to in v55-v58 (Just press the T/M button)</li>
-      </ul>
-    </li>
-    <li>Once Test Mode is started type 11 to open the well known Test Menu</li>
-    <li>
-      <strong>
-        <em>BE CAREFUL IN TEST MODE, DON&#39;T DO ANYTHING YOU ARE UNSURE ABOUT!</em>
-      </strong>
-    </li>
-  </ul>
-
-  <h5>Tweak Installer Changes/Fixes</h5>
-
-  <ul>
-    <li>App install/uninstall now uses NodeJS to add/remove from app list
-      <ul>
-        <li>Allows for cleaner installations</li>
-        <li>Backward compatible</li>
-        <li>Solves the issue of all apps disappearing off the app list when only 1 is uninstalled due to improperly formatted JSON file</li>
-        <li>&quot;
-          <em>Legacy App Install</em>&quot; in install options to use the old method (using bash)
-          <ul>
-            <li>The only reason I can think of for this is if you already have an improperly formatted JSON file then you need to uninstall all apps with legacy installer because the NodeJS code will throw an error. Other than that the NodeJS code will never
-              cause an improperly formatted JSON file.</li>
-            </ul>
-          </li>
+  <li><strong>Edit all customizations from the AIO interface</strong> - <strong><em>Option Panels:</em></strong>
+    <ul>
+      <li>StatusBar Speedometer &amp; Fuel Bar</li>
+      <li>Bar Speedometer Layout</li>
+      <li>Classic Speedometer Layout</li>
+      <li>Bar Speedometer Color Themes</li>
+      <li>Multicontroller Functions</li>
+      <li>Extra Options</li>
+    </ul>
+  </li>
+  <li>Statusbar Speedometer Options
+    <ul>
+      <li>Set all 3 Statusbar Speedometer Values To Anything!
+        <ul>
+          <li>NOTE: There are only 7 icons for 21 values so they are reused. If someone wants to contribute some white 32x32px icons would be cool!</li>
         </ul>
       </li>
-      <li>Cleaned up installer code
+      <li>Set Interval Of Rotating Values Or Set Only 1 Extra Value to stop the rotation interval</li>
+      <li>Option To Hide In Reverse - reverse adjusted to accommodate extra values</li>
+      <li>Option To Hide When Speedometer App is Open - true by default</li>
+      <li>Statusbar Fuel Gauge
         <ul>
-          <li>Removed some superfluous code</li>
-          <li>Fixed many inconsequential errors</li>
+          <li>Positions: Top of Screen, Bottom of Screen, or Below Statusbar</li>
+          <li>Customize Colors For Each 20% Interval</li>
         </ul>
       </li>
     </ul>
+  </li>
+  <li><strong>Bar Speedometer:</strong> layout changes are remembered until reboot
+    <ul>
+      <li>Multicontroller: Hold.select (default) to reset to your default layout</li>
+      <li>5 Customizable Color Themes
+        <ul>
+          <li>Randomize Colors Button</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><strong>The Classic Speedometer:</strong> has a different design structure as the Bar Speedometer in that instead of each position being mapped to a location on the screen, it is essentially a stack inside a table.
+    <ul>
+      <li>Customize order of value table stack</li>
+      <li>Added Fuel Bar to the Digital Speedometer in Classic Mode (bottom left in the previously unused space)</li>
+      <li>In accordance with the stack model, values are &quot;popped&quot; off the top of the value table and appended to the bottom
+        <ul>
+          <li>Multicontroller: hold.select (default)</li>
+          <li>Tap the top value will also pop it</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Extra Options:
+    <ul>
+      <li>Hide Speed Bar in Bar Mode</li>
+      <li>Start with Speed Bar in RPM Mode</li>
+      <li>Turn on Counter Animation (Makes output lag by about 1 second because the counter cannot predict the future so it is always a little bit behind while chasing the dragon)</li>
+      <li>Fuel Gauge Type: (experimental) Fuel Gauge reading will show approximate Gallons or Liters remaining
+        <ul>
+          <li>% - Percentage (default)</li>
+          <li>L - Liters</li>
+          <li>Gal. - Gallons</li>
+        </ul>
+      </li>
+      <li>Fuel Tank Capacity - The Fuel Tank Capacity of your Vehicle in Gal/L (From Fuel Gauge Type)</li>
+    </ul>
+  </li>
+  <li><strong>UX</strong>: Toggle sorting lists by the order number (Auto Sorts when position numbers change)</li>
+  <li>Each panel is saved when compile is run.</li>
+  <li>Each panel can be reset individually or &quot;Reset Options&quot; in the top/side menus will reset all the panels.</li>
+  <li>Dutch Translation by: Taeke</li>
+</ul>
+
+<h4>Autorun &amp; Recovery - For Serial Connection</h4>
+
+<ul>
+  <li>Recovery files will be copied to &quot;XX&quot; folder be used with <a onclick="externalLink('serial')">these instructions</a></li>
+  <li>No installer is included, files need to be manually copied from USB Drive to CMU using a connected computer.</li>
+  <li><strong>Only for gaining access via serial connection.</strong></li>
+</ul>
+
+<h5>Tweak Installer Changes/Fixes</h5>
+
+<ul>
+  <li>Fixed the NodeJS code to handle all errors and repair broken installations
+    <ul>
+      <li>Removed the short lived &quot;Use legacy install&quot; because the new method will repair errors if they exist.</li>
+      <li>This should solve the apps disappearing from the app list issues and fix all other app installation/uninstallation issues too.</li>
+    </ul>
+  </li>
+  <li>One additional file <span class="nocap">(/jci/opera/opera_dir/userjs/aio.js)</span> is installed with apps containing some global AIO helper functions
+    <ul>
+      <li>Separated from <span class="nocap">additionalApps.js</span> to maintain backward and cross compatibility (with CASDK, cmu-opkg, and other older community developed mods/apps that use <span class="nocap">additionalApps.js</span>)</li>
+    </ul>
+  </li>
+</ul>
+
+<h5>One More Thing</h5>
+
+<ul>
+  <li>Added &quot;Load Last Compile&quot; to the top, side and context (right-click) menus.</li>
+</ul>

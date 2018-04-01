@@ -5,23 +5,23 @@
   position: absolute;
   right: 115px;
   top: 0px;
-  width: 84px;
+  width: 100px;
   z-index: 20200;
   /* text-shadow: 1px 0 0 #000, -1px 0 0 #000, 0 1px 0 #000, 0 -1px 0 #000; */
 }
-#SbSpeedo .gpsSpeedValue, #SbSpeedo .outsideTempValue, #SbSpeedo .Drv1AvlFuelEValue, #SbSpeedo .gpsAltitudeValue, #SbSpeedo .gpsHeading {
+#SbSpeedo .SbMain, #SbSpeedo [class*='SbVal'] {
   text-align: right;
   position: absolute;
 }
-#SbSpeedo .gpsSpeedValue {
+#SbSpeedo .SbMain {
   font-size: 40px;
   line-height: 40px;
   height: 40px;
   top: 23px;
   right: 16px;
-  width: 100%;
+  width: 200px;
 }
-#SbSpeedo .speedUnit {
+#SbSpeedo .SbUnit {
   color: #DDDDDD;
   font-size: 12px;
   position: absolute;
@@ -31,57 +31,101 @@
   bottom: 12px;
   white-space: nowrap;
 }
-#SbSpeedo .outsideTempValue, #SbSpeedo .Drv1AvlFuelEValue, #SbSpeedo .gpsAltitudeValue, #SbSpeedo .gpsHeading {
+#SbSpeedo [class*='SbVal'] {
   padding-right: 24px;
-  background: transparent url('IcnCompass.png') no-repeat scroll right 0px / 18px 18px;
+  background-color: transparent;
+  background-position: right;
+  background-origin: 0px;
+  background-attachment: scroll;
+  background-repeat: no-repeat;
+  background-size: 18px 18px;
   font-size: 17px;
   line-height: 17px;
   height: 20px;
   top: 6px;
   right: 17px;
+  width: 100%;
 }
-#SbSpeedo .outsideTempValue {
-  background-image: url('IcnTemp.png');
+#SbSpeedo .SbMain:not([class*="speed"]):not(.gpsSpeedValue):not(.vehicleSpeed) {
+  padding-right: 22px;
+  padding-left: 5px;
+  background-position: 100%;
+  background-size: 20px;
+  background-repeat: no-repeat;
 }
-#SbSpeedo .gpsAltitudeValue {
-  display: none;
+#SbSpeedo .SbVal1, #SbSpeedo .gpsHeading, #SbSpeedo [class*="gps"] {
+  /* default for val1 and anything gps */
+  background-image: url('IcnCompass.png');
+}
+#SbSpeedo [class*="SbVal"][class*="peed"], #SbSpeedo .engineSpeedValue, #SbSpeedo .engineSpeedTopValue {
+  background-image: url('IcnSpeed.png');
+}
+#SbSpeedo .SbVal2, #SbSpeedo .gpsAltitudeValue, #SbSpeedo .gpsAltitudeMinMax, #SbSpeedo .gpsLatitudeValue, #SbSpeedo .gpsLongitudeValue {
+  /* default for val2 */
   background-image: url('IcnMountain.png');
 }
-#SbSpeedo .Drv1AvlFuelEValue {
+#SbSpeedo .gearPositionValue, #SbSpeedo .gearLeverPositionValue, #SbSpeedo .tripDistance {
+  background-image: url('IcnGear.png');
+}
+#SbSpeedo .outsideTempValue, #SbSpeedo .coolantTempValue, #SbSpeedo .intakeTempValue {
+  /* temperatures */
+  background-image: url('IcnTemp.png');
+}
+#SbSpeedo [class*='uel'] {
+  /* covers everything with 'fuel' */
+  background-image: url('IcnFuel.png');
+}
+#SbSpeedo .tripTimeValue, #SbSpeedo .tripDistance, #SbSpeedo .engineIdleTimeValue, #SbSpeedo .idleTimeValue {
+  background-image: url('IcnStopwatch.png');
+}
+#SbSpeedo .SbMain:not([class*="speed"]):not(.gpsSpeedValue):not(.vehicleSpeed)+.SbUnit {
+  /* anything with 'speed' gets the speed unit */
   display: none;
-  background-image: url('IcnFuel.png')
+}
+#SbSpeedo .gpsSpeedValue.SbMain, #SbSpeedo .vehicleSpeed.SbMain {
+  background-image: none;
+}
+#SbSpeedo .gpsAltitudeMinMax.SbMain {
+  font-size: 30px;
 }
 /*** Statusbar speedo style if more than 3 SbIcons ***/
 
-#SbSpeedo.morespace .Drv1AvlFuelEValue, #SbSpeedo.morespace .outsideTempValue, #SbSpeedo.morespace .gpsAltitudeValue, #SbSpeedo.morespace .gpsHeading {
+#SbSpeedo.morespace [class*='SbVal'] {
   right: 40px;
 }
 /*** Statusbar speedo style inside backupparking app ***/
 
 #SbSpeedo.parking {
-  width: 160px;
+  width: 180px;
   height: 45px;
-  right: 320px;
+  left: 0;
+  right: 0;
+  margin: auto;
   /* opacity: 0.8; */
   background-color: rgba(0, 0, 0, 0.7);
   border-radius: 0 0 5px 5px;
 }
-#SbSpeedo.parking .gpsSpeedValue {
-  right: 19px;
+#SbSpeedo.parking .SbMain {
+  right: 30px;
   top: 3px;
+  text-align: center;
+  width: 100px;
+  background: none;
+  margin-right: 30px;
 }
-#SbSpeedo.parking .speedUnit {
+#SbSpeedo.parking .SbUnit {
   right: -5px;
   bottom: 15px;
+  display: none;
 }
-#SbSpeedo.parking .outsideTempValue, #SbSpeedo.parking .gpsAltitudeValue {
-  display: block !important;
-  right: 88px;
+#SbSpeedo.parking .SbVal1 {
+  top: 4px;
 }
-#SbSpeedo.parking .Drv1AvlFuelEValue, #SbSpeedo.parking .gpsHeading {
-  display: block !important;
-  right: 88px;
-  top: 23px;
+#SbSpeedo.parking .SbVal2 {
+  margin-top: 18px;
+}
+#SbSpeedo .hidden {
+  display: none !important;
 }
 /* *** Statusbar adjustments *** */
 
@@ -94,6 +138,48 @@
 .SbnCtrl_Style06_Meter {
   left: 270px !important;
 }
+/**  Status Bar Fuel Meter * */
+
+.fuel-bar-wrapper {
+  width: 100%;
+  position: absolute;
+  height: 10px;
+  z-index: 40;
+  opacity: .8;
+}
+.fuel-bar-container {
+  width: 100%;
+  background-color: #e0e0e0;
+  padding: 0px;
+  border-radius: 3px;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, .2);
+}
+.fuel-bar {
+  display: block;
+  height: 10px;
+  background-color: transparent;
+  border-radius: 3px;
+  transition: 2s ease-in-out;
+}
+#Sbfuel-bar-wrapper {
+  top: 60px;
+  /* below sb (default) */
+  bottom: auto;
+}
+#Sbfuel-bar-wrapper.bottombar {
+  top: auto;
+  /* bottom of the screen */
+  bottom: 0;
+}
+#Sbfuel-bar-wrapper.parking:not(.bottombar), #Sbfuel-bar-wrapper.topbar {
+  top: 0;
+  /* top of the screen */
+}
+#Sbfuel-bar-container {
+  background: none;
+}
+/* hide in reverse */
+
 /* Digital Clock Mod - Remove this to apply
 #SbSpeedo, .StatusBarCtrlDate, .StatusBarCtrlClock {
     font-family: "Crystal"!important;

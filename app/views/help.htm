@@ -15,7 +15,7 @@
 -->
 <div id='helpMenuTop' class='w3-black w3-animate-bottom w3-hide w3-third w3-right'>
   <a href="" onclick="$(this).parent().toggleClass('w3-hide')" class="w3-left"><span class="icon-x"></span></a>
-  <div id="flipOp">Menu Animation:<select ng-model="user.flipOption" name="flipOption" id="flipOption" class='w3-select w3-third w3-right'><option value="">none</option><option value="w3-360flip" checked>360Fip</option><!--option value='w3-animate-right'>slide</option--><option value="w3-animate-opacity">Fade</option><option value='w3-animate-zoom'>Zoom</option></select></div>
+  <div id="flipOp">Menu Animation:<select ng-model="user.flipOption" name="flipOption" id="flipOption" class='w3-third w3-right'><option value="">none</option><option value="w3-360flip" checked>360Fip</option><!--option value='w3-animate-right'>slide</option--><option value="w3-animate-opacity">Fade</option><option value='w3-animate-zoom'>Zoom</option></select></div>
   <div id="darkMode"><a class="icon-save w3-display-bottomleft" style="padding:5px;" title="{{menu.save.label}}" onclick="helpDropdown()" ng-click="miniSave()"></a><!---->
     Dark Mode:<input type="checkbox" name="mzdColors" id="mzdColors" class="w3-check" ng-model="user.darkMode" onclick="$('html, body, #sidePanel').toggleClass('w3-black')"> </div></div><!-- TODO: Do this the angular way -->
     <div ng-controller="helpCtrl">

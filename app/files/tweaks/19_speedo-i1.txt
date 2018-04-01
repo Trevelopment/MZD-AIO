@@ -55,14 +55,9 @@ sed -i '/umount -l/d' /jci/scripts/stage_wifi.sh
 sed -i '/sleep 25/d' /jci/scripts/stage_wifi.sh
 sed -i '/sleep 4/d' /jci/scripts/stage_wifi.sh
 sed -i '/sleep 6/d' /jci/scripts/stage_wifi.sh
-
-# remove old websocket
-if grep -Fq "55554" /jci/scripts/stage_wifi.sh
-then
-  sed -i '/55554/d' /jci/scripts/stage_wifi.sh
-  sed -i '/9969/d' /jci/scripts/stage_wifi.sh
-  sed -i '/## Speedometer/d' /jci/scripts/stage_wifi.sh
-fi
+sed -i '/55554/d' /jci/scripts/stage_wifi.sh
+sed -i '/9969/d' /jci/scripts/stage_wifi.sh
+sed -i '/## Speedometer/d' /jci/scripts/stage_wifi.sh
 
 # delete empty lines
 sed -i '/^ *$/ d' /jci/scripts/stage_wifi.sh
@@ -88,7 +83,11 @@ then
 else
   log_message "===       NO 'speedometer-config.js' FILE FOUND... USING DEFAULT      ==="
 fi
-
+if [ -e ${MYDIR}/config/speedometer/speedometer-controls.js ]
+then
+  cp -a ${MYDIR}/config/speedometer/speedometer-controls.js /jci/gui/apps/_speedometer/js
+  log_message "===                Copied Speedometer controls File                   ==="
+fi
 if [ ! -e /jci/gui/addon-common/websocketd ]  || [ ! -e /jci/gui/addon-common/cufon-yui.js ]; then
   cp -a "${MYDIR}/config/jci/gui/addon-common/" /jci/gui/
   chmod 755 /jci/gui/addon-common/websocketd
@@ -126,7 +125,7 @@ fi
 if [ $CASDK_MODE -eq 0 ]
 then
   log_message "===           No additionalApps.js available, will copy one           ==="
-  cp -a ${MYDIR}/config/jci/opera/opera_dir/userjs/additionalApps.js /jci/opera/opera_dir/userjs/ && CASDK_MODE=1
+  cp -a ${MYDIR}/config/jci/opera/opera_dir/userjs/*.js /jci/opera/opera_dir/userjs/ && CASDK_MODE=1
   find /jci/opera/opera_dir/userjs/ -type f -name '*.js' -exec chmod 755 {} \;
 fi
 
@@ -139,15 +138,16 @@ then
   log_message "===                   Created additionalApps.json                     ==="
 fi
 
-# call function add_app_json to modify additionalApps.json
-add_app_json "_speedometer" "Speedometer" "speedometer-startup.js"
+sed -i 's/var speedMod = false;/var speedMod = true;/g' /jci/gui/apps/_speedometer/js/speedometer-startup.js
 
-# add preload to the AA json entry if needed
+# Remove old json entries
 if ! grep -q "speedometer-startup.js" /jci/opera/opera_dir/userjs/additionalApps.json
 then
-	sed -i 's/"label": "Speedometer" \}/"label": "Speedometer", "preload": "speedometer-startup.js" \}/g' /jci/opera/opera_dir/userjs/additionalApps.json
-	log_message "===     Added speedometer-startup.js to speedometer json entry        ==="
+	remove_app_json "_speedometer"
 fi
+
+# call function add_app_json to modify additionalApps.json
+add_app_json "_speedometer" "Speedometer" "speedometer-startup.js"
 
 # change compass rotating depending on NAV SD card inside or not
 if [ ! -d /mnt/sd_nav/content/speedcam ] || [ $COMPAT_GROUP -ne 1  ]
@@ -155,6 +155,27 @@ then
   sed -i 's/var noNavSD = false;/var noNavSD = true;/g' /jci/gui/apps/_speedometer/js/speedometer-startup.js
   log_message "===    Changed compass rotating, because no NAV SD card is inside     ==="
 fi
+if [ -e ${MYDIR}/config/speedometer/barThemes.css ]
+then
+  cat ${MYDIR}/config/speedometer/barThemes.css > /jci/gui/apps/_speedometer/css/_speedometerApp.css
+  log_message "===                Set Bar Speedometer Color Themes                   ==="
+fi
+
+if [ "${FBC100}" != ""  ]
+then
+  sed -i "s/var fuelBarColor_80to100 = '.*;/var fuelBarColor_80to100 = '${FBC100}';/g" /jci/gui/apps/_speedometer/js/speedometer-startup.js
+  sed -i "s/var fuelBarColor_60to80 = '.*;/var fuelBarColor_60to80 = '${FBC80}';/g" /jci/gui/apps/_speedometer/js/speedometer-startup.js
+  sed -i "s/var fuelBarColor_40to60 = '.*;/var fuelBarColor_40to60 = '${FBC60}';/g" /jci/gui/apps/_speedometer/js/speedometer-startup.js
+  sed -i "s/var fuelBarColor_20to40 = '.*;/var fuelBarColor_20to40 = '${FBC40}';/g" /jci/gui/apps/_speedometer/js/speedometer-startup.js
+  sed -i "s/var fuelBarColor_0to20 = '.*;/var fuelBarColor_0to20 = '${FBC20}';/g" /jci/gui/apps/_speedometer/js/speedometer-startup.js
+  log_message "===                       Set Fuel Bar Colors                         ==="
+fi
+
+if [ $BTSTART -ne 0 ]
+then
+  sed -i "s/var speedometerTheme = 0;/var speedometerTheme = ${BTSTART};/g" /jci/gui/apps/_speedometer/js/speedometer-startup.js
+fi
+
 if [ "${SPEEDCOLOR}" != "0" ]
 then
   rm -f /jci/gui/common/images/*.aio
@@ -165,42 +186,42 @@ fi
 # if another color scheme is active, then change speeometer graphics too
 if [ -e /jci/gui/common/images/Blue.aio ]
 then
-  cp -a ${MYDIR}/config/speedometer/color/Blue/* /jci/gui/apps/_speedometer/templates/SpeedoMeter/images/
+  sed -i "s/var analogColor = '.*;/var analogColor = 'Blue';/g" /jci/gui/apps/_speedometer/js/speedometer-startup.js
   log_message "===               Change speedometer graphics to blue                 ==="
 fi
 
 if [ -e /jci/gui/common/images/Green.aio ]
 then
-  cp -a ${MYDIR}/config/speedometer/color/Green/* /jci/gui/apps/_speedometer/templates/SpeedoMeter/images/
+  sed -i "s/var analogColor = '.*;/var analogColor = 'Green';/g" /jci/gui/apps/_speedometer/js/speedometer-startup.js
   log_message "===               Change speedometer graphics to green                ==="
 fi
 
 if [ -e /jci/gui/common/images/Orange.aio ]
 then
-  cp -a ${MYDIR}/config/speedometer/color/Orange/* /jci/gui/apps/_speedometer/templates/SpeedoMeter/images/
+  sed -i "s/var analogColor = '.*;/var analogColor = 'Orange';/g" /jci/gui/apps/_speedometer/js/speedometer-startup.js
   log_message "===               Change speedometer graphics to orange               ==="
 fi
 
 if [ -e /jci/gui/common/images/Pink.aio ]
 then
-  cp -a ${MYDIR}/config/speedometer/color/Pink/* /jci/gui/apps/_speedometer/templates/SpeedoMeter/images/
+  sed -i "s/var analogColor = '.*;/var analogColor = 'Pink';/g" /jci/gui/apps/_speedometer/js/speedometer-startup.js
   log_message "===                Change speedometer graphics to pink                ==="
 fi
 
 if [ -e /jci/gui/common/images/Purple.aio ]
 then
-  cp -a ${MYDIR}/config/speedometer/color/Purple/* /jci/gui/apps/_speedometer/templates/SpeedoMeter/images/
+  sed -i "s/var analogColor = '.*;/var analogColor = 'Purple';/g" /jci/gui/apps/_speedometer/js/speedometer-startup.js
   log_message "===               Change speedometer graphics to purple               ==="
 fi
 
 if [ -e /jci/gui/common/images/Silver.aio ]
 then
-  cp -a ${MYDIR}/config/speedometer/color/Silver/* /jci/gui/apps/_speedometer/templates/SpeedoMeter/images/
+  sed -i "s/var analogColor = '.*;/var analogColor = 'Silver';/g" /jci/gui/apps/_speedometer/js/speedometer-startup.js
   log_message "===               Change speedometer graphics to silver               ==="
 fi
 
 if [ -e /jci/gui/common/images/Yellow.aio ]
 then
-  cp -a ${MYDIR}/config/speedometer/color/Yellow/* /jci/gui/apps/_speedometer/templates/SpeedoMeter/images/
+  sed -i "s/var analogColor = '.*;/var analogColor = 'Yellow';/g" /jci/gui/apps/_speedometer/js/speedometer-startup.js
   log_message "===               Change speedometer graphics to yellow               ==="
 fi

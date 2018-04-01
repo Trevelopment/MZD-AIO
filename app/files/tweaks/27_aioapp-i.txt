@@ -22,7 +22,7 @@ rm -f /jci/opera/opera_dir/userjs/aio-startup.js
 # Copies the additionalApps.js
 if [ $CASDK_MODE -eq 0 ]
 then
-  cp -a ${MYDIR}/config/jci/opera/opera_dir/userjs/additionalApps.js /jci/opera/opera_dir/userjs/ && CASDK_MODE=1
+  cp -a ${MYDIR}/config/jci/opera/opera_dir/userjs/*.js /jci/opera/opera_dir/userjs/ && CASDK_MODE=1
   chmod 755 /jci/opera/opera_dir/userjs/additionalApps.js
   chown 1018:3015 /jci/opera/opera_dir/userjs/additionalApps.js
   log_message "===                    Copied  additionalApps.js                      ==="
@@ -37,15 +37,14 @@ then
   log_message "===                   Created additionalApps.json                     ==="
 fi
 
-# Call to the function to populate the json
-add_app_json "_aiotweaks" "AIO Tweaks" "AIO-startup.js"
-
-# add preload to the AA json entry if needed
+# Remove old json entries
 if ! grep -q "AIO-startup.js" /jci/opera/opera_dir/userjs/additionalApps.json
 then
-  sed -i 's/"label": "AIO Tweaks" \}/"label": "AIO Tweaks", "preload": "AIO-startup.js" \}/g' /jci/opera/opera_dir/userjs/additionalApps.json
-  log_message "===           Added AIO-startup.js to AIO Tweaks json entry           ==="
+  remove_app_json "_aiotweaks"
 fi
+
+# Call to the function to populate the json
+add_app_json "_aiotweaks" "AIO Tweaks" "AIO-startup.js"
 
 # Copies the content of the addon-common folder
 if [ ! -e /jci/gui/addon-common/websocketd ]  || [ ! -e /jci/gui/addon-common/jquery.min.js ]; then

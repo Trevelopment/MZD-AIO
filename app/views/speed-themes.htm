@@ -1,0 +1,47 @@
+<h4 style="font-weight:bold;margin-tiop:5px;">To customize the Bar Speedometer color themes edit the file (from USB Drive or _copy_to_usb folder): 'config/speedometer/barThemes.css'</h4>
+<pre class="lang-css"><code>/* barThemes.css - Customize Bar Speedometer Color Themes
+* Any Valid CSS Colors Can Be Used Examples:
+* Names -    Ex: blue;
+* Hex -      Ex: #00ff66;
+* RGB -      Ex: rgb(100, 255, 0);
+* HSL -      Ex: hsl(248, 53%, 58%);
+* For More Info On CSS Colors Visit https://www.w3schools.com/colors/colors_names.asp
+* Each Theme Has 3 Colors In This Order:
+* Primary - Color of Values
+* Secondary - Color of Labels/Units
+* Border-Color - Color of the Box Borders
+* If you know CSS then have fun with it
+* CSS is a very forgiving language any errors in this file will be ignored
+*/
+
+/* Theme #1 */
+
+#speedBarContainer.theme1 #vehdataMainDiv fieldset div, #speedBarContainer.theme1 #vehdataMainDiv [class*="vehDataMain"].pos0 div {
+  /* Primary */
+  color: aquamarine;
+}
+
+#speedBarContainer.theme1 #vehdataMainDiv [class*="vehDataMain"].pos0 legend .spunit span, #speedBarContainer.theme1 #vehdataMainDiv fieldset {
+  /* Secondary */
+  color: #64bfff;
+  /* Border-Color */
+  border-color: blue;
+}
+
+/* Theme #2 */
+
+#speedBarContainer.theme2 #vehdataMainDiv fieldset div, #speedBarContainer.theme2 #vehdataMainDiv [class*="vehDataMain"].pos0 div {
+  color: #3fff17;
+}
+
+#speedBarContainer.theme2 #vehdataMainDiv [class*="vehDataMain"].pos0 legend .spunit span, #speedBarContainer.theme2 #vehdataMainDiv fieldset {
+  color: hsl(248, 53%, 58%);
+  border-color: rgb(100, 0, 12);
+}
+
+/* Theme #3 */
+...
+...
+...
+</code></pre>
+<script src="./assets/vendor/prism.js"></script>

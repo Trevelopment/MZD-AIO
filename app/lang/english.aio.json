@@ -249,7 +249,7 @@
       "testlabel": "Test Backups",
       "skipconfirm": "Skip Confirmation",
       "safetylvl": "safe",
-      "toolTip": "<h5>Retrieve CMU Data</h5><p>Dump diagnostic files from the CMU to the USB Drive.  Cleans out error files and core dumps from the system.</p><h5>Skip Confirmation</h5><p>Allows for the installation to run without prompting for confirmation to begin the install. Mainly this is used for recovering when the touchscreen is not responding.  </p><h5>Copy Backups:</h5> <p> Copy original backups of modified system files, for safe keeping. </p><h5>Test Backups:</h5> <p>Some tweaks have before and after copies of the files modified during the installation.  If you like that kind of thing they will be copied to your-usb/bakups/test/.</p><p><h5>Use Legacy App Install</h5>The new and improved way to install apps is done with NodeJS. Check to use the old method of installing apps using bash.</p>"
+      "toolTip": "<h5>Retrieve CMU Data</h5><p>Dump diagnostic files from the CMU to the USB Drive.  Cleans out error files and core dumps from the system.</p><h5>Skip Confirmation</h5><p>Allows for the installation to run without prompting for confirmation to begin the install. Mainly this is used for recovering when the touchscreen is not responding.  </p><h5>Copy Backups:</h5> <p> Copy original backups of modified system files, for safe keeping. </p><h5>Test Backups:</h5> <p>Some tweaks have before and after copies of the files modified during the installation.  If you like that kind of thing they will be copied to your-usb/bakups/test/.</p>"
     },
     "mainmenu": {
       "id": 8,
@@ -887,7 +887,7 @@
     "toolTip": "<h5>Change Order of the Audio Source List.  </h5> The order of the audio source list is arranged as follows: <ui><li>USB_A</li> <li>USB_B</li> <li>btaudio</li> <li>AuxIn</li> <li>FMRadio</li> <li>DAB</li>  <li>CD</li> <li>SatRadio</li> <li>AhaRadio</li> <li>Pandora</li> <li>Stitcher</li> <li>amradio</li> <li>DVD</li> <li>TV</li></ui>",
     "img": "",
     "safetylvl": "warning",
-    "extraOps": false,
+    "extraOps": true,
     "advancedOp": false
   }, {
     "id": 10,
@@ -1011,11 +1011,11 @@
     "advancedOp": false
   }, {
     "id": 22,
-    "OpName": "Fuel Consumtion Tweak",
+    "OpName": "Fuel Consumption Tweak",
     "INST": "Install Fuel Consumption Tweak",
     "DEINST": "Remove Fuel Consumption Tweak",
     "toolTip": "<h5>Fuel Consumption Tweak. </h5> Additional display of KM / L (or MPG).",
-    "img": "FuelConsumtionTweak.jpg",
+    "img": "FuelConsumptionTweak.jpg",
     "safetylvl": "safe",
     "extraOps": true,
     "advancedOp": false

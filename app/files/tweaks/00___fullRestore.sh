@@ -557,6 +557,7 @@ rm -f /jci/scripts/get-vehicle-gear*
 rm -f /jci/scripts/get-vehicle-speed*
 rm -f /jci/opera/opera_dir/userjs/*-startup.*
 rm -f /jci/opera/opera_dir/userjs/additionalApps.*
+rm -f /jci/opera/opera_dir/userjs/aio.js
 rm -f /jci/scripts/wait_adb_arm.sh
 rm -f /jci/scripts/adb
 rm -f /jci/scripts/cs_receiver_arm

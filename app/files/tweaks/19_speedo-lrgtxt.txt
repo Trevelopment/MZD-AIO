@@ -1,0 +1,3 @@
+# Larger Text for Classic Speedo
+sed -i "s/var spdLrgTxt = .*;/var spdLrgTxt = true;/g" /jci/gui/apps/_speedometer/js/speedometer-startup.js
+log_message "===                 SET LARGER TEXT FOR CLASSIC SPEEDO                ==="

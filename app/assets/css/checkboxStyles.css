@@ -264,7 +264,6 @@ input[type=checkbox] {
 .color-check label.CarOS:after {
   background: white;
   background: -webkit-radial-gradient(center, #00ff95 6%, #000000 100%);
-  ;
 }
 .sidePanel input[type=radio] {
   visibility: hidden;
@@ -713,6 +712,10 @@ tr.w3-row.w3-col td strong {
   background: #aaa;
   cursor: not-allowed;
 }
+#sidePanel .speedo-radio.w3-row input:checked+label {
+  outline: 2px dashed #ff002d;
+  outline-offset: -2px;
+}
 #sidePanel .speedo-radio:first-of-type label {
   border-radius: 4px 0 0 4px;
 }
@@ -726,6 +729,7 @@ tr.w3-row.w3-col td strong {
 #sidePanel .speedo-lang .speedo-radio label {
   width: 25%;
 }
+#sidePanel .speedo-radio.third label,
 #sidePanel .sbspeedo .speedo-radio label {
   width: 33.3333%;
 }

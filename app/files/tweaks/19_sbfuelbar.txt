@@ -1,0 +1,7 @@
+sed -i 's/var sbFuelBar = .*;/var sbFuelBar = true;/g' /jci/gui/apps/_speedometer/js/speedometer-startup.js
+log_message "===                ACTIVATE STATUSBAR FUEL GAUGE                      ==="
+if [ "${SBFBPOS}" != "default" ]
+then
+	sed -i "s/var sbfbPos = '.*/var sbfbPos = '${SBFBPOS}';/g" /jci/gui/apps/_speedometer/js/speedometer-startup.js
+	log_message "===               MOVE STATUSBAR FUEL BAR TO ${SBFBPOS}                  ==="
+fi

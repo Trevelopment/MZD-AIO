@@ -14,7 +14,10 @@ sed -i '/### MZD Meter/d' /jci/scripts/stage_wifi.sh
 sed -i '/mzdmonitor.sh/d' /jci/scripts/stage_wifi.sh
 
 ADDIT_APPS=0
-# delete mzdmeter entry from /jci/opera/opera_dir/userjs/additionalApps.json
+if [ -e /jci/opera/opera_dir/userjs/CustomApplicationsProxy.js ] || [ -e /jci/opera/opera_dir/userjs/nativeApps.js ]
+then
+  log_message "===                          Found CASDK                              ==="
+  ADDIT_APPS=1
 if grep -Fq "_androidauto" /jci/opera/opera_dir/userjs/additionalApps.json
 then
 	log_message "===           Found androidauto entry in additionalApps.json          ==="
@@ -36,6 +39,7 @@ if [ $ADDIT_APPS -eq 0 ]
 then
 	log_message "===    No more entrys in additionalApps.json, files will be deleted   ==="
 	rm -f /jci/opera/opera_dir/userjs/additionalApps.*
+  rm -f /jci/opera/opera_dir/userjs/app.js
 else
 	remove_app_json "_mzdmeter"
 fi

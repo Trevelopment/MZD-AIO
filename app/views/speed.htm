@@ -1,20 +1,20 @@
-<h4 style="font-weight:bold;margin-tiop:5px;">To customize the Bar Speedometer edit the file (from USB Drive or _copy_to_usb folder): 'config/speedometer_bar/speedometer-config.js'</h4>
-<pre><code>/** speedometer-config.js ************************************************************** *\
-|* =========================                                                             *|
-|* Speedometer Configuration - Used to configure position of Speedometer values.         *|
-|* =========================                                                             *|
-|* Main Speedometer Value: [0, 0, 0] - Large, Front, & Center.                           *|
-|* Other Values: [ 0/1:(0 For Main Column OR 1 For Bottom Rows), Row Number, Position ]  *|
-|* Main Column Positions: 4 Values (1-4 From Top to Bottom)                              *|
-|* Bottom Rows Positions: 5 Values Per Row (1-5 From Left to Right)                      *|
-|* Examples:                                                                             *|
-|* [0, 1, 4] = [Main, Column, 4th position (Bottom of the Column)]                       *|
-|* [1, 3, 1] = [Bottom, 3rd Row, First Position (Left Side)]                             *|
-|* [1, 1, 5] = [Bottom, 1st Row, Last Position (Right Side)]                             *|
-|* To Hide a Value = [1, 1, 0] (Any bottom row position 0 will hide the value)           *|
-|* To Change Bottom Row Push Command Knob ("Select")                                     *|
-|* Note: Only numbers inside [] brackets determine position, order in this list DOES NOT *|
-|* ******* DELETE THE CONFIG FILE TO REUSE YOUR CURRENT CONFIG-SPEEDOMETER.JS ********** *|
+<h4 style="font-weight:bold;margin-tiop:5px;">To customize the Bar Speedometer edit the file (from USB Drive or _copy_to_usb folder): 'config/speedometer/speedometer-config.js'</h4>
+
+<pre class="lang-javascript"><code>/** speedometer-config.js ************************************************************** *\
+|* =========================
+|* Speedometer Configuration - Used to configure position of Speedometer values.
+|* =========================
+|* Main Speedometer Value: [0, 0, 0] - Large, Front, & Center.
+|* Other Values: [ 0/1:(0 For Main Column OR 1 For Bottom Rows), Row Number, Position ]
+|* Main Column Positions: 4 Values (1-4 From Top to Bottom)
+|* Bottom Rows Positions: 5 Values Per Row (1-5 From Left to Right)
+|* Examples:
+|* [0, 1, 4] = [Main, Column, 4th position (Bottom of the Column)]
+|* [1, 3, 1] = [Bottom, 3rd Row, First Position (Left Side)]
+|* [1, 1, 5] = [Bottom, 1st Row, Last Position (Right Side)]
+|* To Hide a Value = [1, 1, 0] (Any bottom row position 0 will hide the value)
+|* To Change Bottom Row Push Command Knob ("Select")
+|* Note: Only numbers inside [] brackets determine position, order in this list DOES NOT
 \* ************************************************************************************* */
 var spdBottomRows = 3;&nbsp;&nbsp;&nbsp;//Number of Bottom Rows
 var spdTbl = { // Example Layout:
@@ -46,7 +46,7 @@ var spdTbl = { // Example Layout:
 &nbsp;&nbsp;batSOC:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[1, 1, 0], //Battery Charge State (i-stop)
 };
 </code><img style="cursor:pointer;" class="speedoRef" src="files/screenshots/barSpeedo.jpg" data-featherlight="files/screenshots/barSpeedo.jpg" /></pre>
-<pre><code>
+<pre class="lang-javascript"><code>
 // OverRide Values
 /* ************************************************** */
 /* Set overRideSpeed to true to use your values below */
@@ -115,3 +115,4 @@ var SORV = {
   speedAnimation: false,
 };
 </code></pre>
+<script src="./assets/vendor/prism.js"></script>
