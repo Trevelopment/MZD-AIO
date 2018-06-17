@@ -43,6 +43,11 @@ then
 	sed -i "s/var speedAnimation = false;/var speedAnimation = true;/g" /jci/gui/apps/_speedometer/js/speedometer-startup.js
   log_message "===                  TURNED COUNTER ANIMATION ON                      ==="
 fi
+if [ "${HIDE_SPEEDO_SBN}" = "1" ]
+then
+	sed -i "s/var hideSbSpeedoSBN = false;/var hideSbSpeedoSBN = true;/g" /jci/gui/apps/_speedometer/js/speedometer-startup.js
+  log_message "===         HIDE STATUSBAR SPEEDOMETER DURING NOTIFICATIONS           ==="
+fi
 if [ $TESTBKUPS -eq 1 ]
 then
   cp -a /jci/gui/apps/_speedometer/js/speedometer-startup.js ${MYDIR}/bakups/test/

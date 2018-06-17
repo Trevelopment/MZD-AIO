@@ -1,13 +1,9 @@
+backup_org /jci/settings/configurations/blm_msg-system.xml
 # Remove Message Replies
 # To Apply This Tweak You Must Perform A Factory Reset After Installing
 show_message "REMOVE MESSAGE REPLIES ...\n\nNOTE: TO APPLY REMOVE MESSAGE REPLIES TWEAK\nYOU MUST PREFORM 'RESTORE ALL FACTORY SETTINGS'"
 log_message "========************ INSTALL REMOVE MESSAGE REPLIES ... **********======="
 
-if [ ! -e /jci/settings/configurations/blm_msg-system.xml.org ]
-	then
-		cp -a /jci/settings/configurations/blm_msg-system.xml /jci/settings/configurations/blm_msg-system.xml.org
-		log_message "===     Backup of /jci/settings/configurations/blm_msg-system.xml     ==="
-fi
 cp -a ${MYDIR}/config/message_replies/jci/settings/configurations/blm_msg-system.xml /jci/settings/configurations
 log_message "===       Copied /jci/settings/configurations/blm_msg-system.xml      ==="
 sleep 6

@@ -1,6 +1,6 @@
-var Gritter = function () {
+var Gritter = function() {
 
-  $('#add-sticky').click(function () {
+  $('#add-sticky').click(function() {
 
     var unique_id = $.gritter.add({
       // (string | mandatory) the heading of the notification
@@ -33,7 +33,7 @@ var Gritter = function () {
 
   });
 
-  $('#add-regular').click(function () {
+  $('#add-regular').click(function() {
 
     $.gritter.add({
       // (string | mandatory) the heading of the notification
@@ -52,7 +52,7 @@ var Gritter = function () {
 
   });
 
-  $('#add-max').click(function () {
+  $('#add-max').click(function() {
 
     $.gritter.add({
       // (string | mandatory) the heading of the notification
@@ -64,7 +64,7 @@ var Gritter = function () {
       // (bool | optional) if you want it to fade out on its own or just sit there
       sticky: false,
       // (function) before the gritter notice is opened
-      before_open: function () {
+      before_open: function() {
         if ($('.gritter-item-wrapper').length == 3) {
           // Returning false prevents a new gritter from opening
           return false;
@@ -76,7 +76,7 @@ var Gritter = function () {
 
   });
 
-  $('#add-without-image').click(function () {
+  $('#add-without-image').click(function() {
 
     $.gritter.add({
       // (string | mandatory) the heading of the notification
@@ -88,7 +88,7 @@ var Gritter = function () {
     return false;
   });
 
-  $('#add-gritter-light').click(function () {
+  $('#add-gritter-light').click(function() {
 
     $.gritter.add({
       // (string | mandatory) the heading of the notification
@@ -101,7 +101,7 @@ var Gritter = function () {
     return false;
   });
 
-  $("#remove-all").click(function () {
+  $("#remove-all").click(function() {
 
     $.gritter.removeAll();
     return false;

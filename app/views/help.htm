@@ -14,144 +14,185 @@
 \* ************************************************************************** */
 -->
 <div id='helpMenuTop' class='w3-black w3-animate-bottom w3-hide w3-third w3-right'>
-  <a href="" onclick="$(this).parent().toggleClass('w3-hide')" class="w3-left"><span class="icon-x"></span></a>
-  <div id="flipOp">Menu Animation:<select ng-model="user.flipOption" name="flipOption" id="flipOption" class='w3-third w3-right'><option value="">none</option><option value="w3-360flip" checked>360Fip</option><!--option value='w3-animate-right'>slide</option--><option value="w3-animate-opacity">Fade</option><option value='w3-animate-zoom'>Zoom</option></select></div>
-  <div id="darkMode"><a class="icon-save w3-display-bottomleft" style="padding:5px;" title="{{menu.save.label}}" onclick="helpDropdown()" ng-click="miniSave()"></a><!---->
-    Dark Mode:<input type="checkbox" name="mzdColors" id="mzdColors" class="w3-check" ng-model="user.darkMode" onclick="$('html, body, #sidePanel').toggleClass('w3-black')"> </div></div><!-- TODO: Do this the angular way -->
-    <div ng-controller="helpCtrl">
-      <div class="accordion help-messages">
-        <ul>
-          <li>
-            <input type="radio" name="select" class="accordion-select" checked/>
-            <div class="accordion-title">
-              <span>{{helpMsgs[0].title}}</span>
+  <a href="" onclick="$(this).parent().toggleClass('w3-hide')" class="w3-left">
+    <span class="icon-x"></span>
+  </a>
+  <div id="flipOp">Menu Animation:
+    <select ng-model="user.flipOption" name="flipOption" id="flipOption" class='w3-third w3-right'>
+      <option value="">none</option>
+      <option value="w3-360flip" checked>360Fip</option>
+      <!--option value='w3-animate-right'>slide</option-->
+      <option value="w3-animate-opacity">Fade</option>
+      <option value='w3-animate-zoom'>Zoom</option>
+    </select>
+  </div>
+  <div id="darkMode"><a class="icon-save w3-display-bottomleft" style="padding:5px;" title="{{menu.save.label}}" onclick="helpDropdown()" ng-click="miniSave()"></a>
+    <!---->
+    Dark Mode:
+    <input type="checkbox" name="mzdColors" id="mzdColors" class="w3-check" ng-model="user.darkMode" onclick="$('html, body, #sidePanel').toggleClass('w3-black')"> </div>
+</div>
+<!-- TODO: Do this the angular way -->
+<div ng-controller="helpCtrl">
+  <div class="accordion help-messages">
+    <ul>
+      <li>
+        <input type="radio" name="select" class="accordion-select" checked/>
+        <div class="accordion-title">
+          <span>{{helpMsgs[0].title}}</span>
+        </div>
+        <div class="accordion-content">
+          <div class="w3-col w3-justify">
+            <h1 class="w3-center">{{appName}} v{{appVer}} |</h1>
+            <h2 class="w3-center" style="white-space:pre"> MZD All In One Tweaks Installer</h2>
+            <span class="w3-justify" ng-bind-html="helpMsgs[0].msg | markdown"></span>
+          </div>
+        </div>
+        <div class="accordion-separator"></div>
+      </li>
+      <li>
+        <input type="radio" name="select" class="accordion-select" />
+        <div class="accordion-title">
+          <span>{{helpMsgs[1].title}}</span>
+        </div>
+        <div class="accordion-content">
+          <div class="t-warn">
+            <h2 class="warnToggler w3-border-bottom w3-hover-border-red">{{helpMsgs[1].title}}</h2>
+            <div class="warnpanel" style="display:block" ng-bind-html="helpMsgs[1].msg | markdown"></div>
+            <div class="warnToggler w3-black w3-bottombar w3-hover-text-blue w3-hover-border-deep-orange">
+              <strong>
+                <h4 ng-bind="helpMsgs[1].t2"></h4>
+              </strong>
             </div>
-            <div class="accordion-content">
-              <div class="w3-col w3-justify"><h1 class="w3-center">{{appName}} v{{appVer}} |</h1><h2 class="w3-center" style="white-space:pre"> MZD All In One Tweaks Installer</h2>
-              <span class="w3-justify" ng-bind-html="helpMsgs[0].msg | markdown"></span></div>
+            <div class="warnpanel" style="display:none" ng-bind-html="helpMsgs[1].msg2 | markdown"></div>
+          </div>
+        </div>
+        <div class="accordion-separator"></div>
+      </li>
+      <li>
+        <input type="radio" name="select" class="accordion-select" />
+        <div class="accordion-title">
+          <span>{{helpMsgs[2].title}}</span>
+        </div>
+        <div class="accordion-content">
+          <h2 class="revertToggler w3-center w3-hover-border-yellow w3-hover-text-green w3-border-bottom">{{helpMsgs[2].title}}</h2>
+          <div class="revertpanel w3-col" style="display:block" ng-bind-html="helpMsgs[2].msg | markdown"></div>
+          <div class="revertToggler w3-black w3-bottombar w3-hover-text-aqua w3-hover-border-amber">
+            <strong>
+              <h4 ng-bind="helpMsgs[2].t2"></h4>
+            </strong>
+          </div>
+          <div class="revertpanel" style="display:none" ng-bind-html="helpMsgs[2].msg2 | markdown"></div>
+        </div>
+        <div class="accordion-separator"></div>
+      </li>
+      <li>
+        <input type="radio" name="select" class="accordion-select" />
+        <div class="accordion-title">
+          <span>{{helpMsgs[3].title}}</span>
+        </div>
+        <div class="accordion-content">
+          <h2 class="troubleshootingToggler  w3-center w3-hover-border-pink w3-hover-text-blue w3-border-bottom">{{helpMsgs[3].title}}</h2>
+          <div class="troubleshootingPanel w3-col" ng-bind-html="helpMsgs[3].msg | markdown"></div>
+          <div class="troubleshootingToggler w3-black w3-center w3-bottombar w3-hover-text-deep-orange w3-hover-border-deep-purple">
+            <strong>
+              <h4 ng-bind="helpMsgs[3].t2"></h4>
+            </strong>
+          </div>
+          <div class="troubleshootingPanel" style="display:none" ng-bind-html="helpMsgs[3].msg2 | markdown"></div>
+        </div>
+        <div class="accordion-separator"></div>
+      </li>
+      <li>
+        <input type="radio" name="select" class="accordion-select" />
+        <div class="accordion-title">
+          <span>{{helpMsgs[4].title}}</span>
+        </div>
+        <div class="accordion-content">
+          <h2 class="kiToggler w3-center w3-hover-border-indigo w3-hover-text-lime w3-border-bottom">{{helpMsgs[4].title}}</h2>
+          <div class="kiPanel w3-col" ng-bind-html="helpMsgs[4].msg | markdown"></div>
+          <div class="kiToggler w3-black w3-center w3-bottombar w3-hover-text-deep-orange w3-hover-border-deep-purple">
+            <strong>
+              <h4 ng-bind="helpMsgs[4].t2"></h4>
+            </strong>
+          </div>
+          <div class="kiPanel" style="display:none" ng-bind-html="helpMsgs[4].msg2 | markdown">
+            <div id="console">
+              <div class="console-messages"></div>
             </div>
-            <div class="accordion-separator"></div>
-          </li>
-          <li>
-            <input type="radio" name="select" class="accordion-select" />
-            <div class="accordion-title">
-              <span>{{helpMsgs[1].title}}</span>
-            </div>
-            <div class="accordion-content">
-              <div class="t-warn">
-                <h2 class="warnToggler w3-border-bottom w3-hover-border-red">{{helpMsgs[1].title}}</h2>
-                <div class="warnpanel" style="display:block" ng-bind-html="helpMsgs[1].msg | markdown"></div>
-                <div class="warnToggler w3-black w3-bottombar w3-hover-text-blue w3-hover-border-deep-orange"><strong><h4 ng-bind="helpMsgs[1].t2"></h4></strong></div>
-                <div class="warnpanel" style="display:none" ng-bind-html="helpMsgs[1].msg2 | markdown"></div>
-              </div>
-            </div>
-            <div class="accordion-separator"></div>
-          </li>
-          <li>
-            <input type="radio" name="select" class="accordion-select" />
-            <div class="accordion-title">
-              <span>{{helpMsgs[2].title}}</span>
-            </div>
-            <div class="accordion-content">
-              <h2 class="revertToggler w3-center w3-hover-border-yellow w3-hover-text-green w3-border-bottom">{{helpMsgs[2].title}}</h2>
-              <div class="revertpanel w3-col" style="display:block" ng-bind-html="helpMsgs[2].msg | markdown"></div>
-              <div class="revertToggler w3-black w3-bottombar w3-hover-text-aqua w3-hover-border-amber"><strong><h4 ng-bind="helpMsgs[2].t2"></h4></strong></div>
-              <div class="revertpanel" style="display:none" ng-bind-html="helpMsgs[2].msg2 | markdown"></div>
-            </div>
-            <div class="accordion-separator"></div>
-          </li>
-          <li>
-            <input type="radio" name="select" class="accordion-select" />
-            <div class="accordion-title">
-              <span>{{helpMsgs[3].title}}</span>
-            </div>
-            <div class="accordion-content">
-              <h2 class="troubleshootingToggler  w3-center w3-hover-border-pink w3-hover-text-blue w3-border-bottom">{{helpMsgs[3].title}}</h2>
-              <div class="troubleshootingPanel w3-col" ng-bind-html="helpMsgs[3].msg | markdown"></div>
-              <div class="troubleshootingToggler w3-black w3-center w3-bottombar w3-hover-text-deep-orange w3-hover-border-deep-purple"><strong><h4 ng-bind="helpMsgs[3].t2"></h4></strong></div>
-              <div class="troubleshootingPanel" style="display:none" ng-bind-html="helpMsgs[3].msg2 | markdown"></div>
-            </div>
-            <div class="accordion-separator"></div>
-          </li>
-          <li>
-            <input type="radio" name="select" class="accordion-select" />
-            <div class="accordion-title">
-              <span>{{helpMsgs[4].title}}</span>
-            </div>
-            <div class="accordion-content">
-              <h2 class="kiToggler w3-center w3-hover-border-indigo w3-hover-text-lime w3-border-bottom">{{helpMsgs[4].title}}</h2>
-              <div class="kiPanel w3-col" ng-bind-html="helpMsgs[4].msg | markdown"></div>
-              <div class="kiToggler w3-black w3-center w3-bottombar w3-hover-text-deep-orange w3-hover-border-deep-purple"><strong><h4 ng-bind="helpMsgs[4].t2"></h4></strong></div>
-              <div class="kiPanel" style="display:none" ng-bind-html="helpMsgs[4].msg2 | markdown"><div id="console"><div class="console-messages"></div></div></div>
-            </div>
-            <div class="accordion-separator"></div>
-          </li>
-          <li>
-            <input type="radio" name="select" class="accordion-select" />
-            <div class="accordion-title">
-              <span>{{helpMsgs[5].title}}</span>
-            </div>
-            <div class="accordion-content">
-              <h2 class="ttToggler w3-center w3-hover-border-grey w3-hover-text-aqua w3-border-bottom">{{helpMsgs[5].title}}</h2>
-              <div class="ttPanel w3-col" ng-bind-html="helpMsgs[5].msg | markdown"></div>
-              <!--div class="ttToggler w3-black w3-center w3-bottombar w3-hover-text-deep-orange w3-hover-border-deep-purple"><strong><h4 ng-bind="helpMsgs[5].t2"></h4></strong></div>
+          </div>
+        </div>
+        <div class="accordion-separator"></div>
+      </li>
+      <li>
+        <input type="radio" name="select" class="accordion-select" />
+        <div class="accordion-title">
+          <span>{{helpMsgs[5].title}}</span>
+        </div>
+        <div class="accordion-content">
+          <h2 class="ttToggler w3-center w3-hover-border-grey w3-hover-text-aqua w3-border-bottom">{{helpMsgs[5].title}}</h2>
+          <div class="ttPanel w3-col" ng-bind-html="helpMsgs[5].msg | markdown"></div>
+          <!--div class="ttToggler w3-black w3-center w3-bottombar w3-hover-text-deep-orange w3-hover-border-deep-purple"><strong><h4 ng-bind="helpMsgs[5].t2"></h4></strong></div>
               <div class="ttPanel" style="display:none" ng-bind-html="helpMsgs[5].msg2 | markdown"></div-->
-            </div>
-            <div class="accordion-separator"></div>
-          </li>
-          <li>
-            <input type="radio" name="select" class="accordion-select" />
-            <div class="accordion-title">
-              <span>{{faqs.title}}</span>
-            </div>
-            <div class="accordion-content">
-              <h2 class="w3-center w3-hover-border-aqua w3-hover-text-amber w3-border-bottom">{{faqs.msg}}</h2>
-              <div class="faqs">
-                <div class="faqToggler" ng-bind-html="faqs.q1 | markdown"></div>
-                <div class="faqpanel" style="display:block;" ng-bind-html="faqs.a1 | markdown"></div>
-                <div class="faqToggler" ng-bind-html="faqs.q2 | markdown"></div>
-                <div class="faqpanel" style="" ng-bind-html="faqs.a2 | markdown"></div>
-                <div class="faqToggler" ng-bind-html="faqs.q3 | markdown"></div>
-                <div class="faqpanel" style="" ng-bind-html="faqs.a3 | markdown"></div>
-                <div class="faqToggler" ng-bind-html="faqs.q4 | markdown"></div>
-                <div class="faqpanel" style="" ng-bind-html="faqs.a4 | markdown"></div>
-                <div class="faqToggler" ng-bind-html="faqs.q5 | markdown"></div>
-                <div class="faqpanel" style="" ng-bind-html="faqs.a5 | markdown"></div>
-                <div class="faqToggler" ng-bind-html="faqs.q6 | markdown"></div>
-                <div class="faqpanel" style="" ng-bind-html="faqs.a6 | markdown"></div>
-                <div class="faqToggler" ng-bind-html="faqs.q7 | markdown"></div>
-                <div class="faqpanel" style="" ng-bind-html="faqs.a7 | markdown"></div>
-                <div class="faqToggler" ng-bind-html="faqs.q8 | markdown"></div>
-                <div class="faqpanel" style="" ng-bind-html="faqs.a8 | markdown"></div>
-                <div class="faqToggler" ng-bind-html="faqs.q9 | markdown"></div>
-                <div class="faqpanel" style="" ng-bind-html="faqs.a9 | markdown"></div>
-                <div class="faqToggler" ng-bind-html="faqs.q10 | markdown"></div>
-                <div class="faqpanel" style="" ng-bind-html="faqs.a10 | markdown"></div>
-              </div>
-              <div class="w3-center w3-display-bottommiddle w3-padding" style="width: 94%;"><a href="" onclick="externalLink('faqs')" class="w3-padding" data-toggle="tooltip" data-placement="auto" title="More FAQs">FAQs</a>
-                <a href="" class="w3-padding" onclick="$('#feedback').click();helpDropdown();" data-toggle="tooltip" data-placement="auto" title='Contact The Treveloper'>Contact</a>
-              </div>
-            </div>
-            <div class="accordion-separator"></div>
-          </li>
-          <li>
-            <input type="radio" name="select" class="accordion-select" />
-            <div class="accordion-title">
-              <span>{{helpMsgs[6].title}}</span>
-            </div>
-            <div class="accordion-content">
-              <div class="w3-col w3-large" compile="helpMsgs[6].msg"></div>
-              <div class="translator w3-text-red"><h3 style="font-weight:800">EXPERIMENTAL: Google Translate </h3><span id="google_translate_element"></span></div><div class="w3-border w3-border-pink w3-padding w3-margin-top">NOTE: SOME LANGUAGES WILL BREAK FORMATTING</div>
-              <hr>
-              <!--div class="settingsToggler w3-black w3-center w3-bottombar w3-hover-text-deep-orange w3-hover-border-deep-purple"><strong><h4 ng-bind="helpMsgs[6].t2"></h4></strong></div>
+        </div>
+        <div class="accordion-separator"></div>
+      </li>
+      <li>
+        <input type="radio" name="select" class="accordion-select" />
+        <div class="accordion-title">
+          <span>{{faqs.title}}</span>
+        </div>
+        <div class="accordion-content">
+          <h2 class="w3-center w3-hover-border-aqua w3-hover-text-amber w3-border-bottom">{{faqs.msg}}</h2>
+          <div class="faqs">
+            <div class="faqToggler" ng-bind-html="faqs.q1 | markdown"></div>
+            <div class="faqpanel" style="display:block;" ng-bind-html="faqs.a1 | markdown"></div>
+            <div class="faqToggler" ng-bind-html="faqs.q2 | markdown"></div>
+            <div class="faqpanel" style="" ng-bind-html="faqs.a2 | markdown"></div>
+            <div class="faqToggler" ng-bind-html="faqs.q3 | markdown"></div>
+            <div class="faqpanel" style="" ng-bind-html="faqs.a3 | markdown"></div>
+            <div class="faqToggler" ng-bind-html="faqs.q4 | markdown"></div>
+            <div class="faqpanel" style="" ng-bind-html="faqs.a4 | markdown"></div>
+            <div class="faqToggler" ng-bind-html="faqs.q5 | markdown"></div>
+            <div class="faqpanel" style="" ng-bind-html="faqs.a5 | markdown"></div>
+            <div class="faqToggler" ng-bind-html="faqs.q6 | markdown"></div>
+            <div class="faqpanel" style="" ng-bind-html="faqs.a6 | markdown"></div>
+            <!-- <div class="faqToggler" ng-bind-html="faqs.q7 | markdown"></div>
+                <div class="faqpanel" style="" ng-bind-html="faqs.a7 | markdown"></div> -->
+            <div class="faqToggler" ng-bind-html="faqs.q8 | markdown"></div>
+            <div class="faqpanel" style="" ng-bind-html="faqs.a8 | markdown"></div>
+            <div class="faqToggler" ng-bind-html="faqs.q9 | markdown"></div>
+            <div class="faqpanel" style="" ng-bind-html="faqs.a9 | markdown"></div>
+            <div class="faqToggler" ng-bind-html="faqs.q10 | markdown"></div>
+            <div class="faqpanel" style="" ng-bind-html="faqs.a10 | markdown"></div>
+          </div>
+          <div class="w3-center w3-display-bottommiddle w3-padding" style="width: 94%;"><a href="" onclick="externalLink('faqs')" class="w3-padding" data-toggle="tooltip" data-placement="auto" title="More FAQs">FAQs</a>
+            <a href="" class="w3-padding" onclick="$('#feedback').click();helpDropdown();" data-toggle="tooltip" data-placement="auto" title='Contact The Treveloper'>Contact</a>
+          </div>
+        </div>
+        <div class="accordion-separator"></div>
+      </li>
+      <li>
+        <input type="radio" name="select" class="accordion-select" />
+        <div class="accordion-title">
+          <span>{{helpMsgs[6].title}}</span>
+        </div>
+        <div class="accordion-content">
+          <div class="w3-col w3-large" compile="helpMsgs[6].msg"></div>
+          <div class="translator w3-text-red">
+            <h3 style="font-weight:800">EXPERIMENTAL: Google Translate </h3>
+            <span id="google_translate_element"></span>
+          </div>
+          <div class="w3-border w3-border-pink w3-padding w3-margin-top">NOTE: SOME LANGUAGES WILL BREAK FORMATTING</div>
+          <hr>
+          <!--div class="settingsToggler w3-black w3-center w3-bottombar w3-hover-text-deep-orange w3-hover-border-deep-purple"><strong><h4 ng-bind="helpMsgs[6].t2"></h4></strong></div>
               <div class="settingsPanel" style="display:none" ng-bind-html="helpMsgs[6].msg2 | markdown"></div-->
-            </div>
-            <div class="accordion-separator"></div>
-          </li>
-        </ul>
-      </div>
-    </div>
-    <script>
+        </div>
+        <div class="accordion-separator"></div>
+      </li>
+    </ul>
+  </div>
+</div>
+<script>
     $(function(){
       $('.w3-bottombar').click(function(){$(this).addClass('stick')});
       $('[class*="Toggler"]:not(".w3-bottombar")').click(function(){$('.w3-bottombar').removeClass('stick')});

@@ -1,0 +1,8 @@
+# Android Auto Headunit App w/ Wifi Support
+if [ -e ${MYDIR}/config/androidautowifi ]
+then
+	cp -a ${MYDIR}/config/androidautowifi/* /tmp/mnt/data_persist/dev/bin
+  log_message "===                     Android Auto WiFi Support                     ==="
+fi
+log_message "====******** END INSTALLATION OF ANDROID AUTO HEADUNIT APP *********====="
+log_message " "

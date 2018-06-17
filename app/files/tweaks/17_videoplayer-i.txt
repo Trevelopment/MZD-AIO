@@ -20,6 +20,7 @@ pkill websocketd
 rm -fr /jci/gui/apps/_videoplayer/
 sed -i '/Video/d' /jci/scripts/stage_wifi.sh
 sed -i '/--port=9998/d' /jci/scripts/stage_wifi.sh
+log_message "===                   Removed Old VideoPlayer Files                   ==="
 
 # Copies the additionalApps.js
 if [ $CASDK_MODE -eq 0 ]
@@ -29,6 +30,12 @@ then
   chown 1018:3015 /jci/opera/opera_dir/userjs/additionalApps.js
   log_message "===                     Copied  additionalApps.js                     ==="
 fi
+
+cp -a ${MYDIR}/config/jci/opera/opera_dir/userjs/aio.js /jci/opera/opera_dir/userjs/
+chmod 755 /jci/opera/opera_dir/userjs/aio.js
+chown 1018:3015 /jci/opera/opera_dir/userjs/aio.js
+log_message "===                        Copied  aio.js                             ==="
+
 
 # create additionalApps.json file from scratch if the file does not exist
 if [ ! -e /jci/opera/opera_dir/userjs/additionalApps.json ]
@@ -78,9 +85,12 @@ log_message "===                    Copy VideoPlayer Files                      
 
 
 cp -a ${MYDIR}/config/videoplayer/usr/lib/gstreamer-0.10/* /usr/lib/gstreamer-0.10/
+cp -a ${MYDIR}/config/videoplayer/usr/lib/libFLAC.so.8.3.0 /usr/lib/
 chmod 755 -R /usr/lib/gstreamer-0.10/libgstautodetect.so
+chmod 755 -R /usr/lib/gstreamer-0.10/libgstflac.so
+chmod 755 -R /usr/lib/libFLAC.so.8.3.0
+ln -s /usr/lib/libFLAC.so.8.3.0 /usr/lib/libFLAC.so.8
 log_message "===              Copy libs to usr/lib/gstreamer-0.10                  ==="
-
 
 count=$(grep -c '/imx-mm/video-codec' /etc/profile)
 if [ $count -eq 0 ]

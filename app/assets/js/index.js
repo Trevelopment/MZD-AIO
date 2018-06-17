@@ -13,6 +13,7 @@
 /* jshint esversion:6, -W033 */
 const { electron, nativeImage, remote, clipboard, shell } = require('electron')
 const { app, BrowserWindow } = remote
+const _ = require('lodash')
 const fs = require('fs')
 const ipc = require('electron').ipcRenderer
 const Config = require('electron-store')
@@ -31,9 +32,9 @@ var copyFolderLocation = persistantData.get('copyFolderLocation')
 var visits = persistantData.get('visits') || 0
 var hasColorFiles = fs.existsSync(`${app.getPath('userData')}/color-schemes/`)
 var hasSpeedCamFiles = fs.existsSync(`${app.getPath('userData')}/speedcam-patch/`)
-var translateSchema, langPath, lang
+var translateSchema, langPath, lang, langDefault
 var tempDir = `${app.getPath('userData')}/background`
-var date = function () { return new Date() }
+var date = function() { return new Date() }
 // require('./lib/log')('MZD-AIO-LOG')
 // var output = process.stdout
 // var errorOutput = process.stderr
@@ -45,12 +46,16 @@ console.log("speedcamfiles: "+hasSpeedCamFiles) */
 lang = persistantData.get('lang') || 'english'
 if (window.location.pathname.includes('joiner')) {
   langPath = `../lang/${lang}.aio.json`
+  langDefault = '../lang/english.aio.json'
   translateSchema = require('../lang/aio.schema.json')
 } else {
-  translateSchema = require('./lang/aio.schema.json')
   langPath = `${app.getPath('home')}/lang/${lang}.aio.json`
+  langDefault = `${app.getPath('home')}/lang/english.aio.json`
+  translateSchema = require(`${app.getPath('home')}/lang/aio.schema.json`)
 }
 var langObj = require(langPath)
+var langDef = require(langDefault)
+langObj = _.merge(langDef, langObj)
 /* IDEA FOR AIO BG PICKER
 var bg-images = []
 fs.readdir('./background-images/', (err, files) => {
@@ -58,11 +63,21 @@ files.forEach(file => {
 console.log(file)
 bg-images.push('<img src="file">')
 })
-}) */
-function getBackground () {
+})
+const testFolder = './background-images/';
+var bgpics = [];
+fs.readdir(testFolder, (err, files) => {
+  files.forEach(file => {
+    bgpics.push('<img src="'+file+'" alt="" >')
+    console.log(file);
+  });
+})
+*/
+function getBackground() {
   return `${tempDir}/background.png`
 }
-function saveMenuLock () {
+
+function saveMenuLock() {
   persistantData.set('menuLock', !persistantData.get('menuLock'))
   $('body, .hideNav, .w3-overlay').toggleClass('showNav')
 }
@@ -75,6 +90,10 @@ function helpMessageFreeze(item) {
   $(item).children().toggleClass('w3-show')
 }
 
+
+function runInstallCSApp() {
+  require('./assets/js/installCS.js')()
+}
 /* Clock for Background preview */
 function startTime() {
   var today = new Date()
@@ -92,9 +111,7 @@ function checkTime(i) {
   if (i < 10) { i = '0' + i } // add zero in front of numbers < 10
   return i
 }
-/* function createImageWindow() {
-var imageWindow = windowManager.open('imageWindow')// , 'Drag & Drop Background Image', '/views/imageWindow.html','imageWindow')
-} */
+
 ipc.on('open-copy-folder', () => {
   openCopyFolder()
 })
@@ -122,29 +139,30 @@ function openDlFolder() {
 function openDefaultFolder() {
   shell.showItemInFolder(path.normalize(path.join('file://', __dirname, '../background-images/default/defaut.png')))
 }
-function autoHelp () {
-  $.featherlight('views/autoHelp.htm',{closeSpeed:500,variant:'autoHelpBox'})
+function autoHelp() {
+  $.featherlight('views/autoHelp.htm', { closeSpeed: 500, variant: 'autoHelpBox' })
 }
-function myStance () {
-  ipc.send('reset-window-size')
-  $.featherlight('views/stance.htm',{closeSpeed:2000,variant:'myStance',afterClose:updateNotesCallback})
+function myStance() {
+  //updateNotesCallback()
+  //ipc.send('reset-window-size')
+  $.featherlight('views/stance.htm', { closeSpeed: 2000, variant: 'myStance', afterClose: updateNotesCallback })
 }
 function announcement() {
   var anoncmntNum = localStorage.getItem('anoncmnt')
 }
-function showAnnouncement () {
+function showAnnouncement() {
   $.featherlight('https://aio.trevelopment.com/aio.php',{closeSpeed:1000,variant:'announcementWindow'})
-}
-function hideAnnouncement (anonNum) {
+      }
+function hideAnnouncement(anonNum) {
   $('.communicationFile').hide()
   $.featherlight.close()
   localStorage.setItem('anoncmnt', anonNum)
 }
-function anonData (anonNum) {
+function anonData(anonNum) {
   localStorage.setItem('anondat', anonNum)
 }
-function updateNotes () {
-  $.get('views/update.htm', function (data) { $('#changelog').html(data) })
+function updateNotes() {
+  $.get('views/update.htm', function(data) { $('#changelog').html(data) })
   bootbox.dialog({
     title: `<div class='w3-center'>Welcome To MZD-AIO-TI v${app.getVersion()} | MZD All In One Tweaks Installer</div>`,
     message: `<div id='changelog'></div><button id='newVerBtn' style='display:none;font-weight:800;' class='w3-btn w3-hover-green w3-hover-text-black w3-display-bottommiddle' onclick='bootbox.hideAll()'>OK</button><br>`,
@@ -159,10 +177,10 @@ function updateNotes () {
 }
 
 function firstTimeVisit() {
-  if (!persistantData.has('updateVer') || persistantData.get('updateVer') < 279) {
+  if (!persistantData.has('updateVer') || persistantData.get('updateVer') < 280) {
     myStance()
     settings.set('reset', true)
-    persistantData.set('updateVer', 279)
+    persistantData.set('updateVer', 280)
     persistantData.set('updated', false)
     persistantData.delete('ver270')
     persistantData.delete('message-502')
@@ -192,17 +210,17 @@ function updateNotesCallback() {
     $('body').prepend('<div id="super-overlay" style="z-index:999999;width:9999px;height:9999px;display:block;position:fixed;background:transparent;"></div>')
     var firstTimeMessage = bootbox.dialog({
       title: `<div class='w3-center'>Welcome To MZD-AIO-TI v${app.getVersion()} | MZD All In One Tweaks Installer</div>`,
-      message: `<div class='w3-center'><h3>Welcome to the AIO!</h3></div><div class='w3-justify'> <b>All changes happen at your own risk! Please understand that you can damage or brick your infotainment system running these tweaks!  If you are careful, follow all instructions carefully, and heed all warnings, the chances of damaging your system are greatly reduced.<br>For more help, open the <a href='' onclick='helpDropdown()'>Help Panel</a> or visit <a href='https://mazdatweaks.com' class="link">MazdaTweaks.com</a><br><br>I appreciate feedback<br>use the <a href='' onclick='$("#feedback").click()'>feedback link</a> below to let me know what you think.<br><br><a href class='w3-btn w3-blue' onclick='$("#tourBtn").click()'>Take The Tour</a><br></center><br><h2><b>***NOTE</b> FOR FIRMWARE V59.00.502+*** CAN ONLY INSTALL TWEAKS AFTER <a href="" onclick="externalLink('im-super-serial')" title="By Serial Connection">GAINING ACCESS VIA SERIAL CONNECTION </a>.  THEN YOU WILL NEED TO INSTALL THE AUTORUN & RECOVERY SCRIPTS AFTER GAINING SERIAL ACCESS.</h2><br></b></div><div id="first-time-msg-btn" class="w3-center"><img class='loader' src='./files/img/load-0.gif' alt='...' /></div>`,
+      message: `<div class='w3-center'><h3>Welcome to the AIO!</h3></div><div class='w3-justify'> <b>All changes happen at your own risk! Please understand that you can damage or brick your infotainment system running these tweaks!  If you are careful, follow all instructions carefully, and heed all warnings, the chances of damaging your system are greatly reduced.<br>For more help, open the <a href='' onclick='helpDropdown()'>Help Panel</a> or visit <a href='https://mazdatweaks.com' class="link">MazdaTweaks.com</a><br><br>I appreciate feedback<br>use the <a href='' onclick='$("#feedback").click()'>feedback link</a> below to let me know what you think.<br><br><a href class='w3-btn w3-blue' onclick='$("#tourBtn").click()'>Take The Tour</a><br></center><br><h2><b>***NOTE: FOR FIRMWARE V59.00.502+*** CAN ONLY INSTALL TWEAKS AFTER <a href="" onclick="externalLink('im-super-serial')" title="By Serial Connection">GAINING ACCESS VIA SERIAL CONNECTION </a><b>.  THEN YOU WILL NEED TO INSTALL THE AUTORUN & RECOVERY SCRIPTS AFTER GAINING SERIAL ACCESS.</h2><br></b></div><div id="first-time-msg-btn" class="w3-center"><img class='loader' src='./files/img/load-0.gif' alt='...' /></div>`,
       closeButton: false,
       className: "first-time-dialog"
     })
-    setTimeout(function () { $('#super-overlay').remove() }, 3000)
-    setTimeout(function () {
+    setTimeout(function() { $('#super-overlay').remove() }, 3000)
+    setTimeout(function() {
       $('#first-time-msg-btn').html(`<button id='newVerBtn' style='display:none' class='w3-btn w3-hover-text-light-blue w3-display-bottommiddle' onclick='bootbox.hideAll()'>OK</button><br>`)
       $('#newVerBtn').fadeIn(10000)
-    }, 20000)
+    }, 5000)
   }
-  dataCheck()
+
 }
 var helpClick = false
 
@@ -248,7 +266,7 @@ function dropDownMenu(id) {
     x.className = x.className.replace(' w3-show', '')
   }
   y.on({
-    mouseleave: function () {
+    mouseleave: function() {
       y.toggleClass('w3-show')
     }
   })
@@ -349,12 +367,17 @@ function secretMenu() {
   <div class="w3-container">
   <button class="w3-btn w3-red w3-hover-yellow w3-ripple w3-border" onclick="persistantData.delete('lang')">Reset Language Variable</button>
   <button class="w3-btn w3-green w3-hover-indigo w3-ripple w3-border" onclick="$('#instAll').click()">Install All</button>
-  <button class="w3-btn w3-deep-orange w3-hover-redw3-ripple w3-border" onclick="$('#uninstAll').click()">Uninstall All</button>
+  <button class="w3-btn w3-deep-orange w3-hover-red w3-ripple w3-border" onclick="$('#uninstAll').click()">Uninstall All</button>
+  <button class="w3-btn w3-blue w3-hover-yellow w3-ripple w3-border" onclick="openDlFolder()">Downloaded Files</button>
   </div>
   <footer class="w3-container w3-teal">
   <p>Modal Footer</p>
   </div>`).insertAfter($('#snackbar'))
   $('#secretMenu').fadeOut(10000)
+}
+
+function toggleOverDraws() {
+  $('.spdConfigInst').click(function() { $('#autorunCheck').toggle() })
 }
 
 function writeRotatorVars() {
@@ -371,7 +394,7 @@ function saveAIOLogHTML() {
 }
 
 function checkForUpdate(ver) {
-  $.featherlight(`https://aio.trevelopment.com/update.php?ver=279`, { closeSpeed: 100, variant: 'checkForUpdate' })
+  $.featherlight(`https://aio.trevelopment.com/update.php?ver=280`, { closeSpeed: 100, variant: 'checkForUpdate' })
 }
 
 function formatDateCustom(dateFormatType) {
@@ -413,7 +436,7 @@ function showCompatibility() {
   </header>
   <div class="w3-container">
   <div class="w3-panel w3-center">
-  <H2> **AIO IS COMPATIBLE WITH ALL FW V55, V56, V58, AND V59 UP TO V59.00.554** </H2>
+  <H2> **AIO IS COMPATIBLE WITH ALL FW V55, V56, V58, V59 AND UP TO V70.00.000** </H2>
   <h3 style="text-transform: capitalize;">NOTE: FW v59.00.502+ <a href="" onclick="externalLink('im-super-serial')">Requires Additional Steps To Install Tweaks.</a>  If updating to v59.00.502+ install Autorun & Recovery Scripts to allow Tweaks to be installed after updating.</h3>
   </div>`).insertAfter($('#mzd-title'))
 }
@@ -421,7 +444,7 @@ $(function() {
   $('.toggleExtra.1').addClass('icon-plus-square').removeClass('icon-minus-square')
   setTimeout(function() {
     $('#IN21').click(function() {
-      snackbar('THERE MAY BE ISSUES REGARDING COMPATIBILITY WITH THIS TWEAK. AFTER INSTALLING, YOUR USB PORTS MAY BECOME UNREADABLE TO THE CMU. <h3>AUTORUN-RECOVERY SCRIPT WILL BE INSTALLED IN CASE RECOVERY BY SD CARD SLOT IS NEEDED TO RECOVER USB FUNCTION</h3>')
+      snackbar('THERE MAY BE ISSUES REGARDING COMPATIBILITY WITH THIS TWEAK. AFTER INSTALLING, YOUR USB PORTS MAY BECOME UNREADABLE TO THE CMU. <h5>AUTORUN-RECOVERY SCRIPT WILL BE INSTALLED IN CASE RECOVERY BY SD CARD SLOT IS NEEDED TO RECOVER USB FUNCTION</h5>')
     })
     $('#advancedOptions').click(function() {
       $('.advancedOp, #twkOpsTitle').toggle()
@@ -429,6 +452,7 @@ $(function() {
       if ($('#IN21').prop('checked')) { $('#IN21').click() }
     })
   }, 1000)
+  $('body').css('overflow', 'auto')
 })
 
 function toggleTips() {

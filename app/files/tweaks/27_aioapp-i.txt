@@ -22,11 +22,16 @@ rm -f /jci/opera/opera_dir/userjs/aio-startup.js
 # Copies the additionalApps.js
 if [ $CASDK_MODE -eq 0 ]
 then
-  cp -a ${MYDIR}/config/jci/opera/opera_dir/userjs/*.js /jci/opera/opera_dir/userjs/ && CASDK_MODE=1
+  cp -a ${MYDIR}/config/jci/opera/opera_dir/userjs/additionalApps.js /jci/opera/opera_dir/userjs/ && CASDK_MODE=1
   chmod 755 /jci/opera/opera_dir/userjs/additionalApps.js
   chown 1018:3015 /jci/opera/opera_dir/userjs/additionalApps.js
   log_message "===                    Copied  additionalApps.js                      ==="
 fi
+
+cp -a ${MYDIR}/config/jci/opera/opera_dir/userjs/aio.js /jci/opera/opera_dir/userjs/
+chmod 755 /jci/opera/opera_dir/userjs/aio.js
+chown 1018:3015 /jci/opera/opera_dir/userjs/aio.js
+log_message "===                        Copied  aio.js                             ==="
 
 # create additionalApps.json file from scratch if the file does not exist
 if [ ! -e /jci/opera/opera_dir/userjs/additionalApps.json ]
@@ -78,7 +83,7 @@ chmod 755 -R /tmp/mnt/data_persist/dev/system_restore/
 chmod 755 /jci/scripts/jci-fw.sh
 chmod 755 /jci/scripts/jci-wifiap.sh
 log_message "===                  Copied Files For AIO Tweak App                   ==="
-sed -i "s/var aioTweaksVer = 0;/var aioTweaksVer = ${AIO_TWKS_VER};/g" /jci/gui/apps/_aiotweaks/js/mzd.js
+sed -i "s/var aioTweaksVer = .*;/var aioTweaksVer = ${AIO_TWKS_VER};/g" /jci/gui/apps/_aiotweaks/js/mzd.js
 
 log_message "======********** END INSTALLATION OF AIO TWEAKS APP **************======="
 log_message " "

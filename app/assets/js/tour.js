@@ -13,7 +13,7 @@ function startTour(tourMsgs) {
       {
         element: '#sidePanel',
         intro: tourMsgs[2].msg,
-        position: 'left'
+        position: 'auto'
       },
       {
         element: '#mainOptions',
@@ -60,4 +60,15 @@ function AndroidAutoChoice() {
       position: 'auto'
     }]
   });
+}
+function casdkIntro() {
+  var casdkMsg = introJs().setOptions({ 'doneLabel': 'Got It!', 'tooltipClass': 'w3-pale-blue w3-center', 'showStepNumbers': false, 'scrollToItem': true, 'exitOnOverlayClick': true, 'hideNext': true, 'hidePrev': true })
+  casdkMsg.setOptions({
+    steps: [{
+      element: $('#compileAutorun + .dropdown-toggle').get(0),
+      intro: "Click here to try CASDK!!",
+      position: 'bottom'
+    }]
+  });
+  casdkMsg.start()
 }

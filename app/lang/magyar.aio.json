@@ -1,76 +1,59 @@
 {
   "languages": {
     "en": {
-      "id": 1,
       "lang": "Angol"
     },
     "de": {
-      "id": 2,
       "lang": "Német"
     },
     "fr": {
-      "id": 3,
       "lang": "Francia"
     },
     "sp": {
-      "id": 4,
       "lang": "Spanyol"
     },
     "pl": {
-      "id": 5,
       "lang": "Lengyel"
     },
     "trk": {
-      "id": 7,
       "lang": "Török"
     },
     "slv": {
-      "id": 8,
       "lang": "Szlovák"
     },
     "hu": {
-      "id": 8,
       "lang": "Magyar"
     }
   },
   "helpMsgs": [{
-    "id": 0,
     "title": "Bemutatás",
     "msg": "<b>Telepítő és törlő program, több mint 40 \"Tweak\"-hez a Mazda Infotainment rendszeréhez a következő járművekben:</b>&nbsp;Mazda 2 (DJ), Mazda 3 (BM), Mazda 6 (GJ), Mazda CX-3 (DK), Mazda CX-5 (KE), Mazda MX-5 Roadster (ND) and new 2017 Mazda CX-9 (TC)<br>Fiat Spider, Toyota ScionA<h5><b>Mi is az a MZD-AIO-TI?</b></h5> My Egy jó barátom Siutsch összegyűjtötte az általa használt tweak-ek fájljait, abból a célból, hogy egyesítve egy felületen ki lehessen választani, hogy melyekre van szüksége valakinek és azokat egyszerűen telepíteni és újra törölni tudja. Ebből született egy CMD (command line) alapú program, mely gyorsan elérte a határait és hiányzott a manapság megszokott \"app\"-hatás. Ekkor vettem fel Siutsch-csal a kapcsolatot és felajánlottam neki, hogy együtt csináljunk egy programot számítógépre, amit mindenki egyszerűen tud kezelni és nem igényel különösebb technikai tudást. Ebből lett az itt látható MZD-AIO-TI. \n\n ###### **Ezért kérlek nagyon ügyelj arra, hogy mit is csinálsz.**  \n\nEz az applikáció automatikusan frissül, ha új verzió lesz elérhető. \n\nThis program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.\n\nThis program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the <a href='' onclick='externalLink(`copyleft`)'>Copyleft</a> Under The <a href='http://aio.trevelopment.win/gpl3' data-featherlight='ajax' data-featherlight-loading='<img src=\"files/img/gplv3.png\" alt=\"GPLv3\"><br><b>GNU GPLv3<br>LOADING....</b>'>GNU General Public License</a> for more details.",
     "t2": "",
     "msg2": "<p><br></p>"
   }, {
-    "id": 1,
     "title": "Tweakelés",
-    "msg": "<h3>Minden változtatás csak a saját felelősségre! </h3>\n <b>Vedd figyelembe, hogy ezekkel a saját fejegységedbe nyúlsz bele, amely így nem megfelelő használat mellett tönkre is mehet! </b>AnyoneMindenki, aki nem biztos abban, hogy mit is csinál, inkább ne végezze el a változtatásokat egyedül, hanem kérjen a <a href=\"\" onclick=\"externalLink('mazda3revolution')\">fórum</a>-on segítséget.<h5>Én nem felelek semmilyen kárért, ami a használatból következik.</h5>HavingMindazonáltal a MZD-AIO-TI úgy lett fejlesztve, hogy gondoltam a biztonságra is, ezért három kategóriába sorolom a tweak-eket: \n\n - <span class=\"hlpsfty twk-safe\">Biztonságos</span> - sokat tesztelt és általánosan is biztonságosnak tekintett - <span class=\"hlpsfty twk-warn\">Figyelem</span> - Érzékeny rendszerfájlokat módosít, vagy még nem lett tesztelve. Általában nagy biztonsággal, használható kellő figyelem mellett! Ezek közül a legtöbb rövid időn belül átkerülhet a \"biztonságos\" kategóriába.\n - <span class=\"hlpsfty twk-development\">Fejlesztés alatt</span> - Ezek a tweak-ek fejlesztés alatt álnak, vagy még nem működnek. Csak az Android Auto van jelenleg ezen a szinten, de úgy tűnik, hogy&nbsp;<a href=\"\" onclick=\"externalLink('AAIssueFix')\">nemrégiben sikerült megoldaniuk a problémákat.</a>",
-    "t2": "Kompatibilis firmware verziók:",
-    "msg2": "###### 55.00.650A/753A/760A / 56.00.521A-NA(NA N) \n\n###### 56.00.100A/230A/240B/511A/512A/513C/514A-ADR(4A N) \n\n###### 56.00.100A/230A/511A/512A/513A/513B/513C-EU \n\n###### 56.00.401A/403A-JP | 56.00.100A-CHN \n\n###### 58.00.250A-NA(NA N) / 58.00.251A-ADR(4A N) \n\n59.00.326A/330A/342A/442A/443C-ADR(4A N) \n\n###### 59.00.330A/441A/443A/446A/450A-NA(N NA) \n\n###### 59.00.330A/331A/443C/447A/449A-EU \n\n###### Csak &gt;= v55. firmware verziókhoz! NE HASZNÁLD V30/31/33 FW-hez VAGY TÖNKRE TESZED A FEJEGYSÉGED, mely így folyamatosan a Mazda logónál fog maradni! A biztonság kedvéért a program leállítja a telepítést, ha egy nem kompatibilis verziót észlel! Ahhoz, hogy ezt felülírd, át kell írnod a tweaks.sh-ban a kódrészt, amely a verzióbiztonságért felel, vagy hozzá kell addnod a saját verziódat a támogatottak listájához.  **CSAK SAJÁT FELELŐSSÉGRE!**"
+    "t2": "Kompatibilis firmware verziók:"
   }, {
-    "id": 2,
     "title": "Visszaállítás",
     "msg": "**Szinte minden tweak-et** le lehet törölni, hogy visszaálljon a rendszer az alaphelyzetbe. <div class=\"w3-padding w3-right w3-third\">Alapértelmezett háttér: <br><br><img style=\"cursor:pointer\" data-featherlight=\"../background-images/default/default.png\" src=\"../background-images/default/default.png\"></div>\n\n - AZ AIO minden módosított fájlról egy biztonsági mentés készít, a változtatás előtt. Ezeket a fájlokat használja az eredeti állípot visszaállításához. Ezenfelül az AIO szintén tartalmazza az eredeti fájlok másolatát, arra az esetre, ha mégse állnának biztonsági mentések rendelkezésere. Jövőbeni verziókban lesz egy olyan funkció, amely lehetővé teszi, hogy a saját rendszer fájlai legyenek az AIO-ba elmentve, így leegyszerűsítve a jövőbeni verziók támogatását. - Általánosságban kimondható, hogy minden kompatibilis FW verzióval nyugodtan visszaállíthatóak olyan tweak-ek is, melyek nem lettek telepítve, DE tartsd észben, hogy ebben az esetben az AIO átírja az eredeti fájlokat a központi biztonsági mentésben található fájlokkal. Tehát lehetőség szerint, ne törölj olyan tweak-eket, amelyek nem lettek telepítve, hogy ne legyen felesleges változtatás a rendszereden.",
     "t2": "Mely beállításokat nem lehet visszaállítani az AIO-val?",
     "msg2": "<h4><b>MZD-AIO-TI néhány olyan fájlt is módosít, amelyet nem lehet az applikáció segítségével visszaállítani.</b></h4>Ez a három fájl soha ne legyen visszaállítva, mert bármely hiba a visszaállítás során ahhoz vezethet, hogy az MZD örökre fennakadjon. Ezek a fájlok csak azért kerülnek változtatásra, hogy ne tudjon a rendszer egy váratlan újraindítást produkálni telepítés közben. **Csak az első indításkor** amikor a telepítő lefut a rendszeren, biztonsági mentést készít ezekről a fájlokról. **NE VÁLTOZTASD MAGAD EZEKET A FÁJLOKAT, KÜLÖNBEN TÖNKRETEHETED A RENDSZEREDET!**\n\n- /jci/sm/sm.conf (Android Auto is módosítja)\n- /jci/opera/opera_home/opera.ini \n- /jci/opera/opera_dir/userjs/fps.js\n\n##### These Ennek a 2 tweak-nek nincs visszaállítási lehetősége, mert ezeknek már alapból működnie kéne.\n\n- Wifi (É-Ameriaki régió)\n- ssh_bringback"
   }, {
-    "id": 3,
     "title": "Hibaelhárítás",
     "msg": "Itt van néhány gyakori probléma és a megoldásuk. \n#### Ha folyamatosan hibákba futsz vagy elakadsz::\n - Általában hozzáférési jogosultságokkal van probléma: a kívánt erőforrás foglalt, vagy le van terhelve. Ez akkor lép fel, ha egy fájlt vagy mappát nem lehet elérni, mert már meg van nyitva, vagy éppen egy másik program használja. Kompilálás alatt zárj be minden mappát és dokumentumot, főleg azokat amelyeket a &nbsp;MZD-AIO-TI is használ(*pl: '_copy_to_usb'*)\n - ISokszor próbáltam egyszerre az össze tweak kompilálását, ha te esetleg mégis valami hibába futsz folyamatosan, kérlek jelezd. - Ha a telepítő nem indul amikor bedugod az autóban, akkor formázd újra FAT32 formátumra a pendrice-odat és csatlakoztass le minden más USB eszközt. Az is segíthet, ha kikapcsolod a bluetooth-t. A Navigáció SD kártyája maradjon bent.",
     "t2": "Probléma a videó lejátszóval",
     "msg2": " Próbáld:\n\n- Helyezd a filmjeidet egy 'Movies' nevű mappába! \n\n- Használj H264 videó codec-et és MPEG-4 AAC audió codec-et videókhoz - Csatlakoztass le minden USB eszközt, különösen azokat, amelyek sok MP3-at tartalmaznak - Csak egy MP3-at másolj a videók mellé a pendrivera - Csak kevés videót másolj a pendrive-odra (nem kell törölnöd fájlokat, elég ha megváltoztatod a kiterjesztését *._mp4-re, mert így már nem lesznek felismerve) \n\n- Indítsd újra a gépedet és próbálj meg lejátszani egy videót -&nbsp;Zárd be a lejátszót és indítsd újra&nbsp;- Ha ez nem segít, akkor változtasd meg a hangbemenetet - Néha az első videó akadozik, vagy nem indul el, kattints a \"következő\" gombra, amely így a következő videót fogja elindítani - Támogatott videóformátumok: MP4, AVI, FLV, WMV"
   }, {
-    "id": 4,
     "title": "Hozzájárulás",
     "msg": "A kezelői felület az én munkám, de a projekt legfontosabb részei a tweak-ek maguk. Közösségek, mint pl. a&nbsp;<a href=\"\" onclick=\"externalLink('mazda3revolution')\">Mazda3Revolution Forum</a>&nbsp;és sok fejlesztő tette le az alapokat, melyekre ez a program épül és a jövőbeni fejlesztésre is nagy befolyással lesznek. Ha szeretnéd, hogy a te általad fejlesztett tweak is bekerüljön, akkor teszteld először a lehető legalaposabban.&nbsp;<br><br>Ha JavaScript vagy AngularJS varázsló vagy, akkor nyugodtan takarítsd fel a kódot (kicsit káosz van benne ... bocsi) vagy implementáld a felületet \"angulárisan\"<br><br>Ez a projekt&nbsp;<a href=\"\" onclick=\"externalLink(`copyleft`)\">Copyleft</a>&nbsp;és&nbsp;<a href=\"http://aio.trevelopment.win/gpl3\" data-featherlight=\"ajax\" data-featherlight-loading=\"<img src=&quot;files/gplv3.png&quot; alt=&quot;GPLv3&quot;><br><b>GNU GPLv3<br>LOADING....</b>\"><span class=\"icon-network\"></span>GPLv3.0 License</a>&nbsp;alatt áll!<br><br><a href=\"\" onclick=\"externalLink(`github`)\"><span class=\"icon-github2\"></span> Github Repo</a>",
     "t2": "Problémák",
     "msg2": "- Az&nbsp;59.xx.xxx&nbsp;FW verziók app-jei nem láthatók a menüben (Speedometer és Video Player) és a \"dátum a fejlécben\" mod is problémás (az érintett FW verziókon nem lehet telepíteni) - Hogyha nincs elég hely a pendrive-on, akkor legfagy a program a fájlok másolása közben. Ez általában akkor történik, amikor a swap fájlt másoljuk egy olyan pendrive-ra, amely már majdnem tele van. Egy jövőbeni verzió megoldja majd a problémát és egy felugró hibaablak fogja jelezni ezt. - Ha telepítetted a \"háttérkép nélküli gombok\" mod-ot és telepíted a színsémákat, akkor visszaáll a gombok háttere. Ezt megelőzheted, ha mindkét tweak-et egyszere telepíted. - A Google Fordító megpróbálja a kódot néhány helyen lefordítani, ez nem várt dolgokat produkálhat. Használd ezt a fordítóban egy új nyelvre való fordításra, hogy az bekerüljön a jövőbeni verziókba és mások is tudják használni fordításkor."
   }, {
-    "id": 5,
     "title": "Tippek & trükkök",
     "msg": "I Itt találhatsz néhány trükköt ennek a programnak a használatáról. <br><a href=\"\" onclick=\"externalLink('emulate')\">Itt van egy leírás, hogy hogyan indítsd el a CMU rendszert a gépeden.</a><br><br><a href='' onclick=externalLink('cmu-autorun')>CMU-Autorun script for testing and recovery.</a><h4><em>How to run Android Auto from an SD card</em></h4><p>First of all uninstall Android Auto from your system.  Click the CMU-Autorun link above and download the repository (download button is on the top right next to \"<span class='icon-search4'></span>Find File\").  Copy the \"installer\" Folder to a blank USB drive to install the autorun script, this script will run every time the system boots up.   The script looks at the root of the SD card (if available) for a file called \"run.sh\" and if found, executes the file. After installing, copy the \"dryrun\" folder onto an SD card to test that the installation worked correctly. </p><p>AA - Copy the contents of the \"headunit\" folder to the root of a blank SD card, connect before booting up infotanment system, a message will show the first time to confirm it is running.  \nPlug in an Android Auto compatible phone to start.</p><p><b>Caveats:</b> The device with the headunit files must be connected before booting up the infotainment system to run. Once the headunit app is running it is loaded into memory and will silently run in the background, this means that even if you remove the SD card the headunit app will still be running in memory.  To stop the process you can do one of these things: <ol><li>Turn off the vehicle for about 5-10 minutes</li><li>Hard reset (hold: mute + nav + back)</li><li>Login SSH, enter command 'killall headunit'</li></ol></p><hr><p><h3>Want to run tweaks from an SD card?</h3>With autorun script installed copy tweak files to an SD card.  Rename \"tweaks.sh\" to \"run.sh\".  Boot up the system and tweaks will run as expected.  NOTE: I/O to SD card is slower than USB so installation will take longer.</p>",
     "t2": "Technikai rész",
     "msg2": "Ez az app <a href=\"\" onclick=\"externalLink(`Electron`)\" title=\"Electron\">Electron</a>-nal and <a href=\"\" onclick=\"externalLink(`AngularJS`)\" title=\"AngularJS\">AngularJS</a>-szel készült"
   }, {
-    "id": 6,
     "title": "Segítség & Beállítások",
     "msg": "<h2>Súgó:</h2> \n<div class=\"w3-display-topright w3-margin-top\"><a href=\"\" id=\"aio-settings-btn\" class=\"w3-btn\" onclick=\"$(`#helpMenuTop`).toggleClass(`w3-hide`)\" data-toggle=\"tooltip\" data-placement=\"auto\" title=\"MZD-AIO-TI Settings\"><span class=\"icon-tools2\"></span></a></div><div class=\"w3-panel\"><div class=\"w3-twothird\">Hogyan kell a programot használni:</div><div class=\"w3-third w3-medium\"><a class=\"w3-btn\" ng-click=\"startTour()\" id=\"tourBtn\"><span class=\"icon-car2\"></span> Körbevezetés</a></div></div><div class=\"w3-panel\"><div class=\"w3-twothird\"><p>Ha hibába futsz,&nbsp;<br>vagy elakadsz akkor:</p><p>Vagy:</p></div><div class=\"w3-third w3-medium\"><a class=\"w3-btn\" onclick=\"location.reload()\">App</a><a class=\"w3-btn\" onclick=\"app.relaunch();app.exit()\"><span class=\"icon-rocket3\"></span>&nbsp;újratöltése App újraindítása</a></div></div><div class=\"w3-panel\"><div class=\"w3-twothird\"><p>Szereted ezt az app-ot? Adakozással, mutatsd ki, hogy mennyire!:</p></div><div class=\"w3-third w3-medium\"><a class=\"w3-btn\" onclick=\"donate()\"><span class=\"icon-money\"></span> Adakozás</a></div></div><hr>",
     "t2": "",
@@ -101,173 +84,120 @@
     "a10": "Javítottam több létező tweak-en és a tweak.sh-n is, de van rendes munkám és a kezelői felület fejlesztése is sok időt vesz igénybe. DE vannak saját ötleteim is a jövőre és természetesen javaslatokat is szívesen fogadok, de nem ígérhetem a mihamarabbi teljesítést. Az App jobb alján megtalálhatod az elérhetőségeimet, azon keresztül tudsz üzenni nekem."
   },
   "tourMsgs": [{
-    "id": 0,
     "msg": "<h1>Üdvözlet a MZD-AIO-TI-ben!</h1><br><h3>Mazda All In One Tweaks telepítő</h3>Egy telepítő és törlő program több mint 40 \"tweak\"-hez a Mazda MZD Infotainment rendszeréhez."
   }, {
-    "id": 1,
     "msg": "Ezek a főbb tweak-ek. Itt kiválaszthatod telepítésüket vagy törlésüket."
   }, {
-    "id": 2,
     "msg": "Itt találod a kiválasztott tweak-eket és egyéb beállításokat is itt tudsz elvégezni, valamint további információkat találszhatsz a súgóban az egyen pontokhoz, ha rájuk kattintasz."
   }, {
-    "id": 3,
     "msg": "További beállítások, mint pl. JCI mappa biztonsági mentése vagy a Wifi bekapcsolása az Északamerikai verziókhoz."
   }, {
-    "id": 4,
     "msg": "Ezeket a beállításokat lehet visszaállítani a gyári beállításokra, ha kiválasztod az alapértelmezett értékeket."
   }, {
-    "id": 5,
     "msg": "A menük további súgó témákhoz ill. hasznos információkhoz és leírásokhoz tartalmaznak linkeket."
   }, {
-    "id": 6,
     "msg": "Ha kiválasztottad minden szükséges tweak-et, kattints ide a kompilálás elindításához!"
   }, {
-    "id": 7,
     "msg": "Másold a \"_copy_to_usb\" mappa teljes tartalmát egy üres, FAT32 formátumú pendrive-ra. Csatlakoztasd a pendrive-ot az autó USB portjához és a telepítő pár percen belül megkezdi a telepítést.  Távolíts el minden egyéb dolgot az USB csatlakozókról, de a NAVIGÁCIÓ SD kártyája maradjon bedugva.  Bluetooth és wifi kapcsolatok kikapcsolása is segít. A telepítés végeztél a rendszer automatikusan újraindul, ezután eltávolíthatod a pendrive-ot és élvezheted az új tweak-jeidet."
   }, {
-    "id": 8,
     "msg": "További információk a <a href=\"\" onclick=\"externalLink(&quot;mazdatweaks&quot;)\" title=\"Mazda Tweaks\">MazdaTweaks.com!</a>-on"
   }],
   "popupMsgs": [{
-    "id": 0,
     "msg": "Kompilálás... Várj..."
   }, {
-    "id": 1,
     "msg": "Tweak fájlok helye"
   }, {
-    "id": 2,
     "msg": "<small>(A jobb eredmény érdekében, formázott pendrive-ot használj)</small>"
   }, {
-    "id": 3,
     "msg": "Másolás a pendrive-ra"
   }, {
-    "id": 4,
     "msg": "Még nem"
   }, {
-    "id": 5,
     "msg": "Pendrive megnyitása"
   }, {
-    "id": 6,
     "msg": "Talált pendrive-ok"
   }, {
-    "id": 7,
     "msg": "Szeretnéd a fájlokat a pendrive-ra másolni?"
   }, {
-    "id": 8,
     "msg": "Válassz egy pendrive-ot, amelyre a fájlok át lesznek másolva"
   }, {
-    "id": 9,
     "msg": "Nem található pendrive. Másold a teljes tartalmat"
   }, {
-    "id": 10,
     "msg": "egy üres, FAT32 formátumú pendrive-ra"
   }, {
-    "id": 11,
     "msg": "Másolás a pendrive-ra"
   }, {
-    "id": 12,
     "msg": "Kérlek várj..."
   }, {
-    "id": 13,
     "msg": "Swapfájl kicsomagolása ide:"
   }, {
-    "id": 14,
     "msg": "Ez eltart pár percig... légy türelemmel."
   }, {
-    "id": 15,
     "msg": "Swapfile mérete: 1 GB."
   }, {
-    "id": 16,
     "msg": "Amíg vársz, itt van pár információ"
   }, {
-    "id": 17,
     "msg": "Újrakezdés"
   }, {
-    "id": 18,
     "msg": "AIO Compile Log mutatása"
   }, {
-    "id": 19,
     "msg": "Kilépés"
   }, {
-    "id": 20,
     "msg": "Siker!"
   }, {
-    "id": 21,
     "msg": "_copy_to_usb mappa törlése másolás után"
   }],
   "mainOps": {
     "wifi": {
-      "id": 0,
       "label": "Wifi bekapcsolása (É-Amerika)",
-      "safetylvl": "safe",
       "toolTip": "<h5>WIFI </h5>Aktiválja a WIFI hozzáférést az Észak-Amerikai régiós firmware-ekben"
     },
     "backup": {
-      "id": 1,
       "label": "JCI mappa mentése",
-      "safetylvl": "safe",
       "toolTip": "<h5>JCI mappa mentése </h5>JCI mappáról biztonsági mentés készítése, a tweak-ek telepítése előtt."
     },
     "background": {
-      "id": 2,
       "label": "Háttérkép",
-      "safetylvl": "safe",
       "toolTip": "<h5>Háttér </h5>Változtasd meg az infotainment rendszer hátterét egy általad választottra. Támogatott kééprípusok: jpg, jpeg, and png (bármilyen méret). Figyelem: Ha egy kép lett kiválasztva, akkor át lesz méretezve 800px x 480px <b>DE NEM LESZ LEVÁGVA</b> és .png formátumba lesz konvertálba. Hogy visszállítsd az eredeti hátteret, válaszd az \"alapértelmezett háttér\" opciót."
     },
     "colors": {
-      "id": 3,
       "label": "Saját színek a hangrendszerhez (infotainment)",
-      "safetylvl": "safe",
       "toolTip": "<h5>Saját színséma </h5>Változtasd meg az infotainment rendszer színsémáját pirosról (alapértelmezett) a további színek egyikére:  <ul><li>kék</li> <li>zöld</li> <li>narancssárga</li> <li>pink</li> <li>lila</li> <li>ezüst</li> <li>sárga</li> <li>carOS</li></ul>",
       "toolTip2": "<h5><b>The Custom Theme Option:</b> </h5>Use any theme designed for the MZD Infotainment System or easily apply your own Custom Made Theme. <br><li>To use any theme: download and unzip the theme</li> <li>Import the <code>config/jci/</code> folder from the theme into AIO.</li><br>NOTE: Using This Method Will Copy Only .png Files For Themes<h5><b>Using Your Own Custom Made Theme:</b> </h5> <li><b>If no theme is chosen:</b> a folder will be generated here: <code>_copy_to_usb/config/color-schemes/theme/jci/</code></li> <li>After compiling tweaks, copy your files into the generated jci folder <b>in the same directory location of the images you want to replace.<div class='warning'>WARNING: WHEN USING THIS METHOD EVERYTHING IN THE JCI FOLDER WILL BE COPIED ONTO YOUR SYSTEM IN THE SAME LOCATION.  USE RESPONSIBLY.</div>",
       "img": "carOS.png"
     },
     "sshbringback": {
-      "id": 4,
       "label": "SSH_bringback telepítése (56.00.51x-as verzióhoz)",
-      "safetylvl": "safe",
       "toolTip": "<h5>SSH_bringback </h5>**NEM LEHET TÖRÖLNO!** Az 56.00.511 FW verzióval a Mazda eltörölte az SSH hozzáférést.  Az SSH_bringback telepítésével, ez újra elérhető lesz.  Ez a twek csak akkor kerül telepítésre, ha az 56.00.511 FW verzió van telepítve, 56.00.230-asnál nem történik semmi."
     },
     "sdcid": {
-      "id": 5,
       "label": "SD CID",
-      "safetylvl": "safe",
       "toolTip": "<h5>SD CID </h5>Kiolvassa a CID-t a navigációs SD kártyáról, ha elérhető."
     },
     "backgroundrotator": {
-      "id": 6,
       "label": "Háttérképek váltogatása",
       "btntxt": "Képek összeillesztése",
       "button": "Kattints ide, hogy összeilleszted a váltogtatnivaló képeket",
-      "safetylvl": "safe",
       "toolTip": "<h5>Háttérképek váltogatása  </h5>10 perces ciklusokban, változtatja percenként a háttérképet. Figyelem: Telepítés után bármikor kicserélheted az összeillesztett képeket, anélköl, hogy újra kéne telepíteni ezt a tweak-et.  Töröld a tweak-et, hogy újra egy háttérképed legyen."
     },
     "retain": {
-      "id": 7,
       "label": "Copy Backups",
       "testlabel": "Test Backups",
       "skipconfirm": "Skip Confirmation",
-      "safetylvl": "safe",
       "toolTip": "<h5>Retrieve CMU Data</h5><p>Dump diagnostic files from the CMU to the USB Drive.  Cleans out error files and core dumps from the system.</p><h5>Skip Confirmation</h5><p>Allows for the installation to run without prompting for confirmation to begin the install. Mainly this is used for recovering when the touchscreen is not responding.  </p><h5>Copy Backups:</h5> <p> Copy original backups of modified system files, for safe keeping. </p><h5>Test Backups:</h5> <p>Some tweaks have before and after copys of the files modified during the instalation.  If you like that kind of thing they will copied to your-usb/bakups/test/.</p>"
     },
     "mainmenu": {
-      "id": 8,
       "label": "Main Menu Tweaks",
-      "safetylvl": "safe",
       "toolTip": "<h5>Main Menu Tweaks </h5>   <br><ul><li><h5>Alternative Main Menu Layouts</h5><ul><li><h4>'Star Points' Layout</h4></li>  <li><h4>'Inverted' Layout</h4></li></ul></li>  <li><h5>3D Main Menu Label</h5></li>  <li><h5>Hide Main Menu Ellipse</h5></li> <li><h5>Smaller Main Menu 'Coins'</h5></li></ul>",
       "img": "Alt-layouts.jpg"
     },
     "uistyle": {
-      "id": 9,
       "label": "Text Colors",
-      "safetylvl": "safe",
       "toolTip": "<h4>User Interface Text Style Tweaks</h4> Customize Your User Interface Style and Text Colors: <br> <ul><li>Song Title</li>  <li>Artist & Album</li>  <li>Radio Station</li>  <li>List Item & Disabled List Item</li>  <li>Text Shadow</li></ul>"
     },
     "offscreenbg": {
-      "id": 10,
       "label": "Off Screen Background",
       "btntxt": "Off Screen Default",
-      "safetylvl": "safe",
       "toolTip": "<h5>Off Screen Background.  </h5>Background Image when \"Turn Display Off and Show Clock\" is chosen in the Settings menu.  Also shown during system shutdown."
     }
   },
@@ -394,43 +324,30 @@
     }
   },
   "imgOps": [{
-    "id": 0,
     "label": "Join multiple images for your infotainment background"
   }, {
-    "id": 1,
-    "label": "Select up to 50, 480px X 800px Images (Each Image will be resized to 480x800). Background Rotator Will Show Each Background For X Seconds (Max 300 Seconds = 5 Minutes per img)."
+    "label": "Select up to 40, 480px X 800px Images (Each Image will be resized to 480x800). Background Rotator Will Show Each Background For X Seconds (Max 300 Seconds = 5 Minutes per img)."
   }, {
-    "id": 2,
     "label": "Húzd a képeket, hogy változtass a sorrenden."
   }, {
-    "id": 3,
     "label": "kiválasztott képek"
   }, {
-    "id": 4,
     "label": "Válassz 10 db képet (Mindegyik magassága: 480px, szélessége: 800px le) vagy "
   }, {
-    "id": 5,
     "label": "Használd a saját már összeillesztett képedet (nincs átméretezés)"
   }, {
-    "id": 6,
     "label": "Ez a kép lesz az infotainment rendszer új háttere."
   }, {
-    "id": 7,
     "label": "Kép mentése másként"
   }, {
-    "id": 8,
     "label": "Újabb készítése"
   }, {
-    "id": 9,
     "label": "Jobb kattintás > \"Kép mentése\" lementi a background.png egy másolatát a \"Letöltések\" mappába."
   }, {
-    "id": 10,
     "label": "perc"
   }, {
-    "id": 11,
     "label": "Képek kiválasztása"
   }, {
-    "id": 12,
     "label": "Képek"
   }],
   "translatorWindow": [{
@@ -468,596 +385,397 @@
   }],
   "colors": {
     "red": {
-      "id": 0,
       "label": "Piros (Alapértelmezett)"
     },
     "blue": {
-      "id": 1,
       "label": "Kék"
     },
     "green": {
-      "id": 2,
       "label": "Zöld"
     },
     "silver": {
-      "id": 3,
       "label": "Ezüst"
     },
     "pink": {
-      "id": 4,
       "label": "Pink"
     },
     "purple": {
-      "id": 5,
       "label": "Lila"
     },
     "orange": {
-      "id": 6,
       "label": "Narancssárga"
     },
     "yellow": {
-      "id": 7,
       "label": "Sárga"
     },
     "smoothred": {
-      "id": 8,
       "label": "Smooth Red"
     },
     "lightskyblue": {
-      "id": 9,
       "label": "Smooth Azure"
     },
     "smoothviolet": {
-      "id": 10,
       "label": "Smooth Violet"
     },
     "caros": {
-      "id": 11,
       "label": "CarOS"
     },
     "stormtroopers": {
-      "id": 12,
       "label": "Storm Troopers"
     },
     "poker": {
-      "id": 13,
       "label": "Poker"
     },
     "mazdalogos": {
-      "id": 14,
       "label": "Mazda Logos"
     },
     "floating": {
-      "id": 15,
       "label": "Floating Logo"
     },
     "xmen": {
-      "id": 16,
       "label": "X-Men"
     },
     "custom": {
-      "id": 17,
       "label": "Custom Theme"
     }
   },
   "statusbar": {
     "main": {
-      "id": 0,
       "label": "Remove Statusbar Background"
     },
     "opacity": {
-      "id": 1,
       "label": "Statusbar Opacity"
     },
     "app": {
-      "id": 2,
       "label": "App Title"
     },
     "clock": {
-      "id": 3,
       "label": "Clock"
     },
     "notif": {
-      "id": 4,
       "label": "Status Notifications"
     },
     "d2sbinst": {
-      "id": 5,
       "label": "Date To Statusbar Mod"
     },
     "d2sbuninst": {
-      "id": 6,
       "label": "Remove Date To Statusbar Mod"
     }
   },
   "uistyle": {
     "body": {
-      "id": 0,
       "label": "Body Text (Audio Artist & Album)"
     },
     "listitem": {
-      "id": 1,
       "label": "List Item"
     },
     "listitemdisabled": {
-      "id": 2,
       "label": "Disabled List Item"
     },
     "title": {
-      "id": 3,
       "label": "Song Title"
     },
     "radio": {
-      "id": 4,
       "label": "Radio Station"
     },
     "ellipse": {
-      "id": 6,
       "label": "Remove Ellipse"
     },
     "shadow": {
-      "id": 8,
       "label": "Text Shadow"
     },
     "minicoins": {
-      "id": 10,
       "label": "Smaller 'Coins'"
     },
     "minifocus": {
-      "id": 11,
       "label": "Small Focused Coin"
     },
     "hideglow": {
-      "id": 12,
       "label": "Remove Glow"
     },
     "fulltitles": {
-      "id": 13,
       "label": "Full Width Titles"
     },
     "noalbm": {
-      "id": 14,
       "label": "Hide Album Art"
     },
     "mainlabel": [{
-      "id": 1,
       "label": "3D Text"
     }, {
-      "id": 2,
       "label": "Hide Text"
     }, {
-      "id": 3,
       "label": "Color Text"
     }],
     "layout": [{
-      "id": 1,
       "label": "'Star Points' Layout"
     }, {
-      "id": 2,
       "label": "'Star Points B' Layout"
     }, {
-      "id": 3,
       "label": "'Inverted' Layout"
     }, {
-      "id": 4,
       "label": "'FlatLine' Layout"
     }],
-    "nobtnbg": { "id": 1, "label": "Behind Buttons" },
-    "nonpbg": { "id": 2, "label": "Now Playing" },
-    "nolistbg": { "id": 3, "label": "List View" },
-    "nocallbg": { "id": 4, "label": "In Call" },
-    "notextbg": { "id": 5, "label": "Text Messages" }
+    "nobtnbg": {
+      "label": "Behind Buttons"
+    },
+    "nonpbg": {
+      "label": "Now Playing"
+    },
+    "nolistbg": {
+      "label": "List View"
+    },
+    "nocallbg": {
+      "label": "In Call"
+    },
+    "notextbg": {
+      "label": "Text Messages"
+    }
   },
   "speedcamOps": [{
-    "id": 0,
     "label": "Európa mobil traffipaxokkal"
   }, {
-    "id": 1,
     "label": "Európa mobil traffipaxok nélkül"
   }, {
-    "id": 2,
     "label": "Németország mobil traffipaxokkal"
   }, {
-    "id": 3,
     "label": "Németország mobil traffipaxok nélkül"
   }, {
-    "id": 4,
     "label": "Törökország"
   }, {
-    "id": 5,
     "label": "Saját speedcam.txt fálj használata"
   }],
   "disclaimOps": [{
-    "id": 0,
     "label": "Teljes eltávolítás"
   }, {
-    "id": 1,
     "label": "Várakozási idő 0.5 mp-re csökkentése"
   }],
   "fuelOps": [{
-    "id": 0,
     "label": "Km/L"
   }, {
-    "id": 1,
     "label": "MPG"
   }],
   "d2sbOps": [{
-    "id": 0,
     "label": "V1.0"
   }, {
-    "id": 1,
     "label": "v3.3 (Date Localized)"
   }, {
-    "id": 2,
     "label": "V3.3 (dd.mm.)"
   }, {
-    "id": 3,
     "label": "V3.3 (mm/dd)"
   }],
   "speedoOps": {
     "lang": {
       "en": {
-        "id": 0,
         "label": "Angol"
       },
       "de": {
-        "id": 1,
         "label": "Német"
       },
       "sp": {
-        "id": 2,
         "label": "Spanyol"
       },
       "pl": {
-        "id": 3,
         "label": "Lengyel"
       },
       "sl": {
-        "id": 4,
         "label": "Szlovák"
       },
       "tk": {
-        "id": 5,
         "label": "Török"
       },
       "fr": {
-        "id": 6,
         "label": "Francia"
       },
       "it": {
-        "id": 7,
         "label": "Italian"
+      },
+      "nl": {
+        "label": "Dutch"
       }
     },
     "xph": {
       "mph": {
-        "id": 10,
         "label": "MPH"
       },
       "kmh": {
-        "id": 11,
         "label": "KM/H"
       }
     },
     "effic": {
       "kml": {
-        "id": 40,
         "label": "km/L"
       },
       "lkm": {
-        "id": 41,
         "label": "L/100km"
       }
     },
     "temperature": {
       "cel": {
-        "id": 42,
         "label": "C"
       },
       "fer": {
-        "id": 43,
         "label": "F"
       }
     },
     "sml": {
       "gps": {
-        "id": 20,
         "label": "GPS értékei"
       },
       "car": {
-        "id": 21,
         "label": "Autó értékei"
       },
       "none": {
-        "id": 22,
         "label": "Ne aktiválja"
       }
     },
     "bg": {
       "ind": {
-        "id": 30,
         "label": "Egyéni háttér"
       },
       "orig": {
-        "id": 31,
         "label": "eredeti háttér"
       }
     },
     "color": ["Red", "Blue", "Green", "Purple", "Yellow", "Orange", "Pink", "Silver"],
     "mod": {
-      "id": 50,
       "label": "Modded"
     },
     "modAlt": {
-      "id": 51,
       "label": "Analog With Compass"
     },
     "opac": {
-      "id": 40,
       "val": "0",
       "label": "Fekete háttér átütése? (Az eredeti háttér eltüntetésére) 0.0 (teljesen átlátszó) - 1.0 (teljesen fekete)"
     }
   },
   "tweakOps": [{
-    "id": 1,
     "OpName": "Érintőképernyő menet közben",
     "INST": "Lehetővé teszi az érintőképernyő használatát menet közben is",
     "DEINST": "Deaktiválja menet közben az érintőképernyőt",
-    "toolTip": "<h5>Érintőképernyő </h5>Lehetővé teszi az érintőképernyő használatát menet közben is.<br>Fix Cluster Compass: Some things will be disabled while driving but the touchscreen itself and the cluster compass will work",
-    "img": "",
-    "safetylvl": "safe",
-    "extraOps": true,
-    "advancedOp": false
+    "toolTip": "<h5>Érintőképernyő </h5>Lehetővé teszi az érintőképernyő használatát menet közben is.<br>Fix Cluster Compass: Some things will be disabled while driving but the touchscreen itself and the cluster compass will work"
   }, {
-    "id": 2,
     "OpName": "Biztonsági figyelmeztetés eltávolítása",
     "INST": "Biztonsági figyelmeztetés teljes eltávolítása",
     "DEINST": "Biztonsági figyelmeztetés visszaállítása 3,5mp-re",
-    "toolTip": "<h5>Biztonsági figyelmeztetés eltávolítása </h5>Csökkenti a biztonsági figyelmeztetés mutatásának idejét 3.5 mp-ről 0.5 mp-re, vagy teljesen el is törli azt.",
-    "img": "",
-    "safetylvl": "safe",
-    "extraOps": true,
-    "advancedOp": false
+    "toolTip": "<h5>Biztonsági figyelmeztetés eltávolítása </h5>Csökkenti a biztonsági figyelmeztetés mutatásának idejét 3.5 mp-ről 0.5 mp-re, vagy teljesen el is törli azt."
   }, {
-    "id": 3,
     "OpName": "Tolatókamera biztonsági figyelmeztetés",
     "INST": "Tolatókamera biztonsági figyelmeztetésének eltávolítása",
     "DEINST": "Tolatókamera biztonsági figyelmeztetésének visszaállítása",
-    "toolTip": "<h5>Tolatókamera biztonsági figyelmeztetés </h5>NA tolatókamera biztonsági figyelmeztetésének kikapcsolása.",
-    "img": "",
-    "safetylvl": "safe",
-    "extraOps": false,
-    "advancedOp": false
+    "toolTip": "<h5>Tolatókamera biztonsági figyelmeztetés </h5>NA tolatókamera biztonsági figyelmeztetésének kikapcsolása."
   }, {
-    "id": 4,
     "OpName": "Félig átlátszó parkolószenzor grafikák",
     "INST": "Félig átlátszó parkolószenzor grafikák telepítése",
     "DEINST": "Félig átlátszó parkolószenzor grafikák visszaállítása",
-    "toolTip": "<h5>Félig átlátszó parkolószenzor grafikák </h5>  Félig átlátszó parkolószenzor grafikák.  A tolatókamera bekapcsolásakor megjelenik egy felülnézeti kép a jobb felső sarokban.#Ezek a grafikák lesznek félig áttetszőek, ha telepíted ezt a tweaket.",
-    "img": "semi-transparent_parking-sensors.jpg",
-    "safetylvl": "safe",
-    "extraOps": false,
-    "advancedOp": false
+    "toolTip": "<h5>Félig átlátszó parkolószenzor grafikák </h5>  Félig átlátszó parkolószenzor grafikák.  A tolatókamera bekapcsolásakor megjelenik egy felülnézeti kép a jobb felső sarokban.#Ezek a grafikák lesznek félig áttetszőek, ha telepíted ezt a tweaket."
   }, {
-    "id": 5,
     "OpName": "Főmenü loopolása",
     "INST": "main_menu_loop telepítése",
     "DEINST": "main_menu_loop visszaállítása",
-    "toolTip": "<h5>Főmenü loopolása </h5>Loop a főmenüben <br>Balról jobbra lehet ugrani ill. vissza.",
-    "img": "",
-    "safetylvl": "safe",
-    "extraOps": false,
-    "advancedOp": false
+    "toolTip": "<h5>Főmenü loopolása </h5>Loop a főmenüben <br>Balról jobbra lehet ugrani ill. vissza."
   }, {
-    "id": 6,
     "OpName": "Javított lista loopolás",
     "INST": "improved_list_loop telepítése",
     "DEINST": "improved_list_loop visszaállítása",
-    "toolTip": "<h5>Javított lista loopolás </h5>Loop minden listához és almenühöz (zene, kapcsolatok, stb.).<br>A legfelső pozícióból a legalsóba lehet ugrani, ill. fordítva. Now with remmove list loop option.",
-    "img": "",
-    "safetylvl": "safe",
-    "extraOps": true,
-    "advancedOp": false
+    "toolTip": "<h5>Javított lista loopolás </h5>Loop minden listához és almenühöz (zene, kapcsolatok, stb.).<br>A legfelső pozícióból a legalsóba lehet ugrani, ill. fordítva. Now with remmove list loop option."
   }, {
-    "id": 7,
     "OpName": "Rövid késleltetés mod",
     "INST": "shorter_delay_mod telepítése",
     "DEINST": "shorter_delay_mod visszaállítása",
-    "toolTip": "<h5>Rövid késleltetés mod. </h5>Csökkenti a várakozási időt az oldalankénti lapozásnál 1.5 mp-ről auf 0.3 mp-re.<br>A javított lista loopolás tweak törlése ezt a tweak-et is eltávolítja.",
-    "img": "",
-    "safetylvl": "safe",
-    "extraOps": false,
-    "advancedOp": false
+    "toolTip": "<h5>Rövid késleltetés mod. </h5>Csökkenti a várakozási időt az oldalankénti lapozásnál 1.5 mp-ről auf 0.3 mp-re.<br>A javított lista loopolás tweak törlése ezt a tweak-et is eltávolítja."
   }, {
-    "id": 8,
     "OpName": "No More Beeps",
     "INST": "Disable All System Beeps",
     "DEINST": "Restore System Beeps",
-    "toolTip": "<h5>No More Beeps</h5>Disable all 'Beeps' made by the system that are not silenced by the 'Settings > Sound > Beep' option.  This also includes the beeps that cannot be silenced by the settings option.",
-    "img": "",
-    "safetylvl": "safe",
-    "extraOps": false,
-    "advancedOp": false
+    "toolTip": "<h5>No More Beeps</h5>Disable all 'Beeps' made by the system that are not silenced by the 'Settings > Sound > Beep' option.  This also includes the beeps that cannot be silenced by the settings option."
   }, {
-    "id": 9,
     "OpName": "Hangforrások listájának rendezése",
     "INST": "Hangforrások listájának megváltoztatása",
     "DEINST": "Hangforrások eredeti listájának visszaállítása",
-    "toolTip": "<h5>Hangforrások listájának rendezése </h5> THangforrás lista rendezése:<ui></ui><li>FMRadio</li><ui></ui><li>DAB</li><ui> </ui><li>USB_A</li><ui> </ui><li>USB_B</li><ui> </ui><li>BT_audio</li><ui></ui><li>CD</li><ui></ui><li>SatRadio</li><ui></ui><li>AhaRadio</li><ui></ui><li>Pandora</li><ui></ui><li>Stitcher</li><ui></ui><li>AuxIn</li><ui></ui><li>AMradio</li><ui></ui><li>DVD</li><ui></ui><li>TV</li><ui></ui>",
-    "img": "",
-    "safetylvl": "warning",
-    "extraOps": true,
-    "advancedOp": false
+    "toolTip": "<h5>Hangforrások listájának rendezése </h5> THangforrás lista rendezése:<ui></ui><li>FMRadio</li><ui></ui><li>DAB</li><ui> </ui><li>USB_A</li><ui> </ui><li>USB_B</li><ui> </ui><li>BT_audio</li><ui></ui><li>CD</li><ui></ui><li>SatRadio</li><ui></ui><li>AhaRadio</li><ui></ui><li>Pandora</li><ui></ui><li>Stitcher</li><ui></ui><li>AuxIn</li><ui></ui><li>AMradio</li><ui></ui><li>DVD</li><ui></ui><li>TV</li><ui></ui>"
   }, {
-    "id": 10,
     "OpName": "Zenelejátszás megállítása némításkor",
     "INST": "pause_on_mute telepítése",
     "DEINST": "pause_on_mute visszaállítása",
-    "toolTip": "<h5>Zenelejátszás megállítása némításkor </h5> Elnémításkor (hangerőgomb megnyomásával) a lejátszott médiumok is szünetelnek.",
-    "img": "",
-    "safetylvl": "safe",
-    "extraOps": false,
-    "advancedOp": false
+    "toolTip": "<h5>Zenelejátszás megállítása némításkor </h5> Elnémításkor (hangerőgomb megnyomásával) a lejátszott médiumok is szünetelnek."
   }, {
-    "id": 11,
     "OpName": "Automatikus üzenetaláírás törlése",
     "INST": "Automatikus üzenetaláírás törlése patch",
     "DEINST": "Automatikus üzenetaláírás visszaállítása",
-    "toolTip": "<h5>Automatikus üzenetaláírás törlése </h5>Törli a 'Mazda Quick Text Systemről küldve' sort az üzenetből.",
-    "img": "",
-    "safetylvl": "safe",
-    "extraOps": false,
-    "advancedOp": false
+    "toolTip": "<h5>Automatikus üzenetaláírás törlése </h5>Törli a 'Mazda Quick Text Systemről küldve' sort az üzenetből."
   }, {
-    "id": 12,
     "OpName": "1 mp diagnózis menü elérés",
     "INST": " 1 mp diagnózis menü elérés telepítése",
     "DEINST": " 1 mp diagnózis menü elérés törlése",
-    "toolTip": "<h5>1 mp diagnózis menü elérés </h5>Biztosítja, hogy a diagnózis menü az órára való 1 mp-es nyomás után elérhető legyen a <b>képernyő beállítások</b> menüben.",
-    "img": "",
-    "safetylvl": "warning",
-    "extraOps": false,
-    "advancedOp": false
+    "toolTip": "<h5>1 mp diagnózis menü elérés </h5>Biztosítja, hogy a diagnózis menü az órára való 1 mp-es nyomás után elérhető legyen a <b>képernyő beállítások</b> menüben."
   }, {
-    "id": 13,
     "OpName": "Boot animáció",
     "INST": "Boot animáció törlése",
     "DEINST": "Boot animáció visszaállítása",
-    "toolTip": "<h5>Boot animáció </h5>A boot animáció, amelyik a Mazda logó megjelenése után a főmenübe vezet át deaktiválódik.",
-    "img": "",
-    "safetylvl": "safe",
-    "extraOps": true,
-    "advancedOp": false
+    "toolTip": "<h5>Boot animáció </h5>A boot animáció, amelyik a Mazda logó megjelenése után a főmenübe vezet át deaktiválódik."
   }, {
-    "id": 20,
     "OpName": "Statusbar Tweaks",
     "INST": "Install Statusbar Tweaks",
     "DEINST": "Remove Statusbar Tweaks",
-    "toolTip": "<h5>Statusbar Mods </h5>Add some Color to your statusbar text.<br><h4>Change Colors For: </h4><br><h4>App Name: <small>Title of the app or media source. </small></h4><h4>Clock: <small>This one is pretty self explanatory. </small></h4><h4>Status Notification: <small>Navigation notifications </small></h4><h4>Remove Statusbar Background Image And <br>Adjust Statusbar Opacity (From 0-1: 0 = transparent, 1 = Black)  </h4><strong>Safe for all FW Versions</strong><br><h5>Date In Status Bar Mod. </h5>  Permanently visible date + icons by the clock, even if system messages are displayed.",
-    "img": "mzd_datum_icons_all.jpg",
-    "safetylvl": "safe",
-    "extraOps": true,
-    "advancedOp": false
+    "toolTip": "<h5>Statusbar Mods </h5>Add some Color to your statusbar text.<br><h4>Change Colors For: </h4><br><h4>App Name: <small>Title of the app or media source. </small></h4><h4>Clock: <small>This one is pretty self explanatory. </small></h4><h4>Status Notification: <small>Navigation notifications </small></h4><h4>Remove Statusbar Background Image And <br>Adjust Statusbar Opacity (From 0-1: 0 = transparent, 1 = Black)  </h4><strong>Safe for all FW Versions</strong><br><h5>Date In Status Bar Mod. </h5>  Permanently visible date + icons by the clock, even if system messages are displayed."
   }, {
-    "id": 26,
     "OpName": "USB Audio Mod",
     "INST": "Install USB Audio Mod",
     "DEINST": "Remove USB Audio Mod",
-    "toolTip": "<h5>USB Audio Mod. <small>By: Enlsen</small> </h5><b>Patches The USB Audio App With These Mods:   <br><ol><li>Long press (click hold) folders/all songs to play</li><li>Adds new icon for USB root menu on the UMP control</li> <li>Removes \"More like this\" button from UMP control</li><li>Adds folders button to UMP control</li><li>Set folders and song list icons correctly (were switched) on UMP control</li><li>Removes trailing \"/\" character from folder names for list control and title of now playing</li><li>Adds folder and song icons to the list control</li><li>Adds folder and playlist icons to now playing</li></ol>",
-    "img": "USBAudioMod.jpg",
-    "safetylvl": "safe",
-    "extraOps": true,
-    "advancedOp": false
+    "toolTip": "<h5>USB Audio Mod. <small>By: Enlsen</small> </h5><b>Patches The USB Audio App With These Mods:   <br><ol><li>Long press (click hold) folders/all songs to play</li><li>Adds new icon for USB root menu on the UMP control</li> <li>Removes \"More like this\" button from UMP control</li><li>Adds folders button to UMP control</li><li>Set folders and song list icons correctly (were switched) on UMP control</li><li>Removes trailing \"/\" character from folder names for list control and title of now playing</li><li>Adds folder and song icons to the list control</li><li>Adds folder and playlist icons to now playing</li></ol>"
   }, {
-    "id": 14,
     "OpName": "Nagyobb album fedőképek",
     "INST": "Nagyobb album fedőképek törlése",
     "DEINST": "Nagyobb album fedőképek visszaállítása",
-    "toolTip": "<h5>Nagyobb album fedőképek </h5> Nagyobb album fedőképek mutatása.   Extra Options: Full Width Titles & Hide Album Art",
-    "img": "full_titles.png",
-    "safetylvl": "safe",
-    "extraOps": true,
-    "advancedOp": false
+    "toolTip": "<h5>Nagyobb album fedőképek </h5> Nagyobb album fedőképek mutatása.   Extra Options: Full Width Titles & Hide Album Art"
   }, {
-    "id": 15,
     "OpName": "Remove Background Overlays",
     "INST": "Remove the background overlays",
     "DEINST": "Background behind buttons back to original",
-    "toolTip": "<h5>No Background Behind Buttons </h5> Remove the background behind the buttons and other semi-transparent overlay backgrounds.  Overlays that can be removed: Now Playing, List View, In Call, Text Message View, and Behind Buttons",
-    "img": "NoButtonBackground.jpg",
-    "safetylvl": "safe",
-    "extraOps": true,
-    "advancedOp": false
+    "toolTip": "<h5>No Background Behind Buttons </h5> Remove the background behind the buttons and other semi-transparent overlay backgrounds.  Overlays that can be removed: Now Playing, List View, In Call, Text Message View, and Behind Buttons"
   }, {
-    "id": 16,
     "OpName": "Üres album fedőképkeretek megváltoztatása",
     "INST": "Üres album fedőképkeretek megváltoztatása",
     "DEINST": "Üres album fedőképkeretek visszaállítása",
-    "toolTip": "<h5>Üres album fedőképkeretek megváltoztatása </h5>Az üres albumfedőkép, mely akkor jelenik meg ha nincs az előadóhoz tartozó kép a Gracenote adatbankban, eltűnik. Helyette egy rádió képe lesz látható, akkor is ha nincs fedőkép MP3 \"tag\"-ként. Támogatott fájl formátumok: jpg, jpeg és png (bármely méret). Figyelem: A választott kép át lesz konvertálva 146px x 146px-es méretre, <b>DE NEM LESZ LEVÁGVA</b>, és .png formátumba.",
-    "img": "",
-    "safetylvl": "safe",
-    "extraOps": true,
-    "advancedOp": false
+    "toolTip": "<h5>Üres album fedőképkeretek megváltoztatása </h5>Az üres albumfedőkép, mely akkor jelenik meg ha nincs az előadóhoz tartozó kép a Gracenote adatbankban, eltűnik. Helyette egy rádió képe lesz látható, akkor is ha nincs fedőkép MP3 \"tag\"-ként. Támogatott fájl formátumok: jpg, jpeg és png (bármely méret). Figyelem: A választott kép át lesz konvertálva 146px x 146px-es méretre, <b>DE NEM LESZ LEVÁGVA</b>, és .png formátumba."
   }, {
-    "id": 17,
     "OpName": "Videólejátszó",
     "INST": "Videólejátszó telepítése",
     "DEINST": "Videólejátszó törlése",
-    "toolTip": "<h5>Videólejátszó <span class=\"icon-video-camera2\"></span> </h5> Videólejátszó app hozzáadása a főmenühöz.",
-    "img": "",
-    "safetylvl": "safe",
-    "extraOps": true,
-    "advancedOp": false
+    "toolTip": "<h5>Videólejátszó <span class=\"icon-video-camera2\"></span> </h5> Videólejátszó app hozzáadása a főmenühöz."
   }, {
-    "id": 18,
     "OpName": "Swapfájl",
     "INST": "Media player v2 swapfájl létrehozása",
     "DEINST": "Media player v2 swapfájl törlése",
-    "toolTip": "<h5>Swapfájl </h5>Telepítsük a swap fájlt egy olyan pendrivera, amely a kocsiban marad...  A telepítő fájlok törlődnek ezután nem szabad a pendrive-ot menet közben leválasztani, mert a rendszer futásához szükséges adatok vannak rajta és tárhelyként is van használva... A pendrive-ot a jövőben csak akkor csatlakoztasd le, ha az MZD ki van kapcsolva.",
-    "img": "",
-    "safetylvl": "warning",
-    "extraOps": true,
-    "advancedOp": false
+    "toolTip": "<h5>Swapfájl </h5>Telepítsük a swap fájlt egy olyan pendrivera, amely a kocsiban marad...  A telepítő fájlok törlődnek ezután nem szabad a pendrive-ot menet közben leválasztani, mert a rendszer futásához szükséges adatok vannak rajta és tárhelyként is van használva... A pendrive-ot a jövőben csak akkor csatlakoztasd le, ha az MZD ki van kapcsolva."
   }, {
-    "id": 19,
     "OpName": "Speedometer",
     "INST": "Speedometer telepítése",
     "DEINST": "Speedometer törlése",
-    "toolTip": "<h5>Speedometer íránytűvel App-ként mutatása az alkalmazás menüben </h5>  <ul><li>a sebességmérő alatt km/h vagy mph látszik a beállítások függvényében</li> <li>Max. mutatható sebesség: 240 km/h</li> <li>Fogyasztási adatoks</li> <li>Optimalizált grafikus elemek új sebességmérővel</li> <li>Kis sebességmérő tű, mely a legnagyobb sebességet mutatja az analóg skálán</li> <li>A skála különböző hosszúságú és világosságú az 5, 10 ill. 20 km/h-s felbontás függvényében</li> <li>Jobboldali táblázat német és angol szövegekre lett optimalizálva</li> <li>Minden számnak van árnyéka a jobb olvashatóság érdekében</li> <li>Haladási iránytól függő iránytű a sebesség körül</li> <li>Animált felület a fejlécben GPS által mért sebességgel és haladási iránnyal, mely egy érintéssel az órára bármelyik menüben előhozható vagy elrejthető</li> <li>Szélességi és hosszúsági fokok a jobboldali táblázatban</li> <li>Ha a navigáció vagy a tolatókamera aktiválódik, automatikusan elindul</li></ul><br>A kis sebességmérő fejlécben való mutatása a \"dátum a fejlécben\" mod V2.2 igényli, ezért ez automatikusan kiválasztásra kerül, ha nem történt még meg..",
-    "img": "mzd_SpeedoCompass.gif",
-    "safetylvl": "safe",
-    "extraOps": true,
-    "advancedOp": false
+    "toolTip": "<h5>Speedometer íránytűvel App-ként mutatása az alkalmazás menüben </h5>  <ul><li>a sebességmérő alatt km/h vagy mph látszik a beállítások függvényében</li> <li>Max. mutatható sebesség: 240 km/h</li> <li>Fogyasztási adatoks</li> <li>Optimalizált grafikus elemek új sebességmérővel</li> <li>Kis sebességmérő tű, mely a legnagyobb sebességet mutatja az analóg skálán</li> <li>A skála különböző hosszúságú és világosságú az 5, 10 ill. 20 km/h-s felbontás függvényében</li> <li>Jobboldali táblázat német és angol szövegekre lett optimalizálva</li> <li>Minden számnak van árnyéka a jobb olvashatóság érdekében</li> <li>Haladási iránytól függő iránytű a sebesség körül</li> <li>Animált felület a fejlécben GPS által mért sebességgel és haladási iránnyal, mely egy érintéssel az órára bármelyik menüben előhozható vagy elrejthető</li> <li>Szélességi és hosszúsági fokok a jobboldali táblázatban</li> <li>Ha a navigáció vagy a tolatókamera aktiválódik, automatikusan elindul</li></ul><br>A kis sebességmérő fejlécben való mutatása a \"dátum a fejlécben\" mod V2.2 igényli, ezért ez automatikusan kiválasztásra kerül, ha nem történt még meg.."
   }, {
-    "id": 22,
     "OpName": "Fogyasztás Tweak",
     "INST": "Fogyasztás Tweak telepítése",
     "DEINST": "Fogyasztás Tweak visszaállítása",
-    "toolTip": "<h5>Fogyasztás Tweak </h5> Fogyasztás mutatása KM/L-ben (vagy MPG-ben)",
-    "img": "FuelConsumptionTweak.jpg",
-    "safetylvl": "safe",
-    "extraOps": true,
-    "advancedOp": false
+    "toolTip": "<h5>Fogyasztás Tweak </h5> Fogyasztás mutatása KM/L-ben (vagy MPG-ben)"
   }, {
-    "id": 24,
     "OpName": "Castscreen vevő",
     "INST": "Castscreen vevő telepítése",
     "DEINST": "Castscreen vevő visszaállítása",
-    "toolTip": "<h5>Castscreen vevő </h5> Telepítés után a mobiltelefon képernyőjét duplikálni lehet (mirroring) az MZD képernyőjére.<ul><li>Az androidos <a href=\"\" onclick=\"openApkFolder()\">CastScreen App</a> (castscreen-1.0.apk) telepítése szükséges. Ez megtalálható a 'config' mappában, ha a Tweak ki lett választva,</li><lia telefonon=\"\" engedélyezni=\"\" kell=\"\" a=\"\" debug=\"\" módot,<=\"\" li=\"\"><li>Csatlakoztasd a telefont egy USB kábellel az MZD-hez,</li> <li>Indítsd el az applikációt, beállítások: H264, 800x480 @ 160, 1 Mbps, 127.0.0.1 és \"input receiver\"-t kiválasztani, jobboldalt fent a 'Start' gombot megnyomni.</li></lia></ul>.",
-    "img": "",
-    "safetylvl": "warning",
-    "extraOps": true,
-    "advancedOp": false
+    "toolTip": "<h5>Castscreen vevő </h5> Telepítés után a mobiltelefon képernyőjét duplikálni lehet (mirroring) az MZD képernyőjére.<ul><li>Az androidos <a href=\"\" onclick=\"openApkFolder()\">CastScreen App</a> (castscreen-1.0.apk) telepítése szükséges. Ez megtalálható a 'config' mappában, ha a Tweak ki lett választva,</li><lia telefonon=\"\" engedélyezni=\"\" kell=\"\" a=\"\" debug=\"\" módot,<=\"\" li=\"\"><li>Csatlakoztasd a telefont egy USB kábellel az MZD-hez,</li> <li>Indítsd el az applikációt, beállítások: H264, 800x480 @ 160, 1 Mbps, 127.0.0.1 és \"input receiver\"-t kiválasztani, jobboldalt fent a 'Start' gombot megnyomni.</li></lia></ul>."
   }, {
-    "id": 25,
     "OpName": "Android Auto fejegység applikáció",
     "INST": "Android Auto fejegység applikáció telepítése",
     "DEINST": "Android Auto fejegység applikáció visszaállítása",
-    "toolTip": "<h5>Android Car Headunit app for the MZD Infotainment System. </h5>  <ol><li>Install the Android app from google play store</li><li> Connect the phone to USB and pair the phone bluetooth with the CMU </li><li> Android Auto will then start. If it does not try to open from the 'Applications' menu <li>3 ways to stop AA <ol><li>Press Home Button on the Mazda's Commander</li><li>Disconnect the USB cable</li><li>Use the onscreen menu 'Return to Mazda Connect' on last screen with speedo icon.</li></ol></ol>",
-    "toolTip2": "",
-    "img": "AndroidAuto.jpg",
-    "safetylvl": "safe",
-    "extraOps": true,
-    "advancedOp": false
+    "toolTip2": ""
   }, {
-    "id": 27,
     "OpName": "AIO Tweaks App",
     "INST": "Install AIO Tweaks App",
-    "DEINST": "Remove AIO Tweaks App",
-    "toolTip": "<div class='aio-help'><h5>AIO Tweaks App </h5> An experimental app by Trezdog44. <h5>This is an experimental app that I made to test the limits of app functionality.  For each success there were several failures.</h5><h6><strong>Every function in this app is <em>not</em> guaranteed to work</strong> but here are some useful and/or fun things you can do:</h6><ul><li>&#39;Apps&#39; Tab:<ul><li>Home: Goes home. This was the easy part.</li><li>Go to: USB A, USB B, Bluetooth (audio context).</li><li>Previous, Next - Works without changing contexts</li><li>Stop (and Start*) Android Auto Headunit process.<ul><li>Killing headunit process with allow Bluetooth calling to work correctly.</li><li>Starting the process does not work properly yet, reboot CMU to restart headunit process.</li></ul></li><li>Stop and Start Castscreen Receiver<ul><li>Useful for troubleshooting if it is not functioning correctly.  </li><li>Both of these do work but there is a possibility that a memory issue may prevent the process from properly starting in which case a reboot is required to allow the process to run.</li></ul></li></ul></li><li>&#39;Tweaks&#39; Tab:<ul><li>Many familiar AIO layout related tweaks that can be applied on the fly<ul><li>Applied tweaks are automatically saved to localStorage and saved tweaks are applied on boot.</li><li>Toggle each individual tweak on or off.</li><li>One button to reset all tweaks.</li><li><em>NOTE: AIO Tweaks App will not UNDO installed tweaks, they will mix and may result in unexpected and/or interesting layouts</em></li></ul></li></ul></li><li><p>&#39;Options&#39; Tab:</p><ul><li><p>Touchscreen: <em>NOTE: Changes to the touchscreen functionality are applied when the vehicle comes to a <strong>COMPLETE STOP</strong></em></p><ul><li>Enable Touchscreen and Menu</li><ul><li>Normally disabled menu items while driving ie. Text messages &amp; enter address for navigation,</li><li>Compass is disabled</li></ul><li>Enable Touchscreen and Compass</li><ul><li>Compass is functional</li><li>Menu items are disabled</lI></ul><li>Disable Touchscreen</li><ul><li>Touchscreen and Menu Items disabled</li><li><p>Compass is functional</p></li></ul></ul></li><li><p>Show Background: Show only background (any button to exit).</p></li><li>Reboot: To Reboot.</li></ul></li></ul></div>",
-    "img": "AIO_Tweaks-Screen.png",
-    "safetylvl": "safe",
-    "extraOps": false,
-    "advancedOp": false
+    "DEINST": "Remove AIO Tweaks App"
   }, {
-    "id": 21,
     "OpName": "Zeneszámok név szerinti rendezése és FLAC támogatás",
     "INST": "media_order patch és FLAC támogatás telepítése",
     "DEINST": "media_order patch és FLAC támogatás visszaállítása",
-    "toolTip": "<h5>Zeneszámok név szerinti rendezése és FLAC támogatás </h5>Zenék név szerinti rendezése és nem dátum szerinti rendezése. FLAC formátum támogatása. <h6>Audio Order Patch & FLAC Support is only compatible with these FW Versions: </h6><div style='columns:5'>55.00.650A-NA  55.00.753A-NA  55.00.760A-NA  56.00.100A-ADR  56.00.230A-EU  56.00.240B-ADR  56.00.511A-EU  56.00.512A-EU  56.00.521A-NA  58.00.250A-NA  59.00.326A-ADR  59.00.331A-EU  56.00.513C-EU  56.00.513B-EU  56.00.513C-ADR  59.00.330A-ADR   59.00.342A-ADR   59.00.441A-NA  59.00.443C-EU</div>",
-    "img": "",
-    "safetylvl": "warning",
-    "extraOps": false,
-    "advancedOp": true
+    "toolTip": "<h5>Zeneszámok név szerinti rendezése és FLAC támogatás </h5><p>Zenék név szerinti rendezése és nem dátum szerinti rendezése. FLAC formátum támogatása. </p><h6>Audio Order Patch & FLAC Support is only compatible with these FW Versions: </h6><div style='columns:5'>55.00.650A-NA  55.00.753A-NA  55.00.760A-NA  56.00.100A-ADR  56.00.230A-EU  56.00.240B-ADR  56.00.511A-EU  56.00.512A-EU  56.00.521A-NA  58.00.250A-NA  59.00.326A-ADR  59.00.331A-EU  56.00.513C-EU  56.00.513B-EU  56.00.513C-ADR  59.00.330A-ADR   59.00.342A-ADR   59.00.441A-NA  59.00.443C-EU</div>"
   }]
 }

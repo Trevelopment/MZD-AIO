@@ -11,13 +11,31 @@
   <tbody class="w3-col">
     <div id="audioSourceOrder" class="w3-row w3-col w3-padding">
       <!--span class="resetBtn"><i class="icon-reload" title="Reset To Default" ng-click="reset_entertainmentItems()"></i></span-->
-      <div class="w3-container w3-medium">
-        <div ng-repeat="sp in user.entertainmentItems | orderBy: 'pos'" class="w3-row 3-col audio-order">
+      <div class="w3-container w3-medium" ng-class="{v70:v70source}">
+        <div ng-repeat="sp in user.entertainmentItems | orderBy: 'pos'" class="w3-row 3-col audio-order {{sp.label}}">
           <span class="w3-half">{{sp.label}}:</span>
           <input type="number" min="0" max="99" ng-model="sp.pos" ng-value="sp.pos" class="w3-half" />
         </div>
       </div>
     </div>
-    <div class="w3-panel">NOTE: This will no show hidden values for your vehicle/region.</div>
+    <div class="w3-panel">
+      <input type="checkbox" id="v70audioSource" class="w3-check" name="v70audio" ng-model="v70source">
+      <label for="v70audioSource">FW v70.00.XXX</label>
+    </div>
+    <div class="w3-panel">
+      <strong>NOTE: This will NOT show/hide sources for your vehicle/region.</strong>
+    </div>
   </tbody>
 </table>
+<style>
+#audioSourceOrder .Android.Auto,
+#audioSourceOrder .Car.Play,
+#audioSourceOrder .XM.Audio {
+  display: none;
+}
+#audioSourceOrder .v70 .Android.Auto,
+#audioSourceOrder .v70 .Car.Play,
+#audioSourceOrder .v70 .XM.Audio {
+  display: block;
+}
+</style>

@@ -33,10 +33,4 @@
  */
 
 var CustomApplications = [
-  "app.simpledashboard",
-  "app.multidash",
-  "app.gpsspeed",
-  "app.vdd",
-  "app.devtools",
-  "app.terminal",
 ];

@@ -23,7 +23,7 @@ var MyDataTransform = {
   },
 
   toCelsius: function(value) {
-    return Math.round((value - 32) * 5 / 9);
+    return Math.round(value - 40);
   },
 
 };
@@ -180,7 +180,8 @@ CustomApplicationsHandler.register("app.multidash", new CustomApplication({
     "theme": 0,
     "fuelLevelMaxValue": 186,
     "timezoneOffset": -5,
-    "brightness": 100
+    "brightness": 100,
+    "digifont": false
   },
 
 
@@ -207,7 +208,7 @@ CustomApplicationsHandler.register("app.multidash", new CustomApplication({
     // load config and update where necessary
 
     // this.getDefaultConfig();
-    // this.getConfig();
+    this.getConfig();
 
 
     // helper data
@@ -232,7 +233,7 @@ CustomApplicationsHandler.register("app.multidash", new CustomApplication({
     this.fuelLevelTicks = 0;
     this.fuelLevelMod = 10; // when to recalculate the fuel level avg
 
-    this.tripStartTime = new Date();
+    this.tripStartTime = new Date(framework.common.getCurrentTime())
     this.updateTripTimerInterval = 1000;
 
 
@@ -261,15 +262,12 @@ CustomApplicationsHandler.register("app.multidash", new CustomApplication({
     this.avgSpeedConLabel = $("<label/>").addClass('label').html('Avg Speed').appendTo(this.avgSpeedCon);
     this.avgSpeedConValue = $("<div/>").addClass('value').html('&nbsp;').appendTo(this.avgSpeedCon);
 
-
-
     this.timeCon = $("<div/>").attr('id', 'time-con').html($('.StatusBarCtrlClock').text()).appendTo(this.topRightCon);
     this.dateCon = $("<div/>").attr('id', 'date-con').html($('.StatusBarCtrlDate').text()).appendTo(this.topRightCon);
 
     this.temperature = $("<div/>").attr('id', 'temperature').appendTo(this.topRightCon);
     this.temperatureValue = $("<div/>").addClass('value').html('&nbsp;').appendTo(this.temperature);
     this.temperatureLabel = $("<label/>").addClass('label').html(this.region.temperatureUnit).appendTo(this.temperature);
-
 
     this.additionalStats = $('<div/>').attr('id', 'additional-stats').appendTo(this.topRightCon);
 
@@ -294,7 +292,6 @@ CustomApplicationsHandler.register("app.multidash", new CustomApplication({
     this.fuelPercentage = $('<div/>').addClass('fuel-percentage').appendTo(this.bottomCon);
     this.fuelIcon = $('<div/>').addClass('fuel-icon').appendTo(this.bottomCon);
 
-
     this.statusMessage.appendTo(this.mainContainer);
     this.topLeftCon.appendTo(this.mainContainer);
     this.topRightCon.appendTo(this.mainContainer);
@@ -303,10 +300,9 @@ CustomApplicationsHandler.register("app.multidash", new CustomApplication({
 
     this.adjustBrightness(0);
     this.mainContainer.addClass('theme-' + this.themes[this.config.theme]);
-
+    if(this.config.digifont) this.mainContainer.addClass('digital');
 
     this.createSections();
-
 
     this.updateTripTime();
     this.updateTripTimer = setInterval(function() { this.updateTripTime(); }.bind(this), this.updateTripTimerInterval);
@@ -328,7 +324,6 @@ CustomApplicationsHandler.register("app.multidash", new CustomApplication({
     this.updateTripTime();
     clearInterval(this.updateTripTimer);
     this.updateTripTimer = setInterval(function() { this.updateTripTime(); }.bind(this), this.updateTripTimerInterval);
-
     // this.mainContainer.addClass('shown');
   },
 
@@ -478,6 +473,9 @@ CustomApplicationsHandler.register("app.multidash", new CustomApplication({
          * MultiController was moved down
          */
       case this.DOWN:
+        this.mainContainer.toggleClass('digital');
+        this.config.digifont = this.mainContainer.hasClass('digital');
+        this.saveConfig();
         break;
 
         /*
@@ -577,7 +575,7 @@ CustomApplicationsHandler.register("app.multidash", new CustomApplication({
 
 
   updateTripTime: function() {
-    var now = new Date(),
+    var now = new Date(framework.common.getCurrentTime()),
       diff = now - this.tripStartTime,
       diffH = Math.floor((diff % 86400000) / 3600000),
       diffM = Math.floor(((diff % 86400000) % 3600000) / 60000),
@@ -606,11 +604,12 @@ CustomApplicationsHandler.register("app.multidash", new CustomApplication({
 
 
   updateDateTime: function(timestamp) {
-    var objDate = new Date(timestamp * 1000),
+    // use framework.common.getCurrentTime() to get correct time
+    var objDate = new Date(framework.common.getCurrentTime()),
       dotw, month, d, h, m, ap;
 
     // hack for my timezone atm
-    objDate.setHours(objDate.getHours() + this.config.timezoneOffset);
+    //objDate.setHours(objDate.getHours());//+ this.config.timezoneOffset);
 
     if (objDate.getFullYear() >= 2016) {
       if (this.timeTicks++ % 15 === 0 || !this.timeUpdated) {
@@ -636,8 +635,8 @@ CustomApplicationsHandler.register("app.multidash", new CustomApplication({
         this.dateCon[0].innerHTML = dotw + ', ' + month + ' ' + this.ordinal_suffix_of(d);
         //}
 
-        //this.timeCon[0].innerHTML = h+':'+m+'<span class="ampm">'+ap+'</span>';
-        this.timeCon[0].innerHTML = $('.StatusBarCtrlClock').text();
+        this.timeCon[0].innerHTML = h + ':' + m + '<span class="ampm">' + ap + '</span>';
+        // this.timeCon[0].innerHTML = $('.StatusBarCtrlClock').text();
 
         if (!this.timeUpdated) {
           this.timeUpdated = true;

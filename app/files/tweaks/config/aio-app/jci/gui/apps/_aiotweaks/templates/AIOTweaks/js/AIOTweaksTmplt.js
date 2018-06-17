@@ -55,14 +55,16 @@ function AIOTweaksTmplt(uiaId, parentDiv, templateID, controlProperties) {
     '</div>' +
     '<div id="Options" class="tabcontent FadeIn">' +
     '</div>' +
-    '<div id="AioInfoPanel"><div id="AioInformation"></div></div>';
+    '<div id="AioInfoPanel" class="animate-zoom"><div id="AioInformation"></div></div>';
 
   function AIOTabs(tab, tabLink) {
     $(".tablinks").removeClass("active-tab");
     $(".tabcontent").hide();
+    $(".tabcontent").removeClass("animate-zoom");
     $("button").removeClass("selectedItem");
     maxButtons = $(tab + " a").length - 2;
     $(tab).show();
+    $(tab).addClass('animate-zoom');
     (selectedItem < maxButtons) ? $(tab + " button").eq(selectedItem).addClass("selectedItem"): selectedItem = 0;
     $(tabLink).addClass("active-tab");
     currTab = tab;
@@ -129,12 +131,13 @@ function AIOTweaksTmplt(uiaId, parentDiv, templateID, controlProperties) {
   $("<button/>").attr("id", "showDFHBtn").html('<a>Disk Space</a>').appendTo($('#Options'));
   $("<button/>").attr("id", "showMeminfoBtn").html('<a>Memory Info</a>').appendTo($('#Options'));
   $("<button/>").attr("id", "showPSBtn").html('<a>Running Processes</a>').appendTo($('#Options'));
-  //$("<button/>").attr("id", "displayOffBtn").html('<a>Screen Off</a>').appendTo($('#Options'));
+  $("<button/>").attr("id", "displayOffBtn").html('<a>Screen Off</a>').appendTo($('#Options'));
   //$("<button/>").attr("id", "runCheckIPBtn").html('<a>Check IP</a>').appendTo($('#Options'));
   $("<button/>").attr("id", "reverseAppListBtn").html('<a>Reverse App List</a>').appendTo($('#Options'));
   $("<button/>").attr("id", "systemTab").html('<a>Settings &gt; System</a>').appendTo($('#Options'));
-  $("<button/>").attr("id", "wifiSettings").html('<a>WIFI Settings</a>').appendTo($('#Options'));
-  $("<button/>").attr("id", "toggleWifiAPBtn").html('<a>WifiAP</a>').appendTo($('#Options'));
+  $("<button/>").attr("id", "wifiToggle").html('<a>Turn WiFi On</a>').appendTo($('#Options'));
+  $("<button/>").attr("id", "wifiSettings").html('<a>WiFi Settings</a>').appendTo($('#Options'));
+  $("<button/>").attr("id", "toggleWifiAPBtn").html('<a>Wifi AP</a>').appendTo($('#Options'));
   $("<button/>").attr("id", "stopFirewallBtn").html('<a>Stop Firewall</a>').appendTo($('#Options'));
   $("<button/>").attr("id", "fullRestoreConfirmBtn").html('<a>System Restore</a>').appendTo($('#Options'));
   $("<button/>").attr("id", "aioReboot").html('<a>Reboot</a>').appendTo($('#Options'));
@@ -183,7 +186,7 @@ function AIOTweaksTmplt(uiaId, parentDiv, templateID, controlProperties) {
   } catch (e) {
     $("#Opt").click();
   }
-  utility.loadScript('apps/_aiotweaks/js/mzd.js');
+  utility.loadScript('apps/_aiotweaks/js/mzd.js', null, StartAIOApp);
 }
 
 /*
@@ -242,11 +245,6 @@ AIOTweaksTmplt.prototype.handleControllerEvent = function(eventID) {
         $(currTab + " a").eq(selectedItem).parent().addClass("selectedItem");
       }
       break;
-    case "upStart":
-      this.longHold(function() {
-        //do the same as up
-        this.handleControllerEvent("up");
-      })
     case "up":
       this.singleClick(function() {
 
@@ -305,7 +303,7 @@ AIOTweaksTmplt.prototype.handleControllerEvent = function(eventID) {
       break;
   }
   $("button").blur();
-  $("html").removeClass("showBg");
+  if(eventID.indexOf('Start')!==-1) $("html").removeClass("showBg");
   return retValue;
 };
 /*

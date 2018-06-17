@@ -45,4 +45,5 @@ smdb-read -v -n vdm_vdt_current_data -e DR_IntakeAirTemp >> ${OUTPUT}-vdt
 smdb-read -v -n vdm_vdt_current_data -e Out-CarTemperature >> ${OUTPUT}-vdt
 smdb-read -v -n vdm_vdt_current_data -e EngClnt_Te_Actl >> ${OUTPUT}-vdt
 smdb-read -v -n vdm_vdt_current_data -e TransmChangeLeverPosition >> ${OUTPUT}-vdt
+smdb-read -v -n vdm -e PID_Drv1Dstnc_curr >> ${OUTPUT}-vdt
 smdb-read -v -n vdm -e Drv1AvlFuelE >> ${OUTPUT}-vdt

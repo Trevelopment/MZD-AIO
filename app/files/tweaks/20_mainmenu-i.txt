@@ -1,23 +1,9 @@
+backup_org /jci/gui/apps/system/controls/MainMenu/css/MainMenuCtrl.css
 # MAIN MENU Tweaks
 # Trevelopment By: Trezdog44
 show_message "INSTALL MAIN MENU TWEAKS ..."
 log_message "=======**************  INSTALL MAIN MENU TWEAKS ... **************======="
 
-# Always create a backup
-if [ ! -e /jci/gui/apps/system/controls/MainMenu/css/MainMenuCtrl.css.org ]
-then
-  cp -a /jci/gui/apps/system/controls/MainMenu/css/MainMenuCtrl.css /jci/gui/apps/system/controls/MainMenu/css/MainMenuCtrl.css.org
-  log_message "=== Bakup /jci/gui/apps/system/controls/MainMenu/css/MainMenuCtrl.css ==="
-fi
-if [ $KEEPBKUPS -eq 1 ]
-then
-  cp -a /jci/gui/apps/system/controls/MainMenu/css/MainMenuCtrl.css.org "${MYDIR}/bakups/"
-  aio_info \"MainMenuCtrl.css.org\",
-fi
-if [ $TESTBKUPS -eq 1 ]
-then
-  cp -a /jci/gui/apps/system/controls/MainMenu/css/MainMenuCtrl.css "${MYDIR}/bakups/test/MainMenuCtrl_before.css"
-fi
 # Remove existing Main Menu CSS and add new CSS to the end of the file
 remove_aio_css /jci/gui/apps/system/controls/MainMenu/css/MainMenuCtrl.css MAINMENU
 
@@ -142,7 +128,7 @@ if [ $UI_STYLE_NOGLOW -eq 1 ]
 then
   cat <<EOT >> /jci/gui/apps/system/controls/MainMenu/css/MainMenuCtrl.css
   /* Remove Coin Glow */
-  .MainMenuCtrl .Visible {
+  .MainMenuCtrl .Visible:not(.MainMenuCtrlIconName) {
     display:none!important;
   }
 EOT

@@ -133,8 +133,34 @@
       </select>
     </div>
     <div class="spdExtraOp w3-half w3-col">
-      <label for="fuelGaugeFactor" class="w3-threequarter fueltanks" data-toggle="popover" data-placement="top" title="Approximate Fuel Tank Capacities" data-content="<div class='w3-medium'>- Model --- Liters --- Gallons -</div>Mazda3 --- 50 L --- 13.2 Gal<br>Mazda6 --- 62 L --- 16.4 Gal<br>Miada MX-5 - 45 L - 11.9 Gal<br>CX-3 --- 46 L --- 12.3 Gal<br>CX-5 --- 57 L --- 15 Gal<br>CX-9 --- 72 L --- 19 Gal">Fuel Tank Capacity ({{user.spdExtra.fuelGaugeValueSuffix}}):</label>
-      <input id="fuelGaugeFactor" class="w3-quarter" type="number" ng-step="0.1" step="0.1" min="1" ng-min="1" ng-max="user.spdExtra.fuelGaugeValueSuffix === '%' ? 100 : 80" max="100" ng-value="user.spdExtra.fuelGaugeValueSuffix === '%' ? user.spdExtra.fuelGaugeFactor = 100 : 50" ng-model="user.spdExtra.fuelGaugeFactor" ng-disabled="user.spdExtra.fuelGaugeValueSuffix === '%'">
+      <div class="popover top in" role="tooltip" id="approxFuelCap" style="top: -129px; left: 276.031px; display: block;">
+        <div class="arrow" style="left: 50%;"></div>
+        <h3 class="popover-title">Approximate Fuel Tank Capacities
+          <br>- Model --- Liters --- Gallons -</h3>
+        <div class="popover-content" title="Click To Set!!!">Mazda3 ---
+          <span class="fuel-gauge-capacities" ng-click="user.spdExtra.fuelGaugeValueSuffix='L' ;user.spdExtra.fuelGaugeFactor=50">50 L</span> ---
+          <span class="fuel-gauge-capacities" ng-click="user.spdExtra.fuelGaugeValueSuffix='Gal' ;user.spdExtra.fuelGaugeFactor=13.2">13.2 Gal</span>
+          <br>Mazda6 ---
+          <span class="fuel-gauge-capacities" ng-click="user.spdExtra.fuelGaugeValueSuffix='L' ;user.spdExtra.fuelGaugeFactor=62">62 L</span> ---
+          <span class="fuel-gauge-capacities" ng-click="user.spdExtra.fuelGaugeValueSuffix='Gal' ;user.spdExtra.fuelGaugeFactor=16.4">16.4 Gal</span>
+          <br>Miada MX-5 -
+          <span class="fuel-gauge-capacities" ng-click="user.spdExtra.fuelGaugeValueSuffix='L' ;user.spdExtra.fuelGaugeFactor=45">45 L</span> -
+          <span class="fuel-gauge-capacities" ng-click="user.spdExtra.fuelGaugeValueSuffix='Gal' ;user.spdExtra.fuelGaugeFactor=11.9">11.9 Gal</span>
+          <br>CX-3 ---
+          <span class="fuel-gauge-capacities" ng-click="user.spdExtra.fuelGaugeValueSuffix='L' ;user.spdExtra.fuelGaugeFactor=46">46 L</span> ---
+          <span class="fuel-gauge-capacities" ng-click="user.spdExtra.fuelGaugeValueSuffix='Gal' ;user.spdExtra.fuelGaugeFactor=12.3">12.3 Gal</span>
+          <br>CX-5 ---
+          <span class="fuel-gauge-capacities" ng-click="user.spdExtra.fuelGaugeValueSuffix='L' ;user.spdExtra.fuelGaugeFactor=57">57 L</span> ---
+          <span class="fuel-gauge-capacities" ng-click="user.spdExtra.fuelGaugeValueSuffix='Gal' ;user.spdExtra.fuelGaugeFactor=15">15 Gal</span>
+          <br>CX-9 ---
+          <span class="fuel-gauge-capacities" ng-click="user.spdExtra.fuelGaugeValueSuffix='L' ;user.spdExtra.fuelGaugeFactor=72">72 L</span> ---
+          <span class="fuel-gauge-capacities" ng-click="user.spdExtra.fuelGaugeValueSuffix='Gal' ;user.spdExtra.fuelGaugeFactor=19">19 Gal</span>
+        </div>
+      </div>
+      <label for="fuelGaugeFactor" class="w3-threequarter fueltanks" onclick="$('#approxFuelCap').fadeToggle()">
+        Fuel Tank Capacity ({{user.spdExtra.fuelGaugeValueSuffix}}):</label>
+      <input id="fuelGaugeFactor" class="w3-quarter" type="number" ng-step="0.1" step="0.1" min="1" ng-min="1" ng-max="user.spdExtra.fuelGaugeValueSuffix === '%' ? 100 : 80" max="100" ng-value="user.spdExtra.fuelGaugeValueSuffix === '%' ? user.spdExtra.fuelGaugeFactor = 100 : 50"
+        ng-model="user.spdExtra.fuelGaugeFactor" ng-disabled="user.spdExtra.fuelGaugeValueSuffix === '%'">
     </div>
   </div>
   <div class="w3-row">
@@ -258,27 +284,30 @@
   </div>
 </div>
 <div id="SpdOpsTips" class="spdOpsTips w3-display-right w3-panel w3-row w3-col w3-card-16 w3-padding draggable-handle">
-  <span onclick="toggleTips()" class="closeBtn">&times;</span>
+  <span onclick="toggleTips()" class="closeBtn closeTips">&times;</span>
   <header class="w3-teal w3-large w3-row w3-col move-handle">Tips:</header>
   <div class="w3-container w3-padding">
     <div class="SpeedoTips w3-row w3-card-16 w3-padding">
-      VALUES WITH SAME POSITION WILL OVERLAP EACH OTHER!
+      Values with duplicate positions will turn red to show the issue. You will not be able to compile with invalid values.
     </div>
     <div class="ClassicSpeedoTips w3-row w3-card-16 w3-padding">
-      Using the same number multiple times is OK because the values will stack<br>
+      Using the same number multiple times is OK because the values will stack
+      <br>
     </div>
     <div class="SpeedoTips ClassicSpeedoTips w3-row w3-card-16 w3-padding">
-      Turn on "AutoSort" to reorder the list when you make a change. Click the  &nbsp;<span style="color:orange" class="icon-sort-numeric-asc"></span>&nbsp; icon to toggle AutoSort.
+      Turn on "AutoSort" to reorder the list when you make a change. Click the &nbsp;
+      <span style="color:orange" class="icon-sort-numeric-asc"></span>&nbsp; icon to toggle AutoSort.
     </div>
     <div class="SbSpeedoTips w3-row w3-card-16 w3-padding">
       To show only 1 extra value above the Statusbar Speedometer hide one of the 2 rotating values.
     </div>
     <div class="SpdExtraTips w3-row w3-card-16 w3-padding">
-      If you change the Fuel Gauge Type to L or Gal, be sure to change the Fuel Tank Capacity to match your vehicles fuel tank.<br><a class="w3-btn" onclick="$('.fueltanks').click()">Fuel Tank Capacities</a>
+      If you change the Fuel Gauge Type to L or Gal, be sure to change the Fuel Tank Capacity to match your vehicles fuel tank.
+      <br><a class="w3-btn" onclick="$('.fueltanks').click()">Fuel Tank Capacities</a>
     </div>
     <div class="SpeedoControlTips w3-row w3-card-16 w3-padding">
-      Set Controls for Classic & Bar Speedometers Indepentently<br>
-      To disable a Multi-controller function, set the control to "Disable"
+      Set Controls for Classic & Bar Speedometers Indepentently
+      <br> To disable a Multi-controller function, set the control to "Disable"
     </div>
     <div class="BarColorTips w3-row w3-card-16 w3-padding">
       <span class="w3-large">Click the <i class="icon-randcolor intips"></i> icon to randomize colors</span>
@@ -289,10 +318,9 @@
   var showSpdHints = persistantData.get('showSpdHints') || true
   $('#SbSpeedoOps').html(SbOpsHTML)
   $('#SpeedoControlOps').html(spdCtrlHTML)
-  //$('#SpdExtraOps').html(spdExtraOptions.join(''))
-  $('.closeBtn').click(function() {
+  $('.closeBtn:not(.closeTips)').click(function() {
+    $('body').css('overflow', 'auto')
     $('#SpdOpsTips').slideUp()
-    //$('#SpdOpsTips').effect('explode', 3000)
   })
   $('.spdConfigInst').click(function() {
     var thisId = $(this).attr('id')
@@ -300,6 +328,7 @@
       $('.spdOpsPanel, .spdOpsTips .w3-card-16').hide()
       $('#' + thisId.replace(/Btn/, '')).fadeIn()
       $('.' + thisId.replace(/OpsBtn/, 'Tips')).fadeIn()
+      $('body').css('overflow', 'hidden');
       if (showSpdHints) {
         $('#SpdOpsTips').slideDown()
       } else {

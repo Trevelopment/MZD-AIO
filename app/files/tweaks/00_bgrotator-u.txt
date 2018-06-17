@@ -1,9 +1,8 @@
 # restore background image and common.css to original
-show_message "UNINSTALL BACKGROUND ROTATOR ..."
 log_message "======***********    UNINSTALL BACKGROUND ROTATOR ...    **********======"
 
 # one line uninstall
-remove_aio_css /jci/gui/common/css/common.css
+sed -i "/.. MZD-AIO-TI CSS ../,/.. END AIO CSS ../d" /jci/gui/common/css/common.css
 log_message "===            Removed MZD-AIO-TI Custom CSS in common.css            ==="
 
 # Check for leftover code from old bg rotator, if not found moves on.

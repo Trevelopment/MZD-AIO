@@ -1,0 +1,78 @@
+#!/bin/sh
+
+SCRIPT=$(readlink -f "$0")
+SCRIPTPATH=$(dirname "$SCRIPT")
+LOGPATH=/tmp/mnt/data/headunit.log
+SCRIPT_ARGS=$@
+
+export LD_LIBRARY_PATH="${SCRIPTPATH}/headunit_libs:/jci/lib:/jci/opera/3rdpartylibs/freetype:/usr/lib/imx-mm/audio-codec:/usr/lib/imx-mm/parser:/data_persist/dev/lib:"
+#override some GST plugins with these
+export GST_PLUGIN_PATH="${SCRIPTPATH}/headunit_libs:/usr/lib/gstreamer-0.10"
+
+# This function starts the headunit process and
+# sets the process affinity via taskset. The
+# return value of this function is the pid of
+# the headunit process.
+
+conf='{
+    "launchOnDevice": true,
+    "carGPS": true,
+    "wifiTransport": false
+}'
+
+if ! [ -e /tmp/root/headunit.json ]; then
+ printf "%s\n" "$conf" > /tmp/root/headunit.json
+fi
+
+start_headunit()
+{
+   rm -f /tmp/root/headunit-wireless.status
+   sed -i 's."wifiTransport": true."wifiTransport": false.g' /tmp/root/headunit.json 
+   taskset 0xFFFFFFFF "${SCRIPTPATH}/headunit" "$@" > /dev/null 2>&1 &
+   sleep 2
+   touch /tmp/root/headunit.status
+}
+
+start_AAwireless()
+{
+    rm -f /tmp/root/headunit.status
+    sed -i 's."wifiTransport": false."wifiTransport": true.g' /tmp/root/headunit.json 
+    taskset 0xFFFFFFFF "${SCRIPTPATH}/headunit" "$@" > /dev/null 2>&1 &
+    sleep 2
+    touch /tmp/root/headunit-wireless.status
+}
+
+rm -f /tmp/root/headunit-wireless.status
+rm -f /tmp/root/headunit.status
+
+#default USB
+start_headunit
+
+# loop forever. every 5 seconds, 
+# if headunit not running, start it again.
+while true
+do
+ NET_CHECK=`netstat -rn|awk '$2=="192.168.43.1" {print}'|wc -l`
+ if [ $NET_CHECK == 1 ]; then
+    #echo "WLAN"
+    if [ -e /tmp/root/headunit.status ]; then
+        killall -q headunit
+    fi
+
+    if ! [ -e /tmp/root/headunit-wireless.status ]; then
+        #echo "Start WIRELESS"
+        start_AAwireless
+    fi
+
+ else
+    #echo "USB"
+    if [ -e /tmp/root/headunit-wireless.status ]; then
+        killall -q headunit
+    fi
+    if ! [ -e /tmp/root/headunit.status ]; then
+        #echo "Start USB"
+        start_headunit
+    fi
+ fi
+ sleep 5
+done

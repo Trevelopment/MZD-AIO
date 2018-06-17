@@ -28,7 +28,7 @@
  * This is the main mini framework file that contains everything to run the custom application environment
  */
 
-var CUSTOM_APPLICATION_VERSION = '0.0.4';
+var CUSTOM_APPLICATION_VERSION = '0.0.5';
 
 
 var CustomApplication = (function() {
@@ -1127,12 +1127,12 @@ var VehicleData = {
   vehicle: {
     speed: { id: 'VDTVehicleSpeed', friendlyName: 'Vehicle Speed', input: 'range', min: 0, max: 240, factor: 0.01 },
     rpm: { id: 'VDTEngineSpeed', friendlyName: 'Engine RPM', input: 'range', min: 0, max: 8000, factor: 2.25 },
-    odometer: { id: 'VDCOdocount', friendlyName: 'Odocount' },
-    batterylevel: { id: 'VDCBattery_StateOfCharge', friendlyName: 'Battery Level' },
+    odometer: { id: 'VDTCOdocount', friendlyName: 'Odocount' },
+    batterylevel: { id: 'VDTCBattery_StateOfCharge', friendlyName: 'Battery Level' },
 
     //Peter-dk added
-    //	latAcc: {id: 'VDCLateralAcceleration', friendlyName: 'Lateral acceleration', input: 'range', min: 3000, max: 5000, factor: 1},
-    //	lonAcc: {id: 'VDCLongitudinalAccelerometer', friendlyName: 'Longitudinal acceleration', input: 'range', min: 3000, max: 5000, factor: 1},
+    //	latAcc: {id: 'VDTCLateralAcceleration', friendlyName: 'Lateral acceleration', input: 'range', min: 3000, max: 5000, factor: 1},
+    //	lonAcc: {id: 'VDTCLongitudinalAccelerometer', friendlyName: 'Longitudinal acceleration', input: 'range', min: 3000, max: 5000, factor: 1},
     startTime: { id: 'PIDGlobalRealTime_Start', friendlyName: 'Start time' },
     curTime: { id: 'PIDCrntReadTm', friendlyName: 'Current time' },
     drv1dstnc: { id: 'VDTPID_Drv1Dstnc_curr', friendlyName: 'Drive Distance' },
@@ -1144,7 +1144,9 @@ var VehicleData = {
 
   fuel: {
     position: { id: 'VDTFuelGaugePosition', friendlyName: 'Fuel Gauge Position' },
+    // fuelconsumption: { id: 'Drv1AvlFuelE', friendlyName: 'Current Fuel Consumption' },
     averageconsumption: { id: 'VDTDrv1AvlFuelE', friendlyName: 'Average Fuel Consumption' },
+    // totalconsumption: { id: 'TotAvlFuelE', friendlyName: 'Total Fuel Consumption' },
   },
 
   /**
@@ -1285,18 +1287,18 @@ var CustomApplicationDataHandler = {
     // Vehicle Data Transfer data
     { table: 'vdtpid', prefix: 'PID', enabled: true, file: true, update: 60 },
 
-    // Vehicle Data Transfer data Trez - changed VDTC to VDC to make it unique from VDT prefix above
-    { table: 'vdtcurrent', prefix: 'VDC', enabled: true, file: true, update: 60 },
+    // Vehicle Data Transfer data Current
+    { table: 'vdtcurrent', prefix: 'VDTC', enabled: true, file: true, update: 60 },
 
     /**
      * More less frequent updated tables (5min refresh rate)
      */
 
-    // VDM - ECO and Energy Management data (disabled)
-    { table: 'vdm', prefix: 'VDM', enabled: false, file: true, update: 300 },
+    // VDM - ECO and Energy Management data
+    { table: 'vdm', prefix: 'VDM', enabled: true, file: true, update: 300 },
 
-    // VDM History - ECO and Energy Management data (disabled)
-    { table: 'vdmhistory', prefix: 'VDMH', enabled: false, file: true, update: 300 },
+    // VDM History - ECO and Energy Management data
+    { table: 'vdmhistory', prefix: 'VDMH', enabled: true, file: true, update: 300 },
 
 
     /**
@@ -1313,7 +1315,7 @@ var CustomApplicationDataHandler = {
     { table: 'idmhistory', prefix: 'IDMH', enabled: true, file: true, update: false },
 
     // Vehicle Data Transfer data (disabled)
-    { table: 'vdthistory', prefix: 'VDTH', enabled: false, file: true, update: false },
+    { table: 'vdthistory', prefix: 'VDTH', enabled: true, file: true, update: false },
 
   ],
 
@@ -1516,7 +1518,7 @@ var CustomApplicationDataHandler = {
 
         if (table.update && table.__last && table.update > 1) {
 
-          enabled = (((new Date()) - table.__last) / 1000) > table.update;
+          enabled = (((new Date(framework.common.getCurrentTime())) - table.__last) / 1000) > table.update;
 
         }
 
@@ -1554,7 +1556,7 @@ var CustomApplicationDataHandler = {
             loaded++;
 
             // completed
-            this.tables[tableIndex].__last = new Date();
+            this.tables[tableIndex].__last = new Date(framework.common.getCurrentTime());
 
             // continue
             finish();
@@ -1584,7 +1586,7 @@ var CustomApplicationDataHandler = {
                 this.__parseFileData(table, data);
 
                 // completed
-                this.tables[tableIndex].__last = new Date();
+                this.tables[tableIndex].__last = new Date(framework.common.getCurrentTime());
 
               }.bind(this),
 
@@ -2079,7 +2081,7 @@ var CustomApplicationLog = {
       try {
         if (this, enabledConsole) {
           console.log(
-            CustomApplicationHelpers.sprintr("%c[{0}] [{1}] ", (new Date()).toDateString(), values[0]) +
+            CustomApplicationHelpers.sprintr("%c[{0}] [{1}] ", (new Date(framework.common.getCurrentTime())).toDateString(), values[0]) +
             CustomApplicationHelpers.sprintr("%c{0}", msg.join(" ")),
             "color:black",
             CustomApplicationHelpers.sprintr("color:{0}", color)

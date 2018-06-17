@@ -8,17 +8,17 @@
 -
 -->
 <table>
-	<tbody class="w3-col">
-		<tr ng-repeat="option in speedcamOps | filter:twkfltr" class="w3-hover-pale-blue w3-tooltip w3-half">
-			<td>
-				<div class="speedcam-check extraRadio">
-					<input id="speedcam{{option.id}}" type="radio" name="{{option.label}}" ng-model="user.speedcamOps" ng-value="option.id">
-					<label for="speedcam{{option.id}}" data-toggle="tooltip" data-placement="auto bottom" title="{{option.label}}" class="{{option.label}}"></label>
-				</div>
-			</td>
-			<td>
-				<label for="speedcam{{option.id}}" data-toggle="tooltip" data-placement="auto bottom" title="{{option.label}}">{{option.label}}</label>
-			</td>
-		</tr>
-	</tbody>
+  <tbody class="w3-col">
+    <tr ng-repeat="option in speedcamOps | filter:twkfltr" class="w3-hover-pale-blue w3-tooltip w3-half">
+      <td>
+        <div class="speedcam-check extraRadio">
+          <input id="speedcam{{option.id}}" type="radio" name="{{option.label}}" ng-model="user.speedcamOps" ng-value="option.id">
+          <label for="speedcam{{option.id}}" data-toggle="tooltip" data-placement="auto bottom" title="{{option.label}}" class="{{option.label}}"></label>
+        </div>
+      </td>
+      <td>
+        <label for="speedcam{{option.id}}" data-toggle="tooltip" data-placement="auto bottom" title="{{option.label}}">{{option.label}}</label>
+      </td>
+    </tr>
+  </tbody>
 </table>

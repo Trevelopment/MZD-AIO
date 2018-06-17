@@ -21,13 +21,5 @@ rm -f /jci/gui/common/images/icons/IcnUmpUSBMenu_Ds.png
 rm -f /jci/gui/common/images/icons/IcnUmpUSBMenu_En.png
 log_message "===                      Deleted USB icon images                      ==="
 
-if [ $KEEPBKUPS -eq 1 ]
-then
-	cp /jci/gui/common/controls/NowPlaying4/js/NowPlaying4Ctrl.js "${MYDIR}/bakups/"
-	cp /jci/gui/common/controls/NowPlaying4/css/NowPlaying4Ctrl.css "${MYDIR}/bakups/"
-	cp /jci/gui/apps/usbaudio/js/usbaudioApp.js "${MYDIR}/bakups/"
-	log_message "===              Copied Backup Files to ${MYDIR}/bakups/              ==="
-fi
-
 log_message "===******         END UNINSTALLATION OF USB AUDIO MOD            *******==="
 log_message " "

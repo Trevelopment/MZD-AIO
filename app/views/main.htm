@@ -1,10 +1,17 @@
 <div id="header" style="" class="w3-teal" ng-cloak>
-  <h1 id="mzd-title" class="mazda">MZD-AIO <small><i>v</i>{{appVer}}</small>
+  <h1 id="mzd-title" class="mazda">MZD-AIO
+    <small><i>v</i>{{appVer}}</small>
     <!-- Split button -->
     <div class="btn-group">
-      <button type="button" id="compileButton" class="btn btn-theme03 w3-shadow w3-green w3-small w3-ripple w3-hover-light-blue" ng-show="!user.autorun.installer" style="letter-spacing:1.4px;" data-toggle="tooltip" data-placement="bottom" title="{{menu.start.toolTip}}" ng-click="startCompile()"><span class="icon-genius"></span> {{menu.start.label}} <span class="icon-lab2"></span></button>
-      <button type="button" id="compileAutorun" class="btn btn-theme03 w3-shadow w3-pale-blue w3-small w3-ripple w3-hover-indigo" ng-show="user.autorun.installer" style="letter-spacing:1.4px;" data-toggle="tooltip" data-placement="bottom" title="Install CMU-autorun" ng-click="startAutorunCompile()">
-        <span class="icon-genius"></span> Autorun <span class="icon-lab2"></span>
+      <button type="button" id="compileButton" class="btn btn-theme03 w3-shadow w3-green w3-small w3-ripple w3-hover-light-blue" ng-show="!user.autorun.installer" style="letter-spacing:1.4px;" data-toggle="tooltip" data-placement="bottom" title="{{menu.start.toolTip}}"
+        ng-click="startCompile()">
+        <span class="icon-genius"></span> {{menu.start.label}}
+        <span class="icon-lab2"></span>
+      </button>
+      <button type="button" id="compileAutorun" class="btn btn-theme03 w3-shadow w3-pale-blue w3-small w3-ripple w3-hover-indigo" ng-show="user.autorun.installer" style="letter-spacing:1.4px;" data-toggle="tooltip" data-placement="bottom" title="Install CMU-autorun"
+        ng-click="startAutorunCompile()">
+        <span class="icon-genius"></span> Autorun
+        <span class="icon-lab2"></span>
       </button>
       <button type="button" class="btn btn-theme03 dropdown-toggle w3-shadow w3-green w3-small w3-ripple w3-hover-light-blue" ng-class="{'w3-hover-indigo w3-pale-blue': user.autorun.installer}" data-toggle="dropdown">
         <span class="caret"></span>
@@ -17,7 +24,7 @@
         <li class="home-tweaks"><a href="#" ng-click="user.restore.full = user.autorun.installer = false">Tweaks</a></li>
       </ul>
     </div>
-      <a class="w3-hover-blue w3-ripple w3-btn w3-large" title="CASDK" href="#/casdk" ng-click="user.restore.full = user.autorun.installer = false" onclick="w3_close();" id="casdkBtn" ng-show="user.twkfltr.toLowerCase() == 'casdk'"><span class="icon-trophy"></span> CASDK</a>
+      <a class="w3-hover-blue w3-ripple w3-btn w3-large" title="CASDK" href="#/casdk" ng-click="user.restore.full = user.autorun.installer = false" onclick="w3_close();" id="casdkBtn" ng-show="user.twkfltr.toLowerCase() === 'casdk'"><span class="icon-trophy"></span> CASDK</a>
       <label class="layoutSwitch switch w3-ripple"  data-toggle="tooltip" data-placement="bottom" title="<h5>Toggle Alternate Layout</h5>" >
         <input id="altlyt" type="checkbox" ng-model="user.altLayout" ng-value="user.altLayout" onclick="settings.set('altLayout',$(this).prop('checked'))">
         <span class="slider"></span>
@@ -132,11 +139,11 @@
       <tr ng-show="user.twkfltr.toLowerCase() === 'mzdmeterdev' || user.mzdmeter.inst || user.mzdmeter.uninst || user.mzdmeter.show" class="w3-hover-pale-blue w3-tooltip w3-half" ng-class="">
         <td>
           <div class="install-check">
-            <input id="IN28" type="checkbox" name="MZD Meter" ng-value="user.mzdmeter.inst" onclick="persistantData.set('showMeter', true);snackbarstay('Remember that this app is not 100% working.  Please contribute by fixing non-working features rather than reporting issues.')" ng-click="user.twkfltr = ''; user.mzdmeter.show = true" ng-disabled="user.mzdmeter.uninst" ng-model="user.mzdmeter.inst">
+            <input id="IN28" type="checkbox" name="MZD Meter" ng-value="user.mzdmeter.inst" onclick="persistantData.set('checkMeter', true);snackbarstay('Remember that this app is not 100% working.  Please contribute by fixing non-working features rather than reporting issues.')" ng-click="user.twkfltr = ''; user.mzdmeter.show = true" ng-disabled="user.mzdmeter.uninst" ng-model="user.mzdmeter.inst">
             <label for="IN28" data-toggle="tooltip" data-placement="auto left" title="Install MZD Meter"></label>
           </div>
           <div class="uninstall-check">
-            <input id="UN28" type="checkbox" name="MZD Meter" ng-value="user.mzdmeter.uninst" onclick="persistantData.set('showMeter', false)" ng-disabled="user.mzdmeter.inst" ng-model="user.mzdmeter.uninst">
+            <input id="UN28" type="checkbox" name="MZD Meter" ng-value="user.mzdmeter.uninst" onclick="persistantData.set('checkMeter', true)" ng-disabled="user.mzdmeter.inst" ng-model="user.mzdmeter.uninst">
             <label for="UN28" data-toggle="tooltip" data-placement="auto right" title="Uninstall MZD Meter"></label>
           </div>
         </td>
@@ -146,7 +153,7 @@
         </td>
       </tr>
     </table>
-    <div id="bg-img" ng-class="{'w3-hide': user.mainOps.indexOf(2) == -1}" ng-cloak>
+    <div id="bg-img" ng-class="{'w3-hide': user.mainOps.indexOf(2) === -1}" ng-cloak>
       <div id="bgPickTitle" style="text-align:center;"><h2>Chosen Background Image: <small>(click for preview mode)</small></h2><br>
       </div>
       <div id="imgNavButtonsMAin" class="w3-center">
@@ -179,31 +186,31 @@
       <span id="alltoggle" class="icon-minus-alt" onclick="toggleAllOps()" title="Toggle All Extra Options" style="cursor:pointer"></span>
       <h3 id="sidePanelTitle">Selected Tweaks:</h3>
       <ul>
-        <li class="extrasMessage mainmenu" ng-class="{'hide': user.mainOps.indexOf(8) == -1}">
+        <li class="extrasMessage mainmenu" ng-class="{'hide': user.mainOps.indexOf(8) === -1}">
           <div class="w3-tooltip" onclick="helpMessageFreeze(this)" title="{{menu.clickforhelp.label}}">{{mainOps.mainmenu.label}}
             <span class="w3-tag w3-text w3-half w3-hlpmsg draggable ui-widget-content" title="{{menu.close.label}}" ng-class="{'w3-hide': user.menu.indexOf(9) != -1}">
               <span class="w3-closebtn">&times;</span><img ng-src="./files/screenshots/{{mainOps.mainmenu.img}}" /><span ng-bind-html="mainOps.mainmenu.toolTip"></span>
             </span>
           </div>
-          <div class="w3-container" ng-class="{'hide': user.mainOps.indexOf(8) == -1}">
+          <div class="w3-container" ng-class="{'hide': user.mainOps.indexOf(8) === -1}">
             <span class="toggleExtra icon-minus-square" onclick="toggleOps(this)" title="Show/Hide"></span>
             <table ng-include="'opts/mainmenuoptions.htm'" id="mainmenuOptions" class="w3-table w3-bordered w3-card-2 w3-col" style="display:inline-block;">
             </table>
           </div>
         </li>
-        <li class="extrasMessage uistyle" ng-class="{'hide': user.mainOps.indexOf(9) == -1}">
+        <li class="extrasMessage uistyle" ng-class="{'hide': user.mainOps.indexOf(9) === -1}">
           <div class="w3-tooltip" onclick="helpMessageFreeze(this)" title="{{menu.clickforhelp.label}}">{{mainOps.uistyle.label}}
             <span class="w3-tag w3-text w3-half w3-hlpmsg draggable ui-widget-content" title="{{menu.close.label}}" ng-class="{'w3-hide': user.menu.indexOf(9) != -1}">
               <span class="w3-closebtn">&times;</span><img ng-src="./files/screenshots/{{mainOps.uistyle.img}}" /><span ng-bind-html="mainOps.uistyle.toolTip"></span>
             </span>
           </div>
-          <div class="w3-container" ng-class="{'hide': user.mainOps.indexOf(9) == -1}">
+          <div class="w3-container" ng-class="{'hide': user.mainOps.indexOf(9) === -1}">
             <span class="toggleExtra icon-minus-square" onclick="toggleOps(this)" title="Show/Hide"></span>
             <table ng-include="'opts/uistyleoptions.htm'" id="uistyleOptions" class="w3-table w3-bordered w3-card-2 w3-col" style="display:inline-block;">
             </table>
           </div>
         </li>
-        <li class="extrasMessage customBackground" ng-class="{'hide': user.mainOps.indexOf(2) == -1}">
+        <li class="extrasMessage customBackground" ng-class="{'hide': user.mainOps.indexOf(2) === -1}">
           <div class="w3-tooltip" onclick="helpMessageFreeze(this)" title="{{menu.clickforhelp.label}}">{{mainOps.background.label}}
             <span class="w3-tag w3-text w3-half w3-hlpmsg draggable ui-widget-content" title="{{menu.close.label}}" ng-class="{'w3-hide': user.menu.indexOf(9) != -1}"  style="width: 500px;">
               <span class="w3-closebtn ">&times;</span><img ng-src="./files/screenshots/{{mainOps.background.img}}" onerror="$(this).hide()"/><span ng-bind-html="mainOps.background.toolTip"></span><br>
@@ -211,58 +218,58 @@
               <span ng-bind-html="mainOps.offscreenbg.toolTip"></span>
             </span>
           </div>
-          <div id="holder" class="w3-container"  ng-class="{'hide': user.mainOps.indexOf(2) == -1}">
+          <div id="holder" class="w3-container"  ng-class="{'hide': user.mainOps.indexOf(2) === -1}">
             <span class="toggleExtra icon-minus-square" onclick="toggleOps(this)" title="Show/Hide"></span>
             <table ng-include="'opts/bgoptions.htm'" id="custbgOptions" class="w3-table w3-bordered w3-card-2 w3-col" style="">
             </table>
           </div>
         </li>
-        <li class="extrasMessage colorScheme" ng-class="{'hide': user.mainOps.indexOf(3) == -1}">
+        <li class="extrasMessage colorScheme" ng-class="{'hide': user.mainOps.indexOf(3) === -1}">
           <div class="w3-tooltip" onclick="helpMessageFreeze(this)" title="{{menu.clickforhelp.label}}">{{mainOps.colors.label}}
             <span class="w3-tag w3-text w3-half w3-hlpmsg draggable ui-widget-content" title="{{menu.close.label}}" ng-class="{'w3-hide': user.menu.indexOf(9) != -1}">
               <span class="w3-closebtn">&times;</span><img ng-src="./files/screenshots/{{mainOps.colors.img}}" /><span ng-bind-html="mainOps.colors.toolTip"></span>
             </span>
           </div>
           <div class="useColorBG w3-right"><input class="w3-check" type="checkbox" name="useColorBG" ng-checked="user.useColorBg" ng-model="user.useColorBG" style="width:10%">Use Color Scheme Background</div>
-          <div class="w3-container" ng-class="{'hide': user.mainOps.indexOf(3) == -1}">
+          <div class="w3-container" ng-class="{'hide': user.mainOps.indexOf(3) === -1}">
             <span class="toggleExtra icon-minus-square" onclick="toggleOps(this);$('.useColorBG').toggleClass('w3-hide')" title="Show/Hide"></span>
             <table ng-include="'opts/coloroptions.htm'" id="colorOptions" class="w3-table w3-bordered w3-card-2 w3-col" style="display:inline-block;">
             </table>
           </div>
         </li>
-        <li class="extrasMessage backupJCI" ng-class="{'hide': user.mainOps.indexOf(1) == -1}">
+        <li class="extrasMessage backupJCI" ng-class="{'hide': user.mainOps.indexOf(1) === -1}">
           <div class="w3-tooltip" onclick="helpMessageFreeze(this)" title="{{menu.clickforhelp.label}}">{{mainOps.backup.label}}
             <span class="w3-tag w3-text w3-hlpmsg draggable ui-widget-content" title="{{menu.close.label}}" ng-class="{'w3-hide': user.menu.indexOf(9) != -1}" style="width: 400px;">
               <span class="w3-closebtn">&times;</span><span ng-bind-html="mainOps.backup.toolTip"></span>
             </span>
           </div>
-          <div class="w3-container" ng-class="{'hide': user.mainOps.indexOf(1) == -1}">
+          <div class="w3-container" ng-class="{'hide': user.mainOps.indexOf(1) === -1}">
             <span class="toggleExtra icon-plus-square" onclick="toggleOps(this);" title="Show/Hide"></span>
             <table ng-include="'opts/backupoptions.htm'" id="backupOptions" class="w3-table w3-bordered w3-card-2 w3-col" style="display:inline-block;">
             </table>
           </div>
         </li>
-        <li class="extrasMessage enableWIFI" ng-class="{'hide': user.mainOps.indexOf(0) == -1}">
+        <li class="extrasMessage enableWIFI" ng-class="{'hide': user.mainOps.indexOf(0) === -1}">
           <div class="w3-tooltip" onclick="helpMessageFreeze(this)" title="{{menu.clickforhelp.label}}">{{mainOps.wifi.label}}
             <span class="w3-tag w3-text w3-hlpmsg w3-third draggable ui-widget-content" title="{{menu.close.label}}" ng-class="{'w3-hide': user.menu.indexOf(9) != -1}" style="width: 400px;">
               <span class="w3-closebtn">&times;</span><span ng-bind-html="mainOps.wifi.toolTip"></span>
             </span>
           </div>
         </li>
-        <li class="extrasMessage sd-cid" ng-class="{'hide': user.mainOps.indexOf(5) == -1}">
+        <li class="extrasMessage sd-cid" ng-class="{'hide': user.mainOps.indexOf(5) === -1}">
           <div class="w3-tooltip" onclick="helpMessageFreeze(this)" title="{{menu.clickforhelp.label}}">{{mainOps.sdcid.label}}
             <span class="w3-tag w3-text w3-hlpmsg w3-third draggable ui-widget-content" title="{{menu.close.label}}" ng-class="{'w3-hide': user.menu.indexOf(9) != -1}" style="width: 400px;">
               <span class="w3-closebtn">&times;</span><span ng-bind-html="mainOps.sdcid.toolTip"></span>
             </span>
           </div>
         </li>
-        <li class="extrasMessage SSHbringback" ng-class="{'hide': user.mainOps.indexOf(4) == -1}">
+        <li class="extrasMessage SSHbringback" ng-class="{'hide': user.mainOps.indexOf(4) === -1}">
           <div class="w3-tooltip" onclick="helpMessageFreeze(this)" title="{{menu.clickforhelp.label}}">{{mainOps.sshbringback.label}}
             <span class="w3-tag w3-text w3-hlpmsg w3-third draggable ui-widget-content" title="{{menu.close.label}}" ng-class="{'w3-hide': user.menu.indexOf(9) != -1}" style="width: 500px;">
               <span class="w3-closebtn">&times;</span><span ng-bind-html="mainOps.sshbringback.toolTip"></span>
             </span>
           </div>
-          <div class="w3-container" ng-class="{'hide': user.mainOps.indexOf(4) == -1}">
+          <div class="w3-container" ng-class="{'hide': user.mainOps.indexOf(4) === -1}">
             <span class="toggleExtra icon-plus-square" onclick="toggleOps(this);" title="Show/Hide"></span>
             <table ng-include="'opts/sshoptions.htm'" id="backupOptions" class="w3-table w3-bordered w3-card-2 w3-col" style="display:inline-block;">
             </table>
@@ -270,7 +277,7 @@
         </li>
         <li class="uninstallMessage"
         ng-repeat="opt in options | filter:user.twkfltr"
-        ng-class="{'hide': user.options.indexOf(opt.id+100) == -1}">
+        ng-class="{'hide': user.options.indexOf(opt.id+100) === -1}">
         <div class="w3-tooltip" onclick="helpMessageFreeze(this)" title="{{menu.clickforhelp.label}}">{{opt.DEINST}}
           <span id="un{{opt.id}}-msg" class="w3-tag w3-text w3-hlpmsg draggable ui-widget-content" title="{{menu.close.label}}" ng-class="{'w3-hide': user.menu.indexOf(9) != -1}">
             <span class="w3-closebtn">&times;</span><img ng-if="opt.img" ng-src="./files/screenshots/{{opt.img}}"/><span ng-bind-html="opt.toolTip"></span>
@@ -279,13 +286,13 @@
       </li>
       <li class="installMessage"
       ng-repeat="opt in options | filter:user.twkfltr"
-      ng-class="{'hide': user.options.indexOf(opt.id) == -1}">
+      ng-class="{'hide': user.options.indexOf(opt.id) === -1}">
       <div class="w3-tooltip" onclick="helpMessageFreeze(this)" title="{{menu.clickforhelp.label}}">{{opt.INST}}
         <span id="in{{opt.id}}-msg" class="w3-tag w3-text w3-hlpmsg draggable ui-widget-content" title="{{menu.close.label}}" ng-class="{'w3-hide': user.menu.indexOf(9) != -1}">
           <span class="w3-closebtn">&times;</span><span class="sfty {{opt.safetylvl}}">{{opt.safetylvl}}</span><img ng-if="opt.img" ng-src="./files/screenshots/{{opt.img}}"/><span ng-bind-html="opt.toolTip"></span>
         </span>
       </div>
-      <div  ng-if="opt.extraOps" class="w3-container">
+      <div ng-if="opt.extraOps" class="w3-container">
         <span class="toggleExtra icon-minus-square {{opt.id}}" onclick="toggleOps(this)" title="Show/Hide"></span>
         <table ng-include="'opts/'+opt.id+'options.htm'" id="custOptions{{opt.id}}" class="w3-bordered w3-card-2 w3-col" style="display:inline-block;">
         </table>
@@ -326,20 +333,18 @@
   <div id="bkupchks" class="w3-container" ng-cloak>
     <input id="dataDump" name="dataDump" type="checkbox" class="w3-check w3-margin" ng-model="user.dataDump" ng-value="user.dataDump">
     <label for="dataDump" class="w3-validate">Retrieve CMU Data</label>
-    <!--input id="checkFullRestore" name="checkFullRestore" type="checkbox" class="w3-check w3-margin" ng-model="user.restore.full" ng-value="user.restore.full" title="Fully Restores Infotainment System Back to Stock.">
-    <label for="checkFullRestore" class="w3-label checkFullRestore" style="">Full System Restore</label-->
     <input id="skipConfirm" name="skipConfirm" type="checkbox" class="w3-check w3-margin" ng-model="user.backups.skipconfirm" ng-value="user.backups.skipconfirm">
     <label for="skipConfirm" class="w3-validate">{{mainOps.retain.skipconfirm}}</label>
     <input id="keepBackups" name="keepBackups" type="checkbox" class="w3-check w3-margin" ng-model="user.backups.org" ng-value="user.backups.org">
     <label for="keepBackups" class="w3-validate">{{mainOps.retain.label}}</label>
     <input type="checkbox" id="testBackups" name="testBackups" class="w3-check w3-margin" ng-model="user.backups.test" ng-value="user.backups.test">
     <label for="testBackups" class="w3-validate">{{mainOps.retain.testlabel}}</label>
-    <!--input type="checkbox" id="legacyAppInst" name="legacyAppInst" class="w3-check w3-margin" ng-model="user.noNodeInstall" ng-value="user.noNodeInstall">
-    <label for="legacyAppInst" class="w3-validate">Use Legacy App Install</label -->
+    <input type="checkbox" id="legacyAppInst" name="legacyAppInst" class="w3-check w3-margin" ng-model="user.mzdmeter.show" ng-value="user.mzdmeter.show" onclick="persistantData.set('showMeter', !persistantData.get('showMeter'))" ng-show="user.mzdmeter.check">
+    <label for="legacyAppInst" class="w3-validate" ng-show="user.mzdmeter.check">Show MZD Meter</label>
     <input type="checkbox" id="advancedOptions" name="advancedOptions" class="w3-check w3-margin" ng-model="user.advancedOps" ng-value="user.advancedOps">
-    <label for="advancedOptions" class="w3-validate">Disabled Tweaks</label>
+    <label for="advancedOptions" class="w3-validate">FLAC Support</label>
   </div>
-  <span class="icon-question w3-right" data-toggle="popover" data-placement="right" title="{{mainOps.retain.label}}" data-content="{{mainOps.retain.toolTip}}" ></span>
+  <span class="icon-question w3-right" data-toggle="popover" data-placement="right" title="{{mainOps.retain.label}}" data-content="{{mainOps.retain.toolTip}}<span class='flacmsg'>{{options[25].toolTip}}</span>" ></span>
 </div>
 <!-- Test Panel (Remove for distribution version)  - ->
 <div id="TestPanel" class="testpanel w3-display-bottomleft w3-dark-grey w3-padding w3-card-2 draggable w3-hide" style="bottom:-60px;background:rgba(255, 255, 255, 0.8);position:fixed;">

@@ -8,7 +8,8 @@
  * Copyright (c) 2016. All rights reserved.
  *
  * WARNING: The installation of this application requires modifications to your Mazda Connect system.
- * If you don't feel comfortable performing these changes, please do not attempt to install this. You might
+ * If you don't feel comfortable performing these changes, ple
+ase do not attempt to install this. You might
  * be ending up with an unusuable system that requires reset by your Dealer. You were warned!
  *
  * This program is free software: you can redistribute it and/or modify it under the terms of the
@@ -329,10 +330,10 @@ CustomApplicationsHandler.register("app.simpledashboard", new CustomApplication(
 
             // Fuel Level
             {field: VehicleData.fuel.position, name: 'Fuel Level'},
-            
+
             // Average Consumption
             {field: VehicleData.fuel.averageconsumption, name: 'Average Fuel Consumption'},
-            
+
             // Temperature: Outside
             {field: VehicleData.temperature.outside, name: 'Temperature Outside'},
 

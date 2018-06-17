@@ -1,6 +1,6 @@
 /**
  * Custom Applications SDK for Mazda Connect Infotainment System
- * 
+ *
  * A mini framework that allows to write custom applications for the Mazda Connect Infotainment System
  * that includes an easy to use abstraction layer to the JCI system.
  *
@@ -11,15 +11,15 @@
  * If you don't feel comfortable performing these changes, please do not attempt to install this. You might
  * be ending up with an unusuable system that requires reset by your Dealer. You were warned!
  *
- * This program is free software: you can redistribute it and/or modify it under the terms of the 
+ * This program is free software: you can redistribute it and/or modify it under the terms of the
  * GNU General Public License as published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even 
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
  * the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
  * License for more details.
- * 
- * You should have received a copy of the GNU General Public License along with this program. 
+ *
+ * You should have received a copy of the GNU General Public License along with this program.
  * If not, see http://www.gnu.org/licenses/
  *
  */
@@ -29,223 +29,199 @@
  */
 
 [app="app.gpsspeed"] {
-	background:url(images/speedometer_background.jpg) no-repeat center center;
+  background: url(images/speedometer_background.jpg) no-repeat center center;
 }
-
-
 [app="app.gpsspeed"] #speedometer {
-	position:absolute;
-    left: 1px;
-    bottom: 0px;
-    width: 496px;
-    height: 416px;
-    background: url('images/speedometer_meter.png') no-repeat scroll 0 0;
-    z-index: 5;
+  position: absolute;
+  left: 1px;
+  bottom: 0px;
+  width: 496px;
+  height: 416px;
+  background: url('images/speedometer_meter.png') no-repeat scroll 0 0;
+  z-index: 5;
 }
-
-	[app="app.gpsspeed"] #speedometer #speedounit {
-    	position: relative;
-    	left: 0;
-    	top: 372px;
-    	color: #FFFFFF;
-    	font-size: 17px;
-    	text-align: center;
-    	text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
-	}
-
-    [app="app.gpsspeed"] #speedometer #speedomarker {
-    width: 20px;
-    height: 20px;
-    background: url('images/marker.png') no-repeat scroll center center transparent;
-    position: absolute;
-    left: 120px;
-    bottom: 82px;
-    z-index: 105;
+[app="app.gpsspeed"] #speedometer #speedounit {
+  position: relative;
+  left: 0;
+  top: 372px;
+  color: #FFFFFF;
+  font-size: 17px;
+  text-align: center;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
 }
-
+[app="app.gpsspeed"] #speedometer #speedomarker {
+  width: 20px;
+  height: 20px;
+  background: url('images/marker.png') no-repeat scroll center center transparent;
+  position: absolute;
+  left: 120px;
+  bottom: 82px;
+  z-index: 105;
+}
 [app="app.gpsspeed"] #speedoindicator {
-	width: 25px;
-    height: 310px;
-    background: url('images/speedometer_needle.png') no-repeat scroll center center transparent;
-    left: 237px;
-    position: absolute;
-    bottom: 7px;
-    z-index: 103;
-    transform: rotate(-120deg);
+  width: 25px;
+  height: 310px;
+  background: url('images/speedometer_needle.png') no-repeat scroll center center transparent;
+  left: 237px;
+  position: absolute;
+  bottom: 7px;
+  z-index: 103;
+  transform: rotate(-120deg);
 }
-
 [app="app.gpsspeed"] #speedodial {
-    left: 110px;
-    bottom: 62px;
-    width: 278px;
-    height: 241px;
-    background: url('images/speedometer_ticks.png') no-repeat scroll 0 0;
-    background-size: 100% 93.7%;
-    position:absolute;
-    z-index: 101;
+  left: 110px;
+  bottom: 62px;
+  width: 278px;
+  height: 241px;
+  background: url('images/speedometer_ticks.png') no-repeat scroll 0 0;
+  background-size: 100% 93.7%;
+  position: absolute;
+  z-index: 101;
 }
-
 [app="app.gpsspeed"] #speedodialtext {
-	position:absolute;
-	left: 110px;
-    bottom: 62px;
-    width: 278px;
-    height: 241px;
+  position: absolute;
+  left: 110px;
+  bottom: 62px;
+  width: 278px;
+  height: 241px;
 }
-
-	[app="app.gpsspeed"] #speedodialtext .container {
-		position:relative;
-		width:100%;
-		height:100%;
-	}
-
-		[app="app.gpsspeed"] #speedodialtext .container .speedotext {
-			font-size:25px;
-			color:#CCCCCC;
-			z-index: 101;
-			position:absolute;
-			text-align: center;
-			text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
-		}
-
-
-
+[app="app.gpsspeed"] #speedodialtext .container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+[app="app.gpsspeed"] #speedodialtext .container .speedotext {
+  font-size: 25px;
+  color: #CCCCCC;
+  z-index: 101;
+  position: absolute;
+  text-align: center;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+}
 [app="app.gpsspeed"] #speedocurrent {
-    position: absolute;
-    left: 139px;
-    bottom: 53px;
-    width: 220px;
-    height: 220px;
-    background: url('images/speedometer_speed.png') no-repeat scroll center center transparent;
-    color: #FFFFFF;
-    font-size: 40px;
-    line-height: 217px;
-    text-align: center;
-    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);
-    z-index: 104;
+  position: absolute;
+  left: 139px;
+  bottom: 53px;
+  width: 220px;
+  height: 220px;
+  background: url('images/speedometer_speed.png') no-repeat scroll center center transparent;
+  color: #FFFFFF;
+  font-size: 40px;
+  line-height: 217px;
+  text-align: center;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);
+  z-index: 104;
 }
-
 [app="app.gpsspeed"] #gps {
-    position: absolute;
-    left: 139px;
-    bottom: 53px;
-    width: 220px;
-    height: 220px;
-    background: url('images/speedometer_compass.png') no-repeat scroll center center transparent;
-    transform: rotate(0deg);
-    z-index: 102;
+  position: absolute;
+  left: 139px;
+  bottom: 53px;
+  width: 220px;
+  height: 220px;
+  background: url('images/speedometer_compass.png') no-repeat scroll center center transparent;
+  transform: rotate(0deg);
+  z-index: 102;
 }
-
-[app="app.gpsspeed"] #gpscompass {  /* top, left =21 */
-    position: relative;
-    top: 164px;
-    left: 161px;
-    width: 179px;
-    height: 179px;
-    z-index: 102;
+[app="app.gpsspeed"] #gpscompass {
+  /* top, left =21 */
+  position: relative;
+  top: 164px;
+  left: 161px;
+  width: 179px;
+  height: 179px;
+  z-index: 102;
 }
-
-	[app="app.gpsspeed"] #gpscompass div {
-	    position: absolute;
-	    width: 24px;
-	    height: 24px;
-	    text-align: center;
-	    /*display: inline-block;*/
-	    font-size: 20px;
-	    color: #DDDDDD;
-	    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
-	    line-height: 20px;
-	}
-
-		[app="app.gpsspeed"] #gpscompass div.small {
-		    width: 30px;
-		    font-size: 16px;
-		    color: #BBBBBB;
-		    line-height: 22px;
-		}
-
-
+[app="app.gpsspeed"] #gpscompass div {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  text-align: center;
+  /*display: inline-block;*/
+  font-size: 20px;
+  color: #DDDDDD;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+  line-height: 20px;
+}
+[app="app.gpsspeed"] #gpscompass div.small {
+  width: 30px;
+  font-size: 16px;
+  color: #BBBBBB;
+  line-height: 22px;
+}
 [app="app.gpsspeed"] #speedograph {
-	position:absolute;
-	bottom:20px;
-	right:20px;
-	width:280px;
-	height:150px;
-	background:rgba(50, 50, 50, 0.5);
-	box-shadow:rgba(255, 255, 255, 0.3) 0 0 15px;  
-    font-size:14px;
-    color:#eee;
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  width: 280px;
+  height: 150px;
+  background: rgba(50, 50, 50, 0.5);
+  box-shadow: rgba(255, 255, 255, 0.3) 0 0 15px;
+  font-size: 14px;
+  color: #eee;
 }
-
-
 [app="app.gpsspeed"] #speedorpm {
-    position:absolute;
-    top:43px;
-    left:39px;
-    width: 420px; 
-    height: 420px;
-    position: absolute; 
-    clip: rect(0px, 420px, 420px, 210px); 
-    z-index: 12;
-    transform:rotate(-120deg);  /* Peter-dk org. = -180 */
+  position: absolute;
+  top: 43px;
+  left: 39px;
+  width: 420px;
+  height: 420px;
+  position: absolute;
+  clip: rect(0px, 420px, 420px, 210px);
+  z-index: 12;
+  transform: rotate(-120deg);
+  /* Peter-dk org. = -180 */
 }
-
-    [app="app.gpsspeed"] #speedorpm .circle {
-      width: 400px;
-      height: 400px;
-      border: 10px solid rgba(255, 40, 40, 1);
-      border-radius: 210px;
-      position: absolute;
-      clip: rect(0px, 210px, 420px, 0px);
-      transform: rotate(0deg);
-      box-shadow:inset 0 0 25px rgba(255, 50, 50, 1);
-      opacity:0;
-    }
- 
-    [app="app.gpsspeed"] #GPStimeText {
-        position: absolute;
-        left: 500px;
-        width: 300px;
-        top: 0px;
-        color: #FFFFFF;
-        font-size: 22px;
-        text-align: left;
-        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
-    }
-
-   [app="app.gpsspeed"] #altitudeText {
-        position: absolute;
-        left: 500px;
-        width: 300px;
-        top: 30px;
-        color: #FFFFFF;
-        font-size: 22px;
-        text-align: left;
-        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
-    }
-
-    [app="app.gpsspeed"] #headingText {
-        position: absolute;
-        left: 500px;
-        width: 300px;
-        top: 60px;
-        color: #FFFFFF;
-        font-size: 22px;
-        text-align: left;
-        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
-    }
-
-     [app="app.gpsspeed"] #deltaSpeedText {
-        position: absolute;
-        left: 500px;
-        width: 300px;
-        top: 120px;
-        color: #FFFFFF;
-        font-size: 22px;
-        text-align: left;
-        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
-    }
-
+[app="app.gpsspeed"] #speedorpm .circle {
+  width: 400px;
+  height: 400px;
+  border: 10px solid rgba(255, 40, 40, 1);
+  border-radius: 210px;
+  position: absolute;
+  clip: rect(0px, 210px, 420px, 0px);
+  transform: rotate(0deg);
+  box-shadow: inset 0 0 25px rgba(255, 50, 50, 1);
+  opacity: 0;
+}
+[app="app.gpsspeed"] #GPStimeText {
+  position: absolute;
+  left: 500px;
+  width: 300px;
+  top: 0px;
+  color: #FFFFFF;
+  font-size: 22px;
+  text-align: left;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+}
+[app="app.gpsspeed"] #altitudeText {
+  position: absolute;
+  left: 500px;
+  width: 300px;
+  top: 30px;
+  color: #FFFFFF;
+  font-size: 22px;
+  text-align: left;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+}
+[app="app.gpsspeed"] #headingText {
+  position: absolute;
+  left: 500px;
+  width: 300px;
+  top: 60px;
+  color: #FFFFFF;
+  font-size: 22px;
+  text-align: left;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+}
+[app="app.gpsspeed"] #deltaSpeedText {
+  position: absolute;
+  left: 500px;
+  width: 300px;
+  top: 120px;
+  color: #FFFFFF;
+  font-size: 22px;
+  text-align: left;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+}
 /*    [app="app.gpsspeed"] #latAccText {
         position: absolute;
         left: 500px;
@@ -267,50 +243,47 @@
         text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
     }
 */
-    [app="app.gpsspeed"] #driveTimeText {
-        position: absolute;
-        left: 500px;
-        width: 300px;
-        top: 150px;
-        color: #FFFFFF;
-        font-size: 22px;
-        text-align: left;
-        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
-    }
 
-    [app="app.gpsspeed"] #maxSpeedText {
-        position: absolute;
-        left: 500px;
-        width: 300px;
-        top: 200px;
-        color: #FFFFFF;
-        font-size: 22px;
-        text-align: left;
-        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
-    }
-
-    [app="app.gpsspeed"] #rpmText {
-        position: absolute;
-        left: 10px;
-        width: 200px;
-        top: 30px;
-        color: #FFFFFF;
-        font-size: 22px;
-        text-align: left;
-        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
-    }
-
-    [app="app.gpsspeed"] #tempOutText {
-        position: absolute;
-        left: 10px;
-        width: 200px;
-        top: 0px;
-        color: #FFFFFF;
-        font-size: 22px;
-        text-align: left;
-        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
-    }
-
+[app="app.gpsspeed"] #driveTimeText {
+  position: absolute;
+  left: 500px;
+  width: 300px;
+  top: 150px;
+  color: #FFFFFF;
+  font-size: 22px;
+  text-align: left;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+}
+[app="app.gpsspeed"] #maxSpeedText {
+  position: absolute;
+  left: 500px;
+  width: 300px;
+  top: 200px;
+  color: #FFFFFF;
+  font-size: 22px;
+  text-align: left;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+}
+[app="app.gpsspeed"] #rpmText {
+  position: absolute;
+  left: 10px;
+  width: 200px;
+  top: 30px;
+  color: #FFFFFF;
+  font-size: 22px;
+  text-align: left;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+}
+[app="app.gpsspeed"] #tempOutText {
+  position: absolute;
+  left: 10px;
+  width: 200px;
+  top: 0px;
+  color: #FFFFFF;
+  font-size: 22px;
+  text-align: left;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+}
 /*    [app="app.gpsspeed"] #tempInText {
         position: absolute;
         left: 10px;
@@ -322,40 +295,37 @@
         text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
     }
 */
-    [app="app.gpsspeed"] .button {
-        position: absolute;
-        border:1px solid #fff;
-        border-radius: 10px;
-        width:60px;
-        height:60px;
-        line-height:60px;
-        color: #FFFFFF;
-        font-size: 28px;
-        text-align: center;
-    }
 
-    [app="app.gpsspeed"] .button[context="focused"] {
-        border-color:white;   /* red; */
-    }
-
-    [app="app.gpsspeed"] #msg {
-        position:absolute;
-        left: 200px;
-        width: 480px;
-        top: 70px;
-        height: 300px;
-        background: black;
-        box-shadow: rgba(255, 255, 255, 0.9) 0 0 15px;  
-        font-size: 14px;
-        text-align: center;
-        color: #FFFFFF;
-        z-index: 1000;
-    }
-
-    [app="app.gpsspeed"] #msg .txt {
-        font-size: 14px;
-        text-align: center;
-        color: #FFFFFF;
-        
-    }
-
+[app="app.gpsspeed"] .button {
+  position: absolute;
+  border: 1px solid #fff;
+  border-radius: 10px;
+  width: 60px;
+  height: 60px;
+  line-height: 60px;
+  color: #FFFFFF;
+  font-size: 28px;
+  text-align: center;
+}
+[app="app.gpsspeed"] .button[context="focused"] {
+  border-color: white;
+  /* red; */
+}
+[app="app.gpsspeed"] #msg {
+  position: absolute;
+  left: 200px;
+  width: 480px;
+  top: 70px;
+  height: 300px;
+  background: black;
+  box-shadow: rgba(255, 255, 255, 0.9) 0 0 15px;
+  font-size: 14px;
+  text-align: center;
+  color: #FFFFFF;
+  z-index: 1000;
+}
+[app="app.gpsspeed"] #msg .txt {
+  font-size: 14px;
+  text-align: center;
+  color: #FFFFFF;
+}

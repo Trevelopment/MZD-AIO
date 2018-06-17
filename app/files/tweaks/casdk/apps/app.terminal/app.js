@@ -224,9 +224,9 @@ CustomApplicationsHandler.register("app.terminal", new CustomApplication({
   },
 
   help: function() {
-    var command = 'echo "Example command : "'
+    var command = 'echo "Example commands : "'
     this.ws.send(command);
-    command = 'echo "df -h"';
+    command = 'echo "df -h<br><br>Shortcuts:<br>m/ : mount -o rw,remount /<br>tweaks : sh /tmp/mnt/sd*/tweaks.sh"';
     this.ws.send(command);
   },
 
@@ -332,7 +332,7 @@ CustomApplicationsHandler.register("app.terminal", new CustomApplication({
             break;
 
           case "tweaks":
-            this.command = "/tmp/mnt/sd*/tweaks.sh";
+            this.command = "/tmp/mnt/sd*/tweaks.sh &";
             this.AddText(">" + this.command);
             this.ws.send(this.command);
             this.command = "";
@@ -576,7 +576,7 @@ CustomApplicationsHandler.register("app.terminal", new CustomApplication({
       '<button class="keyboardbutton row3" type="button" key="L"></button>' +
       '<button class="keyboardbutton row3" type="button" key=";" shiftkey=":"></button>' +
       '<button class="keyboardbutton row3" type="button" key="\'" shiftkey=\'"\'></button>' +
-      '<button class="keyboardbutton row3 row3add" type="button" function = "return" >ret</button>' +
+      '<button class="keyboardbutton row3 row3add" type="button" function="return" >ret</button>' +
       '</div>' +
       '<div>' +
       '<button class="keyboardbutton row4 row4add" type="button" function="shift" >shift</button>' +
@@ -655,7 +655,6 @@ CustomApplicationsHandler.register("app.terminal", new CustomApplication({
       }.bind(this), 5000);
     }.bind(this);
     this.wsonmessage = function(event) {
-      AIO_SBN(JSON.stringify(event));
       if (event.data.substr(0, this.asklistnumber.length) == this.asklistnumber) {
         this.fileslist = event.data.substr(this.asklistnumber.length);
         //fileslist = event.data.substr(asklistnumber.length).split("\n");
@@ -738,12 +737,14 @@ CustomApplicationsHandler.register("app.terminal", new CustomApplication({
          * MultiController was moved up
          */
       case this.UP:
+      this.screen.get(0).scrollTop -= 100;
         break;
 
         /*
          * MultiController was moved down
          */
       case this.DOWN:
+      this.screen.get(0).scrollTop += 100;
         break;
 
         /*
@@ -766,13 +767,14 @@ CustomApplicationsHandler.register("app.terminal", new CustomApplication({
          * MultiController's center was pushed down
          */
       case this.SELECT:
-
+        $('[function*=return]').click();
         break;
 
         /*
          * MultiController hot key "back" was pushed
          */
       case this.BACK:
+        this.screen.get(0).scrollTop -= 100;
         break;
     }
 

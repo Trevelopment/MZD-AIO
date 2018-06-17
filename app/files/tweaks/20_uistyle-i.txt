@@ -1,35 +1,15 @@
+backup_org /jci/gui/common/controls/List2/css/List2Ctrl.css
+backup_org /jci/gui/common/controls/NowPlaying4/css/NowPlaying4Ctrl.css
+backup_org /jci/gui/common/css/common.css
 # UI Style Tweaks
 # Trevelopment By: Trezdog44
 show_message "INSTALL UI STYLE TWEAKS ..."
 log_message "==========************  INSTALL UI STYLE TWEAKS ...  **********=========="
 
-# Always create a backup
-if [ ! -e /jci/gui/common/controls/List2/css/List2Ctrl.css.org ]
-then
-  cp -a /jci/gui/common/controls/List2/css/List2Ctrl.css /jci/gui/common/controls/List2/css/List2Ctrl.css.org
-  log_message "===                       Backup of List2Ctrl.css                     ==="
-fi
-if [ ! -e /jci/gui/common/controls/NowPlaying4/css/NowPlaying4Ctrl.css.org ]
-then
-  cp -a /jci/gui/common/controls/NowPlaying4/css/NowPlaying4Ctrl.css /jci/gui/common/controls/NowPlaying4/css/NowPlaying4Ctrl.css.org
-  log_message "===                     Backup NowPlaying4Ctrl.css                    ==="
-fi
-if [ $KEEPBKUPS -eq 1 ]
-then
-  cp -a /jci/gui/common/controls/List2/css/List2Ctrl.css.org "${MYDIR}/bakups/"
-  cp -a /jci/gui/common/controls/NowPlaying4/css/NowPlaying4Ctrl.css.org "${MYDIR}/bakups/"
-  aio_info \"NowPlaying4Ctrl.css.org\",
-  aio_info \"List2Ctrl.css.org\",
-  aio_info \"MainMenuCtrl.css.org\",
-fi
-if [ $TESTBKUPS -eq 1 ]
-then
-  cp -a /jci/gui/common/controls/List2/css/List2Ctrl.css "${MYDIR}/bakups/test/List2Ctrl_before.css"
-  cp -a /jci/gui/common/controls/NowPlaying4/css/NowPlaying4Ctrl.css "${MYDIR}/bakups/test/NowPlaying4Ctrl_before.css"
-fi
 # Remove existing MZD-AIO-TI CSS and add new CSS to the end of the file
 remove_aio_css /jci/gui/common/controls/List2/css/List2Ctrl.css UISTYLE
 remove_aio_css /jci/gui/common/controls/NowPlaying4/css/NowPlaying4Ctrl.css UISTYLE
+remove_aio_css /jci/gui/common/css/common.css UISTYLE
 sed -i "/.. MZD-AIO-TI CSS ../,/.. END AIO CSS ../d" /jci/gui/common/controls/NowPlaying4/css/NowPlaying4Ctrl.css
 log_message "===         Removed any existing UI Style CSS modifications           ==="
 
@@ -73,6 +53,15 @@ body {
 }
 .TabsCtrlLabelSpan {
   text-shadow: none;
+}
+/* END AIO UISTYLE CSS */
+EOT
+
+cat <<EOT >> /jci/gui/common/css/common.css
+/* MZD-AIO-TI UISTYLE CSS */
+/* Text Shadows */
+body {
+  ${UI_STYLE_SHADOW}
 }
 /* END AIO UISTYLE CSS */
 EOT

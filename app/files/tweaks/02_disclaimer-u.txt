@@ -7,38 +7,33 @@ TRACKORDER_DISCLAIMER=2
 if [ $COMPAT_GROUP -eq 1 ]
 then
   TRACKORDER_DISCLAIMER=0
-elif [ $COMPAT_GROUP -eq 2 ]
-then
-  TRACKORDER_DISCLAIMER=1
-  TRACKORDER_DISCLAIMER_FILE=58.00.250A-NA
-  log_message "===       FW ${CMU_SW_VER} detected, copy matching systemApp.js       ==="
-elif [ $COMPAT_GROUP -eq 3 ] || [ $COMPAT_GROUP -eq 4 ]
-then
-  TRACKORDER_DISCLAIMER=1
-  TRACKORDER_DISCLAIMER_FILE=59.00.330
-  log_message "===       FW ${CMU_SW_VER} detected, copy matching systemApp.js       ==="
-elif [ $COMPAT_GROUP -eq 5 ]
+elif [ $COMPAT_GROUP -ge 2 ] && [ $COMPAT_GROUP -le 5 ]
 then
   TRACKORDER_DISCLAIMER=1
   TRACKORDER_DISCLAIMER_FILE=59
   log_message "===       FW ${CMU_SW_VER} detected, copy matching systemApp.js       ==="
+elif [ $COMPAT_GROUP -eq 6 ]
+then
+  TRACKORDER_DISCLAIMER=1
+  TRACKORDER_DISCLAIMER_FILE=70
+  log_message "===       FW ${CMU_SW_VER} detected, copy matching systemApp.js       ==="
 fi
 
-# Compatibility check falls into 4 groups:
-# 59.00.4XX ($COMPAT_GROUP=4)
-# 59.00.3XX ($COMPAT_GROUP=3)
-# 58.00.XXX ($COMPAT_GROUP=2)
+# Compatibility check falls into 3 groups:
+# 70.00.XXX ($COMPAT_GROUP=6)
+# 58.00.XXX - 59.00.XXX ($COMPAT_GROUP=2-5)
 # 55.XX.XXX - 56.XX.XXX ($COMPAT_GROUP=1)
+
 if [ $TRACKORDER_DISCLAIMER -ne 2 ] && [ -e /jci/gui/apps/system/js/systemApp.js.audio ] && grep -q "^var FmRadioPos" /jci/gui/apps/system/js/systemApp.js.audio
 then
   if [ $TRACKORDER_DISCLAIMER -eq 1 ]
   then
-    #cp -a "${MYDIR}/config_org/audio_order_AND_no_More_Disclaimer/only_change_audio_order/jci/gui/apps/system/js/systemApp.${TRACKORDER_DISCLAIMER_FILE}.js" /jci/gui/apps/system/js/systemApp.js
-    cat /jci/gui/apps/system/js/systemApp.js.audio "${MYDIR}/config_org/audio_order_AND_no_More_Disclaimer/only_change_audio_order/jci/gui/apps/system/js/systemApp.${TRACKORDER_DISCLAIMER_FILE}.js" > /jci/gui/apps/system/js/systemApp.js
+    #cp -a "${MYDIR}/config/audio_order_AND_no_More_Disclaimer/only_change_audio_order/jci/gui/apps/system/js/systemApp.${TRACKORDER_DISCLAIMER_FILE}.js" /jci/gui/apps/system/js/systemApp.js
+    cat /jci/gui/apps/system/js/systemApp.js.audio "${MYDIR}/config/audio_order_AND_no_More_Disclaimer/only_change_audio_order/jci/gui/apps/system/js/systemApp.${TRACKORDER_DISCLAIMER_FILE}.js" > /jci/gui/apps/system/js/systemApp.js
     log_message "===  Restored Disclaimer for ${CMU_SW_VER}, audio order still changed ==="
   else #[ $TRACKORDER_DISCLAIMER -eq 0 ]
-    #cp -a "${MYDIR}/config_org/audio_order_AND_no_More_Disclaimer/only_change_audio_order/jci/gui/apps/system/js/systemApp.js" /jci/gui/apps/system/js/
-    cat /jci/gui/apps/system/js/systemApp.js.audio "${MYDIR}/config_org/audio_order_AND_no_More_Disclaimer/only_change_audio_order/jci/gui/apps/system/js/systemApp.js" > /jci/gui/apps/system/js/systemApp.js
+    #cp -a "${MYDIR}/config/audio_order_AND_no_More_Disclaimer/only_change_audio_order/jci/gui/apps/system/js/systemApp.js" /jci/gui/apps/system/js/
+    cat /jci/gui/apps/system/js/systemApp.js.audio "${MYDIR}/config/audio_order_AND_no_More_Disclaimer/only_change_audio_order/jci/gui/apps/system/js/systemApp.js" > /jci/gui/apps/system/js/systemApp.js
     log_message "===          Restored Disclaimer, audio order still changed           ==="
   fi
 elif [ -e /jci/gui/apps/system/js/systemApp.js.org ]

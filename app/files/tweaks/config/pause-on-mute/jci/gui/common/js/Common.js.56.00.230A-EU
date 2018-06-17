@@ -18,8 +18,7 @@
  v0.2 (27-Aug-2012) Added basic logic for "global" controls, multicontroller events, transitions, ctrl clicks, basic BG logic
  v0.3 (28-Aug-2012) Added logic for alerts
  v0.4 (11-Oct-2012) Added logic to hide Home Button while on Home Screen
- v0.5 (04-Nov-2012) Added API to display App Name in Status Bar
-                    Added Diag Entry logic
+ v0.5 (04-Nov-2012) Added API to display App Name in Status Bar Added Diag Entry logic
  v0.6 (08-Nov-2012) Added API for Setting the Left Button Style.
  v0.7 (19-Nov-2012) Changed Alert event to conform with MMUI standards. Added API to set the Status Bar Clock with value from MMUI.
  v0.8 (26-Nov-2012) Fixed Diagnostics Entry. Common now counts a sequence to make sure the sequence is complete before resetting.

@@ -7,5 +7,10 @@ log_message "========****** UNINSTALL REMOVE TOUCHSCREEN RESTRICTION ... ******=
 /jci/scripts/set_speed_restriction_config.sh enable
 log_message "===              Touchscreen Speed Restriction Enabled                ==="
 
+if grep -Fq "//\"Global.AtSpeed" /jci/gui/common/js/Common.js
+then
+  sed -i 's/\/\/.Global.AtSpeed/"Global.AtSpeed/g' /jci/gui/common/js/Common.js
+fi
+
 log_message "====***** END UNINSTALLATION OF REMOVE TOUCHSCREEN RESTRICTION  *****===="
 log_message " "

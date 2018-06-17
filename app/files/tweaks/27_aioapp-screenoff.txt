@@ -1,0 +1,2 @@
+sed -i 's/var turnScreenOff = .*;/var turnScreenOff = true;/g' /jci/gui/apps/_aiotweaks/js/AIO-startup.js
+log_message "======**********       SET SCREEN OFF ON BOOT       **************======="

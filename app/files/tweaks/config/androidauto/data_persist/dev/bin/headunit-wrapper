@@ -2,9 +2,34 @@
 
 SCRIPT=$(readlink -f "$0")
 SCRIPTPATH=$(dirname "$SCRIPT")
+HEADUNIT_CMD="${SCRIPTPATH}/headunit"
+LOGPATH=/tmp/mnt/data/headunit.log
+SCRIPT_ARGS=$@
 
 export LD_LIBRARY_PATH="${SCRIPTPATH}/headunit_libs:/jci/lib:/jci/opera/3rdpartylibs/freetype:/usr/lib/imx-mm/audio-codec:/usr/lib/imx-mm/parser:/data_persist/dev/lib:"
 #override some GST plugins with these
 export GST_PLUGIN_PATH="${SCRIPTPATH}/headunit_libs"
 
-taskset 0xFFFFFFFF "${SCRIPTPATH}/headunit" "$@" 2>&1 | tee /tmp/mnt/data/headunit.log
+# This function starts the headunit process and
+# sets the process affinity via taskset. The
+# return value of this function is the pid of
+# the headunit process.
+start_headunit()
+{
+    local pid
+    taskset 0xFFFFFFFF "${HEADUNIT_CMD}" "$@" 2>&1 | tee ${LOGPATH}
+    # return the pid -- technically this is for "tee", but if
+    # headunit crashes, the pipe will break and tee should exit.
+    echo $!
+}
+
+headunit_pid=$(start_headunit "${SCRIPT_ARGS}")
+# loop forever. every 10 seconds, check if headunit is running.
+# if it's not running, start it again.
+while true
+do
+    sleep 10
+    if ! kill -0 ${headunit_pid} >/dev/null 2>&1 ; then
+        headunit_pid=$(start_headunit "${SCRIPT_ARGS}")
+    fi
+done

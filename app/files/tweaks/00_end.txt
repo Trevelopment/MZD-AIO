@@ -4,6 +4,11 @@ then
   sed -i '/^ *$/ d' ${ADDITIONAL_APPS_JSON}
   cp ${ADDITIONAL_APPS_JSON} "${MYDIR}/bakups/test/additionalApps.after.json"
 fi
+if [ -e /tmp/mnt/data/aio.log ]
+then
+  # copy aio log if present
+  mv /tmp/mnt/data/aio.log ${MYDIR}/bakups/
+fi
 log_message " "
 sleep 2
 log_message "======================= END OF TWEAKS INSTALLATION ======================"

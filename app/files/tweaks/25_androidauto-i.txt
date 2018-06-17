@@ -13,27 +13,21 @@ fi
 killall -q -9 headunit
 pkill websocketd
 
-rm -f /tmp/mnt/data_persist/dev/bin/headunit
+rm -fr /jci/gui/apps/_androidauto
+rm -fr /tmp/mnt/data_persist/dev/bin/headunit*
+rm -fr /tmp/mnt/data_persist/dev/androidauto
 rm -f /tmp/mnt/data_persist/dev/bin/aaserver
-rm -f /tmp/mnt/data_persist/dev/bin/headunit-wrapper
 rm -f /tmp/mnt/data_persist/dev/bin/input_filter
 rm -f /tmp/mnt/data/enable_input_filter
 rm -f /tmp/mnt/data/input_filter
-rm -fr /tmp/mnt/data_persist/dev/androidauto
-rm -fr /jci/gui/apps/_androidauto
-rm -fr /tmp/mnt/data_persist/dev/bin/headunit_libs
-sed -i '/Android Auto start/d' /jci/scripts/stage_wifi.sh
-sed -i '/hwclock --hctosys/d' /jci/scripts/stage_wifi.sh
-sed -i '/websocketd --port=9999 sh &/d' /jci/scripts/stage_wifi.sh
-sed -i '/headunit-wrapper &/d' /jci/scripts/stage_wifi.sh
 sed -i '/9999/d' /jci/scripts/stage_wifi.sh
 sed -i '/headunit/d' /jci/scripts/stage_wifi.sh
 sed -i '/Android Auto/d' /jci/scripts/stage_wifi.sh
 log_message "===                   Removed old Android Auto App                    ==="
 if grep -Fq "input_filter" /jci/sm/sm.conf
 then
-	log_message "===           Clean obsolete input_filter to /jci/sm/sm.conf          ==="
 	sed -i '/input_filter/ d' /jci/sm/sm.conf
+	log_message "===           Clean obsolete input_filter to /jci/sm/sm.conf          ==="
 fi
 
 # delete empty lines
@@ -58,10 +52,7 @@ fi
 
 cp -a ${MYDIR}/config/androidauto/data_persist/dev/* /tmp/mnt/data_persist/dev
 cp -a ${MYDIR}/config/androidauto/jci/gui/apps/_androidauto /jci/gui/apps
-chmod 755 /tmp/mnt/data_persist/dev/bin/headunit_libs/libgsth264parse.so
-chmod 755 /tmp/mnt/data_persist/dev/bin/headunit_libs/libmfw_gst_isink.so
-chmod 755 /tmp/mnt/data_persist/dev/bin/headunit
-chmod 755 /tmp/mnt/data_persist/dev/bin/headunit-wrapper
+chmod -R 755 /tmp/mnt/data_persist/dev/bin/
 log_message "===                Copied Android Auto Headunit App files             ==="
 
 # copy additionalApps.js, if not already present
@@ -88,18 +79,15 @@ fi
 # call function add_app_json to modify additionalApps.json
 add_app_json "_androidauto" "Android Auto" "preload.js"
 
-# Remove obsolete patch to asound.conf
-SOUND_X=$(grep -c "tel_asymed" /etc/asound.conf)
-if [ $SOUND_X -eq 1 ]; then
-	# remove patch to /etc/asound.conf Bluetooth calling Bug is fixed
-	log_message "===     Detected Bluetooth call patch in asound.conf reverting file   ==="
-	if [ -e /etc/asound.conf.org ];	then
-		if mv /etc/asound.conf.org /etc/asound.conf; then
-			log_message "===     /etc/asound.conf reverted from backup /etc/asound.conf.org    ==="
-		else
-			log_message "===           Error removing patch from /etc/asound.conf              ==="
-		fi
-	fi
+if [ -e /etc/asound.conf.org ]
+then
+  # fix link from previous version
+  if ! [ -L /etc/asound.conf ]; then
+    mv /etc/asound.conf ${MYDIR}/asound.conf.AA
+    ln -sf /data/asound.conf /etc/asound.conf
+  fi
+  rm -f /etc/asound.conf.org
+  log_message "===     /etc/asound.conf reverted from factory /data/asound.conf    ==="
 fi
 
 if [ $TESTBKUPS -eq 1 ]
@@ -114,5 +102,3 @@ then
 	mv /tmp/mnt/data/headunit.log ${MYDIR}
 	log_message "===                 Moved headunit.log To USB Drive                   ==="
 fi
-log_message "====******** END INSTALLATION OF ANDROID AUTO HEADUNIT APP *********====="
-log_message " "

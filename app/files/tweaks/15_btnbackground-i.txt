@@ -1,18 +1,8 @@
+backup_org /jci/gui/common/controls/Ump3/css/Ump3Ctrl.css
 # no button background graphics
 show_message "INSTALL REMOVE BACKGROUND OVERLAY GRAPHICS ..."
 log_message "======******* INSTALL REMOVE BACKGROUND OVERLAY GRAPHICS ... ******======"
 
-# Backups
-if [ ! -e /jci/gui/common/controls/Ump3/css/Ump3Ctrl.css.org ]
-then
-	cp -a /jci/gui/common/controls/Ump3/css/Ump3Ctrl.css /jci/gui/common/controls/Ump3/css/Ump3Ctrl.css.org
-	log_message "===      Backup of /jci/gui/common/controls/Ump3/css/Ump3Ctrl.css     ==="
-fi
-if [ $KEEPBKUPS -eq 1 ]
-then
-	cp -a /jci/gui/common/controls/Ump3/css/Ump3Ctrl.css.org "${MYDIR}/bakups/"
-	aio_info \"Ump3Ctrl.js.org\",
-fi
 # Remove CSS that is already been added
 sed -i "/.. MZD-AIO-TI NO-BTN-BG ../,/.. END AIO CSS ../d" /jci/gui/common/controls/Ump3/css/Ump3Ctrl.css
 # Append css

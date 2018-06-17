@@ -1,3 +1,0 @@
-sed -i 's/var speedMod = false;/var speedMod = true;/g' /jci/gui/apps/_speedometer/js/speedometer-startup.js
-log_message "===       Set flag for speedometer mod in speedometer-startup.js      ==="
-chmod -R 755 /jci/fonts

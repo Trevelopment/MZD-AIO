@@ -33,15 +33,7 @@ then
   chmod 755 /jci/opera/opera_dir/userjs/additionalApps.json
   log_message "===                   Created additionalApps.json                     ==="
 fi
-# Add startup file check for speedometer app too
-if [ -e /jci/gui/apps/_speedometer/js/speedometer.js ]
-then
-  cp -a ${MYDIR}/config/mzdmeter/jci/opera/opera_dir/userjs/speedometer-startup.js /jci/opera/opera_dir/userjs/
-  log_message "===              Speedometer installed copied startup file            ==="
-else
-  cp -a ${MYDIR}/config/mzdmeter/jci/opera/opera_dir/userjs/mzdmeter-startup.js /jci/opera/opera_dir/userjs/speedometer-startup.js
-  log_message "===                   Copied mzdmeter startup file                    ==="
-fi
+
 # Copies the content of the addon-common folder
 if [ ! -e /jci/gui/addon-common/websocketd ]  || [ ! -e /jci/gui/addon-common/jquery.min.js ]; then
   cp -a ${MYDIR}/config/jci/gui/addon-common/ /jci/gui/

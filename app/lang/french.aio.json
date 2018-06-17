@@ -1,80 +1,38 @@
 {
   "languages": {
     "en": {
-      "id": 1,
       "lang": "Anglais"
     },
     "de": {
-      "id": 2,
       "lang": "Allemand"
     },
     "fr": {
-      "id": 3,
       "lang": "Français"
     },
     "sp": {
-      "id": 4,
       "lang": "Espagnol"
     },
     "pl": {
-      "id": 5,
       "lang": "Polonais"
     },
     "trk": {
-      "id": 7,
       "lang": "Turque"
     },
     "slv": {
-      "id": 8,
       "lang": "Slovaque"
     },
     "hu": {
-      "id": 9,
       "lang": "Hongrie"
     }
   },
   "helpMsgs": [{
-    "id": 0,
     "title": "Introduction",
     "msg": "<b>Installer et desintaller plus de 40 'Tweaks' pour votre Mazda MZD Infotainment System</b> \n Mazda 2 (DJ), Mazda 3 (BM), Mazda 6 (GJ), Mazda CX-3 (DK), Mazda CX-5 (KE), Mazda MX-5 Roadster (ND) et la nouvelle 2017 Mazda CX-9 (TC)<br>Fiat Spider, Toyota ScionA<h5>\n<b>Qu'est-ce MZD-AIO-TI?</b></h5> \nMon bon ami Siutsch a copié des fichiers de différents nombreux réglages pour son système d'infotainment et a pensé qu'il serait utile si vous pouviez choisir quels réglages vous souhaitez installer ou désinstaller. Il a continué à développer un programme basé sur CMD pour accomplir cette tâche, il fonctionnait très bien mais avait atteint certaines limitations et manquait ce look d'application moderne. J'ai contacté Siutsch et lui ai proposé que nous faisions le prochain AIO desktop app style avec les mêmes réglages de AIO v1.5.x que nous connaissons et aimons tous. J'ai ensuite développé MZD-AIO-TI.\n\n S'il vous plaît, soyez conscient lorsque vous installer les tweak. ** Cette application sera automatiquement mise à jour. \n\nThis program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.\n\nThis program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the <a href='' onclick='externalLink(`copyleft`)'>Copyleft</a> Under The <a href='http://aio.trevelopment.win/gpl3' data-featherlight='ajax' data-featherlight-loading='<img src=\"files/img/gplv3.png\" alt=\"GPLv3\"><br><b>GNU GPLv3<br>LOADING....</b>'>GNU General Public License</a> for more details.",
     "t2": "",
     "msg2": ""
   }, {
-    "id": 1,
     "title": "Tweaking",
-    "msg": "<h3>Tous les changements sont à vos risques! </h3>\n <b>SVP, veuillez comprendre que vous pouvez endommager ou casser votre infotainment system en utilisant ces tweaks! </b>Toute personnes qui n'est pas sûr de ce qu'elle fait doit demander de l'aide à un utilisateur avec de l'expérience ou demande de l'aide sur le <a href=\"\" onclick=\"externalLink('mazda3revolution')\">forum</a>.<h5>Je ne suis pas résponsable des dommages causé par l'utilisation.</h5>Cela dit, MZD-AIO-TI a été construit avec la sécurité à l'esprit il y a 3 niveaux de sécurité basée sur la quantité ou la partie du système est modifié: - Sûr - Très testé et accepté comme relativement sûr - Avertissement - Modifie le système sensible Fichiers ou je ne me suis pas encore testé. Surtout sûr, mais utiliser avec prudence! La plupart d'entre eux finiront par être rebaptisés. - Développement - Ce sont des ajustements qui sont encore en développement, ou ne fonctionnent pas encore. Seul Android Auto est actuellement à ce niveau et <a href=\"\" onclick=\"externalLink('AAIssueFix')\">récemment le problème a été résolu.</a>",
-    "t2": "Version compatible des Firmwares :",
-    "msg2": "###### 55.00.650A/753A/760A / 56.00.521A-NA(NA N) \n\n###### 56.00.100A/230A/240B/511A/512A/513C/514A-ADR(4A N) \n\n###### 56.00.100A/230A/511A/512A/513A/513B/513C-EU \n\n###### 56.00.401A/403A-JP | 56.00.100A-CHN \n\n###### 58.00.250A-NA(NA N) / 58.00.251A-ADR(4A N) \n\n59.00.326A/330A/342A/442A/443C-ADR(4A N) \n\n###### 59.00.330A/441A/443A/446A/450A-NA(N NA) \n\n###### 59.00.330A/331A/443C/447A/449A-EU \n\n###### \n\nUtiliser uniquement avec Firmware Versions&gt; = v55. N'UTILISEZ PAS avec V30 / 31/33 OU VOUS CASSEREZ VOTRE SYSTÈME, IL PARTIRA EN BOUCLE SUR LE MAZDA BOOT! Pour être sûr, AIO-TI annulera automatiquement l'installation si aucune version de microprogramme n'est trouvée. Pour surmonter cela, vous devez être à l'aise tweaks.sh directement, trouver le code qui bloque la verification du firmware et désactiver ou ajouter votre version à la liste des firmwares compatibles. ** Vous faites ceci à vos propres risques! **"
-  }, {
-    "id": 2,
-    "title": "Reverting",
-    "msg": "**Almost all the tweaks** can be uninstalled to revert to the system default state. <div class='w3-padding w3-right w3-third'>Default Background: <br><br><img style='cursor:pointer' data-featherlight='../background-images/default/default.png' src='../background-images/default/default.png' /></div>\n\n - AIO creates backups of all the files that it modifies and uses those backups when reverting. AIO also contains an original version of each file just in case any of the backup files are missing. In future versions I plan to include an option to copy and store your own system's backup files into AIO as a failsafe to ensure compatability for future CMD versions.\n - In general, for all Compatible CMD versions it is safe to run uninstalls of tweaks that have not been installed BUT keep in mind that AIO will overwrite the files involved with the included failsafe backups because it will not find any available backups in the system.  So try to avoid running uninstallers for tweaks that you have not installed.",
-    "t2": "What Parts Of The System Are Not Reverted By AIO?",
-    "msg2": "<h4><b>MZD-AIO-TI modifies some files in the system that cannot be reverted back using this app.</b></h4> \n\nThese first 3 files honestly should never be reverted because a mistake in one of these files will result in a unrecoverable bootloop.  They are only modified to disable the system from triggering a reboot on error and consequently creating a bootloop, so reverting them would put your system at a high risk. **Only the first time** the installer runs on your system they are backed up and modified.\n\n**DO NOT MODIFY ANY OF THESE FILES YOURSELF, YOU WILL BREAK YOUR SYSTEM IF YOU DO**\n\n- /jci/sm/sm.conf (Also modified by the Android Auto Tweak)\n- /jci/opera/opera_home/opera.ini \n- /jci/opera/opera_dir/userjs/fps.js\n\n##### These 2 tweaks have no uninstall because the system should have had these enabled by default.\n\n- Wifi (NA Region)\n- SSH_Bringback"
-  }, {
-    "id": 3,
-    "title": "Troubleshooting",
-    "msg": "Here are some common errors with ways to avoid them. \n#### If you keep hitting errors and/or hang ups:\n - The most common issue is a file system access error: resource busy or locked.  This occurs when a file or directory cannot be modified becasue it is open or being used by another program. While compiling, close all folders and documents especially files that are actively being used by MZD-AIO-TI (*ex: '_copy_to_usb'*)\n - <s>Try selecting fewer tweaks at a time, picking too many increases the chaces for an unexpected error.</s> I have tested running every single tweak at once many times, if you are consistantly hitting an error please report the bug. \n - If the installer does not start in the car try reformatting your USB drive as FAT32 and make sure all other USB devices are disconnected. It helps to turn bluetooth off too. NAV SD card should be left in.",
-    "t2": "If you are having Video Player Issues",
-    "msg2": " Try:\n\n- Place your videos in a folder named 'Movies'! \n\n- Use H264 video codec and MPEG-4 AAC audio codec in video files\n\n- Unplug all other USB drives, especially one, with many MP3s on it \n\n- Copy only one mp3 on your video USB drive \n\n- Copy only a few videos on your stick (you don't have to delete, rename to *._mp4 is OK too, so that they will not found anymore) \n\n- Reboot your system and try to play a video right after that \n\n- Close the player and start again \n\n- If that doesn't work, then change the audio input.\n\n- Sometimes the first video selected lags or fails to start but pressing 'next' will sometimes start the next video.\n\n- Videos can be: MP4, AVI, FLV, WMV"
-  }, {
-    "id": 4,
-    "title": "Contributing",
-    "msg": "Though I did build this user interface, the more valuable aspects of this project are the tweak files.  Communities like <a href='' onclick=externalLink('mazda3revolution')>Mazda3Revolution Forum</a> out there and many developers laid down the groundwork from which this app is built and will continue to play an important role in future developments.\n\nIf you want to contributes a tweak, make sure you test your tweak thouroughly.  <br><br>If you are an expert in javascript or AngularJS then feel free to fix up my code (its a little bit messy... sorry) or implement more of the ui 'The Angular Way'<br><br>This Project Is <a href='' onclick='externalLink(`copyleft`)'>Copyleft</a> Under The <a href='http://aio.trevelopment.win/gpl3' data-featherlight='ajax' data-featherlight-loading='<img src=\"files/gplv3.png\" alt=\"GPLv3\"><br><b>GNU GPLv3<br>LOADING....</b>'><span class='icon-network'></span> GPLv3.0 License</a><br><br><a href='' onclick='externalLink(`github`)'><span class='icon-github2'></span> Github Repo</a>",
-    "t2": "Issues",
-    "msg2": "- FW Versions 59.xx.xxx apps do not show up in the app menu (Speedometer and Video Player) also have an issue with the date to statusbar mod (rejects on installation for effecgted FW versions.) \n- If there is not enough space free on the USB drive, you will hang up while copying to USB drive. This may happen if you are copying the swapfile on a drive that is almost full. I plan to fix this in a future version and have an error message pop up. \n- If you installed the 'No Background Behind Buttons' tweak and are going to install a color scheme, it will restore the background behind buttons. Prevent this by selecting both tweaks in the same installation.\n- The Google Translator will try to translate certain parts of the code resulting in unexpected effects.  Try to use it to make a translated file with the translator to include in the next version so everything will still work when others use the language."
-  }, {
-    "id": 5,
-    "title": "Tips & Tricks",
-    "msg": "I will include some tips that go above and beyond this app. <br><br><a href='' onclick=externalLink('emulate')>Here are instructions how to run the CMU OS on yor computer.</a><br><br><a href='' onclick=externalLink('cmu-autorun')>CMU-Autorun script for testing and recovery.</a><h4><em>How to run Android Auto from an SD card</em></h4><p>First of all uninstall Android Auto from your system.  Click the CMU-Autorun link above and download the repository (download button is on the top right next to \"<span class='icon-search4'></span>Find File\").  Copy the \"installer\" Folder to a blank USB drive to install the autorun script, this script will run every time the system boots up.   The script looks at the root of the SD card (if available) for a file called \"run.sh\" and if found, executes the file. After installing, copy the \"dryrun\" folder onto an SD card to test that the installation worked correctly. </p><p>AA - Copy the contents of the \"headunit\" folder to the root of a blank SD card, connect before booting up infotanment system, a message will show the first time to confirm it is running.  \nPlug in an Android Auto compatible phone to start.</p><p><b>Caveats:</b> The device with the headunit files must be connected before booting up the infotainment system to run. Once the headunit app is running it is loaded into memory and will silently run in the background, this means that even if you remove the SD card the headunit app will still be running in memory.  To stop the process you can do one of these things: <ol><li>Turn off the vehicle for about 5-10 minutes</li><li>Hard reset (hold: mute + nav + back)</li><li>Login SSH, enter command 'killall headunit'</li></ol></p><hr><p><h3>Want to run tweaks from an SD card?</h3>With autorun script installed copy tweak files to an SD card.  Rename \"tweaks.sh\" to \"run.sh\".  Boot up the system and tweaks will run as expected.  NOTE: I/O to SD card is slower than USB so installation will take longer.</p>",
-    "t2": "Technical Talk",
-    "msg2": "This app is built with <a href='' onclick='externalLink(`Electron`)' title='Electron'>Electron</a> and <a href='' onclick='externalLink(`AngularJS`)' title='AngularJS'>AngularJS</a>"
-  }, {
-    "id": 6,
-    "title": "Help & Settings",
-    "msg": "<h2>Help:</h2> \n<div class='w3-display-topright w3-margin-top'><a href='' id='aio-settings-btn' class='w3-btn' onclick='$(`#helpMenuTop`).toggleClass(`w3-hide`)' data-toggle='tooltip' data-placement='auto' title='MZD-AIO-TI Settings'><span class='icon-tools2'></span></a></div></div><div class='w3-panel'><div class='w3-twothird'>  For instructions on how to generate tweak files:</div><div class='w3-third w3-medium'><a class='w3-btn' ng-click='startTour()' id='tourBtn'><span class='icon-car2'></span> Take The Tour</a></div></div><div class='w3-panel'><div class='w3-twothird'><p>If you you hit an error <br>or a hang up you can:</p><p>Or you can:</p></div><div class='w3-third w3-medium'><a class='w3-btn' onclick='location.reload()'><span class='icon-refresh'></span> Reload App</a><a class='w3-btn' onclick='app.relaunch();app.exit()'><span class='icon-rocket3'></span> Relaunch App</a></div></div><div class='w3-panel'><div class='w3-twothird'><p>Love this app? Donating is a great way to show some love!:</p></div><div class='w3-third w3-medium'><a class='w3-btn' onclick='donate()'><span class='icon-money'></span> Donate</a></div></div><hr>",
-    "t2": "",
-    "msg2": ""
+    "t2": "Version compatible des Firmwares :"
   }],
   "FAQs": {
     "title": "FAQ",
@@ -101,173 +59,120 @@
     "a10": "I have improved on many of the existing tweaks and tweaks.sh as a whole but I do have a job and Developing the GUI for this app is a pretty hefty task. That being said, I do have ideas for future tweaks and I will take suggestions but no promises. You can contact me with the contact form on the bottom right of the app."
   },
   "tourMsgs": [{
-    "id": 0,
     "msg": "<h1>Bienvenue sur le MZD-AIO-TI!</h1><br><h3>Mazda All In One Tweaks Installeur</h3>Pour installer et desinstaller plus de 40+ 'Tweaks' sur le Mazda MZD Infotainment System."
   }, {
-    "id": 1,
     "msg": "Ceci est le menu des Tweaks disponible. Vous pouvez choisir de les installer ou desinstaller."
   }, {
-    "id": 2,
     "msg": "Cette zone vous liste tous les Twekans séléctionné. Ici vous aurez les option supplémentaire et vous pouvez cliquer dessus pour avoir de l'aide ou des informations."
   }, {
-    "id": 3,
     "msg": "<div>Les des actions supplémentaire telle que la sauvegadres du répertoire JCI &amp; activation du wifi pour le nord de l'Amérique.</div>"
   }, {
-    "id": 4,
     "msg": "<div>Ces options peuvent être restaurées à l'état d'origine en séléctionnant leur option par défaut.</div>"
   }, {
-    "id": 5,
     "msg": "<div>Le menu&nbsp;</div>The menus have more help topics and links to resources and documentation."
   }, {
-    "id": 6,
     "msg": "<div>Quand vous avez séléctionné tous vos tweaks, cliquez sur Démarrer la compilation !</div>"
   }, {
-    "id": 7,
     "msg": "<div>Copie le contenu entier du dossier \"_copy_to_usb\" sur une clé USB vierge formatée en FAT32. Branchez votre clé USB et retirer tous les autres périphériques USB. Laisser votre carte de navigation (carte SD) dans le lecteur. Mettre le contact dans la voiture pour le que MZD s'allume. Désactiver le bluthooth et le wifi (conseillé). Une fois l'installation terminée, le système redémarre, vous pouvez retirer la clé USB et les modifications seront appliquées.</div>"
   }, {
-    "id": 8,
     "msg": "Pour plus d'information, visitez&nbsp;<a href=\"\" onclick=\"externalLink(&quot;mazdatweaks&quot;)\" title=\"Mazda Tweaks\">MazdaTweaks.com!</a>"
   }],
   "popupMsgs": [{
-    "id": 0,
     "msg": "Préparation de la compilation... veuillez patientez..."
   }, {
-    "id": 1,
     "msg": "Emplacement des fichiers des logiciels"
   }, {
-    "id": 2,
     "msg": "<small>(Pour de meilleurs résultats, veuillez effacer votre clé USB avant la copie)</small>"
   }, {
-    "id": 3,
     "msg": "Copie sur votre clé USB"
   }, {
-    "id": 4,
     "msg": "Pas prêt"
   }, {
-    "id": 5,
     "msg": "Ouverture de la clé USB"
   }, {
-    "id": 6,
     "msg": "<div>Les lecteurs suivant sont disponibles :</div>"
   }, {
-    "id": 7,
     "msg": "<div>Souhaitez-vous que je copie directement les fichiers sur une cle USB?</div><div>(Veuillez supprimer les données de la cle avant !)</div>"
   }, {
-    "id": 8,
     "msg": "<div>Sur quelle lettre de lecteur souhaitez-vous que je copie?</div>"
   }, {
-    "id": 9,
     "msg": "Aucune clé USB disponible. Copie du contenu sur"
   }, {
-    "id": 10,
     "msg": "une clé USB vierge formatée en FAT32"
   }, {
-    "id": 11,
     "msg": "Copie sur la clé USB"
   }, {
-    "id": 12,
     "msg": "Veuillez patientez"
   }, {
-    "id": 13,
     "msg": "Decompression du fichier d'échange sur"
   }, {
-    "id": 14,
     "msg": "Cela prend quelques minutes... soyez patient."
   }, {
-    "id": 15,
     "msg": "Taille du fichier d'échange : 1Gb"
   }, {
-    "id": 16,
     "msg": "Pendant que vous patientez, voici quelques informations"
   }, {
-    "id": 17,
     "msg": "Recommancer"
   }, {
-    "id": 18,
     "msg": "Voir le log de compilation AIO"
   }, {
-    "id": 19,
     "msg": "Sortir"
   }, {
-    "id": 20,
     "msg": "Réussi !"
   }, {
-    "id": 21,
     "msg": "Supprimer le repertoire _copy_to_usb après la copie"
   }],
   "mainOps": {
     "wifi": {
-      "id": 0,
       "label": "Activation WIFI",
-      "safetylvl": "safe",
       "toolTip": "<h5>WIFI </h5>Activation du WIFI pour l'Amérique du Nord"
     },
     "backup": {
-      "id": 1,
       "label": "Sauvegarde dossier JCI",
-      "safetylvl": "safe",
       "toolTip": "<h5>Sauvegarde JCI </h5>Pour sauvegarder le dossier JCI avant l'installation des logiciels"
     },
     "background": {
-      "id": 2,
       "label": "Fond d'écran",
-      "safetylvl": "safe",
       "toolTip": "<h5>Fond d'écran</h5><div>Changer le fond d'écran de votre Infotainment avec une image personalisée. Les formats suivant sont supporté : jpg, jpeg, and png (taille illimitée). Note : Si une seul image est choisie, l'image sera redimensionnée en 800px x 480px mais PAS COUPEE et convertie au format .png. Pour choisir le fond d'écran original, choisissez \"default Backgroud\".</div>"
     },
     "colors": {
-      "id": 3,
       "label": "Couleurs personnalisées Infotainment",
-      "safetylvl": "safe",
       "toolTip": "<h5>Couleurs personnalisée</h5>Changer les couleurs du Infotainment de rouge (par défaut) à une couleur suivante :<ul><li>Bleu</li> <li>Vert</li> <li>Orange</li> <li>Rose</li> <li>Violet</li> <li>Argent</li> <li>Jaune</li> <li>carOS (défaut)</li></ul>",
       "toolTip2": "<h5><b>The Custom Theme Option:</b> </h5>Use any theme designed for the MZD Infotainment System or easily apply your own Custom Made Theme. <br><li>To use any theme: download and unzip the theme</li> <li>Import the <code>config/jci/</code> folder from the theme into AIO.</li><br>NOTE: Using This Method Will Copy Only .png Files For Themes<h5><b>Using Your Own Custom Made Theme:</b> </h5> <li><b>If no theme is chosen:</b> a folder will be generated here: <code>_copy_to_usb/config/color-schemes/theme/jci/</code></li> <li>After compiling tweaks, copy your files into the generated jci folder <b>in the same directory location of the images you want to replace.<div class='warning'>WARNING: WHEN USING THIS METHOD EVERYTHING IN THE JCI FOLDER WILL BE COPIED ONTO YOUR SYSTEM IN THE SAME LOCATION.  USE RESPONSIBLY.</div>",
       "img": "carOS.png"
     },
     "sshbringback": {
-      "id": 4,
       "label": "Installation SSH_bringback",
-      "safetylvl": "safe",
       "toolTip": "<h5>SSH_bringback </h5>**Desinstallation impossible !** Avec le FW 56.00.511 Mazda a supprimé l'accès au SSH. Avec le SSH_bringback c'est à nouveau accessible. Ce logiciel s'installe uniquement sur la version FW 56.00.511, si vous avez la version 56.00.230, il ne se passera rien."
     },
     "sdcid": {
-      "id": 5,
       "label": "SD CID",
-      "safetylvl": "safe",
       "toolTip": "<h5>SD CID </h5>Recupéré le CID de la carte mémoire de navigation s'il est disponible."
     },
     "backgroundrotator": {
-      "id": 6,
       "label": "Fond d'écran tournant",
       "btntxt": "Joindre image",
       "button": "Cliquer sur Joindre image pour avoir le fond d'écran qui change",
-      "safetylvl": "safe",
       "toolTip": "<h5>Fond d'écran tournant</h5>Un cycle de 10 images toutes les 10 minutes (600 secondes - 60 secondes par image). Note: Après l'installation de ce logiciel, vous pouvez changer de fond d'écran installer sans reinstaller le logiciel. Pour revenir à l'état initiale, desinstaller ce logiciel."
     },
     "retain": {
-      "id": 7,
       "label": "Conserver les sauvegardes",
       "testlabel": "Test Backups",
       "skipconfirm": "Skip Confirmation",
-      "safetylvl": "safe",
       "toolTip": "<h5>Retrieve CMU Data</h5><p>Dump diagnostic files from the CMU to the USB Drive.  Cleans out error files and core dumps from the system.</p><h5>Skip Confirmation</h5><p>Allows for the installation to run without prompting for confirmation to begin the install. Mainly this is used for recovering when the touchscreen is not responding.  </p><h5>Copy Backups:</h5> <p> Copy original backups of modified system files, for safe keeping. </p><h5>Test Backups:</h5> <p>Some tweaks have before and after copys of the files modified during the instalation.  If you like that kind of thing they will copied to your-usb/bakups/test/.</p>"
     },
     "mainmenu": {
-      "id": 8,
       "label": "Main Menu Tweaks",
-      "safetylvl": "safe",
       "toolTip": "<h5>Main Menu Tweaks </h5>   <br><ul><li>Alternative Main Menu Layout</li>  <li>3D Main Menu Label</li>  <li>Hide Main Menu Ellipse</li></ul>",
       "img": "Alt-layouts.jpg"
     },
     "uistyle": {
-      "id": 9,
       "label": "Text Colors",
-      "safetylvl": "safe",
       "toolTip": "<h4>User Interface Text Style Tweaks</h4> Customize Your User Interface Style and Text Colors: <br> <ul><li>Song Title</li>  <li>Artist & Album</li>  <li>Radio Station</li>  <li>List Item & Disabled List Item</li>  <li>Text Shadow</li></ul>"
     },
     "offscreenbg": {
-      "id": 10,
       "label": "Off Screen Background",
       "btntxt": "Off Screen Default",
-      "safetylvl": "safe",
       "toolTip": "<h5>Off Screen Background.  </h5>Background Image when \"Turn Display Off and Show Clock\" is chosen in the Settings menu.  Also shown during system shutdown."
     }
   },
@@ -394,43 +299,30 @@
     }
   },
   "imgOps": [{
-    "id": 0,
     "label": "Ajouter plusieurs images pour le fond d'écran infotainment"
   }, {
-    "id": 1,
-    "label": "Sélectionner 10, 480px X 800px images (Chaque image sera redimensionnée en 480x800). Fond d’écran tournant sur 10 images en 10 min. Plus d’option prochainement…"
+    "label": "Sélectionner 2 - 40, 480px X 800px images (Chaque image sera redimensionnée en 480x800). Fond d’écran tournant sur images en X min. Plus d’option prochainement…"
   }, {
-    "id": 2,
     "label": "Déplacer les images pour changer l'ordre."
   }, {
-    "id": 3,
     "label": "images séléctionnées"
   }, {
-    "id": 4,
-    "label": "Vous devez choisir 10 images à ajouter (Chacune sera redimensionnée en 480px x 800px ou "
+    "label": "Vous devez choisir 2 - 40 images à ajouter (Chacune sera redimensionnée en 480px x 800px ou "
   }, {
-    "id": 5,
     "label": "Utiliser vos propres images jointe (non redimensionnée)"
   }, {
-    "id": 6,
     "label": "Cette image remplacement le fond d'écran du infotainment."
   }, {
-    "id": 7,
     "label": "Sauvegarder l'image sous"
   }, {
-    "id": 8,
     "label": "Faire un autre"
   }, {
-    "id": 9,
     "label": "Clique droit > Sauvegader l'image en background.png dans votre répertoire de téléchargement."
   }, {
-    "id": 10,
     "label": "Minutes"
   }, {
-    "id": 11,
     "label": "Séléctionner l'image"
   }, {
-    "id": 12,
     "label": "Images"
   }],
   "translatorWindow": [{
@@ -468,596 +360,397 @@
   }],
   "colors": {
     "red": {
-      "id": 0,
       "label": "Rouge (Default)"
     },
     "blue": {
-      "id": 1,
       "label": "Bleu"
     },
     "green": {
-      "id": 2,
       "label": "Vert"
     },
     "silver": {
-      "id": 3,
       "label": "Argent"
     },
     "pink": {
-      "id": 4,
       "label": "Rose"
     },
     "purple": {
-      "id": 5,
       "label": "Voiloet"
     },
     "orange": {
-      "id": 6,
       "label": "Orange"
     },
     "yellow": {
-      "id": 7,
       "label": "Jaune"
     },
     "smoothred": {
-      "id": 8,
       "label": "Smooth Red"
     },
     "lightskyblue": {
-      "id": 9,
       "label": "Smooth Azure"
     },
     "smoothviolet": {
-      "id": 10,
       "label": "Smooth Violet"
     },
     "caros": {
-      "id": 11,
       "label": "CarOS"
     },
     "stormtroopers": {
-      "id": 12,
       "label": "Storm Troopers"
     },
     "poker": {
-      "id": 13,
       "label": "Poker"
     },
     "mazdalogos": {
-      "id": 14,
       "label": "Mazda Logos"
     },
     "floating": {
-      "id": 15,
       "label": "Floating Logo"
     },
     "xmen": {
-      "id": 16,
       "label": "X-Men"
     },
     "custom": {
-      "id": 17,
       "label": "Custom Theme"
     }
   },
   "statusbar": {
     "main": {
-      "id": 0,
       "label": "Remove Statusbar Background"
     },
     "opacity": {
-      "id": 1,
       "label": "Opacité de la barre de statut"
     },
     "app": {
-      "id": 2,
       "label": "Titre de l'App"
     },
     "clock": {
-      "id": 3,
       "label": "Date & Heure"
     },
     "notif": {
-      "id": 4,
       "label": "Status de notifications"
     },
     "d2sbinst": {
-      "id": 5,
       "label": "Installer la date dans la barre de statut"
     },
     "d2sbuninst": {
-      "id": 6,
       "label": "desinstaller la date dans la barre de statut"
     }
   },
   "uistyle": {
     "body": {
-      "id": 0,
       "label": "Body Text (Audio Artist & Album)"
     },
     "listitem": {
-      "id": 1,
       "label": "List Item"
     },
     "listitemdisabled": {
-      "id": 2,
       "label": "Disabled List Item"
     },
     "title": {
-      "id": 3,
       "label": "Song Title"
     },
     "radio": {
-      "id": 4,
       "label": "Radio Station"
     },
     "ellipse": {
-      "id": 6,
       "label": "Remove Ellipse"
     },
     "shadow": {
-      "id": 8,
       "label": "Text Shadow"
     },
     "minicoins": {
-      "id": 10,
       "label": "Smaller 'Coins'"
     },
     "minifocus": {
-      "id": 11,
       "label": "Small Focused Coin"
     },
     "hideglow": {
-      "id": 12,
       "label": "Remove Glow"
     },
     "fulltitles": {
-      "id": 13,
       "label": "Full Width Titles"
     },
     "noalbm": {
-      "id": 14,
       "label": "Hide Album Art"
     },
     "mainlabel": [{
-      "id": 1,
       "label": "3D Text"
     }, {
-      "id": 2,
       "label": "Hide Text"
     }, {
-      "id": 3,
       "label": "Color Text"
     }],
     "layout": [{
-      "id": 1,
       "label": "'Star Points' Layout"
     }, {
-      "id": 2,
       "label": "'Star Points B' Layout"
     }, {
-      "id": 3,
       "label": "'Inverted' Layout"
     }, {
-      "id": 4,
       "label": "'FlatLine' Layout"
     }],
-    "nobtnbg": { "id": 1, "label": "Behind Buttons" },
-    "nonpbg": { "id": 2, "label": "Now Playing" },
-    "nolistbg": { "id": 3, "label": "List View" },
-    "nocallbg": { "id": 4, "label": "In Call" },
-    "notextbg": { "id": 5, "label": "Text Messages" }
+    "nobtnbg": {
+      "label": "Behind Buttons"
+    },
+    "nonpbg": {
+      "label": "Now Playing"
+    },
+    "nolistbg": {
+      "label": "List View"
+    },
+    "nocallbg": {
+      "label": "In Call"
+    },
+    "notextbg": {
+      "label": "Text Messages"
+    }
   },
   "speedcamOps": [{
-    "id": 0,
     "label": "Europe avec les radars mobiles"
   }, {
-    "id": 1,
     "label": "Europe sans les radars mobiles"
   }, {
-    "id": 2,
     "label": "Allemagne avec les radars mobiles"
   }, {
-    "id": 3,
     "label": "Allemagne sans les radars mobiles"
   }, {
-    "id": 4,
     "label": "Turquie"
   }, {
-    "id": 5,
     "label": "Utilisation de votre fichier speedcam.txt"
   }],
   "disclaimOps": [{
-    "id": 0,
     "label": "Suppression complete"
   }, {
-    "id": 1,
     "label": "Reduction du temps à 0,5 seconde"
   }],
   "fuelOps": [{
-    "id": 0,
     "label": "Km/L"
   }, {
-    "id": 1,
     "label": "MPG"
   }],
   "d2sbOps": [{
-    "id": 0,
     "label": "V1.0"
   }, {
-    "id": 1,
     "label": "V3.1 (Localized)"
   }, {
-    "id": 2,
     "label": "V3.2 (dd.mm.)"
   }, {
-    "id": 3,
     "label": "V3.3 (mm/dd)"
   }],
   "speedoOps": {
     "lang": {
       "en": {
-        "id": 0,
         "label": "Anglais"
       },
       "de": {
-        "id": 1,
         "label": "Allemand"
       },
       "sp": {
-        "id": 2,
         "label": "Espagnol"
       },
       "pl": {
-        "id": 3,
         "label": "Polonais"
       },
       "sl": {
-        "id": 4,
         "label": "Slovaque"
       },
       "tk": {
-        "id": 5,
         "label": "Turque"
       },
       "fr": {
-        "id": 6,
         "label": "Français"
       },
       "it": {
-        "id": 7,
         "label": "Italian"
+      },
+      "nl": {
+        "label": "Dutch"
       }
     },
     "xph": {
       "mph": {
-        "id": 10,
         "label": "MPH"
       },
       "kmh": {
-        "id": 11,
         "label": "KM/H"
       }
     },
     "effic": {
       "kml": {
-        "id": 40,
         "label": "km/L"
       },
       "lkm": {
-        "id": 41,
         "label": "L/100km"
       }
     },
     "temperature": {
       "cel": {
-        "id": 42,
         "label": "C"
       },
       "fer": {
-        "id": 43,
         "label": "F"
       }
     },
     "sml": {
       "gps": {
-        "id": 20,
         "label": "Valeur GPS"
       },
       "car": {
-        "id": 21,
         "label": "Valeurs Voiture"
       },
       "none": {
-        "id": 22,
         "label": "Ne pas activé"
       }
     },
     "bg": {
       "ind": {
-        "id": 30,
         "label": "Fond d'écran personnalisé"
       },
       "orig": {
-        "id": 31,
         "label": "Fond d'écran original"
       }
     },
     "color": ["Red", "Blue", "Green", "Purple", "Yellow", "Orange", "Pink", "Silver"],
     "mod": {
-      "id": 50,
       "label": "Modded"
     },
     "modAlt": {
-      "id": 51,
       "label": "Analog With Compass"
     },
     "opac": {
-      "id": 40,
       "val": "0",
       "label": "<div>Opacite sur le fond noir du compteur km/h pour reduire la visibilité&nbsp;du fond d'ecran MZD ?</div><div>Valeurs possible:&nbsp;0.0 (transparent) jusqu'a &nbsp;1.0 (non transparent)</div>"
     }
   },
   "tweakOps": [{
-    "id": 1,
     "OpName": "Ecran tactile en tout temps",
     "INST": "Activation de l'écran tactile quand on roule",
     "DEINST": "Desactivation de l'écran tactile quand on roule",
-    "toolTip": "<h5>Ecran tactile</h5>Possibilité d'utiliser l'écran tactile en tout temps",
-    "img": "",
-    "safetylvl": "safe",
-    "extraOps": true,
-    "advancedOp": false
+    "toolTip": "<h5>Ecran tactile</h5>Possibilité d'utiliser l'écran tactile en tout temps"
   }, {
-    "id": 2,
     "OpName": "Plus d'avertissements",
     "INST": "Suppression des avertissements",
     "DEINST": "Restauration de l'avertissement (a 3.5 secondes)",
-    "toolTip": "<h5>Plus d'avertissements </h5>Suppression complete de l'avertissement ou reduction de 3,5 à 0,5 secondes.",
-    "img": "",
-    "safetylvl": "safe",
-    "extraOps": true,
-    "advancedOp": false
+    "toolTip": "<h5>Plus d'avertissements </h5>Suppression complete de l'avertissement ou reduction de 3,5 à 0,5 secondes."
   }, {
-    "id": 3,
     "OpName": "Avertissement de sécurité de la caméra arrière",
     "INST": "Suppression de l'avertissement caméra arrière",
     "DEINST": "Restauration de l'avertissement caméra arrière",
-    "toolTip": "<h5>Avertissement de sécurité de la caméra arrière </h5>Plus de message en bas de l'écran quand la caméra arrière est activée !",
-    "img": "",
-    "safetylvl": "safe",
-    "extraOps": false,
-    "advancedOp": false
+    "toolTip": "<h5>Avertissement de sécurité de la caméra arrière </h5>Plus de message en bas de l'écran quand la caméra arrière est activée !"
   }, {
-    "id": 4,
     "OpName": "Graphique senseur parking semi-transparent",
     "INST": "Installation du graphique senseur parking semi-transparent",
     "DEINST": "Desinstallation du graphique senseur parking semi-transparent",
-    "toolTip": "<h5>Graphique senseur parking semi-transparent </h5>  Graphique senseur parking semi-transparent pour les senseurs de proximité. Quand on active la caméra arrière, la voiture apparait en haut à droite.#Le graphique apparait maintenant en semi-transparent après l'installation de ce logiciel.",
-    "img": "semi-transparent_parking-sensors.jpg",
-    "safetylvl": "safe",
-    "extraOps": false,
-    "advancedOp": false
+    "toolTip": "<h5>Graphique senseur parking semi-transparent </h5>  Graphique senseur parking semi-transparent pour les senseurs de proximité. Quand on active la caméra arrière, la voiture apparait en haut à droite.#Le graphique apparait maintenant en semi-transparent après l'installation de ce logiciel."
   }, {
-    "id": 5,
     "OpName": "Boucle du Menu principal",
     "INST": "Installation de la boucle du Menu principal",
     "DEINST": "Desinstallation de la boucle du Menu principal",
-    "toolTip": "<h5>Boucle du Menu principal </h5>Boucle pour le menu principal, vous pouvez passer de la position tout à droite à celle de toute à gauche en continuant a tourner votre boutton vers la droite et vice versa.",
-    "img": "",
-    "safetylvl": "safe",
-    "extraOps": false,
-    "advancedOp": false
+    "toolTip": "<h5>Boucle du Menu principal </h5>Boucle pour le menu principal, vous pouvez passer de la position tout à droite à celle de toute à gauche en continuant a tourner votre boutton vers la droite et vice versa."
   }, {
-    "id": 6,
     "OpName": "Boucle de liste",
     "INST": "Installation de la boucle de liste",
     "DEINST": "Desinstallation de la boucle de liste",
-    "toolTip": "<h5>Boucle de liste </h5>Boucle sur les différentes listes et sous menu (musique, contacts, etc.).<br>Vous pouvez passer de la 1ere à la derniere et vice versa.<br>En desinstallant ce module, vous desinstaller aussi le Délai Court. Vous pouvez éviter cela en installant le Délai Court dans la même installation de logiciel. Now with remmove list loop option.",
-    "img": "",
-    "safetylvl": "safe",
-    "extraOps": true,
-    "advancedOp": false
+    "toolTip": "<h5>Boucle de liste </h5>Boucle sur les différentes listes et sous menu (musique, contacts, etc.).<br>Vous pouvez passer de la 1ere à la derniere et vice versa.<br>En desinstallant ce module, vous desinstaller aussi le Délai Court. Vous pouvez éviter cela en installant le Délai Court dans la même installation de logiciel. Now with remmove list loop option."
   }, {
-    "id": 7,
     "OpName": "Délai Court",
     "INST": "Installation Délai Court",
     "DEINST": "Desintallation Délai Court",
-    "toolTip": "<h5>Délai Court </h5>REduit l'attente entre les pages de 1.5 to 0.3 secondes.<br>Desinstaller la Boucle de liste desinstallera ce module.",
-    "img": "",
-    "safetylvl": "safe",
-    "extraOps": false,
-    "advancedOp": false
+    "toolTip": "<h5>Délai Court </h5>REduit l'attente entre les pages de 1.5 to 0.3 secondes.<br>Desinstaller la Boucle de liste desinstallera ce module."
   }, {
-    "id": 8,
     "OpName": "No More Beeps",
     "INST": "Disable All System Beeps",
     "DEINST": "Restore System Beeps",
-    "toolTip": "<h5>No More Beeps</h5>Disable all 'Beeps' made by the system that are not silenced by the 'Settings > Sound > Beep' option.  This also includes the beeps that cannot be silenced by the settings option.",
-    "img": "",
-    "safetylvl": "safe",
-    "extraOps": false,
-    "advancedOp": false
+    "toolTip": "<h5>No More Beeps</h5>Disable all 'Beeps' made by the system that are not silenced by the 'Settings > Sound > Beep' option.  This also includes the beeps that cannot be silenced by the settings option."
   }, {
-    "id": 9,
     "OpName": "Ordre des sources audio",
     "INST": "Changer l'ordre de la liste des sources audio ?",
     "DEINST": "Restauration de l'ordre des sources, retour a la liste originale ?",
-    "toolTip": "<ui></ui><p class=\"\"><span style=\"font-size: 10.79px;\"><b>Change l'ordre de la liste des sources audio</b><br>L'ordre de la liste des sources audio est agence comme suit:</span></p><ui></ui><li>FMRadio</li><ui></ui><li>DAB</li><ui> </ui><li>USB_A</li><ui> </ui><li>USB_B</li><ui> </ui><li>btaudio</li><ui></ui><li>CD</li><ui></ui><li>SatRadio</li><ui></ui><li>AhaRadio</li><ui></ui><li>Pandora</li><ui></ui><li>StitcherAuxIn</li><ui>  </ui><li>amradio</li><ui></ui><li>DVD</li><ui> </ui><li>TV</li><ui></ui>",
-    "img": "",
-    "safetylvl": "warning",
-    "extraOps": true,
-    "advancedOp": false
+    "toolTip": "<ui></ui><p class=\"\"><span style=\"font-size: 10.79px;\"><b>Change l'ordre de la liste des sources audio</b><br>L'ordre de la liste des sources audio est agence comme suit:</span></p><ui></ui><li>FMRadio</li><ui></ui><li>DAB</li><ui> </ui><li>USB_A</li><ui> </ui><li>USB_B</li><ui> </ui><li>btaudio</li><ui></ui><li>CD</li><ui></ui><li>SatRadio</li><ui></ui><li>AhaRadio</li><ui></ui><li>Pandora</li><ui></ui><li>StitcherAuxIn</li><ui>  </ui><li>amradio</li><ui></ui><li>DVD</li><ui> </ui><li>TV</li><ui></ui>"
   }, {
-    "id": 10,
     "OpName": "Pause en mode sourdine",
     "INST": "Installation de la Pause en mode sourdine",
     "DEINST": "Desinstallation de la Pause en mode sourdine",
-    "toolTip": "<h5>Pause en mode sourdine </h5>  Quand vous appuyez sur sourdine (bouton du volume) le media qui est lu est en pause.",
-    "img": "",
-    "safetylvl": "safe",
-    "extraOps": false,
-    "advancedOp": false
+    "toolTip": "<h5>Pause en mode sourdine </h5>  Quand vous appuyez sur sourdine (bouton du volume) le media qui est lu est en pause."
   }, {
-    "id": 11,
     "OpName": "Suppression du \"Envoye depuis...\"",
     "INST": "Suppression des messages de reponse automatique?",
     "DEINST": "Restauration des messages-reponse automatique ?",
-    "toolTip": "<h5>Suppression du \"Envoye depuis...\" </h5>Suppression du text \"Envoye depuis le 'Mazda Quick Text System' quand vous repondez a un message",
-    "img": "",
-    "safetylvl": "safe",
-    "extraOps": false,
-    "advancedOp": false
+    "toolTip": "<h5>Suppression du \"Envoye depuis...\" </h5>Suppression du text \"Envoye depuis le 'Mazda Quick Text System' quand vous repondez a un message"
   }, {
-    "id": 12,
     "OpName": "Menu Diag en 1 sec",
     "INST": "Installer l'acces en 1sec au menu diagnostic?",
     "DEINST": "Suppression 1 sec. pour le menu diagnostic ?",
-    "toolTip": "<h5>Menu Diag en 1 sec<br><span style=\"font-size: 13px; font-weight: normal;\">Permet l'ouvrir des menus de diagnostic en pressant pendant une seconde sur l'horloge en haut a droite du menu des parametres d'affichage</span></h5>",
-    "img": "",
-    "safetylvl": "warning",
-    "extraOps": false,
-    "advancedOp": false
+    "toolTip": "<h5>Menu Diag en 1 sec<br><span style=\"font-size: 13px; font-weight: normal;\">Permet l'ouvrir des menus de diagnostic en pressant pendant une seconde sur l'horloge en haut a droite du menu des parametres d'affichage</span></h5>"
   }, {
-    "id": 13,
     "OpName": "Animation de démarrage",
     "INST": "Desactivation de l'Animation de démarrage",
     "DEINST": "Activation de l'Animation de démarrage",
-    "toolTip": "<h5>Animation de démarrage </h5>L'animation de demarrage qui mene au menu avec les boutons rouges sera desactive.",
-    "img": "",
-    "safetylvl": "safe",
-    "extraOps": true,
-    "advancedOp": false
+    "toolTip": "<h5>Animation de démarrage </h5>L'animation de demarrage qui mene au menu avec les boutons rouges sera desactive."
   }, {
-    "id": 20,
     "OpName": "Statusbar Tweaks",
     "INST": "Installation de la date dans la barre de statut",
     "DEINST": "Desinstallation de la date dans la barre de statut",
-    "toolTip": "<h5>Date dans la barre de statut</h5>  Date dans la barre d'etat, visible en permanence date + icones par l'horloge , même si les messages systemes sont affiches",
-    "img": "mzd_datum_icons_all.jpg",
-    "safetylvl": "safe",
-    "extraOps": true,
-    "advancedOp": false
+    "toolTip": "<h5>Date dans la barre de statut</h5>  Date dans la barre d'etat, visible en permanence date + icones par l'horloge , même si les messages systemes sont affiches"
   }, {
-    "id": 26,
     "OpName": "USB Audio Mod",
     "INST": "Install USB Audio Mod",
     "DEINST": "Remove USB Audio Mod",
-    "toolTip": "<h5>USB Audio Mod. <small>By: Enlsen</small> </h5><b>Patches The USB Audio App With These Mods:   <br><ol><li>Long press (click hold) folders/all songs to play</li><li>Adds new icon for USB root menu on the UMP control</li> <li>Removes \"More like this\" button from UMP control</li><li>Adds folders button to UMP control</li><li>Set folders and song list icons correctly (were switched) on UMP control</li><li>Removes trailing \"/\" character from folder names for list control and title of now playing</li><li>Adds folder and song icons to the list control</li><li>Adds folder and playlist icons to now playing</li></ol>",
-    "img": "USBAudioMod.jpg",
-    "safetylvl": "safe",
-    "extraOps": true,
-    "advancedOp": false
+    "toolTip": "<h5>USB Audio Mod. <small>By: Enlsen</small> </h5><b>Patches The USB Audio App With These Mods:   <br><ol><li>Long press (click hold) folders/all songs to play</li><li>Adds new icon for USB root menu on the UMP control</li> <li>Removes \"More like this\" button from UMP control</li><li>Adds folders button to UMP control</li><li>Set folders and song list icons correctly (were switched) on UMP control</li><li>Removes trailing \"/\" character from folder names for list control and title of now playing</li><li>Adds folder and song icons to the list control</li><li>Adds folder and playlist icons to now playing</li></ol>"
   }, {
-    "id": 14,
     "OpName": "Grande pochette d'album",
     "INST": "Installation de la Grande pochette d'album",
     "DEINST": "Desinstallation de la Grande pochette d'album",
-    "toolTip": "<h5>Grande pochette d'album </h5> La pochette d'album est agrandie.   Extra Options: Full Width Titles & Hide Album Art",
-    "img": "full_titles.png",
-    "safetylvl": "safe",
-    "extraOps": true,
-    "advancedOp": false
+    "toolTip": "<h5>Grande pochette d'album </h5> La pochette d'album est agrandie.   Extra Options: Full Width Titles & Hide Album Art"
   }, {
-    "id": 15,
     "OpName": "Remove Background Overlays",
     "INST": "Remove the background overlays",
     "DEINST": "Background behind buttons back to original",
-    "toolTip": "<h5>No Background Behind Buttons </h5> Remove the background behind the buttons and other semi-transparent overlay backgrounds.  Overlays that can be removed: Now Playing, List View, In Call, Text Message View, and Behind Buttons",
-    "img": "NoButtonBackground.jpg",
-    "safetylvl": "safe",
-    "extraOps": true,
-    "advancedOp": false
+    "toolTip": "<h5>No Background Behind Buttons </h5> Remove the background behind the buttons and other semi-transparent overlay backgrounds.  Overlays that can be removed: Now Playing, List View, In Call, Text Message View, and Behind Buttons"
   }, {
-    "id": 16,
     "OpName": "Change Blank Album Art Frame",
     "INST": "Suppression de la pochette album vide",
     "DEINST": "Restauration de la pochette album vide",
-    "toolTip": "<h5>Change Blank Album Art Frame </h5><div>La pochette album vide est retiré quand il n'y a pas d'entree dans la base de donnees Gracenote pour l'artiste . L'image d'une radio est affiche, s'il n'y a pas d'information dans la balise MP3. Les formats supporté sont : jpg, jpeg et png (toute taille). Note: L'image choisie sera redimensionnée en 146px x 146px <b>MAIS PAS DECOUPEE</b>&nbsp;et convertie en format .png</div>",
-    "img": "",
-    "safetylvl": "safe",
-    "extraOps": true,
-    "advancedOp": false
+    "toolTip": "<h5>Change Blank Album Art Frame </h5><div>La pochette album vide est retiré quand il n'y a pas d'entree dans la base de donnees Gracenote pour l'artiste . L'image d'une radio est affiche, s'il n'y a pas d'information dans la balise MP3. Les formats supporté sont : jpg, jpeg et png (toute taille). Note: L'image choisie sera redimensionnée en 146px x 146px <b>MAIS PAS DECOUPEE</b>&nbsp;et convertie en format .png</div>"
   }, {
-    "id": 17,
     "OpName": "Lecteur Video",
     "INST": "Installation du Lecteur Video",
     "DEINST": "Desinstallation du Lecteur Video",
-    "toolTip": "<h5>Lecteur Video <span class=\"icon-video-camera2\"></span> </h5> Le lecteur video dans le menu application",
-    "img": "",
-    "safetylvl": "safe",
-    "extraOps": true,
-    "advancedOp": false
+    "toolTip": "<h5>Lecteur Video <span class=\"icon-video-camera2\"></span> </h5> Le lecteur video dans le menu application"
   }, {
-    "id": 18,
     "OpName": "Fichier d'échange",
     "INST": "Generation du fichier d'echange pour le lecteur video v.2?",
     "DEINST": "Suppression du fichier d'échange",
-    "toolTip": "<h5>Fichier d'échange </h5>L'installation du fichier d'echange doit se faire sur une cle USB avec de la musique et / ou des films , ce qui reste dans la voiture . Les fichiers d'installation sont automatiquement supprimes , le lecteur ne peut plus etre retire pendant le fonctionnement , parce que le systeme utilisera aussi comme memoire. Ne retirez la cle USB si le systeme MZD est eteint.",
-    "img": "",
-    "safetylvl": "warning",
-    "extraOps": true,
-    "advancedOp": false
+    "toolTip": "<h5>Fichier d'échange </h5>L'installation du fichier d'echange doit se faire sur une cle USB avec de la musique et / ou des films , ce qui reste dans la voiture . Les fichiers d'installation sont automatiquement supprimes , le lecteur ne peut plus etre retire pendant le fonctionnement , parce que le systeme utilisera aussi comme memoire. Ne retirez la cle USB si le systeme MZD est eteint."
   }, {
-    "id": 19,
     "OpName": "Compteur km/h + boussole",
     "INST": "Installation du compteur km/h + boussole",
     "DEINST": "Desinstallation du compteur km/h + boussole",
-    "toolTip": "<h5>Compteur km/h + boussole dans le menu Application</h5>  <ul><li>dessous du compteur de vitesse est km/h ou mph, selon le reglage</li> <li>Plage de vitesse allant jusqu'a 240 km/h<br></li> <li>valeurs de consommation<br></li> <li>modules graphiques optimises avec le nouveau pointeur de compteur de vitesse<br></li> <li>Petit aiguille du compteur de vitesse pour la vitesse superieure dans la partie analogique<br></li> <li>l'image pour l'echelle du compteur km/h a differentes longueurs ou des lignes lumineuses pour 5, 10 et 20 km/h sauts<br></li> <li>Table de droite anglais ou allemand allemand et couleur / taille optimisee<br></li> <li>Legere ombre autour des chiffres pour mieux se demarquer de l'arriere-plan<br></li> <li>La boussole sur l'axe centrale et la vitesse actuelle indiquée au centre<br></li> <li>tourne selon les points cardinaux - superposition d'animation en l'etat avec la vitesse et la direction du Voyage dans chaque menu GPS peuvent etre prepares par le toucher a l'horloge<br></li> <li>la latitude et la longitude dans la table de droite<br></li> <li>Lorsque l'appareil photo Navi ou arriere est lance, il apparaît automatiquement<br></li></ul><br>Pour le petit compteur km/h dans la barre d'etat , vous devez installer date_to_statusbar V2.2 mod aussi. Par consequent, il sera automatiquement selectionne, si pas deja fait.",
-    "img": "mzd_SpeedoCompass.gif",
-    "safetylvl": "safe",
-    "extraOps": true,
-    "advancedOp": false
+    "toolTip": "<h5>Compteur km/h + boussole dans le menu Application</h5>  <ul><li>dessous du compteur de vitesse est km/h ou mph, selon le reglage</li> <li>Plage de vitesse allant jusqu'a 240 km/h<br></li> <li>valeurs de consommation<br></li> <li>modules graphiques optimises avec le nouveau pointeur de compteur de vitesse<br></li> <li>Petit aiguille du compteur de vitesse pour la vitesse superieure dans la partie analogique<br></li> <li>l'image pour l'echelle du compteur km/h a differentes longueurs ou des lignes lumineuses pour 5, 10 et 20 km/h sauts<br></li> <li>Table de droite anglais ou allemand allemand et couleur / taille optimisee<br></li> <li>Legere ombre autour des chiffres pour mieux se demarquer de l'arriere-plan<br></li> <li>La boussole sur l'axe centrale et la vitesse actuelle indiquée au centre<br></li> <li>tourne selon les points cardinaux - superposition d'animation en l'etat avec la vitesse et la direction du Voyage dans chaque menu GPS peuvent etre prepares par le toucher a l'horloge<br></li> <li>la latitude et la longitude dans la table de droite<br></li> <li>Lorsque l'appareil photo Navi ou arriere est lance, il apparaît automatiquement<br></li></ul><br>Pour le petit compteur km/h dans la barre d'etat , vous devez installer date_to_statusbar V2.2 mod aussi. Par consequent, il sera automatiquement selectionne, si pas deja fait."
   }, {
-    "id": 22,
     "OpName": "Consommation d'essence KM/L",
     "INST": "Installation de la consommation essence KM/L",
     "DEINST": "Desinstallation de la consommation essence KM/L",
-    "toolTip": "<h5>Consommation d'essence KM/L </h5> Rajout du Km/L (ou mpg)",
-    "img": "FuelConsumptionTweak.jpg",
-    "safetylvl": "safe",
-    "extraOps": false,
-    "advancedOp": false
+    "toolTip": "<h5>Consommation d'essence KM/L </h5> Rajout du Km/L (ou mpg)"
   }, {
-    "id": 24,
     "OpName": "Projeter votre android sur l'écran",
     "INST": "Installer le projecteur",
     "DEINST": "Desinstaller le projecteur",
-    "toolTip": "<h5>Castscreen receiver. <br><span style=\"font-size: 13px; font-weight: normal;\">Apres l'installation, vous pouvez mettre en miroir votre smartphone et l'ecran&nbsp;</span><span style=\"font-size: 13px; font-weight: normal;\">infotainment&nbsp;</span><span style=\"font-size: 13px; font-weight: normal;\">(mirroring)</span><br></h5><p style=\"\" class=\"\"></p><p style=\"\" class=\"\"></p><ul><li>Vous devez installer l'application castscreen sur votre telephone Android ( castscreen - 1.0.apk )&nbsp;</li> <li>L'application peut etre trouvee dans la ' config' dossier de votre disque USB&nbsp;</li> <li>Activer le mode de debogage sur votre smartphone&nbsp;</li> <li>Connecter le smartphone avec un cable USB au systeme l'ecran&nbsp;infotainment</li> <li>Demarrer les parametres de l'application : H264 , 800x480 @ 160 , 1 mbps , 127.0.0.1 et appuyez sur entree, puis entree recepteur, puis appuyez sur Demarrer sur le coin en haut a droite .\"</li></ul><p></p><p></p>",
-    "img": "",
-    "safetylvl": "warning",
-    "extraOps": true,
-    "advancedOp": false
+    "toolTip": "<h5>Castscreen receiver. <br><span style=\"font-size: 13px; font-weight: normal;\">Apres l'installation, vous pouvez mettre en miroir votre smartphone et l'ecran&nbsp;</span><span style=\"font-size: 13px; font-weight: normal;\">infotainment&nbsp;</span><span style=\"font-size: 13px; font-weight: normal;\">(mirroring)</span><br></h5><p style=\"\" class=\"\"></p><p style=\"\" class=\"\"></p><ul><li>Vous devez installer l'application castscreen sur votre telephone Android ( castscreen - 1.0.apk )&nbsp;</li> <li>L'application peut etre trouvee dans la ' config' dossier de votre disque USB&nbsp;</li> <li>Activer le mode de debogage sur votre smartphone&nbsp;</li> <li>Connecter le smartphone avec un cable USB au systeme l'ecran&nbsp;infotainment</li> <li>Demarrer les parametres de l'application : H264 , 800x480 @ 160 , 1 mbps , 127.0.0.1 et appuyez sur entree, puis entree recepteur, puis appuyez sur Demarrer sur le coin en haut a droite .\"</li></ul><p></p><p></p>"
   }, {
-    "id": 25,
     "OpName": "Android Auto Headunit App",
     "INST": "Installer l'application Android Auto Headunit?",
     "DEINST": "Suppression d'Android Auto Headunit App?",
-    "toolTip": "<h5>Android Car Headunit app for the MZD Infotainment System. </h5>  <ol><li>Install the Android app from google play store</li><li> Connect the phone to USB and pair the phone bluetooth with the CMU </li><li> Android Auto will then start. If it does not try to open from the 'Applications' menu <li>3 ways to stop AA <ol><li>Press Home Button on the Mazda's Commander</li><li>Disconnect the USB cable</li><li>Use the onscreen menu 'Return to Mazda Connect' on last screen with speedo icon.</li></ol></ol>",
-    "toolTip2": "",
-    "img": "AndroidAuto.jpg",
-    "safetylvl": "safe",
-    "extraOps": true,
-    "advancedOp": false
+    "toolTip2": ""
   }, {
-    "id": 27,
     "OpName": "AIO Tweaks App",
     "INST": "Install AIO Tweaks App",
-    "DEINST": "Remove AIO Tweaks App",
-    "toolTip": "<div class='aio-help'><h5>AIO Tweaks App </h5> An experimental app by Trezdog44. <h5>This is an experimental app that I made to test the limits of app functionality.  For each success there were several failures.</h5><h6><strong>Every function in this app is <em>not</em> guaranteed to work</strong> but here are some useful and/or fun things you can do:</h6><ul><li>&#39;Apps&#39; Tab:<ul><li>Home: Goes home. This was the easy part.</li><li>Go to: USB A, USB B, Bluetooth (audio context).</li><li>Previous, Next - Works without changing contexts</li><li>Stop (and Start*) Android Auto Headunit process.<ul><li>Killing headunit process with allow Bluetooth calling to work correctly.</li><li>Starting the process does not work properly yet, reboot CMU to restart headunit process.</li></ul></li><li>Stop and Start Castscreen Receiver<ul><li>Useful for troubleshooting if it is not functioning correctly.  </li><li>Both of these do work but there is a possibility that a memory issue may prevent the process from properly starting in which case a reboot is required to allow the process to run.</li></ul></li></ul></li><li>&#39;Tweaks&#39; Tab:<ul><li>Many familiar AIO layout related tweaks that can be applied on the fly<ul><li>Applied tweaks are automatically saved to localStorage and saved tweaks are applied on boot.</li><li>Toggle each individual tweak on or off.</li><li>One button to reset all tweaks.</li><li><em>NOTE: AIO Tweaks App will not UNDO installed tweaks, they will mix and may result in unexpected and/or interesting layouts</em></li></ul></li></ul></li><li><p>&#39;Options&#39; Tab:</p><ul><li><p>Touchscreen: <em>NOTE: Changes to the touchscreen functionality are applied when the vehicle comes to a <strong>COMPLETE STOP</strong></em></p><ul><li>Enable Touchscreen and Menu</li><ul><li>Normally disabled menu items while driving ie. Text messages &amp; enter address for navigation,</li><li>Compass is disabled</li></ul><li>Enable Touchscreen and Compass</li><ul><li>Compass is functional</li><li>Menu items are disabled</lI></ul><li>Disable Touchscreen</li><ul><li>Touchscreen and Menu Items disabled</li><li><p>Compass is functional</p></li></ul></ul></li><li><p>Show Background: Show only background (any button to exit).</p></li><li>Reboot: To Reboot.</li></ul></li></ul></div>",
-    "img": "AIO_Tweaks-Screen.png",
-    "safetylvl": "safe",
-    "extraOps": false,
-    "advancedOp": false
+    "DEINST": "Remove AIO Tweaks App"
   }, {
-    "id": 21,
     "OpName": "Patch ordre alphabetique & support FLAC",
     "INST": "Activation du patch media / support des fichiers FLAC?",
     "DEINST": "Suppression du correctif pour l'ordre des supports media ?",
-    "toolTip": "<h5>Patch ordre alphabetique &amp; support FLAC </h5>La musique sera triee par ordre alphabetique et non par date des nouvelles entrees. Support pour le format audio FLAC  <h6>Audio Order Patch & FLAC Support is only compatible with these FW Versions: </h6><div style='columns:5'>55.00.650A-NA  55.00.753A-NA  55.00.760A-NA  56.00.100A-ADR  56.00.230A-EU  56.00.240B-ADR  56.00.511A-EU  56.00.512A-EU  56.00.521A-NA  58.00.250A-NA  59.00.326A-ADR  59.00.331A-EU  56.00.513C-EU  56.00.513B-EU  56.00.513C-ADR  59.00.330A-ADR   59.00.342A-ADR   59.00.441A-NA  59.00.443C-EU</div>",
-    "img": "",
-    "safetylvl": "warning",
-    "extraOps": false,
-    "advancedOp": true
+    "toolTip": "<h5>Patch ordre alphabetique &amp; support FLAC </h5><p>La musique sera triee par ordre alphabetique et non par date des nouvelles entrees. Support pour le format audio FLAC </p> <h6>Audio Order Patch & FLAC Support is only compatible with these FW Versions: </h6><div style='columns:5'>55.00.650A-NA  55.00.753A-NA  55.00.760A-NA  56.00.100A-ADR  56.00.230A-EU  56.00.240B-ADR  56.00.511A-EU  56.00.512A-EU  56.00.521A-NA  58.00.250A-NA  59.00.326A-ADR  59.00.331A-EU  56.00.513C-EU  56.00.513B-EU  56.00.513C-ADR  59.00.330A-ADR   59.00.342A-ADR   59.00.441A-NA  59.00.443C-EU</div>"
   }]
 }

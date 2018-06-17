@@ -1,3 +1,0 @@
-# no small speedometer in statusbar
-sed -i 's/var sbTemp = false;/var sbTemp = true;/g' /jci/gui/apps/_speedometer/js/speedometer-startup.js
-log_message "===                   ADD TEMPERATURE TO STATUSBAR                    ==="

@@ -1,12 +1,8 @@
+backup_org /jci/gui/common/controls/List2/js/List2Ctrl.js
+
 show_message "INSTALL SHORTER DELAY MOD ..."
 log_message "============******** INSTALL SHORTER DELAY MOD ... *********============="
 
-# Backup if needed
-if [ ! -e /jci/gui/common/controls/List2/js/List2Ctrl.js.org ]
-	then
-		cp -a /jci/gui/common/controls/List2/js/List2Ctrl.js /jci/gui/common/controls/List2/js/List2Ctrl.js.org
-		log_message "=== Backup of /jci/gui/common/controls/List2/js/List2Ctrl.js to List2Ctrl.js.org ==="
-fi
 # Remove this marker if present so it wont get added twice
 sed -i '/Shorter Delay Mod/d' /jci/gui/common/controls/List2/js/List2Ctrl.js
 # Modify List2Ctrl.js

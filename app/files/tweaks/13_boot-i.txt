@@ -1,28 +1,10 @@
+backup_org /jci/resources/LoopLogo.ivf
+backup_org /jci/resources/TranLogo.ivf
+backup_org /jci/resources/TranLogoEnd.ivf
+backup_org /jci/resources/ExitLogo.ivf
 # Disable Boot Animation
 show_message "CUSTOMIZE BOOT ANIMATION ..."
 log_message "======***********        INSTALL BOOT ANIMATION ...      **********======"
-
-if [ ! -e /jci/resources/LoopLogo.ivf.org ]
-then
-	cp -a /jci/resources/LoopLogo.ivf /jci/resources/LoopLogo.ivf.org
-	log_message "===      Backup of /jci/resources/LoopLogo.ivf to LoopLogo.ivf.org    ==="
-fi
-if [ ! -e /jci/resources/TranLogo.ivf.org ]
-then
-	cp -a /jci/resources/TranLogo.ivf /jci/resources/TranLogo.ivf.org
-	log_message "===      Backup of /jci/resources/TranLogo.ivf to TranLogo.ivf.org    ==="
-fi
-if [ ! -e /jci/resources/TranLogoEnd.ivf.org ]
-then
-	cp -a /jci/resources/TranLogoEnd.ivf /jci/resources/TranLogoEnd.ivf.org
-	log_message "===  Backup of /jci/resources/TranLogoEnd.ivf to TranLogoEnd.ivf.org  ==="
-fi
-if [ ! -e /jci/resources/ExitLogo.ivf.org ]
-then
-	cp -a /jci/resources/ExitLogo.ivf /jci/resources/ExitLogo.ivf.org
-	log_message "===    Backup of /jci/resources/ExitLogo.ivf to ExitLogo.ivf.org      ==="
-fi
-
 
 if [ $BOOTLOGO1 -eq 0 ]
 then

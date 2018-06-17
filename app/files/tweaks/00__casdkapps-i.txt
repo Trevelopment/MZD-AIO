@@ -1,4 +1,10 @@
-# Install CASDK apps
+# Check for AIO + CASDK
+if [ ! -e /jci/casdk/casdk.aio ]
+then
+  show_message "AIO + CASDK FRAMEWORK IS NOT INSTALLED!\nINSTALL CASDK FRAMEWORK TO RUN CASDK APPS\nINSTALLATION ABORTED!!!!\nPLEASE REMOVE USB DRIVE... THE SYSTEM WILL REBOOT NOW"
+  sleep 15
+  reboot
+fi
 
 # run apps from SD card
 if [ ${CASDK_SD} -eq 1 ]
@@ -51,6 +57,7 @@ else
   show_message "INSTALLING CASDK APPS... "
 fi
 
+# Install CASDK apps
 log_message "===  INSTALLING CASDK APPS TO ${MZD_APP_DIR}   ==="
 # create apps folder if it doesnt exist
 mkdir -p ${MZD_APP_DIR}
@@ -73,21 +80,41 @@ fi
 
 add_casdk_app "${APPTERMINAL}" "terminal"
 add_casdk_app "${APPSIMPLEDASHBOARD}" "simpledashboard"
-add_casdk_app "${APPGPSSPEED}" "gpsspeed"
-add_casdk_app "${APPMULTIDASH}" "multidash"
-add_casdk_app "${APPBG}" "background"
+add_casdk_app "${APPSIMPLESPEEDO}" "simplespeedo"
 add_casdk_app "${APPVDD}" "vdd"
+add_casdk_app "${APPMULTIDASH}" "multidash"
+add_casdk_app "${APPGPSSPEED}" "gpsspeed"
+add_casdk_app "${APPBG}" "background"
 add_casdk_app "${APPDEVTOOLS}" "devtools"
-#add_casdk_app "${APPTETRIS}" "tetris"
-#add_casdk_app "${APPBREAKOUT}" "breakout"
-#add_casdk_app "${APPSNAKE}" "snake"
+add_casdk_app "${APPCLOCK}" "clock"
+add_casdk_app "${APPTETRIS}" "tetris"
+add_casdk_app "${APPBREAKOUT}" "breakout"
+add_casdk_app "${APPSNAKE}" "snake"
 
 echo '];' >> ${MZD_APPS_JS}
 chmod -R 755 ${MZD_APP_DIR}
 
+backup_org /jci/gui/apps/system/js/systemApp.js
+# for FW v59 if they do not have No more disclamer or order of audio source
+# apply patch to show apps in app List
+if [ $COMPAT_GROUP -gt 2 ] && ! grep -Fq "app.casdkapps" /jci/gui/apps/system/js/systemApp.js
+then
+  if [ $COMPAT_GROUP -lt 6 ]
+  then
+    cp -a ${MYDIR}/casdk/patch/systemApp.js /jci/gui/apps/system/js
+    log_message "===        Patched systemApp.js for AIO + CASDK apps for v59          ==="
+  elif [ $COMPAT_GROUP -eq 6 ]
+  then
+    cp -a ${MYDIR}/casdk/patch/systemApp.70.js /jci/gui/apps/system/js/systemApp.js
+    log_message "===        Patched systemApp.js for AIO + CASDK apps for v70          ==="
+  else
+    log_message "=== FW > v70.00.100 DETECTED VISIT MAZDATWEAKS.COM FOR MORE DETAILS   ==="
+  fi
+fi
+
 sleep 5
 log_message "=========************* CASDK INSTALLATION FINISHED *************========="
 killall jci-dialog
-/jci/tools/jci-dialog --title="MZD-AIO-TI+CASDK INSTALLED" --text="THE CUSTOM APPLICATION RUNTIME\nWAS SUCCESSFULLY INSTALLED\n\nTHE SYSTEM WILL REBOOT IN A FEW SECONDS." --no-cancel &
+/jci/tools/jci-dialog --title="AIO + CASDK INSTALLED" --text="THE CUSTOM APPLICATION RUNTIME\nWAS SUCCESSFULLY INSTALLED\n\nTHE SYSTEM WILL REBOOT IN A FEW SECONDS." --no-cancel &
 sleep 10
 reboot

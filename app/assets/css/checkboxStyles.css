@@ -644,6 +644,7 @@ input[type=color]::-webkit-color-swatch {
 }
 .icon-question~.popover {
   background-color: #000;
+  font-size: 12px;
 }
 .hasColorFiles td:nth-child(2) label {
   padding: 2px 11px;
@@ -729,8 +730,7 @@ tr.w3-row.w3-col td strong {
 #sidePanel .speedo-lang .speedo-radio label {
   width: 25%;
 }
-#sidePanel .speedo-radio.third label,
-#sidePanel .sbspeedo .speedo-radio label {
+#sidePanel .speedo-radio.third label, #sidePanel .sbspeedo .speedo-radio label {
   width: 33.3333%;
 }
 #sidePanel .speedo-color .speedo-radio label {

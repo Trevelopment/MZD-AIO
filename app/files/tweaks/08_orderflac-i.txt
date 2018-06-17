@@ -1,3 +1,4 @@
+backup_org /jci/lib/libmc_user.so
 # track-order and FLAC support
 show_message "INSTALL TRACK-ORDER AND FLAC SUPPORT ..."
 log_message "=======******** INSTALL TRACK-ORDER AND FLAC SUPPORT ... *********======="
@@ -34,12 +35,6 @@ then
   TRACKORDER_FLAC_FILE=326A-ADR
 fi
 
-# Backup
-if [ ! -e /jci/lib/libmc_user.so.org ]
-then
-  cp -a /jci/lib/libmc_user.so /jci/lib/libmc_user.so.org
-  log_message "===       Backup of /jci/lib/libmc_user.so to libmc_user.so.org       ==="
-fi
 if [ ! -e /tmp/mnt/data_persist/dev/bin/autorun ]
 then
   cp -a ${MYDIR}/config/media-order-patching/data_persist/* /tmp/mnt/data_persist/

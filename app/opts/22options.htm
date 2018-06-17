@@ -9,12 +9,12 @@
 -->
 
 <tbody class="w3-col w3-row">
-	<tr class="w3-hover-pale-blue w3-tooltip w3-col w3-row">
-		<td class="w3-col w3-row">
-			<span class="fuel-check speedo-radio" ng-repeat="option in fuelOps | filter:twkfltr">
-				<input id="fuel{{option.id}}" type="radio" name="{{option.label}}" ng-model="user.fuelOps" ng-value="option.id" ng-disabled="user.fuelOps.indexOf({{option.id}}) == -1 && user.fuelOps.length > 0">
-				<label for="fuel{{option.id}}" data-toggle="tooltip" data-placement="auto bottom" title="{{option.label}}">{{option.label}}</label>
-			</span>
-		</td>
-	</tr>
+  <tr class="w3-hover-pale-blue w3-tooltip w3-col w3-row">
+    <td class="w3-col w3-row">
+      <span class="fuel-check speedo-radio" ng-repeat="option in fuelOps | filter:twkfltr">
+        <input id="fuel{{option.id}}" type="radio" name="{{option.label}}" ng-model="user.fuelOps" ng-value="option.id" ng-disabled="user.fuelOps.indexOf({{option.id}}) == -1 && user.fuelOps.length > 0">
+        <label for="fuel{{option.id}}" data-toggle="tooltip" data-placement="auto bottom" title="{{option.label}}">{{option.label}}</label>
+      </span>
+    </td>
+  </tr>
 </tbody>

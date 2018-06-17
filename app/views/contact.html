@@ -24,7 +24,6 @@
   </div>
   <p id="failure">Message Was Not Sent. Try Again..</p>
   <p id="success">Your message was sent successfully. Thank you!</p>
-
   <form id="form1" class="form" action="https://trevelopment.com/mzdmail.php" method="post" target="mailform">
     <div>
       <label for="name" class="w3-label">
@@ -82,13 +81,11 @@ Please check the mazdatweaks.com FAQ page first.**
       var err=true;
       if (title=="" || title==null) {
         $("#name").addClass("validation");
-
         var err= false;
       } else {  $("#name").removeClass("validation");}
       var email = $("#email").val();
       if (!(/(.+)@(.+){2,}\.(.+){2,}/.test(email))) {
         $("#email").addClass("validation");
-
         var err= false;
       } else {  $("#email").removeClass("validation"); }
       var title = $("#message").val();

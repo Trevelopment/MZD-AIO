@@ -6,6 +6,7 @@ log_message "========*********    UNINSTALL UI TEXT STYLE TWEAKS ...   *********
 # Remove the UISTYLE CSS
 remove_aio_css /jci/gui/common/controls/List2/css/List2Ctrl.css UISTYLE
 remove_aio_css /jci/gui/common/controls/NowPlaying4/css/NowPlaying4Ctrl.css UISTYLE
+remove_aio_css /jci/gui/common/css/common.css UISTYLE
 sed -i "/.. MZD-AIO-TI CSS ../,/.. END AIO CSS ../d" /jci/gui/common/controls/List2/css/List2Ctrl.css
 
 log_message "======******** END UNINSTALLATION OF UI TEXT STYLE TWEAKS  *********======="

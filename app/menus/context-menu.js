@@ -9,18 +9,25 @@ require('electron-context-menu')({
   window: BrowserWindow.fromId(1),
   append: params => [
     { type: 'separator' },
-    { label: 'Full Screen', accelerator: (function () { if (process.platform === 'darwin') return 'Ctrl+Command+F'; else return 'F11' })(), click: function (item, focusedWindow) { if (focusedWindow) focusedWindow.setFullScreen(!focusedWindow.isFullScreen()) }},
-    { label: 'Minimize', accelerator: 'CmdOrCtrl+M', role: 'minimize'},
+    {
+      label: 'Full Screen',
+      accelerator: (function() {
+        if (process.platform === 'darwin') { return 'Ctrl+Command+F'; } else { return 'F11' }
+      })(),
+      click: function(item, focusedWindow) { if (focusedWindow) focusedWindow.setFullScreen(!focusedWindow.isFullScreen()) }
+    },
+    { label: 'Minimize', accelerator: 'CmdOrCtrl+M', role: 'minimize' },
     { type: 'separator' },
     { label: 'Zoom In', accelerator: 'CmdOrCtrl+Plus', role: 'zoomin' },
     { label: 'Zoom Out', accelerator: 'CmdOrCtrl+-', role: 'zoomout' },
     { label: 'Reset Zoom', accelerator: 'CmdOrCtrl+=', role: 'resetzoom' },
     { type: 'separator' },
-    { label: 'Save', accelerator: 'CmdOrCtrl+s', click: function (item, focusedWindow) { focusedWindow.webContents.send('save-options') }},
-    { label: 'Load', accelerator: 'CmdOrCtrl+l', click: function (item, focusedWindow) { focusedWindow.webContents.send('load-options') }},
+    { label: 'Save', accelerator: 'CmdOrCtrl+s', click: function(item, focusedWindow) { focusedWindow.webContents.send('save-options') } },
+    { label: 'Load', accelerator: 'CmdOrCtrl+l', click: function(item, focusedWindow) { focusedWindow.webContents.send('load-options') } },
+    { label: 'Load Last Compile', accelerator: 'CmdOrCtrl+Shift+L', click: function(item, focusedWindow) { focusedWindow.webContents.send('load-last') } },
     { type: 'separator' },
-    { label: 'Reload View', accelerator: 'CmdOrCtrl+R', role: 'reload'}, // , click: function (item, focusedWindow) {if (focusedWindow) focusedWindow.reload()}},
-    { label: 'Quit', accelerator: 'CmdOrCtrl+Q', role: 'quit'}// , click: function (item, focusedWindow) {if (focusedWindow) focusedWindow.close()}
+    { label: 'Reload View', accelerator: 'CmdOrCtrl+R', role: 'reload' }, // , click: function (item, focusedWindow) {if (focusedWindow) focusedWindow.reload()}},
+    { label: 'Quit', accelerator: 'CmdOrCtrl+Q', role: 'quit' } // , click: function (item, focusedWindow) {if (focusedWindow) focusedWindow.close()}
   ]
   // prepend: params => [{}]
 })

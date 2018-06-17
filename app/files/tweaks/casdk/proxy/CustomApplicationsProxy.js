@@ -1,35 +1,34 @@
 /**
-* Custom Applications SDK for Mazda Connect Infotainment System
-*
-* A mini framework that allows to write custom applications for the Mazda Connect Infotainment System
-* that includes an easy to use abstraction layer to the JCI system.
-*
-* Written by Andreas Schwarz (http://github.com/flyandi/mazda-custom-applications-sdk)
-* Copyright (c) 2016. All rights reserved.
-*
-* WARNING: The installation of this application requires modifications to your Mazda Connect system.
-* If you don't feel comfortable performing these changes, please do not attempt to install this. You might
-* be ending up with an unusuable system that requires reset by your Dealer. You were warned!
-*
-* This program is free software: you can redistribute it and/or modify it under the terms of the
-* GNU General Public License as published by the Free Software Foundation, either version 3 of the
-* License, or (at your option) any later version.
-*
-* This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
-* the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
-* License for more details.
-*
-* You should have received a copy of the GNU General Public License along with this program.
-* If not, see http://www.gnu.org/licenses/
-*
-*/
+ * Custom Applications SDK for Mazda Connect Infotainment System
+ *
+ * A mini framework that allows to write custom applications for the Mazda Connect Infotainment System
+ * that includes an easy to use abstraction layer to the JCI system.
+ *
+ * Written by Andreas Schwarz (http://github.com/flyandi/mazda-custom-applications-sdk)
+ * Copyright (c) 2016. All rights reserved.
+ *
+ * WARNING: The installation of this application requires modifications to your Mazda Connect system.
+ * If you don't feel comfortable performing these changes, please do not attempt to install this. You might
+ * be ending up with an unusuable system that requires reset by your Dealer. You were warned!
+ *
+ * This program is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU General Public License as published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even
+ * the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+ * License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with this program.
+ * If not, see http://www.gnu.org/licenses/
+ *
+ */
 
 /* ***********************    Native apps     *********************** */
 var nativeApps = [];
 var nativeAppsLoc = "apps/";
 
-var _addAppFilesOverwrite = function(uiaId, mmuiMsgObj)
-{
+var _addAppFilesOverwrite = function(uiaId, mmuiMsgObj) {
   log.debug("framework._addAppFiles called for: " + uiaId);
 
   var appName = null;
@@ -40,8 +39,7 @@ var _addAppFilesOverwrite = function(uiaId, mmuiMsgObj)
 
   this._lastAppLoaded = uiaId;
 
-  if (uiaId === "common")
-  {
+  if (uiaId === "common") {
     this._frameworkState = this._FWK_STATE_LOADING_CMN;
 
     appName = uiaId;
@@ -49,7 +47,7 @@ var _addAppFilesOverwrite = function(uiaId, mmuiMsgObj)
     // common is unique. "common" is not a uiaId, but we're using it here for convenience
     path = uiaId;
     jsPath = "common/js/Common.js";
-  } else if (uiaId.substr(0,1) === "_") {
+  } else if (uiaId.substr(0, 1) === "_") {
     this._frameworkState = this._FWK_STATE_LOADING_APP;
 
     appName = uiaId + "App";
@@ -76,8 +74,7 @@ var _addAppFilesOverwrite = function(uiaId, mmuiMsgObj)
   this._loadingAppJsObj = mmuiMsgObj;
 
   utility.loadCss(cssPath);
-  if (this._rtlLanguage)
-  {
+  if (this._rtlLanguage) {
     utility.loadCss(cssRtlPath);
   }
   utility.loadScript(jsPath);
@@ -91,8 +88,8 @@ var _addAppFilesOverwrite = function(uiaId, mmuiMsgObj)
 
 
 /**
-* (GlobalError)
-*/
+ * (GlobalError)
+ */
 
 window.onerror = function() {
   console.error(arguments);
@@ -100,16 +97,16 @@ window.onerror = function() {
 
 
 /**
-* (CustomApplicationsProxy)
-*
-* Registers itself between the JCI system and CustomApplication runtime.
-*/
+ * (CustomApplicationsProxy)
+ *
+ * Registers itself between the JCI system and CustomApplication runtime.
+ */
 
 window.CustomApplicationsProxy = {
 
   /**
-  * (locals)
-  */
+   * (locals)
+   */
 
   debug: false,
   bootstrapped: false,
@@ -126,21 +123,21 @@ window.CustomApplicationsProxy = {
 
 
   /**
-  * (bootstrap)
-  *
-  * Bootstraps the JCI system
-  */
+   * (bootstrap)
+   *
+   * Bootstraps the JCI system
+   */
 
   bootstrap: function() {
 
     // verify that core objects are available
-    if(typeof framework === 'object' && framework._currentAppUiaId === this.systemAppId && this.bootstrapped === false) {
+    if (typeof framework === 'object' && framework._currentAppUiaId === this.systemAppId && this.bootstrapped === false) {
 
       // retrieve system app
       var systemApp = framework.getAppInstance(this.systemAppId);
 
       // verify bootstrapping - yeah long name
-      if(systemApp) {
+      if (systemApp) {
 
         // set to strap - if everything fails - no harm is done :-)
         this.bootstrapped = true;
@@ -152,19 +149,19 @@ window.CustomApplicationsProxy = {
           systemApp._contextTable[this.systemAppCategory].controlProperties.List2Ctrl.selectCallback = this.menuItemSelectCallback.bind(systemApp);
 
           // for usb changes
-          if(typeof(systemApp.overwriteStatusMenuUSBAudioMsgHandler) === "undefined") {
+          if (typeof(systemApp.overwriteStatusMenuUSBAudioMsgHandler) === "undefined") {
             systemApp.overwriteStatusMenuUSBAudioMsgHandler = systemApp._StatusMenuUSBAudioMsgHandler;
             systemApp._StatusMenuUSBAudioMsgHandler = this.StatusMenuUSBAudioMsgHandler.bind(systemApp);
           }
 
           // overwrite framework route handler
-          if(typeof(framework.overwriteRouteMmmuiMsg) === "undefined") {
+          if (typeof(framework.overwriteRouteMmmuiMsg) === "undefined") {
             framework.overwriteRouteMmmuiMsg = framework.routeMmuiMsg;
             framework.routeMmuiMsg = this.routeMmuiMsg.bind(framework);
           }
 
           // ovewrite framework MMUI sender
-          if(typeof(framework.overwriteSendEventToMmui) === "undefined") {
+          if (typeof(framework.overwriteSendEventToMmui) === "undefined") {
             framework.overwriteSendEventToMmui = framework.sendEventToMmui;
             framework.sendEventToMmui = this.sendEventToMmui.bind(framework);
           }
@@ -175,7 +172,7 @@ window.CustomApplicationsProxy = {
           // kick off loader
           this.prepareCustomApplications();
 
-        } catch(e) {
+        } catch (e) {
           //do nothing
         }
       }
@@ -184,19 +181,19 @@ window.CustomApplicationsProxy = {
 
 
   /**
-  * (Overwrite) menuItemSelectCallback
-  */
+   * (Overwrite) menuItemSelectCallback
+   */
 
   menuItemSelectCallback: function(listCtrlObj, appData, params) {
 
     try {
-      if(appData.mmuiEvent === "SelectCustomApplication") {
+      if (appData.mmuiEvent === "SelectCustomApplication") {
         /* ***********************    Native apps     *********************** */
-        if ( appData.appId.substr(0,1) === "_" ) {
+        if (appData.appId.substr(0, 1) === "_") {
 
           for (var i = 0; i < additionalApps.length; ++i) {
             var additionalApp = additionalApps[i];
-            if(additionalApp.name === appData.appName) {
+            if (additionalApp.name === appData.appName) {
               framework.additionalAppName = appData.appName;
               framework.additionalAppContext = 'Start';
 
@@ -211,7 +208,7 @@ window.CustomApplicationsProxy = {
           }
           /* ***********************    ~Native apps     *********************** */
           // launch app or exit if handler is not available
-        } else if(typeof(CustomApplicationsHandler) !== "undefined" && CustomApplicationsHandler.launch(appData)) {
+        } else if (typeof(CustomApplicationsHandler) !== "undefined" && CustomApplicationsHandler.launch(appData)) {
           CustomApplicationsProxy.targetAppName = 'custom';
           CustomApplicationsProxy.targetAppContext = 'Surface';
           try {
@@ -219,12 +216,12 @@ window.CustomApplicationsProxy = {
             // set app data
             appData.appName = CustomApplicationsProxy.proxyAppName;
             appData.mmuiEvent = CustomApplicationsProxy.proxyMmuiEvent;
-          } catch(e) {
+          } catch (e) {
             // do nothing
           }
         }
       }
-    } catch(e) {
+    } catch (e) {
       // do nothing
     }
     // pass to original handler
@@ -232,14 +229,14 @@ window.CustomApplicationsProxy = {
   },
 
   /**
-  * (Overwrite) sendEventToMmui
-  */
+   * (Overwrite) sendEventToMmui
+   */
 
   sendEventToMmui: function(uiaId, eventId, params, fromVui) {
     var currentUiaId = this.getCurrentApp(),
-    currentContextId = this.getCurrCtxtId();
+      currentContextId = this.getCurrCtxtId();
     // proxy overwrites
-    if(currentUiaId === CustomApplicationsProxy.targetAppName) {
+    if (currentUiaId === CustomApplicationsProxy.targetAppName) {
       currentUiaId = CustomApplicationsProxy.proxyAppName;
       currentContextId = CustomApplicationsProxy.proxyAppContext;
     }
@@ -248,43 +245,43 @@ window.CustomApplicationsProxy = {
   },
 
   /**
-  * (Overwrite) routeMmuiMsg
-  */
+   * (Overwrite) routeMmuiMsg
+   */
   routeMmuiMsg: function(jsObject) {
     try {
       var proxy = CustomApplicationsProxy;
-      if(typeof(CustomApplicationsHandler) === 'object') {
+      if (typeof(CustomApplicationsHandler) === 'object') {
         // validate routing message
-        switch(jsObject.msgType) {
+        switch (jsObject.msgType) {
           // magic switch
           case 'ctxtChg':
-          if(proxy.targetAppName && jsObject.uiaId === proxy.proxyAppName) {
-            jsObject.uiaId = proxy.targetAppName;
-            jsObject.ctxtId = proxy.targetAppContext;
-          }
-          break;
-          // check if our proxy app is in the focus stack
+            if (proxy.targetAppName && jsObject.uiaId === proxy.proxyAppName) {
+              jsObject.uiaId = proxy.targetAppName;
+              jsObject.ctxtId = proxy.targetAppContext;
+            }
+            break;
+            // check if our proxy app is in the focus stack
           case 'focusStack':
-          if(jsObject.appIdList && jsObject.appIdList.length) {
-            for(var i = 0; i < jsObject.appIdList.length; i++) {
-              var appId = jsObject.appIdList[i];
-              if(appId.id === proxy.proxyAppName) {
-                appId.id = proxy.targetAppName;
+            if (jsObject.appIdList && jsObject.appIdList.length) {
+              for (var i = 0; i < jsObject.appIdList.length; i++) {
+                var appId = jsObject.appIdList[i];
+                if (appId.id === proxy.proxyAppName) {
+                  appId.id = proxy.targetAppName;
+                }
               }
             }
-          }
           case 'msg':
           case 'alert':
-          if(jsObject.uiaId === proxy.proxyAppName) {
-            jsObject.uiaId = proxy.targetAppName;
-          }
-          break;
+            if (jsObject.uiaId === proxy.proxyAppName) {
+              jsObject.uiaId = proxy.targetAppName;
+            }
+            break;
           default:
-          // do nothing
-          break;
+            // do nothing
+            break;
         }
       }
-    } catch(e) {
+    } catch (e) {
       // do nothing
     }
     // pass to framework
@@ -292,14 +289,14 @@ window.CustomApplicationsProxy = {
   },
 
   /**
-  * (Overwrite) StatusMenuUSBAudioMsgHandler
-  */
+   * (Overwrite) StatusMenuUSBAudioMsgHandler
+   */
   StatusMenuUSBAudioMsgHandler: function(msg) {
-    if(typeof(CustomApplicationsHandler) === 'object') {
+    if (typeof(CustomApplicationsHandler) === 'object') {
       try {
         var proxy = CustomApplicationsProxy;
         console.log(JSON.stringify(msg));
-      } catch(e) {
+      } catch (e) {
         // do nothing
       }
     }
@@ -308,8 +305,8 @@ window.CustomApplicationsProxy = {
   },
 
   /**
-  * (prepareCustomApplications)
-  */
+   * (prepareCustomApplications)
+   */
   prepareCustomApplications: function() {
     // load native apps & custom apps separately
     this.loadCount = 0;
@@ -320,11 +317,11 @@ window.CustomApplicationsProxy = {
   },
 
   /**
-  * (loadCustomApplications)
-  */
+   * (loadCustomApplications)
+   */
   loadCustomApplications: function() {
     try {
-      if(typeof(CustomApplicationsHandler) === 'undefined') {
+      if (typeof(CustomApplicationsHandler) === 'undefined') {
         // clear
         clearTimeout(this.loadTimer);
         // try to load the runtime script
@@ -334,27 +331,27 @@ window.CustomApplicationsProxy = {
         }.bind(this));
         // safety timer
         this.loadTimer = setTimeout(function() {
-          if(typeof(CustomApplicationsHandler) === "undefined") {
+          if (typeof(CustomApplicationsHandler) === "undefined") {
             this.loadCount = this.loadCount + 1;
             // 20 attempts or we forget it - that's almost 3min
-            if(this.loadCount < 20) {
+            if (this.loadCount < 20) {
               this.loadCustomApplications();
             }
           }
         }.bind(this), 10000);
       }
-    } catch(e) {
+    } catch (e) {
       //log.error('loadCustomApplications failed, we won\'t attempt again because there could be issues with the actual handler');
     }
   },
 
   /**
-  * (initCustomApplicationsDataList)
-  */
+   * (initCustomApplicationsDataList)
+   */
   initCustomApplicationsDataList: function() {
     // extend with custom applications
     try {
-      if(typeof(CustomApplicationsHandler) !== "undefined") {
+      if (typeof(CustomApplicationsHandler) !== "undefined") {
         CustomApplicationsHandler.retrieve(function(items) {
           var systemApp = framework.getAppInstance(this.systemAppId);
           items.forEach(function(item) {
@@ -362,50 +359,50 @@ window.CustomApplicationsProxy = {
             framework.localize._appDicts[this.systemAppId][item.appData.appName.replace(".", "_")] = item.title;
             framework.common._contextCategory._contextCategoryTable[item.appData.appName + '.*'] = 'Applications';
             // For v59+ there is an additional list _applicationsCtxtWiseAppNames.Applications
-            if(typeof systemApp._applicationsCtxtWiseAppNames !== "undefined" && systemApp._applicationsCtxtWiseAppNames.Applications.indexOf(item.appData.appName) === -1) {
+            if (typeof systemApp._applicationsCtxtWiseAppNames !== "undefined" && systemApp._applicationsCtxtWiseAppNames.Applications.indexOf(item.appData.appName) === -1) {
               systemApp._applicationsCtxtWiseAppNames.Applications.push(item.appData.appName);
             }
           }.bind(this));
         }.bind(this));
       }
-    } catch(e) {
+    } catch (e) {
       // do nothing
     }
   },
   /**
-  * (initNativeApplicationsDataList)
-  */
+   * (initNativeApplicationsDataList)
+   */
   initNativeApplicationsDataList: function() {
     try {
       var systemApp = framework.getAppInstance(this.systemAppId);
       var category = 'Applications';
-      if(!systemApp.hasAdditionalApps) {
+      if (!systemApp.hasAdditionalApps) {
         systemApp.hasAdditionalApps = true; // so we only do this if needed
         GuiFramework.prototype._addAppFiles = _addAppFilesOverwrite;
         var script = document.createElement('script');
         script.type = 'text/javascript';
-        script.src = (this.debug) ? 'apps/custom/apps/nativeApps.js':'/jci/opera/opera_dir/userjs/nativeApps.js';
+        script.src = '../opera/opera_dir/userjs/nativeApps.js';
         document.head.appendChild(script);
         script.onload = function(data) {
-          if(typeof additionalApps !== "undefined"){
+          if (typeof additionalApps !== "undefined") {
             for (var i = 0; i < additionalApps.length; ++i) {
               var additionalApp = additionalApps[i];
-              systemApp._masterApplicationDataList.items.push(
-                { appData :
-                  { appName : additionalApp.name,
-                    isVisible : true,
-                    appId : additionalApp.name,
-                    mmuiEvent : "SelectCustomApplication"
-                  },
-                  text1Id : additionalApp.name,
-                  disabled : false,
-                  itemStyle : 'style01',
-                  hasCaret : false
-                });
+              systemApp._masterApplicationDataList.items.push({
+                appData: {
+                  appName: additionalApp.name,
+                  isVisible: true,
+                  appId: additionalApp.name,
+                  mmuiEvent: "SelectCustomApplication"
+                },
+                text1Id: additionalApp.name,
+                disabled: false,
+                itemStyle: 'style01',
+                hasCaret: false
+              });
               framework.localize._appDicts['system'][additionalApp.name] = additionalApp.label;
-              framework.common._contextCategory._contextCategoryTable[additionalApp.name+'.*'] = category;
+              framework.common._contextCategory._contextCategoryTable[additionalApp.name + '.*'] = category;
               // For v59+ there is an additional list _applicationsCtxtWiseAppNames.Applications
-              if(typeof systemApp._applicationsCtxtWiseAppNames !== "undefined" && systemApp._applicationsCtxtWiseAppNames.Applications.indexOf(additionalApp.name) === -1) {
+              if (typeof systemApp._applicationsCtxtWiseAppNames !== "undefined" && systemApp._applicationsCtxtWiseAppNames.Applications.indexOf(additionalApp.name) === -1) {
                 systemApp._applicationsCtxtWiseAppNames.Applications.push(additionalApp.name);
               }
               if (additionalApp.preload !== undefined) {
@@ -416,7 +413,7 @@ window.CustomApplicationsProxy = {
           }
         }
       }
-    } catch(e) {
+    } catch (e) {
       // do nothing
     }
   },
@@ -424,11 +421,11 @@ window.CustomApplicationsProxy = {
 
 
 /**
-* Runtime Caller
-*/
+ * Runtime Caller
+ */
 
-if(window.opera) {
-  window.opera.addEventListener('AfterEvent.load', function (e) {
+if (window.opera) {
+  window.opera.addEventListener('AfterEvent.load', function(e) {
     CustomApplicationsProxy.bootstrap();
   });
 }

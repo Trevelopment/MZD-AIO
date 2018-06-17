@@ -67,7 +67,7 @@ rm -f ${MYDIR}/dataRetrieval_config.txt
 rm -f ${MYDIR}/jci-autoupdate
 rm -f ${MYDIR}/MZD_LOG.md
 rm -f ${MYDIR}/AIO_info.json
-rm -f ${MYDIR}/headunit.log
+rm -f ${MYDIR}/*.log
 rm -f ${MYDIR}/tweaks.sh
 
 log_message "===========********** END INSTALLATION OF SWAP FILE **********==========="

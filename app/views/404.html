@@ -1,21 +1,105 @@
 <!doctype html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>Error</title>
-    <link rel="stylesheet" href="assets/css/index.css">
+<head>
+  <meta charset="utf-8">
+  <title>Error</title>
+  <link rel="stylesheet" href="../assets/css/index.css">
+  <script src="../assets/vendor/jquery.min.js"></script>
+  <script src="../assets/js/index.js"></script>
   <style>
+  html,
   body {
-    background-image: url(http://trevelopment.com/images/homer404.png);
+    overflow: hidden;
+  }
+  body {
+    background-image: url(../files/img/homer404.png);
     background-attachment: fixed;
     background-size: cover;
     background-repeat: no-repeat;
-}
-.main {
-  text-align:center;
-  margin-top: 50%;
-}
-a {
+  }
+  .main {
+    text-align: center;
+    margin-top: 50%;
+  }
+  footer {
+    /* display:none; */
+    bottom: 0;
+    text-align: center;
+    width: 100%;
+    height: 40px;
+    padding: 5px 0;
+    border-top: 1px solid #e0e5e6;
+    background: #f6f8f8;
+    position: fixed;
+    z-index: 99999;
+    color: #000;
+  }
+  footer [class*="icon-"] {
+    margin-right: 5px;
+  }
+  span.test-panel-toggle,
+  .footer-donate {
+    margin-top: 5px;
+    position: fixed;
+    left: 10px;
+    z-index: 99999;
+  }
+  .copyright {
+    position: fixed;
+    right: 0;
+    left: 0;
+    margin: auto;
+  }
+  .copyleft {
+    font-weight: 500
+  }
+  .copyleft .symbol {
+    display: inline-block;
+    transform: rotate(180deg);
+    font-size: 21px;
+  }
+  footer .contact-form {
+    margin-top: 3px;
+    right: 10px;
+    position: fixed;
+  }
+  footer a {
+    cursor: pointer;
+  }
+  footer .footer-secret a {
+    color: transparent;
+    left: 100px;
+    text-align: left;
+    position: fixed;
+    cursor: help;
+    z-index: 1000;
+  }
+  #secretMenu {
+    position: fixed;
+    bottom: 100px;
+    left: 20px;
+    height: 250px;
+    width: 250px;
+    border: 4px double #fff;
+    outline: 6px double #000;
+    background-color: #444;
+    color: #eee;
+    text-align: center;
+    padding: 20px;
+    display: table;
+  }
+  #secretMenu button {
+    margin: 3px;
+  }
+  .w3-bordered tr {
+    border-right: 1px solid #ddd;
+  }
+  section.options {
+    margin: 0px;
+    width: 100%;
+    max-width: 100%;
+  }
+  a.card {
     padding: 20px;
     text-align: center;
     top: 50%;
@@ -25,52 +109,77 @@ a {
     background-color: #666;
     right: 0;
     left: 0;
-    bottom: 50px;
-    width: 20%;
+    margin: auto;
+    min-width: 51%;
+    position: fixed;
+    width: 100px;
     border-radius: 40px;
     text-transform: uppercase;
-}
-a:hover {
-  background-color: red;
-  color: yellow;
-}
-.card {
-  transition: all 0.2s ease-in-out;
-}
-.card {
-  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-}
-.card:hover,card-1:focus  {
-  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
-}
-.card:focus {
-  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
-}
-
-</style>
-<script>
-
-</script>
+    max-width: 100%;
+  }
+  p#errorMessage {
+    width: 100%;
+    background: none;
+    top: 100px;
+    text-decoration: none;
+    font-size: 30px;
+    right: 0;
+    left: 0;
+    margin: auto;
+    text-align: center;
+    width: 0;
+    min-width: 400px;
+    max-width: 800px;
+    padding: 15px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    position: fixed;
+  }
+  a:hover {
+    background-color: red;
+    color: yellow;
+  }
+  .card {
+    transition: all 0.2s ease-in-out;
+  }
+  .card {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  }
+  .card:hover,
+  card-1:focus {
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+  }
+  .card:focus {
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+  }
+  </style>
 </head>
 <body>
   <div class="container">
     <header>
       <h3></h3>
-      <p id="errorMessage"></p>
+      <p id="errorMessage" class="card"></p>
     </header>
     <section class="main">
-<a class="card" href="../index.html">Back</a>
-</div>
-        <script>
+      <a class="card" href="../index.html">Reload AIO</a>
+  </div>
+  <script>
           require('electron').ipcRenderer.on('app-error', (event, message) => {
             document.getElementById('errorMessage').innerHTML = message;
           });
         </script>
-      </section>
-      <footer>
-        <span class='footer-donate'><a href="" onclick='donate()'><span class='icon-money'></span> Donate</a></span>
-        <span class="copyright"><span class="copyleft" title="Copyleft" onclick="externalLink('copyleft')" style="cursor:pointer">&copy; 2017 <a href="" onclick="externalLink('trevelopment')" title="Copyleft Trevelopment">Trevelopment.</a></span></span>
-        <span class="contact-form"><span class='icon-contact_mail'></span><a href="views/contact.html" data-featherlight="ajax" title="Contact The Developer" id="feedback">Feedback</a></span>
-      </footer>
-  </body>
+  </section>
+  <footer>
+    <span class='footer-donate'>
+      <a href="" onclick='shell.openExternal("https://paypal.me/Trevelopment")'>
+        <span class='icon-money'></span> Donate</a>
+    </span>
+    <span class="copyright">
+      <span class="copyleft" title="Copyleft" onclick="shell.openExternal('https://Trevelopment.com')" style="cursor:pointer">&copy; 2017 <a href="" onclick="externalLink('trevelopment')" title="Copyleft Trevelopment">Trevelopment.</a></span>
+    </span>
+    <span class="contact-form">
+      <span class='icon-contact_mail'></span><a onclick="shell.openExternal('mailto:Trez@MazdaTweaks.com?Subject=Contact%20Error!!!!')" data-featherlight="ajax" title="Contact The Developer" id="feedback">Feedback</a></span>
+  </footer>
+</body>
+
 </html>

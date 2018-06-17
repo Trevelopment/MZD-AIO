@@ -110,9 +110,9 @@ function AAlogPoll() {
                 }
                 var psconsole = document.getElementById('aaStatusText');
                 if (debugTxt != null && psconsole != null) {
-                  var atBottom = (psconsole.scrollTop == psconsole.scrollHeight);
-                  psconsole.focus();
                   psconsole.value = debugTxt;
+                  psconsole.focus();
+                  var atBottom = (psconsole.scrollTop == psconsole.scrollHeight);
 
                   if (psconsole.length && atBottom)
                     psconsole.scrollTop = psconsole.scrollHeight;

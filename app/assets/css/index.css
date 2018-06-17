@@ -115,7 +115,7 @@ div#header, #notices, nav#mySidenav, header span#openNav, header span#openSidePa
   margin-top: 30px;
 }
 .showNav~nav#mySidenav {
-  top: 25px;
+  /* top: 25px; */
 }
 .hideNav span.icon-lock:before {
   /*font-size: 26px;*/
@@ -560,22 +560,27 @@ tr#custThemeHelp {
 #custbgOptions td {
   padding: 5px;
 }
+#custbgOptions button {
+  width: 100%;
+}
 .uninstall-check input[disabled]~label:after, .install-check input[disabled]~label:after {
   background: none;
   content: 'x';
-  font-size: 25px;
+  font-size: 30px;
   padding: 0;
   margin: 0px 0px 0px 0px;
-  line-height: .4;
-  color: inherit;
+  line-height: 0.4;
   opacity: 0.1;
+  color: #b3b3b3;
 }
 input[disabled]~label:hover:after {
-  opacity: .7;
+  opacity: 0.4;
+  color: #ff9900;
   box-shadow: none;
 }
 input[disabled]~label:active:after {
   opacity: 1;
+  color: #ff0000;
   cursor: not-allowed;
 }
 div#bgPickTitle {
@@ -586,6 +591,12 @@ div#bgPickTitle {
   width: 40%;
   text-align: center;
   font-size: 10px;
+}
+.flacmsg {
+  font-size: 11px;
+}
+.flacmsg p {
+  display: none;
 }
 #img2use {
   width: 810px;
@@ -825,7 +836,7 @@ div#helpMenuTop, div#helpMenuTop .w3-third {
   margin-right: 10px;
 }
 .finishedMessage .modal-dialog {
-  max-width: 450px;
+  max-width: 550px;
 }
 .tooltip>.tooltip-inner {
   max-width: 100% !important;
@@ -1271,13 +1282,21 @@ input#bgRotatorSeconds {
   padding: 3px 16px;
   font-size: 20px;
   font-weight: 800;
+  width: 85px;
+  display: inline-block;
+  border: 2px solid transparent;
+  border-bottom: 2px solid #808080;
 }
 input#bgRotatorSeconds:hover {
-  border: 2px dotted #ff0000;
-  background: #aaa;
+  border: 2px dashed #099;
+  background: #9dd;
 }
 input#bgRotatorSeconds:focus {
   background: #ddd;
+}
+input#bgRotatorSeconds.error {
+  border: 2px dotted #fcf939;
+  background: #ff0000;
 }
 input:focus {
   outline: 2px solid rgba(0, 0, 0, 0.55);
@@ -1609,6 +1628,9 @@ select#spdOp-barThemeStart {
 }
 .gauge-type {
   width: 40%;
+}
+.featherlight.announcementWindow a {
+  display: inline;
 }
 /* @media Queries */
 
@@ -1968,6 +1990,9 @@ a#update-available {
 #changelog {
   text-transform: capitalize;
 }
+#changelog li {
+  text-transform: none;
+}
 span.nocap {
   text-transform: none;
 }
@@ -2265,6 +2290,13 @@ button#compileAutorun {
 #audioSourceOrder input[type=number] {
   width: 25%;
   text-align: center;
+  padding-top: 0;
+}
+#audioSourceOrder .audio-order {
+  padding-top: 8px;
+}
+#audioSourceOrder .audio-order span {
+  padding-top: 4px;
 }
 #SbSpeedoOps {
   font-size: 16px;
@@ -2460,6 +2492,7 @@ input#spdOp-interval {
 }
 #serialConnection .link {
   color: blue;
+  cursor: pointer;
   border-bottom: 1px dashed green;
 }
 .ng-invalid {
@@ -2475,12 +2508,14 @@ input#spdOp-interval {
   outlline: none;
   cursor: auto;
 }
+.fuel-gauge-capacities {
+  transition: .6s ease-in .2s;
+  text-decoration: underline;
+}
+.fuel-gauge-capacities:hover {
+  background: rgba(242, 145, 249, 0.56);
+  color: blue;
+}
 input:disabled {
   cursor: not-allowed;
 }
-/* ******* REMOVE FOR VERSION 2.8.0 ******** */
-
-.casdk-link {
-  display: none;
-}
-/* ****************************************** */

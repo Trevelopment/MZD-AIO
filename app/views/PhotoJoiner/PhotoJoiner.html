@@ -1,3 +1,4 @@
+<div id="joinError"></div>
 <ng-form id="form1" runat="server">
   <div id="header" class="header w3-pale-green">
     <div class="content center">
@@ -9,7 +10,7 @@
   </div>
   <div class="content">
     <div id="Panel1" style="width: 100%;">
-      <div class="w3-center">{{imgOps[1].label}}<br>X = <input type='number' id='bgRotatorSeconds' name='bgRotatorSeconds' value='60' min='10' max='300' step='1'></div>
+      <div class="w3-center">{{imgOps[1].label}}<br><span class="w3-large">X (Seconds Per Background) = </span><input type="number" id="bgRotatorSeconds" name="bgRotatorSeconds" value="60" min="10" max="300" ng-min="10" ng-max="300" ng-step="1" step="1"></div>
       <table width="100%" border="0">
         <tbody>
           <tr>

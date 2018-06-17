@@ -1,8 +1,9 @@
 var vardir = `${app.getPath('userData')}/background/`;
 var style = 1;
 var JoinedHeight = 0,
-JoinedWidth = 0,
-ImageCount = 0;
+  JoinedWidth = 0,
+  ImageCount = 0,
+  maxImages = 40;
 var margin = 10;
 var cols = 2;
 var first = true;
@@ -104,6 +105,15 @@ function selectFiles() {
 }
 
 function JoinPhotos() {
+  var bgSec = $('#bgRotatorSeconds').val();
+  if (arr.length > maxImages) {
+    ShowErrorMessage(maxImages);
+    return
+  }
+  if (bgSec > 300 || bgSec < 10) {
+    ShowTimeError(bgSec);
+    return
+  }
   // $('#joinbtn').prepend('<img src="../../files/img/load-1.gif" />');
   // $('#joinbtn').append('<img src="../../files/img/load-0.gif" />');
   makeArray();
@@ -122,7 +132,7 @@ function JoinPhotos() {
     Images.push(imgobj);
   }
   JoinedHeight = 480;
-  JoinedWidth += imgobj.nWidth*Images.length;
+  JoinedWidth += imgobj.nWidth * Images.length;
   /* We already know that every image is going to be the same length  */
   /*
   for (var i = 0; i < Images.length; i++) {
@@ -137,8 +147,6 @@ function JoinPhotos() {
       JoinedHeight += imgobj.nHeight;
     }
   }*/
-  $("#Panel2").show();
-  $("#Panel1").hide();
   var margin = 0;
   canvas.width = JoinedWidth;
   canvas.height = JoinedHeight;
@@ -146,7 +154,7 @@ function JoinPhotos() {
   ctx.fillStyle = document.getElementById("color").value;
   ctx.fillRect(0, 0, JoinedWidth, JoinedHeight);
   var Top = margin,
-  Left = margin;
+    Left = margin;
   for (var i = 0; i < Images.length; i++) {
     if (style == "1") {
       Top = 0;
@@ -173,9 +181,19 @@ function JoinPhotos() {
   //$("#hdnImageData").val(canvas.toDataURL('image/png'));
   //saveCanvas(canvas, 'background', 'png');
   /* Write the joined image directly to the File System as background.png */
-  fs.writeFile(`${vardir}/background.png`,nativeImage.createFromDataURL(canvas.toDataURL('image/png')).toPNG()),function(err){console.log(err);window.close();}
-  outImage.src = `${vardir}/background.png`;
-  $('#imgJoined').attr("src",`${vardir}/background.png`);
+  fs.writeFile(`${vardir}/background.png`,
+    nativeImage.createFromDataURL(canvas.toDataURL('image/png')).toPNG(),
+    (err) => {
+      if (err) {
+        console.log(err);
+        window.close();
+        return
+      }
+      $("#Panel2").show();
+      $("#Panel1").hide();
+      outImage.src = `${vardir}/background.png`;
+      $('#imgJoined').attr("src", `${vardir}/background.png`);
+    })
 }
 
 function changeStyle(s) {
@@ -310,12 +328,12 @@ function del(i) {
 }
 
 function hideMsg() {
-  $("#lblFB").slideUp();
+  $("#joinError").slideUp();
 }
 
 function JoinasGrid(canvas) {
   var JoinedHeight = 0,
-  JoinedWidth = 0;
+    JoinedWidth = 0;
   Images = [];
   for (var i = 0; i < arr.length; i++) {
     var img = document.createElement("img");
@@ -339,7 +357,7 @@ function JoinasGrid(canvas) {
   var rows = parseInt($("#txtRows").val());
   var cols = parseInt($("#txtCols").val());
   var CurrHeight = 0,
-  CurrWidth = 0;
+    CurrWidth = 0;
   var ImageWidth = 0;
   var margin = 0;
   if (document.getElementById("margin").checked) {
@@ -389,7 +407,7 @@ function JoinasGrid(canvas) {
   ctx.fillStyle = document.getElementById("color").value;
   ctx.fillRect(0, 0, JoinedWidth, JoinedHeight);
   var Top = margin,
-  Left = margin;
+    Left = margin;
   var rowNumber = 0;
   for (var i = 0; i < Images.length; i++) {
     var imgobj = Images[i];
@@ -443,16 +461,16 @@ function CreateGridPreview() {
 
 function mode(array) {
   if (array.length == 0)
-  return null;
+    return null;
   var modeMap = {};
   var maxEl = array[0],
-  maxCount = 1;
+    maxCount = 1;
   for (var i = 0; i < array.length; i++) {
     var el = array[i];
     if (modeMap[el] == null)
-    modeMap[el] = 1;
+      modeMap[el] = 1;
     else
-    modeMap[el]++;
+      modeMap[el]++;
     if (modeMap[el] > maxCount) {
       maxEl = el;
       maxCount = modeMap[el];
@@ -478,11 +496,11 @@ function CreateImagePreview(imgpath) {
   img.src = imgpath;
   img.setAttribute("class", "thumbimg");
   if (style == 1)
-  img.setAttribute("height", 100);
+    img.setAttribute("height", 100);
   else if (style == 2)
-  img.setAttribute("width", 100);
+    img.setAttribute("width", 100);
   else if (style == 3)
-  img.setAttribute("width", 100);
+    img.setAttribute("width", 100);
   var thumb = document.createElement("div");
   thumb.setAttribute("class", "thumb");
   thumb.setAttribute("id", "thumb" + ImageCount);
@@ -508,10 +526,20 @@ function CreateImagePreview(imgpath) {
 }
 
 function ShowErrorMessage(AllowedImages) {
-  var ErrorLabel = document.getElementById("lblFB");
-  ErrorLabel.innerHTML = "You can add maximum of " + AllowedImages + " Photos.<br/> To add more change the rows and columns";
-  ErrorLabel.setAttribute("class", "err");
-  $("#lblFB").slideDown();
+  var ErrorLabel = $("#joinError");
+  ErrorLabel.html("You can add maximum of " + AllowedImages + " images.");
+  ErrorLabel.addClass("err");
+  ErrorLabel.slideDown();
+  setTimeout("hideMsg();", 5000);
+}
+function ShowTimeError(seconds) {
+  var ErrorLabel = $("#joinError");
+  ErrorLabel.html("INVALID X = " + seconds +"! Seconds per background must be between 10 and 300 Seconds.");
+  ErrorLabel.addClass("err");
+  ErrorLabel.slideDown();
+  $('#bgRotatorSeconds').addClass("error");
+  $('#bgRotatorSeconds').click(()=>{$('#bgRotatorSeconds').removeClass('error')});
+  $('#bgRotatorSeconds').focus();
   setTimeout("hideMsg();", 5000);
 }
 
@@ -530,4 +558,7 @@ function ValidateAllowedImages() {
 
 function numberOfImages() {
   document.getElementById('imgCount').innerHTML = arr.length;
+  if (arr.length > maxImages) {
+    ShowErrorMessage(maxImages);
+  }
 }

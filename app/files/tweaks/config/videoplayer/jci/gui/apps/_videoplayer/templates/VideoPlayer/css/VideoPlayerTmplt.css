@@ -1,22 +1,172 @@
-#myVideoContainer {
+.VPControlOverlay {
+  background: transparent;
+  max-height: 430px;
+  position: fixed;
+  z-index: 9;
+  height: 0px;
+  width: 800px;
+  left: 0px;
+  top: 0px;
+}
+.VPControlOverlay.blackOut {
+  max-height: 480px;
+  z-index: 99;
+}
+.VPControlOverlay:not(.blackOut) .StatusBarCtrlAppName, .VPControlOverlay:not(.blackOut) #blackOutVideoStatus {
+  display: none !important;
+}
+.VPControlOverlay.blackOut .StatusBarCtrlAppName {
+  text-align: center;
+  width: 100%;
+  left: 0;
+}
+.VPControlOverlay.blackOut #blackOutVideoStatus {
+  font-size: 14px;
+  position: fixed;
+  padding: 10px;
+  z-index: 100;
+  height: 8%;
+  width: 50px;
+  bottom: 0;
+  transition: none;
+  opacity: 1;
+}
+.VPControlOverlay.blackOut .VPCtrlAppName {
+  transition: none;
+  z-index: 100;
+  opacity: 1;
+  height: 12%;
+}
+.VPControlOverlay.blackOut #blackOutVideoStatus.out, .VPControlOverlay.blackOut .VPCtrlAppName.out {
+  transition: opacity 1s ease-in-out 1s;
+  opacity: 0;
+}
+.VPControlOverlay.blackOut.wideVideo #blackOutVideoStatus div {
+  padding-right: 3px;
+  display: inline;
+}
+.VPControlOverlay.blackOut.wideVideo #blackOutVideoStatus {
+  padding: 10px;
+  height: 10px;
+}
+.VPControlOverlay ul {
+  z-index: 999;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+.VPControlOverlay ul li {
+  float: left;
+}
+.VPControlOverlay #blackBgn {
+  background-color: transparent;
+  height: 100%;
+  width: 100%;
+}
+.VPControlOverlay.blackOut #blackBgn {
+  background-color: black;
+}
+.VPControlOverlay .videoTouchControls {
+  z-index: 999;
+  position: absolute;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: transparent;
+  background-image: none;
+}
+.VPControlOverlay #videoShuffleBtn {
+  top: 0;
+  right: 30%;
+  left: 0;
+  width: 25%;
+  height: 20%;
+  margin: auto;
+}
+.VPControlOverlay #videoReAllBtn {
+  top: 0;
+  right: 0;
+  left: 30%;
+  width: 25%;
+  height: 20%;
+  margin: auto;
+}
+.VPControlOverlay #videoStopBtn {
+  top: 80%;
+  right: 0;
+  left: 0;
+  width: 50%;
+  height: 20%;
+  margin: auto;
+}
+.VPControlOverlay #videoPlayBtn {
+  top: 60px;
+  bottom: 60px;
+  left: 60px;
+  right: 60px;
+  height: 50%;
+  width: 50%;
+  margin: auto;
+}
+.VPControlOverlay #videoNextBtn {
+  top: 0;
+  left: 80%;
+  width: 20%;
+  height: 45%;
+}
+.VPControlOverlay #videoPlayFFBtn {
+  top: 52%;
+  left: 80%;
+  width: 20%;
+  height: 47%;
+}
+.VPControlOverlay #videoPlayRWBtn {
+  top: 52%;
+  left: 0;
+  width: 20%;
+  height: 47%;
+}
+.VPControlOverlay #videoPrevBtn {
+  top: 0;
+  left: 0;
+  width: 20%;
+  height: 45%;
+}
+.VPControlOverlay #memErrorMessage {
+  position: absolute;
+  font-size: 20px;
+  color: #fff;
+  background: #000;
+  outline: 4px solid #ff0000;
+  padding: 15px 0;
+  width: 85%;
+  top: 20%;
+  left: 5%;
+  text-align: center;
+  z-index: 20600;
+  text-shadow: 2px 2px .8px #000;
+}
+.VPControlOverlay #memErrorMessage ul {
+  list-style: none;
+}
+.VideoPlayerTmplt #myVideoContainer {
   height: 480px;
   width: 100%;
   position: relative;
   background-image: url('../images/player_background.jpg');
   text-shadow: 2px 2px .8px #000;
 }
-#myVideoContainer.noBg {
+.VideoPlayerTmplt #myVideoContainer.noBg {
   background-image: none;
   background-color: transparent;
 }
-#myVideoContainer #ajaxLoader {
+.VideoPlayerTmplt #myVideoContainer #ajaxLoader {
   width: 150px;
   height: 150px;
   left: 275px;
   top: 130px;
   position: absolute;
 }
-#myVideoControlDiv {
+.VideoPlayerTmplt #myVideoControlDiv {
   top: 430px;
   right: 0;
   left: 0;
@@ -26,7 +176,7 @@
   border-top: 1px solid #444444;
   /*background-color: #000000;*/
 }
-#myVideoName {
+.VideoPlayerTmplt #myVideoName {
   color: #cccccc;
   font-size: 16px;
   font-family: verdana;
@@ -41,7 +191,7 @@
   white-space: nowrap;
   text-overflow: ellipsis;
 }
-#myVideoStatus {
+.VideoPlayerTmplt #myVideoStatus {
   color: #cccccc;
   font-size: 14px;
   font-family: verdana;
@@ -55,14 +205,14 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
-#myVideoControlDiv ul, #videoInfoPanel ul {
+.VideoPlayerTmplt #myVideoControlDiv ul, .VideoPlayerTmplt #videoInfoPanel ul {
   margin: 0;
   padding: 0;
   list-style-type: none;
   height: 100%;
   width: 100%;
 }
-#myVideoControlDiv ul li, #videoInfoPanel ul li {
+.VideoPlayerTmplt #myVideoControlDiv ul li, .VideoPlayerTmplt #videoInfoPanel ul li {
   float: right;
   padding-left: 42px;
   margin-right: 12px;
@@ -70,7 +220,7 @@
   background-position: 0 7px;
   height: 100%;
 }
-#myVideoControlDiv ul li a, #videoInfoPanel ul li a {
+.VideoPlayerTmplt #myVideoControlDiv ul li a, .VideoPlayerTmplt #videoInfoPanel ul li a {
   display: block;
   color: #cccccc;
   font-size: 16px;
@@ -78,11 +228,11 @@
   font-weight: normal;
   padding-top: 16px;
 }
-#myVideoControlDiv ul li a {
+.VideoPlayerTmplt #myVideoControlDiv ul li a {
   padding-bottom: 22px;
 }
-#myVideoControlDiv ul li:active {
-  background: linear-gradient(bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
+.VideoPlayerTmplt #myVideoControlDiv ul li:active {
+  background: -webkit-linear-gradient(bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
   background-repeat: no-repeat !important;
   background-position: 0 3px;
 }
@@ -90,7 +240,7 @@
   margin-top: 1px;
   margin-left: 10px;
 }
-#myMusicMetadata {
+.VideoPlayerTmplt #myMusicMetadata {
   top: 66px;
   right: 100px;
   bottom: 50px;
@@ -102,7 +252,7 @@
   overflow: hidden;
   visibility: hidden;
 }
-#myVideoList {
+.VideoPlayerTmplt #myVideoList {
   top: 66px;
   right: 100px;
   bottom: 50px;
@@ -113,7 +263,7 @@
   font-family: verdana;
   overflow: hidden;
 }
-#myVideoList ul {
+.VideoPlayerTmplt #myVideoList ul {
   height: 100%;
   width: 100%;
   margin: 0;
@@ -121,22 +271,25 @@
   list-style-type: none;
   /*overflow-y: scroll;*/
 }
-#myVideoList ul li {
+.VideoPlayerTmplt #myVideoList ul li {
   border-bottom: 1px solid #666666;
   padding: 10px 15px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-#myVideoScroll {
+.VideoPlayerTmplt #myVideoList .videoListContainer li:last-child {
+  border: none;
+}
+.VideoPlayerTmplt #myVideoScroll {
   top: 20px;
   right: 40px;
   position: absolute;
 }
-#myVideoScroll {
+.VideoPlayerTmplt #myVideoScroll {
   margin-top: 25px;
 }
-#myVideoScroll img, #myVideoScroll li {
+.VideoPlayerTmplt #myVideoScroll img, .VideoPlayerTmplt #myVideoScroll li {
   display: block;
   margin-top: 25px;
   width: 50px;
@@ -145,98 +298,20 @@
   background-position: center;
   background-size: 100%;
 }
-#videoPlayControl {
-  top: 64px;
-  right: 0px;
-  bottom: 50px;
-  left: 0px;
-  position: absolute;
-  display: none;
+.VideoPlayerTmplt #myVideoScrollUp, .VideoPlayerTmplt #myVideoScrollDown {
+  visibility: hidden;
 }
-#videoPlayControl ul {
-  margin: 0;
-  padding: 0;
-  list-style-type: none;
-}
-#videoPlayControl ul li {
-  float: left;
-}
-#videoShuffleBtn {
-  top: 0;
-  right: 30%;
-  left: 0;
-  width: 25%;
-  height: 20%;
-  margin: auto;
-}
-#videoReAllBtn {
-  top: 0;
-  right: 0;
-  left: 30%;
-  width: 25%;
-  height: 20%;
-  margin: auto;
-}
-#videoStopBtn {
-  top: 80%;
-  right: 0;
-  left: 0;
-  width: 50%;
-  height: 20%;
-  margin: auto;
-}
-#videoPlayBtn {
-  top: 60px;
-  bottom: 60px;
-  left: 60px;
-  right: 60px;
-  height: 50%;
-  width: 50%;
-  margin: auto;
-}
-#videoNextBtn {
-  top: 0;
-  left: 80%;
-  width: 20%;
-  height: 220px;
-}
-#videoPlayFFBtn {
-  top: 52%;
-  left: 80%;
-  width: 20%;
-  height: 47%;
-}
-#videoPlayRWBtn {
-  top: 52%;
-  left: 0;
-  width: 20%;
-  height: 47%;
-}
-#videoPrevBtn {
-  top: 0;
-  left: 0;
-  width: 20%;
-  height: 45%;
-}
-.VideoPlayerTmplt .videoTouchControls {
-  z-index: 20200;
-  position: absolute;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-color: transparent;
-  background-image: none;
-}
-#videoInfoPanel ul li#colorThemes {
+.VideoPlayerTmplt #videoInfoPanel ul li#colorThemes {
   padding-left: 0;
 }
-#videoInfoPanel ul li#colorThemes a {
+.VideoPlayerTmplt #videoInfoPanel ul li#colorThemes a {
   width: 23%;
   border-width: 2px;
   border-style: solid;
   float: left;
   text-align: center;
   margin: 2px;
-  padding-bottom: 20px;
+  padding-bottom: 12px;
 }
 .VideoPlayerTmplt .selectedItemRed {
   background: -webkit-linear-gradient(to top, rgba(139, 0, 0, 1) 44%, rgba(0, 0, 0, 0.1));
@@ -267,64 +342,40 @@
 .VideoPlayerTmplt .selectedItemPink, .VideoPlayerTmplt .selectedItemViolet {
   background: -webkit-linear-gradient(to top, rgba(148, 0, 211, 1) 44%, rgba(0, 0, 0, 0.1));
 }
-#myVideoList .selectedItemRed {
+.VideoPlayerTmplt #myVideoList .selectedItemRed {
   background: -webkit-linear-gradient(to left, rgba(139, 0, 0, 0), rgba(139, 0, 0, 1) 60%);
 }
-#myVideoList .selectedItemBlue {
+.VideoPlayerTmplt #myVideoList .selectedItemBlue {
   background: -webkit-linear-gradient(to left, rgba(0, 0, 139, 0), rgba(0, 0, 139, 1) 60%);
 }
-#myVideoList .selectedItemGreen {
+.VideoPlayerTmplt #myVideoList .selectedItemGreen {
   background: -webkit-linear-gradient(to left, rgba(0, 100, 0, 0), rgba(0, 100, 0, 1) 60%);
 }
-#myVideoList .selectedItemOrange {
+.VideoPlayerTmplt #myVideoList .selectedItemOrange {
   background: -webkit-linear-gradient(to left, rgba(255, 140, 0, 0), rgba(255, 140, 0, 1) 60%);
 }
-#myVideoList .selectedItemTeal {
+.VideoPlayerTmplt #myVideoList .selectedItemTeal {
   background: -webkit-linear-gradient(to left, rgba(0, 139, 139, 0), rgba(0, 139, 139, 1) 60%);
 }
-#myVideoList .selectedItemSlate {
+.VideoPlayerTmplt #myVideoList .selectedItemSlate {
   background: -webkit-linear-gradient(to left, rgba(0, 0, 0, 0), rgba(47, 79, 79, 1) 60%);
 }
-#myVideoList .selectedItemPink, #myVideoList .selectedItemViolet {
+.VideoPlayerTmplt #myVideoList .selectedItemPink, .VideoPlayerTmplt #myVideoList .selectedItemViolet {
   background: -webkit-linear-gradient(to left, rgba(148, 0, 211, 0), rgba(148, 0, 211, 1) 60%);
 }
-#myVideoList .selectedItemGold {
+.VideoPlayerTmplt #myVideoList .selectedItemGold {
   background: -webkit-linear-gradient(to left, rgba(184, 134, 11, 0), rgba(184, 134, 11, 1) 60%);
 }
-#myVideoList .selectedItemWhite {
+.VideoPlayerTmplt #myVideoList .selectedItemWhite {
   background: -webkit-linear-gradient(to left, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 1) 60%);
   color: #000 !important;
   text-shadow: 1px 1.5px 1px #eee !important;
-}
-#myVideoContainer #memErrorMessage {
-  position: absolute;
-  font-size: 20px;
-  color: #fff;
-  background: #000;
-  outline: 4px solid #ff0000;
-  padding: 15px 0;
-  width: 85%;
-  top: 20%;
-  left: 5%;
-  text-align: center;
-  z-index: 20600;
-  text-shadow: 2px 2px .8px #000;
-}
-#memErrorMessage ul {
-  list-style: none;
-}
-#memErrorMessage .rebootBtnDiv {
-  background-repeat: no-repeat;
-  background-size: contain;
-  height: 35px;
-  padding-left: 42px;
-  margin-left: 46.5%;
 }
 .VideoPlayerTmplt .playbackOption.selectedItem {
   text-shadow: 0 0 5px #fff;
   background: rgba(0, 117, 48, 0.45);
 }
-#videoInfoPanel {
+.VideoPlayerTmplt #videoInfoPanel {
   position: absolute;
   top: 90px;
   left: 0px;
@@ -343,67 +394,67 @@
   z-index: 20400;
   text-shadow: 2px 2px .5px #000;
 }
-#videoInfoPanel.showInfo {
+.VideoPlayerTmplt #videoInfoPanel.showInfo {
   transition: 0.4s;
   height: 310px;
 }
-aside#widget-content {
+.VideoPlayerTmplt #widget-content {
   display: block;
   margin: 10px 40px;
   font-size: 13pt;
-  height: 235px;
+  height: 260px;
   /*overflow-x: hidden;
   overflow-y: auto;*/
   overflow: hidden;
 }
-#infoTitle, #optionTitle {
+.VideoPlayerTmplt #infoTitle, .VideoPlayerTmplt #optionTitle {
   font-size: 25px;
   font-weight: 700;
   padding-top: 5px;
   width: 100%;
   text-align: center;
 }
-#myVideoInfoClose {
+.VideoPlayerTmplt #myVideoInfoClose {
   position: absolute;
   top: 0;
   right: 30px;
   font-size: 32px;
   color: #fff;
 }
-#myVideoInfoClose a {
+.VideoPlayerTmplt #myVideoInfoClose a {
   padding: 0 15px;
 }
-#myVideoInfoClose a:focus, #myVideoInfoClose a:active, #myVideoInfoClose a[class*="selected"] {
+.VideoPlayerTmplt #myVideoInfoClose a:focus, .VideoPlayerTmplt #myVideoInfoClose a:active, .VideoPlayerTmplt #myVideoInfoClose a[class*="selected"] {
   color: #ff0000;
   -webkit-transform: rotate(100deg);
   transform: rotate(100deg);
 }
-#videoInfoPanel #popOptionsTab, #videoInfoPanel.state #popInfoTab {
+.VideoPlayerTmplt #videoInfoPanel #popOptionsTab, .VideoPlayerTmplt #videoInfoPanel.state #popInfoTab {
   background: #000;
 }
-#videoInfoPanel #popInfoTab, #videoInfoPanel.state #popOptionsTab {
+.VideoPlayerTmplt #videoInfoPanel #popInfoTab, .VideoPlayerTmplt #videoInfoPanel.state #popOptionsTab {
   background: #0000ee;
 }
-#videoInfoPanel.state #widgetContent, #videoInfoPanel #widgetContentState {
+.VideoPlayerTmplt #videoInfoPanel.state #widgetContent, .VideoPlayerTmplt #videoInfoPanel #widgetContentState {
   display: none;
 }
-#videoInfoPanel #widgetContent, #videoInfoPanel.state #widgetContentState {
+.VideoPlayerTmplt #videoInfoPanel #widgetContent, .VideoPlayerTmplt #videoInfoPanel.state #widgetContentState {
   display: block;
 }
-#videoInfoPanel ul li {
+.VideoPlayerTmplt #videoInfoPanel ul li {
   float: none;
   line-height: 22px;
   background-position: 0;
 }
-#widgetContentState ul li {
+.VideoPlayerTmplt #widgetContentState ul li {
   line-height: 28px;
   padding-left: 15px;
 }
-#videoInfoPanel ul li a {
+.VideoPlayerTmplt #videoInfoPanel ul li a {
   font-size: 22px;
   width: 50%;
 }
-#videoInfoPanel #colorThemes [class*="selected"] {
+.VideoPlayerTmplt #videoInfoPanel #colorThemes [class*="selected"] {
   border-style: dashed;
 }
 .VideoPlayerTmplt .infoBtn {
@@ -438,5 +489,23 @@ aside#widget-content {
   background-repeat: no-repeat;
 }
 .VideoPlayerTmplt li#colorThemes {
-  margin-top: 30px;
+  margin-top: 25px;
+}
+.VideoPlayerTmplt #videoPlayBtn {
+  background-image: none;
+}
+.VideoPlayerTmplt.videoPlaying #myVideoShuffleBtn, .VideoPlayerTmplt.videoPlaying #myVideoMovieBtn, .VideoPlayerTmplt.videoPlaying #myVideoFullScrBtn, .VideoPlayerTmplt.videoPlaying #myResumePlay, .VideoPlayerTmplt.videoPlaying #myVideoRepeatBtn, .VideoPlayerTmplt.videoPlaying #myPlayMusicBtn, .VideoPlayerTmplt.videoPlaying #rebootBtnDiv, .VideoPlayerTmplt #myVideoPreviousBtn, .VideoPlayerTmplt #myVideoRW, .VideoPlayerTmplt #myVideoPausePlayBtn, .VideoPlayerTmplt #myVideoFF, .VideoPlayerTmplt #myVideoNextBtn, .VideoPlayerTmplt #myVideoStopBtn, .VideoPlayerTmplt #myVideoName, .VideoPlayerTmplt #myVideoStatus {
+  display: none;
+}
+.VideoPlayerTmplt.videoPlaying #myVideoName, .VideoPlayerTmplt.videoPlaying #myVideoStatus, .VideoPlayerTmplt.videoPlaying #myVideoPreviousBtn, .VideoPlayerTmplt.videoPlaying #myVideoRW, .VideoPlayerTmplt.videoPlaying #myVideoPausePlayBtn, .VideoPlayerTmplt.videoPlaying #myVideoFF, .VideoPlayerTmplt.videoPlaying #myVideoNextBtn, .VideoPlayerTmplt.videoPlaying #myVideoStopBtn {
+  display: block;
+}
+.VideoPlayerTmplt #myMusicMetadata, .VideoPlayerTmplt #myVideoScrollUp, .VideoPlayerTmplt #myVideoScrollDown, .VideoPlayerTmplt.videoPlaying #myVideoList, .VideoPlayerTmplt.videoPlaying #myVideoScrollDown, .VideoPlayerTmplt.videoPlaying #myVideoScrollUp, .VideoPlayerTmplt.videoPlaying #myVideoInfo, .VideoPlayerTmplt.videoPlaying #toggleBgBtn {
+  visibility: hidden;
+}
+.VideoPlayerTmplt #toggleBgBtn, .VideoPlayerTmplt #myVideoInfo, .VideoPlayerTmplt #myVideoList, .VideoPlayerTmplt.videoPlaying #myMusicMetadata {
+  visibility: visible;
+}
+.VideoPlayerTmplt #unmountSwapVP {
+  float: right;
 }

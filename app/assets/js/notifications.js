@@ -21,8 +21,8 @@ ipc.on('update-available-alert', (event) => {
 ipc.on('update-err', (event) => {
   clearInterval(dll)
   dll = null
-  $('#update-available').html('<a href="https://github.com/Trevelopment/MZD-AIO/releases" class="link">ERROR: CLICK HERE FOR UPDATE.</a>')
-  snackbarstay(`<a href="https://github.com/Trevelopment/MZD-AIO/releases" class="link">UPDATE ERROR: CLICK HERE TO DOWNLOAD THE LATEST UPDATE.</a>`)
+  $('#update-available').html('<a onclick="shell.openExternal(\'https://github.com/Trevelopment/MZD-AIO/releases\')" class="link">ERROR: CLICK HERE FOR UPDATE.</a>')
+  snackbarstay(`<a onclick="shell.openExternal(\'https://github.com/Trevelopment/MZD-AIO/releases\')" class="link">UPDATE ERROR: CLICK HERE TO DOWNLOAD THE LATEST UPDATE.</a>`)
 })
 ipc.on('update-downloaded', (event) => {
   snackbarstay(`<span id="restart">An Update Is Available:  <a href="" class="w3-btn w3-deep-purple w3-hover-light-blue">UPDATE</a></span>`)

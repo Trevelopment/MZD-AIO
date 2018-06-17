@@ -1,50 +1,12 @@
+backup_org /jci/gui/apps/diag/js/diagApp.js
+backup_org /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js
+backup_org /jci/gui/common/js/Common.js
+backup_org /jci/gui/apps/diag/controls/Test/js/TestCtrl.js
+backup_org /jci/gui/apps/diag/controls/Test/css/TestCtrl.css
 #diagmenu with 1 sec. press at clock in display settings menu, script made by Sumire_Racing_JPN
 show_message "DIAGMENU W. 1 SEC. PRESS AT CLOCK IN DISPLAY SETTINGS MENU"
 log_message "===*** INSTALL DIAGMENU 1 SEC. CLOCK PRESS IN DISPLAY SETTINGS ... ***==="
-# Backups
-if [ ! -e /jci/gui/apps/diag/js/diagApp.js.org ]
-then
-	cp -a /jci/gui/apps/diag/js/diagApp.js /jci/gui/apps/diag/js/diagApp.js.org
-  log_message "===              Backup /jci/gui/apps/diag/js/diagApp.js              ==="
-fi
-if [ ! -e /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js.org ]
-then
-	cp -a /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js.org
-	log_message "===   Backup /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js   ==="
-fi
-if [ ! -e /jci/gui/common/js/Common.js.org ]
-then
-	cp -a /jci/gui/common/js/Common.js /jci/gui/common/js/Common.js.org
-	log_message "===                Backup /jci/gui/common/js/Common.js                ==="
-fi
-if [ ! -e /jci/gui/apps/diag/controls/Test/js/TestCtrl.js.org ]
-then
-	cp -a /jci/gui/apps/diag/controls/Test/js/TestCtrl.js /jci/gui/apps/diag/controls/Test/js/TestCtrl.js.org
-	log_message "===       Backup /jci/gui/apps/diag/controls/Test/js/TestCtrl.js      ==="
-fi
-if [ ! -e /jci/gui/apps/diag/controls/Test/css/TestCtrl.css.org ]
-then
-	cp -a /jci/gui/apps/diag/controls/Test/css/TestCtrl.css /jci/gui/apps/diag/controls/Test/css/TestCtrl.css.org
-	log_message "===      Backup /jci/gui/apps/diag/controls/Test/css/TestCtrl.css     ==="
-fi
 
-if [ $KEEPBKUPS -eq 1 ]
-then
-	cp /jci/gui/apps/diag/js/diagApp.js.org "${MYDIR}/bakups/"
-	cp /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js.org "${MYDIR}/bakups/"
-	cp /jci/gui/common/js/Common.js.org "${MYDIR}/bakups/"
-	cp /jci/gui/apps/diag/controls/Test/css/TestCtrl.css.org  "${MYDIR}/bakups/"
-	cp /jci/gui/apps/diag/controls/Test/js/TestCtrl.js.org  "${MYDIR}/bakups/"
-fi
-if [ $TESTBKUPS -eq 1 ]
-then
-	cp /jci/gui/apps/diag/js/diagApp.js "${MYDIR}/bakups/test/diagApp_diagmenu-before.js"
-	cp /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js "${MYDIR}/bakups/test/StatusBarCtrl_diagmenu-before.js"
-	cp /jci/gui/common/js/Common.js "${MYDIR}/bakups/test/Common_diagmenu-before.js"
-	/bin/fsync "${MYDIR}/bakups/test/diagApp_diagmenu-before.js"
-	/bin/fsync "${MYDIR}/bakups/test/StatusBarCtrl_diagmenu-before.js"
-	/bin/fsync "${MYDIR}/bakups/test/Common_diagmenu-before.js"
-fi
 if grep -Fq '"settleTime" : 1000,' /jci/gui/apps/diag/js/diagApp.js
 then
 	log_message "===   Modifications already done to /jci/gui/apps/diag/js/diagApp.js  ==="

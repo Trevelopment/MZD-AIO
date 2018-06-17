@@ -1,3 +1,4 @@
+backup_org /jci/gui/apps/system/js/systemApp.js
 # change order of the audio source list
 show_message "CHANGE ORDER OF AUDIO SOURCE LIST ..."
 log_message "======****** INSTALL CHANGE ORDER OF AUDIO SOURCE LIST ... *******======="
@@ -6,44 +7,22 @@ TRACKORDER_AUDIO=2
 if [ $COMPAT_GROUP -eq 1 ]
 then
   TRACKORDER_AUDIO=0
-elif [ $COMPAT_GROUP -eq 2 ]
-then
-  TRACKORDER_AUDIO=1
-  TRACKORDER_AUDIO_FILE=58.00.250A-NA
-  log_message "===       FW ${CMU_SW_VER} detected, copy matching systemApp.js       ==="
-elif [ $COMPAT_GROUP -eq 3 ] || [ $COMPAT_GROUP -eq 4 ]
-then
-  TRACKORDER_AUDIO=1
-  TRACKORDER_AUDIO_FILE=59.00.330
-  log_message "===       FW ${CMU_SW_VER} detected, copy matching systemApp.js       ==="
-elif [ $COMPAT_GROUP -eq 5 ]
+elif [ $COMPAT_GROUP -ge 2 ] && [ $COMPAT_GROUP -le 5 ]
 then
   TRACKORDER_AUDIO=1
   TRACKORDER_AUDIO_FILE=59
   log_message "===       FW ${CMU_SW_VER} detected, copy matching systemApp.js       ==="
+elif [ $COMPAT_GROUP -eq 6 ]
+then
+  TRACKORDER_AUDIO=1
+  TRACKORDER_AUDIO_FILE=70
+  log_message "===       FW ${CMU_SW_VER} detected, copy matching systemApp.js       ==="
 fi
 
-# Compatibility check falls into 4 groups:
-# 59.00.4XX ($COMPAT_GROUP=4)
-# 59.00.3XX ($COMPAT_GROUP=3)
-# 58.00.XXX ($COMPAT_GROUP=2)
+# Compatibility check falls into 3 groups:
+# 70.00.XXX ($COMPAT_GROUP=6)
+# 58.00.XXX - 59.00.XXX ($COMPAT_GROUP=2-5)
 # 55.XX.XXX - 56.XX.XXX ($COMPAT_GROUP=1)
-
-if [ ! -e /jci/gui/apps/system/js/systemApp.js.org ]
-then
-  cp -a /jci/gui/apps/system/js/systemApp.js /jci/gui/apps/system/js/systemApp.js.org
-  log_message "===          Backup of /jci/gui/apps/system/js/systemApp.js           ==="
-fi
-if [ $KEEPBKUPS -eq 1 ]
-then
-  cp -a /jci/gui/apps/system/js/systemApp.js.org "${MYDIR}/bakups/"
-  aio_info \"systemApp.js.org\",
-fi
-if [ $TESTBKUPS -eq 1 ]
-then
-  cp -a /jci/gui/apps/system/js/systemApp.js "${MYDIR}/bakups/test/systemApp_before-audiosources.js"
-fi
-
 if [ ! $TRACKORDER_AUDIO -eq 2 ]
 then
   cp -a "${MYDIR}/config/audio_order_AND_no_More_Disclaimer/systemApp.js.audio" /jci/gui/apps/system/js/

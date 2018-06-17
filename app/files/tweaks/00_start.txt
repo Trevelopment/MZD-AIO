@@ -51,18 +51,31 @@ get_casdk_mode()
 add_casdk_app()
 {
   CASDK_APP=${2}
-  if [ ${1} -eq 1 ]
+  if [ ${1} -eq 1 ] && [ -e ${MYDIR}/casdk/apps/app.${CASDK_APP} ]
   then
     sed -i /${CASDK_APP}/d ${MZD_APPS_JS}
     cp -a ${MYDIR}/casdk/apps/app.${CASDK_APP} ${MZD_APP_DIR}
     echo "  \"app.${CASDK_APP}\"," >> ${MZD_APPS_JS}
+    show_message "INSTALL ${CASDK_APP} ..."
     CASDK_APP="${CASDK_APP}         "
     log_message "===                 Installed CASDK App: ${CASDK_APP:0:10}                   ==="
   fi
 }
+remove_casdk_app()
+{
+  CASDK_APP=${2}
+  if [ ${1} -eq 1 ] && grep -Fq ${CASDK_APP} ${MZD_APPS_JS}
+  then
+    sed -i /${CASDK_APP}/d ${MZD_APPS_JS}
+    show_message "UNINSTALL ${CASDK_APP} ..."
+    CASDK_APP="${CASDK_APP}         "
+    log_message "===                Uninstalled CASDK App: ${CASDK_APP:0:10}                  ==="
+  fi
+}
 compatibility_check()
 {
-  # Compatibility check falls into 5 groups:
+  # Compatibility check falls into 6 groups:
+  # 70.00.XXX ($COMPAT_GROUP=6)
   # 59.00.5XX ($COMPAT_GROUP=5)
   # 59.00.4XX ($COMPAT_GROUP=4)
   # 59.00.3XX ($COMPAT_GROUP=3)
@@ -89,11 +102,16 @@ compatibility_check()
     elif [ $_VER_EXT -lt 500 ] # v59.00.400-500
     then
       echo 4 && return
-    elif [ $_VER_EXT -lt 599 ]
-    then
-      echo 5 && return # 59.00.502+ is another level because it is not compatible with USB Audio Mod
     else
-      echo 0 && return
+      echo 5 && return # 59.00.502+ is another level because it is not compatible with USB Audio Mod
+    fi
+  elif [ $_VER -eq 70 ]
+  then
+    if [ $_VER_EXT -le 100 ]
+    then
+      echo 6 && return # v70 compatibility is still being analyzed
+    else
+      echo 7 && return # Past v70.00.100 is unknown and cannot be trusted
     fi
   else
     echo 0
@@ -110,6 +128,28 @@ remove_aio_js()
   sed -i "/.. MZD-AIO-TI.${2}.JS ../,/.. END AIO.${2}.JS ../d" "${1}"
   INPUT=${1##*/}
   log_message "===            Removed ${2:0:11} JavaScript From ${INPUT:0:13}    ==="
+}
+backup_org()
+{
+  FILE=${1}
+  BACKUP_FILE="${1}.org"
+  FILENAME=$(basename -- "$FILE")
+  FEXT="${FILENAME##*.}"
+  FNAME="${FILENAME%.*}"
+  if [ ! -e "${BACKUP_FILE}" ]
+  then
+    cp -a "${FILE}" "${BACKUP_FILE}"
+    log_message "***+++---===|___ Created Backup of ${FILENAME} ___|===---+++***"
+  fi
+  if [ $KEEPBKUPS -eq 1 ] && [ ! -e "${MYDIR}/bakups/${FILENAME}.org" ]
+  then
+   cp -a "${BACKUP_FILE}" "${MYDIR}/bakups/"
+   aio_info \"${FILENAME}\",
+  fi
+  if [ $TESTBKUPS -eq 1 ] && [ ! -e "${MYDIR}/bakups/test/${FNAME}_before.${FEXT}" ]
+  then
+    cp -a ${FILE} "${MYDIR}/bakups/test/${FNAME}_before.${FEXT}"
+  fi
 }
 show_message()
 {
@@ -323,6 +363,21 @@ then
   exit 1
 fi
  # Compatibility Check
+
+if [ $COMPAT_GROUP -ge 6 ]
+then
+  sleep 2
+  killall jci-dialog
+  /jci/tools/jci-dialog --confirm --title="MZD-AIO-TI | CONTINUE INSTALLATION?" --text="WARNING! VERSION ${CMU_SW_VER} DETECTED\nAIO COMPATIBILITY HAS ONLY BEEN TESTED UP TO V70.00.000\nIF YOU ARE RUNNING A LATER FW VERSION USE EXTREME CAUTION!" --ok-label="YES - GO ON" --cancel-label="NO - ABORT"
+  if [ $? = 1 ]
+  then
+    log_message "********************* INSTALLATION ABORTED *********************"
+    show_message "INSTALLATION ABORTED! PLEASE UNPLUG USB DRIVE"
+    sleep 10
+    killall jci-dialog
+    exit 0
+  fi
+fi
 if [ $COMPAT_GROUP -ne 0 ]
 then
   if [ $SKIPCONFIRM -eq 1 ]
@@ -403,6 +458,15 @@ then
   # remove double commas
   sed -i 's/,,/,/g' ${ADDITIONAL_APPS_JSON}
   log_message "================ Fixed Issue with additionalApps.json ==================="
+fi
+DATA_PERSIST=$(df -h | (grep 'data_persist' || echo 0) | awk '{ print $5 " " $1 }')
+#log_message $DATA_PERSIST
+USED=$(echo $DATA_PERSIST | awk '{ print $1}' | cut -d'%' -f1  )
+#log_message $USED
+log_message "==================== data_persist partition ${USED}% used ===================="
+if [ $USED -ge 80 ]; then
+	rm -f /tmp/mnt/data_persist/log/dumps/*
+  log_message "===                 Over 80% Used Delete Dump Files                   ==="
 fi
 log_message "=========************ END PRE-INSTALL OPERATIONS ***************========="
 log_message " "

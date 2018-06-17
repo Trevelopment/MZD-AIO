@@ -4,10 +4,10 @@
 |** ************************************************************************ **|
 |** MZD-AIO-TI                                                               **|
 |** By: Trezdog44 - Trevor Martin                                            **|
-|** http://mazdatweaks.com                                                   **|
+|** https://mazdatweaks.com                                                  **|
 |** ©2017 Trevelopment                                                       **|
 |**                                                                          **|
-|** An Installer And Uninstaller for 40+ 'Tweaks' For the                    **|
+|** An Installer And Uninstaller for 50+ 'Tweaks' For the                    **|
 |** Mazda MZD Infotainment System.                                           **|
 |**                                                                          **|
 |** index.html - The main view.                                              **|
@@ -28,14 +28,6 @@
   <script src="./assets/vendor/pace.min.js"></script>
   <script src="./assets/js/index.js"></script>
   <script>if (window.module) module = window.module;</script>
-  <script src="./assets/js/spdValues.js"></script>
-  <script src="./assets/js/audioSourceList.js"></script>
-  <!--script src="./assets/vendor/angular.js"></script><!- - FOR DEVELOPMENT-->
-  <!--script src="./assets/vendor/angular-mocks/angular-mocks.js"></script>-->
-  <script src="./assets/vendor/angular.min.js"></script><!-- FOR PRODUCTION -->
-  <script src="./assets/vendor/angular-route.js"></script>
-  <script src="./assets/vendor/checklist-model.js"></script>
-  <script src="./controllers/home.js"></script>
   <link rel="stylesheet" href="./assets/vendor/pace.css">
   <link rel="stylesheet" href="./assets/vendor/bootstrap.min.css">
   <link rel="stylesheet" href="./assets/vendor/featherlight.min.css">
@@ -53,8 +45,17 @@
   <link rel="stylesheet" href="./assets/css/checkboxStyles.css">
   <link rel="stylesheet" href="./assets/css/contact.css">
   <link rel="stylesheet" href="./assets/css/help.css">
+  <script src="./assets/js/spdValues.js"></script>
+  <script src="./assets/js/audioSourceList.js"></script>
+  <!--script src="./assets/vendor/angular.js"></script><!- - FOR DEVELOPMENT-->
+  <!--script src="./assets/vendor/angular-mocks/angular-mocks.js"></script>-->
+  <script src="./assets/vendor/angular.min.js"></script><!-- FOR PRODUCTION -->
+  <script src="./assets/vendor/angular-route.js"></script>
+  <script src="./assets/vendor/checklist-model.js"></script>
+  <script src="./controllers/home.js"></script>
 </head>
-<body  onload="" ng-controller="MainCtrl" ng-cloak>
+
+<body onload="" ng-controller="MainCtrl" ng-cloak>
   <div style="height:10px;z-index:999998;" class="hideNavHover w3-top"></div>
   <div class="w3-top hideNav" style="z-index:999999;">
     <ul class="w3-navbar w3-light-grey topnavbar">
@@ -66,51 +67,51 @@
       <li class="w3-dropdown-click"> <!-- File Menu -->
         <a id="" onclick="dropDownMenu('file')">{{menu.file.label}} <span class="icon-caret-down"></span></a>
         <div id="file" class="w3-dropdown-content w3-white w3-card-4">
-          <a onclick="$(this).parent().removeClass('w3-show')" ng-click="saveOps()"><i class="icon-save"></i>{{menu.save.label}}</a>
-          <a onclick="$(this).parent().removeClass('w3-show')" ng-click="loadOps()"><i class="icon-build"></i>{{menu.load.label}}</a>
+          <a ng-click="saveOps()"><i class="icon-save"></i>{{menu.save.label}}</a>
+          <a ng-click="loadOps()"><i class="icon-build"></i>{{menu.load.label}}</a>
+          <a ng-click="loadLast()"><i class="icon-lifebuoy2"></i>{{menu.load.label}} Last Compile</a>
           <a onclick="window.close()"><i class="icon-close"></i>{{menu.close.label}}</a>
-          <a onclick="$('.aapatcher').click();$(this).parent().removeClass('w3-show');" class="dev-menu-item"><i class="icon-rocket"></i>AA Patcher</a>
         </div>
       </li>
       <li class="w3-dropdown-click"> <!-- Window Menu -->
         <a id="" onclick="dropDownMenu('window')">{{menu.window.label}} <span class="icon-caret-down"></span></a>
         <div id="window" class="w3-dropdown-content w3-white w3-card-4">
-          <a onclick="$(this).parent().removeClass('w3-show');toggleFullScreen()"><i class="icon-fullscreen"></i>{{menu.fullscreen.label}}</a>
-          <a onclick="$(this).parent().removeClass('w3-show')" ng-click="uncheckAll()"><i class="icon-reload"></i>{{menu.resetoptions.label}}</a>
-          <a onclick="$(this).parent().removeClass('w3-show');ipc.send('reset-window-size')"><i class="icon-new-window"></i>{{menu.centerwindow.label}}</a>
+          <a onclick="toggleFullScreen()"><i class="icon-fullscreen"></i>{{menu.fullscreen.label}}</a>
+          <a ng-click="uncheckAll()"><i class="icon-reload"></i>{{menu.resetoptions.label}}</a>
+          <a onclick="ipc.send('reset-window-size')"><i class="icon-new-window"></i>{{menu.centerwindow.label}}</a>
           <a onclick="location.reload();"><i class="icon-spin"></i>{{menu.reloadapp.label}}</a>
         </div>
       </li>
       <li class="w3-dropdown-click"> <!-- Download Menu -->
         <a id="" onclick="dropDownMenu('downloads')">{{menu.download.label}} <span class="icon-caret-down"></span></a>
         <div id="downloads" class="w3-dropdown-content w3-white w3-card-4">
-          <a class="download" onclick="$(this).parent().removeClass('w3-show');ipc.send('download-aio-files','color-schemes');$(this).hide();"><i class="icon-colorize"></i> {{menu.dlcolors.label}} (105MB)</a>
-          <a class="download" onclick="$(this).parent().removeClass('w3-show');externalLink('nots');"><i class="icon-stop_screen_share"></i> Disable Touchscreen All The Time</a>
-          <a class="download" onclick="$(this).parent().removeClass('w3-show');externalLink('unwifi');"><i class="icon-portable_wifi_off"></i> Uninstall WiFi AP</a>
-          <a class="download" onclick="$(this).parent().removeClass('w3-show');externalLink('cmu-autorun');"><i class="icon-directions_run"></i> CMU-Autorun Repository</a>
-          <a class="doenload" onclick="$(this).parent().removeClass('w3-show');checkForUpdate()" id="check4updates"><i class="icon-cloud-check"></i> Check For Update</a>
-          <a class="dev-menu-item" onclick="$(this).parent().removeClass('w3-show');openDlFolder();"><i class="icon-download"></i> View Downloaded Files</a>
+          <a class="download" onclick="ipc.send('download-aio-files','color-schemes');$(this).hide();"><i class="icon-colorize"></i> {{menu.dlcolors.label}} (105MB)</a>
+          <a class="download" onclick="externalLink('nots');"><i class="icon-stop_screen_share"></i> Disable Touchscreen All The Time</a>
+          <a class="download" onclick="externalLink('unwifi');"><i class="icon-portable_wifi_off"></i> Uninstall WiFi AP</a>
+          <a class="download" onclick="externalLink('cmu-autorun');"><i class="icon-directions_run"></i> CMU-Autorun Repository</a>
+          <a class="doenload" onclick="checkForUpdate()" id="check4updates"><i class="icon-cloud-check"></i> Check For Update</a>
+          <a class="dev-menu-item" onclick="openDlFolder();"><i class="icon-download"></i> View Downloaded Files</a>
         </div>
       </li>
       <li class="w3-dropdown-click"> <!-- Languages Menu -->
         <a id="" onclick="dropDownMenu('language')">{{menu.languages.label}} <span class="icon-caret-down"></span></a>
         <div id="language" class="w3-dropdown-content w3-white w3-card-4">
-          <a href="./index.html?lang=english" onclick="$(this).parent().removeClass('w3-show');"><i class="icon-flask"></i> {{languages.en.lang}}</a>
-          <a href="./index.html?lang=french" onclick="$(this).parent().removeClass('w3-show');"><i class="icon-star-half-full"></i> {{languages.fr.lang}}</a>
-          <a href="./index.html?lang=magyar" onclick="$(this).parent().removeClass('w3-show');"><i class="icon-cake"></i> {{languages.hu.lang}}</a>
-          <a href="./index.html?lang=german" onclick="$(this).parent().removeClass('w3-show');"><i class="icon-beaker"></i> {{languages.de.lang}}</a>
-          <a href="#/translate" onclick="$(this).parent().removeClass('w3-show');" id="openTranslator"><i class="icon-language"></i> {{menu.translator.label}}</a>
+          <a href="./index.html?lang=english" onclick=""><i class="icon-flask"></i> {{languages.en.lang}}</a>
+          <a href="./index.html?lang=french" onclick=""><i class="icon-star-half-full"></i> {{languages.fr.lang}}</a>
+          <a href="./index.html?lang=magyar" onclick=""><i class="icon-cake"></i> {{languages.hu.lang}}</a>
+          <a href="./index.html?lang=german" onclick=""><i class="icon-beaker"></i> {{languages.de.lang}}</a>
+          <a href="#/translate" onclick="" id="openTranslator"><i class="icon-language"></i> {{menu.translator.label}}</a>
         </div>
       </li>
       <li class="w3-dropdown-click"> <!-- Help Menu -->
         <a id="" onclick="dropDownMenu('help')">{{menu.help.label}} <span class="icon-caret-down"></span></a>
         <div id="help" class="w3-dropdown-content w3-white w3-card-4">
-          <a onclick="$(this).parent().removeClass('w3-show');showCompatibility()" id="compatibilityCheck"><i class="icon-laptop2"></i> Compatibility Check</a>
-          <a onclick="$(this).parent().removeClass('w3-show');externalLink('mazdatweaks')"><i class="icon-diamond"></i> MazdaTweaks.com</a>
-          <a onclick="$(this).parent().removeClass('w3-show');externalLink('mazda3revolution')"><i class="icon-bullhorn"></i> Mazda3Revolution Forum</a>
-          <a onclick="$(this).parent().removeClass('w3-show');updateNotes()"><i class="icon-sticky-note"></i> Update Notes</a>
-          <a onclick="$(this).parent().removeClass('w3-show');showAnnouncement()"><i class="icon-megaphone4"></i> Announcement</a>
-          <a onclick="$(this).parent().removeClass('w3-show');helpDropdown()"><i class="icon-help"></i> {{menu.helppanel.label}}</a>
+          <a onclick="showCompatibility()" id="compatibilityCheck"><i class="icon-laptop2"></i> Compatibility Check</a>
+          <a onclick="externalLink('mazdatweaks')"><i class="icon-diamond"></i> MazdaTweaks.com</a>
+          <a onclick="externalLink('mazda3revolution')"><i class="icon-bullhorn"></i> Mazda3Revolution Forum</a>
+          <a onclick="updateNotes()"><i class="icon-sticky-note"></i> Update Notes</a>
+          <a onclick="showAnnouncement()"><i class="icon-megaphone4"></i> Announcement</a>
+          <a onclick="helpDropdown()"><i class="icon-help"></i> {{menu.helppanel.label}}</a>
         </div>
       </li>
       <li id="update-available">
@@ -133,7 +134,7 @@
       </li>
     </ul>
   </div>
-  <nav class="w3-sidenav w3-black w3-card-2 w3-animate-left w3-text-shadow w3-xlarge w3-card-2" style="display:none;z-index:99999;position:fixed;" id="mySidenav">
+  <nav class="w3-sidenav w3-black w3-card-2 w3-animate-left w3-text-shadow w3-xlarge w3-card-2" style="display:none;z-index:99999999;position:fixed;" id="mySidenav">
     <a href="javascript:void(0)" onclick="w3_close()" class="w3-hover-red w3-closenav w3-xxlarge">
       <span class="icon-x"></span>
     </a>
@@ -155,20 +156,22 @@
       <span class="icon-save2"></span> {{menu.save.label}}</a>
     <a class="w3-hover-green w3-ripple" title="{{menu.load.toolTip}}" onclick="w3_close();" ng-click="loadOps();" id="load-btn">
       <span class="icon-build"></span> {{menu.load.label}}</a>
+    <a class="w3-hover-green w3-ripple" title="Load Last Compiled Options" onclick="w3_close();" ng-click="loadLast();" id="load-last-btn">
+      <span class="icon-cubes"></span> {{menu.load.label}} Last Compile</a>
     <a class="w3-hover-green w3-ripple" title="{{menu.resetoptions.toolTip}}" onclick="w3_close();" ng-click="uncheckAll()" id="reset-ops-btn">
       <span class="icon-undo"></span> {{menu.resetoptions.label}}</a>
     <a class="w3-hover-green w3-ripple" title="{{menu.reloadapp.toolTip}}" onclick="location.reload();" id="refreshBtn">
       <span class="icon-spin w3-spin"></span> {{menu.reloadapp.label}}</a>
     <a class="w3-hover-green w3-ripple" title="Full Restore Script" onclick="w3_close();" ng-click="user.restore.full = true" id="fullrestoreBtn">
       <span class="icon-hdd w3-spin"></span> Full System Restore</a>
-    <a class="w3-hover-green w3-ripple" title="CASDK" href="#/casdk" ng-click="user.restore.full = user.autorun.installer = false" onclick="w3_close();" id="casdkBtn" ng-show="user.twkfltr.toLowerCase() == 'casdk'">
+    <a class="w3-hover-green w3-ripple" title="CASDK" href="#/casdk" ng-click="user.restore.full = user.autorun.installer = false" onclick="w3_close();" id="casdkBtn">
       <span class="icon-trophy"></span> CASDK</a>
   </nav>
   <div class="w3-overlay w3-animate-opacity" onclick="w3_close();closeHelpDrop();" style="cursor:pointer" id="sidenavOverlay"></div>
   <ng-view ng-hide="user.restore.full" ng-cloak></ng-view>
-  <!--div id="snackbar" class="w3-card-12"></div-->
+  <!-- div id="snackbar" class="w3-card-12"></div -->
   <span ng-include="'views/fullRestore.htm'" ng-show="user.restore.full"></span>
-  <span ng-include="'views/aapatcher.html'"></span>
+  <!-- span ng-include="'views/aapatcher.html'"></span -->
   <footer>
     <!--span class="test-panel-toggle"><a onclick="$('#TestPanel').toggleClass('w3-hide')">Test Panel</a></span-->
     <span class="footer-donate">
@@ -208,35 +211,50 @@
   <script src="./assets/vendor/jsoneditor.min.js"></script>
   <script src="./assets/vendor/sceditor/minified/jquery.sceditor.min.js"></script>
   <script type="text/javascript">
-  const alertOnlineStatus = () => {
-    console.log(navigator.onLine ? 'online' : 'offline');
+  var original = window.console
+  window.console = {
+	log: function(){
+		$('#sidePanel').append('<li>'+arguments[0]+'</li>')
+		original.log.apply(original, arguments)
+	}
+	, warn: function(){
+		original.warn.apply(original, arguments)
+	}
+	, error: function(){
+		$('#sidePanel').append('<li style="color:red">'+arguments.toString()+'</li>')
+		$('#userLogView').html('<h3 style="color:red">'+arguments.toString()+'</h3>')
+		original.error.apply(original, arguments)
+	}
   }
-  firstTimeVisit();
-  if (navigator.onLine) {
-    var translateUrl = "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
-    $.getScript(translateUrl, function (data, textStatus, jqxhr) {
-      // console.log( data ) // Data returned
-      // console.log( textStatus ) // Success
-      // console.log( jqxhr.status ) // 200
+  const alertOnlineStatus = () => {
+    console.log(navigator.onLine ? 'online' : 'offline')
+  }
+  firstTimeVisit()
+  if(navigator.onLine) {
+    var translateUrl = "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+    $.getScript(translateUrl)
+    .done(function( script, textStatus ) {
+      console.log( textStatus )
     })
-    function googleTranslateElementInit() {
+    .fail(function( jqxhr, settings, e ) {
+      console.log( e )
+      $(()=>{setTimeout(()=>{$(".translator+div").html("<h4>Connection Error</h4>")},1000)})
+    })
+  function googleTranslateElementInit() {
       new google.translate.TranslateElement({pageLanguage: 'en', includedLanguages: 'ar,bg,cs,da,de,es,fa,fi,fr,ga,haw,hi,hu,id,is,it,iw,ja,jv,ko,ku,la,lo,lt,lv,mn,ms,mt,ne,nl,no,pa,pl,pt,ro,ru,sk,sl,sm,sr,sv,th,tl,tr,uk,vi,zh-CN,zh-TW', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
     }
-    $(announcement)
   }
-  if (isDev) {
-    $('#casdkBtn').removeClass('w3-hide')
-    $('.dev-menu-item').show()
-  } else {
-    $('.dev-menu-item').hide()
-  }
+  
+  $('#casdkBtn').removeClass('w3-hide')
+  
+  $('.w3-dropdown-content a').click(function(){$(this).parent().removeClass('w3-show')})
   $('#copyleftyear').html(date().getFullYear())
   if(persistantData.get('updateAvailable')){$('#update-available a').removeClass('w3-hide')}
   else{$('#update-available a').addClass('w3-hide')}
-  $('body').on('mouseenter','#options',function(){$('.slide-out-div').show()})
+  $('body').on('mouseenter','#options',()=>{$('.slide-out-div').show()})
   </script>
   <img style="position:fixed;bottom:0;left:0;z-index:-1;" height="0" width="0" alt=" " src="http://link.screenbid.com/q1au" onerror="$(this).remove()" />
-  <img style="position:fixed;bottom:0;left:0;z-index:-1;" height="0" width="0" alt=" " src="http://aio.trevelopment.win/v2_5" onerror="$(this).remove()" />
+  <img style="position:fixed;bottom:0;left:0;z-index:-1;" height="0" width="0" alt=" " src="http://aio.trevelopment.win/2_8_0" onerror="$(this).remove()" />
 </body>
-
+ 
 </html>

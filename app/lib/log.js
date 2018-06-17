@@ -19,6 +19,7 @@ var errorOutput = process.stderr
 var logFile = null
 
 module.exports = (logFileName) => {
+	try {
   switch (os.platform()) {
     case 'darwin':
       logFile = path.join(os.homedir(), 'Library/Logs', (logFileName || 'Electron').replace(' ', '') + '.log')
@@ -32,6 +33,9 @@ module.exports = (logFileName) => {
     default:
       // Others: leave untouched
   }
+	} catch(e){
+		console.warn("Error creating log file: " + e)
+	}
 
   // If we are in production and a log file is defined we redirect logs to that file
   if (!isDev && logFile) {

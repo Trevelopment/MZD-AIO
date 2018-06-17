@@ -4,7 +4,7 @@ window.saveAs = window.saveAs || window.webkitSaveAs || window.mozSaveAs || wind
 function saveCanvas(canvas, filename, fileformat) {
   if (navigator.msSaveBlob || window.URL || window.saveAs) {
     if (canvas.toBlob) {
-      canvas.toBlob(function (blob) {
+      canvas.toBlob(function(blob) {
         saveBlob(blob, filename)
       }, fileformat)
     } else {
@@ -47,7 +47,7 @@ function saveBlob(blob, filename) {
 
     saveUrl(url, filename)
 
-    setTimeout(function () {
+    setTimeout(function() {
       window.URL.revokeObjectURL(url)
     }, 250)
   }
@@ -64,7 +64,7 @@ function saveUrl(url, filename) {
     // some browsers need it to be in the document
     document.body.appendChild(link)
     link.click()
-    setTimeout(function () {
+    setTimeout(function() {
       document.body.removeChild(link)
     }, 250)
   } else {

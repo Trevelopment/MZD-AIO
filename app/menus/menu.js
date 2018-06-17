@@ -1,25 +1,25 @@
 /**
-* Creates a default menu for electron apps
-*
-* @param {Object} app electron.app
-* @param {Object} shell electron.shell
-* @returns {Object}  a menu object to be passed to electron.Menu
-*/
+ * Creates a default menu for electron apps
+ *
+ * @param {Object} app electron.app
+ * @param {Object} shell electron.shell
+ * @returns {Object}  a menu object to be passed to electron.Menu
+ */
 const electron = require('electron')
 const { BrowserWindow, Menu, app, shell } = electron
 const ipc = electron.ipcMain
-function sendAction (action) {
+
+function sendAction(action) {
   const win = BrowserWindow.getFocusedWindow()
   if (process.platform === 'darwin') {
     win.restore()
   }
   win.webContents.send(action)
 }
-const viewSubmenu = [
-  {
+const viewSubmenu = [{
     label: 'Back',
     accelerator: 'CmdOrCtrl+B',
-    click: function (item, focusedWindow) {
+    click: function(item, focusedWindow) {
       if (focusedWindow) {
         focusedWindow.webContents.goBack()
       }
@@ -28,7 +28,7 @@ const viewSubmenu = [
   {
     label: 'Reload',
     accelerator: 'CmdOrCtrl+R',
-    click: function (item, focusedWindow) {
+    click: function(item, focusedWindow) {
       if (focusedWindow) {
         focusedWindow.reload()
       }
@@ -45,7 +45,7 @@ const viewSubmenu = [
     id: 'zoom-in',
     accelerator: 'CmdOrCtrl+Plus',
     enabled: false,
-    click () {
+    click() {
       sendAction('zoom-in')
     }
   }, {
@@ -53,7 +53,7 @@ const viewSubmenu = [
     id: 'zoom-out',
     accelerator: 'CmdOrCtrl+-',
     enabled: false,
-    click () {
+    click() {
       sendAction('zoom-out')
     }
   }, {
@@ -61,17 +61,15 @@ const viewSubmenu = [
     id: 'zoom-actual',
     accelerator: 'CmdOrCtrl+=',
     enabled: false,
-    click () {
+    click() {
       sendAction('zoom-actual')
     }
   }
 ]
 
-let template = [
-  {
+let template = [{
     label: 'File',
-    submenu: [
-      {
+    submenu: [{
         label: 'Save',
         accelerator: 'CmdOrCtrl+s',
         role: 'save',
@@ -85,6 +83,15 @@ let template = [
         role: 'load',
         click: function(item, focusedWindow) {
           sendAction('load-options')
+        }
+
+      },
+      {
+        label: 'Load Last Compile',
+        accelerator: 'CmdOrCtrl+Shift+L',
+        role: 'load',
+        click: function(item, focusedWindow) {
+          sendAction('load-last')
         }
       },
       {
@@ -111,40 +118,39 @@ let template = [
         role: 'selectall'
       },
     ]
-  }, {
+  },
+  {
     label: 'Window',
     role: 'window',
-    submenu: [
-      {
-        label: 'Reload',
-        accelerator: 'CmdOrCtrl+R',
-        click: function(item, focusedWindow) {
-          if (focusedWindow)
+    submenu: [{
+      label: 'Reload',
+      accelerator: 'CmdOrCtrl+R',
+      click: function(item, focusedWindow) {
+        if (focusedWindow)
           focusedWindow.reload();
-        }
-      }, {
-        label: 'Full Screen',
-        accelerator: (function() {
-          if (process.platform === 'darwin')
-          return 'Ctrl+Command+F';
-          else
-          return 'F11';
-        })(),
-        click: function(item, focusedWindow) {
-          if (focusedWindow)
-          focusedWindow.setFullScreen(!focusedWindow.isFullScreen());
-        }
-      }, {
-        label: 'Minimize',
-        accelerator: 'CmdOrCtrl+M',
-        role: 'minimize'
       }
-    ]
-  }, {
+    }, {
+      label: 'Full Screen',
+      accelerator: (function() {
+        if (process.platform === 'darwin')
+          return 'Ctrl+Command+F';
+        else
+          return 'F11';
+      })(),
+      click: function(item, focusedWindow) {
+        if (focusedWindow)
+          focusedWindow.setFullScreen(!focusedWindow.isFullScreen());
+      }
+    }, {
+      label: 'Minimize',
+      accelerator: 'CmdOrCtrl+M',
+      role: 'minimize'
+    }]
+  },
+  {
     label: 'Zoom',
     role: 'zoom',
-    submenu: [
-      {
+    submenu: [{
         label: 'Reset Zoom',
         accelerator: '=',
         role: "resetzoom"
@@ -160,7 +166,8 @@ let template = [
         role: "zoomout"
       }
     ]
-  },{
+  },
+  {
     label: 'Help',
     role: 'help',
     submenu: [
@@ -170,35 +177,35 @@ let template = [
       ipc.emit('open-info-window')
     }
   },*/
-  {
-    label: 'Learn More: MazdaTweaks.com',
-    click: function() { shell.openExternal('http://aio.trevelopment.win/mazdatweaks') }
+      {
+        label: 'Learn More: MazdaTweaks.com',
+        click: function() { shell.openExternal('http://aio.trevelopment.win/mazdatweaks') }
+      },
+      {
+        label: 'Forum: Mazda3Revolution.com',
+        click: function() { shell.openExternal('http://aio.trevelopment.win/mazda3revolution') }
+      }
+    ]
+  },
+  /*{
+    label: 'Back',
+    accelerator: 'CmdOrCtrl+B',
+    click: function (item, focusedWindow) {
+      if (focusedWindow) {
+        focusedWindow.webContents.goBack()
+      }
+    }
   },
   {
-    label: 'Forum: Mazda3Revolution.com',
-    click: function() { shell.openExternal('http://aio.trevelopment.win/mazda3revolution') }
+    label: 'Close',
+    accelerator: 'CmdOrCtrl+W',
+    role: 'close'
+  },*/
+  {
+    label: 'Quit',
+    accelerator: 'CmdOrCtrl+Q',
+    role: 'quit'
   }
-]
-},
-/*{
-  label: 'Back',
-  accelerator: 'CmdOrCtrl+B',
-  click: function (item, focusedWindow) {
-    if (focusedWindow) {
-      focusedWindow.webContents.goBack()
-    }
-  }
-},
-{
-  label: 'Close',
-  accelerator: 'CmdOrCtrl+W',
-  role: 'close'
-},*/
-{
-  label: 'Quit',
-  accelerator: 'CmdOrCtrl+Q',
-  role: 'quit'
-}
 ];
 /*if (process.platform === 'darwin') {
   const name = app.getName();
@@ -256,12 +263,12 @@ let template = [
       });
     }
   }*/
-  app.on('ready', function () {
-    const menu = Menu.buildFromTemplate(template)
-    Menu.setApplicationMenu(menu)
-    return template;
-  })
-  /*
+app.on('ready', function() {
+  const menu = Menu.buildFromTemplate(template)
+  Menu.setApplicationMenu(menu)
+  return template;
+})
+/*
   app.on('browser-window-created', function () {
   let reopenMenuItem = findReopenMenuItem()
   if (reopenMenuItem) reopenMenuItem.enabled = false

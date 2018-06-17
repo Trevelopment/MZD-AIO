@@ -308,7 +308,7 @@ function updateSpeedoApp() {
   }
   // Polskie
   else if (language === 'PL') {
-    $('#gpsSpeedFieldSet legend').html('PrÄ™dkoÅ›Ä‡ GPS');
+    $('#gpsSpeedFieldSet legend').html('Prędkość GPS');
     $('#tripDistFieldSet legend').html('Dystans <span class="spunit">(<span class="distUnit">km</span>)</span>');
     $('#speedTopFieldSet legend').html('Prędkość maks.');
     $('#speedAvgFieldSet legend').html('Prędkość śr.');

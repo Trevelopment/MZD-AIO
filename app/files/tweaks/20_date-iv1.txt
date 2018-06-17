@@ -1,3 +1,9 @@
+backup_org /jci/gui/framework/js/Utility.js
+backup_org /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js
+backup_org /jci/gui/common/controls/Sbn/css/SbnCtrl.css
+backup_org /jci/gui/common/controls/StatusBar/css/StatusBarCtrl.css
+backup_org /jci/gui/common/controls/StatusBar/images/StatusBarBg.png
+backup_org /jci/gui/common/images/icons/IcnSbRoaming.png
 # date_to_statusbar_mod_V1.0 by diginix
 show_message "INSTALL DATE_TO_STATUSBAR MOD V1 BY DIGINIX ..."
 log_message "=======***** INSTALL DATE_TO_STATUSBAR MOD V1 BY DIGINIX ... *****======="
@@ -39,52 +45,6 @@ if [ "${CMU_SW_VER}" = "59.00.331A-EU" ] \
 || [ "${CMU_SW_VER}" = "59.00.326A-ADR" ]
 then
 	statusbar_copy=0
-fi
-
-if [ ! -e /jci/gui/common/controls/Sbn/css/SbnCtrl.css.org ]
-then
-	cp -a /jci/gui/common/controls/Sbn/css/SbnCtrl.css /jci/gui/common/controls/Sbn/css/SbnCtrl.css.org
-	log_message "=== Backup of /jci/gui/common/controls/Sbn/css/SbnCtrl.css to SbnCtrl.css.org ==="
-fi
-if [ ! -e /jci/gui/common/controls/StatusBar/css/StatusBarCtrl.css.org ]
-then
-	cp -a /jci/gui/common/controls/StatusBar/css/StatusBarCtrl.css /jci/gui/common/controls/StatusBar/css/StatusBarCtrl.css.org
-	log_message "=== Backup of /jci/gui/common/controls/StatusBar/css/StatusBarCtrl.css to StatusBarCtrl.css.org ==="
-fi
-if [ ! -e /jci/gui/common/controls/StatusBar/images/StatusBarBg.png.org ]
-then
-	cp -a /jci/gui/common/controls/StatusBar/images/StatusBarBg.png /jci/gui/common/controls/StatusBar/images/StatusBarBg.png.org
-	log_message "=== Backup of /jci/gui/common/controls/StatusBar/images/StatusBarBg.png to StatusBarBg.png.org ==="
-fi
-if [ ! -e /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js.org ]
-then
-	cp -a /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js.org
-	log_message "=== Backup of /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js to StatusBarCtrl.js.org ==="
-fi
-if [ ! -e /jci/gui/common/images/icons/IcnSbRoaming.png.org ]
-then
-	cp -a /jci/gui/common/images/icons/IcnSbRoaming.png /jci/gui/common/images/icons/IcnSbRoaming.png.org
-	log_message "=== Backup of /jci/gui/common/images/icons/IcnSbRoaming.png to IcnSbRoaming.png.org ==="
-fi
-if [ ! -e /jci/gui/framework/js/Utility.js.org ]
-then
-	cp -a /jci/gui/framework/js/Utility.js /jci/gui/framework/js/Utility.js.org
-	log_message "===   Backup of /jci/gui/framework/js/Utility.js to Utility.js.org    ==="
-fi
-if [ $KEEPBKUPS -eq 1 ]
-then
-	cp -a /jci/gui/common/controls/Sbn/css/SbnCtrl.css.org "${MYDIR}/bakups/"
-	cp -a /jci/gui/common/controls/StatusBar/css/StatusBarCtrl.css.org "${MYDIR}/bakups/"
-	cp -a /jci/gui/common/controls/StatusBar/images/StatusBarBg.png.org "${MYDIR}/bakups/"
-	cp -a /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js.org "${MYDIR}/bakups/"
-	cp -a /jci/gui/common/images/icons/IcnSbRoaming.png.org "${MYDIR}/bakups/"
-	cp -a /jci/gui/framework/js/Utility.js.org "${MYDIR}/bakups/"
-	aio_info \"SbnCtrl.css.org\",
-	aio_info \"StatusBarCtrl.css.org\",
-	aio_info \"StatusBarBg.png.org\",
-	aio_info \"StatusBarCtrl.js.org\",
-	aio_info \"IcnSbRoaming.png.org\",
-	aio_info \"Utility.js.org\",
 fi
 
 if [ $statusbar_copy -eq 1 ]

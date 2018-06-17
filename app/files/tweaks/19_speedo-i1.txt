@@ -72,6 +72,10 @@ log_message "===             Copied folder /jci/gui/apps/_speedometer           
 find /jci/gui/apps/_*/ -type f -name '*.js' -exec chmod 755 {} \;
 find /jci/gui/apps/_*/ -type f -name '*.sh' -exec chmod 755 {} \;
 
+cp -a ${MYDIR}/config/speedometer/jci/fonts /jci
+chmod -R 755 /jci/fonts
+log_message "===                  Copied Speedometer Font Files                    ==="
+
 if [ -e ${MYDIR}/config/speedometer/speedometer-config.js ]
 then
   cp -a ${MYDIR}/config/speedometer/speedometer-config.js /jci/gui/apps/_speedometer/js

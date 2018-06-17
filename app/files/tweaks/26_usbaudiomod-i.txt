@@ -1,35 +1,10 @@
+backup_org /jci/gui/common/controls/NowPlaying4/js/NowPlaying4Ctrl.js
+backup_org /jci/gui/common/controls/NowPlaying4/css/NowPlaying4Ctrl.css
+backup_org /jci/gui/apps/usbaudio/js/usbaudioApp.js
 # USB Audio Mod
 show_message "INSTALL USB AUDIO MOD ..."
 log_message "======*************     INSTALL USB AUDIO MOD ...      ***********======="
 
-if [ $TESTBKUPS -eq 1 ]
-then
-	cp /jci/gui/common/controls/NowPlaying4/js/NowPlaying4Ctrl.js "${MYDIR}/bakups/test/"
-	cp /jci/gui/common/controls/NowPlaying4/css/NowPlaying4Ctrl.css "${MYDIR}/bakups/test/"
-	cp /jci/gui/apps/usbaudio/js/usbaudioApp.js "${MYDIR}/bakups/test/"
-fi
-# Backups
-if [ ! -e /jci/gui/common/controls/NowPlaying4/js/NowPlaying4Ctrl.js.org ]
-then
-	cp -a /jci/gui/common/controls/NowPlaying4/js/NowPlaying4Ctrl.js /jci/gui/common/controls/NowPlaying4/js/NowPlaying4Ctrl.js.org
-	log_message "===                    Backup of NowPlaying4Ctrl.js                   ==="
-fi
-if [ ! -e /jci/gui/common/controls/NowPlaying4/css/NowPlaying4Ctrl.css.org ]
-then
-	cp -a /jci/gui/common/controls/NowPlaying4/css/NowPlaying4Ctrl.css /jci/gui/common/controls/NowPlaying4/css/NowPlaying4Ctrl.css.org
-	log_message "===                   Backup of NowPlaying4Ctrl.css                   ==="
-fi
-if [ ! -e /jci/gui/apps/usbaudio/js/usbaudioApp.js.org ]
-then
-	cp -a /jci/gui/apps/usbaudio/js/usbaudioApp.js /jci/gui/apps/usbaudio/js/usbaudioApp.js.org
-	log_message "===        Backup of /jci/gui/apps/usbaudio/js/usbaudioApp.js         ==="
-fi
-if [ $KEEPBKUPS -eq 1 ]
-then
-	cp /jci/gui/common/controls/NowPlaying4/js/NowPlaying4Ctrl.js.org "${MYDIR}/bakups/"
-	cp /jci/gui/common/controls/NowPlaying4/css/NowPlaying4Ctrl.css.org "${MYDIR}/bakups/"
-	cp /jci/gui/apps/usbaudio/js/usbaudioApp.js.org "${MYDIR}/bakups/"
-fi
 if [ $COMPAT_GROUP -lt 5 ]
 then
 	cp -a ${MYDIR}/config/USBAudioMod/NowPlaying4Ctrl.js /jci/gui/common/controls/NowPlaying4/js/

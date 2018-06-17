@@ -1,18 +1,8 @@
+backup_org /jci/gui/common/js/Common.js
+
 # pause on mute
 show_message "INSTALL PAUSE_ON_MUTE ..."
 log_message "============**********    INSTALL PAUSE_ON_MUTE ... **********==========="
-
-# Backups
-if [ ! -e /jci/gui/common/js/Common.js.org ]
-then
-	cp -a /jci/gui/common/js/Common.js /jci/gui/common/js/Common.js.org
-	log_message "===      Backup of /jci/gui/common/js/Common.js to Common.js.org      ==="
-fi
-if [ $KEEPBKUPS -eq 1 ]
-then
-	cp -a /jci/gui/common/js/Common.js.org "${MYDIR}/bakups/"
-	aio_info \"Common.js.org\",
-fi
 
 # Search a specific, unique code snippet to check if modification has already been done
 if grep -Fq 'isMuted ? "Global.Pause" : "Global.Resume"' /jci/gui/common/js/Common.js \

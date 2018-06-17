@@ -68,65 +68,78 @@ function buildTweakFile(user, apps) {
   saveInstallerOps(user)
   if (fs.existsSync(`${tmpdir}`)) {
     aioLog('Delete old _copy_to_usb folder...')
-    try {
-      // delete tmp folder if it exists and make new tmpdir
-      rimraf.sync(`${tmpdir}`)
-    } catch (e) {
-      let m = `${e} - Error occured while deleting old '_copy_to_usb' folder. Try closing all other running programs and folders before compiling.`
-      aioLog(m, m)
-      finishedMessage()
-      return
-    }
-  }
-  /* Autorun Script Installer */
-  if (user.autorun.installer) {
-    buildAutorunInstaller(user)
-    return
   }
   try {
-    mkdirp.sync(`${tmpdir}`)
-    mkdirp.sync(`${tmpdir}/config/`)
-    mkdirp.sync(`${tmpdir}/config_org/`)
+    // delete tmp folder if it exists and make new tmpdir
+    rimraf.sync(`${tmpdir}`)
   } catch (e) {
-    m = `${e} - Error occured while creating '_copy_to_usb' folder. Try closing all other running programs and folders before compiling.`
-    aioLog(e.message, m)
+    let m = `Error occured while deleting old '_copy_to_usb' folder: ${e}\n Try closing all other running programs and folders before compiling.`
+    aioLog(m, m)
     finishedMessage()
     return
   }
-  /* Full System Restore Script */
-  if (user.restore.full) {
-    fullSystemRestore(user)
-    return
-  }
-  /* CASDK Installer */
-  if (user.casdk.inst || user.casdk.uninst) {
-    if (apps) {
-      buildCASDK(user, apps)
-      rimraf.sync(`${tmpdir}/config/`)
-      rimraf.sync(`${tmpdir}/config_org/`)
+  setTimeout(() => {
+    /* Autorun Script Installer */
+    if (user.autorun.installer) {
+      buildAutorunInstaller(user)
       return
     }
-  }
-  // first back up JCI folder if chosen
-  if (user.mainOps.indexOf(1) !== -1) {
-    addTweak('00_backup.txt')
-  }
-  if (user.mainOps.indexOf(0) !== -1 || user.options.indexOf(21) !== -1) {
-    addTweak('00_wifi.txt')
-  }
-  if (user.mainOps.indexOf(4) !== -1 || user.options.indexOf(21) !== -1) {
-    addTweak('00_sshbringback.txt')
-    addTweakDir('ssh_bringback', true)
-  }
-  if (user.options.indexOf(16) !== -1) {
-    mkdirp.sync(`${tmpdir}/config/blank-album-art-frame/jci/gui/common/images/`)
-    addTweakDir('blank-album-art-frame', true)
-  }
-  checkForColorScheme(user)
+    try {
+      mkdirp.sync(`${tmpdir}/`)
+      mkdirp.sync(`${tmpdir}/config/`)
+      // mkdirp.sync(`${tmpdir}/config_org/`)
+    } catch (e) {
+      m = `${e} - Error occured while creating '_copy_to_usb' folder. Try closing all other running programs and folders before compiling.`
+      aioLog(e.message, m)
+      finishedMessage()
+      return
+    }
+    /* Full System Restore Script */
+    if (user.restore.full) {
+      fullSystemRestore(user)
+      return
+    }
+    /* CASDK Installer */
+    if (user.casdk.inst || user.casdk.uninst) {
+      if (apps) {
+        buildCASDK(user, apps)
+        rimraf.sync(`${tmpdir}/config/`)
+        rimraf.sync(`${tmpdir}/config_org/`)
+        return
+      }
+    }
+    // first back up JCI folder if chosen
+    if (user.mainOps.includes(1)) {
+      addTweak('00_backup.txt')
+    }
+    if (user.mainOps.includes(0) || user.options.includes(21)) {
+      addTweak('00_wifi.txt')
+    }
+    if (user.mainOps.includes(4) || user.options.includes(21)) {
+      addTweak('00_sshbringback.txt')
+      addTweakDir('ssh_bringback', true)
+    }
+    if (user.options.includes(16)) {
+      addTweakDir('blank-album-art-frame', true)
+      mkdirp.sync(`${tmpdir}/config/blank-album-art-frame/jci/gui/common/images/`)
+      var outStr = fs.createWriteStream(`${tmpdir}/config/blank-album-art-frame/jci/gui/common/images/no_artwork_icon.png`)
+      var inStr = fs.createReadStream(`${varDir}/no_artwork_icon.png`)
+      outStr.on('close', function() {
+        aioLog('Blank Album Art Copy Successful!')
+        checkForColorScheme(user)
+      })
+      outStr.on('error', function(err) {
+        aioLog(err, 'Blank Album Art Copy FAILED!')
+      })
+      inStr.pipe(outStr)
+    } else {
+      checkForColorScheme(user)
+    }
+  }, 1000)
 }
 /* Check For Color Scheme Tweak */
 function checkForColorScheme(user) {
-  if (user.mainOps.indexOf(3) !== -1) {
+  if (user.mainOps.includes(3)) {
     if (user.colors > 16) {
       customTheme(themeColor, user)
     } else if (user.colors < 8 || user.colors === 11) { // 11 for CarOS theme
@@ -185,10 +198,6 @@ function setTheme(color, user) {
 
 function setColor(color, user) {
   fs.mkdirSync(`${tmpdir}/config/color-schemes`)
-  copydir(`${extradir}/color-schemes/speedometer/`, `${tmpdir}/config/color-schemes/speedometer`, function(err) {
-    if (err) { aioLog(err, err) }
-    aioLog('Speedometer Color Files Copied')
-  })
   aioLog(`Unzipping ${color} color theme folder`)
   extract(`${extradir}/color-schemes/${color}/jci.zip`, { dir: `${tmpdir}/config/color-schemes/${color}` }, function(err) {
     if (err) { aioLog(err, err) }
@@ -217,106 +226,99 @@ function buildTweak(user) {
   // ****************************************************/
   // **********Write uninstalls first********************/
   // ****************************************************/
-  if (user.options.indexOf(101) !== -1) {
+  if (user.options.includes(101)) {
     addTweak('01_touchscreen-u.txt')
   }
-  if (user.options.indexOf(102) !== -1) {
+  if (user.options.includes(102)) {
     addTweak('02_disclaimer-u.txt')
-    addTweakDir('audio_order_AND_no_More_Disclaimer', false)
-    disclaimerAndAudioFlag = true
   }
-  if (user.options.indexOf(103) !== -1) {
+  if (user.options.includes(103)) {
     addTweak('03_warning-u.txt')
     addTweakDir('safety-warning-reverse-camera', false)
   }
-  if (user.options.indexOf(104) !== -1) {
+  if (user.options.includes(104)) {
     addTweak('04_sensor-u.txt')
     addTweakDir('transparent-parking-sensor', false)
   }
-  if (user.options.indexOf(105) !== -1) {
+  if (user.options.includes(105)) {
     addTweak('05_mainloop-u.txt')
     addTweakDir('main-menu-loop', false)
   }
-  if (user.options.indexOf(106) !== -1) {
+  if (user.options.includes(106)) {
     addTweak('06_listloop-u.txt')
     addTweakDir('list-loop', false)
   }
-  if (user.options.indexOf(107) !== -1) {
+  if (user.options.includes(107)) {
     addTweak('07_shorterdelay-u.txt')
   }
-  if (user.options.indexOf(108) !== -1) {
+  if (user.options.includes(108)) {
     addTweak('08_sysbeep-u.txt')
   }
-  if (user.options.indexOf(109) !== -1) {
+  if (user.options.includes(109)) {
     addTweak('09_audioorder-u.txt')
-    buildEntList(user)
-    if (!disclaimerAndAudioFlag) {
-      addTweakDir('audio_order_AND_no_More_Disclaimer', false)
-    }
   }
-  if (user.options.indexOf(110) !== -1) {
+  if (user.options.includes(110)) {
     addTweak('10_pausemute-u.txt')
-    addTweakDir('pause-on-mute', false)
   }
-  if (user.options.indexOf(111) !== -1) {
+  if (user.options.includes(111)) {
     addTweak('11_msgreplies-u.txt')
     addTweakDir('message_replies', false)
   }
-  if (user.options.indexOf(112) !== -1) {
+  if (user.options.includes(112)) {
     addTweak('12_diag-u.txt')
   }
-  if (user.options.indexOf(113) !== -1) {
+  if (user.options.includes(113)) {
     addTweak('13_boot-u.txt')
     addTweakDir('bootanimation', false)
   }
-  if (user.options.indexOf(114) !== -1) {
+  if (user.options.includes(114)) {
     addTweak('14_bgart-u.txt')
     addTweakDir('bigger-album-art', false)
   }
-  if (user.options.indexOf(115) !== -1) {
+  if (user.options.includes(115)) {
     addTweak('15_btnbackground-u.txt')
     addTweakDir('NoButtons', false)
   }
-  if (user.options.indexOf(116) !== -1) {
+  if (user.options.includes(116)) {
     addTweak('16_blnkframe-u.txt')
     addTweakDir('blank-album-art-frame', false)
   }
-  if (user.options.indexOf(117) !== -1) {
+  if (user.options.includes(117)) {
     addTweak('17_videoplayer-u.txt')
   }
-  if (user.options.indexOf(118) !== -1) {
+  if (user.options.includes(118)) {
     addTweak('18_swapfile-u.txt')
   }
-  if (user.options.indexOf(119) !== -1) {
+  if (user.options.includes(119)) {
     addTweak('19_speedo-u.txt')
     addTweakDir('speedometer', false)
   }
-  if (user.options.indexOf(122) !== -1) {
+  if (user.options.includes(122)) {
     addTweak('22_fuel-u.txt')
     addTweakDir('FuelConsumptionTweak', false)
   }
-  if (user.options.indexOf(124) !== -1) {
+  if (user.options.includes(124)) {
     addTweak('24_castscreen-u.txt')
   }
-  if (user.options.indexOf(125) !== -1) {
+  if (user.options.includes(125)) {
     addTweak('25_androidauto-u.txt')
-    addTweakDir('androidauto', false)
+    //addTweakDir('androidauto', false)
   }
-  if (user.options.indexOf(121) !== -1) {
+  if (user.options.includes(121)) {
     addTweak('08_orderflac-u.txt')
     addTweakDir('media-order-patching', false)
   }
-  if (user.options.indexOf(126) !== -1) {
+  if (user.options.includes(126)) {
     addTweak('26_usbaudiomod-u.txt')
     addTweakDir('USBAudioMod', false)
   }
-  if (user.options.indexOf(127) !== -1) {
+  if (user.options.includes(127)) {
     addTweak('27_aioapp-u.txt')
   }
   if (user.mzdmeter.uninst) {
     addTweak('28_mzdmeter-u.txt')
   }
-  if (user.mainOps.indexOf(106) !== -1) {
+  if (user.mainOps.includes(106)) {
     addTweak('00_bgrotator-u.txt')
     addTweakDir('BackgroundRotator', false)
   }
@@ -325,7 +327,7 @@ function buildTweak(user) {
   // ****************************************************/
   // ******************Write Installs********************/
   // ****************************************************/
-  if (user.mainOps.indexOf(3) !== -1) {
+  if (user.mainOps.includes(3)) {
     if (user.colors === 0) {
       addTweak('21_colors-u.txt')
     } else if (user.colors < 8 || user.colors === 11) {
@@ -335,56 +337,48 @@ function buildTweak(user) {
       addTweak('21_theme-i.txt')
     }
   }
-  if (user.options.indexOf(1) !== -1) {
+  if (user.options.includes(1)) {
     addTweak('01_touchscreen-i.txt')
   }
-  if (user.options.indexOf(2) !== -1) {
-    if (user.disclaimOps === 1) {
-      addTweak('02_disclaimer5-i.txt')
-    } else {
-      addTweak('02_disclaimer-i.txt')
-    }
-    addTweakDir('audio_order_AND_no_More_Disclaimer', true)
-    buildEntList(user)
-    disclaimerAndAudioFlag = true
+  if (user.options.includes(2)) {
+    //  if (user.disclaimOps === 1) {
+    //    addTweak('02_disclaimer5-i.txt')
+    //} else {
+    addTweak('02_disclaimer-i.txt')
+    //  }
   }
-  if (user.options.indexOf(3) !== -1) {
+  if (user.options.includes(3)) {
     addTweak('03_warning-i.txt')
     addTweakDir('safety-warning-reverse-camera', true)
   }
-  if (user.options.indexOf(4) !== -1) {
+  if (user.options.includes(4)) {
     addTweak('04_sensor-i.txt')
     addTweakDir('transparent-parking-sensor', true)
   }
-  if (user.options.indexOf(5) !== -1) {
+  if (user.options.includes(5)) {
     addTweak('05_mainloop-i.txt')
     addTweakDir('main-menu-loop', true)
   }
-  if (user.options.indexOf(6) !== -1) {
+  if (user.options.includes(6)) {
     addTweak('06_listloop-i.txt')
     addTweakDir('list-loop', true)
   }
-  if (user.options.indexOf(7) !== -1) {
+  if (user.options.includes(7)) {
     addTweak('07_shorterdelay-i.txt')
   }
   if (user.listbeep) {
     addTweak('07_listbeep-i.txt')
   }
-  if (user.options.indexOf(8) !== -1) {
+  if (user.options.includes(8)) {
     addTweak('08_sysbeep-i.txt')
   }
-  if (user.options.indexOf(9) !== -1) {
+  if (user.options.includes(9)) {
     addTweak('09_audioorder-i.txt')
-    if (!disclaimerAndAudioFlag) {
-      addTweakDir('audio_order_AND_no_More_Disclaimer', true)
-      buildEntList(user)
-    }
   }
-  if (user.options.indexOf(10) !== -1) {
+  if (user.options.includes(10)) {
     addTweak('10_pausemute-i.txt')
-    addTweakDir('pause-on-mute', true)
   }
-  if (user.options.indexOf(19) !== -1) {
+  if (user.options.includes(19)) {
     addTweak('19_speedo-i1.txt', true)
     switch (user.speedoOps.lang.id) {
       case 1:
@@ -416,7 +410,7 @@ function buildTweak(user) {
     if (user.speedoOps.xph.id === 10) {
       addTweak('19_speedo-mph.txt', true)
     }
-    if (user.speedoOps.effic.id === 41) {
+    if (user.speedoOps.effic.id === 40) {
       addTweak('19_speedo-kml.txt', true)
     }
     if (user.speedoOps.classicLargeText) {
@@ -459,55 +453,60 @@ function buildTweak(user) {
     addTweakDir('speedometer', true)
     writeSpeedoConfigFile(user)
   }
-  if (user.options.indexOf(21) !== -1) {
+  if (user.options.includes(21)) {
     addTweak('08_orderflac-i.txt')
     addTweakDir('media-order-patching', true)
   }
-  if (user.options.indexOf(24) !== -1) {
+  if (user.options.includes(24)) {
     addTweak('24_castscreen-i.txt')
     addTweakDir('castscreen-receiver', true)
   }
-  if (user.options.indexOf(25) !== -1) {
+  if (user.options.includes(25)) {
     addTweak('25_androidauto-i.txt')
     addTweakDir('androidauto', true)
+    if (user.aaWifi) {
+      addTweak('25_androidautowifi-i.txt')
+      addTweakDir('androidautowifi', true)
+    }
     if (user.aaBetaVer) {
       addTweak('25_androidautob-i.txt')
-      addTweakDir('androidautob', true)
+      if (!user.aaWifi) addTweakDir('androidautob', true)
     }
+
   }
-  if (user.options.indexOf(11) !== -1) {
+  if (user.options.includes(11)) {
     addTweak('11_msgreplies-i.txt')
     addTweakDir('message_replies', true)
   }
-  if (user.options.indexOf(12) !== -1) {
+  if (user.options.includes(12)) {
     addTweak('12_diag-i.txt')
     addTweakDir('test_mode', true)
   }
-  if (user.options.indexOf(13) !== -1) {
+  if (user.options.includes(13)) {
     addTweak('13_boot-i.txt')
     addTweakDir('bootanimation', true)
   }
-  if (user.options.indexOf(26) !== -1) {
+  if (user.options.includes(26)) {
     addTweak('26_usbaudiomod-i.txt') // USB Audio Mod Install comes before Bigger Album Art
     addTweakDir('USBAudioMod', true)
   }
-  if (user.options.indexOf(14) !== -1) {
+  if (user.options.includes(14)) {
     addTweak('14_bgart-i.txt')
     addTweakDir('bigger-album-art', true)
   }
-  if (user.options.indexOf(15) !== -1) {
+  if (user.options.includes(15)) {
     addTweak('15_btnbackground-i.txt')
     addTweakDir('NoButtons', true)
   }
-  if (user.options.indexOf(17) !== -1) {
+  if (user.options.includes(17)) {
     addTweak('17_videoplayer-i.txt')
     addTweakDir('videoplayer', true)
-    if (user.vpUnicode) {
-      addTweak('17_videoplayer-unicode.txt')
-    }
   }
-  if (user.options.indexOf(27) !== -1) {
+  if (user.options.includes(27)) {
     addTweak('27_aioapp-i.txt')
+    if (user.screenOffBoot) {
+      addTweak('27_aioapp-screenoff.txt')
+    }
     addTweakDir('aio-app', true)
   }
   if (user.mzdmeter.inst) {
@@ -515,7 +514,7 @@ function buildTweak(user) {
     addTweakDir('mzdmeter', true)
   }
   /*  TODO: Fuel Consumptoion Tweak - Think of a better way to pick MPG or Km/L (Like a variable) */
-  if (user.options.indexOf(22) !== -1) {
+  if (user.options.includes(22)) {
     if (user.fuelOps === 1) {
       addTweak('22_fuelMPG-i.txt')
     } else {
@@ -523,11 +522,16 @@ function buildTweak(user) {
     }
     addTweakDir('FuelConsumptionTweak', true)
   }
+  // disclaimer & order of audio source list
+  if (user.options.includes(2) || user.options.includes(9) || user.options.includes(102) || user.options.includes(109)) {
+    addTweakDir('audio_order_AND_no_More_Disclaimer', true)
+    buildEntList(user)
+  }
   // Statusbar Tweaks
-  if (user.options.indexOf(120) !== -1) {
+  if (user.options.includes(120)) {
     addTweak('20_date-u.txt')
     addTweakDir('date-to-statusbar_mod', false)
-  } else if (user.options.indexOf(20) !== -1) {
+  } else if (user.options.includes(20)) {
     if (user.statusbar.d2sbuninst) {
       addTweak('20_date2status-u.txt')
       addTweakDir('date-to-statusbar_mod', false)
@@ -548,28 +552,22 @@ function buildTweak(user) {
 
   if (user.uistyle.uninst) {
     addTweak('20_uistyle-u.txt')
-  } else if (user.mainOps.indexOf(9) !== -1) {
+  } else if (user.mainOps.includes(9)) {
     addTweak('20_uistyle-i.txt')
   }
   if (user.uistyle.uninstmain) {
     addTweak('20_mainmenu-u.txt')
-  } else if (user.mainOps.indexOf(8) !== -1) {
+  } else if (user.mainOps.includes(8)) {
     addTweak('20_mainmenu-i.txt')
     addTweakDir('MainMenuTweaks', true)
   }
-  if (user.options.indexOf(16) !== -1) {
-    var outStr = fs.createWriteStream(`${tmpdir}/config/blank-album-art-frame/jci/gui/common/images/no_artwork_icon.png`)
-    var inStr = fs.createReadStream(`${varDir}/no_artwork_icon.png`)
-    outStr.on('close', function() {
-      aioLog('Blank Album Art Copy Successful!')
-    })
-    inStr.pipe(outStr)
+  if (user.options.includes(16)) {
     addTweak('16_blnkframe-i.txt')
   }
   // Off Screen Background
-  if (user.mainOps.indexOf(10) !== -1 || user.mainOps.indexOf(110) !== -1) {
+  if (user.mainOps.includes(10) || user.mainOps.includes(110)) {
     var inStrOff
-    if (user.mainOps.indexOf(10) !== -1) {
+    if (user.mainOps.includes(10)) {
       inStrOff = fs.createReadStream(`${varDir}/OffScreenBackground.png`)
       addTweak('00_offbackground-i.txt')
     } else {
@@ -583,10 +581,9 @@ function buildTweak(user) {
     inStrOff.pipe(outOff)
   }
   // Add chosen background
-  if (user.mainOps.indexOf(2) !== -1) {
-    if (user.mainOps.indexOf(6) !== -1) {
+  if (user.mainOps.includes(2)) {
+    if (user.mainOps.includes(6)) {
       addTweak('00_bgrotator-i.txt')
-      addTweakDir('BackgroundRotator', true)
     }
     var inStrbg = fs.createReadStream(`${varDir}/background.png`)
     var out = fs.createWriteStream(`${tmpdir}/config/background.png`, { flags: 'w' })
@@ -596,19 +593,20 @@ function buildTweak(user) {
     inStrbg.pipe(out)
     addTweak('00_background.txt')
   }
-  if (user.mainOps.indexOf(5) !== -1) {
+  if (user.mainOps.includes(5)) {
     addTweak('00_sd-cid.txt')
     addTweakDir('get_sd_cid', true)
   }
-  if (user.options.indexOf(19) !== -1 || user.options.indexOf(17) !== -1 || user.options.indexOf(25) !== -1 || user.options.indexOf(27) !== -1 || user.options.indexOf(28) !== -1 || user.options.indexOf(119) !== -1 || user.options.indexOf(117) !== -1 || user.options.indexOf(125) !== -1 || user.options.indexOf(127) !== -1 || user.options.indexOf(128) !== -1) {
+  if (user.options.includes(19) || user.options.includes(17) || user.options.includes(25) || user.options.includes(27) || user.options.includes(28) || user.options.includes(119) || user.options.includes(117) || user.options.includes(125) || user.options.includes(127) || user.options.includes(128)) {
     addTweakDir('bin', true)
-    if (user.options.indexOf(19) !== -1 || user.options.indexOf(17) !== -1 || user.options.indexOf(25) !== -1 || user.options.indexOf(27) !== -1 || user.options.indexOf(28) !== -1) {
+    if (user.options.includes(19) || user.options.includes(17) || user.options.includes(25) || user.options.includes(27) || user.options.includes(28)) {
       addTweakDir('jci', true)
+      addTweak('00_59patch.txt')
     }
   }
   // Swapfile tweak has to be last because the final operation
   //  in the script is to remove all of the other tweak files
-  if (user.options.indexOf(18) !== -1) {
+  if (user.options.includes(18)) {
     copySwapfile = true
     if (user.swapOps.mount) {
       swapdest = '/config/swapfile/'
@@ -737,16 +735,11 @@ function writeSpeedoConfigFile(user) {
 
 function tweakVariables(user) {
 
-  var bak = `KEEPBKUPS=`
-  bak += (user.backups.org) ? `1\n` : `0\n`
-  bak += `TESTBKUPS=`
-  bak += (user.backups.test) ? `1\n` : `0\n`
-  bak += `SKIPCONFIRM=`
-  bak += (user.backups.skipconfirm) ? `1\n` : `0\n`
-  bak += `ZIPBACKUP=`
-  bak += (user.zipbackup) ? `1\n` : `0\n`
-  bak += `FORCESSH=`
-  bak += (user.forcessh) ? `1\n` : `0\n`
+  var bak = `KEEPBKUPS=` + (user.backups.org ? `1\n` : `0\n`)
+  bak += `TESTBKUPS=` + (user.backups.test ? `1\n` : `0\n`)
+  bak += `SKIPCONFIRM=` + (user.backups.skipconfirm ? `1\n` : `0\n`)
+  bak += (user.mainOps.includes(1) ? `ZIPBACKUP=` + (user.zipbackup ? `1\n` : `0\n`) : '')
+  bak += (user.mainOps.includes(4) ? `FORCESSH=` + (user.forcessh ? `1\n` : `0\n`) : '')
   fs.writeFileSync(`${varDir}/backups.txt`, bak)
   tweaks2write.push(`${varDir}/backups.txt`)
 
@@ -757,63 +750,81 @@ function tweakVariables(user) {
     tweaks2write.push(`${varDir}/restore.txt`)
   }
 
-
-  if (user.mainOps.indexOf(6) !== -1) {
+  if (user.mainOps.includes(6)) {
     tweaks2write.push(`${varDir}/bg-rotator.txt`)
   }
-  if (user.mainOps.indexOf(3) !== -1) {
-    if (user.colors === 0) {
-      themeColor = 'Red'
-    } else if (user.colors === 1) {
-      themeColor = 'Blue'
-    } else if (user.colors === 2) {
-      themeColor = 'Green'
-    } else if (user.colors === 3) {
-      themeColor = 'Silver'
-    } else if (user.colors === 4) {
-      themeColor = 'Pink'
-    } else if (user.colors === 5) {
-      themeColor = 'Purple'
-    } else if (user.colors === 6) {
-      themeColor = 'Orange'
-    } else if (user.colors === 7) {
-      themeColor = 'Yellow'
-    } else if (user.colors === 8) {
-      themeColor = 'SmoothRed'
-    } else if (user.colors === 9) {
-      themeColor = 'SmoothAzure'
-    } else if (user.colors === 10) {
-      themeColor = 'SmoothViolet'
-    } else if (user.colors === 11) {
-      themeColor = 'CarOS'
-    } else if (user.colors === 12) {
-      themeColor = 'StormTroopers'
-    } else if (user.colors === 13) {
-      themeColor = 'Poker'
-    } else if (user.colors === 14) {
-      themeColor = 'Mazda'
-    } else if (user.colors === 15) {
-      themeColor = 'Floating'
-    } else if (user.colors === 16) {
-      themeColor = 'X-Men'
-    } else if (user.colors === 17) {
-      themeColor = 'Custom'
-    } else {
-      themeColor = 'Red'
+  if (user.mainOps.includes(3)) {
+    switch (user.colors) {
+      case 0:
+        themeColor = 'Red'
+        break
+      case 1:
+        themeColor = 'Blue'
+        break
+      case 2:
+        themeColor = 'Green'
+        break
+      case 3:
+        themeColor = 'Silver'
+        break
+      case 4:
+        themeColor = 'Pink'
+        break
+      case 5:
+        themeColor = 'Purple'
+        break
+      case 6:
+        themeColor = 'Orange'
+        break
+      case 7:
+        themeColor = 'Yellow'
+        break
+      case 8:
+        themeColor = 'SmoothRed'
+        break
+      case 9:
+        themeColor = 'SmoothAzure'
+        break
+      case 10:
+        themeColor = 'SmoothViolet'
+        break
+      case 11:
+        themeColor = 'CarOS'
+        break
+      case 12:
+        themeColor = 'StormTroopers'
+        break
+      case 13:
+        themeColor = 'Poker'
+        break
+      case 14:
+        themeColor = 'Mazda'
+        break
+      case 15:
+        themeColor = 'Floating'
+        break
+      case 16:
+        themeColor = 'X-Men'
+        break
+      case 17:
+        themeColor = 'Custom'
+        break
+      default:
+        themeColor = 'Red'
     }
   }
-  if (user.options.indexOf(13) !== -1) {
+  if (user.options.includes(13)) {
     var bootAnimations = `BOOTLOGO1=${user.boot.logo1}\n`
     bootAnimations += `BOOTLOGO2=${user.boot.logo2}\n`
     bootAnimations += `BOOTLOGO3=${user.boot.logo3}\n`
     fs.writeFileSync(`${varDir}/bootlogo.txt`, bootAnimations)
     tweaks2write.push(`${varDir}/bootlogo.txt`)
   }
-  if (user.mainOps.indexOf(3) !== -1) {
+  if (user.mainOps.includes(3)) {
     fs.writeFileSync(`${varDir}/color.txt`, `COLORTHEME=${themeColor}\n`)
     tweaks2write.push(`${varDir}/color.txt`)
   }
-  if (user.options.indexOf(1) !== -1) {
+  if (user.options.includes(1)) {
     if (user.keepSpeedRestrict) {
       fs.writeFileSync(`${varDir}/touchscreen.txt`, `KEEP_SPEED_RESTRICT=1\n`)
     } else {
@@ -821,7 +832,7 @@ function tweakVariables(user) {
     }
     tweaks2write.push(`${varDir}/touchscreen.txt`)
   }
-  if (user.mainOps.indexOf(8) !== -1) {
+  if (user.mainOps.includes(8)) {
     var mmenu = `UI_STYLE_ELLIPSE=`
     mmenu += (user.uistyle.ellipse) ? `1\n` : `0\n`
     mmenu += `UI_STYLE_MINICOINS=`
@@ -836,7 +847,7 @@ function tweakVariables(user) {
     fs.writeFileSync(`${varDir}/mainmenu.txt`, mmenu)
     tweaks2write.push(`${varDir}/mainmenu.txt`)
   }
-  if (user.mainOps.indexOf(9) !== -1) {
+  if (user.mainOps.includes(9)) {
     var ui = `UI_STYLE_BODY=${user.uistyle.body}\n`
     ui += `UI_STYLE_LIST=${user.uistyle.listitem}\n`
     ui += `UI_STYLE_DISABLED=${user.uistyle.listitemdisabled}\n`
@@ -847,7 +858,7 @@ function tweakVariables(user) {
     fs.writeFileSync(`${varDir}/uistyle.txt`, ui)
     tweaks2write.push(`${varDir}/uistyle.txt`)
   }
-  if (user.options.indexOf(14) !== -1) {
+  if (user.options.includes(14)) {
     var noalbmart = `NOALBM=`
     noalbmart += (user.uistyle.noalbm) ? `1\n` : `0\n`
     noalbmart += `FULLTITLES=`
@@ -855,7 +866,7 @@ function tweakVariables(user) {
     fs.writeFileSync(`${varDir}/bgralbmart.txt`, noalbmart)
     tweaks2write.push(`${varDir}/bgralbmart.txt`)
   }
-  if (user.options.indexOf(15) !== -1) {
+  if (user.options.includes(15)) {
     var transbg = `NO_BTN_BG=`
     transbg += (user.uistyle.nobtnbg) ? `1\n` : `0\n`
     transbg += `NO_NP_BG=`
@@ -869,7 +880,7 @@ function tweakVariables(user) {
     fs.writeFileSync(`${varDir}/removebgs.txt`, transbg)
     tweaks2write.push(`${varDir}/removebgs.txt`)
   }
-  if (user.options.indexOf(20) !== -1) {
+  if (user.options.includes(20)) {
     var dateFormat = user.d2sbOps - 1
     fs.writeFileSync(`${varDir}/d2sb.txt`, `DATE_FORMAT=${dateFormat}\n`)
     tweaks2write.push(`${varDir}/d2sb.txt`)
@@ -881,7 +892,7 @@ function tweakVariables(user) {
     fs.writeFileSync(`${varDir}/statusbar-color.txt`, sc)
     tweaks2write.push(`${varDir}/statusbar-color.txt`)
   }
-  if (user.options.indexOf(19) !== -1) {
+  if (user.options.includes(19)) {
     var sops = `OPACITY=`
     sops += (user.speedoOps.bg.id === 30) ? `${user.speedoOps.opac}\n` : `0\n`
     sops += `SPEEDCOLOR=`
@@ -892,6 +903,8 @@ function tweakVariables(user) {
     sops += (user.spdExtra.hideSpeedBar) ? `1\n` : `0\n`
     sops += `SPD_COUNTER=`
     sops += (user.spdExtra.speedAnimation) ? `1\n` : `0\n`
+    sops += `HIDE_SPEEDO_SBN=`
+    sops += (user.spdExtra.hidespeedosbn) ? `1\n` : `0\n`
     sops += `SPD_XTRA_FUEL_SUFF=${user.spdExtra.fuelGaugeValueSuffix}\n`
     sops += `SPD_XTRA_FUEL_FACT=${user.spdExtra.fuelGaugeFactor}\n`
     sops += (user.speedoOps.sbmain !== undefined) ? `SBMAIN=${user.speedoOps.sbmain}\n` : `\n`
@@ -909,7 +922,7 @@ function tweakVariables(user) {
     tweaks2write.push(`${varDir}/bgopacity.txt`)
 
   }
-  if (user.options.indexOf(26) !== -1) {
+  if (user.options.includes(26)) {
     fs.writeFileSync(`${varDir}/gracenote.txt`, `GRACENOTE="${user.gracenoteText}"`)
     tweaks2write.push(`${varDir}/gracenote.txt`)
   }
@@ -921,15 +934,12 @@ function convert2LF() {
     if (err) {
       aioLog(err, 'LF Convert Error')
     } else if (endingType === 'NA') {
-      aioLog(`EOL => ${endingType} (Format should be: LF)`)
+      aioLog(`LF Convert Error`, `EOL => ${endingType} (Format should be: LF)`)
     } else if (endingType === 'LF') {
       aioLog(`EOL => ${endingType}`)
-    } else if (endingType === 'CRLF') {
-      aioLog(`EOL => ${endingType}`)
     } else {
-      aioLog(`EOL FORMAT ${endingType} (Format should be: LF)`)
+      aioLog(`LF Convert Error`, `EOL => ${endingType} (Format should be: LF)`)
     }
-    // if (err) aioLog(err,'LF Convert Error')throw err **********************
     // Rename tweaks.txt to tweaks.sh
     fs.renameSync(`${tmpdir}/tweaks.txt`, `${tmpdir}/tweaks.sh`)
     aioLog('Writing Tweaks.sh')
@@ -949,6 +959,7 @@ function addTweakDir(twk, inst) {
   var twkdir = '/config/'
   if (!inst) {
     twkdir = '/config_org/'
+    mkdirp.sync(`${tmpdir}/config_org/`)
   }
   try {
     if (!fs.existsSync(`${tmpdir}${twkdir}${twk}`)) {
@@ -1157,7 +1168,7 @@ function usbDrives() {
       message: `<div>${e.toString()}</div><div class="w3-center w3-large"><h2>Build has completed successfully</h2>Although USB drives cannot be found because of an error.<br>${langObj.popupMsgs[9].msg} <pre>${tmpdir}</pre> ${langObj.popupMsgs[10].msg}. <br><button href='' class='w3-large w3-center w3-black w3-btn w3-ripple nousbbutton' title='Copy These Files To A Blank USB Drive' onclick='openCopyFolder()'>${langObj.menu.copytousb.toolTip}</button></div> `,
       callback: function() {
         bootbox.hideAll()
-        finishedMessage()
+        unzipSwapfile(null)
       }
     })
     appendAIOlog(e)
@@ -1181,7 +1192,7 @@ function copyToUSB(mp) {
     className: 'copyingtoUSB',
     closeButton: false
   })
-  if(!keeplog){
+  if (!keeplog) {
     mp = `${mp}/XX`
     mkdirp.sync(mp)
   }
@@ -1317,7 +1328,7 @@ function cleanCopyDir() {
   rimraf(`${tmpdir}`, function() { appendAIOlog(`<li style='color:#ff3366'>Deleted '_copy_to_usb' Folder</li>`) })
 }
 
-function casdkAppOptions(apps) {
+function casdkAppOptions(apps, inst) {
   var casdkapps = `APPSIMPLEDASHBOARD=`
   casdkapps += (apps.simpledashboard) ? `1\n` : `0\n`
   casdkapps += `APPGPSSPEED=`
@@ -1338,26 +1349,63 @@ function casdkAppOptions(apps) {
   casdkapps += (apps.breakout) ? `1\n` : `0\n`
   casdkapps += `APPSNAKE=`
   casdkapps += (apps.snake) ? `1\n` : `0\n`
+  casdkapps += `APPCLOCK=`
+  casdkapps += (apps.clock) ? `1\n` : `0\n`
+  casdkapps += `APPSIMPLESPEEDO=`
+  casdkapps += (apps.simplespeedo) ? `1\n` : `0\n`
   casdkapps += `CASDK_SD=`
   casdkapps += (apps.sdcard) ? `1\n` : `0\n`
+  if (inst) {
+    addCASDKapp(apps.simpledashboard, "simpledashboard")
+    addCASDKapp(apps.gpsspeed, "gpsspeed")
+    addCASDKapp(apps.multidash, "multidash")
+    addCASDKapp(apps.vdd, "vdd")
+    addCASDKapp(apps.devtools, "devtools")
+    addCASDKapp(apps.terminal, "terminal")
+    addCASDKapp(apps.background, "background")
+    addCASDKapp(apps.tetris, "tetris")
+    addCASDKapp(apps.breakout, "breakout")
+    addCASDKapp(apps.snake, "snake")
+    addCASDKapp(apps.clock, "clock")
+    addCASDKapp(apps.simplespeedo, "simplespeedo")
+  }
   fs.writeFileSync(`${varDir}/casdkapps.txt`, casdkapps)
   tweaks2write.push(`${varDir}/casdkapps.txt`)
 }
 
+function addCASDKapp(add, app) {
+  if (add) {
+    copydir(`${builddir}casdk/apps/app.${app}`, `${tmpdir}/casdk/apps/app.${app}`, function(err) {
+      if (err) {
+        aioLog(`File Copy Error: ${err}`, err.message)
+        return
+      }
+      aioLog(`Files for CASDK copied successfully!`)
+    })
+  }
+}
+
 function buildCASDK(user, apps) {
   addRootFiles()
+  casdkAppOptions(apps, user.casdk.inst)
   if (user.casdk.inst) {
-    casdkAppOptions(apps)
     mkdirp.sync(`${tmpdir}/casdk/`)
-    tweaks2write.push(`${builddir}00__casdk-i.txt`)
-    if (user.casdk.region === 'eu') {
-      fs.writeFileSync(`${varDir}/casdkreg.txt`, `sed -i "s/'na'/'eu'/g" /jci/gui/apps/custom/runtime/runtime.js && log_message "=== Region Changed to EU ==="`)
-    } else {
-      fs.writeFileSync(`${varDir}/casdkreg.txt`, `sed -i "s/'eu'/'na'/g" /jci/gui/apps/custom/runtime/runtime.js && log_message "=== Region Changed to NA ==="`)
+    if (!user.casdkAppsOnly) {
+      tweaks2write.push(`${builddir}00__casdk-i.txt`)
+      if (user.casdk.region === 'eu') {
+        fs.writeFileSync(`${varDir}/casdkreg.txt`, `sed -i "s/'na'/'eu'/g" /jci/gui/apps/custom/runtime/runtime.js && log_message "===                      Region Changed to EU                         ==="`)
+      } else {
+        fs.writeFileSync(`${varDir}/casdkreg.txt`, `sed -i "s/'eu'/'na'/g" /jci/gui/apps/custom/runtime/runtime.js && log_message "===                      Region Changed to NA                         ==="`)
+      }
+      tweaks2write.push(`${varDir}/casdkreg.txt`)
     }
-    tweaks2write.push(`${varDir}/casdkreg.txt`)
     tweaks2write.push(`${builddir}00__casdkapps-i.txt`)
-    copydir(`${builddir}casdk`, `${tmpdir}/casdk`, function(err) {
+    copydir(`${builddir}casdk`, `${tmpdir}/casdk`, function(stat, filepath, filename) {
+      if (filepath.includes(`apps`)) {
+        return false
+      }
+      return true;
+    }, function(err) {
       if (err) {
         aioLog(`File Copy Error: ${err}`, err.message)
         return
@@ -1365,7 +1413,7 @@ function buildCASDK(user, apps) {
       aioLog(`Files for CASDK copied successfully!`)
     })
   } else if (user.casdk.uninst) {
-    tweaks2write.push(`${builddir}00__casdk-u.txt`)
+    tweaks2write.push(user.casdkAppsOnly ? `${builddir}00__casdkapps-u.txt` : `${builddir}00__casdk-u.txt`)
   } else {
     errFlag = true
     finishedMessage()

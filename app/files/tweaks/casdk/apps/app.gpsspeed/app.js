@@ -320,10 +320,34 @@ CustomApplicationsHandler.register('app.gpsspeed', new CustomApplication({
       this.setCurTime(value);
     }.bind(this));
 
+    // create help message box
+    this.msgBox = $('<canvas/>').attr({ id: 'msg', width: 480, height: 300 }).addClass('gpsspeedMsg').appendTo(this.canvas);
+    var canvas = this.msgBox.get(0);
+    var ctx = canvas.getContext("2d");
+    ctx.fillStyle = "#ffffff"; //'rgba(255, 255, 255, 0.5)';
+    ctx.font = 'bold 30px Tipperary, Arial, Helvetica, sans-serif';
+    ctx.fillText("Help text", 10, 30);
+
+    ctx.font = '22px Tipperary, Arial, Helvetica, sans-serif';
+    ctx.fillText("Push: Toggle Region (eu/na)", 10, 70);
+    ctx.fillText("Rotate: Set Local Speed Limit (+- 10)", 10, 100);
+    ctx.fillText("Left: Toggle Help (this pop-up)", 10, 130);
+    ctx.fillText("Right: Toggle window (graph/histogram)", 10, 160);
+    ctx.fillText("Up: TBD", 10, 190);
+    ctx.fillText("Down: TBD", 10, 220);
+
+    ctx.font = '18px Tipperary';
+    ctx.fillText("NB: This progam is just for fun, all use is at your own risk!", 10, 245);
+    ctx.fillText("Modified by Peter-dk", 300, 30);
+
+    ctx.font = '22px Tipperary, Arial, Helvetica, sans-serif';
+    ctx.fillStyle = "#0000ff";
+    ctx.fillRect(10, 265, 460, 30);
+    ctx.fillStyle = "#ffffff";
+    ctx.fillText("This window closes after 5 seconds", 10, 290);
 
     // create our context aware sections
     this.createButtonSections();
-
 
     this.setRegion('eu'); //Peter-dk
 
@@ -435,11 +459,12 @@ CustomApplicationsHandler.register('app.gpsspeed', new CustomApplication({
         break;
 
       case 'leftStart':
+        this.helpOpen = !this.helpOpen;
         if (this.helpOpen) {
-          this.msgBox.remove();
-          this.helpOpen = false;
+          clearTimeout(this.helpTimeout);
+          this.showHelp(6);
         } else {
-          this.showHelp(8);
+          $(".gpsspeedMsg").hide();
         }
         break;
 
@@ -467,7 +492,7 @@ CustomApplicationsHandler.register('app.gpsspeed', new CustomApplication({
 
         if (context.index == 0) { // Help button
           // this.speedoRPMLabel.html("<div style='font-size:24px; color:blue;'>Button1</div>");
-          this.showHelp(3);
+          this.showHelp(4);
         }
 
         if (context.index == 1) { // Right button
@@ -499,37 +524,13 @@ CustomApplicationsHandler.register('app.gpsspeed', new CustomApplication({
 
 
   showHelp: function(seconds) {
-
+    //$('.gpsspeedMsg').get(0).getContext("2d").fillText("This window closes after " + seconds + " seconds", 10, 290);
     this.helpOpen = true;
-
-    this.msgBox = $('<canvas/>').attr({ id: 'msg', width: 480, height: 300 }).appendTo(this.canvas);
-    var canvas = this.msgBox.get(0);
-    var ctx = canvas.getContext("2d");
-    ctx.fillStyle = "#ffffff"; //'rgba(255, 255, 255, 0.5)';
-    ctx.font = 'bold 30px Tipperary, Arial, Helvetica, sans-serif';
-    ctx.fillText("Help text", 10, 30);
-
-    ctx.font = '22px Tipperary, Arial, Helvetica, sans-serif';
-    ctx.fillText("Push:  Toggle region (eu/na)", 10, 70);
-    ctx.fillText("Rotate:  Set local speed limit", 10, 100);
-    ctx.fillText("Left:  Help (this pop-up)", 10, 130);
-    ctx.fillText("Right:  Toggle window (graph/histogram)", 10, 160);
-    ctx.fillText("Up:  TBD", 10, 190);
-    ctx.fillText("Down:  TBD", 10, 220);
-
-    ctx.font = '18px Tipperary';
-    ctx.fillText("NB: This progam is just for fun, all use is at your own risk!", 10, 245);
-    ctx.fillText("Modified by Peter-dk", 300, 30);
-
-    ctx.font = '22px Tipperary, Arial, Helvetica, sans-serif';
-    ctx.fillStyle = "#0000ff";
-    ctx.fillRect(10, 265, 460, 30);
-    ctx.fillStyle = "#ffffff";
-    ctx.fillText("This window closes after " + seconds + " seconds", 10, 290);
-
-    setTimeout(function() {
-      canvas.hidden = 'true';
-      this.helpOpen = false
+    $('.gpsspeedMsg').show();
+    var that = this;
+    this.helpTimeout = setTimeout(function() {
+      $('.gpsspeedMsg').hide();
+      return that.helpOpen = false;
     }, seconds * 1000); // delay closing of window
   },
 

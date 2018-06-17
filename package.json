@@ -2,7 +2,7 @@
   "name": "MZD-AIO-TI",
   "productName": "MZD All In One Tweaks Installer",
   "description": "An Installer/Uninstaller for Over 50 System Tweaks for the Mazda MZD Infotainment System.",
-  "version": "2.7.7",
+  "version": "2.8.0",
   "homepage": "http://mazdatweaks.com",
   "license": "GPL-3.0",
   "main": "main.js",
@@ -48,16 +48,16 @@
     "pack": "build --dir",
     "prebuild": "node build/target.js",
     "build:osx": "npm run prebuild && build --mac && npm run postbuild",
-    "build:win": "npm run prebuild && build --win --ia32 --x64 --em.author.name=Trevelopment && npm run postbuild",
-    "build:win64": "npm run prebuild && build --win --x64 --em.author.name=Trevelopment && npm run postbuild",
-    "build:win32": "npm run prebuild && build --win --ia32 --em.author.name=Trevelopment && npm run postbuild",
+    "build:win": "npm run prebuild && build --win --x64 && npm run postbuild",
+    "build:win64": "npm run prebuild && build --win --x64 && npm run postbuild",
+    "build:win32": "npm run prebuild && build --win --ia32 && npm run postbuild",
     "build:linux:x64": "npm run prebuild && build --linux deb AppImage --x64 && npm run postbuild",
     "build:linux:deb": "./scripts/build_linux_deb.sh",
     "build": "build",
     "release": "build",
     "postbuild": "node build/target.js --clean",
-    "xinstall": "cd app && ncu -u && ncu -a && npm i && cd .. && ncu -u && ncu -a && npm i",
-    "postinstall": "electron-builder install-app-deps"
+    "xinstall": "cd app && ncu -u --packageFile package.json && ncu -a --packageFile package.json && npm i && cd .. && ncu -u --packageFile package.json && ncu -a --packageFile package.json && npm i",
+    "postinstall": "install-app-deps && electron-rebuild -w drivelist"
   },
   "standard": {
     "globals": [
@@ -98,8 +98,7 @@
     "copyright": "© 2018 Trevelopment By Trevor G Martin",
     "artifactName": "${productName}-${os}_${version}.${ext}",
     "extraResources": [
-      "background-images/**/*",
-      "tools/*"
+      "background-images/**/*"
     ],
     "extraFiles": [
       "castscreenApp/*.apk"
@@ -165,35 +164,34 @@
     }
   },
   "devDependencies": {
-    "async": "^2.6.0",
+    "async": "^2.6.1",
     "chai": "^4.1.2",
     "chai-as-promised": "^7.1.1",
-    "dependency-check": "^3",
+    "dependency-check": "^3.2.0",
     "devtron": "^1",
-    "electron": "^1.8.2",
-    "electron-builder": "^20.0.8",
-    "electron-debug": "^1.5.0",
+    "electron": "^2.0.5",
+    "electron-builder": "20.23.1",
+    "electron-debug": "^2.0.0",
     "electron-is-dev": "^0.3",
-    "electron-rebuild": "^1.7.3",
+    "electron-rebuild": "^1.8.1",
     "istanbul": "^0.4",
-    "mocha": "^5",
+    "mocha": "^5.2.0",
     "rimraf": "^2.6.2",
-    "shelljs": "^0.8",
+    "shelljs": "^0.8.2",
     "spectron": "^3.8.0",
-    "standard": "^11.0.0"
+    "standard": "^11.0.1"
   },
   "dependencies": {
-    "angular-dragula": "^1.2.8",
     "appender": "^0.0.2",
-    "copy-dir": "^0.3.0",
+    "bluebird-lst": "^1.0.5",
+    "copy-dir": "^0.4.0",
     "crlf": "^1.1.1",
-    "drivelist": "^6.0.4",
-    "electron-context-menu": "^0.9.1",
+    "drivelist": "^6.3.0",
+    "electron-context-menu": "^0.10.0",
     "electron-image-resize": "^1.2.4",
-    "electron-store": "^1.3.0",
-    "extract-zip": "^1.6.6",
+    "electron-store": "^2.0.0",
+    "extract-zip": "^1.6.7",
     "jquery": "^3.3.1",
-    "mkdirp": "^0.5.1",
-    "sort-array": "^2.0.0"
+    "mkdirp": "^0.5.1"
   }
 }

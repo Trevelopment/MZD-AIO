@@ -1,3 +1,4 @@
+backup_org /jci/scripts/jci-fw.sh
 # Install Castscreen receiver
 show_message "INSTALL CASTSCREEN-RECEIVER ..."
 log_message "=====**************  INSTALL CASTSCREEN-RECEIVER ...   *************====="
@@ -37,17 +38,6 @@ then
 			cp /jci/scripts/stage_wifi.sh ${MYDIR}/bakups/test/stage_wifi_castscreen-after.sh
 		fi
 	fi
-fi
-# Backup if needed
-if [ ! -e /jci/scripts/jci-fw.sh.org ]
-then
-	cp /jci/scripts/jci-fw.sh /jci/scripts/jci-fw.sh.org
-	log_message "===                  Backup of /jci/scripts/jci-fw.sh                 ==="
-fi
-if [ "$KEEPBKUPS" = 1 ]
-then
-	cp /jci/scripts/jci-fw.sh.org ${MYDIR}/bakups/
-	log_message "===                    Saved Backup of jci-fw.sh                      ==="
 fi
 # Fix Firewall Settings
 if ! grep -q "Allow ScreenCast rule" /jci/scripts/jci-fw.sh

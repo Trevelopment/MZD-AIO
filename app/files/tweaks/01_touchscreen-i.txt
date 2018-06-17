@@ -1,3 +1,4 @@
+backup_org /jci/gui/common/js/Common.js
 # disable/enable touchscreen mod: enable = mod off, disable = mod on
 show_message "ENABLE TOUCHSCREEN ..."
 log_message "=======******** INSTALL REMOVE TOUCHSCREEN RESTRICTION ... *******======="
@@ -10,8 +11,15 @@ else
   /jci/scripts/set_speed_restriction_config.sh enable
 fi
 
+
 /jci/scripts/set_lvds_speed_restriction_config.sh disable
 
+# This will stop the MMUI "Global.AtSpeed" signal from reaching the GUI
+# Therefor menu items will never become speed-disabled
+if ! grep -Fq "//\"Global.AtSpeed" /jci/gui/common/js/Common.js
+then
+  sed -i 's/ .Global.AtSpeed/ \/\/"Global.AtSpeed/g' /jci/gui/common/js/Common.js
+fi
 log_message "===             Touchscreen Speed Restriction Disabled                ==="
 
 log_message "====****** END INSTALLATION OF REMOVE TOUCHSCREEN RESTRICTION  ******===="

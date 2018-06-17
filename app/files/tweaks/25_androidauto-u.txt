@@ -15,6 +15,7 @@ fi
 
 rm -fr /tmp/mnt/data_persist/dev/androidauto
 rm -f /tmp/mnt/data_persist/dev/bin/headunit
+rm -f /tmp/mnt/data_persist/dev/bin/headunit-wireless
 rm -f /tmp/mnt/data_persist/dev/bin/aaserver
 rm -f /tmp/mnt/data_persist/dev/bin/headunit-wrapper
 rm -f /tmp/mnt/data_persist/dev/bin/input_filter
@@ -59,10 +60,6 @@ elif grep -Fq "_mzdmeter" /jci/opera/opera_dir/userjs/additionalApps.json
 then
   log_message "===           Found mzd meter entry in additionalApps.json            ==="
   ADDIT_APPS=1
-elif grep -Fq "name" /jci/opera/opera_dir/userjs/additionalApps.json
-then
-  log_message "===          Found unknown app found in additionalApps.json           ==="
-  ADDIT_APPS=1
 fi
 if [ $ADDIT_APPS -eq 0 ]
 then
@@ -81,11 +78,13 @@ log_message "===        Deleted modifications from /jci/scripts/stage_wifi.sh   
 
 if [ -e /etc/asound.conf.org ]
 then
-  if cp -a /etc/asound.conf.org /etc/asound.conf; then
-    rm -f /etc/asound.conf.org
+  # fix link from previous version
+  if ! [ -L /etc/asound.conf ]; then
+    mv /etc/asound.conf ${MYDIR}/asound.conf.AA
+    ln -sf /data/asound.conf /etc/asound.conf
   fi
-  log_message "===     /etc/asound.conf reverted from backup /etc/asound.conf.org    ==="
-
+  rm -f /etc/asound.conf.org
+  log_message "===     /etc/asound.conf reverted from factory /data/asound.conf    ==="
 fi
 
 if grep -Fq "input_filter" /jci/sm/sm.conf

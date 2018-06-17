@@ -62,6 +62,7 @@
         advancedOps: false,
         dataDump: false,
         aaBetaVer: false,
+        aaWifi: true,
         autosort: true,
         barautosort: true,
         gracenoteText: "Powered By Gracenote®",
@@ -90,6 +91,7 @@
       }
       $scope.user.mzdmeter = {
         show: persistantData.get('showMeter') || false,
+        check: persistantData.get('checkMeter') || false,
         inst: false,
         uninst: false
       }
@@ -253,7 +255,7 @@
             if (itemPosition in testObject) {
               testObject[itemPosition].duplicate = true
               item.duplicate = true
-              seenDuplicate.push(itemName, lastSeenDuplicate)
+              seenDuplicate.push(itemName, testObject[itemPosition].elmnt)
             } else {
               lastSeenDuplicate = itemName
               testObject[itemPosition] = item
@@ -281,8 +283,21 @@
           $scope.user.spdValues[valIndex].pos[2] = '0'
         } else if (value.pos[2] === '0') {
           $scope.user.spdValues[valIndex].pos[2] = '1'
-        } else if (value.pos[0] === '0' && value.pos[1] > '1') {
-          $scope.user.spdValues[valIndex].pos[1] = '1'
+        }
+        if (value.pos[0] === '1') {
+          if (value.pos[1] < 1) {
+            $scope.user.spdValues[valIndex].pos[1] = '1'
+          }
+          if (value.pos[2] < 1) {
+            $scope.user.spdValues[valIndex].pos[2] = '1'
+          }
+        } else if (value.pos[0] === '0') {
+          if (value.pos[1] > 1) {
+            $scope.user.spdValues[valIndex].pos[1] = '1'
+          }
+          if (value.pos[2] > 4) {
+            $scope.user.spdValues[valIndex].pos[2] = '4'
+          }
         }
         $scope.barAutoSortBy()
         $scope.colorDuplicates()
@@ -447,9 +462,9 @@
       })
       $scope.miniSpeedo = function() {
         if ($scope.user.options.indexOf(20) === -1) {
-          $scope.user.options.push(20)
-          $scope.user.statusbar.d2sbinst = true
-          snackbar('Date-to-StatusBar Mod is Auto-Selected with Speedometer-in-StatusBar Mod')
+          //$scope.user.options.push(20)
+          //$scope.user.statusbar.d2sbinst = true
+          snackbar('Date-to-StatusBar Mod is now optional With Statusbar Speedometer')
         }
       }
 
@@ -495,9 +510,11 @@
             settings.delete('reset')
           }
           $scope.user = settings.store
-          snackbar('Options Loaded!')
           closeHelpDrop()
-          $scope.$apply()
+          setTimeout(function() {
+            snackbar('Options Loaded!')
+            $scope.$apply()
+          }, 500)
         }
       }
       $scope.loadLast = function() {
@@ -506,9 +523,11 @@
           lastView.delete('reset')
         }
         $scope.user = lastView.store
-        snackbar('Loaded Last Compiled Options!')
         closeHelpDrop()
-        $scope.$apply()
+        setTimeout(function() {
+          snackbar('Loaded Last Compiled Options!')
+          $scope.$apply()
+        }, 500)
       }
       ipc.on('custom-theme', (event, theme) => {
         $scope.user.customTheme = theme
@@ -622,7 +641,7 @@
         remote.BrowserWindow.fromId(1).focus()
         if (!$scope.user.restore.full) { return }
         var msg = '<center>This script will completely remove all tweaks installed by AIO.\n'
-        if ($scope.user.restore.delBackups) { msg += `<h3 style='width:100%;text-align:center;'>*** YOU HAVE CHOSEN TO DELETE ALL BACKUP FILES. ***</h3><br><h4>BY CONTINUING, YOU ARE ACKNOWLEDGING THAT YOU UNDERSTAND THE IMPLECATIONS OF PERFORMING THIS ACTION.</h4>` }
+        if ($scope.user.restore.delBackups) { msg += `<h3 style='width:100%;text-align:center;'>*** YOU HAVE CHOSEN TO DELETE ALL BACKUP FILES. ***</h3><br><h4>BY CONTINUING, YOU ARE ACKNOWLEDGING THAT YOU UNDERSTAND THE IMPLICATIONS OF PERFORMING THIS ACTION.</h4>` }
         msg += '\nCONTINUE?</center>'
         bootbox.confirm({
           title: `AIO Full Restore Script`,
@@ -805,7 +824,7 @@
           $scope.saveSpeedoOps()
         }
         lastView.set($scope.user)
-        $('#compileButton, #compileAutorun, .btn-group, .btn-group~*, .checkAutorun').hide()
+        $('#compileButton, #compileAutorun, .btn-group, .btn-group~*, .checkAutorun, .handle').hide()
         buildTweakFile($scope.user)
       }
     })
@@ -886,13 +905,15 @@
       uninstall: false
     }
     $scope.apps = {
-      simpledashboard: true,
+      simpledashboard: false,
+      clock: false,
       multidash: false,
       vdd: false,
       terminal: false,
       gpsspeed: false,
       aio: false,
       speedometer: false,
+      simplespeedo: false,
       tetris: false,
       snake: false,
       breakout: false,
@@ -903,12 +924,14 @@
     }
     $scope.visibleApps = {
       simpledashboard: casdkApps.get('simpledashboard') || true,
+      clock: casdkApps.get('clock') || false,
       multidash: casdkApps.get('multidash') || false,
-      vdd: casdkApps.get('vdd') || false,
+      vdd: casdkApps.get('vdd') || true,
       terminal: casdkApps.get('terminal') || false,
       gpsspeed: casdkApps.get('gpsspeed') || false,
       aio: casdkApps.get('aio') || false,
       speedometer: casdkApps.get('speedometer') || false,
+      simplespeedo: casdkApps.get('simplespeedo') || false,
       tetris: casdkApps.get('tetris') || false,
       snake: casdkApps.get('snake') || false,
       breakout: casdkApps.get('breakout') || false,
@@ -918,57 +941,29 @@
     }
     $scope.secretCodes = function(code) {
       switch (code.replace(/(\(.*\)|[\ \(\)\\\/\_\-])/g, '').toLowerCase()) {
-        case "vdddd":
-          $scope.visibleApps.vdd = true
+        case "reset":
+          casdkApps.set('clock', false)
+          casdkApps.set('multidash', false)
           casdkApps.set('vdd', true)
-          snackbar("Unlocked: Vehicle Diagnostic Data (vdd)")
-          break
-        case "dultimash":
-          $scope.visibleApps.multidash = true
-          casdkApps.set('multidash', true)
-          snackbar("Unlocked: MultiDash Speedometer")
-          break
-        case "terminator":
-          $scope.visibleApps.terminal = true
-          casdkApps.set('terminal', true)
-          snackbar("Unlocked: Terminal")
-          break
-        case "geepeeess":
-          $scope.visibleApps.gpsspeed = true
-          casdkApps.set('gpsspeed', true)
-          snackbar("Unlocked: GPS Speedometer")
-          break
-        case "trevelop":
-          $scope.visibleApps.devtools = true
-          casdkApps.set('devtools', true)
-          snackbar("Unlocked: Dev Tools")
-          break
-        case "background":
-          $scope.visibleApps.background = true
-          casdkApps.set('background', true)
-          snackbar("Unlocked: Background")
-          break
-        case "dropinblocks":
-          $scope.visibleApps.tertris = true
-          casdkApps.set('tertris', true)
-          snackbar("Unlocked: Tetris")
-          break
-        case "trousersnake":
-          $scope.visibleApps.snake = true
-          casdkApps.set('snake', true)
-          snackbar("Unlocked: Tetris")
-          break
-        case "outbreak":
-          $scope.visibleApps.breakout = true
-          casdkApps.set('breakout', true)
-          snackbar("Unlocked: Breakout")
+          casdkApps.set('terminal', false)
+          casdkApps.set('gpsspeed', false)
+          casdkApps.set('aio', false)
+          casdkApps.set('simplespeedo', false)
+          casdkApps.set('tetris', false)
+          casdkApps.set('snake', false)
+          casdkApps.set('breakout', false)
+          casdkApps.set('background', false)
+          casdkApps.set('multicontroller', false)
+          casdkApps.set('devtools', false)
+          snackbar("CASDK APPS RESET")
+          setTimeout(() => { location.reload() }, 5000)
           break
         default:
           snackbar("Invalid Code...")
       }
     }
-    $scope.compileCASDK = function(user) {
-      if (user.casdk.inst) {
+    $scope.compileCASDK = function(user, appsOnly) {
+      if (user.casdk.inst && !appsOnly) {
         var compileTweaksDialog = bootbox.confirm({
           title: `<center><h3 class="tweak-inst-title">*************** CASDK ***************</h3></center>`,
           message: "Choose Region - Available Regions:<br><ul><li>North America - NA - mph, ft, °F</li><li>Europe - EU - Km/h, m, °C</li></ul>",
@@ -991,6 +986,7 @@
           }
         })
       } else {
+        user.casdkAppsOnly = appsOnly
         buildTweakFile(user, $scope.apps)
       }
     }

@@ -1,12 +1,14 @@
 #SbSpeedo {
-  font-family: Tipperary, verdana;
+  font-family: "Tipperary", verdana;
   color: white;
   height: 64px;
   position: absolute;
-  right: 115px;
+  left: 590px;
   top: 0px;
   width: 100px;
   z-index: 20200;
+  /* transition: opacity .4s ease-in-out; */
+  /* opacity: 1; */
   /* text-shadow: 1px 0 0 #000, -1px 0 0 #000, 0 1px 0 #000, 0 -1px 0 #000; */
 }
 #SbSpeedo .SbMain, #SbSpeedo [class*='SbVal'] {
@@ -26,7 +28,7 @@
   font-size: 12px;
   position: absolute;
   width: 30px;
-  right: -8px;
+  right: 8px;
   transform: rotate(-90deg);
   bottom: 12px;
   white-space: nowrap;
@@ -35,7 +37,7 @@
   padding-right: 24px;
   background-color: transparent;
   background-position: right;
-  background-origin: 0px;
+  background-origin: border-box;
   background-attachment: scroll;
   background-repeat: no-repeat;
   background-size: 18px 18px;
@@ -46,7 +48,9 @@
   right: 17px;
   width: 100%;
 }
-#SbSpeedo .SbMain:not([class*="speed"]):not(.gpsSpeedValue):not(.vehicleSpeed) {
+/* #SbSpeedo .SbMain:not([class*="speed"]):not(.gpsSpeedValue):not(.vehicleSpeed) { */
+
+#SbSpeedo .SbMain {
   padding-right: 22px;
   padding-left: 5px;
   background-position: 100%;
@@ -64,10 +68,16 @@
   /* default for val2 */
   background-image: url('IcnMountain.png');
 }
-#SbSpeedo .gearPositionValue, #SbSpeedo .gearLeverPositionValue, #SbSpeedo .tripDistance {
+#SbSpeedo .gearPositionValue, #SbSpeedo .gearLeverPositionValue {
   background-image: url('IcnGear.png');
 }
-#SbSpeedo .outsideTempValue, #SbSpeedo .coolantTempValue, #SbSpeedo .intakeTempValue {
+#SbSpeedo .coolantTempValue {
+  background-image: url('IcnCoolantTemp.png');
+}
+#SbSpeedo .intakeTempValue {
+  background-image: url('IcnIntakeTemp.png');
+}
+#SbSpeedo .outsideTempValue {
   /* temperatures */
   background-image: url('IcnTemp.png');
 }
@@ -75,8 +85,11 @@
   /* covers everything with 'fuel' */
   background-image: url('IcnFuel.png');
 }
-#SbSpeedo .tripTimeValue, #SbSpeedo .tripDistance, #SbSpeedo .engineIdleTimeValue, #SbSpeedo .idleTimeValue {
+#SbSpeedo .tripTimeValue, #SbSpeedo .engineIdleTimeValue, #SbSpeedo .idleTimeValue {
   background-image: url('IcnStopwatch.png');
+}
+#SbSpeedo .tripDistance {
+  background-image: url('IcnDist.png');
 }
 #SbSpeedo .SbMain:not([class*="speed"]):not(.gpsSpeedValue):not(.vehicleSpeed)+.SbUnit {
   /* anything with 'speed' gets the speed unit */
@@ -178,11 +191,30 @@
 #Sbfuel-bar-container {
   background: none;
 }
+.StatusBarCtrl .StatusBarCtrlClock {
+  right: 10px;
+  top: 22px;
+  height: 40px;
+  line-height: 40px;
+  letter-spacing: 1px;
+}
+.StatusBarCtrl .StatusBarCtrlIconContainer {
+  height: 23px;
+  margin-right: 10px;
+  margin-left: 600px;
+  margin-bottom: -20px;
+  /*opacity: 0.8;*/
+}
+.StatusBarCtrl .StatusBarCtrlIcon {
+  width: 23px;
+  height: 23px;
+  background-size: 27px 23px;
+}
 /* hide in reverse */
 
 /* Digital Clock Mod - Remove this to apply
 #SbSpeedo, .StatusBarCtrlDate, .StatusBarCtrlClock {
     font-family: "Crystal"!important;
-    text-transform: uppercase;
+    text-transform:uppercase;
 }
 Remove this */

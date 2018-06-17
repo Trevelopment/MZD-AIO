@@ -1,12 +1,8 @@
+backup_org /jci/gui/common/controls/List2/js/List2Ctrl.js
+
 show_message "INSTALL REMOVE SYSTEM BEEPS ..."
 log_message "============******* INSTALL REMOVE SYSTEM BEEPS ...  *******============="
 
-# Backup if needed
-if [ ! -e /jci/gui/common/controls/List2/js/List2Ctrl.js.org ]
-	then
-		cp -a /jci/gui/common/controls/List2/js/List2Ctrl.js /jci/gui/common/controls/List2/js/List2Ctrl.js.org
-		log_message "=== Backup of /jci/gui/common/controls/List2/js/List2Ctrl.js to List2Ctrl.js.org ==="
-fi
 # Modify List2Ctrl.js
 sed -i 's/        return framework.common.beep(pressType, eventCause);/        \/\/ return framework.common.beep(pressType, eventCause); \/\/No More Beeps/g' /jci/gui/common/controls/List2/js/List2Ctrl.js
 log_message "===                  Modified Beeps in List2Ctrl.js                   ==="

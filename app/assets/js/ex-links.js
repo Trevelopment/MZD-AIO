@@ -1,4 +1,4 @@
-// Open all external links outside the app
+// Open all external links *with class="link"* outside the app
 // Credit: Electron API Demos app
 const links = document.querySelectorAll('a.link')
 

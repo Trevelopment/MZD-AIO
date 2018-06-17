@@ -48,6 +48,7 @@ var speedometerLonghold = false;
 var hideSpeedFuel = false;
 var speedometerLayout = null;
 var speedoClassicLayout = null;
+var speedometerIcon = "apps/_speedometer/IcnSbnSpeedometer.png";
 
 $.ajax({
   url: 'addon-common/cufon-yui.js',
@@ -172,9 +173,9 @@ $(document).ready(function() {
     currentSpeed = $.trim(currentSpeed);
     if ($.isNumeric(currentSpeed)) {
       if (isMPH) {
-        speedCurrent = Math.ceil(currentSpeed * 0.006213712);
+        speedCurrent = Math.round(currentSpeed * 0.006213712);
       } else {
-        speedCurrent = Math.ceil(currentSpeed * 0.01);
+        speedCurrent = Math.round(currentSpeed * 0.01);
       }
       // update vehicle top speed
       // --------------------------------------------------------------------------
@@ -198,7 +199,7 @@ $(document).ready(function() {
       if (speedCurrent > 0) {
         totalMoveCount++;
         speedSumTotal += speedCurrent;
-        var avgSpeed = Math.ceil(speedSumTotal / totalMoveCount);
+        var avgSpeed = Math.round(speedSumTotal / totalMoveCount);
         if (speedAvg !== avgSpeed) {
           speedAvg = avgSpeed;
           $('.speedAvgValue').html(speedAvg);
@@ -220,12 +221,12 @@ $(document).ready(function() {
           duration: 950,
           easing: 'linear',
           step: function(now) {
-            var speedCurr = Math.ceil(now);
+            var speedCurr = Math.round(now);
             if (speedAnimation) {
               $this.text(speedCurr);
             }
             if (!engineSpeedBar) {
-              updateSpeedBar(Math.ceil(isMPH ? speedCurr * 1.6 : speedCurr));
+              updateSpeedBar(Math.round(isMPH ? speedCurr * 1.6 : speedCurr));
             }
           },
           complete: function() {}
@@ -361,7 +362,7 @@ $(document).ready(function() {
             duration: 950,
             easing: 'linear',
             step: function(now) {
-              $this.text(Math.ceil(now));
+              $this.text(Math.round(now));
             },
             complete: function() {}
           });
@@ -628,12 +629,12 @@ $(document).ready(function() {
             duration: 950,
             easing: 'linear',
             step: function(now) {
-              var engineSpeedCurr = Math.ceil(now);
+              var engineSpeedCurr = Math.round(now);
               if (speedAnimation) {
                 $this.text(engineSpeedCurr);
               }
               if (engineSpeedBar) {
-                updateSpeedBar(Math.ceil(engineSpeedCurr / 45));
+                updateSpeedBar(Math.round(engineSpeedCurr / 45));
               }
             },
             complete: function() {
@@ -993,7 +994,7 @@ function SpeedoSwapFieldSets() {
       swapOut.removeClass(swapClass).addClass(tempClass);
       temp.removeClass(tempClass).addClass(swapClass);
       if (temp.hasClass('pos0') || swapOut.hasClass('pos0')) {
-        AIO_SBN((temp.hasClass('pos0')) ? temp.children('legend').text() : swapOut.children('legend').text(), "apps/_speedometer/IcnSbnSpeedometer.png");
+        AIO_SBN((temp.hasClass('pos0')) ? temp.children('legend').text() : swapOut.children('legend').text(), speedometerIcon);
       }
       // Save the layout
       SaveSpeedBarLayout();
@@ -1051,7 +1052,7 @@ function ClearSpeedBarLayout() {
   if (speedometerLayout !== null) {
     speedometerLayout = null;
     $('.activeDataBar').removeClass('activeDataBar');
-    AIO_SBN("Layout Reset", "apps/_speedometer/IcnSbnSpeedometer.png");
+    AIO_SBN("Layout Reset", speedometerIcon);
     aioMagicRoute("_speedometer", "Start");
   }
 }

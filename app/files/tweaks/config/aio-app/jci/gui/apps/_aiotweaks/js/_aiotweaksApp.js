@@ -25,8 +25,10 @@ function _aiotweaksApp(uiaId) {
  * Called just after the app is instantiated by framework.
  * All variables local to this app should be declared in this function
  */
-_aiotweaksApp.prototype.appInit = function () {
+_aiotweaksApp.prototype.appInit = function() {
   log.debug("_aiotweaksApp appInit  called...");
+
+  this.stopMsgTimeout = null;
 
   //Context table
   //@formatter:off
@@ -55,14 +57,23 @@ _aiotweaksApp.prototype.appInit = function () {
  * CONTEXT CALLBACKS
  * =========================
  */
-_aiotweaksApp.prototype._AtSpeedMsgHandler = function (msg) {
+_aiotweaksApp.prototype._AtSpeedMsgHandler = function(msg) {
   log.info("AIO Tweaks App Received AtSpeedMsg" + msg);
+  framework.common.setSbName("AIO Tweaks - Driving...");
 }
-_aiotweaksApp.prototype._NoSpeedMsgHandler = function (msg) {
+_aiotweaksApp.prototype._NoSpeedMsgHandler = function(msg) {
   log.info("AIO Tweaks App Received NoSpeedMsg" + msg);
+  framework.common.setSbName("AIO Tweaks - Stop!");
+  clearTimeout(this.stopMsgTimeout);
+  this.stopMsgTimeout = setTimeout(function() {
+    if (framework.getCurrentApp() === '_aiotweaks') {
+      framework.common.setSbName("AIO Tweaks");
+    }
+  }, 2000); // Show for 2 seconds
+
 }
 // from usbaudioApp - test to see if this works
-_aiotweaksApp.prototype._TimedSbn_CurrentSongMsgHandler = function (msg) {
+_aiotweaksApp.prototype._TimedSbn_CurrentSongMsgHandler = function(msg) {
   framework.common.startTimedSbn(this.uiaId, 'TimedSbn_UsbAudio_CurrentSong', 'typeE', {
     sbnStyle: 'Style02',
     imagePath1: 'IcnSbnEnt.png',
@@ -70,11 +81,11 @@ _aiotweaksApp.prototype._TimedSbn_CurrentSongMsgHandler = function (msg) {
     text2: msg.params.payload.title,
   });
 };
-_aiotweaksApp.prototype._StartContextReady = function () {
+_aiotweaksApp.prototype._StartContextReady = function() {
   framework.common.setSbDomainIcon("apps/_aiotweaks/app.png");
 };
 
-_aiotweaksApp.prototype._StartContextOut = function () {
+_aiotweaksApp.prototype._StartContextOut = function() {
   var currTwks = document.getElementsByTagName("body")[0].className;
   if (currTwks.length > 0) {
     localStorage.setItem("aio.tweaks", currTwks);

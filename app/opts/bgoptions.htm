@@ -10,23 +10,23 @@
 <tbody class="w3-col">
   <tr>
     <td class="w3-hover-pale-blue w3-third w3-round">
-      <a class="w3-btn w3-ripple w3-teal w3-hover-orange" href="" onclick="ipc.send('open-file-bg')" id="chooseBgBtn"><span class="icon-camera"></span> Single Img</a>
+      <button class="w3-btn w3-ripple w3-teal w3-hover-orange single-bg" onclick="ipc.send('open-file-bg')" id="chooseBgBtn"  ng-disabled="user.mainOps.includes({{mainOps.backgroundrotator.id}})"><span class="icon-camera"></span> Single Img</button>
     </td>
     <td class="w3-hover-pale-blue w3-third w3-round">
-      <a class="w3-btn w3-ripple w3-grey w3-hover-light-green" href="" onclick="ipc.send('open-file-default')" id="defaultBgBtn"><span class="icon-camera-retro"></span> Default</a>
+      <button class="w3-btn w3-ripple w3-grey w3-hover-light-green single-bg" onclick="ipc.send('open-file-default')" id="defaultBgBtn"  ng-disabled="user.mainOps.includes({{mainOps.backgroundrotator.id}})"><span class="icon-camera-retro"></span> Default</button>
     </td>
     <td class="w3-hover-pale-blue w3-third w3-round">
-      <a class="w3-btn w3-ripple w3-yellow w3-hover-red" href="" onclick="$('#imgframe').click()" data-toggle="tooltip" data-placement="auto bottom" title="Preview Background"><span class="icon-pageview"></span> Preview</a>
+      <button class="w3-btn w3-ripple w3-yellow w3-hover-red" onclick="$('#imgframe').click()" data-toggle="tooltip" data-placement="auto bottom" title="Preview Background"><span class="icon-pageview"></span> Preview</button>
     </td>
   </tr>
   <tr class="w3-hover-pale-blue w3-tooltip w3-col w3-row bgrotator w3-half">
     <td style="padding:0 5px;min-width: 80px;">
       <div class="install-check">
-        <input id="IN{{mainOps.backgroundrotator.id}}BG" type="checkbox" name="{{mainOps.backgroundrotator.label}}" checklist-model="user.mainOps" checklist-value="mainOps.backgroundrotator.id" ng-disabled="user.mainOps.indexOf({{mainOps.backgroundrotator.id}}+100) != -1">
+        <input id="IN{{mainOps.backgroundrotator.id}}BG" type="checkbox" name="{{mainOps.backgroundrotator.label}}" checklist-model="user.mainOps" checklist-value="mainOps.backgroundrotator.id" ng-disabled="user.mainOps.includes({{mainOps.backgroundrotator.id}}+100)">
         <label for="IN{{mainOps.backgroundrotator.id}}BG" data-toggle="tooltip" data-placement="auto bottom" title="{{menu.install.label}} {{mainOps.backgroundrotator.label}}"></label>
       </div>
       <div class="uninstall-check">
-        <input id="UN{{mainOps.backgroundrotator.id}}BG" type="checkbox" name="{{mainOps.backgroundrotator.label}}" checklist-model="user.mainOps" checklist-value="mainOps.backgroundrotator.id+100" ng-disabled="user.mainOps.indexOf({{mainOps.backgroundrotator.id}}) != -1">
+        <input id="UN{{mainOps.backgroundrotator.id}}BG" type="checkbox" name="{{mainOps.backgroundrotator.label}}" checklist-model="user.mainOps" checklist-value="mainOps.backgroundrotator.id+100" ng-disabled="user.mainOps.includes({{mainOps.backgroundrotator.id}})">
         <label for="UN{{mainOps.backgroundrotator.id}}BG" data-toggle="tooltip" data-placement="auto bottom" title="{{menu.uninstall.label}} {{mainOps.backgroundrotator.label}}"></label>
       </div>
     </td>
@@ -49,14 +49,17 @@
       <label id="label-{{mainOps.offscreenbg.id}}" class="w3-validate" for="IN{{mainOps.offscreenbg.id}}BG" value="mainOps.offscreenbg.label" data-toggle="tooltip" data-placement="auto bottom" title="{{mainOps.offscreenbg.toolTip}}">{{mainOps.offscreenbg.label}}</label>
     </td>
   </tr>
-  <tr class="w3-hover-pale-blue bgrotator-button w3-half"  ng-show="user.mainOps.indexOf(6) !== -1">
+  <tr class="w3-hover-pale-blue bgrotator-button w3-half"  ng-show="user.mainOps.includes(6)">
     <td class="w3-col">
-      <a class="w3-btn w3-ripple w3-indigo" href="" onclick="ipc.send('open-joiner-window')" data-toggle="tooltip" data-placement="auto bottom" title="{{mainOps.backgroundrotator.button}}"><span class="icon-images"></span> {{mainOps.backgroundrotator.btntxt}}</a> 
+      <a class="w3-btn w3-ripple w3-indigo" href="" onclick="ipc.send('open-joiner-window')" data-toggle="tooltip" data-placement="auto bottom" title="{{mainOps.backgroundrotator.button}}"><span class="icon-images"></span> {{mainOps.backgroundrotator.btntxt}}</a>
     </td>
   </tr>
-  <tr class="w3-hover-pale-blue bgrotator-button w3-half" ng-show="user.mainOps.indexOf(10) !== -1">
+  <tr class="w3-hover-pale-blue bgrotator-button w3-half" ng-show="user.mainOps.includes(10)">
     <td class="w3-col">
       <a class="w3-btn w3-ripple w3-indigo" href="" onclick="ipc.send('open-offscreen-bg')"><span class="icon-images"></span> {{mainOps.offscreenbg.label}}</a>
     </td>
   </tr>
 </tbody>
+<script>
+$(()=>{$(".single-bg").click(()=>{($("#UN6BG").is(":checked") ? null: $("#UN6BG").click())})})
+</script>

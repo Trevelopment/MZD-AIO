@@ -151,6 +151,7 @@ function List2Ctrl(uiaId, parentDiv, controlId, properties)
         checkMinChangeInterval :                250,
         checkSettleTime :                       1000,
 
+        stepMinChangeInterval :                 0,      /* {integer} number of ms that must occur between step callbacks. This is used for Outgoing Event Filtering */
 
         wrapTextThreshold :                     604,    /* styles CSV-dependent */
 
@@ -176,6 +177,8 @@ function List2Ctrl(uiaId, parentDiv, controlId, properties)
         needDataTimeout :                       3000, /* {integer} number of ms to wait before unlocking the list after needDataCallback is fired */
         requestSize :                           20,   /* has to be more than the poolsize, ideally poolsize + 5 */
 
+        // Position select
+        listPositionSelect:                     false, /* {boolean} indicates if list position select is allowed*/
     };
 
     // Merge with user configuration
@@ -269,6 +272,7 @@ function List2Ctrl(uiaId, parentDiv, controlId, properties)
                     case 'style02a' :
                     case 'style03' :
                     case 'style03a' :
+                    case 'style12' :
                         this.properties.visibleItems = (this.properties.thickItems) ? 4 : 5;
                         break;
                     case 'style05' :
@@ -351,6 +355,8 @@ function List2Ctrl(uiaId, parentDiv, controlId, properties)
     this._inDrag            = false;       // {boolean} indicates whether the list is currently being dragged
     this._inScroll          = false;       // {boolean} indicates whether the list is currently being scrolled
 
+    this._scrollerHeight    = 0;           // {integer} height of the scroller (replaces this.scroller.offsetHeight)
+    this._scrollIndicatorHeight = 0;       // {integer} height of the scroll indicator (replaces this.scrollIndicator.offsetHeight)
     this._scrollerH         = 0;           // {integer} height of the scroller
     this._maskPositionY     = 0;           // {integer} position of the mask
     this._maskPositionX     = 0;           // {integer} position of the mask
@@ -454,6 +460,7 @@ function List2Ctrl(uiaId, parentDiv, controlId, properties)
     this._needDataTimeoutId        = null; // {timeout} timeout after which the list will no longer wait for items
     this._radioSettleTimeoutId     = null; // {timeout} settle timeout for radio group items - this is reset on every user input and checked on every API call
     this._tickSettleTimeoutId      = null; // {timeout} settle timeout for tick group items - this is reset on every user input and checked on every API call
+	this._appIsAtSpeed = false;            // {boolean} Indicates whether app is at speed.
     // Note: checkboxes, onOff and toggle items have their own timeouts for every item
 
     // event filtering
@@ -811,7 +818,14 @@ List2Ctrl.prototype._createPool = function()
         styleStep : new Array(),    // TODO: rename this to style26
         styleLock : new Array(),    // not official name
         style28 : new Array(),
+        style29 : new Array(),
+        style30a : new Array(),
 
+        style35 : new Array(),
+        style36 : new Array(),
+        style37 : new Array(),
+        style37a : new Array(),
+        style38 : new Array()
     };
 
     // the pool size (this.properties.poolsize) should be at least 3 times
@@ -850,6 +864,14 @@ List2Ctrl.prototype._createPool = function()
                     line1 = document.createElement('span');
                     line1.className = 'line1';
                     li.appendChild(line1);
+
+                    label1 = document.createElement('span');
+                    label1.className = 'label1';
+                    li.appendChild(label1);
+
+                    label2 = document.createElement('span');
+                    label2.className = 'label2';
+                    li.appendChild(label2);
 
                     break;
 
@@ -1290,6 +1312,7 @@ List2Ctrl.prototype._createPool = function()
                     li.appendChild(line2);
 
                     break;
+                    
                 case 'style28' :
                     image1 = document.createElement('span');
                     image1.className = 'image1';
@@ -1302,6 +1325,145 @@ List2Ctrl.prototype._createPool = function()
                     var subcontainer = document.createElement('div');
                     subcontainer.className = 'subcontainer';
                     li.appendChild(subcontainer);
+                    
+                    break;
+                    
+                case 'style29' :
+                    line1 = document.createElement('span');
+                    line1.className = 'line1';
+                    li.appendChild(line1);
+                  
+                    label1 = document.createElement('span');
+                    label1.className = 'label1';
+                    li.appendChild(label1);
+                    
+                    label2 = document.createElement('span');
+                    label2.className = 'label2';
+                    li.appendChild(label2);
+                    
+                    image1 = document.createElement('span');
+                    image1.className = 'image1';
+                    li.appendChild(image1);
+                   
+                    break;
+		    
+               case 'style30a' :
+                    image1 = document.createElement('span');
+                    image1.className = 'image1';
+                    li.appendChild(image1);
+                    
+                    line1 = document.createElement('span');
+                    line1.className = 'line1';
+                    li.appendChild(line1);
+                  
+                    label1 = document.createElement('span');
+                    label1.className = 'label1';
+                    li.appendChild(label1);
+                    
+                    label2 = document.createElement('span');
+                    label2.className = 'label2';
+                    li.appendChild(label2);
+                    
+                    label3 = document.createElement('span');
+                    label3.className = 'label3';
+                    li.appendChild(label3);
+                    
+                    break;    
+                    case 'style35' :
+                    image1 = document.createElement('span');
+                    image1.className = 'image1';
+                    li.appendChild(image1);
+                    
+                    line1 = document.createElement('span');
+                    line1.className = 'line1';
+                    li.appendChild(line1);
+                  
+                    label1 = document.createElement('span');
+                    label1.className = 'label1';
+                    li.appendChild(label1);
+                    
+                    label2 = document.createElement('span');
+                    label2.className = 'label2';
+                    li.appendChild(label2);
+                                       
+                    break;
+                    
+                case 'style36' :
+                    
+                    line1 = document.createElement('span');
+                    line1.className = 'line1';
+                    li.appendChild(line1);
+                  
+                    label1 = document.createElement('span');
+                    label1.className = 'label1';
+                    li.appendChild(label1);
+                    
+                    image1 = document.createElement('span');
+                    image1.className = 'image1';
+                    li.appendChild(image1);
+                    
+                    label2 = document.createElement('span');
+                    label2.className = 'label2';
+                    li.appendChild(label2);                                                          
+                    break;
+
+                case 'style37' :
+                    image1 = document.createElement('span');
+                    image1.className = 'image1';
+                    li.appendChild(image1);
+
+                    line1 = document.createElement('span');
+                    line1.className = 'line1';
+                    li.appendChild(line1);
+
+                    image2 = document.createElement('span');
+                    image2.className = 'image2';
+                    li.appendChild(image2);
+
+                    label1 = document.createElement('span');
+                    label1.className = 'label1';
+                    li.appendChild(label1);
+                    break;
+                    
+                case 'style37a' :
+                    image1 = document.createElement('span');
+                    image1.className = 'image1';
+                    li.appendChild(image1);
+
+                    line1 = document.createElement('span');
+                    line1.className = 'line1';
+                    li.appendChild(line1);
+
+                    label1 = document.createElement('span');
+                    label1.className = 'label1';
+                    li.appendChild(label1);
+
+                    label2 = document.createElement('span');
+                    label2.className = 'label2';
+                    li.appendChild(label2);
+                    break;
+
+	    case 'style38' :
+                   
+                    image1 = document.createElement('span');
+                    image1.className = 'image1';
+                    li.appendChild(image1);
+                    
+                    line1 = document.createElement('span');
+                    line1.className = 'line1';
+                    li.appendChild(line1);
+
+                    label1 = document.createElement('span');
+                    label1.className = 'label1';
+                    li.appendChild(label1);
+
+                    label2 = document.createElement('span');
+                    label2.className = 'label2';
+                    li.appendChild(label2);
+                    
+                    image2 = document.createElement('span');
+                    image2.className = 'image2';
+                    li.appendChild(image2);
                     break;
 
                 default :
@@ -1386,6 +1548,7 @@ List2Ctrl.prototype._prepareListItem = function(item)
         text1 : '',         // Textual content of the label
         hasCaret : true,    // Show the caret icon on the right of the item
         disabled : false,   // Whether the list item is disabled
+        separator: 'normal', // normal /thick list seperator
         styleMod : '',      // Style modifier, 'hint', 'bold', or ''/omitted
         disabledStyleMod: "normal", // Disabled style modifier, 'normal' or 'white'
         background : 'normal', // Background modifier, 'normal' or 'grey'
@@ -1490,6 +1653,27 @@ List2Ctrl.prototype._prepareListItem = function(item)
         case 'style28' :
             specificItem = { image1:'', min:0, max:1, increment:0.1, value:1, allowAdjust:true, showTickMarks:false, tickMarkObject:null, showLabels:false, labelObject:null, showPlusMinus:false, pivot:false, minChangeInterval:this.properties.minChangeInterval, settleTime:this.properties.settleTime, rotationIdleDetectTime:this.properties.rotationIdleDetectTime, indented : false };
             break;
+        case 'style29' :
+            specificItem = { label1Id:null, label1SubMap:null, label1:'',label2Id:null, label2SubMap:null, label2:'', image1:'' };
+            break;
+        case 'style30a' :
+            specificItem = {image1:'' ,label1Id:null, label1SubMap:null, label1:'',label2Id:null, label2SubMap:null, label2:'',label3Id:null, label3SubMap:null, label3:'' ,isLabel2Disabled:'false'};
+            break;
+        case 'style35' :
+            specificItem = {image1:'' ,label1Id:null, label1SubMap:null, label1:'',label2Id:null, label2SubMap:null, label2:'' };
+            break;
+        case 'style36' :
+            specificItem = {image1:'' ,label1Id:null, label1SubMap:null, label1:'',label2Id:null, label2SubMap:null, label2:'' };
+            break;  
+         case 'style37' :
+            specificItem = {image1:'' ,text1Id:null, text1SubMap:null, text1:'', label1Id:null, label1SubMap:null, label1:'',image2:''};
+            break;
+         case 'style37a' :
+            specificItem = {image1:'' ,text1Id:null, text1SubMap:null, text1:'', label1Id:null, label1SubMap:null, label1:'',label2Id:null, label2SubMap:null, label2:'',isLabel1Disabled:false};
+            break;
+        case 'style38' :
+            specificItem = {image1:'' ,text1Id:null, text1SubMap:null, text1:'',label1SubMap:null, label1:'',label2Id:null, label2SubMap:null, label2:'' ,image2:''};
+            break;
         default :
             log.error('List2: unknown item style: ' + item.itemStyle);
             break;
@@ -1564,6 +1748,20 @@ List2Ctrl.prototype._localizeItems = function(firstItem, lastItem)
                 {
                     var text1 = this._getLocalizedString(this.dataList.items[i].text1Id, this.dataList.items[i].text1SubMap);
                     this.dataList.items[i].text1 = text1;
+                }
+                //label1 and label2 only supports for style38 for reorderList
+                if(this._reorderItem.itemStyle === "style38")
+                {
+                    if (this.dataList.items[i].laebl1Id)
+                    {
+                    	var label1 = this._getLocalizedString(this.dataList.items[i].laebl1Id, this.dataList.items[i].label1SubMap);
+                    	this.dataList.items[i].label1 = label1;
+                    }
+                    if (this.dataList.items[i].laebl2Id)
+                    {
+                    	var label2 = this._getLocalizedString(this.dataList.items[i].laebl2Id, this.dataList.items[i].label2SubMap);
+                    	this.dataList.items[i].label2 = label2;
+                    }
                 }
                 if (this.dataList.items[i].button1Id)
                 {
@@ -1892,6 +2090,140 @@ List2Ctrl.prototype._localizeItems = function(firstItem, lastItem)
                     this.dataList.items[i].text2 = text2;
                 }
                 break;
+                
+            case 'style29' :
+                if (this.dataList.items[i].text1Id)
+                {
+                    var text1 = this._getLocalizedString(this.dataList.items[i].text1Id, this.dataList.items[i].text1SubMap);
+                    this.dataList.items[i].text1 = text1;
+                }
+                if (this.dataList.items[i].label1Id)
+                {
+                    var label1 = this._getLocalizedString(this.dataList.items[i].label1Id, this.dataList.items[i].label1SubMap);
+                    this.dataList.items[i].label1 = label1;
+                }
+                if (this.dataList.items[i].label2Id)
+                {
+                    var label2 = this._getLocalizedString(this.dataList.items[i].label2Id, this.dataList.items[i].label2SubMap);
+                    this.dataList.items[i].label2 = label2;
+                }
+                break;
+		
+            case 'style30a' :
+                if (this.dataList.items[i].text1Id)
+                {
+                    var text1 = this._getLocalizedString(this.dataList.items[i].text1Id, this.dataList.items[i].text1SubMap);
+                    this.dataList.items[i].text1 = text1;
+                }
+                
+                if (this.dataList.items[i].label1Id)
+                {
+                    var label1 = this._getLocalizedString(this.dataList.items[i].label1Id, {value:this.dataList.items[i].value});
+                    this.dataList.items[i].label1 = label1;
+                }
+                if (this.dataList.items[i].label2Id)
+                {
+                    var label2 = this._getLocalizedString(this.dataList.items[i].label2Id, {value:this.dataList.items[i].value});
+                    this.dataList.items[i].label2 = label2;
+                } 
+                if (this.dataList.items[i].label3Id)
+                {
+                    var label3 = this._getLocalizedString(this.dataList.items[i].label3Id, {value:this.dataList.items[i].value});
+                    this.dataList.items[i].label3 = label3;
+                }                
+                break;
+                
+            case 'style35' :
+                if (this.dataList.items[i].text1Id)
+                {
+                    var text1 = this._getLocalizedString(this.dataList.items[i].text1Id, this.dataList.items[i].text1SubMap);
+                    this.dataList.items[i].text1 = text1;
+                }
+                
+                if (this.dataList.items[i].label1Id)
+                {
+                    var label1 = this._getLocalizedString(this.dataList.items[i].label1Id, {value:this.dataList.items[i].value});
+                    this.dataList.items[i].label1 = label1;
+                }
+               
+                if (this.dataList.items[i].label2Id)
+                {
+                    var label2 = this._getLocalizedString(this.dataList.items[i].label2Id, {value:this.dataList.items[i].value});
+                    this.dataList.items[i].label2 = label2;
+                }
+               
+                break;              
+                
+            case 'style36' :
+                if (this.dataList.items[i].text1Id)
+                {
+                    var text1 = this._getLocalizedString(this.dataList.items[i].text1Id, this.dataList.items[i].text1SubMap);
+                    this.dataList.items[i].text1 = text1;
+                }
+                
+                if (this.dataList.items[i].label1Id)
+                {
+                    var label1 = this._getLocalizedString(this.dataList.items[i].label1Id, {value:this.dataList.items[i].value});
+                    this.dataList.items[i].label1 = label1;
+                }
+                
+                if (this.dataList.items[i].label2Id)
+                {
+                    var label2 = this._getLocalizedString(this.dataList.items[i].label2Id, {value:this.dataList.items[i].value});
+                    this.dataList.items[i].label2 = label2;
+                }
+                break;              
+		
+            case 'style37' :
+                if (this.dataList.items[i].text1Id)
+                {
+                    var text1 = this._getLocalizedString(this.dataList.items[i].text1Id, this.dataList.items[i].text1SubMap);
+                    this.dataList.items[i].text1 = text1;
+                }
+
+                if (this.dataList.items[i].label1Id)
+                {
+                    var label1 = this._getLocalizedString(this.dataList.items[i].label1Id, {value:this.dataList.items[i].value});
+                    this.dataList.items[i].label1 = label1;
+                }
+                break;
+		    case 'style37a' :
+                if (this.dataList.items[i].text1Id)
+                {
+                    var text1 = this._getLocalizedString(this.dataList.items[i].text1Id, this.dataList.items[i].text1SubMap);
+                    this.dataList.items[i].text1 = text1;
+                }
+
+                if (this.dataList.items[i].label1Id)
+                {
+                    var label1 = this._getLocalizedString(this.dataList.items[i].label1Id, {value:this.dataList.items[i].value});
+                    this.dataList.items[i].label1 = label1;
+                }
+                if (this.dataList.items[i].label2Id)
+                {
+                    var label2 = this._getLocalizedString(this.dataList.items[i].label2Id, {value:this.dataList.items[i].value});
+                    this.dataList.items[i].label2 = label2;
+                }
+                break;
+		
+	    case 'style38' :
+                if (this.dataList.items[i].text1Id)
+                {
+                    var text1 = this._getLocalizedString(this.dataList.items[i].text1Id, this.dataList.items[i].text1SubMap);
+                    this.dataList.items[i].text1 = text1;
+                }
+
+                if (this.dataList.items[i].label1Id)
+                {
+                    var label1 = this._getLocalizedString(this.dataList.items[i].label1Id, {value:this.dataList.items[i].value});
+                    this.dataList.items[i].label1 = label1;
+                }
+                if (this.dataList.items[i].label2Id)
+                {
+                    var label2 = this._getLocalizedString(this.dataList.items[i].label2Id, {value:this.dataList.items[i].value});
+                    this.dataList.items[i].label2 = label2;
+                }
+                break;
 
         }
 
@@ -2101,6 +2433,18 @@ List2Ctrl.prototype._getListItem = function(listItem, dataListIndex)
         case 'draggable' :
             // listItem : { text1:String, image1:String, button1:String }
             this._setText(li, '.line1', listItem.text1);
+            if(this._reorderItem.itemStyle === "style38" )
+            {
+            	//For style 38 line1 width should be shorter as compare the other style.
+            	li.querySelector(".line1").classList.add('shortText') 
+            }
+
+            //label1 and label2 only supports for style38 for reorderList
+            if(this._reorderItem.itemStyle === "style38" )
+            {
+                this._setText(li, '.label1', listItem.label1);
+                this._setText(li, '.label2', listItem.label2);
+            }
             this._setImage(li, '.image1', listItem.image1);
             this._setText(li, '.buttonOk', listItem.button1);
             break;
@@ -2306,6 +2650,11 @@ List2Ctrl.prototype._getListItem = function(listItem, dataListIndex)
                 li.classList.add('label1Warning');
             else
                 li.classList.remove('label1Warning');
+
+            if (listItem.indented)
+                li.classList.add('indented');
+            else
+                li.classList.remove('indented');
 
             break;
 
@@ -2799,6 +3148,92 @@ List2Ctrl.prototype._getListItem = function(listItem, dataListIndex)
             }
 
             break;
+            
+        case 'style29':
+            
+            this._setText(li, '.line1', listItem.text1);
+            this._setText(li, '.label1', listItem.label1);
+            this._setText(li, '.label2', listItem.label2);
+            this._setImage(li, '.image1', listItem.image1);
+            break;
+            
+         case 'style30a':
+            
+            this._setImage(li, '.image1', listItem.image1);
+            this._setText(li, '.line1', listItem.text1);
+            this._setText(li, '.label1', listItem.label1);
+            this._setText(li, '.label2', listItem.label2);
+            this._setText(li, '.label3', listItem.label3);
+            
+            if(listItem.isLabel2Disabled)
+            {
+                li.querySelector('.label2').classList.add('disabled');
+            }
+            else
+            {
+               li.querySelector('.label2').classList.remove('disabled');
+            }
+            break;
+            
+        case 'style35':
+            
+            this._setImage(li, '.image1', listItem.image1);
+            this._setText(li, '.line1', listItem.text1);
+            this._setText(li, '.label1', listItem.label1);
+            this._setText(li, '.label2', listItem.label2);
+            break;
+            
+        case 'style36':
+            
+            this._setText(li, '.line1', listItem.text1);
+            this._setText(li, '.label1', listItem.label1);
+            this._setImage(li, '.image1', listItem.image1);
+            this._setText(li, '.label2', listItem.label2);            
+            break; 
+
+         case 'style37':
+            this._setImage(li, '.image1', listItem.image1);
+            this._setText(li, '.line1', listItem.text1);
+            this._setImage(li, '.image2', listItem.image2);
+            this._setText(li, '.label1', listItem.label1);
+            break;
+            
+         case 'style37a':
+            this._setImage(li, '.image1', listItem.image1);
+            this._setText(li, '.line1', listItem.text1);
+            this._setText(li, '.label1', listItem.label1);
+            this._setText(li, '.label2', listItem.label2);
+            
+            if(listItem.isLabel1Disabled)
+            {
+                li.querySelector('.label1').classList.add('disabled');
+            }
+            else
+            {
+               li.querySelector('.label1').classList.remove('disabled');
+            }
+            break;
+
+	case 'style38':
+
+            if(listItem.text1)
+            {
+                this._setImage(li, '.image1', listItem.image1);
+                this._setText(li, '.line1', listItem.text1);
+                this._setText(li, '.label1', listItem.label1);
+                this._setText(li, '.label2', listItem.label2);
+                this._setImage(li, '.image2', listItem.image2);
+            }
+            else
+            {
+                this._setImage(li, '.image1', listItem.image1);
+                this._setText(li, '.line1', "");
+                this._setText(li, '.label1', "");
+                this._setText(li, '.label2', "");
+                this._setImage(li, '.image2', listItem.image2);
+                
+            }
+            break;
     }
 
     /* ITEM MODIFICATORS */
@@ -2812,6 +3247,14 @@ List2Ctrl.prototype._getListItem = function(listItem, dataListIndex)
         li.classList.remove('hasCaret');
     }
 
+    if ('thick'== listItem.separator)
+    {
+        li.classList.add('thickSeparator'); 
+    }
+    else
+    {
+        li.classList.remove('thickSeparator');
+    }
     // add/remove disabled class
     if (listItem.disabled)
     {
@@ -2956,6 +3399,42 @@ List2Ctrl.prototype._emptyScroller = function()
         this._returnListItem(item.domElt);
     }
 
+};
+
+/**
+ * Set the scroller's pixel height, based on the number of items currently in the list.
+ * Set the scroller DOM element's height, and update the _scrollerHeight internal variable.
+ * Use the _scrollerHeight variable to avoid having to extract the scroller height from the
+ * scroller DOM element's 'offsetHeight' attribute (which may not yet be updated by Opera).
+ * TAG: internal
+ * =========================
+ * @return {void}
+ */
+List2Ctrl.prototype._setScrollerHeight = function()
+{
+    var additionalSpace = this._getAdditionalSpace();
+    this._scrollerHeight = this.dataList.itemCount * this.properties.itemHeight + additionalSpace;
+    this.scroller.style.height = this._scrollerHeight + 'px';
+
+    // NOTE: Used to be this.scroller.offsetHeight.  We're assuming there's no border and/or padding on the scroller DOM element.
+    this._scrollerH = this._scrollerHeight;
+};
+
+/**
+ * Set the scroll indicator's pixel height, based on the current scroller height.  Set the
+ * scroll indicator DOM element's height, and update the _scrollIndicatorHeight internal variable.
+ * Use the _scrollIndicatorHeight variable to avoid having to extract the scroll indicator height
+ * from the scroll indicator DOM element's 'offsetHeight' attribute (which may not yet be updated
+ * by Opera).
+ * TAG: internal
+ * =========================
+ * @return {void}
+ */
+List2Ctrl.prototype._setScrollIndicatorHeight = function()
+{
+    var indicatorSize = Math.round(this.mask.offsetHeight * (this.mask.offsetHeight / this._scrollerHeight));
+    this._scrollIndicatorHeight = this.m.max(indicatorSize, this.properties.scrollIndicatorMinSize);
+    this.scrollIndicator.style.height = this._scrollIndicatorHeight + 'px';
 };
 
 /** 5. DYNAMIC LIST ITEMS **/
@@ -3325,41 +3804,48 @@ List2Ctrl.prototype._requestMore = function(index, direction)
     // do not request more if a previous request is pending
     if (!this._inLoading)
     {
-        // indicate loading is in progress
-        this._setLoading(true);
-
-        if (direction == 'up')
+		if(this._appIsAtSpeed)
         {
-            // we add 1 to the requestSize to include the last element in the way up
-            index = this.m.max(index - this.properties.requestSize + 1, 0);
-
+            return; // do not do anything if the list gets this._appIsAtSpeed
         }
-        else if (direction == 'middle')
+        else
         {
-            // we request 25 items on each direction from the topItem
-            index = this.m.max(index, 0);
+			// indicate loading is in progress
+			this._setLoading(true);
 
-        }
+			if (direction == 'up')
+			{
+				// we add 1 to the requestSize to include the last element in the way up
+				index = this.m.max(index - this.properties.requestSize + 1, 0);
 
-        // build additional data
-        var additionalParams = {
-            topItem : this._topItem,
-            visibleItems : this.properties.visibleItems,
-            ranges : this.getEmptyRange(),
-        };
+			}
+			else if (direction == 'middle')
+			{
+				// we request 25 items on each direction from the topItem
+				index = this.m.max(index, 0);
 
-        log.debug('Request items from ' + index + ' to ' + index+this.properties.requestSize + ' ' + direction);
+			}
 
-        // call needDataCallback if it is defined. The first empty item is
-        if (typeof this.properties.needDataCallback == 'function')
-        {
-            this.properties.needDataCallback(index, additionalParams);
-        }
+			// build additional data
+			var additionalParams = {
+				topItem : this._topItem,
+				visibleItems : this.properties.visibleItems,
+				ranges : this.getEmptyRange(),
+			};
 
-        // set timeout for data population
-        clearTimeout(this._needDataTimeoutId);
-        this._needDataTimeoutId = setTimeout(this._needDataTimeoutCallback.bind(this, index), this.properties.needDataTimeout);
-    }
+			log.debug('Request items from ' + index + ' to ' + index+this.properties.requestSize + ' ' + direction);
+
+			// call needDataCallback if it is defined. The first empty item is
+			if (typeof this.properties.needDataCallback == 'function')
+			{
+				this.properties.needDataCallback(index, additionalParams);
+			}
+
+			// set timeout for data population
+			clearTimeout(this._needDataTimeoutId);
+			this._needDataTimeoutId = setTimeout(this._needDataTimeoutCallback.bind(this, index), this.properties.needDataTimeout);
+		}
+	}		
 
 };
 
@@ -3619,6 +4105,9 @@ List2Ctrl.prototype._prepareTitle = function(titleObj)
         case 'style08' :
             title = { text1:'', text1Id:null, text1SubMap:null, image1:'', styleMod:'' };
             break;
+        case 'style12' :
+            title = { text1:'', text1Id:null, text1SubMap:null, styleMod:'',countlabel:'', countlabelId:null, countlabelSubMap:null };
+            break;
         default :
             log.error('Lis2: unknown title style: ' + titleObj.titleStyle);
             break;
@@ -3637,6 +4126,7 @@ List2Ctrl.prototype._prepareTitle = function(titleObj)
         case 'style02a' :
         case 'style03' :
         case 'style08' :
+        case 'style12' :
             if (title.text1Id)
             {
                 title.text1 = this._getLocalizedString(title.text1Id, title.text1SubMap);
@@ -3715,14 +4205,15 @@ List2Ctrl.prototype._scrollIndicatorBuild = function(visible)
     // determine scroll indicator size
     var indicatorSize = Math.round(this.mask.offsetHeight * (this.mask.offsetHeight / this.scroller.offsetHeight));
 
-    // add scroll indicator wrapper
+    // add scroll indicator wrapper, if needed
+    if (this.scrollIndicatorWrapper === null)
+    {
     this.scrollIndicatorWrapper = document.createElement('div');
     this.scrollIndicatorWrapper.className = 'List2CtrlScrollIndicatorWrapper';
     this.divElt.appendChild(this.scrollIndicatorWrapper);
+    }
 
-    // add scroll indicator
-    this.scrollIndicator = document.createElement('div');
-    this.scrollIndicator.className = 'List2CtrlScrollIndicator';
+    // set scroll indicator wrapper visibility
     if(!visible)
     {
         this.scrollIndicatorWrapper.style.visibility = 'hidden';
@@ -3731,13 +4222,30 @@ List2Ctrl.prototype._scrollIndicatorBuild = function(visible)
     {
         this.scrollIndicatorWrapper.style.visibility = 'visible';
     }
+
+    // create scroll indicator, if needed
+    var addScrollIndicator = (this.scrollIndicator === null);
+    if (addScrollIndicator)
+    {
+        this.scrollIndicator = document.createElement('div');
+        this.scrollIndicator.className = 'List2CtrlScrollIndicator';
+    }
+
+    // determine scroll indicator size
+    this._setScrollIndicatorHeight();
+
+    // finish adding scroll indicator
+    if (addScrollIndicator)
+    {
+        // determine scroll indicator position
     this.scrollIndicator.style.height = this.m.max(indicatorSize, this.properties.scrollIndicatorMinSize) + 'px';
     this.scrollIndicator.style.top = '0px';
     this.scrollIndicatorWrapper.appendChild(this.scrollIndicator);
+    }
 
     // set scroll indicator boundaries
     this._indicatorMin = 0;
-    this._indicatorMax = this.mask.offsetHeight - this.scrollIndicator.offsetHeight;
+    this._indicatorMax = this.mask.offsetHeight - this._scrollIndicatorHeight;
 
     if (this.properties.hasLetterIndex)
     {
@@ -3972,6 +4480,11 @@ List2Ctrl.prototype._start = function(e)
         // route event to be handled by start reorder rather than regular start
         this._startReorder(e);
         return true;
+    }
+	else if(!this._inListReorder && this._appIsAtSpeed)
+    {
+        this._startReorder(e);
+        return true; 
     }
 
     this._startItem = this._getTargetItem(e);
@@ -4223,6 +4736,11 @@ List2Ctrl.prototype._end = function(e)
         // route event to be handled by end reorder rather than regular end
         this._endReorder(e);
         return true;
+    }
+	else if(!this._inListReorder && this._appIsAtSpeed)
+    {
+        this._endReorder(e);
+        return true; 
     }
 
 
@@ -4962,6 +5480,12 @@ List2Ctrl.prototype._itemSelect = function(itemIndex, paramsModifier, additional
         this._lockShowFocus(itemIndex, 'clear');
         this._setSecondaryMulticontroller(false, itemIndex);
     }
+    else if (this._isStep(itemIndex))
+    {
+        // apply event filter
+        var filterType = "step";
+        filterEvent = this._applyEventFilter(itemIndex, filterType);
+    }
 
     // is this filtered event?
     if (filterEvent)
@@ -5282,6 +5806,26 @@ List2Ctrl.prototype._applyEventFilter = function(itemIndex, filterType)
                 }
             }
             break;
+
+        case 'step' :
+            var difference = now - this.dataList.items[itemIndex]._data.lastEvent;
+
+            if (this.properties.stepMinChangeInterval !== 0 && difference < this.properties.stepMinChangeInterval)
+            {
+                // too soon -> filter the immediate event and send it later
+                log.debug('Event filtered');
+                filter = true;
+
+                // schedule callback
+                clearTimeout(this.dataList.items[itemIndex]._data.eventTimeout);
+                this.dataList.items[itemIndex]._data.eventTimeout = setTimeout(this._filterTimeoutCallback.bind(this, itemIndex, filterType), this.properties.stepMinChangeInterval - difference);
+            }
+            else
+            {
+                // timing is ok -> pass the event and clear any scheduled selects
+                clearTimeout(this.dataList.items[itemIndex]._data.eventTimeout);
+            }
+            break;
     }
 
     return filter;
@@ -5318,6 +5862,9 @@ List2Ctrl.prototype._filterTimeoutCallback = function(itemIndex, filterType)
                 var itemType = this.dataList.items[itemIndex].image1;
                 this._registerSettleTimeout(itemIndex, itemType);
             }
+            break;
+         case 'step' :
+            this._itemSelect(itemIndex, { value : this.dataList.items[itemIndex].value }, 'preventSimpleSelect');
             break;
     }
 };
@@ -6641,8 +7188,11 @@ List2Ctrl.prototype._handleControllerEventSecondary = function(eventID)
             // move the focus up
             this._showFocus('up');
 
+            // get relative focussed index after moving the focus
+            var rfi = this._getRelativeFocussedIndex();
+
             // we need to go back to the beginning in order to scroll up
-            if (focussedIndex < this._topItem)
+            if (rfi < 1)
             {
                 this._scrollUpOne();
             }
@@ -6652,6 +7202,7 @@ List2Ctrl.prototype._handleControllerEventSecondary = function(eventID)
         case "down" :
             // leave secondary multicontroller mode
             this._setSecondaryMulticontroller(false);
+
             if (!this._isLock(focussedIndex))
             {
                 // trigger focus only on non-lock items
@@ -6666,8 +7217,13 @@ List2Ctrl.prototype._handleControllerEventSecondary = function(eventID)
             // move the focus down
             this._showFocus('down');
 
+            // define threshold that will serve as a scroll trigger
+            var bottomFocusThreshold = this.properties.visibleItems - 2;
+            // get relative focussed index after moving the focus
+            var rfi = this._getRelativeFocussedIndex();
+
             // we need to go to the end in order to scroll down
-            if (focussedIndex >= this._topItem + this.properties.visibleItems)
+            if (rfi >= bottomFocusThreshold)
             {
                 this._scrollDownOne();
             }
@@ -6717,11 +7273,16 @@ List2Ctrl.prototype._handleControllerEventSecondary = function(eventID)
             else if (this._isStep(focussedIndex))
             {
                 // change the value and fire selectCallback informing the app of the change
-                var newValue = this._stepDown(focussedIndex);
-                // do not fire select if value is the same
-                if (null != newValue)
+                var itemDOMElement = this._getDOMItem(focussedIndex);
+                if(!itemDOMElement.classList.contains('minReached'))
                 {
-                    this._itemSelect(focussedIndex, {value:newValue, finalAdjustment:false});
+                    var newValue = this._stepDown(focussedIndex);
+                    
+                    // do not fire select if value is the same
+                    if (null != newValue)
+                    {
+                        this._itemSelect(focussedIndex, {value:newValue, finalAdjustment:false});
+                    }
                 }
             }
             else if (this._isLock(focussedIndex))
@@ -6777,11 +7338,16 @@ List2Ctrl.prototype._handleControllerEventSecondary = function(eventID)
             else if (this._isStep(focussedIndex))
             {
                 // change the value and fire selectCallback informing the app of the change
-                var newValue = this._stepUp(focussedIndex);
-                // do not fire select if value is the same
-                if (null != newValue)
+                var itemDOMElement = this._getDOMItem(focussedIndex);
+                if(!itemDOMElement.classList.contains('maxReached'))
                 {
-                    this._itemSelect(focussedIndex, {value:newValue, finalAdjustment:false});
+                    var newValue = this._stepUp(focussedIndex);
+                    
+                    // do not fire select if value is the same
+                    if (null != newValue)
+                    {
+                        this._itemSelect(focussedIndex, {value:newValue, finalAdjustment:false});
+                    }
                 }
             }
             else if (this._isLock(focussedIndex))
@@ -10261,12 +10827,18 @@ List2Ctrl.prototype._stepAdjust = function(e)
     if (relativeX >= pLayout.x1 && relativeX <= pLayout.x2)
     {
         // plus pressed
-        newValue = this._stepUp(itemIndex);
+        if(!itemDOMElement.classList.contains('maxReached'))
+        {
+            newValue = this._stepUp(itemIndex);
+        }
     }
     else if (relativeX >= mLayout.x1 && relativeX <= mLayout.x2)
     {
         // minus pressed
-        newValue = this._stepDown(itemIndex);
+        if(!itemDOMElement.classList.contains('minReached'))
+        {
+            newValue = this._stepDown(itemIndex);
+        }
     }
     else if (relativeX < mLayout.x1)
     {
@@ -10396,6 +10968,11 @@ List2Ctrl.prototype._enterListReorder = function(fromInit)
     var draggableItem = {};
         draggableItem.itemStyle = 'draggable';
         draggableItem.text1 = this._reorderItem.text1;
+        if(this._reorderItem.itemStyle === "style38")
+        {
+            draggableItem.label1 = (this._reorderItem.hasOwnProperty('label1')) ? this._reorderItem.label1 : '';
+            draggableItem.label2 = (this._reorderItem.hasOwnProperty('label2')) ? this._reorderItem.label2 : '';
+        }
         draggableItem.image1 =  (this._reorderItem.hasOwnProperty('image1')) ? this._reorderItem.image1 : '';
         draggableItem.button1 = this._getLocalizedString('common.Ok');
         draggableItem.hasCaret = false;
@@ -10419,6 +10996,7 @@ List2Ctrl.prototype._releaseListReorder = function(preventSelect)
 {
     // exit list reordering mode
     this._inListReorder = false;
+	this._appIsAtSpeed = false;
 
     // get draggable item index
     var draggableItems = this.getItemsByType('draggable');
@@ -10640,11 +11218,16 @@ List2Ctrl.prototype._endReorder = function(e)
         // drag the scroller if in bounds
         this._reorderTouchElt.style.top = newPos + 'px';
 
-        // convert the ghost item back to a draggable ite m
+        // convert the ghost item back to a draggable item
         var draggableItem = {};
             draggableItem.itemStyle = 'draggable';
             draggableItem.text1 = this._reorderItem.text1;
             draggableItem.image1 =  (this._reorderItem.hasOwnProperty('image1')) ? this._reorderItem.image1 : '';
+            if(this._reorderItem.itemStyle === "style38")
+            {
+                draggableItem.label1 = (this._reorderItem.hasOwnProperty('label1')) ? this._reorderItem.label1 : '';
+                draggableItem.label2 = (this._reorderItem.hasOwnProperty('label2')) ? this._reorderItem.label2 : '';
+            }
             draggableItem.button1 = this._getLocalizedString('common.Ok');
             draggableItem.hasCaret = false;
         this.dataList.items[this._reorderCurrentIndex] = draggableItem;
@@ -11057,7 +11640,7 @@ List2Ctrl.prototype.dispatchEvent = function(evt)
 /**
  * =========================
  * PUBLIC API
- * 1. Data List API (setDataList, hasDataList, updateItems)
+ * 1. Data List API (setDataList, hasDataList, updateItems, setDataListAndUpdateItems)
  * 2. Letter Index API (setLetterIndexData)
  * 3. Voice API (selectLine, pageDown, pageUp)
  * 4. Slider / Toggle API (setSliderValue, setToggleValue, setCheckBox, setRadio)
@@ -11168,10 +11751,7 @@ List2Ctrl.prototype.setDataList = function(dataList)
         // force exit secondary multicontroller
         this._inSecondaryMulticontroller = false;
 
-        var additionalSpace = this._getAdditionalSpace();
-
-        this.scroller.style.height = this.dataList.itemCount * this.properties.itemHeight + additionalSpace + 'px';
-        this._scrollerH = this.scroller.offsetHeight;
+        this._setScrollerHeight();
         this._emptyScroller();
         this._scrollIndicatorReset();
         if(0 === this.dataList.itemCount)
@@ -11451,6 +12031,140 @@ List2Ctrl.prototype.updateItems = function(firstItem, lastItem)
 
 };
 
+/**
+ * SW00174004
+ * Combines both the data binding & scroller/scroll indicator initialization of setDataList()
+ * with the effects of updateItems() on the displayed list items.  Why is this API needed?
+ * 1)  updateItems() does not properly handle lists whose length is different than the list
+ *     used in a prior setDataList() call.  Therefore, applications wishing to repeatedly
+ *     update lists of varying lengths (e.g. fuel stations in a certain radius) must use both
+ *     setDataList() (to set the length of the list properly) and updateItems() (to actually
+ *     apply the updated data to the control).
+ * 2)  setDataList() destroys & re-creates/re-sizes the scroll indicator; a side effect of this
+ *     processing is to position the scroll indicator at the top of the list.  When the sequence
+ *     outlined in 1) above occurs, an undesirable visual "flicker" appears as updateItems()
+ *     repositions the scroll indicator in its original position.  This API streamlines the
+ *     processing to avoid the unnecessary scroll indicator positioning, eliminating the flicker.
+ * 3)  Rather than perform surgery on setDataList() and updateItems(), affecting every list in
+ *     the GUI and requiring a large regression effort, a new API (used only in required
+ *     circumstances) is far less risky.
+ * =========================
+ * @param {object} - dataList object (as required by setDataList())
+ * @return {void}
+ */
+
+List2Ctrl.prototype.setDataListAndUpdateItems = function(dataList)
+{
+    log.info("List2Ctrl.setDataListAndUpdateItems(dataList): ", dataList);
+    // validate dataList
+    if (null === dataList || undefined === dataList || typeof dataList !== 'object')
+    {
+        log.warn(this.uiaId + ': dataList cannot be null, undefined or not an object. "' + dataList + '" passed to setDataListAndUpdateItems() API.');
+        return;
+    }
+
+    // ensure correct config
+    if (!dataList.hasOwnProperty('itemCountKnown') &&
+        !dataList.hasOwnProperty('itemCount') &&
+        !dataList.hasOwnProperty('items'))
+    {
+        dataList.itemCountKnown = true;
+        dataList.itemCount = 0;
+        dataList.items = [];
+        dataList.vuiSupport = true;
+    }
+
+    // protect data list items by cloning the items array
+    if (this.properties.protectDataList &&
+        dataList.hasOwnProperty('items') &&
+        dataList.items instanceof Array)
+    {
+        // rebuild dataList object from scratch
+        var tmpDataList = {};
+        tmpDataList.itemCountKnown = dataList.hasOwnProperty('itemCountKnown') ? dataList.itemCountKnown : true;
+        tmpDataList.itemCount = dataList.hasOwnProperty('itemCount') ? dataList.itemCount : 0;
+        tmpDataList.items = dataList.hasOwnProperty('items') ? dataList.items.slice() : [];
+        tmpDataList.vuiSupport = dataList.hasOwnProperty('vuiSupport') ? dataList.vuiSupport : true;
+        dataList = tmpDataList;
+    }
+
+    // show loading if itemCountKnown == false
+    if (!dataList.itemCountKnown)
+    {
+        this._setLoading(true);
+    }
+
+    // truncate dataList if itemCount is less than the items length
+    if (dataList.itemCountKnown && dataList.itemCount < dataList.items.length)
+    {
+        dataList.items = dataList.items.slice(0, dataList.itemCount);
+        console.assert(dataList.itemCount == dataList.items.length, 'dataList.itemCount is not equal to dataList.items.length');
+    }
+
+    // add additional empty items if the number is not enough to reach the itemCount
+    if (dataList && dataList.itemCountKnown && dataList.itemCount > dataList.items.length)
+    {
+        for (var i=dataList.items.length; i<dataList.itemCount; i++)
+        {
+            dataList.items[i] = { itemStyle : 'empty' };
+        }
+    }
+
+    // save dataList into the local dataList property
+    this.dataList = dataList;
+
+    // scroll to the top if possible
+    if (this.hasDataList())
+    {
+        if (this.dataList.items.length > this.properties.visibleItems)
+        {
+            // Set the top list item to zero, but don't actually perform the scroll.
+            // We do it this way to make the math come out right later, without a
+            // visible "flicker" in the scroll indicator position (SW00174004)
+            this._setTopListItem(0);
+        }
+        else
+        {
+            this.topItem = 0;
+        }
+    }
+
+    // dispatch dataList change event
+    this._listEvent(this._EVENTS.DATALIST_CHANGE);
+
+    // reset _hasFill property
+    this._hasFill = false;
+
+    // prepare scroller to accomodate all list items
+    if (dataList.itemCountKnown && dataList.itemCount >= 0)
+    {
+        // force exit secondary multicontroller
+        this._inSecondaryMulticontroller = false;
+
+        this._setScrollerHeight();
+        this._emptyScroller();
+        if (this._prevItemIdx > dataList.itemCount)
+        {
+            this._scrollIndicatorReset();
+        }
+        if(0 === dataList.itemCount)
+        {
+            this._scrollIndicatorBuild(false);
+        }
+        else
+        {
+            this._scrollIndicatorBuild(true);
+        }
+
+        // set line numbers
+        this.setLineNumbers();
+
+        // Immediately update all of the items
+        this.updateItems(0, dataList.itemCount - 1);
+    }
+
+    log.info("end List2Ctrl.setDataListAndUpdateItems()");
+};
 
 /** 2. LETTER INDEX API **/
 
@@ -11480,6 +12194,7 @@ List2Ctrl.prototype.setLetterIndexData = function(data)
     }
 
     // reset any previous letter index data
+    this._letterIndexDataSorted = [];
     this.letterIndexData = [];
     this.letterIndex.innerText = '';
 
@@ -11612,6 +12327,7 @@ List2Ctrl.prototype.setLineNumbers = function()
                 case 'style02a' :
                 case 'style03' :
                 case 'style03a' :
+                case 'style12' :
                     maxItemCount = this.properties.thickItems ? 4 : 5;
                     style = this.properties.thickItems ? 'Style01' : 'Style03';
                     break;
@@ -12429,6 +13145,29 @@ List2Ctrl.prototype.setReorder = function(state, preventSelect)
 };
 
 /**
+ * Enter or release reorder mode
+ * TAG: public
+ * =========================
+ * @param {boolean} - enter or release list reorder
+ * @return {void}
+ */
+List2Ctrl.prototype.setReorderAtSpeed = function(AtSpeed)
+{
+    if(AtSpeed)
+    {
+       this._inListReorder = false; 
+       this._appIsAtSpeed = AtSpeed ;
+	   this.properties.listReorder = false;
+    }
+    else
+    {
+        this._inListReorder = true;
+        this._appIsAtSpeed = AtSpeed ;
+		this.properties.listReorder = true;
+    }
+};
+
+/**
  * Set fixed title for the list
  * TAG: public
  * =========================
@@ -12469,10 +13208,12 @@ List2Ctrl.prototype.setTitle = function(titleStructure)
             case 'style02' :
             case 'style02a' :
             case 'style03' :
+            case 'style12' :
                 // thin
                 if ('style02' != this._currentTitle.titleStyle &&
                     'style02a' != this._currentTitle.titleStyle &&
-                    'style03' != this._currentTitle.titleStyle)
+                    'style03' != this._currentTitle.titleStyle && 
+                    'style12' != this._currentTitle.titleStyle)
                 {
                     log.warn('Lis2: changing title style with a different height is not possible');
                     return;
@@ -12694,6 +13435,20 @@ List2Ctrl.prototype.setTitle = function(titleStructure)
 
             break;
 
+         case 'style12' :
+            line1 = document.createElement('span');
+            line1.className = 'line1';
+            line1.appendChild(document.createTextNode(titleStructure.text1));
+            this.title.appendChild(line1);
+
+            countlabel = document.createElement('span');
+            countlabel.className = 'count';
+            countlabel.appendChild(document.createTextNode(titleStructure.countlabel));
+            this.title.appendChild(countlabel);
+
+            this.divElt.classList.add('listTitleNormal');
+
+            break;
         default :
             log.error('Lis2: unknown title style: ' + titleStructure.titleStyle);
     }
@@ -12703,6 +13458,20 @@ List2Ctrl.prototype.setTitle = function(titleStructure)
 
 };
 
+
+/**
+ * Sets the count label text for title style 12
+ * @param labelText String Text to be displayed on label
+ * 
+ */
+List2Ctrl.prototype.setCountLabel = function(labelText)
+{
+    if(this._currentTitle && this._currentTitle.titleStyle == "style12")
+    {
+        var countLabel = document.getElementsByClassName("count")[0];
+        countLabel.innerHTML = labelText;
+    }
+};
 
 /** 8. CONTEXT CAPTURE AND RESTORE **/
 
@@ -12945,6 +13714,7 @@ List2Ctrl.prototype._getAdditionalSpace = function()
             {
                 case 'style02' :
                 case 'style03' :
+                case 'style12' :
                     additionalSpace = this.properties.thickItems ? 19 : 27;
                     break;
                 case 'style05' :
@@ -13597,6 +14367,24 @@ List2Ctrl.prototype.finishPartialActivity = function()
             this._triggerFocus();
         }
     }
+};
+
+List2Ctrl.prototype.getStationAndRelay = function(stationName,RelayName)
+{
+    var stationRelay = "";
+    if(stationName && RelayName)
+    {
+        stationRelay = stationName+" ("+RelayName+")";
+    }
+    else if(stationName && ((RelayName=="")||(RelayName==null)))
+    {
+        stationRelay = stationName;
+    }
+    else{
+        log.debug("Station name and relay not defined");
+    }
+    
+    return stationRelay;
 };
 
 

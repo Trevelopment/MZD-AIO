@@ -34,405 +34,424 @@
 
 CustomApplicationsHandler.register("app.vdd", new CustomApplication({
 
+  /**
+   * (require)
+   *
+   * An object array that defines resources to be loaded such as javascript's, css's, images, etc
+   *
+   * All resources are relative to the applications root path
+   */
+
+  require: {
+
     /**
-     * (require)
-     *
-     * An object array that defines resources to be loaded such as javascript's, css's, images, etc
-     *
-     * All resources are relative to the applications root path
+     * (js) defines javascript includes
      */
 
-    require: {
+    js: [],
 
-        /**
-         * (js) defines javascript includes
-         */
+    /**
+     * (css) defines css includes
+     */
 
-        js: [],
+    css: ['app.css'],
 
-        /**
-         * (css) defines css includes
-         */
+    /**
+     * (images) defines images that are being preloaded
+     *
+     * Images are assigned to an id
+     */
 
-        css: ['app.css'],
+    images: {},
 
-        /**
-         * (images) defines images that are being preloaded
-         *
-         * Images are assigned to an id
-         */
+  },
 
-        images: {},
+  /**
+   * (settings)
+   *
+   * An object that defines application settings
+   */
 
+  settings: {
+
+    /**
+     * (title) The title of the application in the Application menu
+     */
+
+    title: 'Vehicle Data Diagnostic',
+
+    /**
+     * (statusbar) Defines if the statusbar should be shown
+     */
+
+    statusbar: true,
+
+    /**
+     * (statusbarIcon) defines the status bar icon
+     *
+     * Set to true to display the default icon app.png or set a string to display
+     * a fully custom icon.
+     *
+     * Icons need to be 37x37
+     */
+
+    statusbarIcon: true,
+
+    /**
+     * (statusbarTitle) overrides the statusbar title, otherwise title is used
+     */
+
+    statusbarTitle: false,
+
+
+    /**
+     * (hasLeftButton) indicates if the UI left button / return button should be shown
+     */
+
+    hasLeftButton: false,
+
+    /**
+     * (hasMenuCaret) indicates if the menu item should be displayed with an caret
+     */
+
+    hasMenuCaret: false,
+
+    /**
+     * (hasRightArc) indicates if the standard right car should be displayed
+     */
+
+    hasRightArc: false,
+
+  },
+
+  /**
+   * (DataGroups)
+   */
+
+  dataGroups: [{
+      name: 'Main',
+      items: [
+        { name: 'General', mapping: VehicleData.general },
+        { name: 'Vehicle Data', mapping: VehicleData.vehicle },
+        { name: 'Vehicle Fuel', mapping: VehicleData.fuel },
+        { name: 'Vehicle Temperatures', mapping: VehicleData.temperature },
+        { name: 'GPS', mapping: VehicleData.gps },
+      ]
     },
+    { prefix: 'VDT', title: 'Vehicle Driving Data' },
+    { prefix: 'GPS', title: 'Global Positioning System' },
+    { prefix: 'PID', title: 'Vehicle Data PID' },
+    { prefix: 'VDTC', title: 'Vehicle Data Current' },
+    { prefix: 'VDM', title: 'ECO and Energy Management' },
+    { prefix: 'VDMH', title: 'ECO and Energy History' },
+    { prefix: 'VDS', title: 'Vehicle Settings' },
+    { prefix: 'IDM', title: 'Ignition Diagnostic Monitor' },
+    { prefix: 'IDMH', title: 'Ignition Diagnostic History' },
+    { prefix: 'VDTH', title: 'Vehicle Data Transfer History' }
+  ],
 
-    /**
-     * (settings)
-     *
-     * An object that defines application settings
-     */
 
-    settings: {
+  /***
+   *** User Interface Life Cycles
+   ***/
+
+  /**
+   * (created)
+   *
+   * Executed when the application gets initialized
+   *
+   * Add any content that will be static here
+   */
+
+  created: function() {
+
+    this.createInterface();
+
+  },
+
+  /**
+   * (focused)
+   */
+
+  focused: function() {
+
+    //this.update();
+  },
+
+  /***
+   *** Events
+   ***/
+
+  /**
+   * (event) onControllerEvent
+   *
+   * Called when a new (multi)controller event is available
+   */
+
+  onControllerEvent: function(eventId) {
+
+    var itemHeight = this.canvas.find(".panel div.item").outerHeight(true) * 2;
+
+    switch (eventId) {
+
+      /**
+       * Scroll Down
+       */
+
+      case "cw":
+
+        this.scrollElement(this.canvas.find(".panel"), itemHeight);
+
+        break;
 
         /**
-         * (title) The title of the application in the Application menu
+         * Scroll Up
          */
 
-        title: 'Vehicle Data Diagnostic',
+      case "ccw":
 
-        /**
-         * (statusbar) Defines if the statusbar should be shown
-         */
+        this.scrollElement(this.canvas.find(".panel"), -1 * itemHeight);
 
-        statusbar: true,
+        break;
 
-        /**
-         * (statusbarIcon) defines the status bar icon
-         *
-         * Set to true to display the default icon app.png or set a string to display
-         * a fully custom icon.
-         *
-         * Icons need to be 37x37
-         */
+      case "up":
 
-        statusbarIcon: true,
+        this.scrollElement(this.canvas.find(".panel"), -1 * $('.panel').height());
 
-        /**
-         * (statusbarTitle) overrides the statusbar title, otherwise title is used
-         */
+        break;
+      case "down":
 
-        statusbarTitle: false,
+        this.scrollElement(this.canvas.find(".panel"), $('.panel').height());
 
+        break;
 
-        /**
-         * (hasLeftButton) indicates if the UI left button / return button should be shown
-         */
+    }
 
-        hasLeftButton: false,
+  },
 
-        /**
-         * (hasMenuCaret) indicates if the menu item should be displayed with an caret
-         */
+  /**
+   * (event) onContextEvent
+   *
+   * Called when the context of an element was changed
+   */
 
-        hasMenuCaret: false,
+  onContextEvent: function(eventId, context, element) {
 
-        /**
-         * (hasRightArc) indicates if the standard right car should be displayed
-         */
+    // remember the scrolling position
+    var active = this.canvas.find(".panel.active");
+    if (active.length) {
+      this.panelScrollPositions[active.attr("index")] = active.scrollTop();
+    }
 
-        hasRightArc: false,
+    // continue
+    this.canvas.find(".panel").removeClass("active").hide();
 
-    },
+    var active = this.canvas.find(".panel[name=" + element.attr("name") + "]").addClass("active").show();
 
-    /**
-     * (DataGroups)
-     */
+    // create items
+    this.createPanel(element.attr("index"));
 
-    dataGroups: [
-        {name: 'Main', items: [
-            {name: 'General', mapping: VehicleData.general},
-            {name: 'Vehicle Data', mapping: VehicleData.vehicle},
-            {name: 'Vehicle Fuel', mapping: VehicleData.fuel},
-            {name: 'Vehicle Temperatures', mapping: VehicleData.temperature},
-            {name: 'GPS', mapping: VehicleData.gps},
-        ]},
-        {prefix: 'VDT', title: 'Vehicle Driving Data' },
-        {prefix: 'GPS', title: 'Global Positioning System'},
-        {prefix: 'PID', title: 'Vehicle Data PID'},
-        {prefix: 'VDTC', title: 'Vehicle Data Current'},
-        {prefix: 'VDM', title: 'ECO and Energy Management'},
-        {prefix: 'VDMH', title: 'ECO and Energy History'},
-        {prefix: 'VDTS', title: 'Vehicle Settings'},
-        {prefix: 'IDM', title: 'Ignition Diagnostic Monitor'},
-        {prefix: 'IDMH', title: 'Ignition Diagnostic History'},
-        {prefix: 'VDTH', title: 'Vehicle Data Transfer History'}
-    ],
+    // set position
+    if (this.panelScrollPositions[active.attr("index")]) {
+      active.scrollTop(this.panelScrollPositions[active.attr("index")]);
+    }
+  },
 
 
-    /***
-     *** User Interface Life Cycles
-     ***/
+  /***
+   *** Applicaton specific methods
+   ***/
 
-    /**
-     * (created)
-     *
-     * Executed when the application gets initialized
-     *
-     * Add any content that will be static here
-     */
+  /**
+   * (createInterface)
+   *
+   * This method creates the interface
+   */
 
-    created: function() {
+  createInterface: function() {
+    // create tabbed menu
+    this.menu = $("<div/>").addClass("tabs").appendTo(this.canvas);
 
-        this.createInterface();
+    // create tabs
+    this.panelData = [];
+    this.panelScrollPositions = [];
+    $.each(this.dataGroups, function(index, group) {
 
-    },
+      // set enabled
+      var enabled = true;
 
-    /**
-     * (focused)
-     */
+      // get data table
+      if (!group.items) {
 
-    focused: function() {
+        var table = CustomApplicationDataHandler.getTableByPrefix(group.prefix);
 
-        //this.update();
-    },
+        enabled = table && table.enabled || false;
+      }
 
-    /***
-     *** Events
-     ***/
+      // set group id
+      group.id = group.name || group.prefix
 
-    /**
-     * (event) onControllerEvent
-     *
-     * Called when a new (multi)controller event is available
-     */
+      // add to menu if enabled
+      if (enabled) {
+        // add to menu
+        this.menu.append(this.addContext($("<span/>").attr({ name: group.id, index: this.panelData.length }).addClass("tab").append(group.name || group.prefix)));
 
-    onControllerEvent: function(eventId) {
+        // add divider
+        this.menu.append($("<span/>").addClass("divider"));
 
-        var itemHeight = this.canvas.find(".panel div.item").outerHeight(true) * 2;
+        // add to panel
+        this.panelData.push(group);
 
-        switch(eventId) {
+        this.panelScrollPositions.push(0);
 
-            /**
-             * Scroll Down
-             */
+      }
 
-            case "cw":
+    }.bind(this));
 
-                this.scrollElement(this.canvas.find(".panel"), itemHeight);
+    // calculate size
+    var tabWidth = Math.round((795 - this.panelData.length) / this.panelData.length);
 
-                break;
+    this.menu.find("span.tab").css("width", tabWidth);
 
-            /**
-             * Scroll Up
-             */
+    // remove last divider
+    this.menu.find("span.divider:last-of-type").remove();
 
-            case "ccw":
+  },
 
-                this.scrollElement(this.canvas.find(".panel"), -1 * itemHeight);
 
-                break;
+  /**
+   * createPanel
+   */
 
-        }
+  createPanel: function(index) {
 
-    },
 
-    /**
-     * (event) onContextEvent
-     *
-     * Called when the context of an element was changed
-     */
+    // create panels
+    if (!this.panelData[index]) return;
 
-    onContextEvent: function(eventId, context, element) {
+    // flush
+    this.removeSubscriptions();
 
-        // remember the scrolling position
-        var active = this.canvas.find(".panel.active");
-        if(active.length) {
-            this.panelScrollPositions[active.attr("index")] = active.scrollTop();
-        }
+    this.canvas.find(".panel").remove();
 
-        // continue
-        this.canvas.find(".panel").removeClass("active").hide();
+    // create panel
+    var panelDom = $("<div/>").addClass("panel").appendTo(this.canvas),
+      panel = this.panelData[index];
 
-        var active = this.canvas.find(".panel[name=" + element.attr("name") + "]").addClass("active").show();
+    // create items in panel
+    switch (true) {
+
+      case this.is.array(panel.items):
+
+        // create sectionalized view
+        panel.items.forEach(function(section) {
+
+          // add header
+          panelDom.append($("<div/>").addClass("section").append(section.name));
+
+          // add items
+          this.createItems(panelDom, section);
+
+        }.bind(this));
+
+        break;
+
+      default:
+        // create description
+        panelDom.append($("<div/>").addClass("section").append(panel.title));
 
         // create items
-        this.createPanel(element.attr("index"));
 
-        // set position
-        if(this.panelScrollPositions[active.attr("index")]) {
-            active.scrollTop(this.panelScrollPositions[active.attr("index")]);
+        this.createItems(panelDom, panel);
+        break;
+
+
+    }
+
+  },
+
+  /**
+   * (createItems)
+   *
+   * This method adds items to the panel
+   */
+
+  createItems: function(panelDom, group) {
+
+    // initialize
+    var values = [];
+
+    // prepare mapping to value table
+    if (group.mapping) {
+
+      // get actual values
+      $.each(group.mapping, function(id, params) {
+
+        if (params.id) {
+          var tmp = CustomApplicationDataHandler.get(params.id);
+          if (tmp) {
+            params.value = tmp.value;
+            values.push($.extend(params, tmp));
+          }
         }
-    },
+      });
 
+    } else {
 
-    /***
-     *** Applicaton specific methods
-     ***/
-
-    /**
-     * (createInterface)
-     *
-     * This method creates the interface
-     */
-
-    createInterface: function() {
-        // create tabbed menu
-        this.menu = $("<div/>").addClass("tabs").appendTo(this.canvas);
-
-        // create tabs
-        this.panelData = [];
-        this.panelScrollPositions = [];
-        $.each(this.dataGroups, function(index, group) {
-
-            // set enabled
-            var enabled = true;
-
-            // get data table
-            if(!group.items) {
-
-                var table = CustomApplicationDataHandler.getTableByPrefix(group.prefix);
-
-                enabled = table && table.enabled || false;
-            }
-
-            // set group id
-            group.id = group.name || group.prefix
-
-            // add to menu if enabled
-            if(enabled) {
-                // add to menu
-                this.menu.append(this.addContext($("<span/>").attr({name: group.id, index: this.panelData.length}).addClass("tab").append(group.name || group.prefix)));
-
-                // add divider
-                this.menu.append($("<span/>").addClass("divider"));
-
-                // add to panel
-                this.panelData.push(group);
-
-                this.panelScrollPositions.push(0);
-
-            }
-
-        }.bind(this));
-
-        // calculate size
-        var tabWidth = Math.round((800 - this.panelData.length) / this.panelData.length);
-
-        this.menu.find("span.tab").css("width", tabWidth);
-
-        // remove last divider
-        this.menu.find("span.divider:last-of-type").remove();
-
-    },
-
-
-    /**
-     * createPanel
-     */
-
-    createPanel: function(index) {
-
-
-        // create panels
-        if(!this.panelData[index]) return;
-
-        // flush
-        this.removeSubscriptions();
-
-        this.canvas.find(".panel").remove();
-
-        // create panel
-        var panelDom = $("<div/>").addClass("panel").appendTo(this.canvas),
-            panel = this.panelData[index];
-
-        // create items in panel
-        switch(true) {
-
-            case this.is.array(panel.items):
-
-                // create sectionalized view
-                panel.items.forEach(function(section) {
-
-                    // add header
-                    panelDom.append($("<div/>").addClass("section").append(section.name));
-
-                    // add items
-                    this.createItems(panelDom, section);
-
-                }.bind(this));
-
-                break;
-
-            default:
-                // create description
-                panelDom.append($("<div/>").addClass("section").append(panel.title));
-
-                // create items
-
-                this.createItems(panelDom, panel);
-                break;
-
-
+      // build data array
+      values = $.map(CustomApplicationDataHandler.data, function(value) {
+        if (value.prefix == group.prefix) {
+          return value;
         }
+      });
+    }
 
-    },
+    // sort by name
+    values.sort(function(a, b) {
+      return a.name > b.name ? 1 : -1;
+    });
 
-    /**
-     * (createItems)
-     *
-     * This method adds items to the panel
-     */
+    // get data handler
+    values.forEach(function(value) {
 
-    createItems: function(panelDom, group) {
+      // check prefix
+      var item = $("<div/>").addClass("item").appendTo(panelDom);
 
-        // initialize
-        var values = [];
+      var typeLabel = value.type;
+      switch (typeLabel) {
+        case "string":
+          typeLabel = "str";
+          break;
+        case "double":
+          typeLabel = "dbl";
+          break;
+        default:
+          typeLabel = "int";
+          break;
+      }
 
-        // prepare mapping to value table
-        if(group.mapping) {
+      // add fields
+      $("<span/>").append(value.prefix ? value.prefix : "DATA").addClass(value.prefix).appendTo(item);
+      $("<span/>").append(typeLabel).addClass(value.type).appendTo(item);
+      $("<span/>").append(value.friendlyName ? value.friendlyName : value.name).appendTo(item);
+      $("<span/>").attr("data", value.id).append(value.value).appendTo(item);
 
-            // get actual values
-            $.each(group.mapping, function(id, params) {
+      // create subscription
+      this.subscribe(value.id, this.valueCallback.bind(this));
 
-                if(params.id) {
-                    var tmp = CustomApplicationDataHandler.get(params.id);
-                    if(tmp) {
-                        params.value = tmp.value;
-                        values.push($.extend(params, tmp));
-                    }
-                }
-            });
+    }.bind(this));
 
-        } else {
+  },
 
-            // build data array
-            values = $.map(CustomApplicationDataHandler.data, function(value) {
-                if(value.prefix == group.prefix) {
-                    return value;
-                }
-            });
-        }
+  /**
+   * (valueCallback)
+   */
 
-        // sort by name
-        values.sort(function(a, b) {
-            return a.name > b.name ? 1 : -1;
-        });
+  valueCallback: function(value, payload) {
 
-        // get data handler
-        values.forEach(function(value) {
+    this.canvas.find("span[data=" + payload.id + "]").html(value);
 
-            // check prefix
-            var item = $("<div/>").addClass("item").appendTo(panelDom);
-
-            var typeLabel = value.type;
-            switch(typeLabel) {
-                case "string": typeLabel= "str"; break;
-                case "double": typeLabel = "dbl"; break;
-                default: typeLabel = "int"; break;
-            }
-
-            // add fields
-            $("<span/>").append(value.prefix ? value.prefix : "DATA").addClass(value.prefix).appendTo(item);
-            $("<span/>").append(typeLabel).addClass(value.type).appendTo(item);
-            $("<span/>").append(value.friendlyName ? value.friendlyName : value.name).appendTo(item);
-            $("<span/>").attr("data", value.id).append(value.value).appendTo(item);
-
-            // create subscription
-            this.subscribe(value.id, this.valueCallback.bind(this));
-
-        }.bind(this));
-
-    },
-
-    /**
-     * (valueCallback)
-     */
-
-    valueCallback: function(value, payload) {
-
-        this.canvas.find("span[data=" + payload.id + "]").html(value);
-
-    },
+  },
 
 
 }));

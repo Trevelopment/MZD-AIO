@@ -4,6 +4,7 @@ var isMPH = false;
 var language = 'DE';
 var fuelEffunit_kml = false;
 var noNavSD = false;
+var hideSbSpeedoSBN = false;
 var black_background_opacity = 0.0;
 var original_background_image = false;
 var startAnalog = false;
@@ -55,8 +56,10 @@ function SbSpeedo() {
   } else {
     $('.speedUnit').text('km/h');
   }
-  $('.StatusBarCtrlClock').click(function() {
+  $('.StatusBarCtrlClock, #SbSpeedo').click(function() {
+    var sbVis = $('#SbSpeedo').is(':visible');
     $('#SbSpeedo, #Sbfuel-bar-wrapper').fadeToggle();
+    sbVis ? $('#SbSpeedo').addClass('stayHidden') : $('#SbSpeedo').removeClass('stayHidden');
   });
   setInterval(function() {
     if (framework.getCurrentApp() === 'backupparking') {
@@ -75,3 +78,22 @@ setTimeout(function() {
     }
   });
 }, 5000);
+if (enableSmallSbSpeedo && StatusBarCtrl) {
+  StatusBarCtrl.prototype.setSbnDisplayed = function(flag) {
+    log.debug("StatusBarCtrl.setSbnDisplayed(" + flag + ")");
+    var SbSpeedo = document.getElementById('SbSpeedo');
+    if (flag === true) {
+      // Hide app name and icons
+      this._domainIconDiv.style.opacity = 0;
+      this._appNameDiv.style.opacity = 0;
+      // hide Statusbar speedometer
+      if (hideSbSpeedoSBN) $('#SbSpeedo').fadeOut(100);
+    } else {
+      // Restore app name and icons
+      this._domainIconDiv.style.opacity = 1;
+      this._appNameDiv.style.opacity = 1;
+      // and Statusbar speedometer
+      if (hideSbSpeedoSBN && !$(SbSpeedo).hasClass('stayHidden')) $('#SbSpeedo').fadeIn(400);
+    }
+  };
+}

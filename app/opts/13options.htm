@@ -8,66 +8,66 @@
 -
 -->
 <tbody class="hasbootFiles w3-col">
-	<tr class="w3-hover-pale-blue w3-third side-boots">
-		<td>
-			<div class="boot-choice extraRadio">
-				<input id="bootLogoMazda" class="w3-check" type="radio" name="bootLogo" ng-model="user.boot" ng-value="logoBoot" checked="true">
-				<label for="bootLogoMazda" data-toggle="tooltip" data-placement="auto bottom" title="BootLogo" class="BootLogo"></label>
-			</div>
-		</td>
-		<td>
-			<label for="bootLogoMazda" data-toggle="tooltip" data-placement="auto bottom" title="Default Remove Boot Animation">Disable (Mazda Logo)
-			</label>
-		</td>
-	</tr>
-	<tr class="w3-hover-pale-blue w3-third side-boots" ng-hide="user.boot === bootCustom">
-		<td>
-			<div class="boot-choice extraRadio">
-				<input id="bootLogoMatrix"  class="w3-check" type="radio" name="bootLogo" ng-model="user.boot" ng-value="matrixBoot">
-				<label for="bootLogoMatrix" data-toggle="tooltip" data-placement="auto bottom" title="BootLogo" class="BootLogo"></label>
-			</div>
-		</td>
-		<td>
-			<label for="bootLogoMatrix" data-toggle="tooltip" data-placement="auto bottom" title="Matrix">Matrix Only
-			</label>
-		</td>
-	</tr>
-	<tr class="w3-hover-pale-blue w3-third side-boots" ng-show="user.boot === bootCustom">
-		<td class="w3-col">
-			<button id="bootPrev" class="w3-btn w3-blue" style="width:100%" data-featherlight="./views/bootAnimationPreview.html">Preview</button>
-		</td>
-	</tr>
-	<tr class="w3-hover-pale-blue w3-third side-boots">
-		<td>
-			<div class="boot-choice extraRadio">
-				<input id="bootLogoCustom"  class="w3-check" type="radio" name="bootLogo" ng-model="user.boot" ng-value="bootCustom">
-				<label for="bootLogoCustom" data-toggle="tooltip" data-placement="auto bottom" title="BootLogo" class="BootLogo"></label>
-			</div>
-		</td>
-		<td>
-			<label for="bootLogoCustom" data-toggle="tooltip" data-placement="auto bottom" title="BootLogo">Custom
-			</label>
-		</td>
-	</tr>
-	<tr class="w3-hover-pale-blue w3-third side-boots" ng-show="user.boot === bootCustom">
-		<td>
-			<select ng-model="user.boot.logo1" ng-options="x.logo as x.bootLogo for x in bootOps1">
-				<option value="" selected="selected" disabled="disabled">--- LoopLogo ---</option>
-			</select>
-		</td>
-	</tr>
-	<tr class="w3-hover-pale-blue w3-third side-boots" ng-show="user.boot === bootCustom">
-		<td>
-			<select ng-model="user.boot.logo2" ng-options="x.logo as x.bootLogo for x in bootOps2">
-			<option value="" selected="selected" disabled="disabled">--- TranLogo ---</option>
-			</select>
-		</td>
-	</tr>
-	<tr class="w3-hover-pale-blue w3-third side-boots" ng-show="user.boot === bootCustom">
-		<td>
-			<select ng-model="user.boot.logo3"  ng-options="x.logo as x.bootLogo for x in bootOps3">
-			<option value="" selected="selected" disabled="disabled">--- TranLogoEnd ---</option>
-			</select>
-		</td>
-	</tr>
+  <tr class="w3-hover-pale-blue w3-third side-boots">
+    <td>
+      <div class="boot-choice extraRadio">
+        <input id="bootLogoMazda" class="w3-check" type="radio" name="bootLogo" ng-model="user.boot" ng-value="logoBoot" checked="true">
+        <label for="bootLogoMazda" data-toggle="tooltip" data-placement="auto bottom" title="BootLogo" class="BootLogo"></label>
+      </div>
+    </td>
+    <td>
+      <label for="bootLogoMazda" data-toggle="tooltip" data-placement="auto bottom" title="Default Remove Boot Animation">Disable (Mazda Logo)
+      </label>
+    </td>
+  </tr>
+  <tr class="w3-hover-pale-blue w3-third side-boots" ng-hide="user.boot === bootCustom">
+    <td>
+      <div class="boot-choice extraRadio">
+        <input id="bootLogoMatrix" class="w3-check" type="radio" name="bootLogo" ng-model="user.boot" ng-value="matrixBoot">
+        <label for="bootLogoMatrix" data-toggle="tooltip" data-placement="auto bottom" title="BootLogo" class="BootLogo"></label>
+      </div>
+    </td>
+    <td>
+      <label for="bootLogoMatrix" data-toggle="tooltip" data-placement="auto bottom" title="Matrix">Matrix Only
+      </label>
+    </td>
+  </tr>
+  <tr class="w3-hover-pale-blue w3-third side-boots" ng-show="user.boot === bootCustom">
+    <td class="w3-col">
+      <button id="bootPrev" class="w3-btn w3-blue" style="width:100%" data-featherlight="./views/bootAnimationPreview.html">Preview</button>
+    </td>
+  </tr>
+  <tr class="w3-hover-pale-blue w3-third side-boots">
+    <td>
+      <div class="boot-choice extraRadio">
+        <input id="bootLogoCustom" class="w3-check" type="radio" name="bootLogo" ng-model="user.boot" ng-value="bootCustom">
+        <label for="bootLogoCustom" data-toggle="tooltip" data-placement="auto bottom" title="BootLogo" class="BootLogo"></label>
+      </div>
+    </td>
+    <td>
+      <label for="bootLogoCustom" data-toggle="tooltip" data-placement="auto bottom" title="BootLogo">Custom
+      </label>
+    </td>
+  </tr>
+  <tr class="w3-hover-pale-blue w3-third side-boots" ng-show="user.boot === bootCustom">
+    <td>
+      <select ng-model="user.boot.logo1" ng-options="x.logo as x.bootLogo for x in bootOps1">
+        <option value="" selected="selected" disabled="disabled">--- LoopLogo ---</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="w3-hover-pale-blue w3-third side-boots" ng-show="user.boot === bootCustom">
+    <td>
+      <select ng-model="user.boot.logo2" ng-options="x.logo as x.bootLogo for x in bootOps2">
+        <option value="" selected="selected" disabled="disabled">--- TranLogo ---</option>
+      </select>
+    </td>
+  </tr>
+  <tr class="w3-hover-pale-blue w3-third side-boots" ng-show="user.boot === bootCustom">
+    <td>
+      <select ng-model="user.boot.logo3" ng-options="x.logo as x.bootLogo for x in bootOps3">
+        <option value="" selected="selected" disabled="disabled">--- TranLogoEnd ---</option>
+      </select>
+    </td>
+  </tr>
 </tbody>

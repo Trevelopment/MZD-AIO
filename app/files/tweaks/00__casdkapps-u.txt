@@ -1,0 +1,46 @@
+# Check for AIO + CASDK
+if [ ! -e /jci/casdk/casdk.aio ]
+then
+  show_message "CASDK APPS UNINSTALLATION ABORTED!!!!\n\nAIO + CASDK FRAMEWORK IS NOT INSTALLED\n\nPLEASE REMOVE USB DRIVE... THE SYSTEM WILL REBOOT NOW"
+  sleep 10
+  reboot
+fi
+MZD_APP_DIR=/jci/gui/apps/custom/apps
+# Uninstall CASDK apps
+show_message "UNINSTALLING CASDK APPS ... "
+log_message "=== UNINSTALLING CASDK APPS FROM ${MZD_APP_DIR} ==="
+
+if [ -e ${MZD_APP_DIR} ]
+then
+  MZD_APPS_JS=${MZD_APP_DIR}/apps.js
+
+  #Remove terminal from stage_wifi.sh
+  if [ ${APPTERMINAL} -eq 1 ] && grep -Fq "terminal" /jci/scripts/stage_wifi.sh
+  then
+    sed -i /Terminal/d /jci/scripts/stage_wifi.sh
+    sed -i /terminal.sh/d /jci/scripts/stage_wifi.sh
+    log_message "===                   Removed Terminal Startup                        ==="
+  fi
+  if [ -e ${MZD_APPS_JS} ]
+  then
+    remove_casdk_app "${APPTERMINAL}" "terminal"
+    remove_casdk_app "${APPSIMPLEDASHBOARD}" "simpledashboard"
+    remove_casdk_app "${APPSIMPLESPEEDO}" "simplespeedo"
+    remove_casdk_app "${APPGPSSPEED}" "gpsspeed"
+    remove_casdk_app "${APPMULTIDASH}" "multidash"
+    remove_casdk_app "${APPBG}" "background"
+    remove_casdk_app "${APPVDD}" "vdd"
+    remove_casdk_app "${APPDEVTOOLS}" "devtools"
+    remove_casdk_app "${APPCLOCK}" "clock"
+    remove_casdk_app "${APPTETRIS}" "tetris"
+    remove_casdk_app "${APPBREAKOUT}" "breakout"
+    remove_casdk_app "${APPSNAKE}" "snake"
+  fi
+fi
+
+sleep 5
+log_message "=========************ CASDK UNINSTALLATION FINISHED ************========="
+killall jci-dialog
+/jci/tools/jci-dialog --title="CASDK APPS UNINSTALLED" --text="CASDK APPS SUCCESSFULLY UNINSTALLED.\n\nTHE SYSTEM WILL REBOOT IN A FEW SECONDS." --no-cancel &
+sleep 10
+reboot

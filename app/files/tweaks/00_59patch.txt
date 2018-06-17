@@ -1,0 +1,17 @@
+backup_org /jci/gui/apps/system/js/systemApp.js
+# for FW v59 if they do not have No more disclamer or order of audio source
+# apply patch to show apps in app List
+if [ $COMPAT_GROUP -gt 2 ] && ! grep -Fq "app.casdkapps" /jci/gui/apps/system/js/systemApp.js
+then
+  if [ $COMPAT_GROUP -lt 6 ]
+  then
+    cp -a ${MYDIR}/config/jci/gui/apps/system/js/systemApp.js /jci/gui/apps/system/js
+    log_message "===        Patched systemApp.js for AIO + CASDK apps for v59          ==="
+  elif [ $COMPAT_GROUP -eq 6 ]
+  then
+    cp -a ${MYDIR}/config/jci/gui/apps/system/js/systemApp.70.js /jci/gui/apps/system/js/systemApp.js
+    log_message "===        Patched systemApp.js for AIO + CASDK apps for v70          ==="
+  else
+    log_message "=== FW > v70.00.100 DETECTED VISIT MAZDATWEAKS.COM FOR MORE DETAILS   ==="
+  fi
+fi

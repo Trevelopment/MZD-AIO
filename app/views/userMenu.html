@@ -1,7 +1,11 @@
 <div style="height:5px;z-index:999998;" class="hideNavHover w3-top"></div>
 <div class="w3-top hideNav" style="z-index:999999;">
   <ul class="w3-navbar w3-light-grey">
-    <li><a href="../index.html"><span style="font-size:26px" class="icon-home w3-margin"></span></a></li>
+    <li>
+      <a href="../index.html">
+        <span style="font-size:26px" class="icon-home w3-margin"></span>
+      </a>
+    </li>
     <li class="w3-dropdown-click">
       <a id='' onclick="dropDownMenu('file')" href="">File <span class="icon-caret-down"></span></a>
       <div id="file" class="w3-dropdown-content w3-white w3-card-4">
@@ -43,7 +47,7 @@
         <a href="" onclick="$(this).parent().removeClass('w3-show');ipc.send('open-joiner-window');"><i class="icon-cube"></i> Local Json Test</a>
       </div>
     </li>
-    <li class="menu-icons menulock" style="width:40px;margin-right:20px;margin-left:-5px" data-toggle="tooltip" data-placement="bottom" title="Lock/Unlock Menu Bar"  onclick="$('.hideNav').toggleClass('showNav');saveMenuLock()">
+    <li class="menu-icons menulock" style="width:40px;margin-right:20px;margin-left:-5px" data-toggle="tooltip" data-placement="bottom" title="Lock/Unlock Menu Bar" onclick="$('.hideNav').toggleClass('showNav');saveMenuLock()">
       <span class="icon-lock w3-margin"></span>
     </li>
     <li class="menu-icons" style="margin: 5px 0px 0px 8px;" data-toggle="tooltip" data-placement="bottom" title="Fullscreen" onclick="toggleFullScreen()">
@@ -55,17 +59,29 @@
   </ul>
 </div>
 <nav class="w3-sidenav w3-black w3-card-2 w3-animate-left w3-text-shadow w3-xlarge w3-card-2" style="display:none;z-index:99999;position:fixed;" id="mySidenav">
-  <a href="javascript:void(0)" onclick="w3_close()" class="w3-hover-red w3-closenav w3-xxlarge"><span class='icon-x'></span></a>
-  <a class="w3-hover-green w3-ripple" href="http://link.trevelopment.com/mazdaatweaks"><span class='icon-home'></span> MazdaTweaks.com</a>
-  <a class="w3-hover-green w3-ripple" title="{{menu.tour.toolTip}}" onclick="w3_close();startTour()"><span class='icon-bus'></span> {{menu.tour.label}}</a>
-  <a class="w3-hover-green w3-ripple" title="{{menu.installall.toolTip}}" onclick="w3_close();" ng-click="instAll()"><span class='icon-list3'></span> {{menu.installall.label}}</a>
-  <a class="w3-hover-green w3-ripple" title="{{menu.uninstallall.toolTip}}" onclick="w3_close();" ng-click="uninstAll()"><span class='icon-ungroup'></span> {{menu.uninstallall.label}}</a>
-  <a class="w3-hover-green w3-ripple" title="{{menu.lastcompilelog.toolTip}}" onclick="w3_close();" href="../../MZD_LOG.htm" data-featherlight="ajax"><span class='icon-document-alt-fill'></span> {{menu.lastcompilelog.label}}</a>
-  <a class="w3-hover-green w3-ripple" title="{{menu.copytousb.toolTip}}" onclick="w3_close();openCopyFolder();"><span class='icon-foelder-open'></span> {{menu.copytousb.label}}</a>
-  <a class="w3-hover-green w3-ripple" title="{{menu.save.toolTip}}" onclick="w3_close();" ng-click="saveOps();"><span class='icon-save2'></span> {{menu.save.label}}</a>
-  <a class="w3-hover-green w3-ripple" title="{{menu.load.toolTip}}" onclick="w3_close();" ng-click="loadOps();"><span class='icon-build'></span> {{menu.load.label}}</a>
-  <a class="w3-hover-green w3-ripple" title="{{menu.resetoptions.toolTip}}" onclick="w3_close();" ng-click="uncheckAll()"><span class='icon-undo'></span> {{menu.resetoptions.label}}</a>
-  <a class="w3-hover-green w3-ripple" title="{{menu.reloadapp.toolTip}}" onclick="location.reload();"><span class='icon-spin w3-spin'></span> {{menu.reloadapp.label}}</a>
+  <a href="javascript:void(0)" onclick="w3_close()" class="w3-hover-red w3-closenav w3-xxlarge">
+    <span class='icon-x'></span>
+  </a>
+  <a class="w3-hover-green w3-ripple" href="http://link.trevelopment.com/mazdaatweaks">
+    <span class='icon-home'></span> MazdaTweaks.com</a>
+  <a class="w3-hover-green w3-ripple" title="{{menu.tour.toolTip}}" onclick="w3_close();startTour()">
+    <span class='icon-bus'></span> {{menu.tour.label}}</a>
+  <a class="w3-hover-green w3-ripple" title="{{menu.installall.toolTip}}" onclick="w3_close();" ng-click="instAll()">
+    <span class='icon-list3'></span> {{menu.installall.label}}</a>
+  <a class="w3-hover-green w3-ripple" title="{{menu.uninstallall.toolTip}}" onclick="w3_close();" ng-click="uninstAll()">
+    <span class='icon-ungroup'></span> {{menu.uninstallall.label}}</a>
+  <a class="w3-hover-green w3-ripple" title="{{menu.lastcompilelog.toolTip}}" onclick="w3_close();" href="../../MZD_LOG.htm" data-featherlight="ajax">
+    <span class='icon-document-alt-fill'></span> {{menu.lastcompilelog.label}}</a>
+  <a class="w3-hover-green w3-ripple" title="{{menu.copytousb.toolTip}}" onclick="w3_close();openCopyFolder();">
+    <span class='icon-foelder-open'></span> {{menu.copytousb.label}}</a>
+  <a class="w3-hover-green w3-ripple" title="{{menu.save.toolTip}}" onclick="w3_close();" ng-click="saveOps();">
+    <span class='icon-save2'></span> {{menu.save.label}}</a>
+  <a class="w3-hover-green w3-ripple" title="{{menu.load.toolTip}}" onclick="w3_close();" ng-click="loadOps();">
+    <span class='icon-build'></span> {{menu.load.label}}</a>
+  <a class="w3-hover-green w3-ripple" title="{{menu.resetoptions.toolTip}}" onclick="w3_close();" ng-click="uncheckAll()">
+    <span class='icon-undo'></span> {{menu.resetoptions.label}}</a>
+  <a class="w3-hover-green w3-ripple" title="{{menu.reloadapp.toolTip}}" onclick="location.reload();">
+    <span class='icon-spin w3-spin'></span> {{menu.reloadapp.label}}</a>
 </nav>
 <script>
   $(function(){

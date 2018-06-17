@@ -1,19 +1,19 @@
 // *****************************
-// ** AIO Tweaks App v0.6 - mzd.js
+// ** AIO Tweaks App v0.7 - mzd.js
 // ** All the functions for Buttons in AIO Tweaks App
 // ** By Trezdog44
 // *****************************
 /* jshint -W117 */
-var aioTweaksVer = 0;
+var aioTweaksVer = 0.7;
 var AArunning = false;
 var appListData = [];
 
 //var wsAIO = null;
 //var aioWsVideo = null;
 //var AIOvideo = false;
-$(document).ready(function() {
+function StartAIOApp() {
   try {
-$('#SbSpeedo, #Sbfuel-bar-wrapper').fadeOut();
+    $('#SbSpeedo, #Sbfuel-bar-wrapper').fadeOut();
     //framework.sendEventToMmui("common", "SelectBTAudio");
   } catch (err) {
 
@@ -71,6 +71,7 @@ $('#SbSpeedo, #Sbfuel-bar-wrapper').fadeOut();
   $("#reverseAppListBtn").on("click", reverseApplicationList);
   $("#shiftEntListBtn").on("click", shiftEntertainmentList);
   $("#devModeSecretBtn").on("click", toggleDevMode);
+  $("#wifiToggle").on("click", turnOnWifi);
   $("#showBgBtn").on("click", function() { $("html").addClass("showBg") });
   $("#twkOut").on("click", function() { framework.sendEventToMmui("common", "Global.IntentHome") });
   $("#usba").on("click", function() { framework.sendEventToMmui("system", "SelectUSBA") });
@@ -115,7 +116,7 @@ $('#SbSpeedo, #Sbfuel-bar-wrapper').fadeOut();
   } else {
     console.log("localStorage Not Supported!!");
   }*/
-});
+}
 // *****************************
 // ** Button Functions GO!
 // *****************************
@@ -168,6 +169,22 @@ _MainMenuLoop = function(direction) {
     this._setFocus(index);
     this._setHighlight(index);
   }
+}
+
+function turnOnWifi() {
+  var net, wifiOn = 1; // 0 for off
+  if (framework.getAppInstance('netmgmt') === undefined || framework.getAppInstance('syssettings') === undefined) { // only jump if needed
+    framework.sendEventToMmui("common", "Global.IntentHome");
+    framework.sendEventToMmui("common", "Global.IntentSettingsTab", { payload: { settingsTab: "Devices" } });
+    framework.sendEventToMmui("syssettings", "SelectNetworkManagement"); // this may not be needed
+    framework.sendEventToMmui("common", "Global.IntentHome"); // Jump back to home screen?
+  }
+  setTimeout(function() {
+    net = framework.getAppInstance('netmgmt');
+    if (!net._onOffStatus) {
+      framework.sendEventToMmui('netmgmt', 'SetWifiConnection', { payload: { offOn: wifiOn } });
+    }
+  }, 1000); //give it a second to load
 }
 
 function shiftEntertainmentList() {
@@ -279,8 +296,17 @@ function RunCheckIP() {
 }
 
 function myTest() {
-  framework.common.startTimedSbn(this.uiaId, "SbnAIOTest", "typeE", { sbnStyle: "Style02", imagePath1: 'apps/_aiotweaks/panda.png', text1: this.uiaId, text2: "Pandas are coming for you!!" });
-  //aioWs('node -e "console.log(\'Test\')"', 1);
+  var msgChoice = Math.round(Math.random() * 10/3);
+  switch (msgChoice) {
+    case 1:
+      framework.common.startTimedSbn(this.uiaId, "SbnAIOTest", "typeE", { sbnStyle: "Style02", imagePath1: 'apps/_aiotweaks/panda.png', text1: this.uiaId, text2: "Pandamonium!!" });
+      break
+    case 2:
+      framework.common.startTimedSbn(this.uiaId, "SbnAIOTest", "typeE", { sbnStyle: "Style02", imagePath1: 'apps/_aiotweaks/panda.png', text1: this.uiaId, text2: "Enter the Panda!!" });
+      break
+    default:
+      framework.common.startTimedSbn(this.uiaId, "SbnAIOTest", "typeE", { sbnStyle: "Style02", imagePath1: 'apps/_aiotweaks/panda.png', text1: this.uiaId, text2: "Pandas are coming for you!!" });
+  }
 }
 
 function chooseBackground() {
@@ -356,8 +382,12 @@ function AioFileCheck(fc) {
     case "_SWAP":
       //$('#mountSwapBtn').html('<a>Mount Swapfile</a>').show();
       //$('#createSwapBtn').off('click').on('click',deleteSwap).html('<a>Delete Swapfile</a>');
-      $('#mountSwapBtn').show();
-      $('#unmountSwapBtn').show();
+      if (framework.getCurrentApp() === "_aiotweaks") {
+        $('#mountSwapBtn').show();
+        $('#unmountSwapBtn').show();
+      } else if (UMswap === null) {
+        swapfileShutdownUnmount();
+      }
       break;
     case "_NOSWAP":
       $('#mountSwapBtn').remove();
@@ -464,12 +494,12 @@ function showVersion() {
 
 function displayOff() {
   if (framework.getAppInstance('syssettings') === undefined) {
+    framework.sendEventToMmui("common", "Global.IntentHome");
     framework.sendEventToMmui("common", "Global.IntentSettingsTab", { payload: { settingsTab: "Display" } });
   }
   framework.sendEventToMmui("syssettings", "SelectDisplayOff");
-  //} else {
-  //  framework.sendEventToMmui("system", "DisplayOffGUIActivity");
-  //}
+  //framework.sendEventToMmui("system","SelectIdleStandby");
+  //framework.sendEventToMmui("system","DisplayOffGUIActivity");
 }
 
 function showHeadunitLog() {

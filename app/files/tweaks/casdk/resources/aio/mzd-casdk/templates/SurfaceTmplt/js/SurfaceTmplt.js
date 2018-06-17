@@ -40,6 +40,7 @@ log.addSrcFile("SurfaceTmplt.js", "SurfaceTmpl");
 
 function SurfaceTmplt(uiaId, parentDiv, templateID, controlProperties) {
   $('#SbSpeedo, #Sbfuel-bar-wrapper').fadeOut();
+  $('#SbSpeedo').addClass('stayHidden');
   // create the div for template
   this.divElt = document.createElement('div');
   this.divElt.id = templateID;
@@ -137,6 +138,7 @@ SurfaceTmplt.prototype.cleanUp = function() {
 
   // clear app
   this.application = null;
+  $('#SbSpeedo').removeClass('stayHidden');
   $('#SbSpeedo, #Sbfuel-bar-wrapper').fadeIn();
 }
 

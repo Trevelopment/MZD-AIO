@@ -108,7 +108,7 @@ select select:focus{color:#000;border:1px solid #009688}select option[disabled]{
 .w3-accordion-content a{padding:6px 16px;display:block}.w3-accordion-content a:hover{background-color:#ccc}
 .w3-progress-container{width:100%;height:1.5em;position:relative;background-color:#f1f1f1}
 .w3-progressbar{background-color:#757575;height:100%;position:absolute;line-height:inherit}
-.bootbox-form .checkbox input[type=checkbox],input[type=checkbox].w3-check,input[type=radio].w3-radio{width:24px;height:24px;position:relative;/*top:6px;*/visibility:visible;}
+.bootbox-form .checkbox input[type=checkbox],input[type=checkbox].w3-check,input[type=radio].w3-radio{width:24px;height:24px;position:relative;top:6px;visibility:visible;}
 input[type=checkbox].w3-check:checked+.w3-validate,input[type=radio].w3-radio:checked+.w3-validate{color:#009688}
 input[type=checkbox].w3-check:disabled+.w3-validate,input[type=radio].w3-radio:disabled+.w3-validate{color:#aaa}
 .w3-responsive{overflow-x:auto}
@@ -378,41 +378,41 @@ input[type=checkbox].w3-check:disabled+.w3-validate,input[type=radio].w3-radio:d
   cursor: pointer;
 }
 .w3-black .slide-out-div {
-    background-color: #000;
+  background-color: #000;
 }
 .w3-black a.handle {
-    background: #56ff00;
-    color: #000;
+  background: #56ff00;
+  color: #000;
 }
-.mazda{
+.mazda {
   font-family: mazda;
   letter-spacing: 5px;
   text-transform: lowercase;
   font-size: 46px;
   margin-top: 15px;
 }
-.mazda .dropdown-menu{
-  letter-spacing:normal;
+.mazda .dropdown-menu {
+  letter-spacing: normal;
 }
 .w3-hlpmsg {
   border: 12px ridge #00858c;
-  padding: 5px 15px!important;
+  padding: 5px 15px !important;
   right: 0;
   margin: 0 auto 200px;
   position: fixed;
-  top:20%;
+  top: 20%;
   left: 0;
   max-width: 800px;
-  cursor:grab;
-  cursor:-webkit-grab;
+  cursor: grab;
+  cursor: -webkit-grab;
 }
 .w3-hlpmsg:active {
   cursor: grabbing;
-  cursor:-webkit-grabbing;
+  cursor: -webkit-grabbing;
 }
 .accordion-content .w3-panel .w3-twothird {
-  width:65%!important;
-  margin-right:1%;
+  width: 65% !important;
+  margin-right: 1%;
 }
 .accordion-content .w3-panel .w3-btn {
   width: 110px;
@@ -420,40 +420,40 @@ input[type=checkbox].w3-check:disabled+.w3-validate,input[type=radio].w3-radio:d
   margin: 5px 1px;
   position: relative;
 }
-.accordion-content .w3-panel .w3-btn:hover{
+.accordion-content .w3-panel .w3-btn:hover {
   font-size: 14px;
 }
 .accordion-content .w3-panel .w3-btn:hover [class*="icon"] {
   font-size: 18px;
 }
+#secretCodeInput .w3-modal-content {
+  max-width: 40%;
+}
 @keyframes opacZeroToFull {
-    0% {
-        opacity: 0;
-    }
-
-    100% {
-        opacity: 1;
-    }
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 @keyframes opacFullToZero {
-    0% {
-        opacity: 1;
-    }
-
-    100% {
-        opacity: 0;
-    }
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }
 /*CSS Animation classes for fade animations*/
+
 .FadeOut {
   animation: opacFullToZero 0.3s ease-in-out both;
 }
-
 .FadeIn {
   animation: opacZeroToFull 0.3s ease-in-out both;
 }
-.bootbox .w3-btn:focus,
-.bootbox .btn:focus {
+.bootbox .w3-btn:focus, .bootbox .btn:focus {
   outline: none;
   box-shadow: 0 6px 19px -3px #bf007b, 0 -2px 19px 3px #008c6c;
 }
@@ -461,21 +461,20 @@ div#fullSystemRestore {
   max-width: 250px;
   margin: auto;
   text-align: left;
-  line-height:20px;
+  line-height: 20px;
 }
-div#fullSystemRestore input{
-  top:8px;
-  margin-right:16px;
-  text-align:left;
+div#fullSystemRestore input {
+  top: 8px;
+  margin-right: 16px;
+  text-align: left;
 }
-div#fullSystemRestore label{
-  border-bottom:2px dashed #e40000;
+div#fullSystemRestore label {
+  border-bottom: 2px dashed #e40000;
   padding: 5px;
   border-radius: 5px;
-  color:#333;
-
+  color: #333;
 }
-div#fullSystemRestore input:checked + label{
+div#fullSystemRestore input:checked+label {
   background: #ffd5d5;
   color: #000;
   border-bottom: 2px solid #000;
@@ -492,5 +491,5 @@ ul.dropdown-menu {
   margin: auto;
 }
 input#gracenoteText {
-    cursor: text;
+  cursor: text;
 }

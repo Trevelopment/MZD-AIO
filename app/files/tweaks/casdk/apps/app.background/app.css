@@ -13,36 +13,43 @@
 */
 
 [app="app.background"] {
-	background-color: #000000;
+  background-color: #000000;
 }
-
-[app="app.background"] .container{
-	width:800px;
-	height:400px;
-	padding:20px;
-	border:1px solid gray;
-	box-sizing:border-box;
-	background: black;
-	/*	-webkit-box-sizing:border-box;
-	-moz-box-sizing:border-box;*/
+[app="app.background"] .container {
+  width: 800px;
+  height: 400px;
+  padding: 20px;
+  border: 1px solid gray;
+  box-sizing: border-box;
+  background: black;
 }
-[app="app.background"] .image-slider-wrapper{
-	overflow: hidden;
+[app="app.background"] .panel {
+  width: 675px;
+  right: 0;
+  left: 0;
+  margin: auto;
+  overflow: hidden;
 }
-[app="app.background"] #image_slider{
-	position: relative;
-	height: 280px;
-	padding:0;
+[app="app.background"] .panel img:first-child {
+  width: auto;
 }
-[app="app.background"] #image_slider li{
-	max-width: 100%;
-	width:100px;
-	height:80px;
-	float:left;
-	list-style: none;
+[app="app.background"] #image_slider {
+  position: relative;
+  height: 280px;
+  padding: 0;
 }
-
+[app="app.background"] #image_slider li {
+  max-width: 100%;
+  width: 100px;
+  height: 80px;
+  float: left;
+  list-style: none;
+}
 [app="app.background"] .selectimage {
-	outline: 3px solid #73AD21;
-	outline-offset: -4px;
+  outline: 3px solid #73AD21;
+  outline-offset: -4px;
+}
+.stopSlider .CommonBgImg {
+  background-position: 0;
+  animation: none;
 }

@@ -110,7 +110,7 @@ else
   log_message "===     No Apps Found - Created Empty nativeApps.js for CASDK         ==="
 fi
 
-# install CASDK runtime
+# install CASDK runtime if it doesnt exist or newer version
 if [ ! -e /tmp/mnt/resources/aio/mzd-casdk/runtime ] || [[ "${_CASDK_VER}" < "${CASDK_VER}" ]]
 then
   cp -a ${MYDIR}/casdk/resources /tmp/mnt
@@ -120,19 +120,21 @@ then
   echo "_CASDK_VER=${CASDK_VER}" >> /jci/casdk/casdk.aio
   log_message "===                  Installed CASDK Runtime                          ==="
 else
+  # for development use
+  # cp -a ${MYDIR}/casdk/resources/aio/mzd-casdk /tmp/mnt/resources/aio
   log_message "===              CASDK Runtime Already Installed                      ==="
 fi
 
 # create custom folder
 if [ ! -e /jci/gui/apps/custom ]
 then
-	# create symlinks to various destinations
+	# create custom apps symlink
 	ln -sf /tmp/mnt/resources/aio/mzd-casdk /jci/gui/apps/custom
 	log_message "===             Created Symlinks To Custom App Folder                 ==="
 else
   log_message "===                Custom App Folder Already Exists                   ==="
 fi
-
+# reconnect data symlink
 rm -f /tmp/mnt/resources/aio/mzd-casdk/data
 ln -sf /tmp/root /tmp/mnt/resources/aio/mzd-casdk/data
 log_message "===               Created Data Symlink To /tmp/root/                  ==="

@@ -1,3 +1,0 @@
-# change to Unicode mode as default
-sed -i 's/var defaultUnicode = false;\/\/ Change to true for Unicode Mode/var defaultUnicode = true;\/\/ Change to false for ASCII Mode/g' /jci/gui/apps/_videoplayer/js/videoplayer-v2.js
-log_message "===           CHANGED VIDEO PLAYER TO DEFAULT UNICODE MODE            ==="

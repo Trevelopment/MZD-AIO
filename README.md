@@ -1,27 +1,196 @@
-# MZD-AIO-TI 2.5 [![Download](https://api.bintray.com/packages/trevelopment/MZD-AIO-TI/AIO/images/download.svg?version=MZD-AIO-TI) ](http://dl.mazdatweaks.win)
+# MZD-AIO-TI 2.8 [![Download](aio.svg?version=MZD-AIO-TI) ](http://dl.mazdatweaks.win)
 
 ## MZD All In One tweaks Installer
 
 #### Installer and uninstaller for several different system tweaks for Mazda MZD Infotainment System
 
+ [How To Install](#how-to-install)
+
 ##### App Size ~ 260MB
-AIO Rebuilt with [Electron] & [AngularJS]
-[MazdaTweaks.com]      
+
+AIO Rebuilt with [Electron] & [AngularJS][mazdatweaks.com]  
 Included Translator & Photo-Joiner (for background rotator tweak)
+
 ### Special thanks to all the developers out there that made this possible!
+
 ### And of course, Thanks to @Siutsch for [AIO 1.x][1]
-##### (Mazda 2 (DJ), Mazda 3 (BM), Mazda 6 (GJ), Mazda CX-3 (DK), Mazda CX-5 (KE), Mazda MX-5 Roadster (ND) and new 2017 Mazda CX-9 (TC))
 
-#### WHICH FW VERSIONS ARE SUPPORTED:
+##### (Mazda 2 (DJ), Mazda 3 (BM), Mazda 6 (GJ), Mazda CX-3 (DK), Mazda CX-5 (KE), Mazda MX-5 Roadster (ND) and Mazda CX-9 (TC))
 
-##### All Firmware versions v55, v56, v58, v59 up to 59.00.502 **NOTE: v59.00.502 has removed the ability to install tweaks  When updating from a previous version install autorun & recovery scripts BEFORE updating to recover access.**
-
------
+* * *
 
 ### **IMPORTANT: All changes happen at your own risk!**
+
 ##### **Please understand that you can damage or brick your infotainment system running these tweaks!**
+
 ##### **Anyone who is unsure should leave it alone, ask someone with experience to help or ask in the forum.**
+
 ##### **I am not responsible for damages that may incur from the use.**
+
+* * *
+
+##### Touchscreen
+
+Allows the use of the touchscreen while driving.  
+Fix Cluster Compass: Some things will be disabled while driving but the touchscreen itself and the cluster compass will work
+
+##### No More Disclaimer
+
+Completely remove the disclaimer or reduce the expansion time of the disclaimer from 3.5 to 0.5 seconds.
+
+##### Reverse Camera Safety Warning
+
+No security
+
+##### Semi-Transparent Parking Sensor Graphics.
+
+Semitransparent parking sensor graphics for proximity sensors. When activating the rear camera, the car is displayed at the top right corner. The graphics now appear semitransparent by installing tweak. ![semi-transparent_parking-sensors](app/files/img/semi-transparent_parking-sensors.jpg)
+
+##### Main Menu Loop.
+
+Loop for the main menu.  
+You can jump from left to far right, and vice versa.
+
+##### Improved List Loop.
+
+Loop for all lists and submenu (music, contacts, etc.).  
+You can now jump from the top position of a list to the bottom and vice versa.
+
+##### Shorter Delay Mod.
+
+Reduces the waiting time for switching between pages with the multi commander from 1.5 to 0.3 seconds.
+
+##### No More Beeps
+
+Disable all 'Beeps' made by the system that are not silenced by the 'Settings > Sound > Beep' option. This also includes the beeps that cannot be silenced by the settings option.
+
+##### Change Order of the Audio Source List.
+
+Customize The order of the audio sources list.
+
+##### Pause On Mute.
+
+When pressing mute (pressing the volume button) played media are also paused. Only works in the music player screen.
+
+##### Remove Message Replies
+
+Removes the text 'Sent from my Mazda Quick Text System' if answering messages.
+
+##### 1 Sec Diag Menu
+
+Allows you to open the diagnostic menu by touching the clock at the top right of the **display settings menu** for one second.
+
+##### Boot Animation
+
+Customize the boot animation.
+
+##### Date In Status Bar Mod.
+
+Permanently visible date + icons above the clock, even if system messages are displayed.  Choose between 3 date formats. ![mzd_datum_icons_all](app/files/img/mzd_datum_icons_all.jpg)
+
+##### USB Audio Mod. By: Enlsen
+
+## **NOT Compatible with FW v59.00.502+**
+
+\*\*Patches The USB Audio App With These Mods:  
+
+1.  Long press (click hold) folders/all songs to play
+2.  Adds new icon for USB root menu on the UMP control
+3.  Removes "More like this" button from UMP control
+4.  Adds folders button to UMP control
+5.  Set folders and song list icons correctly (were switched) on UMP control
+6.  Removes trailing "/" character from folder names for list control and title of now playing
+7.  Adds folder and song icons to the list control
+8.  Adds folder and playlist icons to now playing
+9.  At the begining or each track shows **Artist - Title** in a status-bar notification.
+
+![USBAudioMod](app/files/img/USBAudioMod.jpg)
+
+##### Bigger Album Art
+
+You get a bigger album art graphic.
+Extra Options:
+
+-   Full Width Titles: Song/Album/Artist will span across the entire screen.
+-   Hide Album Art: Hides all album art.
+    ![full_titles](app/files/img/full_titles.png)
+
+##### No Background Behind Buttons
+
+Remove the background behind the buttons and other semi-transparent overlay backgrounds. Overlays that can be removed: Now Playing, List View, In Call, Text Message View, and Behind Buttons ![NoButtonBackground](app/files/img/NoButtonBackground.jpg)
+
+##### Change Blank Album Art Frame
+
+The empty album cover frame is removed, which is displayed when there is no entry in the Gracenote database for the artist. Then the image of your choice (or transparent image) is displayed, if there is no cover in the MP3 tag too. Supported image formats are: jpg, jpeg, and png (any size). Note: The image chosen will be resized to 146px x 146px **BUT NOT CROPPED** and converted to .png format
+
+##### Swapfile
+
+The Swapfile will provide your system with an additionasl 1 GB of RAM running from the USB drive for playing videos. The installation of the swap file must be done on a USB drive with music and/or movies, that remains in the car.. The installation files are automatically deleted, the drive may no longer be removed during operation, because the system will use it also as memory.. Only remove the USB drive if the MZD system is off.
+
+##### Fuel Consumption Tweak.
+
+Additional display of KM / L (or MPG). ![FuelConsumptionTweak](app/files/img/FuelConsumptionTweak.jpg)
+
+##### Videoplayer
+
+[The VideoPlayer App.](/videoplayer/)
+
+##### Speedometer
+
+Speedometer App with many options and features.
+
+![mzd_SpeedoCompass](app/files/img/mzd_SpeedoCompass.gif)
+
+##### Castscreen receiver.
+
+After installation you can mirror the smartphone screen at the infotainment display (mirroring).
+
+-   You have to install the castscreen app on your Android Phone (castscreen-1.0.apk) The app can be found in the 'config' folder of your USB drive
+-   activate the debug mode on your smartphone
+-   connect the smartphone with USB cable to the infotainment system
+-   start the app settings: H264, 800x480 @ 160, 1 mbps, then input 127.0.0.1 and press input receiver, then tap Start on right-up corner.
+
+.
+
+##### Android Auto Headunit App.
+
+1.  Install the Android app from google play store
+2.  Connect the phone to USB and pair the phone bluetooth with the CMU
+3.  Android Auto will then start. If it does not try to open from the 'Applications' menu
+4.  3 ways to stop AA
+    1.  Press Home Button on the Mazda's Commander
+    2.  Disconnect the USB cable
+    3.  Use the onscreen menu 'Return to Mazda Connect' on last screen with speedo icon.
+
+![AndroidAuto](app/files/img/AndroidAuto.jpg)
+
+##### AIO Tweaks App.
+
+###### **Every function in this app is _not_ guaranteed to work** but here are some useful and/or fun things you can do:
+
+-   'Apps' Tab:
+    -   Home: Goes home. This was the easy part.
+    -   Go to: USB A, USB B, Bluetooth (audio context).
+    -   Previous, Next - Works without changing contexts
+    -   Stop (and Start\*) Android Auto Headunit process.
+        -   Killing headunit process with allow Bluetooth calling to work correctly.
+        -   Starting the process does not work properly yet, reboot CMU to restart headunit process.
+    -   Stop and Start Castscreen Receiver
+        -   Useful for troubleshooting if it is not functioning correctly.
+        -   Both of these do work but there is a possibility that a memory issue may prevent the process from properly starting in which case a reboot is required to allow the process to run.
+-   'Tweaks' Tab:
+    -   Many familiar AIO layout related tweaks that can be applied on the fly
+        -   Applied tweaks are automatically saved to localStorage and saved tweaks are applied on boot.
+        -   Toggle each individual tweak on or off.
+        -   One button to reset all tweaks.
+        -   _NOTE: AIO Tweaks App will not UNDO installed tweaks, they will mix and may result in unexpected and/or interesting layouts_
+-   'Options' Tab:
+
+    -   Enable/Disable Touchscreen: _NOTE: Changes to the touchscreen functionality are applied when the vehicle comes to a **COMPLETE STOP**_
+
+    -   Reboot: To Reboot.
+
+![AIO_Tweaks-Screen](app/files/img/AIO_Tweaks-Screen.png)
 
 # [CHANGELOG]
 

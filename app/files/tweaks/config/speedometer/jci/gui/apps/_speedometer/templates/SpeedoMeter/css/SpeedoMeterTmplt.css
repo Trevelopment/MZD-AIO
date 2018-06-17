@@ -583,3 +583,26 @@
 #speedometerContainer fieldset#Drv1AvlFuelEFieldSet .spunit span {
   visibility: visible;
 }
+/* *  Fuel Meter * */
+
+.fuel-bar-wrapper {
+  width: 100%;
+  position: absolute;
+  height: 10px;
+  z-index: 40;
+  opacity: .8;
+}
+.fuel-bar-container {
+  width: 100%;
+  background-color: #e0e0e0;
+  padding: 0px;
+  border-radius: 3px;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, .2);
+}
+.fuel-bar {
+  display: block;
+  height: 10px;
+  background-color: transparent;
+  border-radius: 3px;
+  transition: 2s ease-in-out;
+}

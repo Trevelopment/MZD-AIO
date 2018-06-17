@@ -1,28 +1,9 @@
+backup_org /jci/gui/apps/ecoenergy/controls/FuelConsumption/css/FuelConsumptionCtrl.css
+backup_org /jci/gui/apps/ecoenergy/controls/FuelConsumption/images/FuelConsBG.png
+backup_org /jci/gui/apps/ecoenergy/controls/FuelConsumption/js/FuelConsumptionCtrl.js
 # FuelConsumptionTweak
 show_message "INSTALL FUEL CONSUMPTION TWEAK ..."
 log_message "=======************  INSTALL FUEL CONSUMPTION TWEAK ... **********======="
-
-if [ $TESTBKUPS -eq 1 ]
-then
-	cp /jci/gui/apps/ecoenergy/controls/FuelConsumption/css/FuelConsumptionCtrl.css "${MYDIR}/bakups/test/FuelConsumptionCtrl-before.css"
-	cp /jci/gui/apps/ecoenergy/controls/FuelConsumption/js/FuelConsumptionCtrl.js "${MYDIR}/bakups/test/FuelConsumptionCtrl-before.js"
-fi
-# Backups
-if [ ! -e /jci/gui/apps/ecoenergy/controls/FuelConsumption/css/FuelConsumptionCtrl.css.org ]
-then
-	cp -a /jci/gui/apps/ecoenergy/controls/FuelConsumption/css/FuelConsumptionCtrl.css /jci/gui/apps/ecoenergy/controls/FuelConsumption/css/FuelConsumptionCtrl.css.org
-	log_message "===   Backup FuelConsumptionCtrl.css to FuelConsumptionCtrl.css.org   ==="
-fi
-if [ ! -e /jci/gui/apps/ecoenergy/controls/FuelConsumption/images/FuelConsBG.png.org ]
-then
-	cp -a /jci/gui/apps/ecoenergy/controls/FuelConsumption/images/FuelConsBG.png /jci/gui/apps/ecoenergy/controls/FuelConsumption/images/FuelConsBG.png.org
-	log_message "===           Backup of FuelConsBG.png to FuelConsBG.png.org          ==="
-fi
-if [ ! -e /jci/gui/apps/ecoenergy/controls/FuelConsumption/js/FuelConsumptionCtrl.js.org ]
-then
-	cp -a /jci/gui/apps/ecoenergy/controls/FuelConsumption/js/FuelConsumptionCtrl.js /jci/gui/apps/ecoenergy/controls/FuelConsumption/js/FuelConsumptionCtrl.js.org
-	log_message "===  Backup of FuelConsumptionCtrl.js to FuelConsumptionCtrl.js.org   ==="
-fi
 
 cp -a "${MYDIR}/config/FuelConsumptionTweak/jci/gui/apps/ecoenergy/controls/FuelConsumption/css/FuelConsumptionCtrl.css" /jci/gui/apps/ecoenergy/controls/FuelConsumption/css/
 log_message "===                Copied css/FuelConsumptionCtrl.css                 ==="
