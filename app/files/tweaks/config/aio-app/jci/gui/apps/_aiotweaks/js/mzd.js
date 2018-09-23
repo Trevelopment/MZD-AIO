@@ -4,7 +4,7 @@
 // ** By Trezdog44
 // *****************************
 /* jshint -W117 */
-var aioTweaksVer = 0.7;
+var aioTweaksVer = 0.8;
 var AArunning = false;
 var appListData = [];
 
@@ -35,6 +35,7 @@ function StartAIOApp() {
   $("#touchscreenOffBtn").on("click", disableTouchscreen);
   $("#touchscreenCompassBtn").on("click", enableCompass);
   $("#adbBtn").on("click", adbDevices);
+  $("#adbRevBtn").on("click", adbReverse);
   $("#messageTestBtn").on("click", messageTest);
   //$("#screenshotBtn").on("click",takeScreenshot);
   //$("#saveScreenshotBtn").on("click",saveScreenshot);
@@ -63,8 +64,8 @@ function StartAIOApp() {
   $("#displayOffBtn").on("click", displayOff);
   $("#mountSwapBtn").on("click", mountSwap);
   $("#unmountSwapBtn").on("click", unmountSwap);
-  $("#createSwapBtn").on("click", showVehicleType);
-  $("#backupCamBtn").on("click", showBodyClassName);
+  $("#showVehData").on("click", showVehicleData);
+  $("#backupCamBtn").on("click", backUpCam);
   $("#errLogBtn").on("click", showErrLog);
   $("#runTerminalBtn").on("click", TerminalConfirm);
   $("#runCheckIPBtn").on("click", RunCheckIP);
@@ -72,6 +73,7 @@ function StartAIOApp() {
   $("#shiftEntListBtn").on("click", shiftEntertainmentList);
   $("#devModeSecretBtn").on("click", toggleDevMode);
   $("#wifiToggle").on("click", turnOnWifi);
+  $("#verBtn").on("click", showVersion);
   $("#showBgBtn").on("click", function() { $("html").addClass("showBg") });
   $("#twkOut").on("click", function() { framework.sendEventToMmui("common", "Global.IntentHome") });
   $("#usba").on("click", function() { framework.sendEventToMmui("system", "SelectUSBA") });
@@ -101,7 +103,7 @@ function StartAIOApp() {
   $(".toggleTweaks").on("click", saveTweaks);
   $(".tablinks").on("click", function() {
     $("#MainMenuMsg").html("");
-    localStorage.setItem("aio.prevtab", JSON.stringify($(this).attr("id")));
+    localStorage.setItem("aio.prevtab",$(this).attr("tabindex"));
   });
   $("#openNav").on("click", function() {
     document.getElementById("mySidenav").style.width = "250px";
@@ -142,6 +144,12 @@ function getAppListData() {
       hasCS();
       hasSwap();
       hasErrLog();
+      if (typeof CustomApplicationsHandler === "object") {
+        var custApps = CustomApplicationsHandler.getMenuItems();
+        custApps.forEach(function(elmt) {
+          appListData.push({ "name": elmt.text1Id, "label": elmt.title });
+        })
+      }
     });
   } catch (e) {
     showAioInfo('Error: Cannot retrieve AIO app list...  <br>' + e);
@@ -183,6 +191,7 @@ function turnOnWifi() {
     net = framework.getAppInstance('netmgmt');
     if (!net._onOffStatus) {
       framework.sendEventToMmui('netmgmt', 'SetWifiConnection', { payload: { offOn: wifiOn } });
+      showAioInfo("WIFI ON??");
     }
   }, 1000); //give it a second to load
 }
@@ -214,8 +223,9 @@ function toggleDevMode() {
 }
 
 function showEnvVar() {
-  showAioInfo("$ env");
-  aioWs('env', 3);
+  // showAioInfo("$ env");
+  // aioWs('env', 3);
+  exeCmd('env');
 }
 
 function takeScreenshot() {
@@ -235,7 +245,7 @@ function saveScreenshot() {
   $('#AioInfoPanel').show();
   var msg = '/jci/tools/jci-dialog --info --title="SCREENSHOT SAVED TO SD CARD" --text="NOT REALLY\\n I WILL DO THAT LATER" & ';
   msg += 'sleep 2; ';
-  msg += 'killall jci-dialog; ';
+  msg += 'killall -q jci-dialog; ';
   msg += "/bin/sh /jci/gui/apps/_aiotweaks/sh/screenshot.sh TrezShot ";
   msg += "\n";
   $('#AioInformation').css({ 'background': 'url(/tmp/root/wayland-screenshot.png?' + Date.now() + ')', 'background-size': '100% 100%', 'background-position': 'center' });
@@ -245,11 +255,13 @@ function saveScreenshot() {
 function showAioInfo(message, append) {
   $('#aaTitle, #csTitle').css({ 'outline': 'none' });
   $('#AioInfoPanel').addClass('opened');
-  message += '<br>';
-  if (!append) {
-    $('#AioInformation').html(message);
-  } else {
-    $('#AioInformation').append(message);
+  if (message !== "") {
+    message += '<br>'
+    if (!append) {
+      $('#AioInformation').html(message);
+    } else {
+      $('#AioInformation').append(message);
+    }
   }
   if ($('#AioInformation').height() === 360) {
     $('#AioInfoPanel').addClass('scrollers');
@@ -279,8 +291,13 @@ function closeTSPanel() {
 }
 
 function adbDevices() {
-  showAioInfo("$ adb devices -l");
-  aioWs('adb devices -l', 1);
+  // showAioInfo("$ adb devices -l");
+  // aioWs('adb devices -l', 1);
+  exeCmd('adb devices -l');
+}
+
+function adbReverse() {
+  exeCmd('adb reverse tcp:2222 tcp:22');
 }
 
 function TerminalConfirm() {
@@ -296,7 +313,7 @@ function RunCheckIP() {
 }
 
 function myTest() {
-  var msgChoice = Math.round(Math.random() * 10/3);
+  var msgChoice = Math.round(Math.random() * 10 / 3);
   switch (msgChoice) {
     case 1:
       framework.common.startTimedSbn(this.uiaId, "SbnAIOTest", "typeE", { sbnStyle: "Style02", imagePath1: 'apps/_aiotweaks/panda.png', text1: this.uiaId, text2: "Pandamonium!!" });
@@ -326,18 +343,25 @@ function fullSystemRestoreConfirm() {
 function fullSystemRestore() {
   aioWs('/bin/sh /tmp/mnt/data_persist/dev/system_restore/restore.sh', 2); // Run Full Restore Script
 }
-/*function backUpCam(){
-  utility.setRequiredSurfaces("NATGUI_SURFACE", true);
+
+function backUpCam() {
+  utility.setRequiredSurfaces(["NATGUI_SURFACE"], true);
+  $("body").css({ "display": "none" });
   aioWs('/bin/sh /jci/backupcam/start_cam.sh', 2);
-}*/
+  // aioMagicRoute("_aiotweaks", "RevCam");
+  aioMagicRoute("backupparking", "BackupCameraDisplay");
+}
+
 function toggleWifiAP() {
-  showAioInfo("$ start_wifi.sh && jci-wifiap.sh start");
-  aioWs('/bin/sh /jci/scripts/start_wifi.sh; /bin/sh /jci/scripts/jci-wifiap.sh start && echo DONE  ', 5);
+  // showAioInfo("$ start_wifi.sh && jci-wifiap.sh start");
+  // aioWs('/bin/sh /jci/scripts/start_wifi.sh; /bin/sh /jci/scripts/jci-wifiap.sh start && echo DONE  ', 5);
+  exeCmd("start_wifi.sh && jci-wifiap.sh start");
 }
 
 function stopFirewall() {
-  showAioInfo("$ jci-fw.sh stop");
-  aioWs('/bin/sh /jci/scripts/jci-fw.sh stop && echo "DONE" || echo "FAILBOAT" ', 1);
+  // showAioInfo("$ jci-fw.sh stop");
+  // aioWs('/bin/sh /jci/scripts/jci-fw.sh stop && echo "DONE" || echo "FAILBOAT" ', 1);
+  exeCmd("jci-fw.sh stop");
 }
 /*function myMessage(){
   var msg = '/jci/gui/apps/_aiotweaks/sh/message.sh "MESSAGES DISPLAY SUCCESS!!<br>THIS IS A P.O.C. FOR DISPAYING JCI-DIALOG<br>MESSAGES USING WEBSOCKETS AND JAVASCRIPT"';
@@ -369,7 +393,7 @@ function AioFileCheck(fc) {
   var FC = fc.substr(fc.lastIndexOf("_"));
   switch (FC) {
     case "_NOAA":
-      $('#aaTitle, .aaFunc').remove();
+      $('#aaTitle, .aaFunc, #headunitLogBtn').remove();
       $('#csTitle').addClass('centered');
       break;
     case "_CS":
@@ -406,17 +430,19 @@ function AioFileCheck(fc) {
   }
 }
 
-function showVehicleType() {
-  var vehicleType = framework.getSharedData("syssettings", "VehicleType");
-  var hud = framework.getSharedData("vehsettings", "HudInstalled");
-  var IgnitionStatus = framework.getSharedData("vehsettings", "IgnitionStatus");
-  var CANStatus = framework.getSharedData("vehsettings", "CanStatus");
-  var vehicleConfig = framework.getSharedData("syssettings", "VehicleConfigData");
-  var email = framework.getSharedData('email', "emailSupported");
-  var destination = framework.getSharedData("syssettings", "DestinationCode");
-  var steeringWheelType = framework.getSharedData("vehsettings", "SteeringWheelLoc");
-  var toolTipsEnabled = framework.getSharedData("syssettings", "ToolTips");
-  showAioInfo("Vehicle Type: " + vehicleType + "<br>HUD: " + hud + "<br>Ignition Status: " + IgnitionStatus + "<br>CAN Status: " + CANStatus + "<br>Vehicle Configuration Data: " + vehicleConfig + "<br>Email Support: " + email + "<br>Destination: " + destination + "<br>Steering Wheel Type: " + steeringWheelType + "<br>Tool Tips Enabled: " + toolTipsEnabled);
+function showVehicleData() {
+  var vehicleType = []
+  vehicleType.push("<b>Shared Vehicle Data:</b>");
+  vehicleType.push("<br>Vehicle Type: " + framework.getSharedData("syssettings", "VehicleType"));
+  vehicleType.push("<br>HUD: " + framework.getSharedData("vehsettings", "HudInstalled"));
+  vehicleType.push("<br>Ignition Status: " + framework.getSharedData("vehsettings", "IgnitionStatus"));
+  vehicleType.push("<br>Can Status: " + framework.getSharedData("vehsettings", "CanStatus"));
+  vehicleType.push("<br>Vehicle Configuration Data: " + framework.getSharedData("syssettings", "VehicleConfigData"));
+  vehicleType.push("<br>Email Support: " + framework.getSharedData('email', "emailSupported"));
+  vehicleType.push("<br>Destination: " + framework.getSharedData("syssettings", "DestinationCode"));
+  vehicleType.push("<br>Steering Wheel Type: " + framework.getSharedData("vehsettings", "SteeringWheelLoc"));
+  vehicleType.push("<br>Tool Tips Enabled: " + framework.getSharedData("syssettings", "ToolTips"));
+  showAioInfo(vehicleType.join(" "));
 }
 
 function showAppList() {
@@ -424,7 +450,7 @@ function showAppList() {
   $.each(appListData, function(key, val) {
     items.push("<li id='" + key + "'>" + val.label + "</li>");
   });
-  showAioInfo('Installed AIO Apps');
+  showAioInfo('<b>Installed AIO Apps:</b>');
   $("<ul/>", {
     "class": "my-new-list",
     html: items.join("")
@@ -445,23 +471,28 @@ function enableCompass() {
 
 function startHeadunit() {
   AArunning = true;
-  showAioInfo("$ /tmp/mnt/data_persist/dev/bin/headunit-wrapper &");
-  aioWs('/tmp/mnt/data_persist/dev/bin/headunit-wrapper 2>&1 & ', 30);
+  // showAioInfo("$ /tmp/mnt/data_persist/dev/bin/headunit-wrapper &");
+  // aioWs('/tmp/mnt/data_persist/dev/bin/headunit-wrapper 2>&1 & ', 30);
+  exeCmd("headunit-wrapper 2>&1 &");
 }
 
 function stopHeadunit() {
-  showAioInfo("$ killall headunit");
-  aioWs('killall headunit 2>&1', 0);
+  // showAioInfo("$ killall headunit");
+  // aioWs('killall headunit 2>&1', 0);
+  exeCmd("killall headunit 2>&1");
 }
 
 function startCastScreen() {
-  showAioInfo("$ cd /jci/scripts && ./cs_receiver_arm mfw_v4lsink");
-  aioWs('cd /jci/scripts; killall cs_receiver_arm; sleep 1; ./cs_receiver_arm mfw_v4lsink 2>&1', 5);
+  // showAioInfo("$ cd /jci/scripts && ./cs_receiver_arm mfw_v4lsink");
+  // aioWs('cd /jci/scripts; killall cs_receiver_arm; sleep 1; ./cs_receiver_arm mfw_v4lsink 2>&1', 5);
+  aioWs('killall -q -9 cs_receiver_arm', 0);
+  exeCmd("cd /jci/scripts && ./cs_receiver_arm mfw_v4lsink");
 }
 
 function stopCastScreen() {
-  showAioInfo("$ killall cs_receiver_arm");
-  aioWs('killall cs_receiver_arm 2>&1', 0);
+  // showAioInfo("$ killall cs_receiver_arm");
+  // aioWs('killall cs_receiver_arm 2>&1', 0);
+  exeCmd('killall -9 cs_receiver_arm')
 }
 /*function startSpeedometer(){
   utility.loadScript('apps/_speedometer/js/speedometer.js');
@@ -488,8 +519,9 @@ function messageTest() {
 }
 
 function showVersion() {
-  showAioInfo("$ show_version.sh");
-  aioWs('show_version.sh', 1);
+  //showAioInfo("$ show_version.sh");
+  //aioWs('show_version.sh', 1);
+  exeCmd('show_version.sh')
 }
 
 function displayOff() {
@@ -497,9 +529,9 @@ function displayOff() {
     framework.sendEventToMmui("common", "Global.IntentHome");
     framework.sendEventToMmui("common", "Global.IntentSettingsTab", { payload: { settingsTab: "Display" } });
   }
+  framework.sendEventToMmui("system", "SelectIdleStandby");
+  framework.sendEventToMmui("system", "DisplayOffGUIActivity");
   framework.sendEventToMmui("syssettings", "SelectDisplayOff");
-  //framework.sendEventToMmui("system","SelectIdleStandby");
-  //framework.sendEventToMmui("system","DisplayOffGUIActivity");
 }
 
 function showHeadunitLog() {
@@ -510,60 +542,70 @@ function showErrLog() {
   showFile('/tmp/root/casdk-error.log');
 }
 
-function showFile(filepath) {
-  showAioInfo("Loading " + filepath + " ...");
-  $.ajax({
-    url: filepath,
-    dataType: "text",
-    success: function(data) {
-      $("#AioInformation").html(data);
-    },
-    error: function(e) {
-      showAioInfo("ERROR: " + e);
-    }
-  });
+function exeCmd(command) {
+  aioWs(command + " > /tmp/root/stdout", 0)
+  showFile("/tmp/root/stdout", command);
+}
+
+function showFile(filepath, command) {
+  showAioInfo(command ? "$ " + command : "Loading " + filepath + " ...");
+  setTimeout(function() {
+    $.ajax({
+      url: filepath,
+      dataType: "text",
+      success: function(data) {
+        $("#AioInformation").append(data);
+      },
+      error: function(e) {
+        showAioInfo("ERROR: " + JSON.stringify(e), true);
+      }
+    });
+  }, command ? 1000 : 1);
 }
 
 function showBodyClassName() {
-  //showAioInfo("Body className: <br> " + document.getElementsByTagName("body")[0].className + "<br><br>localStorage.getItem(\"aiotweaks\"): <br> " + JSON.parse(localStorage.getItem("aiotweaks")));
+  // showAioInfo("Body className: <br> " + document.getElementsByTagName("body")[0].className + "<br><br>localStorage.getItem(\"aiotweaks\"): <br> " + JSON.parse(localStorage.getItem("aiotweaks")));
   str = JSON.stringify(localStorage);
   str = str.replace(/,/g, '<br>');
   showAioInfo("<div class='infoMessage'>" + str + "</div>");
 }
 
 function showDFH() {
-  showAioInfo("$ df -h");
-  aioWs('df -h 2>&1', 2);
+  // showAioInfo("$ df -h");
+  // aioWs('df -h 2>&1', 2);
+  exeCmd('df -h');
 }
 
 function showMeminfo() {
-  showAioInfo("$ cat /proc/swaps");
-  aioWs('cat /proc/swaps && echo "$ cat /proc/meminfo" && cat /proc/meminfo && echo DONE 2>&1', 3);
+  // showAioInfo("$ cat /proc/swaps");
+  // aioWs('cat /proc/swaps && echo "$ cat /proc/meminfo" && cat /proc/meminfo && echo DONE 2>&1', 3);
+  exeCmd('cat /proc/swaps && cat /proc/meminfo');
 }
 
 function showPS() {
-  showAioInfo("$ ps");
-  aioWs('ps', 2);
+  // showAioInfo("$ ps");
+  // aioWs('ps', 2);
+  exeCmd('ps');
 }
 
 function scrollUp() {
-  $('#AioInformation').animate({ scrollTop: '-=300px' }, 100);
+  $('#AioInformation').animate({ scrollTop: '-=300px' }, 300);
 }
 
 function scrollDown() {
-  $('#AioInformation').animate({ scrollTop: '+=300px' }, 100);
+  $('#AioInformation').animate({ scrollTop: '+=300px' }, 300);
 }
 
 function mountSwap() {
   showAioInfo('$ swapon ${SWAPFILE}<br>');
   aioWs('sh /jci/gui/apps/_aiotweaks/sh/resource_swap.sh 2>&1 && echo DONE');
-  $("#mountSwapBtn").fadeOut(5000);
+  $("#mountSwapBtn").fadeOut(500);
 }
 
 function unmountSwap() {
   showAioInfo('$ swapoff -a /tmp/mnt/sd*/swapfile<br>');
   aioWs('sh /jci/gui/apps/_aiotweaks/sh/resource_swap.sh unmount 2>&1 && echo DONE');
-  $("#unmountSwapBtn").fadeOut(5000);
+  $("#unmountSwapBtn").fadeOut(500);
 }
 /*
 function createSwap() {
@@ -646,6 +688,9 @@ function aioWs(action, waitMessage) {
     }
   };
   ws.onclose = function() {
+    $('button').css({ 'background': '', 'color': '' });
+  };
+  ws.onerror = function() {
     $('button').css({ 'background': '', 'color': '' });
   };
 }

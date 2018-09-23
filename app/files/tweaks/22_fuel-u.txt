@@ -2,38 +2,18 @@
 show_message "REMOVE FUEL CONSUMPTION TWEAK  ..."
 log_message "===========****** UNINSTALL FUEL CONSUMPTION TWEAK  ... *******=========="
 
-if [ $TESTBKUPS -eq 1 ]
+if ! (restore_org /jci/gui/apps/ecoenergy/controls/FuelConsumption/css/FuelConsumptionCtrl.css)
 then
-	cp /jci/gui/apps/ecoenergy/controls/FuelConsumption/css/FuelConsumptionCtrl.css "${MYDIR}/bakups/test/FuelConsumptionCtrl-before.css"
-	cp /jci/gui/apps/ecoenergy/controls/FuelConsumption/js/FuelConsumptionCtrl.js "${MYDIR}/bakups/test/FuelConsumptionCtrl-before.js"
-fi
-# If you for some reason need the fallback files, uncomment the commented lines below.
-if [ -e /jci/gui/apps/ecoenergy/controls/FuelConsumption/css/FuelConsumptionCtrl.css.org ]
-then
-	cp /jci/gui/apps/ecoenergy/controls/FuelConsumption/css/FuelConsumptionCtrl.css.org /jci/gui/apps/ecoenergy/controls/FuelConsumption/css/FuelConsumptionCtrl.css
-	log_message "===       Restored original FuelConsumptionCtrl.css from backup       ==="
-else
-	# cp -a "${MYDIR}/config_org/FuelConsumptionTweak/jci/gui/apps/ecoenergy/controls/FuelConsumption/css/FuelConsumptionCtrl.css" /jci/gui/apps/ecoenergy/controls/FuelConsumption/css/
-	# log_message "===   No backup found, copied original FuelConsumptionCtrl.css from SD card   =="
 	log_message "===      No backup found, FuelConsumptionCtrl.css was not changed     ==="
 fi
-if [ -e /jci/gui/apps/ecoenergy/controls/FuelConsumption/images/FuelConsBG.png.org ]
+if ! (restore_org /jci/gui/apps/ecoenergy/controls/FuelConsumption/js/FuelConsumptionCtrl.js)
 then
-	cp /jci/gui/apps/ecoenergy/controls/FuelConsumption/images/FuelConsBG.png.org /jci/gui/apps/ecoenergy/controls/FuelConsumption/images/FuelConsBG.png
-	log_message "===        Restored original FuelConsumptionCtrl.css from backup      ==="
-else
-	# cp -a "${MYDIR}/config_org/FuelConsumptionTweak/jci/gui/apps/ecoenergy/controls/FuelConsumption/images/FuelConsBG.png" /jci/gui/apps/ecoenergy/controls/FuelConsumption/images/
-	# log_message "===      No backup found, copied original FuelConsBG.png from SD card      ==="
-	log_message "===          No backup found, FuelConsBG.png was not changed          ==="
-fi
-if [ -e /jci/gui/apps/ecoenergy/controls/FuelConsumption/js/FuelConsumptionCtrl.js.org ]
-then
-	cp /jci/gui/apps/ecoenergy/controls/FuelConsumption/js/FuelConsumptionCtrl.js.org /jci/gui/apps/ecoenergy/controls/FuelConsumption/js/FuelConsumptionCtrl.js
-	log_message "===           Restored original FuelConsBG.png from backup            ==="
-else
-	# cp -a "${MYDIR}/config_org/FuelConsumptionTweak/jci/gui/apps/ecoenergy/controls/FuelConsumption/js/FuelConsumptionCtrl.js" /jci/gui/apps/ecoenergy/controls/FuelConsumption/js/
-	# log_message "=== No backup found, copied original FuelConsumptionCtrl.js from SD card ==="
 	log_message "===      No backup found, FuelConsumptionCtrl.js was not changed      ==="
+fi
+if ! (restore_org /jci/gui/apps/ecoenergy/controls/FuelConsumption/images/FuelConsBG.png)
+then
+  cp -a "${MYDIR}/config_org/FuelConsumptionTweak/jci/gui/apps/ecoenergy/controls/FuelConsumption/images/FuelConsBG.png" /jci/gui/apps/ecoenergy/controls/FuelConsumption/images/
+  log_message "===          No backup found, FuelConsBG.png copied from USB          ==="
 fi
 if [ $TESTBKUPS -eq 1 ]
 then

@@ -15,7 +15,7 @@ then
     rm -rf ${MZD_APP_DIR}
     ln -sf ${MZD_APP_SD}/apps ${MZD_APP_DIR}
     log_message "===               Created App Symlink To NAV_SD Card                  ==="
-    killall jci-dialog
+    killall -q jci-dialog
     /jci/tools/jci-dialog --confirm --title="INSTALL APPS TO SD CARD?" --text="INSTALL CASDK APPS ONTO SD CARD?\n\n1. YES - INSTALL APPS ONTO SD CARD.\nOR\n2. NO - SKIP (MANUALLY INSTALL APPS TO SD CARD)." --ok-label="1. YES - INSTALL" --cancel-label="2. NO - SKIP"
     if [ $? -eq 1 ]
     then
@@ -29,7 +29,7 @@ then
       show_message "INSTALLING CASDK APPS TO SD CARD ... "
     fi
   else
-    killall jci-dialog
+    killall -q jci-dialog
     /jci/tools/jci-dialog --confirm --title="INSTALL CASDK APPS?" --text="NO SD CARD CONNECTED, TO USE CASDK APPS:\n\n1. MANUALLY INSTALL APPS TO SD CARD\nOR\n2. INSTALL APPS TO SYSTEM (NO SD CARD NEEDED)." --ok-label="1. SD CARD" --cancel-label="2. SYSTEM DISK"
     if [ $? -eq 1 ]
     then
@@ -71,10 +71,10 @@ else
 fi
 
 # Set up terminal app to directly execute shell commands
-if [ ${APPTERMINAL} -eq 1 ] && ! grep -Fq "terminal" /jci/scripts/stage_wifi.sh
+if [ ${APPTERMINAL} -eq 1 ] && ! grep -Fq "terminal" ${STAGE_WIFI}
 then
-  echo '### Terminal' >> /jci/scripts/stage_wifi.sh
-  echo 'sh /jci/gui/apps/custom/apps/app.terminal/terminal.sh &' >> /jci/scripts/stage_wifi.sh
+  echo '### Terminal' >> ${STAGE_WIFI}
+  echo 'sh /jci/gui/apps/custom/apps/app.terminal/terminal.sh &' >> ${STAGE_WIFI}
   log_message "===                    Added Terminal Startup                         ==="
 fi
 
@@ -94,14 +94,14 @@ add_casdk_app "${APPSNAKE}" "snake"
 echo '];' >> ${MZD_APPS_JS}
 chmod -R 755 ${MZD_APP_DIR}
 
-backup_org /jci/gui/apps/system/js/systemApp.js
 # for FW v59 if they do not have No more disclamer or order of audio source
 # apply patch to show apps in app List
 if [ $COMPAT_GROUP -gt 2 ] && ! grep -Fq "app.casdkapps" /jci/gui/apps/system/js/systemApp.js
 then
+  backup_org /jci/gui/apps/system/js/systemApp.js
   if [ $COMPAT_GROUP -lt 6 ]
   then
-    cp -a ${MYDIR}/casdk/patch/systemApp.js /jci/gui/apps/system/js
+    cp -a ${MYDIR}/casdk/patch/systemApp.js /jci/gui/apps/system/js/
     log_message "===        Patched systemApp.js for AIO + CASDK apps for v59          ==="
   elif [ $COMPAT_GROUP -eq 6 ]
   then
@@ -114,7 +114,7 @@ fi
 
 sleep 5
 log_message "=========************* CASDK INSTALLATION FINISHED *************========="
-killall jci-dialog
+killall -q jci-dialog
 /jci/tools/jci-dialog --title="AIO + CASDK INSTALLED" --text="THE CUSTOM APPLICATION RUNTIME\nWAS SUCCESSFULLY INSTALLED\n\nTHE SYSTEM WILL REBOOT IN A FEW SECONDS." --no-cancel &
 sleep 10
 reboot

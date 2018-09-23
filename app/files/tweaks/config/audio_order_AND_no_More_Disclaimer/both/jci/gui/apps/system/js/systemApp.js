@@ -1,22 +1,22 @@
 // This is a failsafe
-if (typeof FmRadioPos === 'undefined') {
-  FmRadioPos = 1;
-  AmRadioPos = 2;
-  UsbAudioAPos = 4;
-  UsbAudioBPos = 5;
-  AuxInPos = 6;
-  BluetoothPos = 7;
-  SdarsRadioPos = 8;
-  DabRadioPos = 7;
-  AhaRadioPos = 8;
-  PandoraPos = 9;
-  StitcherItemPos = 10;
-  CdPlayerPos = 11;
-  DVDItemPos = 12;
-  TVItemPos = 13;
-  aaAudioPos = 6;
-  cpAudioPos = 6;
-  xmRadioPos = 3;
+if (typeof aaAudioPos === 'undefined') {
+  FmRadioPos = 0;
+  AmRadioPos = 0;
+  UsbAudioAPos = 0;
+  UsbAudioBPos = 0;
+  AuxInPos = 0;
+  BluetoothPos = 0;
+  SdarsRadioPos = 0;
+  DabRadioPos = 0;
+  AhaRadioPos = 0;
+  PandoraPos = 0;
+  StitcherItemPos = 0;
+  CdPlayerPos = 0;
+  DVDItemPos = 0;
+  TVItemPos = 0;
+  aaAudioPos = 0;
+  cpAudioPos = 0;
+  xmRadioPos = 0;
 }
 /*
 Copyright 2012 by Johnson Controls

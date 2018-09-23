@@ -2,15 +2,15 @@
 log.addSrcFile("TestCtrl.js", "common");
 
 function TestCtrl(uiaId, parentDiv, ctrlId, properties)
-{    
+{
     /*This is the constructor of the TestCtrl Component
      Create, set dimensions and assign default name*/
-    
+
     this.id = ctrlId;
     this.divElt = null;
     this.uiaId = null;
     this.parentDiv = null;
-    
+
     //@formatter:off
     this.properties = {
         "enterCallback"    : null, // (function)
@@ -30,13 +30,13 @@ function TestCtrl(uiaId, parentDiv, ctrlId, properties)
     {
         this.properties[i] = properties[i];
     }
-    
+
     // set control's properties
     this.id = ctrlId;            // control's id
     this.parentDiv = parentDiv;    // control's immediate parent DOM element
     this.uiaId = uiaId;            // uiaId of the owning app
     log.debug("Test Control constructor called with uiaId " + this.uiaId);
-    
+
     // control DOM elements
     this.input = null;
     this.data = null;
@@ -56,7 +56,7 @@ function TestCtrl(uiaId, parentDiv, ctrlId, properties)
     this.delHandler = this._delHandler.bind(this);
     this.btnSelectCallback = this._btnSelectCallback.bind(this);
     this.mouseUpBodyHandler = this._mouseUpBodyHandler.bind(this);
-	
+
     this._testIdsArray = new Array();
     this._testNameArray = new Array();
     this._isTestRunning = false;
@@ -64,7 +64,7 @@ function TestCtrl(uiaId, parentDiv, ctrlId, properties)
     this._longPressTimeOut = null;
     this._isHDCertificationON = false;
     this._inputKeyPressed = false;    //(Boolean) true: mousedown, false : mouseup
-	
+
     // initialize
     this.init();
 }
@@ -81,20 +81,20 @@ TestCtrl.prototype.init = function()
     this.divElt = document.createElement('div');
     this.divElt.id = this.id;
     this.divElt.className = "TestCtrl";
-    
+
     //  title
     this.title = document.createElement('div');
     this.title.className = "title";
     this.title.appendChild(document.createTextNode('Test Screen'));
     this.divElt.appendChild(this.title);
-    
+
     // input
     this.input = document.createElement('div');
     this.input.className = "input";
 
     this.input.innerText = "# #";
     this.input.style.color = "grey";
-    if (this.properties.value) 
+    if (this.properties.value)
     {
         this.input.innerText = this.properties.value;
         this.input.style.color = "white";
@@ -102,61 +102,61 @@ TestCtrl.prototype.init = function()
     this.divElt.appendChild(this.input);
 
     // data window
-    this.data = document.createElement('div'); 
+    this.data = document.createElement('div');
     this.data.className = "data";
     this.data.innerText = "Data Window";
     this.data.style.color = "grey";
-    if (this.properties.dataValue) 
+    if (this.properties.dataValue)
     {
         this.data.innerText = this.properties.dataValue;
         this.data.style.color = "white";
     }
     this.divElt.appendChild(this.data);
-    
+
     // status window
     this.status = document.createElement('div');
     this.status.className = "status";
     this.status.innerText = "Status Window";
     this.status.style.color = "grey";
-   
+
     this.divElt.appendChild(this.status);
-    
+
     // btn del
     this.btnDel = document.createElement('div');
     this.btnDel.className = 'del';
     this.btnDel.addEventListener(TestCtrl.prototype._MOUSEDOWNEVENT, this.delHandler, false);
     this.btnDel.innerText = "DEL";
     this.divElt.appendChild(this.btnDel);
-    
+
     // btn enter
     this.btnTest = document.createElement('div');
     this.btnTest.className = 'test';
     this.btnTest.addEventListener(TestCtrl.prototype._MOUSEDOWNEVENT, this.testHandler, false);
     this.btnTest.innerText = "T/M";
     this.divElt.appendChild(this.btnTest);
-    
+
     // btn enter
     this.btnEnter = document.createElement('div');
     this.btnEnter.className = 'enter';
     this.btnEnter.addEventListener(TestCtrl.prototype._MOUSEDOWNEVENT, this.enterHandler, false);
     this.btnEnter.innerText = "ENTER";
     this.divElt.appendChild(this.btnEnter);
-    
+
     // btn Clear
     this.btnClear = document.createElement('div');
     this.btnClear.className = 'clear';
     this.btnClear.addEventListener(TestCtrl.prototype._MOUSEDOWNEVENT, this.clearHandler, false);
     this.btnClear.innerText = "CLEAR";
     this.divElt.appendChild(this.btnClear);
-    
+
     // btn exit
     this.btnExit = document.createElement('div');
     this.btnExit.className = 'exit';
     this.btnExit.addEventListener(TestCtrl.prototype._MOUSEDOWNEVENT, this.exitHandler, false);
     //Setting Button Lable - arsu
-    this.btnExit.innerText = this.properties.buttonValue; 
+    this.btnExit.innerText = this.properties.buttonValue;
     this.divElt.appendChild(this.btnExit);
-    
+
     // buttons
     this.btns = new Array();
     for (var i=0; i<10; i++)
@@ -169,7 +169,7 @@ TestCtrl.prototype.init = function()
         this.btns[i].addEventListener(TestCtrl.prototype._MOUSEDOWNEVENT, this.btnSelectCallback, false);
         this.divElt.appendChild(temp);
     }
-    
+
     // Add it to the DOM
     this.parentDiv.appendChild(this.divElt);
 }
@@ -181,12 +181,12 @@ TestCtrl.prototype.init = function()
  * this control.
  * =========================
  */
- 
+
 TestCtrl.prototype._btnSelectCallback = function(e)
 {
 	// set value
 	//log.info("inside _btnSelectCallback , is normal test running "+!this._JCITestRunning);
-    
+
 	if (this._inputKeyPressed)
 	{
 		document.body.removeEventListener(TestCtrl.prototype._MOUSEUPEVENT, this.mouseUpBodyHandler);
@@ -195,7 +195,7 @@ TestCtrl.prototype._btnSelectCallback = function(e)
 			this.btns[i].removeEventListener(TestCtrl.prototype._MOUSEUPEVENT, this.btnSelectCallback, false);
 		}
 		this._inputKeyPressed = false;
-		
+
 		var val = e.target.getAttribute('data-value');
 		if(!this._isHDCertificationON)
 		{
@@ -208,7 +208,7 @@ TestCtrl.prototype._btnSelectCallback = function(e)
 					{
 						//restrict the input window to accept upto five digits only
 						this.properties.value = (parseInt(this.properties.value , 10)) % 10000;
-						if (this.properties.value) 
+						if (this.properties.value)
 						{
 							//this.childInputText.nodeValue = this.properties.value;
 							this.input.innerText = this.properties.value;
@@ -222,12 +222,12 @@ TestCtrl.prototype._btnSelectCallback = function(e)
 					{
 						//restrict the input window to accept upto two digits only
 						this.properties.value = (parseInt(this.properties.value , 10)) % 10;
-						if (this.properties.value) 
+						if (this.properties.value)
 						{
 							//this.childInputText.nodeValue = this.properties.value;
 							this.input.innerText = this.properties.value;
 							this.input.style.color = "white";
-							
+
 						}
 					}
 				}
@@ -240,13 +240,13 @@ TestCtrl.prototype._btnSelectCallback = function(e)
 			{
 				 this.properties.value = val;
 			}
-			if (this.properties.value) 
+			if (this.properties.value)
 			{
 				this.input.innerText = this.properties.value;
 				this.input.style.color = "white";
 				if (this.properties.keyPressCallback)
 				{
-					var params = {"input":null,"inputData":this.input.innerText ,"statusData":null,"dataWindowData":null,"enterState" :null};           
+					var params = {"input":null,"inputData":this.input.innerText ,"statusData":null,"dataWindowData":null,"enterState" :null};
 					this.properties.keyPressCallback(this, this.properties.appData, params);
 				}
 			}
@@ -256,7 +256,7 @@ TestCtrl.prototype._btnSelectCallback = function(e)
 		{
 			if (this.properties.keyPressCallback)
 			{
-				var params = {"input":val,"inputData":null ,"statusData":null,"dataWindowData":null,"enterState" :null};            
+				var params = {"input":val,"inputData":null ,"statusData":null,"dataWindowData":null,"enterState" :null};
 				this.properties.keyPressCallback(this, this.properties.appData, params);
 			}
 		}
@@ -288,7 +288,7 @@ TestCtrl.prototype._checkedValidTestId = function(n)
                     this.setStatus(status+" - Not Started");
                     if (this.properties.keyPressCallback)
                     {
-                        var params = {"input":null,"inputData":null ,"statusData":status+" - Not Started", "dataWindowData" : "" ,"enterState" :true }; 
+                        var params = {"input":null,"inputData":null ,"statusData":status+" - Not Started", "dataWindowData" : "" ,"enterState" :true };
                         this.properties.keyPressCallback(this, this.properties.appData, params);
                     }
                     //log.info("_checkedValidTestId ,Enter Activate : true");
@@ -304,7 +304,7 @@ TestCtrl.prototype._checkedValidTestId = function(n)
                     this.setData("");
                     if (this.properties.keyPressCallback)
                     {
-                        var params = {"input":null,"inputData":null , "statusData":"Invalid", "dataWindowData" : "" ,"enterState" :false};    
+                        var params = {"input":null,"inputData":null , "statusData":"Invalid", "dataWindowData" : "" ,"enterState" :false};
                         this.properties.keyPressCallback(this, this.properties.appData, params);
                     }
                     //log.info("_checkedValidTestId ,Enter Activate : false");
@@ -314,7 +314,7 @@ TestCtrl.prototype._checkedValidTestId = function(n)
                 this.setStatus("");
                 if (this.properties.keyPressCallback)
                 {
-                    var params = {"input":null,"inputData":null , "statusData":"", "dataWindowData" : "" ,"enterState" :null};     
+                    var params = {"input":null,"inputData":null , "statusData":"", "dataWindowData" : "" ,"enterState" :null};
                     this.properties.keyPressCallback(this, this.properties.appData, params);
                 }
             }
@@ -323,13 +323,13 @@ TestCtrl.prototype._checkedValidTestId = function(n)
         {
             if (this.properties.keyPressCallback)
             {
-                var params = {"input":null,"inputData":null ,"statusData":null, "dataWindowData" : null ,"enterState" :true }; 
+                var params = {"input":null,"inputData":null ,"statusData":null, "dataWindowData" : null ,"enterState" :true };
                 this.properties.keyPressCallback(this, this.properties.appData, params);
             }
             //log.info("_checkedValidTestId ,only Enter Activate : true");
             this.activateEnter(true);
         }
-    } 
+    }
 }
 
 TestCtrl.prototype._testHandler = function(e)
@@ -344,11 +344,11 @@ TestCtrl.prototype._enterHandler = function(e)
 	{
 		document.body.removeEventListener(TestCtrl.prototype._MOUSEUPEVENT, this.mouseUpBodyHandler);
 		this.btnEnter.removeEventListener(TestCtrl.prototype._MOUSEUPEVENT, this.enterHandler, false);
-		this._inputKeyPressed = false;		
-		
+		this._inputKeyPressed = false;
+
 		// fire the callback
 		//log.info("[TestCtrl] : enter pressed "+this.btnEnter.className);
-		
+
 		var params = {"input":this.properties.value};
 		if (this.properties.enterCallback && this.btnEnter.className === "enter")
 		{
@@ -371,8 +371,8 @@ TestCtrl.prototype._exitHandler = function(e)
 	{
 		document.body.removeEventListener(TestCtrl.prototype._MOUSEUPEVENT, this.mouseUpBodyHandler);
 		this.btnExit.removeEventListener(TestCtrl.prototype._MOUSEUPEVENT, this.exitHandler, false);
-		this._inputKeyPressed = false;	
-		
+		this._inputKeyPressed = false;
+
 		// fire the callback
 		if (this.properties.exitCallback)
 		{
@@ -395,11 +395,11 @@ TestCtrl.prototype._delHandler = function(e)
 		document.body.removeEventListener(TestCtrl.prototype._MOUSEUPEVENT, this.mouseUpBodyHandler);
 		this.btnDel.removeEventListener(TestCtrl.prototype._MOUSEUPEVENT, this.delHandler, false);
 		this._inputKeyPressed = false;
-		
+
 		// clear last digit
 		var val = this.properties.value.substring(0, this.properties.value.length-1);
 		this.properties.value = val;
-		if (this.properties.value) 
+		if (this.properties.value)
 		{
 			this.input.innerText = this.properties.value;
 			this.input.style.color = "white";
@@ -407,7 +407,7 @@ TestCtrl.prototype._delHandler = function(e)
 			{
 				this.setStatus("");
 				this.setData("");
-				var params = {"input":null,"inputData":this.input.innerText,"statusData":"","dataWindowData":"","enterState" :""};    
+				var params = {"input":null,"inputData":this.input.innerText,"statusData":"","dataWindowData":"","enterState" :""};
 				this.properties.keyPressCallback(this, this.properties.appData, params);
 			}
 		}
@@ -419,7 +419,7 @@ TestCtrl.prototype._delHandler = function(e)
 			{
 				this.setStatus("");
 				this.setData("");
-				var params = {"input":null,"inputData":"","statusData":"","dataWindowData":"","enterState" :""};    
+				var params = {"input":null,"inputData":"","statusData":"","dataWindowData":"","enterState" :""};
 				this.properties.keyPressCallback(this, this.properties.appData, params);
 			}
 		}
@@ -430,7 +430,7 @@ TestCtrl.prototype._delHandler = function(e)
 			this.activateEnter(false);
 			if (this.properties.keyPressCallback)
 			{
-				var params = {"input":null,"inputData":null,"statusData":"","dataWindowData":null,"enterState" :false};    
+				var params = {"input":null,"inputData":null,"statusData":"","dataWindowData":null,"enterState" :false};
 				this.properties.keyPressCallback(this, this.properties.appData, params);
 			}
 		}
@@ -450,7 +450,7 @@ TestCtrl.prototype._clearHandler = function(e)
 		document.body.removeEventListener(TestCtrl.prototype._MOUSEUPEVENT, this.mouseUpBodyHandler);
 		this.btnClear.removeEventListener(TestCtrl.prototype._MOUSEUPEVENT, this.clearHandler, false);
 		this._inputKeyPressed = false;
-	
+
 		// fire the callback
 		if (this.properties.clearCallback)
 		{
@@ -502,19 +502,19 @@ TestCtrl.prototype.setData = function(e)
 
 TestCtrl.prototype.setInput = function(e)
 {
-   //log.info("inside setInput: e is "+e);   
+   //log.info("inside setInput: e is "+e);
    // Set input in Input Window
     var val = e;
     this.properties.value = val;
-    if (this.properties.value) 
+    if (this.properties.value)
     {
         this.input.innerText = this.properties.value;
         this.input.style.color = "white";
         log.debug("Status Data = "+this.properties.value);
-        
+
         if (this.properties.keyPressCallback)
         {
-            var params = {"input":null,"inputData":this.input.innerText ,"statusData":null,"dataWindowData":null,"enterState" :null};     
+            var params = {"input":null,"inputData":this.input.innerText ,"statusData":null,"dataWindowData":null,"enterState" :null};
             this.properties.keyPressCallback(this, this.properties.appData, params);
         }
     }
@@ -556,19 +556,19 @@ TestCtrl.prototype.setTestIds = function(array,nameList)
     }
 }
 
-/* 
+/*
  * =========================
- * MULTICONTROLLER 
- * ========================= 
+ * MULTICONTROLLER
+ * =========================
  */
- 
-TestCtrl.prototype.handleControllerEvent = function(eventID) 
+
+TestCtrl.prototype.handleControllerEvent = function(eventID)
 {
     //log.info("TestCtrl: handleController() called, eventID: " + eventID);
     //log.info("TestCtrl: handleController()this._isTestRunning: " + this._isTestRunning);
     var returnValue = null;
     if(!this._isTestRunning)
-    {    
+    {
         switch(eventID)
         {
             case "cw":
@@ -622,10 +622,10 @@ TestCtrl.prototype.cleanUp = function()
     {
         this.btns[i].removeEventListener(TestCtrl.prototype._MOUSEDOWNEVENT, this.btnSelectCallback, false);
     }
-    
+
     // remove properties
     this.properties.length = 0;
-	
+
     // reset to default
     this._inputKeyPressed = false;
 }
@@ -650,10 +650,10 @@ TestCtrl.prototype.deActivate = function()
         this.btns[i].className = ('btn'+i+'Disable');
         this.btns[i].removeEventListener(TestCtrl.prototype._MOUSEDOWNEVENT, this.btnSelectCallback, false);
     }
-    
+
     // remove properties
     this.properties.length = 0;
-	
+
     // reset to default
     this._inputKeyPressed = false;
 }
@@ -662,7 +662,7 @@ TestCtrl.prototype.deActivate = function()
 TestCtrl.prototype.activate = function()
 {
     // add event listeners
-    this.btnExit.innerText = this.properties.buttonValue; 
+    this.btnExit.innerText = this.properties.buttonValue;
     this.btnEnter.className = 'enter';
     this.btnExit.className = 'exit';
     this.btnClear.className = 'clear';
@@ -676,7 +676,7 @@ TestCtrl.prototype.activate = function()
         this.btns[i].className = ('btn'+i);
         this.btns[i].addEventListener('click', this.btnSelectCallback, false);
     }
-    
+
     // remove properties
     this.properties.length = 0;
 }
@@ -706,7 +706,7 @@ TestCtrl.prototype.activateExit = function(state)
         this.btnExit.innerText = this.properties.buttonValue;
         this.btnExit.className = 'exit';
         this.btnExit.addEventListener(TestCtrl.prototype._MOUSEDOWNEVENT, this.exitHandler, false);
-    
+
     }
     else
     {
@@ -749,7 +749,7 @@ TestCtrl.prototype.activateKeyPad = function(state)
              this.btns[i].className = ('btn'+i+"Disable");
              this.btns[i].removeEventListener(TestCtrl.prototype._MOUSEDOWNEVENT, this.btnSelectCallback, false);
         }
-    
+
     }
     this.properties.length = 0;
 }
@@ -812,7 +812,7 @@ TestCtrl.prototype._mouseUp = function (e)
     {
         clearTimeout(this._longPressTimeOut);
         this._longPressTimeOut = null;
-        
+
         this._removeActive(target);
         if (this._prevFocusedBtnDOM)
         {
@@ -847,7 +847,7 @@ TestCtrl.prototype._mouseDown = function (e)
             this._removeFocused();
         }
         this._makeActive(target);
-        
+
         // set long press timer
         clearTimeout(this._longPressTimeOut);
         this._longPressTimeOut = null;
@@ -862,7 +862,7 @@ TestCtrl.prototype._mouseOut = function (e)
         clearTimeout(this._longPressTimeOut);
         this._longPressTimeOut = null;
         this._ignoreOnce = false;
-        
+
         this._removeActive(target);
     }
 }
@@ -933,7 +933,7 @@ TestCtrl.prototype._getDOMElementRef = function (DOMEl)
         default:
             log.warn("DalPadCtrl: undefined btn")
     }
-    
+
     return ref;
 }
 
@@ -967,7 +967,7 @@ TestCtrl.prototype._removeFocused = function ()
     {
         this._currentFocusedBtnDOM.classList.remove("focused");
     }
-    
+
     this._prevFocusedBtnDOM = this._currentFocusedBtnDOM;
     this._currentFocusedBtnDOM = null;
 }
@@ -1475,7 +1475,7 @@ TestCtrl.prototype._getNextTestId = function ()
         this.activateEnter(true);
         if (this.properties.keyPressCallback)
         {
-            var params = {"input":null,"inputData":null ,"statusData":null, "dataWindowData" : null ,"enterState" :true }; 
+            var params = {"input":null,"inputData":null ,"statusData":null, "dataWindowData" : null ,"enterState" :true };
             this.properties.keyPressCallback(this, this.properties.appData, params);
         }
     }
@@ -1500,7 +1500,7 @@ TestCtrl.prototype._getPreviousTestId = function ()
         this.activateEnter(true);
         if (this.properties.keyPressCallback)
         {
-            var params = {"input":null,"inputData":null ,"statusData":null, "dataWindowData" : null ,"enterState" :true }; 
+            var params = {"input":null,"inputData":null ,"statusData":null, "dataWindowData" : null ,"enterState" :true };
             this.properties.keyPressCallback(this, this.properties.appData, params);
         }
     }
@@ -1535,7 +1535,7 @@ TestCtrl.prototype._getNextVal = function (val,arr)
 TestCtrl.prototype._getPreviousVal = function (val,arr)
 {
     // omit the next line if the array is always sorted:
-    
+
     arr = arr.slice(0).sort(function(a,b){return a-b;});
      var item = { value : "" , index : ""};
     for (var i = arr.length - 1; i >= -1; i--)
@@ -1561,14 +1561,14 @@ TestCtrl.prototype._mouseUpBodyHandler = function(e)
 {
 	// reset to default
 	this._inputKeyPressed = false;
-	
+
 	// remove event listeners
 	document.body.removeEventListener(TestCtrl.prototype._MOUSEUPEVENT, this.mouseUpBodyHandler);
 	this.btnDel.removeEventListener(TestCtrl.prototype._MOUSEUPEVENT, this.delHandler, false);
 	this.btnEnter.removeEventListener(TestCtrl.prototype._MOUSEUPEVENT, this.enterHandler, false);
 	this.btnExit.removeEventListener(TestCtrl.prototype._MOUSEUPEVENT, this.exitHandler, false);
 	this.btnClear.removeEventListener(TestCtrl.prototype._MOUSEUPEVENT, this.clearHandler, false);
-	
+
 	for (var i=0; i<10; i++)
 	{
 		this.btns[i].removeEventListener(TestCtrl.prototype._MOUSEUPEVENT, this.btnSelectCallback, false);

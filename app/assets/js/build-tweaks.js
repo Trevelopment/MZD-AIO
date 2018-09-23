@@ -13,23 +13,6 @@
 \* ************************************************************************** */
 /* jshint esversion:6 */
 /* jshint -W033 */
-var approot
-if (isDev) {
-  approot = './app/' // for dev
-} else {
-  approot = app.getAppPath() // for dist
-}
-var builddir = `${approot}/files/tweaks/` // Location of tweak files (as .txt files)
-var extradir = app.getPath('userData') // Location of downloaded tweak files (userData)
-var logFileName = 'MZD_LOG' // Name of log file (without extension)
-var varDir = `${extradir}/background/` // Location of files with saved variables
-const appender = require('appender') // Appends the tweak files syncronously
-const crlf = require('crlf') // Converts line endings (from CRLF to LF)
-const copydir = require('copy-dir') // Copys full directories
-const drivelist = require('drivelist') // Module that gets the list of available USB drives
-const extract = require('extract-zip') // For Unzipping
-const mkdirp = require('mkdirp') // Equiv of Unix command mkdir -p
-const rimraf = require('rimraf') // Equiv of Unix command rm -rf
 // First line of AIO log
 var AIO_LOG = `# __MZD-AIO-TI__ ${app.getVersion()}| MZD All In One Tweaks Installer\n#### AIO COMPILATION LOG - ${Date()}\r\n___\n- *START!*\n`
 var AIO_LOG_HTML = `<button class="w3-btn w3-hover-teal w3-display-bottomright w3-margin" onclick="saveAIOLogHTML()">Save Log (HTML)</button><div id="aio-comp-log" class="aio-comp-log"><h1><b>MZD-AIO-TI ${app.getVersion()}</b> | MZD All In One Tweaks Installer</h1><br><h4> AIO COMPILATION LOG - ${Date()}</h4><hr><div><ul><li><b><i>START!</i></b></li>`
@@ -43,6 +26,7 @@ var copySwapfile = false // Swapfile flag
 var tweaks2write = [] // Queue for order consistantcy writing tweaks.sh (Always starts with 00_intro.txt)
 var tmpdir = path.normalize(path.join(persistantData.get('copyFolderLocation'), '_copy_to_usb')) // Place to hold USB drive files before copying
 var themeColor = 'Red' // Default color
+var tweaksFileName = 'tweaks' // Filename for tweaks.sh
 var swapdest = ''
 var keeplog = true
 /*                                      *********\
@@ -87,12 +71,14 @@ function buildTweakFile(user, apps) {
     try {
       mkdirp.sync(`${tmpdir}/`)
       mkdirp.sync(`${tmpdir}/config/`)
-      // mkdirp.sync(`${tmpdir}/config_org/`)
     } catch (e) {
       m = `${e} - Error occured while creating '_copy_to_usb' folder. Try closing all other running programs and folders before compiling.`
       aioLog(e.message, m)
       finishedMessage()
       return
+    }
+    if (user.runsh) {
+      tweaksFileName = 'run'
     }
     /* Full System Restore Script */
     if (user.restore.full) {
@@ -122,20 +108,39 @@ function buildTweakFile(user, apps) {
     if (user.options.includes(16)) {
       addTweakDir('blank-album-art-frame', true)
       mkdirp.sync(`${tmpdir}/config/blank-album-art-frame/jci/gui/common/images/`)
-      var outStr = fs.createWriteStream(`${tmpdir}/config/blank-album-art-frame/jci/gui/common/images/no_artwork_icon.png`)
       var inStr = fs.createReadStream(`${varDir}/no_artwork_icon.png`)
-      outStr.on('close', function() {
-        aioLog('Blank Album Art Copy Successful!')
-        checkForColorScheme(user)
+      inStr.on('error', (err) => {
+        ipc.send('default-blnk-art')
+        setTimeout(() => {
+          inStr = fs.createReadStream(`${varDir}/no_artwork_icon.png`)
+          inStr.on('error', (err) => {
+            aioLog(err, 'Error: Missing Blank Album Art')
+          })
+          inStr.on('open', () => {
+            addBlankAlbumArt(user, inStr)
+            aioLog('Error: Missing Blank Album Art... Using Default')
+          })
+        }, 1000)
       })
-      outStr.on('error', function(err) {
-        aioLog(err, 'Blank Album Art Copy FAILED!')
+      inStr.on('open', () => {
+        addBlankAlbumArt(user, inStr)
       })
-      inStr.pipe(outStr)
     } else {
       checkForColorScheme(user)
     }
   }, 1000)
+}
+
+function addBlankAlbumArt(user, inStr) {
+  var outStr = fs.createWriteStream(`${tmpdir}/config/blank-album-art-frame/jci/gui/common/images/no_artwork_icon.png`)
+  outStr.on('close', () => {
+    aioLog('Blank Album Art Copy Successful!')
+    checkForColorScheme(user)
+  })
+  outStr.on('error', (err) => {
+    aioLog(err, 'Blank Album Art Copy FAILED!')
+  })
+  inStr.pipe(outStr)
 }
 /* Check For Color Scheme Tweak */
 function checkForColorScheme(user) {
@@ -161,7 +166,7 @@ function customTheme(color, user) {
           return false
         }
         return true
-      }, function(err) {
+      }, (err) => {
         if (err) { aioLog(err, err) } else { aioLog(`Custom Theme Copied Successfully.`) }
         buildTweak(user)
       })
@@ -177,7 +182,7 @@ function customTheme(color, user) {
 
 function setTheme(color, user) {
   aioLog(`Unzipping ${color} Theme Folder`)
-  extract(`${builddir}/config/themes/${color}.zip`, { dir: `${tmpdir}/config/color-schemes/theme/` }, function(err) {
+  extract(`${builddir}/config/themes/${color}.zip`, { dir: `${tmpdir}/config/color-schemes/theme/` }, (err) => {
     if (err) { aioLog(err, err) }
     aioLog(`${color} Theme Folder Unzipped & Added.`)
     if (!user.useColorBG) {
@@ -197,13 +202,15 @@ function setTheme(color, user) {
 }
 
 function setColor(color, user) {
-  fs.mkdirSync(`${tmpdir}/config/color-schemes`)
+  if (!fs.existsSync(`${tmpdir}/config/color-schemes`)) {
+    mkdirp.sync(`${tmpdir}/config/color-schemes`)
+  }
   aioLog(`Unzipping ${color} color theme folder`)
-  extract(`${extradir}/color-schemes/${color}/jci.zip`, { dir: `${tmpdir}/config/color-schemes/${color}` }, function(err) {
+  extract(`${colordir}/${color}/jci.zip`, { dir: `${tmpdir}/config/color-schemes/${color}` }, (err) => {
     if (err) { aioLog(err, err) }
     aioLog(`${color} Color Scheme Folder Unzipped... Continue Build.`)
     if (user.colors === 1) {
-      fs.createReadStream(`${extradir}/color-schemes/Blue/_skin_jci_bluedemo.zip`).pipe(fs.createWriteStream(`${tmpdir}/config/color-schemes/Blue/_skin_jci_bluedemo.zip`))
+      fs.createReadStream(`${colordir}/Blue/_skin_jci_bluedemo.zip`).pipe(fs.createWriteStream(`${tmpdir}/config/color-schemes/Blue/_skin_jci_bluedemo.zip`))
       aioLog(`Copying Blue Color Scheme For Navigation`)
     }
     if (!user.useColorBG) {
@@ -242,11 +249,9 @@ function buildTweak(user) {
   }
   if (user.options.includes(105)) {
     addTweak('05_mainloop-u.txt')
-    addTweakDir('main-menu-loop', false)
   }
   if (user.options.includes(106)) {
     addTweak('06_listloop-u.txt')
-    addTweakDir('list-loop', false)
   }
   if (user.options.includes(107)) {
     addTweak('07_shorterdelay-u.txt')
@@ -262,7 +267,6 @@ function buildTweak(user) {
   }
   if (user.options.includes(111)) {
     addTweak('11_msgreplies-u.txt')
-    addTweakDir('message_replies', false)
   }
   if (user.options.includes(112)) {
     addTweak('12_diag-u.txt')
@@ -291,7 +295,6 @@ function buildTweak(user) {
   }
   if (user.options.includes(119)) {
     addTweak('19_speedo-u.txt')
-    addTweakDir('speedometer', false)
   }
   if (user.options.includes(122)) {
     addTweak('22_fuel-u.txt')
@@ -302,7 +305,6 @@ function buildTweak(user) {
   }
   if (user.options.includes(125)) {
     addTweak('25_androidauto-u.txt')
-    //addTweakDir('androidauto', false)
   }
   if (user.options.includes(121)) {
     addTweak('08_orderflac-u.txt')
@@ -331,8 +333,7 @@ function buildTweak(user) {
     if (user.colors === 0) {
       addTweak('21_colors-u.txt')
     } else if (user.colors < 8 || user.colors === 11) {
-      addTweak('21_colors-i1.txt')
-      addTweak('21_colors-i2.txt')
+      addTweak('21_colors-i.txt')
     } else {
       addTweak('21_theme-i.txt')
     }
@@ -341,11 +342,7 @@ function buildTweak(user) {
     addTweak('01_touchscreen-i.txt')
   }
   if (user.options.includes(2)) {
-    //  if (user.disclaimOps === 1) {
-    //    addTweak('02_disclaimer5-i.txt')
-    //} else {
     addTweak('02_disclaimer-i.txt')
-    //  }
   }
   if (user.options.includes(3)) {
     addTweak('03_warning-i.txt')
@@ -476,11 +473,7 @@ function buildTweak(user) {
   }
   if (user.options.includes(11)) {
     addTweak('11_msgreplies-i.txt')
-    addTweakDir('message_replies', true)
-  }
-  if (user.options.includes(12)) {
-    addTweak('12_diag-i.txt')
-    addTweakDir('test_mode', true)
+    copyPresetMessageFile()
   }
   if (user.options.includes(13)) {
     addTweak('13_boot-i.txt')
@@ -564,34 +557,49 @@ function buildTweak(user) {
   if (user.options.includes(16)) {
     addTweak('16_blnkframe-i.txt')
   }
+  if (user.options.includes(12)) {
+    addTweak('12_diag-i.txt')
+    addTweakDir('test_mode', true)
+  }
   // Off Screen Background
   if (user.mainOps.includes(10) || user.mainOps.includes(110)) {
-    var inStrOff
-    if (user.mainOps.includes(10)) {
-      inStrOff = fs.createReadStream(`${varDir}/OffScreenBackground.png`)
-      addTweak('00_offbackground-i.txt')
-    } else {
-      inStrOff = fs.createReadStream(path.resolve(app.getAppPath(), '../background-images/default/OffScreenBackground.png'))
-      addTweak('00_offbackground-u.txt')
-    }
-    var outOff = fs.createWriteStream(`${tmpdir}/config/OffScreenBackground.png`, { flags: 'w' })
-    outOff.on('close', function() {
-      aioLog('Off Screen Background Copy Successful!')
+    var offBG = user.mainOps.includes(10) ? `${varDir}/OffScreenBackground.png` : path.resolve(approot, '../background-images/default/OffScreenBackground.png')
+    var inStrOff = fs.createReadStream(offBG)
+    inStrOff.on('error', (err) => {
+      aioLog('ERROR: No Off Screen Background Chosen... Skipping')
     })
-    inStrOff.pipe(outOff)
+    inStrOff.on('open', () => {
+      addTweak(`00_offbackground-${user.mainOps.includes(10) ? 'i': 'u'}.txt`)
+      var outOff = fs.createWriteStream(`${tmpdir}/config/OffScreenBackground.png`, { flags: 'w' })
+      outOff.on('close', () => {
+        aioLog('Off Screen Background Copy Successful!')
+      })
+      outOff.on('error', (err) => {
+        aioLog(err, 'ERROR: Copy Off Screen Background Failed!')
+      })
+      inStrOff.pipe(outOff)
+    })
   }
   // Add chosen background
   if (user.mainOps.includes(2)) {
-    if (user.mainOps.includes(6)) {
-      addTweak('00_bgrotator-i.txt')
-    }
     var inStrbg = fs.createReadStream(`${varDir}/background.png`)
-    var out = fs.createWriteStream(`${tmpdir}/config/background.png`, { flags: 'w' })
-    out.on('close', function() {
-      aioLog('Background Copy Successful!')
+    inStrbg.on('error', (err) => {
+      aioLog('ERROR: No Background Chosen... Skipping')
     })
-    inStrbg.pipe(out)
-    addTweak('00_background.txt')
+    inStrbg.on('open', () => {
+      if (user.mainOps.includes(6)) {
+        addTweak('00_bgrotator-i.txt')
+      }
+      var out = fs.createWriteStream(`${tmpdir}/config/background.png`, { flags: 'w' })
+      out.on('close', () => {
+        aioLog('Background Copy Successful!')
+      })
+      out.on('error', (err) => {
+        aioLog(err, 'Background Copy Failed!')
+      })
+      inStrbg.pipe(out)
+      addTweak('00_background.txt')
+    })
   }
   if (user.mainOps.includes(5)) {
     addTweak('00_sd-cid.txt')
@@ -601,7 +609,9 @@ function buildTweak(user) {
     addTweakDir('bin', true)
     if (user.options.includes(19) || user.options.includes(17) || user.options.includes(25) || user.options.includes(27) || user.options.includes(28)) {
       addTweakDir('jci', true)
-      addTweak('00_59patch.txt')
+      if (!user.options.includes(2) && !user.options.includes(9)) {
+        addTweak('00_59patch.txt')
+      }
     }
   }
   // Swapfile tweak has to be last because the final operation
@@ -615,11 +625,13 @@ function buildTweak(user) {
       swapdest = '/'
     }
   }
-  // Finish with the end script
-  addTweak('00_end.txt')
-  // Add root files to tmp and write tweaks.sh
-  addRootFiles(user.dataDump)
-  writeTweaksFile()
+  setTimeout(() => {
+    // Finish with the end script
+    addTweak(user.options.includes(11) ? '00_factory-reset-end.txt' : '00_end.txt')
+    // Add root files to tmp and write tweaks.sh
+    addRootFiles(user.dataDump)
+    writeTweaksFile()
+  }, 2000)
 }
 // function to add each tweak to the array
 function addTweak(twk) {
@@ -692,7 +704,7 @@ function writeSpeedoConfigFile(user) {
   fs.writeFileSync(`${varDir}/startupvars.js`, spdStartup)
   var config = fs.createWriteStream(`${tmpdir}/config/speedometer/jci/gui/apps/_speedometer/js/speedometer-startup.js`)
   new appender(speedoConfig).pipe(config)
-  config.on('close', function() { console.log("speedometer-startup.js written successfully!") })
+  config.on('close', () => { console.log("speedometer-startup.js written successfully!") })
 */
   var JSobj = `var spdBottomRows = ${user.spdExtra.barSpeedoRows}; //Number of Bottom Rows\n`
   JSobj += 'var spdTbl = {\n'
@@ -714,7 +726,7 @@ function writeSpeedoConfigFile(user) {
 
   var config = fs.createWriteStream(`${tmpdir}/config/speedometer/speedometer-config.js`)
   new appender(speedoConfig).pipe(config)
-  config.on('close', function() {
+  config.on('close', () => {
     //console.log("speedometer-config.js written successfully!")
   })
 
@@ -738,6 +750,7 @@ function tweakVariables(user) {
   var bak = `KEEPBKUPS=` + (user.backups.org ? `1\n` : `0\n`)
   bak += `TESTBKUPS=` + (user.backups.test ? `1\n` : `0\n`)
   bak += `SKIPCONFIRM=` + (user.backups.skipconfirm ? `1\n` : `0\n`)
+  bak += `APPS2RESOURCES=` + (user.backups.apps2resources ? `1\n` : `0\n`)
   bak += (user.mainOps.includes(1) ? `ZIPBACKUP=` + (user.zipbackup ? `1\n` : `0\n`) : '')
   bak += (user.mainOps.includes(4) ? `FORCESSH=` + (user.forcessh ? `1\n` : `0\n`) : '')
   fs.writeFileSync(`${varDir}/backups.txt`, bak)
@@ -755,62 +768,25 @@ function tweakVariables(user) {
   }
   if (user.mainOps.includes(3)) {
     switch (user.colors) {
-      case 0:
-        themeColor = 'Red'
-        break
-      case 1:
-        themeColor = 'Blue'
-        break
-      case 2:
-        themeColor = 'Green'
-        break
-      case 3:
-        themeColor = 'Silver'
-        break
-      case 4:
-        themeColor = 'Pink'
-        break
-      case 5:
-        themeColor = 'Purple'
-        break
-      case 6:
-        themeColor = 'Orange'
-        break
-      case 7:
-        themeColor = 'Yellow'
-        break
-      case 8:
-        themeColor = 'SmoothRed'
-        break
-      case 9:
-        themeColor = 'SmoothAzure'
-        break
-      case 10:
-        themeColor = 'SmoothViolet'
-        break
-      case 11:
-        themeColor = 'CarOS'
-        break
-      case 12:
-        themeColor = 'StormTroopers'
-        break
-      case 13:
-        themeColor = 'Poker'
-        break
-      case 14:
-        themeColor = 'Mazda'
-        break
-      case 15:
-        themeColor = 'Floating'
-        break
-      case 16:
-        themeColor = 'X-Men'
-        break
-      case 17:
-        themeColor = 'Custom'
-        break
-      default:
-        themeColor = 'Red'
+      case 0: themeColor = 'Red'; break
+      case 1: themeColor = 'Blue'; break
+      case 2: themeColor = 'Green'; break
+      case 3: themeColor = 'Silver'; break
+      case 4: themeColor = 'Pink'; break
+      case 5: themeColor = 'Purple'; break
+      case 6: themeColor = 'Orange'; break
+      case 7: themeColor = 'Yellow'; break
+      case 8: themeColor = 'SmoothRed'; break
+      case 9: themeColor = 'SmoothAzure'; break
+      case 10: themeColor = 'SmoothViolet'; break
+      case 11: themeColor = 'CarOS'; break
+      case 12: themeColor = 'StormTroopers'; break
+      case 13: themeColor = 'Poker'; break
+      case 14: themeColor = 'Mazda'; break
+      case 15: themeColor = 'Floating'; break
+      case 16: themeColor = 'X-Men'; break
+      case 17: themeColor = 'Custom'; break
+      default: themeColor = 'Red'
     }
   }
   if (user.options.includes(13)) {
@@ -892,6 +868,13 @@ function tweakVariables(user) {
     fs.writeFileSync(`${varDir}/statusbar-color.txt`, sc)
     tweaks2write.push(`${varDir}/statusbar-color.txt`)
   }
+  if (user.options.includes(17)) {
+    var vpops = `VP_SHUFFLE=${user.vpOps.shuffle}\n`
+    vpops += `VP_REPEAT=${user.vpOps.repeat}\n`
+    vpops += `VP_FULLSCRN=${user.vpOps.fullscreen}\n`
+    fs.writeFileSync(`${varDir}/vpops.txt`, vpops)
+    tweaks2write.push(`${varDir}/vpops.txt`)
+  }
   if (user.options.includes(19)) {
     var sops = `OPACITY=`
     sops += (user.speedoOps.bg.id === 30) ? `${user.speedoOps.opac}\n` : `0\n`
@@ -941,10 +924,15 @@ function convert2LF() {
       aioLog(`LF Convert Error`, `EOL => ${endingType} (Format should be: LF)`)
     }
     // Rename tweaks.txt to tweaks.sh
-    fs.renameSync(`${tmpdir}/tweaks.txt`, `${tmpdir}/tweaks.sh`)
-    aioLog('Writing Tweaks.sh')
+    fs.renameSync(`${tmpdir}/tweaks.txt`, `${tmpdir}/${tweaksFileName}.sh`)
+    aioLog(`Writing ${tweaksFileName}.sh`)
+    if (`${tweaksFileName}` === 'run') {
+      fs.unlinkSync(`${tmpdir}/jci-autoupdate`)
+      fs.unlinkSync(`${tmpdir}/cmu_dataretrieval.up`)
+      fs.unlinkSync(`${tmpdir}/dataRetrieval_config.txt`)
+    }
     opsComplete = true
-    setTimeout(function() {
+    setTimeout(() => {
       if (filesComplete) {
         printAIOlog()
       }
@@ -963,11 +951,10 @@ function addTweakDir(twk, inst) {
   }
   try {
     if (!fs.existsSync(`${tmpdir}${twkdir}${twk}`)) {
-      fs.mkdirSync(`${tmpdir}${twkdir}${twk}`)
+      mkdirp.sync(`${tmpdir}${twkdir}${twk}`)
     }
-    // console.log(`${approot}/files/tweaks/${twkdir}${twk}`)
     // Above creates, below copies to tmp
-    copydir(`${builddir}${twkdir}${twk}`, `${tmpdir}${twkdir}${twk}`, function(err) {
+    copydir(`${builddir}${twkdir}${twk}`, `${tmpdir}${twkdir}${twk}`, (err) => {
       if (err) {
         aioLog(`File Copy Error: ${twk}-${err}`, `${err}-${twk}`)
       } else {
@@ -975,7 +962,7 @@ function addTweakDir(twk, inst) {
       }
       fileCount--
       if (fileCount === 0) {
-        setTimeout(function() {
+        setTimeout(() => {
           if (fileCount === 0) {
             filesComplete = true
           }
@@ -992,13 +979,13 @@ function addTweakDir(twk, inst) {
 // Function copys root files
 function addRootFiles(dataDump) {
   try {
-    copydir(`${approot}/files/tweaks/root`, `${tmpdir}`, function(err) {
+    copydir(`${approot}/files/tweaks/root`, `${tmpdir}`, (err) => {
       if (err) {
         errFlag = true
         aioLog('ERROR COPYING ROOT FILES', err)
       } else {
         if (dataDump) {
-          copydir(`${tmpdir}/data`, `${tmpdir}`, function(err) {
+          copydir(`${tmpdir}/data`, `${tmpdir}`, (err) => {
             if (err) { errFlag = true } else {
               rimraf.sync(`${tmpdir}/data`)
               aioLog('Root files copied successfully!')
@@ -1024,8 +1011,7 @@ function aioLog(logMsg, err) {
   } else if (keeplog) {
     AIO_LOG_HTML += `<li style='color:#004c00'> ${logMsg}</li>\n`
   }
-  userView = document.getElementById(`userLogView`)
-  if (userView) {
+  if (userView = document.getElementById(`userLogView`)) {
     userView.innerHTML = logMsg
   }
   if (keeplog) { //console.log(logMsg)
@@ -1166,7 +1152,7 @@ function usbDrives() {
     bootbox.alert({
       title: '<center>Error Locating Available USB Drives</center>',
       message: `<div>${e.toString()}</div><div class="w3-center w3-large"><h2>Build has completed successfully</h2>Although USB drives cannot be found because of an error.<br>${langObj.popupMsgs[9].msg} <pre>${tmpdir}</pre> ${langObj.popupMsgs[10].msg}. <br><button href='' class='w3-large w3-center w3-black w3-btn w3-ripple nousbbutton' title='Copy These Files To A Blank USB Drive' onclick='openCopyFolder()'>${langObj.menu.copytousb.toolTip}</button></div> `,
-      callback: function() {
+      callback: () => {
         bootbox.hideAll()
         unzipSwapfile(null)
       }
@@ -1181,7 +1167,7 @@ function noUsbDrive() {
     title: `<h2>Compilation Finished!</h2>`,
     className: `compFinishBox`,
     message: `${langObj.popupMsgs[9].msg} <pre>${tmpdir}</pre> ${langObj.popupMsgs[10].msg}. <br><button href='' class='w3-large w3-center w3-black w3-btn w3-ripple nousbbutton' title='Copy These Files To A Blank USB Drive' onclick='openCopyFolder()'>${langObj.menu.copytousb.toolTip}</button>`,
-    callback: function() { finishedMessage() }
+    callback: () => { finishedMessage() }
   })
   appendAIOlog(`<li style='color:#4a0dab'>To Install Tweak Files: Copy Entire Contents of "_copy_to_usb" Onto USB Drive.</li><li style='color:#1a0dab'>Location:<a href='' onclick='openCopyFolder()'><u> ${tmpdir}</u></a></li>`)
 }
@@ -1197,7 +1183,7 @@ function copyToUSB(mp) {
     mkdirp.sync(mp)
   }
   try {
-    copydir(tmpdir, mp, function(err) {
+    copydir(tmpdir, mp, (err) => {
       if (err) {
         showNotification('Error Copying Files to USB', 'Unable to copy files to USB drive', 13)
         window.alert(err, 'Error: Unable to copy files to USB drive')
@@ -1231,17 +1217,17 @@ function unzipSwapfile(dest) {
       message: `<div class='w3-center'><h3>${langObj.popupMsgs[13].msg}: ${dest.replace(':\\', '')}...  ${langObj.popupMsgs[12].msg}... </h3><br><div id='swapLogView' style='text-align:center;' ></div><br><img class='loader' src='./files/img/load-0.gif' alt='...' /></div>`,
       closeButton: false
     })
-    setTimeout(function() {
+    setTimeout(() => {
       if (document.getElementById('swapLogView')) {
         document.getElementById('swapLogView').innerHTML += `\n\n${langObj.popupMsgs[14].msg}`
       }
     }, 10000)
-    setTimeout(function() {
+    setTimeout(() => {
       if (document.getElementById('swapLogView')) {
         document.getElementById('swapLogView').innerHTML += `\n\n${langObj.popupMsgs[15].msg}`
       }
     }, 35000)
-    setTimeout(function() {
+    setTimeout(() => {
       if (document.getElementById('swapLogView')) {
         document.getElementById('swapLogView').innerHTML = `${langObj.popupMsgs[16].msg}:<br>${langObj.tweakOps[19].toolTip}`
       }
@@ -1251,7 +1237,7 @@ function unzipSwapfile(dest) {
     } catch (e) {
       appendAIOlog(`<li style='color:#ff0000'>${e} Swapfile Already Exists, Overwriting...</li>`)
     }
-    extract(`${approot}/files/tweaks/config/swapfile/swapfile.zip`, { dir: `${dest}` }, function(err) {
+    extract(`${approot}/files/tweaks/config/swapfile/swapfile.zip`, { dir: `${dest}` }, (err) => {
       if (err) {
         appendAIOlog(`<li style='color:#ff0000'>${err} Swapfile Error</li>`)
         console.error(err, err)
@@ -1296,18 +1282,18 @@ function finishedMessage(mp) {
       closeButton: false
     })
   } else {
-    setTimeout(function() {
+    setTimeout(() => {
       var finalbox = bootbox.dialog({
         message: `<span class="w3-closebtn" onclick="postInstallTitle()">&times;</span><div class="w3-center w3-container w3-blue-grey" style="line-height:1.5;"><h1><small class="icon-bolt3"></small> ${langObj.popupMsgs[20].msg} <small class="icon-magic-wand"></small></h1><h3>${strtOver}</h3><h3>${viewLog}</h3><h3>${openUSB}</h3><h3>${cp2usb}</h3><h3>${saveBtn}</h3><h3>${closeApp}</h3></div>`,
         className: 'finishedMessage',
         closeButton: false
       })
-      finalbox.on('shown.bs.modal', function() {
+      finalbox.on('shown.bs.modal', () => {
         $("#startOver").focus();
       })
     }, 100)
   }
-  setTimeout(function() {
+  setTimeout(() => {
     appendAIOlog(`<li style='color:#000000;font-weight:800;'><em>Finished!</em></li></ul></div>`)
   }, 5000)
 }
@@ -1322,10 +1308,11 @@ function saveInstallerOps(user) {
   settings.set('keepBackups', user.backups.org)
   settings.set('testBackups', user.backups.test)
   settings.set('skipConfirm', user.backups.skipconfirm)
+  settings.set('apps2resources', user.backups.apps2resources)
 }
 
 function cleanCopyDir() {
-  rimraf(`${tmpdir}`, function() { appendAIOlog(`<li style='color:#ff3366'>Deleted '_copy_to_usb' Folder</li>`) })
+  rimraf(`${tmpdir}`, () => { appendAIOlog(`<li style='color:#ff3366'>Deleted '_copy_to_usb' Folder</li>`) })
 }
 
 function casdkAppOptions(apps, inst) {
@@ -1375,7 +1362,7 @@ function casdkAppOptions(apps, inst) {
 
 function addCASDKapp(add, app) {
   if (add) {
-    copydir(`${builddir}casdk/apps/app.${app}`, `${tmpdir}/casdk/apps/app.${app}`, function(err) {
+    copydir(`${builddir}casdk/apps/app.${app}`, `${tmpdir}/casdk/apps/app.${app}`, (err) => {
       if (err) {
         aioLog(`File Copy Error: ${err}`, err.message)
         return
@@ -1392,6 +1379,7 @@ function buildCASDK(user, apps) {
     mkdirp.sync(`${tmpdir}/casdk/`)
     if (!user.casdkAppsOnly) {
       tweaks2write.push(`${builddir}00__casdk-i.txt`)
+      tweaks2write.push(`${builddir}00_storage-i.txt`)
       if (user.casdk.region === 'eu') {
         fs.writeFileSync(`${varDir}/casdkreg.txt`, `sed -i "s/'na'/'eu'/g" /jci/gui/apps/custom/runtime/runtime.js && log_message "===                      Region Changed to EU                         ==="`)
       } else {
@@ -1405,7 +1393,7 @@ function buildCASDK(user, apps) {
         return false
       }
       return true;
-    }, function(err) {
+    }, (err) => {
       if (err) {
         aioLog(`File Copy Error: ${err}`, err.message)
         return
@@ -1425,15 +1413,18 @@ function buildCASDK(user, apps) {
 function fullSystemRestore(user) {
   addRootFiles()
   tweaks2write.push(`${builddir}00___fullRestore.sh`)
-  if (fs.existsSync(`${extradir}/color-schemes/Red/jci.zip`)) {
+  if (fs.existsSync(`${colordir}/Red/jci.zip`)) {
     mkdirp.sync(`${tmpdir}/config/color-schemes/Red`)
     aioLog(`Unzipping Red color theme folder`)
-    extract(`${extradir}/color-schemes/Red/jci.zip`, { dir: `${tmpdir}/config/color-schemes/Red` }, function(err) {
-      if (err) { aioLog(err) }
-      aioLog(`Red Color Scheme Added Successfully`)
+    extract(`${colordir}/Red/jci.zip`, { dir: `${tmpdir}/config/color-schemes/Red` }, (err) => {
+      if (err) {
+        aioLog(err, err)
+      } else {
+        aioLog(`Red Color Scheme Added Successfully`)
+      }
     })
   }
-  copydir(`${builddir}config_org`, `${tmpdir}/config_org`, function(err) {
+  copydir(`${builddir}config_org`, `${tmpdir}/config_org`, (err) => {
     if (err) {
       aioLog(`File Copy Error: ${err}`, err.message)
       return
@@ -1446,15 +1437,20 @@ function fullSystemRestore(user) {
 function buildAutorunInstaller(user) {
   if (user.autorun.serial) {
     tmpdir = `${tmpdir}/XX`
-    mkdirp.sync(`${tmpdir}`)
+    try{
+      mkdirp.sync(`${tmpdir}`)
+    } catch (e) {
+      errFlag = true
+      aioLog(`ERROR CREATING ${tmpdir}`, e)
+    }
   }
-  copydir(`${approot}/files/tweaks/cmu-autorun/installer`, `${tmpdir}`, function(err) {
+  copydir(`${approot}/files/tweaks/cmu-autorun/installer`, `${tmpdir}`, (err) => {
     if (err) {
       errFlag = true
       aioLog('ERROR COPYING AUTORUN FILES', err)
     } else {
-      if (user.autorun.id7recovery) {
-        copydir(`${approot}/files/tweaks/cmu-autorun/sdcard/recovery`, `${tmpdir}`, function(err) {
+      if (user.autorun.id7recovery || user.autorun.serial) {
+        copydir(`${approot}/files/tweaks/cmu-autorun/sdcard/recovery`, `${tmpdir}`, (err) => {
           if (err) {
             errFlag = true
             aioLog('ERROR COPYING ID7RECOVERY FILES', err)
@@ -1465,22 +1461,22 @@ function buildAutorunInstaller(user) {
               fs.unlinkSync(`${tmpdir}/run.sh`)
             }
             aioLog('ID7_recovery Pack Copied Successfully!')
-            addWifiApp(user)
+            addWifiAP(user)
           }
         })
       } else {
         aioLog('Autorun Installer/Uninstaller Copied Successfully!')
-        addWifiApp(user)
+        addWifiAP(user)
       }
     }
   })
 }
 
-function addWifiApp(user) {
+function addWifiAP(user) {
   filesComplete = true
   opsComplete = true
   if (user.autorun.autoADB || user.autorun.autoWIFI) {
-    copydir(`${approot}/files/tweaks/cmu-autorun/sdcard/recovery-extra`, `${tmpdir}`, function(err) {
+    copydir(`${approot}/files/tweaks/cmu-autorun/sdcard/recovery-extra`, `${tmpdir}`, (err) => {
       if (err) {
         errFlag = true
         aioLog('ERROR COPYING AUTORUN FILES', err)
@@ -1495,7 +1491,7 @@ function addWifiApp(user) {
     })
   }
   if (user.autorun.dryrun && !user.autorun.serial) {
-    copydir(`${approot}/files/tweaks/cmu-autorun/sdcard/dryrun`, `${tmpdir}`, function(err) {
+    copydir(`${approot}/files/tweaks/cmu-autorun/sdcard/dryrun`, `${tmpdir}`, (err) => {
       if (err) { errFlag = true }
     })
   }
@@ -1514,7 +1510,7 @@ function addWifiApp(user) {
             size: "small",
             title: "Values Were Not Changed",
             message: "WiFi AP Will not be installed",
-            callback: function() {
+            callback: () => {
               rimraf.sync(`${tmpdir}/00-start-wifiAP/`)
               serialCheck(user)
             }
@@ -1547,4 +1543,30 @@ function serialCheck(user) {
     }
   }
   printAIOlog()
+}
+
+function writePresetMessageFile(result) {
+  try {
+    mkdirp.sync(`${varDir}/message_replies/jci/settings/configurations`)
+    fs.writeFileSync(`${varDir}/message_replies/jci/settings/configurations/blm_msg-system.xml`, result)
+    snackbar('Preset Messages Saved!')
+  } catch (e) {
+    snackbar(`ERROR CREATING PRESET MESSAGES FILE 'blm_msg-system.xml': ${e}`)
+  }
+}
+
+function copyPresetMessageFile() {
+  if(fs.existsSync(`${varDir}/message_replies`)) {
+    copydir(`${varDir}/message_replies`, `${tmpdir}/config/message_replies`, (err) => {
+        if (err) {
+          aioLog(err + " copy default preset text messages")
+          addTweakDir('message_replies', true)
+        } else {
+          aioLog('Copied Preset Messages!')
+        }
+      })
+    } else {
+      aioLog("Copy default preset text messages")
+      addTweakDir('message_replies', true)
+    }
 }

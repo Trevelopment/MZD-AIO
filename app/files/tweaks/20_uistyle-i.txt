@@ -74,8 +74,8 @@ then
 fi
 if [ $TESTBKUPS -eq 1 ]
 then
-  cp -a /jci/gui/common/controls/List2/css/List2Ctrl.css "${MYDIR}/bakups/test/List2Ctrl_after.css"
-  cp -a /jci/gui/common/controls/NowPlaying4/css/NowPlaying4Ctrl.css "${MYDIR}/bakups/test/NowPlaying4Ctrl_after.css"
+  cp /jci/gui/common/controls/List2/css/List2Ctrl.css "${MYDIR}/bakups/test/List2Ctrl_after.css"
+  cp /jci/gui/common/controls/NowPlaying4/css/NowPlaying4Ctrl.css "${MYDIR}/bakups/test/NowPlaying4Ctrl_after.css"
 fi
 log_message "===                   Modified NowPlaying4Ctrl.css                    ==="
 log_message "===                   Added CSS For UI Style Tweaks                   ==="

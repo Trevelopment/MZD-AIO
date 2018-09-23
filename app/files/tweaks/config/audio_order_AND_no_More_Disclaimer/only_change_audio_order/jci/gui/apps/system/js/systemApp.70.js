@@ -1,22 +1,22 @@
 // This is a failsafe
 if (typeof aaAudioPos === 'undefined') {
-  FmRadioPos = 1;
-  AmRadioPos = 2;
-  UsbAudioAPos = 4;
-  UsbAudioBPos = 5;
-  AuxInPos = 6;
-  BluetoothPos = 7;
-  SdarsRadioPos = 8;
-  DabRadioPos = 7;
-  AhaRadioPos = 8;
-  PandoraPos = 9;
-  StitcherItemPos = 10;
-  CdPlayerPos = 11;
-  DVDItemPos = 12;
-  TVItemPos = 13;
-  aaAudioPos = 6;
-  cpAudioPos = 6;
-  xmRadioPos = 3;
+  FmRadioPos = 0;
+  AmRadioPos = 0;
+  UsbAudioAPos = 0;
+  UsbAudioBPos = 0;
+  AuxInPos = 0;
+  BluetoothPos = 0;
+  SdarsRadioPos = 0;
+  DabRadioPos = 0;
+  AhaRadioPos = 0;
+  PandoraPos = 0;
+  StitcherItemPos = 0;
+  CdPlayerPos = 0;
+  DVDItemPos = 0;
+  TVItemPos = 0;
+  aaAudioPos = 0;
+  cpAudioPos = 0;
+  xmRadioPos = 0;
 }
 /*
 Copyright 2012 by Johnson Controls
@@ -655,11 +655,18 @@ systemApp.prototype._initApplicationsDataList = function() {
     items: items
   };
   //We have two different context (Applications and VehicleStatusMonitor) for displaying Appication item(s),so context wise storing the array of appName(s) to be displayed on corresponding Context.
+  if (this._vehicleConfigurationType=== "Old") {
   this._applicationsCtxtWiseAppNames = {
     //Context Name :  // [appName,appName....]
-    "Applications": ["hdtrafficimage", "idm", "ecoenergy", "driverid", "vehicleStatus", "vdt_settings", "vdt", "carplay", "androidauto", "_androidauto", "_videoplayer", "_aiotweaks", "_speedometer", "app.background", "app.devtools", "app.gpsspeed", "app.multidash", "app.simpledashboard", "app.terminal", "app.vdd", "app.tetris", "app.breakout", "app.2048", "app.aio", "app.android", "app.myapp", "app.helloworld", "app.marketapps", "app.multicontroller", "app.snake", "app.speedometer", "app.androidauto", "app.aiotweaks", "app.youtube", "app.speed", "app.hello", "app.help", "app.myapp", "app.videoplayer", "app.video", "app.horloge", "app.clock", "app.sbspeedo", "app.statusbar", "app.simple", "app.simplespeedo", "app.analog", "app.casdkapps"],
+      "Applications": ["xmdata", "hdtrafficimage", "idm", "ecoenergy", "driverid", "warnguide", "schedmaint", "vehicleStatus", "vdt_settings", "vdt", "carplay", "androidauto", "_androidauto", "_videoplayer", "_aiotweaks", "_speedometer", "app.background", "app.devtools", "app.gpsspeed", "app.multidash", "app.simpledashboard", "app.terminal", "app.vdd", "app.tetris", "app.breakout", "app.2048", "app.aio", "app.android", "app.myapp", "app.helloworld", "app.marketapps", "app.multicontroller", "app.snake", "app.speedometer", "app.androidauto", "app.aiotweaks", "app.youtube", "app.speed", "app.hello", "app.help", "app.myapp", "app.videoplayer", "app.video", "app.horloge", "app.clock", "app.sbspeedo", "app.statusbar", "app.simple", "app.simplespeedo", "app.analog", "app.casdkapps"],
+      "VehicleStatusMonitor": ["vsm"]
+    };
+  } else {
+    this._applicationsCtxtWiseAppNames = {
+      "Applications": ["xmdata", "hdtrafficimage", "idm", "ecoenergy", "driverid", "vehicleStatus", "vdt_settings", "vdt", "carplay", "androidauto", "_androidauto", "_videoplayer", "_aiotweaks", "_speedometer", "app.background", "app.devtools", "app.gpsspeed", "app.multidash", "app.simpledashboard", "app.terminal", "app.vdd", "app.tetris", "app.breakout", "app.2048", "app.aio", "app.android", "app.myapp", "app.helloworld", "app.marketapps", "app.multicontroller", "app.snake", "app.speedometer", "app.androidauto", "app.aiotweaks", "app.youtube", "app.speed", "app.hello", "app.help", "app.myapp", "app.videoplayer", "app.video", "app.horloge", "app.clock", "app.sbspeedo", "app.statusbar", "app.simple", "app.simplespeedo", "app.analog", "app.casdkapps"],
     "VehicleStatusMonitor": ["warnguide", "vsm", "schedmaint"]
   };
+  }
 };
 systemApp.prototype._initCommunicationsDataList = function() {
   var items = [];
@@ -719,6 +726,12 @@ systemApp.prototype._StatusMenuMsgHandler = function(msg) {
   this._enableAppListItem(appName, isDisabled, this._masterApplicationDataList);
   this._enableAppListItem(appName, isDisabled, this._communicationsDataList);
   this._enableAppListItem(appName, isDisabled, this._masterEntertainmentDataList);
+
+    // check if we should worry about speed restriction for carplay/androidauto icon
+    //For car play/android auto app _setRemoteButtonIcon is called to display or hide car play/android auto icon in status bar
+  if (appName === "carplay" || appName === "androidauto") {
+        this._setRemoteUIButton(appName,!isDisabled);
+    }
   // Update the menu list in the current context if needed
   if (this._currentContext) {
     switch (this._currentContext.ctxtId) {
@@ -877,6 +890,7 @@ systemApp.prototype._StatusMenuVisibleMsgHandler = function(msg) {
       for (var k = 0; k < this._masterApplicationDataList.items.length; ++k) {
         if ((this._masterApplicationDataList.items[k].appData.appName === applicationsCtxtWiseAppName) &&
           this._masterApplicationDataList.items[k].appData.isVisible) {
+          isApplicationsDirty = true;
           isVehicleStatusMonitorVisible = this._masterApplicationDataList.items[k].appData.isVisible;
           break;
         }

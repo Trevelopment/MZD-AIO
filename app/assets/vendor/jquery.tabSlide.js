@@ -99,7 +99,7 @@
 
         if(settings.tabLocation === 'left' || settings.tabLocation === 'right') {
             obj.css({
-                'height' : properties.containerHeight,
+                //'height' : properties.containerHeight,
                 'top' : settings.topPos
             });
 

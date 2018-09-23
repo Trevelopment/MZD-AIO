@@ -18,7 +18,6 @@ then
   cp /jci/gui/apps/syssettings/js/syssettingsApp.js "${MYDIR}/bakups/test/syssettingsApp_WIFI-after.js"
 else
   log_message "===                       Wifi already active                         ==="
-
 fi
 
 log_message "===============************* END ENABLE WIFI *************==============="

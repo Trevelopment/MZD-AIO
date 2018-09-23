@@ -119,15 +119,12 @@ else # if [ $DATE_FORMAT -eq 0 ]
 fi
 
 # StatusBarCtrl.js is the file that needs to be compatability checked because of minor changes in FW v59+
-# Compatibility has been fixed now compatible with all FW v55 - v70.00.000
+# Compatibility has been fixed now compatible with all FW v55 - v70.00.021
 # if [ $STATUSBAR_COPY -eq 1 ]
 if [ $COMPAT_GROUP -le 6 ]
 then
 	cp -a "${MYDIR}/config/date-to-statusbar_mod/jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js" /jci/gui/common/controls/StatusBar/js
   log_message "===                     Copied StatusBarCtrl.js                       ==="
-# elif [ $STATUSBAR_COPY -eq 2 ]
-# then
-# 	cp -a "${MYDIR}/config/date-to-statusbar_mod/jci/gui/common/controls/StatusBar/js/StatusBarCtrl.v2.2.v59.js" /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js
 else # only v70.00.100+ will fail because compatibility is unknown
 	log_message "***** date_to_statusbar_mod v3.3 not compatible to your FW, no installation made! ******"
 	log_message "*********** Please email your FW version:${CMU_SW_VER} to aio@mazdatweaks.com **********"

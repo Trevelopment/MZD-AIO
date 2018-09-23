@@ -29,7 +29,7 @@ function _androidautoApp(uiaId) {
  * Called just after the app is instantiated by framework.
  * All variables local to this app should be declared in this function
  */
-_androidautoApp.prototype.appInit = function () {
+_androidautoApp.prototype.appInit = function() {
   log.debug("_androidautoApp appInit  called...");
 
   //Context table
@@ -66,7 +66,7 @@ _androidautoApp.prototype.appInit = function () {
 
 function AAcallCommandServer(method, request, resultFunc) {
   var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function () {
+  xhttp.onreadystatechange = function() {
     if (xhttp.readyState == 4) {
       if (xhttp.status == 200) {
         resultFunc(JSON.parse(xhttp.responseText));
@@ -89,7 +89,7 @@ function AAdisplayError(location, err) {
 function AAlogPoll() {
 
   try {
-    AAcallCommandServer("GET", "status", function (currentStatus) {
+    AAcallCommandServer("GET", "status", function(currentStatus) {
       if (currentStatus == null) {
         AAdisplayError("AAlogPoll", "Can't connect to headunit process");
       } else {
@@ -100,13 +100,14 @@ function AAlogPoll() {
 
           if (currentStatus.logPath != null) {
             var xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function () {
+            xhttp.onreadystatechange = function() {
               try {
                 var debugTxt = null;
                 if (xhttp.readyState >= 3 && xhttp.status == 200) {
                   debugTxt = xhttp.responseText;
                 } else if (xhttp.readyState == 4 && xhttp.status != 200) {
-                  debugTxt = "HTTP Error: readyState " + xhttp.readyState + " status " + xhttp.status + "\n responseText " + xhttp.responseText + "\n";
+                  //debugTxt = "HTTP Error: readyState " + xhttp.readyState + " status " + xhttp.status + "\n responseText " + xhttp.responseText + "\n";
+                  debugTxt = null;
                 }
                 var psconsole = document.getElementById('aaStatusText');
                 if (debugTxt != null && psconsole != null) {
@@ -114,7 +115,7 @@ function AAlogPoll() {
                   psconsole.focus();
                   var atBottom = (psconsole.scrollTop == psconsole.scrollHeight);
 
-                  if (psconsole.length && atBottom)
+                  if (psconsole.length && !atBottom)
                     psconsole.scrollTop = psconsole.scrollHeight;
                 }
               } catch (err) {
@@ -137,14 +138,14 @@ function AAlogPoll() {
 
 }
 
-_androidautoApp.prototype._StartContextReady = function () {
+_androidautoApp.prototype._StartContextReady = function() {
   framework.common.setSbDomainIcon("apps/_androidauto/aa.png");
   try {
-    AAcallCommandServer("GET", "status", function (currentStatus) {
+    AAcallCommandServer("GET", "status", function(currentStatus) {
       if (currentStatus != null) {
         if (!currentStatus.videoFocus && currentStatus.connected) {
-          var takeFocus = function () {
-            AAcallCommandServer("POST", "takeVideoFocus", function (currentStatus) {});
+          var takeFocus = function() {
+            AAcallCommandServer("POST", "takeVideoFocus", function(currentStatus) {});
           };
 
           //need to sleep a bit to make sure the pane switch is done otherwise it will blow out our focus change later
@@ -159,7 +160,7 @@ _androidautoApp.prototype._StartContextReady = function () {
   }
 };
 
-_androidautoApp.prototype._StartContextOut = function () {
+_androidautoApp.prototype._StartContextOut = function() {
   try {
     //nothing
   } catch (err) {

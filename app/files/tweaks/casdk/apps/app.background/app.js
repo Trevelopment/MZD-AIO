@@ -105,7 +105,7 @@ CustomApplicationsHandler.register("app.background", new CustomApplication({
     }, "");
     this.table = [];
     for (var i = 0; i <= backgroundlist.length; i++) {
-      var elem = $("<image src='" + (i ? this.location + "icons/" + backgroundlist[i - 1] : framework.common._defaultBgPath) + "' width='225' height='135' />");
+      var elem = $("<image src='" + (i ? this.location + "icons/" + backgroundlist[i - 1] : framework.common._defaultBgPath) + "' width='225' height='135' onerror='$(this).hide()' />");
       this.image_slider.append(elem);
       this.table.push({ elem: elem, link: i ? this.location + "background/" + backgroundlist[i - 1] : framework.common._defaultBgPath });
     }

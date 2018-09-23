@@ -78,13 +78,15 @@ if (isDev) {
   console.info('Running in development')
   app.setPath('home', path.resolve(`${__dirname}`))
   console.log(`Home: ${app.getPath('home')}`)
+  //console.debug(JSON.stringify(pjson))
+  console.debug(JSON.stringify(persistantData.store))
+  console.debug(JSON.stringify(pjson.config))
 } else {
   // console.info('Running in production')
   app.setPath('home', app.getAppPath())
   console.log(`Home: ${app.getPath('home')}`)
 }
 app.setAppUserModelId('com.trevelopment.mzd-aio-ti')
-// console.debug(JSON.stringify(pjson.config)
 // Adds debug features like hotkeys for triggering dev tools and reload
 // (disabled in production, unless the menu item is displayed)
 require('electron-debug')({

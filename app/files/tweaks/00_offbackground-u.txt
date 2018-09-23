@@ -2,11 +2,8 @@
 show_message "REVERTING OFF SCREEN BACKGROUND IMAGE ..."
 log_message "======******** UNINSTALL OFF SCREEN BACKGROUND IMAGE ... ********========"
 
-if [ -e /jci/gui/apps/system/controls/OffScreen/images/OffScreenBackground.png.org ]
+if ! (restore_org /jci/gui/apps/system/controls/OffScreen/images/OffScreenBackground.png)
 then
-	cp -a /jci/gui/apps/system/controls/OffScreen/images/OffScreenBackground.png.org /jci/gui/apps/system/controls/OffScreen/images/OffScreenBackground.png
-	log_message "===         Reverting From Backup OffScreenBackground.png.org         ==="
-else
 	cp -a ${MYDIR}/config/OffScreenBackground.png /jci/gui/apps/system/controls/OffScreen/images/
 	log_message "===             Copied OffScreenBackground.png from USB               ==="
 fi

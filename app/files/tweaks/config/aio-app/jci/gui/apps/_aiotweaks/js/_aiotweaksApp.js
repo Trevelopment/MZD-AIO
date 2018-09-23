@@ -38,9 +38,26 @@ _aiotweaksApp.prototype.appInit = function() {
       "template": "AIOTweaksTmplt",
       "templatePath": "apps/_aiotweaks/templates/AIOTweaks", //only needed for app-specific templates
       "readyFunction": this._StartContextReady.bind(this),
-      "contextOutFunction": this._StartContextOut.bind(this)
-    } // end of "AIOTweaks"
-  }; // end of this.contextTable object
+      "contextOutFunction": this._StartContextOut.bind(this),
+      "properties": {
+        "keybrdInputSurface": "JCI_OPERA_PRIMARY",
+        "visibleSurfaces": ["JCI_OPERA_PRIMARY", "NATGUI_SURFACE"]
+      }
+    },
+    "RevCam": {
+      "hideHomeBtn": true,
+      "template" : "NoCtrlTmplt",
+      // set custom properties for this template
+      "properties" : {
+          "statusBarVisible" : false,
+          "customBgImage" : "common/images/FullTransparent.png",
+        "keybrdInputSurface": "JCI_OPERA_PRIMARY",
+        "visibleSurfaces": ["NATGUI_SURFACE"] // Do not include JCI_OPERA_PRIMARY in this list
+      },
+      "readyFunction": null,
+      "displayedFunction": null
+    } // end of "BackupCameraDisplay"
+  };
   //@formatter:on
 
   //@formatter:off

@@ -24,74 +24,39 @@ else
   log_message "===               Javascript Logging Already Enabled                  ==="
 fi
 
-# modify opera storage and move to persistant data
-if [ ! -e /tmp/mnt/data_persist/storage ]
-then
-	mkdir -p /tmp/mnt/data_persist/storage
-	log_message "===                     Created Storage Folder                        ==="
-else
-  log_message "===                     Storage Folder Present                        ==="
-fi
-
-if [ ! -e /jci/opera/opera_home/pstorage/psindex.dat.org ]
-then
-	# check if system file exists
-	if [ -e /jci/opera/opera_home/pstorage/psindex.dat ]
-	then
-		# make a copy
-		cp -a /jci/opera/opera_home/pstorage/psindex.dat /jci/opera/opera_home/pstorage/psindex.dat.org
-	else
-		# create directory
-		mkdir -p /jci/opera/opera_home/pstorage/
-	fi
-	# copy psindex file
-	cp -a ${MYDIR}/casdk/storage/psindex.dat /jci/opera/opera_home/pstorage/
-	log_message "===                    Copied psindex.dat file                        ==="
-else
-  log_message "===              Persistant Storage Already Modified                  ==="
-fi
-
 # install data reader files
-if [ ! -e /jci/casdk ]
-then
-	mkdir -p /jci/casdk
-	cp -a ${MYDIR}/casdk/scripts/* /jci/casdk
-	find /jci/casdk/ -name "vdt*.sh" -exec chmod 755 {} \;
-	log_message "===                  Installed data reader files                      ==="
-else
-	log_message "===               Data reader files already installed                 ==="
-fi
+[ ! -e /jci/casdk ] && mkdir -p /jci/casdk
+cp -a ${MYDIR}/casdk/scripts/* /jci/casdk
+find /jci/casdk/ -name "vdt*.sh" -exec chmod 755 {} \;
+log_message "===                  Installed data reader files                      ==="
 
 # copy initialization file
-if ! grep -Fq "#!/bin/sh" /jci/scripts/stage_wifi.sh
+if ! grep -Fq "#!/bin/sh" ${STAGE_WIFI}
 then
-	cp -a ${MYDIR}/casdk/jci/stage_wifi.sh /jci/scripts/
-	log_message "===              CASDK Entries Added To Stage_wifi.sh                 ==="
-elif grep -Fq 'mzd-casdk.start' /jci/scripts/stage_wifi.sh
+  echo "#!/bin/sh" > ${STAGE_WIFI}
+  log_message "===              CASDK Entries Added To Stage_wifi.sh                 ==="
+fi
+if grep -Fq 'sh /tmp/mnt/resources/aio/autorun/mzd-casdk.start &' ${STAGE_WIFI}
 then
-	log_message "===          CASDK Entries already present in stage_wifi.sh           ==="
+  log_message "===          CASDK Entries already present in stage_wifi.sh           ==="
 else
-  #cat <<EOT >> /jci/scripts/stage_wifi.sh
-  ### CASDK Data Gathering Script
-  #sh /tmp/mnt/resources/aio/autorun/mzd-casdk.start &
-  #EOT
-  sed -i '/#!/ a\### CASDK Data' /jci/scripts/stage_wifi.sh
+  sed -i '/vdt/d' ${STAGE_WIFI}
+  sed -i '/CASDK Data/d' ${STAGE_WIFI}
+  sed -i '/#!/ a\### CASDK Data' ${STAGE_WIFI}
   sleep 1
-  sed -i '/CASDK Data/ i\ ' /jci/scripts/stage_wifi.sh
-  sed -i '/CASDK Data/ a\sh /tmp/mnt/resources/aio/autorun/mzd-casdk.start &' /jci/scripts/stage_wifi.sh
-  chmod 755 /jci/scripts/stage_wifi.sh
+  sed -i '/CASDK Data/ i\ ' ${STAGE_WIFI}
+  sed -i '/CASDK Data/ a\sh /tmp/mnt/resources/aio/autorun/mzd-casdk.start &' ${STAGE_WIFI}
+  chmod 755 ${STAGE_WIFI}
   log_message "===              CASDK Entries Added To Stage_wifi.sh                 ==="
 fi
 
-chmod 755 /jci/scripts/stage_wifi.sh
+chmod 755 ${STAGE_WIFI}
 
 # copy CustomApplicationsProxy and aio.js
 cp -a ${MYDIR}/casdk/proxy/CustomApplicationsProxy.js /jci/opera/opera_dir/userjs/
 cp -a ${MYDIR}/casdk/proxy/aio.js /jci/opera/opera_dir/userjs/
 chmod 755 /jci/opera/opera_dir/userjs/aio.js
 chmod 755 /jci/opera/opera_dir/userjs/CustomApplicationsProxy.js
-chown 1018:3015 /jci/opera/opera_dir/userjs/aio.js
-chown 1018:3015 /jci/opera/opera_dir/userjs/CustomApplicationsProxy.js
 log_message "===               Copied CustomApplicationsProxy.js                   ==="
 
 if [ -e /jci/opera/opera_dir/userjs/additionalApps.js ]
@@ -100,37 +65,30 @@ then
   log_message "===                   Disable AdditionalApps.js                       ==="
 fi
 
-if [ -e /jci/opera/opera_dir/userjs/additionalApps.json ]
+if [ -e ${ADDITIONAL_APPS_JSON} ]
 then
-	echo "additionalApps = $(cat /jci/opera/opera_dir/userjs/additionalApps.json)" > /jci/opera/opera_dir/userjs/nativeApps.js
-	log_message "===                Created nativeApps.js for CASDK                    ==="
+  echo "additionalApps = $(cat ${ADDITIONAL_APPS_JSON})" > /jci/opera/opera_dir/userjs/nativeApps.js
+  log_message "===                Created nativeApps.js for CASDK                    ==="
 else
   echo "additionalApps = [" > /jci/opera/opera_dir/userjs/nativeApps.js
   echo "];" >> /jci/opera/opera_dir/userjs/nativeApps.js
   log_message "===     No Apps Found - Created Empty nativeApps.js for CASDK         ==="
 fi
 
-# install CASDK runtime if it doesnt exist or newer version
-if [ ! -e /tmp/mnt/resources/aio/mzd-casdk/runtime ] || [[ "${_CASDK_VER}" < "${CASDK_VER}" ]]
-then
-  cp -a ${MYDIR}/casdk/resources /tmp/mnt
-  chmod -R 755 /tmp/mnt/resources/aio
-  chmod -R 755 /tmp/mnt/resources/dev/bin
-  echo "_AIO_VER=${AIO_VER}" > /jci/casdk/casdk.aio
-  echo "_CASDK_VER=${CASDK_VER}" >> /jci/casdk/casdk.aio
-  log_message "===                  Installed CASDK Runtime                          ==="
-else
-  # for development use
-  # cp -a ${MYDIR}/casdk/resources/aio/mzd-casdk /tmp/mnt/resources/aio
-  log_message "===              CASDK Runtime Already Installed                      ==="
-fi
+# install CASDK runtime
+cp -a ${MYDIR}/casdk/resources /tmp/mnt
+chmod -R 755 /tmp/mnt/resources/aio
+chmod -R 755 /tmp/mnt/resources/dev/bin
+echo "_AIO_VER=${AIO_VER}" > /jci/casdk/casdk.aio
+echo "_CASDK_VER=${CASDK_VER}" >> /jci/casdk/casdk.aio
+log_message "===                  Installed CASDK Runtime                          ==="
 
 # create custom folder
-if [ ! -e /jci/gui/apps/custom ]
+if [ ! -L /jci/gui/apps/custom ]
 then
-	# create custom apps symlink
-	ln -sf /tmp/mnt/resources/aio/mzd-casdk /jci/gui/apps/custom
-	log_message "===             Created Symlinks To Custom App Folder                 ==="
+  rm -rf /jci/gui/apps/custom
+  ln -sf /tmp/mnt/resources/aio/mzd-casdk /jci/gui/apps/custom
+  log_message "===             Created Symlinks To Custom App Folder                 ==="
 else
   log_message "===                Custom App Folder Already Exists                   ==="
 fi

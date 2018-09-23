@@ -3,11 +3,16 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <title>Image Joiner for Background Rotator Tweak.</title>
+  <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+  <script src="../assets/vendor/jquery.min.js"></script>
+  <script>if (window.module) module = window.module;</script>
   <link rel="Stylesheet" href="./PhotoJoiner_files/Style.css">
   <link rel="Stylesheet" href="./PhotoJoiner_files/fineuploader.css">
   <link rel="Stylesheet" href="./PhotoJoiner_files/colorpicker.css">
+  <script src="../assets/js/index.js"></script>
   <script src="../assets/js/spdValues.js"></script>
   <script src="../assets/js/audioSourceList.js"></script>
+  <script src="../assets/js/messages-settings.js"></script>
   <script src="../assets/vendor/angular.min.js"></script>
   <script src="../assets/vendor/checklist-model.js"></script>
   <script src="../assets/vendor/angular-route.js"></script>
@@ -16,16 +21,9 @@
   <link rel="stylesheet" href="../assets/css/style.css">
   <link rel="stylesheet" href="../assets/vendor/w3.css">
   <link rel="stylesheet" href="../assets/vendor/ico.css">
-  <script>
-  if (typeof module === 'object') {
-    window.module = module;
-    module = undefined;
-  }
-  </script>
-  <script src="../assets/vendor/jquery.min.js"></script>
-  <script src="../assets/vendor/angular-sanitize.min.js"></script>
   <script src="../assets/vendor/jquery.detect_swipe.js"></script>
   <script src="../assets/vendor/w3.js"></script>
+  <script src="../assets/vendor/angular-sanitize.min.js"></script>
   <script src="../assets/vendor/bootstrap.min.js"></script>
   <script src="../assets/vendor/bootbox.min.js"></script>
   <script src="../assets/vendor/intro.js"></script>
@@ -33,7 +31,6 @@
   <script src="../assets/vendor/featherlight.gallery.min.js"></script>
   <script src="../assets/vendor/showdown.min.js"></script>
   <script src="../assets/js/ex-links.js"></script>
-  <script src="../assets/js/index.js"></script>
   <script src="../assets/js/build-tweaks.js"></script>
   <script src="../assets/js/tour.js"></script>
   <script src="../assets/js/notifications.js"></script>
@@ -46,9 +43,6 @@
   <script type="text/javascript" src="./PhotoJoiner_files/TableFunctions.js"></script>
   <!--script type="text/javascript" src="./PhotoJoiner_files/PhotoJoin.js"></script>
   <script src="../assets/vendor/jquery.mousewheel.min.js"></script-->
-  <script>
-  if (window.module) module = window.module;
-  </script>
   <style>
   html {
     overflow-x: auto;
@@ -75,7 +69,7 @@
   }
   </style>
 </head>
-<body ng-app="AIO" ng-controller="MainCtrl">
+<body ng-app="AIO" ng-controller="MainCtrl" id="PhotoJoiner">
   <ng-view></ng-view>
   <footer>
     <span class="copyleft" title="Copyleft">&copy; 2018 <a href="#" onclick="externalLink('copyleft')">Trevelopment.</a></span>

@@ -619,11 +619,18 @@ systemApp.prototype._initApplicationsDataList = function() {
     items: items
   };
   //We have two different context (Applications and VehicleStatusMonitor) for displaying Appication item(s),so context wise storing the array of appName(s) to be displayed on corresponding Context.
+  if (this._vehicleConfigurationType=== "Old") {
   this._applicationsCtxtWiseAppNames = {
     //Context Name :  // [appName,appName....]
-    "Applications": ["hdtrafficimage", "idm", "ecoenergy", "driverid", "vehicleStatus", "vdt_settings", "vdt", "carplay", "androidauto", "_androidauto", "_videoplayer", "_aiotweaks", "_speedometer", "app.background", "app.devtools", "app.gpsspeed", "app.multidash", "app.simpledashboard", "app.terminal", "app.vdd", "app.tetris", "app.breakout", "app.2048", "app.aio", "app.android", "app.myapp", "app.helloworld", "app.marketapps", "app.multicontroller", "app.snake", "app.speedometer", "app.androidauto", "app.aiotweaks", "app.youtube", "app.speed", "app.hello", "app.help", "app.myapp", "app.videoplayer", "app.video", "app.horloge", "app.clock", "app.sbspeedo", "app.statusbar", "app.simple", "app.simplespeedo", "app.analog", "app.casdkapps"],
+      "Applications": ["xmdata", "hdtrafficimage", "idm", "ecoenergy", "driverid", "warnguide", "schedmaint", "vehicleStatus", "vdt_settings", "vdt", "carplay", "androidauto", "_androidauto", "_videoplayer", "_aiotweaks", "_speedometer", "app.background", "app.devtools", "app.gpsspeed", "app.multidash", "app.simpledashboard", "app.terminal", "app.vdd", "app.tetris", "app.breakout", "app.2048", "app.aio", "app.android", "app.myapp", "app.helloworld", "app.marketapps", "app.multicontroller", "app.snake", "app.speedometer", "app.androidauto", "app.aiotweaks", "app.youtube", "app.speed", "app.hello", "app.help", "app.myapp", "app.videoplayer", "app.video", "app.horloge", "app.clock", "app.sbspeedo", "app.statusbar", "app.simple", "app.simplespeedo", "app.analog", "app.casdkapps"],
+      "VehicleStatusMonitor": ["vsm"]
+    };
+  } else {
+    this._applicationsCtxtWiseAppNames = {
+      "Applications": ["xmdata", "hdtrafficimage", "idm", "ecoenergy", "driverid", "vehicleStatus", "vdt_settings", "vdt", "carplay", "androidauto", "_androidauto", "_videoplayer", "_aiotweaks", "_speedometer", "app.background", "app.devtools", "app.gpsspeed", "app.multidash", "app.simpledashboard", "app.terminal", "app.vdd", "app.tetris", "app.breakout", "app.2048", "app.aio", "app.android", "app.myapp", "app.helloworld", "app.marketapps", "app.multicontroller", "app.snake", "app.speedometer", "app.androidauto", "app.aiotweaks", "app.youtube", "app.speed", "app.hello", "app.help", "app.myapp", "app.videoplayer", "app.video", "app.horloge", "app.clock", "app.sbspeedo", "app.statusbar", "app.simple", "app.simplespeedo", "app.analog", "app.casdkapps"],
     "VehicleStatusMonitor": ["warnguide", "vsm", "schedmaint"]
   };
+  }
 };
 systemApp.prototype._initCommunicationsDataList = function() {
   var items = [];
@@ -683,6 +690,13 @@ systemApp.prototype._StatusMenuMsgHandler = function(msg) {
   this._enableAppListItem(appName, isDisabled, this._masterApplicationDataList);
   this._enableAppListItem(appName, isDisabled, this._communicationsDataList);
   this._enableAppListItem(appName, isDisabled, this._masterEntertainmentDataList);
+
+    // check if we should worry about speed restriction for carplay/androidauto icon
+    //For car play/android auto app _setRemoteButtonIcon is called to display or hide car play/android auto icon in status bar
+  if (appName === "carplay" || appName === "androidauto") {
+        this._setRemoteUIButton(appName,!isDisabled);
+    }
+
   // Update the menu list in the current context if needed
   if (this._currentContext) {
     switch (this._currentContext.ctxtId) {
@@ -841,6 +855,7 @@ systemApp.prototype._StatusMenuVisibleMsgHandler = function(msg) {
       for (var k = 0; k < this._masterApplicationDataList.items.length; ++k) {
         if ((this._masterApplicationDataList.items[k].appData.appName === applicationsCtxtWiseAppName) &&
           this._masterApplicationDataList.items[k].appData.isVisible) {
+          isApplicationsDirty = true;
           isVehicleStatusMonitorVisible = this._masterApplicationDataList.items[k].appData.isVisible;
           break;
         }

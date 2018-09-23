@@ -3,15 +3,13 @@ show_message "UNINSTALL USB AUDIO MOD ..."
 log_message "==========*************  UNINSTALL USB AUDIO MOD ... ************=========="
 
 # Backups
-if [ -e /jci/gui/common/controls/NowPlaying4/js/NowPlaying4Ctrl.js.org ]
+if ! (restore_org /jci/gui/common/controls/NowPlaying4/js/NowPlaying4Ctrl.js)
 then
-	cp -a /jci/gui/common/controls/NowPlaying4/js/NowPlaying4Ctrl.js.org /jci/gui/common/controls/NowPlaying4/js/NowPlaying4Ctrl.js
-	log_message "===              NowPlaying4Ctrl.js Restored from backup              ==="
+	log_message "===   No Backup found for NowPlaying4Ctrl.js No Files Were Changed    ==="
 fi
-if [ -e /jci/gui/apps/usbaudio/js/usbaudioApp.js.org ]
+if ! (restore_org /jci/gui/apps/usbaudio/js/usbaudioApp.js)
 then
-	cp -a /jci/gui/apps/usbaudio/js/usbaudioApp.js.org /jci/gui/apps/usbaudio/js/usbaudioApp.js
-	log_message "===    /jci/gui/apps/usbaudio/js/usbaudioApp.js Restored from backup  ==="
+	log_message "===    No Backup found for usbaudioApp.js, No  Files Were Changed     ==="
 fi
 
 # Remove CSS

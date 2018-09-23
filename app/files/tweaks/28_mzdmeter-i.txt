@@ -6,8 +6,8 @@ log_message "=========***************   INSTALL MZD METER   ***************=====
 
 if [ $TESTBKUPS -eq 1 ]
 then
-  cp /jci/scripts/stage_wifi.sh "${MYDIR}/bakups/test/stage_wifi_mzd-before.sh"
-  cp /jci/opera/opera_dir/userjs/additionalApps.json "${MYDIR}/bakups/test/additionalApps_mzd_before.json"
+  cp ${STAGE_WIFI} "${MYDIR}/bakups/test/stage_wifi_mzd-before.sh"
+  [ -f ${ADDITIONAL_APPS_JSON} ] && cp ${ADDITIONAL_APPS_JSON} "${MYDIR}/bakups/test/additionalApps_mzd_before.json"
 fi
 
 ### Kills all WebSocket daemons
@@ -21,17 +21,7 @@ if [ $CASDK_MODE -eq 0 ]
 then
 	cp -a ${MYDIR}/config/jci/opera/opera_dir/userjs/*.js /jci/opera/opera_dir/userjs/ && CASDK_MODE=1
 	chmod 755 /jci/opera/opera_dir/userjs/additionalApps.js
-  chown 1018:3015 /jci/opera/opera_dir/userjs/additionalApps.js
   log_message "===                     Copied additionalApps.js                      ==="
-fi
-
-# create additionalApps.json file from scratch if the file does not exist
-if [ ! -e /jci/opera/opera_dir/userjs/additionalApps.json ]
-then
-  echo "[" > /jci/opera/opera_dir/userjs/additionalApps.json
-  echo "]" >> /jci/opera/opera_dir/userjs/additionalApps.json
-  chmod 755 /jci/opera/opera_dir/userjs/additionalApps.json
-  log_message "===                   Created additionalApps.json                     ==="
 fi
 
 # Copies the content of the addon-common folder
@@ -41,15 +31,16 @@ if [ ! -e /jci/gui/addon-common/websocketd ]  || [ ! -e /jci/gui/addon-common/jq
   log_message "===                     Copied addon-common folder                    ==="
 fi
 
-count=$(grep -c 'mzdmonitor.sh' /jci/scripts/stage_wifi.sh)
+count=$(grep -c 'mzdmonitor.sh' ${STAGE_WIFI})
 if [ "$count" = "0" ]
 then
-	echo -e '\n\n\n### MZD Meter' >> /jci/scripts/stage_wifi.sh
-	echo -e '\nwatch /jci/gui/apps/_mzdmeter/sh/mzdmonitor.sh &' >> /jci/scripts/stage_wifi.sh
-	chmod 755 /jci/scripts/stage_wifi.sh
+	echo -e '\n\n\n### MZD Meter' >> ${STAGE_WIFI}
+	echo -e '\nwatch /jci/gui/apps/_mzdmeter/sh/mzdmonitor.sh &' >> ${STAGE_WIFI}
+	chmod 755 ${STAGE_WIFI}
   log_message "===                      Modified Stage_wifi.sh                       ==="
 fi
 
+create_app_json
 # Call to the function to populate the json
 add_app_json "_mzdmeter" "MZD Meter"
 

@@ -4,9 +4,9 @@ log_message "====************  INSTALL ANDROID AUTO HEADUNIT APP v${AA_VER}...**
 TESTBKUPS=1
 if [ $TESTBKUPS -eq 1 ]
 then
-	cp /jci/scripts/stage_wifi.sh "${MYDIR}/bakups/test/stage_wifi_androidauto-before.sh"
-	cp /jci/opera/opera_dir/userjs/additionalApps.json "${MYDIR}/bakups/test/additionalApps_androidauto-1_before.json"
-	cp /jci/sm/sm.conf "${MYDIR}/bakups/test/sm_androidauto-before.conf"
+  cp ${STAGE_WIFI} "${MYDIR}/bakups/test/stage_wifi_androidauto-before.sh"
+  cp /jci/sm/sm.conf "${MYDIR}/bakups/test/sm_androidauto-before.conf"
+  [ -f ${ADDITIONAL_APPS_JSON} ] && cp ${ADDITIONAL_APPS_JSON} "${MYDIR}/bakups/test/additionalApps_androidauto-1_before.json"
 fi
 
 ### kills all WebSocket daemons
@@ -14,67 +14,67 @@ killall -q -9 headunit
 pkill websocketd
 
 rm -fr /jci/gui/apps/_androidauto
-rm -fr /tmp/mnt/data_persist/dev/bin/headunit*
+rm -fr /tmp/mnt/resources/aio/apps/_androidauto
 rm -fr /tmp/mnt/data_persist/dev/androidauto
+rm -fr /tmp/mnt/data_persist/dev/bin/headunit*
 rm -f /tmp/mnt/data_persist/dev/bin/aaserver
+rm -f /tmp/mnt/data_persist/dev/bin/check-usb.sh
+rm -f /tmp/mnt/data_persist/dev/bin/usb-allow.list
 rm -f /tmp/mnt/data_persist/dev/bin/input_filter
 rm -f /tmp/mnt/data/enable_input_filter
 rm -f /tmp/mnt/data/input_filter
-sed -i '/9999/d' /jci/scripts/stage_wifi.sh
-sed -i '/headunit/d' /jci/scripts/stage_wifi.sh
-sed -i '/Android Auto/d' /jci/scripts/stage_wifi.sh
+sed -i '/9999/d' ${STAGE_WIFI}
+sed -i '/headunit/d' ${STAGE_WIFI}
+sed -i '/Android Auto/d' ${STAGE_WIFI}
+sed -i '/check-usb/d' ${STAGE_WIFI}
 log_message "===                   Removed old Android Auto App                    ==="
 if grep -Fq "input_filter" /jci/sm/sm.conf
 then
-	sed -i '/input_filter/ d' /jci/sm/sm.conf
-	log_message "===           Clean obsolete input_filter to /jci/sm/sm.conf          ==="
+  sed -i '/input_filter/ d' /jci/sm/sm.conf
+  log_message "===           Clean obsolete input_filter to /jci/sm/sm.conf          ==="
 fi
 
 # delete empty lines
-sed -i '/^ *$/ d' /jci/scripts/stage_wifi.sh
-sed -i '/#!/ a\ ' /jci/scripts/stage_wifi.sh
+sed -i '/^ *$/ d' ${STAGE_WIFI}
+sed -i '/#!/ a\ ' ${STAGE_WIFI}
 
 # check for 1st line of stage_wifi.sh
-if grep -Fq "#!/bin/sh" /jci/scripts/stage_wifi.sh
+if ! grep -Fq "#!/bin/sh" ${STAGE_WIFI}
 then
-		#echo -e "\n\n### Android Auto start" >> /jci/scripts/stage_wifi.sh
-		#sleep 1
-		#echo -e "headunit-wrapper &" >> /jci/scripts/stage_wifi.sh
-    sed -i '/#!/ a\#### Android Auto start' /jci/scripts/stage_wifi.sh
-    sleep 1
-    sed -i '/Android Auto start/ i\ ' /jci/scripts/stage_wifi.sh
-    sed -i '/Android Auto start/ a\headunit-wrapper &' /jci/scripts/stage_wifi.sh
-		log_message "===      Added Android Auto entry to /jci/scripts/stage_wifi.sh       ==="
-else
-	cp -a "${MYDIR}/config/androidauto/stage_wifi.sh" /jci/scripts/
-	log_message "===         Missing 1st line of stage_wifi.sh, copied new one         ==="
+  log_message "===                 Missing 1st line of stage_wifi.sh                 ==="
+  echo "#!/bin/sh" > ${STAGE_WIFI}
 fi
+sed -i '/#!/ a\#### Android Auto start' ${STAGE_WIFI}
+sleep 1
+sed -i '/Android Auto start/ i\ ' ${STAGE_WIFI}
+sed -i '/Android Auto start/ a\headunit-wrapper &' ${STAGE_WIFI}
+log_message "===      Added Android Auto entry to ${STAGE_WIFI}       ==="
 
+cp -a ${MYDIR}/config/androidauto/jci/gui/apps/_androidauto ${AIO_APP_DIR}
 cp -a ${MYDIR}/config/androidauto/data_persist/dev/* /tmp/mnt/data_persist/dev
-cp -a ${MYDIR}/config/androidauto/jci/gui/apps/_androidauto /jci/gui/apps
 chmod -R 755 /tmp/mnt/data_persist/dev/bin/
 log_message "===                Copied Android Auto Headunit App files             ==="
+
+# symlink to resources
+if [ $APPS2RESOURCES -eq 1 ]
+then
+  ln -sf /tmp/mnt/resources/aio/apps/_androidauto /jci/gui/apps/_androidauto
+  log_message "===                Created Symlink To Resources Partition             ==="
+fi
 
 # copy additionalApps.js, if not already present
 if [ $CASDK_MODE -eq 0 ]
 then
-	log_message "===           No additionalApps.js available, will copy one           ==="
-	cp -a ${MYDIR}/config/jci/opera/opera_dir/userjs/*.js /jci/opera/opera_dir/userjs/ && CASDK_MODE=1
-	find /jci/opera/opera_dir/userjs/ -type f -name '*.js' -exec chmod 755 {} \;
+  log_message "===           No additionalApps.js available, will copy one           ==="
+  cp -a ${MYDIR}/config/jci/opera/opera_dir/userjs/*.js /jci/opera/opera_dir/userjs/ && CASDK_MODE=1
+  find /jci/opera/opera_dir/userjs/ -type f -name '*.js' -exec chmod 755 {} \;
 fi
 
-# create additionalApps.json file from scratch if the file does not exist
-if [ ! -e /jci/opera/opera_dir/userjs/additionalApps.json ]
-then
-  echo "[" > /jci/opera/opera_dir/userjs/additionalApps.json
-  echo "]" >> /jci/opera/opera_dir/userjs/additionalApps.json
-  chmod 755 /jci/opera/opera_dir/userjs/additionalApps.json
-  log_message "===                   Created additionalApps.json                     ==="
-fi
+create_app_json
 # add preload to the AA json entry if needed
-if ! grep -q "preload.js" /jci/opera/opera_dir/userjs/additionalApps.json
+if grep -q "_androidauto" ${ADDITIONAL_APPS_JSON} && ! grep -q "preload.js" ${ADDITIONAL_APPS_JSON}
 then
-	remove_app_json "_androidauto"
+  remove_app_json "_androidauto"
 fi
 # call function add_app_json to modify additionalApps.json
 add_app_json "_androidauto" "Android Auto" "preload.js"
@@ -92,13 +92,13 @@ fi
 
 if [ $TESTBKUPS -eq 1 ]
 then
-	cp -a /jci/scripts/stage_wifi.sh ${MYDIR}/bakups/test/stage_wifi_androidauto-after.sh
-	cp -a /jci/opera/opera_dir/userjs/additionalApps.json "${MYDIR}/bakups/test/additionalApps_after-AA.json"
+  cp ${STAGE_WIFI} "${MYDIR}/bakups/test/stage_wifi_androidauto-after.sh"
+  [ -f ${ADDITIONAL_APPS_JSON} ] && cp ${ADDITIONAL_APPS_JSON} "${MYDIR}/bakups/test/additionalApps_after-AA.json"
 fi
 
 # Move headunit log file to USB Drive if exists
 if [ -e /tmp/mnt/data/headunit.log ]
 then
-	mv /tmp/mnt/data/headunit.log ${MYDIR}
-	log_message "===                 Moved headunit.log To USB Drive                   ==="
+  mv /tmp/mnt/data/headunit.log ${MYDIR}
+  log_message "===                 Moved headunit.log To USB Drive                   ==="
 fi

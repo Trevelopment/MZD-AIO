@@ -14,7 +14,7 @@ log.addSrcFile("AIOTweaksTmplt.js", "AIOTweaks");
  * =========================
  */
 var selectedItem = 0;
-var currTab = '';
+var currTab = 1;
 var maxButtons = 13;
 
 function AIOTweaksTmplt(uiaId, parentDiv, templateID, controlProperties) {
@@ -45,9 +45,10 @@ function AIOTweaksTmplt(uiaId, parentDiv, templateID, controlProperties) {
 
   // Build The Environment
   this.divElt.innerHTML = '<ul id="AIO-Main" class="tab" style="margin-top:60px">' +
-    '<li><a href="javascript:void(0)" class="tablinks" id="Twk">Apps</a></li>' +
-    '<li><a href="javascript:void(0)" class="tablinks" id="Main">Tweaks</a></li>' +
-    '<li><a href="javascript:void(0)" class="tablinks" id="Opt">Options</a></li>' +
+    '<li><a href="javascript:void(0)" class="tablinks" id="Twk" tabindex=1>Apps</a></li>' +
+    '<li><a href="javascript:void(0)" class="tablinks" id="Main" tabindex=2>Tweaks</a></li>' +
+    '<li><a href="javascript:void(0)" class="tablinks" id="Opt" tabindex=3>Options</a></li>' +
+    '<li><a href="javascript:void(0)" class="tablinks" id="Shll" tabindex=4>Shell</a></li>' +
     '</ul>' +
     '<div id="MainMenu" class="tabcontent FadeIn">' +
     '</div>' +
@@ -55,19 +56,21 @@ function AIOTweaksTmplt(uiaId, parentDiv, templateID, controlProperties) {
     '</div>' +
     '<div id="Options" class="tabcontent FadeIn">' +
     '</div>' +
-    '<div id="AioInfoPanel" class="animate-zoom"><div id="AioInformation"></div></div>';
+    '<div id="Shell" class="tabcontent FadeIn">' +
+    '</div>' +
+    '<div id="AioInfoPanel" class="animate-zoom"><div id="AioCmd"></div><div id="AioInformation"></div></div>';
 
   function AIOTabs(tab, tabLink) {
-    $(".tablinks").removeClass("active-tab");
+    $(".tablinks, .tabcontent").removeClass("active-tab");
     $(".tabcontent").hide();
     $(".tabcontent").removeClass("animate-zoom");
     $("button").removeClass("selectedItem");
     maxButtons = $(tab + " a").length - 2;
     $(tab).show();
-    $(tab).addClass('animate-zoom');
+    $(tab).addClass('animate-zoom active-tab');
     (selectedItem < maxButtons) ? $(tab + " button").eq(selectedItem).addClass("selectedItem"): selectedItem = 0;
     $(tabLink).addClass("active-tab");
-    currTab = tab;
+    currTab = $(tabLink).attr("tabindex");
   }
 
   // Buttons
@@ -90,29 +93,27 @@ function AIOTweaksTmplt(uiaId, parentDiv, templateID, controlProperties) {
   $("<div/>").attr("id", "MainMenuMsg").css({ "padding": "0px" }).insertAfter($('#MainMenu'));
 
   // Apps Section
-  $("<button/>").attr("id", "twkOut").addClass('mainApps').html('<a>Home</a>').addClass('audioSources').appendTo($('#Tweaks'));
-  $("<button/>").attr("id", "usba").html('<a>USB A</a>').addClass('audioSources').appendTo($('#Tweaks'));
-  $("<button/>").attr("id", "usbb").html('<a>USB B</a>').addClass('audioSources').appendTo($('#Tweaks'));
-  $("<button/>").attr("id", "BluetoothAudio").addClass('audioSources').html('<a>Bluetooth</a>').appendTo($('#Tweaks'));
+  $("<button/>").attr("id", "twkOut").addClass('audioSources mainApps').html('<a><img src="common/images/icons/IcnSbHome.png" alt="Home"></a>').appendTo($('#Tweaks'));
+  $("<button/>").attr("id", "BluetoothAudio").addClass('audioSources').html('<a><img src="common/images/icons/IcnListBluetooth_On.png" alt="Bluetooth"></a>').appendTo($('#Tweaks'));
+  $("<button/>").attr("id", "usba").addClass('audioSources').html('<a><img src="apps/_aiotweaks/templates/AIOTweaks/images/usb.png" alt="USB"> A</a>').appendTo($('#Tweaks'));
+  $("<button/>").attr("id", "usbb").addClass('audioSources').html('<a><img src="apps/_aiotweaks/templates/AIOTweaks/images/usb.png" alt="USB"> B</a>').appendTo($('#Tweaks'));
+  $("<button/>").attr("id", "previousTrackBtn").addClass('audioSources').html('<a><img src="common/images/icons/IcnUmpPreviousAudio_Hd.png" alt="Previous"></a>').appendTo($('#Tweaks'));
+  $("<button/>").attr("id", "nextTrackBtn").addClass('audioSources').html('<a><img src="common/images/icons/IcnUmpNextAudio_Hd.png" alt="Next"></a>').appendTo($('#Tweaks'));
   $("<br>").appendTo($('#Tweaks'));
-  $("<button/>").attr("id", "previousTrackBtn").addClass('audioSources').html('<a>Previous</a>').appendTo($('#Tweaks'));
-  $("<button/>").attr("id", "nextTrackBtn").addClass('audioSources').html('<a>Next</a>').appendTo($('#Tweaks'));
-  $("<br>").appendTo($('#Tweaks'));
-  $("<button/>").attr("id", "headunitLogBtn").addClass('aaLog').html('<a>View Headunit Log</a>').appendTo($('#Tweaks'));
   $("<button/>").attr("id", "mountSwapBtn").html('<a>Mount Swapfile</a>').appendTo($('#Tweaks')).hide();
   $("<button/>").attr("id", "unmountSwapBtn").html('<a>Unmount Swapfile</a>').appendTo($('#Tweaks')).hide();
+  $("<button/>").attr("id", "appListBtn").html('<a>App List</a>').appendTo($('#Tweaks'));
+  $("<button/>").attr("id", "backupCamBtn").html('<a>Reverse Cam</a>').appendTo($('#Tweaks'));
+  $("<button/>").attr("id", "errLogBtn").html('<a>Error Log</a>').appendTo($('#Tweaks')).hide();
+  $("<br>").appendTo($('#Tweaks'));
+  //$("<button/>").attr("id", "headunitLogBtn").addClass('aaLog').html('<a>View Headunit Log</a>').appendTo($('#Tweaks'));
   $('<div/>').attr('id', 'aaTitle').html('Android Auto Headunit').appendTo('#Tweaks');
   $("<button/>").attr("id", "AAstart").addClass('aaFunc fnStart').html('<a>Start</a>').appendTo($('#Tweaks'));
   $("<button/>").attr("id", "AAstop").addClass('aaFunc fnStop').html('<a>Stop</a>').appendTo($('#Tweaks'));
   $('<div/>').attr('id', 'csTitle').html('CastScreen Receiver').appendTo('#Tweaks');
   $("<button/>").attr("id", "CSstart").addClass('csFunc fnStart').html('<a>Start</a>').appendTo($('#Tweaks'));
   $("<button/>").attr("id", "CSstop").addClass('csFunc fnStop').html('<a>Stop</a>').appendTo($('#Tweaks'));
-  $("<button/>").attr("id", "scrollUpBtn").addClass('AIO-scroller').html('<img src="apps/_aiotweaks/templates/AIOTweaks/images/scrollUp.png" />').insertAfter($('#AioInfoPanel'));
-  $("<button/>").attr("id", "scrollDownBtn").addClass('AIO-scroller').html('<img src="apps/_aiotweaks/templates/AIOTweaks/images/scrollDown.png" />').insertAfter($('#AioInfoPanel'));
-  $("<button/>").attr("id", "errLogBtn").html('<a>Error Log</a>').appendTo($('#Tweaks')).hide();
-  //$("<button/>").attr("id", "backupCamBtn").html('<a>localStorage</a>').appendTo($('#Tweaks'));
   //$("<button/>").attr("id", "pauseBtn").html('<a>Clear localStorage</a>').appendTo($('#Tweaks'));
-  //$("<button/>").attr("id", "createSwapBtn").html('<a>Vehicle Type</a>').appendTo($('#Tweaks'));
   //$("<button/>").attr("id", "fakeIncomingCallBtn").addClass('test').html('<a>Fake Incoming Call</a>').appendTo($('#Tweaks'));
   //$("<button/>").attr("id", "activeCallBtn").addClass('test').html('<a>Fake Active Call</a>').appendTo($('#Tweaks'));
   //$('<div/>').attr('id','spTitle').html('Speedometer').appendTo('#Tweaks');
@@ -120,20 +121,16 @@ function AIOTweaksTmplt(uiaId, parentDiv, templateID, controlProperties) {
   //$("<button/>").attr("id", "SPstop").addClass('spFunc fnStop').html('<a>Stop</a>').appendTo($('#Tweaks'));
 
   // Options Section
+  $("<button/>").attr("id", "verBtn").html('<a>Show Version</a>').appendTo($('#Options'));
+  $("<button/>").attr("id", "showVehData").html('<a>Vehicle Data</a>').appendTo($('#Options'));
   $("<button/>").attr("id", "aioInfo").html('<a>Info</a>').appendTo($('#Options'));
-  $("<button/>").attr("id", "adbBtn").html('<a>adb</a>').appendTo($('#Options'));
   $("<button/>").attr("id", "messageTestBtn").html('<a>Message Test</a>').appendTo($('#Options'));
   $("<button/>").attr("id", "test").html('<a>SBN Test</a>').appendTo($('#Options'));
   $("<button/>").attr("id", "Tst").addClass("tablinks").html('<a>Touchscreen</a>').appendTo($('#Options'));
   //$("<button/>").attr("id", "showBgBtn").html('<a>Show Background</a>').appendTo($('#Options'));
-  $("<button/>").attr("id", "showEnvBtn").html('<a>Env</a>').appendTo($('#Options'));
-  $("<button/>").attr("id", "appListBtn").html('<a>App List</a>').appendTo($('#Options'));
-  $("<button/>").attr("id", "showDFHBtn").html('<a>Disk Space</a>').appendTo($('#Options'));
-  $("<button/>").attr("id", "showMeminfoBtn").html('<a>Memory Info</a>').appendTo($('#Options'));
-  $("<button/>").attr("id", "showPSBtn").html('<a>Running Processes</a>').appendTo($('#Options'));
-  $("<button/>").attr("id", "displayOffBtn").html('<a>Screen Off</a>').appendTo($('#Options'));
-  //$("<button/>").attr("id", "runCheckIPBtn").html('<a>Check IP</a>').appendTo($('#Options'));
   $("<button/>").attr("id", "reverseAppListBtn").html('<a>Reverse App List</a>').appendTo($('#Options'));
+  $("<button/>").attr("id", "displayOffBtn").html('<a>Screen Off</a>').appendTo($('#Options'));
+  //$("<button/>").attr("id", "runCheckIPBtn").html('<a>Check IP</a>').appendTo($('#Shell'));
   $("<button/>").attr("id", "systemTab").html('<a>Settings &gt; System</a>').appendTo($('#Options'));
   $("<button/>").attr("id", "wifiToggle").html('<a>Turn WiFi On</a>').appendTo($('#Options'));
   $("<button/>").attr("id", "wifiSettings").html('<a>WiFi Settings</a>').appendTo($('#Options'));
@@ -154,7 +151,15 @@ function AIOTweaksTmplt(uiaId, parentDiv, templateID, controlProperties) {
   //$("<button/>").attr("id", "runTweaksBtn").html('<a>VidYos</a>').appendTo($('#Options'));
   $("<button/>").attr("id", "runTerminalBtn").html('Run Terminal').addClass('devTools').appendTo($('#Options'));
   $("<div/>").attr("id", "devModeSecretBtn").css({ 'position': 'fixed', 'height': '100px', 'width': '100px', 'bottom': '0', 'right': '0' }).appendTo($('#Options'));
+  $("<button/>").attr("id", "adbBtn").html('<a>adb Devices</a>').appendTo($('#Shell'));
+  $("<button/>").attr("id", "adbRevBtn").html('<a>adb Reverse Port</a>').appendTo($('#Shell'));
+  $("<button/>").attr("id", "showEnvBtn").html('<a>Env</a>').appendTo($('#Shell'));
+  $("<button/>").attr("id", "showDFHBtn").html('<a>Disk Space</a>').appendTo($('#Shell'));
+  $("<button/>").attr("id", "showMeminfoBtn").html('<a>Memory Info</a>').appendTo($('#Shell'));
+  $("<button/>").attr("id", "showPSBtn").html('<a>Running Processes</a>').appendTo($('#Shell'));
 
+  $("<button/>").attr("id", "scrollUpBtn").addClass('AIO-scroller').html('<img src="apps/_aiotweaks/templates/AIOTweaks/images/scrollUp.png" />').insertAfter($('#AioInfoPanel'));
+  $("<button/>").attr("id", "scrollDownBtn").addClass('AIO-scroller').html('<img src="apps/_aiotweaks/templates/AIOTweaks/images/scrollDown.png" />').insertAfter($('#AioInfoPanel'));
   //$("<br>").appendTo($('#Options'));
   //function buildAIObuttons (aioButtons) {
   //TODO: This function will build the whole thing from a JSON object
@@ -170,6 +175,9 @@ function AIOTweaksTmplt(uiaId, parentDiv, templateID, controlProperties) {
   $("#Opt").on('click', function() {
     AIOTabs("#Options", "#Opt");
   });
+  $("#Shll").on('click', function() {
+    AIOTabs("#Shell", "#Shll");
+  });
   $("#Tst").on('click', function() {
     AIOTabs("#touchscreenPanel", "#Tst");
   });
@@ -178,8 +186,8 @@ function AIOTweaksTmplt(uiaId, parentDiv, templateID, controlProperties) {
   try {
     var prevTab = JSON.parse(localStorage.getItem("aio.prevtab")) || false;
     if (prevTab) {
-      prevTab = "#" + prevTab;
-      $(prevTab).click();
+      prevTab = $('.tablinks[tabindex=' + prevTab + ']');
+      prevTab.click();
     } else {
       $("#Main").click();
     }
@@ -195,21 +203,22 @@ function AIOTweaksTmplt(uiaId, parentDiv, templateID, controlProperties) {
  */
 AIOTweaksTmplt.prototype.singleClick = function(clickTarget) {
   if (typeof clickTarget === "string") { clickTarget = $(clickTarget) }
-  (speedometerLonghold) ? speedometerLonghold = false: (typeof clickTarget === "function") ? clickTarget() : clickTarget.click();
+  (AIOlonghold) ? AIOlonghold = false: (typeof clickTarget === "function") ? clickTarget(arguments[1]) : clickTarget.click();
   clearTimeout(this.longholdTimeout);
   this.longholdTimeout = null;
-}
+};
 /*
  *  @param clickFunction (function) Function to run on a long click
  *  clickFunction can also be a a string of the DOM node or jQuery Object to click
  */
 AIOTweaksTmplt.prototype.longClick = function(clickFunction) {
   if (typeof clickFunction === "string") { clickFunction = $(clickFunction) }
+  var arg = arguments[1];
   this.longholdTimeout = setTimeout(function() {
-    speedometerLonghold = true;
-    (typeof clickFunction === "function") ? clickFunction(): clickFunction.click();
+    AIOlonghold = true;
+    (typeof clickFunction === "function") ? clickFunction(arg): clickFunction.click();
   }, 1200);
-}
+};
 
 /*
  * =========================
@@ -222,88 +231,117 @@ AIOTweaksTmplt.prototype.longClick = function(clickFunction) {
  * @param   eventID (string) any of the “Internal event name” values in IHU_GUI_MulticontrollerSimulation.docx (e.g. 'cw',
  * 'ccw', 'select')
  */
-AIOTweaksTmplt.prototype.handleControllerEvent = function(eventID) {
-  log.debug("handleController() called, eventID: " + eventID);
-
+AIOTweaksTmplt.prototype.ControllerEvents = function(eventID) {
   var retValue = null;
+  // console.log("EVENT: " + eventID);
+  var infoOpen = $("#AioInfoPanel").hasClass("opened");
   switch (eventID) {
     case "ccw":
-      if ($("#AioInfoPanel").hasClass("opened")) {
+      if (infoOpen) {
         document.getElementById("AioInformation").scrollTop -= 200;
       } else {
         $("button").removeClass("selectedItem");
         (selectedItem < 0) ? selectedItem = maxButtons: selectedItem--;
-        $(currTab + " a").eq(selectedItem).parent().addClass("selectedItem");
+        $(".tabcontent.active-tab a").eq(selectedItem).parent().addClass("selectedItem");
       }
       break;
     case "cw":
-      if ($("#AioInfoPanel").hasClass("opened")) {
+      if (infoOpen) {
         document.getElementById("AioInformation").scrollTop += 200;
       } else {
         $("button").removeClass("selectedItem");
         (selectedItem > maxButtons) ? selectedItem = 0: selectedItem++;
-        $(currTab + " a").eq(selectedItem).parent().addClass("selectedItem");
-      }
-      break;
-    case "up":
-      this.singleClick(function() {
-
-        if ($("#AioInfoPanel").hasClass("opened")) {
-          if (document.getElementById("AioInformation").scrollTop === 0) {
-            $("#closeAioInfo").click();
-          }
-          document.getElementById("AioInformation").scrollTop = 0;
-          document.getElementById("AioInformation").scrollLeft = 0;
-        } else {
-          showAioInfo("", true);
-        }
-      })
-      retValue = "consumed";
-      break;
-    case "down":
-      if ($("#AioInfoPanel").hasClass("opened")) {
-        document.getElementById("AioInformation").scrollTop += 2500;
-      } else {
-        retValue = $("#Main").click();
+        $(".tabcontent.active-tab a").eq(selectedItem).parent().addClass("selectedItem");
       }
       break;
     case "left":
-      if ($("#AioInfoPanel").hasClass("opened")) {
+      if (infoOpen) {
         document.getElementById("AioInformation").scrollLeft -= 1000;
       } else {
-        $("#Twk").click();
+        currTab--;
+        if (currTab < 1) currTab = 4;
+        $(".tablinks[tabindex=" + currTab + "]").click();
       }
       retValue = null;
       break;
     case "right":
-      if ($("#AioInfoPanel").hasClass("opened")) {
+      if (infoOpen) {
         document.getElementById("AioInformation").scrollLeft += 500;
       } else {
-        $("#Opt").click();
+        currTab++;
+        if (currTab > 4) currTab = 1;
+        $(".tablinks[tabindex=" + currTab + "]").click();
       }
       retValue = "consumed";
       break;
     case "select":
-      if ($("#AioInfoPanel").hasClass("opened")) {
+      if (infoOpen) {
         $("#closeAioInfo").click();
       } else {
-        $(currTab + " a").eq(selectedItem).parent().click();
+        $(".tabcontent.active-tab a").eq(selectedItem).parent().click();
       }
       retValue = "consumed";
       break;
-    case "downStart":
-    case "upStart":
-    case "leftStart":
-    case "rightStart":
-    case "selectStart":
-      retValue = "ignored";
+    case "down":
+      if (infoOpen) {
+        document.getElementById("AioInformation").scrollTop += 2500;
+        break;
+      } //intentional fallthrough
+    case "up":
+      if (infoOpen) {
+        if (document.getElementById("AioInformation").scrollTop === 0) {
+          $("#closeAioInfo").click();
+        } else {
+          document.getElementById("AioInformation").scrollTop -= 2500;
+        }
+        break;
+      } //intentional fallthrough
+    case "holddown":
+      if (infoOpen) {
+        $('#AioInformation').animate({ scrollTop: 999999 }, 3000);
+        break;
+      } //intentional fallthrough
+    case "holdup":
+      if (infoOpen) {
+        if (document.getElementById("AioInformation").scrollTop === 0) {
+          $("#closeAioInfo").click();
+        } else {
+          $('#AioInformation').animate({ scrollTop: 0, scrollLeft: 0 }, 3000);
+        }
+      } else {
+        showAioInfo("");
+      }
+      break;
+    case "holdleft":
+      currTab = 1;
+      $(".tablinks[tabindex=" + currTab + "]").click();
+      break;
+    case "holdright":
+      currTab = 4;
+      $(".tablinks[tabindex=" + currTab + "]").click();
+      break;
+    case "holdselect":
+      $("body").css({ "display": "" });
       break;
     default:
       retValue = "giveFocusLeft";
       break;
   }
   $("button").blur();
-  if(eventID.indexOf('Start')!==-1) $("html").removeClass("showBg");
+  return retValue;
+};
+AIOTweaksTmplt.prototype.handleControllerEvent = function(eventID) {
+  log.debug("handleController() called, eventID: " + eventID);
+  var retValue = 'giveFocusLeft';
+  var ev = eventID;
+  if (ev.indexOf("Start") !== -1) {
+    $("body").css({ "display": "" });
+    $("html").removeClass("showBg");
+    ev = 'hold' + ev.replace(/Start/, '');
+    retValue = this.longClick(this.ControllerEvents, ev);
+  } else {
+    retValue = this.singleClick(this.ControllerEvents, ev);
+  }
   return retValue;
 };
 /*
@@ -313,6 +351,7 @@ AIOTweaksTmplt.prototype.handleControllerEvent = function(eventID) {
 AIOTweaksTmplt.prototype.cleanUp = function() {
   $(".AIOTweaksTmplt").remove();
   $("html").removeClass("showBg");
+  $("body").css({ "display": "" });
   $('#SbSpeedo, #Sbfuel-bar-wrapper').fadeIn();
 };
 

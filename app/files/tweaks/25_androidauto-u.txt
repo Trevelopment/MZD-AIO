@@ -8,55 +8,43 @@ pkill websocketd
 
 if [ $TESTBKUPS -eq 1 ]
 then
-  cp /jci/scripts/stage_wifi.sh "${MYDIR}/bakups/test/stage_wifi_androidauto-before.sh"
-  cp /jci/opera/opera_dir/userjs/additionalApps.json "${MYDIR}/bakups/test/additionalApps_androidauto-1._before.json"
+  cp ${STAGE_WIFI} "${MYDIR}/bakups/test/stage_wifi_androidauto-before.sh"
   cp /jci/sm/sm.conf "${MYDIR}/bakups/test/sm_androidauto-before.conf"
+  [ -f ${ADDITIONAL_APPS_JSON} ] && cp ${ADDITIONAL_APPS_JSON} "${MYDIR}/bakups/test/additionalApps_androidauto-before.json"
 fi
 
-rm -fr /tmp/mnt/data_persist/dev/androidauto
-rm -f /tmp/mnt/data_persist/dev/bin/headunit
-rm -f /tmp/mnt/data_persist/dev/bin/headunit-wireless
-rm -f /tmp/mnt/data_persist/dev/bin/aaserver
-rm -f /tmp/mnt/data_persist/dev/bin/headunit-wrapper
-rm -f /tmp/mnt/data_persist/dev/bin/input_filter
-rm -fr /tmp/mnt/data_persist/dev/bin/headunit_libs
 rm -fr /jci/gui/apps/_androidauto
+rm -fr /tmp/mnt/data_persist/dev/androidauto
+rm -fr /tmp/mnt/data_persist/dev/bin/headunit*
+rm -fr /tmp/mnt/resources/aio/apps/_androidauto
+rm -f /tmp/mnt/data_persist/dev/bin/aaserver
+rm -f /tmp/mnt/data_persist/dev/bin/check-usb.sh
+rm -f /tmp/mnt/data_persist/dev/bin/usb-allow.list
+rm -f /tmp/mnt/data_persist/dev/bin/input_filter
 rm -f /tmp/mnt/data/enable_input_filter
 rm -f /tmp/mnt/data/input_filter
-#rm -f /usr/lib/gstreamer-0.10/libgsth264parse.so
+
 log_message "===             Removed files for Android Auto Headunit App           ==="
 
-#if [ -e /usr/lib/gstreamer-0.10/libgstalsa.so.org ]
-#then
-  #rm -f /usr/lib/gstreamer-0.10/libgstalsa.so
-  #log_message "===         Original libgstalsa.so is available as backup             ==="
-  #mv /usr/lib/gstreamer-0.10/libgstalsa.so.org /usr/lib/gstreamer-0.10/libgstalsa.so
-  #/bin/fsync /usr/lib/gstreamer-0.10/libgstalsa.so
-#else
-  #log_message "===         No backup found. Copying fallback of libgstalsa.so        ==="
-  # cp -a ${MYDIR}/config_org/androidauto/usr/lib/gstreamer-0.10/libgstalsa.so /usr/lib/gstreamer-0.10/
-  # chmod 755 /usr/lib/gstreamer-0.10/libgstalsa.so
-#fi
-
-# delete Android Auto entry from /jci/opera/opera_dir/userjs/additionalApps.json
+# delete Android Auto entry from additionalApps.json
 ADDIT_APPS=0
 if [ -e /jci/opera/opera_dir/userjs/CustomApplicationsProxy.js ] || [ -e /jci/opera/opera_dir/userjs/nativeApps.js ]
 then
   log_message "===                          Found CASDK                              ==="
   ADDIT_APPS=1
-elif grep -Fq "_aiotweaks" /jci/opera/opera_dir/userjs/additionalApps.json
+elif grep -Fq "_aiotweaks" ${ADDITIONAL_APPS_JSON}
 then
   log_message "===          Found AIOTweaksApp entry in additionalApps.json          ==="
   ADDIT_APPS=1
-elif grep -Fq "_speedometer" /jci/opera/opera_dir/userjs/additionalApps.json
+elif grep -Fq "_speedometer" ${ADDITIONAL_APPS_JSON}
 then
   log_message "===           Found speedometer entry in additionalApps.json          ==="
   ADDIT_APPS=1
-elif grep -Fq "_videoplayer" /jci/opera/opera_dir/userjs/additionalApps.json
+elif grep -Fq "_videoplayer" ${ADDITIONAL_APPS_JSON}
 then
   log_message "===           Found videoplayer entry in additionalApps.json          ==="
   ADDIT_APPS=1
-elif grep -Fq "_mzdmeter" /jci/opera/opera_dir/userjs/additionalApps.json
+elif grep -Fq "_mzdmeter" ${ADDITIONAL_APPS_JSON}
 then
   log_message "===           Found mzd meter entry in additionalApps.json            ==="
   ADDIT_APPS=1
@@ -70,11 +58,12 @@ else
   remove_app_json "_androidauto"
 fi
 
-sed -i '/Android Auto start/d' /jci/scripts/stage_wifi.sh
-sed -i '/hwclock --hctosys/d' /jci/scripts/stage_wifi.sh
-sed -i '/websocketd --port=9999 sh &/d' /jci/scripts/stage_wifi.sh
-sed -i '/headunit-wrapper &/d' /jci/scripts/stage_wifi.sh
-log_message "===        Deleted modifications from /jci/scripts/stage_wifi.sh      ==="
+sed -i '/Android Auto start/d' ${STAGE_WIFI}
+sed -i '/hwclock --hctosys/d' ${STAGE_WIFI}
+sed -i '/websocketd --port=9999 sh &/d' ${STAGE_WIFI}
+sed -i '/headunit-wrapper &/d' ${STAGE_WIFI}
+sed -i '/check-usb.sh &/d' ${STAGE_WIFI}
+log_message "===        Deleted modifications from ${STAGE_WIFI}      ==="
 
 if [ -e /etc/asound.conf.org ]
 then
@@ -92,12 +81,12 @@ then
   sed -i '/input_filter/d' /jci/sm/sm.conf
   log_message "===          Clean obsolete input_filter to /jci/sm/sm.conf           ==="
 fi
-rm -f /jci/scripts/stage_wifi.sh.org3
-rm -f /jci/scripts/stage_wifi.sh.AA
+rm -f ${STAGE_WIFI}.org3
+rm -f ${STAGE_WIFI}.AA
 
 if [ $TESTBKUPS -eq 1 ]
 then
-  cp /jci/scripts/stage_wifi.sh "${MYDIR}/bakups/test/stage_wifi_androidauto-after.sh"
+  cp ${STAGE_WIFI} "${MYDIR}/bakups/test/stage_wifi_androidauto-after.sh"
   cp /jci/sm/sm.conf "${MYDIR}/bakups/test/sm_androidauto-after.conf"
 fi
 

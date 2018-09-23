@@ -1,0 +1,26 @@
+# modify opera storage and move to persistant data
+if [ ! -e /tmp/mnt/data_persist/storage ]
+then
+	mkdir -p /tmp/mnt/data_persist/storage
+	log_message "===                     Created Storage Folder                        ==="
+else
+  log_message "===                     Storage Folder Present                        ==="
+fi
+
+if [ ! -e /jci/opera/opera_home/pstorage/psindex.dat.org ]
+then
+	# check if system file exists
+	if [ -e /jci/opera/opera_home/pstorage/psindex.dat ]
+	then
+		# make a copy
+		cp -a /jci/opera/opera_home/pstorage/psindex.dat /jci/opera/opera_home/pstorage/psindex.dat.org
+	else
+		# create directory
+		mkdir -p /jci/opera/opera_home/pstorage/
+	fi
+	# copy psindex file
+	cp -a ${MYDIR}/casdk/storage/psindex.dat /jci/opera/opera_home/pstorage/
+	log_message "===                    Copied psindex.dat file                        ==="
+else
+  log_message "===              Persistant Storage Already Modified                  ==="
+fi

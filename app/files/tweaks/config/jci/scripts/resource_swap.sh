@@ -13,7 +13,7 @@ CMD="$1"
 shift
 echo $CMD
 if [ "$CMD" == "" ] || [ "$CMD" == "mount" ] ; then
-  USBDRV="resources $(ls /mnt | grep sd)"
+  USBDRV="$(ls /mnt | grep sd)"
   for USB in ${USBDRV}
   do
     USBPATH=/tmp/mnt/${USB}
@@ -31,7 +31,7 @@ if [ "$CMD" == "" ] || [ "$CMD" == "mount" ] ; then
 fi
 
 if [ "$CMD" == "unmount" ] ; then
-  USBDRV="resources $(ls /mnt | grep sd)"
+  USBDRV="$(ls /mnt | grep sd)"
   for USB in ${USBDRV}
   do
     USBPATH=/tmp/mnt/${USB}

@@ -526,7 +526,7 @@
   white-space: nowrap;
 }
 #speedometerContainer .alt1 fieldset legend span {
-  font-size: 16x;
+  font-size: 16px;
 }
 #speedometerContainer .alt1 fieldset legend span.fuelEffUnit {
   font-size: 20px;

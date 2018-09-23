@@ -25,12 +25,12 @@ fi
 # 58.00.XXX - 59.00.XXX ($COMPAT_GROUP=2-5)
 # 55.XX.XXX - 56.XX.XXX ($COMPAT_GROUP=1)
 # If your firmware version falls out of those ranges email the address below
-if [ ! $TRACKORDER_DISCLAIMER -eq 2 ]
+if [ $TRACKORDER_DISCLAIMER -ne 2 ]
 then
   cp -a "${MYDIR}/config/audio_order_AND_no_More_Disclaimer/systemApp.js.disclaimer" /jci/gui/apps/system/js/
   log_message "===               Added marker 'systemApp.js.disclaimer'              ==="
 
-  if [ -e /jci/gui/apps/system/js/systemApp.js.audio ] && grep -q "^var FmRadioPos" /jci/gui/apps/system/js/systemApp.js.audio
+  if [ -e /jci/gui/apps/system/js/systemApp.js.audio ] && grep -q "^var aaAudioPos" /jci/gui/apps/system/js/systemApp.js.audio
   then
     if [ $TRACKORDER_DISCLAIMER -eq 1 ]
     then
@@ -61,7 +61,7 @@ else
 fi
 if [ $TESTBKUPS = 1 ]
 then
-  cp -a /jci/gui/apps/system/js/systemApp.js "${MYDIR}/bakups/test/systemApp_after-disclaimer.js"
+  cp /jci/gui/apps/system/js/systemApp.js "${MYDIR}/bakups/test/systemApp_after-disclaimer.js"
 fi
 
 log_message "=====*********** END INSTALLATION OF NO-MORE-DISCLAIMER ***********======"

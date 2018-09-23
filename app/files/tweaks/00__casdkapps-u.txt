@@ -15,10 +15,10 @@ then
   MZD_APPS_JS=${MZD_APP_DIR}/apps.js
 
   #Remove terminal from stage_wifi.sh
-  if [ ${APPTERMINAL} -eq 1 ] && grep -Fq "terminal" /jci/scripts/stage_wifi.sh
+  if [ ${APPTERMINAL} -eq 1 ] && grep -Fq "terminal" ${STAGE_WIFI}
   then
-    sed -i /Terminal/d /jci/scripts/stage_wifi.sh
-    sed -i /terminal.sh/d /jci/scripts/stage_wifi.sh
+    sed -i /Terminal/d ${STAGE_WIFI}
+    sed -i /terminal.sh/d ${STAGE_WIFI}
     log_message "===                   Removed Terminal Startup                        ==="
   fi
   if [ -e ${MZD_APPS_JS} ]
@@ -40,7 +40,7 @@ fi
 
 sleep 5
 log_message "=========************ CASDK UNINSTALLATION FINISHED ************========="
-killall jci-dialog
+killall -q jci-dialog
 /jci/tools/jci-dialog --title="CASDK APPS UNINSTALLED" --text="CASDK APPS SUCCESSFULLY UNINSTALLED.\n\nTHE SYSTEM WILL REBOOT IN A FEW SECONDS." --no-cancel &
 sleep 10
 reboot

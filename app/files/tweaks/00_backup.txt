@@ -18,6 +18,12 @@ else
 	then
 		log_message "=====       Backing up /jci to ${BACKUPDIR}             ====="
 		cp -R /jci ${BACKUPDIR}
+		#log_message "=====    Backing up /resources to ${BACKUPDIR}          ====="
+		#cp -R /tmp/mnt/resources  ${BACKUPDIR}
+		#log_message "=====       Backing up /data to ${BACKUPDIR}            ====="
+		#cp -R /tmp/mnt/data  ${BACKUPDIR}
+		#log_message "=====     Backing up /data_persist to ${BACKUPDIR}      ====="
+		#cp -R /tmp/mnt/data_persist  ${BACKUPDIR}
 		echo "DATE: $(timestamp)" > ${BACKUPDIR}/jci.txt
 		echo "CMU_VER: ${CMU_SW_VER}" >> ${BACKUPDIR}/jci.txt
 		echo "AIO_VER: ${AIO_VER}" >> ${BACKUPDIR}/jci.txt

@@ -17,7 +17,7 @@
 -->
 <div id="contact-form" class="card card-1">
   <div>
-    <h1>MZD-AIO-TI Contact Form</h1>
+    <h1>MZD-AIO-TI v<span class="AIOver"></span> Contact Form</h1>
     <h4>Have a question, suggestion, feedback, or just want to say hi?</h4>
     <h5>Please check the <a href onclick="externalLink('faqs')">FAQ page</a> before asking for help</h5>
     <h5>That is what it is there for</h5>
@@ -63,6 +63,7 @@ Please check the mazdatweaks.com FAQ page first.**
     <script>
     $(function(){
       $('#AIOver').val(getAIOver());
+      $('.AIOver').text(getAIOver());
       $('[type="submit"]').click(function(){
         if (validateForm()) {
           $('.featherlight').hide();
@@ -97,6 +98,6 @@ Please check the mazdatweaks.com FAQ page first.**
     }
     </script>
     <input class="w3-btn w3-blue w3-hover-green" tabindex="5" type="submit" id="sendmail" name="sendmail" value="SEND">
-    <div class="realMail">Or you can send an email to <a href="" onclick="shell.openExternal('mailto:aio@mazdatweaks.com?subject=MZD-AIO-TI%20v2.7.9')">aio@mazdatweaks.com</a></div>
+    <div class="realMail">Or you can send an email to <a href="" onclick="shell.openExternal(`mailto:aio@mazdatweaks.com?subject=MZD-AIO-TI%20v${getAIOver()}`)">aio@mazdatweaks.com</a></div>
   </form>
 </div>

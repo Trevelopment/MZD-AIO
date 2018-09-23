@@ -6,7 +6,7 @@ HEADUNIT_CMD="${SCRIPTPATH}/headunit"
 LOGPATH=/tmp/mnt/data/headunit.log
 SCRIPT_ARGS=$@
 
-export LD_LIBRARY_PATH="${SCRIPTPATH}/headunit_libs:/jci/lib:/jci/opera/3rdpartylibs/freetype:/usr/lib/imx-mm/audio-codec:/usr/lib/imx-mm/parser:/data_persist/dev/lib:"
+export LD_LIBRARY_PATH="${SCRIPTPATH}/headunit_libs:/jci/lib:/jci/opera/3rdpartylibs/freetype:/usr/lib/imx-mm/audio-codec:/usr/lib/imx-mm/video-codec:/usr/lib/imx-mm/parser:/data_persist/dev/lib:"
 #override some GST plugins with these
 export GST_PLUGIN_PATH="${SCRIPTPATH}/headunit_libs"
 

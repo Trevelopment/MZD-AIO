@@ -2,6 +2,6 @@ if [ -e ${MYDIR}/config/androidautob/data_persist/dev/bin/headunit ]
 then
   cp -a ${MYDIR}/config/androidautob/data_persist/dev/bin /tmp/mnt/data_persist/dev
 else
-  sed -i 's."carGPS": true."carGPS": false.g' /tmp/mnt/data_persist/dev/bin/headunit-wrapper
+  sed -i 's."carGPS": true."carGPS": false.g' /tmp/mnt/data_persist/dev/bin/headunit.json
 fi
 log_message "===                    Android Auto Reverse Heading                   ==="

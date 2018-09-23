@@ -1690,7 +1690,7 @@ systemApp.prototype._displayedDisclaimer = function() {
   framework.sendEventToMmui("system", "DisposeIntroVideo");
   if (this._disclaimerTime.reset) {
     this._disclaimerTime.reset = false;
-    this._disclaimerTime.remaining = 3500;
+    this._disclaimerTime.remaining = 500;
   }
   if (this._disclaimerTime.remaining < 0) {
     this._disclaimerTime.reset = true;
@@ -1720,7 +1720,7 @@ systemApp.prototype._disclaimerTimedout = function() {
   //Incase after Timeout Disclaimer screen didnt remove then sends start the timer again
   if (this._disclaimerTime.reset) {
     this._disclaimerTime.reset = false;
-    this._disclaimerTime.remaining = 3500;
+    this._disclaimerTime.remaining = 500;
   }
   if (this._disclaimerTime.remaining < 0) {
     this._disclaimerTime.reset = true;
@@ -1938,14 +1938,14 @@ systemApp.prototype._updateApplicationStructure = function(vehicleConfiguration)
     //We have two different context (Applications and VehicleStatusMonitor) for displaying Appication item(s),so context wise storing the array of appName(s) to be displayed on corresponding Context.
     this._applicationsCtxtWiseAppNames = {
       //Context Name :  // [appName,appName....]
-      "Applications": ["hdtrafficimage", "idm", "ecoenergy", "driverid", "warnguide", "schedmaint", "vehicleStatus", "vdt_settings", "vdt", "carplay", "androidauto", "_androidauto", "_videoplayer", "_aiotweaks", "_speedometer", "app.background", "app.devtools", "app.gpsspeed", "app.multidash", "app.simpledashboard", "app.terminal", "app.vdd", "app.tetris", "app.breakout", "app.2048", "app.aio", "app.android", "app.myapp", "app.helloworld", "app.marketapps", "app.multicontroller", "app.snake", "app.speedometer", "app.androidauto", "app.aiotweaks", "app.youtube", "app.speed", "app.hello", "app.help", "app.myapp", "app.videoplayer", "app.video", "app.horloge", "app.clock", "app.sbspeedo", "app.statusbar", "app.simple", "app.simplespeedo", "app.analog", "app.casdkapps"],
+      "Applications": ["xmdata", "hdtrafficimage", "idm", "ecoenergy", "driverid", "warnguide", "schedmaint", "vehicleStatus", "vdt_settings", "vdt", "carplay", "androidauto", "_androidauto", "_videoplayer", "_aiotweaks", "_speedometer", "app.background", "app.devtools", "app.gpsspeed", "app.multidash", "app.simpledashboard", "app.terminal", "app.vdd", "app.tetris", "app.breakout", "app.2048", "app.aio", "app.android", "app.myapp", "app.helloworld", "app.marketapps", "app.multicontroller", "app.snake", "app.speedometer", "app.androidauto", "app.aiotweaks", "app.youtube", "app.speed", "app.hello", "app.help", "app.myapp", "app.videoplayer", "app.video", "app.horloge", "app.clock", "app.sbspeedo", "app.statusbar", "app.simple", "app.simplespeedo", "app.analog", "app.casdkapps"],
       "VehicleStatusMonitor": ["vsm"]
     };
   } else {
     //We have two different context (Applications and VehicleStatusMonitor) for displaying Appication item(s),so context wise storing the array of appName(s) to be displayed on corresponding Context.
     this._applicationsCtxtWiseAppNames = {
       //Context Name :  // [appName,appName....]
-      "Applications": ["hdtrafficimage", "idm", "ecoenergy", "driverid", "vehicleStatus", "vdt_settings", "vdt", "carplay", "androidauto", "_androidauto", "_videoplayer", "_aiotweaks", "_speedometer", "app.background", "app.devtools", "app.gpsspeed", "app.multidash", "app.simpledashboard", "app.terminal", "app.vdd", "app.tetris", "app.breakout", "app.2048", "app.aio", "app.android", "app.myapp", "app.helloworld", "app.marketapps", "app.multicontroller", "app.snake", "app.speedometer", "app.androidauto", "app.aiotweaks", "app.youtube", "app.speed", "app.hello", "app.help", "app.myapp", "app.videoplayer", "app.video", "app.horloge", "app.clock", "app.sbspeedo", "app.statusbar", "app.simple", "app.simplespeedo", "app.analog", "app.casdkapps"],
+      "Applications": ["xmdata", "hdtrafficimage", "idm", "ecoenergy", "driverid", "vehicleStatus", "vdt_settings", "vdt", "carplay", "androidauto", "_androidauto", "_videoplayer", "_aiotweaks", "_speedometer", "app.background", "app.devtools", "app.gpsspeed", "app.multidash", "app.simpledashboard", "app.terminal", "app.vdd", "app.tetris", "app.breakout", "app.2048", "app.aio", "app.android", "app.myapp", "app.helloworld", "app.marketapps", "app.multicontroller", "app.snake", "app.speedometer", "app.androidauto", "app.aiotweaks", "app.youtube", "app.speed", "app.hello", "app.help", "app.myapp", "app.videoplayer", "app.video", "app.horloge", "app.clock", "app.sbspeedo", "app.statusbar", "app.simple", "app.simplespeedo", "app.analog", "app.casdkapps"],
       "VehicleStatusMonitor": ["warnguide", "vsm", "schedmaint"]
     };
   }

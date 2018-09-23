@@ -3,82 +3,30 @@ show_message "REMOVE DATE_TO_STATUSBAR_MOD ..."
 log_message "====***********    UNINSTALL DATE_TO_STATUSBAR_MOD ...    ***********===="
 
 # Restore Utility.js From .org Backup
-if [ -e /jci/gui/framework/js/Utility.js.org ]
+if ! (restore_org /jci/gui/framework/js/Utility.js)
 then
-	cp -a /jci/gui/framework/js/Utility.js.org /jci/gui/framework/js/Utility.js
-	log_message "===          Restored Utility.js From Backup Utility.js.org           ==="
+  log_message "===        No backup found for Utility.js, no changes were made       ==="
 fi
 # Remove AIO CSS From StatusBarCtrl & SbnCtrl
 remove_aio_css /jci/gui/common/controls/Sbn/css/SbnCtrl.css D2SB
 remove_aio_css /jci/gui/common/controls/StatusBar/css/StatusBarCtrl.css D2SB
 
 # StatusBarCtrl.js restore from .org backup
-if [ -e /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js.org ]
+if ! (restore_org /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js)
 then
-	cp -a /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js.org /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js
-	log_message "===            Restored backup from StatusBarCtrl.js.org              ==="
-else
-	# cp -a ${MYDIR}/config_org/date-to-statusbar_mod/jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js
-	# log_message "===   No backup found, copied original StatusBarCtrl.js from SD card  ==="
 	log_message "===     No backup found for StatusBarCtrl.js, no changes were made    ==="
 fi
 
 ## Restore Image Files
-if [ -e /jci/gui/common/images/icons/IcnSbRoaming.png.org ]
+if ! (restore_org /jci/gui/common/images/icons/IcnSbRoaming.png)
 then
-	cp -a /jci/gui/common/images/icons/IcnSbRoaming.png.org /jci/gui/common/images/icons/IcnSbRoaming.png
-	log_message "===            Restored backup from IcnSbRoaming.png.org              ==="
-else
 	cp -a ${MYDIR}/config_org/date-to-statusbar_mod/jci/gui/common/images/icons/IcnSbRoaming.png /jci/gui/common/images/icons/
-	log_message "===   No backup found, copied original IcnSbRoaming.png from SD card  ==="
+  log_message "=== No backup found, copied original IcnSbRoaming.png from USB Drive  ==="
 fi
-if [ -e /jci/gui/common/controls/StatusBar/images/StatusBarBg.png.org ]
+if ! (restore_org /jci/gui/common/controls/StatusBar/images/StatusBarBg.png)
 then
-	cp -a /jci/gui/common/controls/StatusBar/images/StatusBarBg.png.org /jci/gui/common/controls/StatusBar/images/StatusBarBg.png
-	log_message "===              Restored backup from StatusBarBg.png.org             ==="
-else
 	cp -a ${MYDIR}/config_org/date-to-statusbar_mod/jci/gui/common/controls/StatusBar/images/StatusBarBg.png /jci/gui/common/controls/StatusBar/images/
-	log_message "===    No backup found, copied original StatusBarBg.png from SD card  ==="
-fi
-
-##### Remove Old Installs - Check Each File For Remaining Code
-##### The folowing search for code snippets not found in original files
-if grep -Fq "Utility.prototype.formatDateCustom" /jci/gui/framework/js/Utility.js
-then
-	log_message "===             Previous D2SB Install Found in Utility.js             ==="
-	if [ -e /jci/gui/framework/js/Utility.js.org ]
-	then
-		cp -a /jci/gui/framework/js/Utility.js.org /jci/gui/framework/js/Utility.js
-		log_message "===                Restored backup from Utility.js.org                ==="
-	else
-		# cp -a ${MYDIR}/config_org/date-to-statusbar_mod/jci/gui/framework/js/Utility.js /jci/gui/framework/js/
-		# log_message "===      No backup found, copied original Utility.js from SD card     ==="
-		log_message "===       No backup found for Utility.js, no changes were made        ==="
-	fi
-fi
-if grep -Fq "/* background-image: url(../images/StatusNotificationBg.png); */" /jci/gui/common/controls/Sbn/css/SbnCtrl.css
-then
-	log_message "===           Previous D2SB Install Found in SbnCtrl.css              ==="
-	if [ -e /jci/gui/common/controls/Sbn/css/SbnCtrl.css.org ]
-	then
-		cp -a /jci/gui/common/controls/Sbn/css/SbnCtrl.css.org /jci/gui/common/controls/Sbn/css/SbnCtrl.css
-		log_message "===                Restored backup from SbnCtrl.css.org               ==="
-	else
-		cp -a ${MYDIR}/config_org/date-to-statusbar_mod/jci/gui/common/controls/Sbn/css/SbnCtrl.${statusbar_copy_file}.css /jci/gui/common/controls/Sbn/css/
-		log_message "===     No backup found, copied original SbnCtrl.css from SD card     ==="
-	fi
-fi
-if grep -Fq "StatusBarCtrlDate" /jci/gui/common/controls/StatusBar/css/StatusBarCtrl.css
-then
-	log_message "===          Previous D2SB Install Found in StatusBarCtrl.css         ==="
-	if [ -e /jci/gui/common/controls/StatusBar/css/StatusBarCtrl.css.org ]
-	then
-		cp -a /jci/gui/common/controls/StatusBar/css/StatusBarCtrl.css.org /jci/gui/common/controls/StatusBar/css/StatusBarCtrl.css
-		log_message "===             Restored backup from StatusBarCtrl.css.org            ==="
-	else
-		cp -a ${MYDIR}/config_org/date-to-statusbar_mod/jci/gui/common/controls/StatusBar/css/StatusBarCtrl.${statusbar_copy_file}.css /jci/gui/common/controls/StatusBar/css/StatusBarCtrl.css
-		log_message "===   No backup found, copied original StatusBarCtrl.css from SD card ==="
-	fi
+  log_message "===  No backup found, copied original StatusBarBg.png from USB Drive  ==="
 fi
 
 log_message "========******* END UNINSTALLATION OF DATE_TO_STATUSBAR_MOD ******======="

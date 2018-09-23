@@ -5,8 +5,8 @@ log_message "==========**************** INSTALL SPEEDOMETER *****************===
 log_message "===                 Begin Installation of Speedometer                 ==="
 if [ $TESTBKUPS -eq 1 ]
 then
-  cp /jci/scripts/stage_wifi.sh "${MYDIR}/bakups/test/stage_wifi_speedometer-before.sh"
-  cp /jci/opera/opera_dir/userjs/additionalApps.json "${MYDIR}/bakups/test/additionalApps_speedometer-1._before.json"
+  cp ${STAGE_WIFI} "${MYDIR}/bakups/test/stage_wifi_speedometer-before.sh"
+  [ -f ${ADDITIONAL_APPS_JSON} ] && cp ${ADDITIONAL_APPS_JSON} "${MYDIR}/bakups/test/additionalApps_speedometer-before.json"
 fi
 
 ### kills all WebSocket daemons
@@ -24,51 +24,61 @@ rm -fr /jci/gui/addon-player
 rm -fr /jci/gui/addon-speedometer
 rm -fr /jci/gui/speedometer
 rm -fr /jci/gui/apps/_speedometer
+rm -fr /tmp/mnt/resources/aio/apps/_speedometer
 
-sed -i '/Speedo-Compass-Video/d' /jci/scripts/stage_wifi.sh
-sed -i '/v3.2/d' /jci/scripts/stage_wifi.sh
-sed -i '/Removed requirement/d' /jci/scripts/stage_wifi.sh
-sed -i '/# mount /d' /jci/scripts/stage_wifi.sh
-sed -i '/Added additional/d' /jci/scripts/stage_wifi.sh
-sed -i '/get-vehicle-speed/d' /jci/scripts/stage_wifi.sh
-sed -i '/get-vehicle-data-other/d' /jci/scripts/stage_wifi.sh
-sed -i '/get-gps-data/d' /jci/scripts/stage_wifi.sh
-sed -i '/Need to set defaults/d' /jci/scripts/stage_wifi.sh
-sed -i '/myVideoList /d' /jci/scripts/stage_wifi.sh
-sed -i '/playbackAction /d' /jci/scripts/stage_wifi.sh
-sed -i '/playbackOption /d' /jci/scripts/stage_wifi.sh
-sed -i '/playbackStatus /d' /jci/scripts/stage_wifi.sh
-sed -i '/playback/d' /jci/scripts/stage_wifi.sh
-sed -i '/myVideoList/d' /jci/scripts/stage_wifi.sh
-sed -i '/Video player action watch/d' /jci/scripts/stage_wifi.sh
-sed -i '/playback-action.sh/d' /jci/scripts/stage_wifi.sh
-sed -i '/Log data collection/d' /jci/scripts/stage_wifi.sh
-sed -i '/get-log-data.sh/d' /jci/scripts/stage_wifi.sh
-sed -i '/addon-speedometer.sh &/d' /jci/scripts/stage_wifi.sh
-sed -i '/addon-player.sh &/d' /jci/scripts/stage_wifi.sh
-sed -i '/stage_vehSpeed.sh/d' /jci/scripts/stage_wifi.sh
-sed -i '/mount of SD card/d' /jci/scripts/stage_wifi.sh
-sed -i '/sleep 40/d' /jci/scripts/stage_wifi.sh
-sed -i '/sleep 55/d' /jci/scripts/stage_wifi.sh
-sed -i '/sleep 50/d' /jci/scripts/stage_wifi.sh
-sed -i '/umount -l/d' /jci/scripts/stage_wifi.sh
-sed -i '/sleep 25/d' /jci/scripts/stage_wifi.sh
-sed -i '/sleep 4/d' /jci/scripts/stage_wifi.sh
-sed -i '/sleep 6/d' /jci/scripts/stage_wifi.sh
-sed -i '/55554/d' /jci/scripts/stage_wifi.sh
-sed -i '/9969/d' /jci/scripts/stage_wifi.sh
-sed -i '/## Speedometer/d' /jci/scripts/stage_wifi.sh
+sed -i '/Speedo-Compass-Video/d' ${STAGE_WIFI}
+sed -i '/v3.2/d' ${STAGE_WIFI}
+sed -i '/Removed requirement/d' ${STAGE_WIFI}
+sed -i '/# mount /d' ${STAGE_WIFI}
+sed -i '/Added additional/d' ${STAGE_WIFI}
+sed -i '/get-vehicle-speed/d' ${STAGE_WIFI}
+sed -i '/get-vehicle-data-other/d' ${STAGE_WIFI}
+sed -i '/get-gps-data/d' ${STAGE_WIFI}
+sed -i '/Need to set defaults/d' ${STAGE_WIFI}
+sed -i '/myVideoList /d' ${STAGE_WIFI}
+sed -i '/playbackAction /d' ${STAGE_WIFI}
+sed -i '/playbackOption /d' ${STAGE_WIFI}
+sed -i '/playbackStatus /d' ${STAGE_WIFI}
+sed -i '/playback/d' ${STAGE_WIFI}
+sed -i '/myVideoList/d' ${STAGE_WIFI}
+sed -i '/Video player action watch/d' ${STAGE_WIFI}
+sed -i '/playback-action.sh/d' ${STAGE_WIFI}
+sed -i '/Log data collection/d' ${STAGE_WIFI}
+sed -i '/get-log-data.sh/d' ${STAGE_WIFI}
+sed -i '/addon-speedometer.sh &/d' ${STAGE_WIFI}
+sed -i '/addon-player.sh &/d' ${STAGE_WIFI}
+sed -i '/stage_vehSpeed.sh/d' ${STAGE_WIFI}
+sed -i '/mount of SD card/d' ${STAGE_WIFI}
+sed -i '/sleep 40/d' ${STAGE_WIFI}
+sed -i '/sleep 55/d' ${STAGE_WIFI}
+sed -i '/sleep 50/d' ${STAGE_WIFI}
+sed -i '/umount -l/d' ${STAGE_WIFI}
+sed -i '/sleep 25/d' ${STAGE_WIFI}
+sed -i '/sleep 4/d' ${STAGE_WIFI}
+sed -i '/sleep 6/d' ${STAGE_WIFI}
+sed -i '/55554/d' ${STAGE_WIFI}
+sed -i '/9969/d' ${STAGE_WIFI}
+sed -i '/## Speedometer/d' ${STAGE_WIFI}
 
 # delete empty lines
-sed -i '/^ *$/ d' /jci/scripts/stage_wifi.sh
-sed -i '/#!/ a\ ' /jci/scripts/stage_wifi.sh
+sed -i '/^ *$/ d' ${STAGE_WIFI}
+sed -i '/#!/ a\ ' ${STAGE_WIFI}
 
 # Remove startup file from userjs
 rm -f /jci/opera/opera_dir/userjs/speedometer-startup.js
 rm -f /jci/opera/opera_dir/userjs/speedometer.js
+log_message "===                    Remover Old Speedometer Files                  ==="
 
-cp -a ${MYDIR}/config/speedometer/jci/gui/apps/* /jci/gui/apps/
-log_message "===             Copied folder /jci/gui/apps/_speedometer              ==="
+cp -a ${MYDIR}/config/speedometer/jci/gui/apps/_speedometer ${AIO_APP_DIR}
+log_message "===                       Copied Speedometer Files                    ==="
+
+# symlink to resources
+if [ $APPS2RESOURCES -eq 1 ]
+then
+  ln -sf /tmp/mnt/resources/aio/apps/_speedometer /jci/gui/apps/_speedometer
+  log_message "===                Created Symlink To Resources Partition             ==="
+fi
+
 find /jci/gui/apps/_*/ -type f -name '*.js' -exec chmod 755 {} \;
 find /jci/gui/apps/_*/ -type f -name '*.sh' -exec chmod 755 {} \;
 
@@ -101,27 +111,27 @@ else
 fi
 
 # check for 1st line of stage_wifi.sh
-if grep -Fq "#!/bin/sh" /jci/scripts/stage_wifi.sh
+if grep -Fq "#!/bin/sh" ${STAGE_WIFI}
 then
   log_message "===                 1st line of stage_wifi.sh is OK                   ==="
 else
-  echo "#!/bin/sh" > /jci/scripts/stage_wifi.sh
+  echo "#!/bin/sh" > ${STAGE_WIFI}
   log_message "===         Missing 1st line of stage_wifi.sh, copied new one         ==="
 fi
 
 # add commands for speedometer to stage_wifi.sh
-if [ -e /jci/scripts/stage_wifi.sh ]
+if [ -e ${STAGE_WIFI} ]
 then
-  if grep -Fq "speedometer.sh &" /jci/scripts/stage_wifi.sh
+  if grep -Fq "speedometer.sh &" ${STAGE_WIFI}
   then
-    log_message "===  Speedometer entry already exists in /jci/scripts/stage_wifi.sh   ==="
+    log_message "===  Speedometer entry already exists in ${STAGE_WIFI}   ==="
   else
-    sed -i '/#!/ a\### Speedometer' /jci/scripts/stage_wifi.sh
+    sed -i '/#!/ a\### Speedometer' ${STAGE_WIFI}
     sleep 1
-    sed -i '/Speedometer/ i\ ' /jci/scripts/stage_wifi.sh
-    sed -i '/### Speedometer/ a\/jci/gui/addon-common/websocketd --port=9969 /jci/gui/apps/_speedometer/sh/speedometer.sh &' /jci/scripts/stage_wifi.sh
-    log_message "===       Added speedometer entry to /jci/scripts/stage_wifi.sh       ==="
-    cp /jci/scripts/stage_wifi.sh "${MYDIR}/bakups/test/stage_wifi_speedometer-after.sh"
+    sed -i '/Speedometer/ i\ ' ${STAGE_WIFI}
+    sed -i '/### Speedometer/ a\/jci/gui/addon-common/websocketd --port=9969 /jci/gui/apps/_speedometer/sh/speedometer.sh &' ${STAGE_WIFI}
+    log_message "===       Added speedometer entry to ${STAGE_WIFI}       ==="
+    cp ${STAGE_WIFI} "${MYDIR}/bakups/test/stage_wifi_speedometer-after.sh"
   fi
 fi
 
@@ -133,19 +143,12 @@ then
   find /jci/opera/opera_dir/userjs/ -type f -name '*.js' -exec chmod 755 {} \;
 fi
 
-# create additionalApps.json file from scratch if the file does not exist
-if [ ! -e /jci/opera/opera_dir/userjs/additionalApps.json ]
-then
-  echo "[" > /jci/opera/opera_dir/userjs/additionalApps.json
-  echo "]" >> /jci/opera/opera_dir/userjs/additionalApps.json
-  chmod 755 /jci/opera/opera_dir/userjs/additionalApps.json
-  log_message "===                   Created additionalApps.json                     ==="
-fi
-
 sed -i 's/var speedMod = false;/var speedMod = true;/g' /jci/gui/apps/_speedometer/js/speedometer-startup.js
 
+create_app_json
+
 # Remove old json entries
-if ! grep -q "speedometer-startup.js" /jci/opera/opera_dir/userjs/additionalApps.json
+if grep -q "_speedometer" ${ADDITIONAL_APPS_JSON} && ! grep -q "speedometer-startup.js" ${ADDITIONAL_APPS_JSON}
 then
 	remove_app_json "_speedometer"
 fi

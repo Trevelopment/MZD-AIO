@@ -83,25 +83,25 @@ log_message()
 show_message()
 {
   sleep 5
-  killall jci-dialog
+  killall -q jci-dialog
   #	log_message "= POPUP: $* "
   /jci/tools/jci-dialog --info --title="AIO TWEAKS v.${AIO_VER}" --text="$*" --no-cancel &
 }
 show_message_OK()
 {
   sleep 4
-  killall jci-dialog
+  killall -q jci-dialog
   #	log_message "= POPUP: $* "
   /jci/tools/jci-dialog --confirm --title="AIO TWEAKS SYSTEM RESTORE" --text="$*" --ok-label="YES - GO ON" --cancel-label="NO - ABORT"
   if [ $? != 1 ]
   then
-    killall jci-dialog
+    killall -q jci-dialog
     return
   else
     log_message "********************* INSTALLATION ABORTED *********************"
     show_message "SYSTEM RESTORE ABORTED!"
     sleep 10
-    killall jci-dialog
+    killall -q jci-dialog
 	mount -o ro,remount /
     exit 0
   fi
@@ -664,31 +664,24 @@ then
 	log_message "===               input_filter removed from sm.conf.                  ==="
 fi
 
+
+rm -fr /tmp/mnt/data_persist/dev/androidauto
+rm -fr /tmp/mnt/data_persist/dev/headunit*
+rm -fr /tmp/mnt/data_persist/dev/system_restore
+rm -fr /tmp/mnt/data_persist/dev/bin/headunit*
 rm -fr /jci/gui/addon-player
 rm -fr /jci/gui/addon-speedometer
 rm -fr /jci/gui/speedometer
 rm -fr /jci/gui/apps/_speedometer
-rm -fr /jci/gui/apps/_mzdmeter
 rm -fr /jci/gui/apps/_videoplayer
 rm -fr /jci/gui/apps/_aiotweaks
 rm -fr /jci/gui/apps/_androidauto
-rm -fr /jci/gui/apps/_*
-rm -f /jci/opera/opera_dir/userjs/aio*js
-rm -f /jci/opera/opera_dir/userjs/addon-startup.js
+rm -fr /jci/gui/apps/_mzdmeter
 rm -f /jci/opera/opera_dir/userjs/mySpeedometer*
 rm -f /jci/opera/opera_dir/userjs/speedometer*
 rm -f /jci/opera/opera_dir/userjs/*-startup.*
 rm -f /jci/opera/opera_dir/userjs/additionalApps.*
-rm -f /tmp/mnt/data/enable_input_filter
-rm -f /tmp/mnt/data/input_filter
-rm -f /tmp/mnt/data_persist/dev/bin/websocketd
-rm -f /tmp/mnt/data_persist/dev/bin/headunit
-rm -f /tmp/mnt/data_persist/dev/bin/aaserver
-rm -f /tmp/mnt/data_persist/dev/bin/headunit-wrapper
-rm -f /tmp/mnt/data_persist/dev/bin/input_filter
-rm -fr /tmp/mnt/data_persist/dev/androidauto
-rm -fr /tmp/mnt/data_persist/dev/headunit_libs
-rm -fr /tmp/mnt/data_persist/dev/bin/headunit_libs
+rm -f /jci/opera/opera_dir/userjs/aio*
 rm -f /jci/scripts/get-gps-data*
 rm -f /jci/scripts/get-log-data*
 rm -f /jci/scripts/get-vehicle-data-other*
@@ -705,6 +698,11 @@ rm -f /jci/scripts/stage_wifi.sh.org
 rm -f /jci/scripts/stage_wifi.sh.org2
 rm -f /jci/scripts/stage_wifi.sh.org3
 rm -f /jci/scripts/stage_wifi.sh.AA
+rm -f /tmp/mnt/data_persist/dev/bin/websocketd
+rm -f /tmp/mnt/data_persist/dev/bin/aaserver
+rm -f /tmp/mnt/data_persist/dev/bin/input_filter
+rm -f /tmp/mnt/data/enable_input_filter
+rm -f /tmp/mnt/data/input_filter
 rm -f /usr/lib/gstreamer-0.10/libgsth264parse.so
 
 echo "#!/bin/sh" > /jci/scripts/stage_wifi.sh
@@ -790,23 +788,6 @@ then
     log_message "- CASDK Data script folder '/jci/casdk' not found"
   fi
 
-  # remove initialization file
-  if grep -q "# CASDK" /jci/scripts/stage_wifi.sh
-  then
-    log_message "- Removing staging scripts"
-    #	echo '#!/bin/sh' > /jci/scripts/stage_wifi.sh
-    sed -i '/# CASDK/d' /jci/scripts/stage_wifi.sh
-    sed -i '/casdk/d' /jci/scripts/stage_wifi.sh
-    sed -i '/################/d' /jci/scripts/stage_wifi.sh
-    sed -i '/# one time/d' /jci/scripts/stage_wifi.sh
-    sed -i '/# 1s update/d' /jci/scripts/stage_wifi.sh
-    sed -i '/# 60s update/d' /jci/scripts/stage_wifi.sh
-    sed -i '/# 300s update/d' /jci/scripts/stage_wifi.sh
-    sed -i '/mzd-casdk.start/d' /jci/scripts/stage_wifi.sh
-  else
-  	log_message "- No staging scripts fouund in /jci/scripts/stage_wifi.sh"
-  fi
-
   # remove proxy
   if [ -f /jci/opera/opera_dir/userjs/CustomApplicationsProxy.js ]
   then
@@ -849,8 +830,8 @@ then
 fi
 # a window will appear before the system reboots automatically
 sleep 3
-killall jci-dialog
+killall -q jci-dialog
 /jci/tools/jci-dialog --info --title="SYSTEM FULLY RESTORED" --text="THE SYSTEM WILL REBOOT IN A FEW SECONDS!" --no-cancel &
 sleep 10
-killall jci-dialog
+killall -q jci-dialog
 reboot

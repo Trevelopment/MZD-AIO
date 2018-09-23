@@ -37,7 +37,7 @@ _videoplayerApp.prototype.appInit = function() {
   this.resumePlay = 0;
   this.musicIsPaused = false;
   this.savedVideoList = null;
-  this.resumeVideo = JSON.parse(localStorage.getItem('videoplayer.resumevideo')) || false;
+  this.resumeVideo = JSON.parse(localStorage.getItem('videoplayer.resumevideo')) || true; // resume is now checked by default
   this.currentVideoTrack = JSON.parse(localStorage.getItem('videoplayer.currentvideo')) || null;
   //this.resumePlay = JSON.parse(localStorage.getItem('videoplayer.resume')) || 0;
 
@@ -81,7 +81,7 @@ _videoplayerApp.prototype._noLongerDisplayed = function() {
   // Stop and close video frame
   CloseVideoFrame();
   // If we are in reverse then save CurrentVideoPlayTime to resume the video where we left of
-  if (framework.getCurrentApp() === 'backupparking' || (ResumePlay && CurrentVideoPlayTime !== null)) {
+  if (framework.getCurrentApp() === 'backupparking'|| framework.getCurrentApp() === 'phone' || (ResumePlay && CurrentVideoPlayTime !== null)) {
     this.resumePlay = this.resumePlay || CurrentVideoPlayTime;
     CurrentVideoPlayTime = 0;
     //localStorage.setItem('videoplayer.resume', JSON.stringify(CurrentVideoPlayTime));

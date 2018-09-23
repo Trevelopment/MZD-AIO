@@ -1,28 +1,27 @@
-backup_org /jci/gui/common/controls/NowPlaying4/js/NowPlaying4Ctrl.js
-backup_org /jci/gui/common/controls/NowPlaying4/css/NowPlaying4Ctrl.css
-backup_org /jci/gui/apps/usbaudio/js/usbaudioApp.js
-# USB Audio Mod
-show_message "INSTALL USB AUDIO MOD ..."
-log_message "======*************     INSTALL USB AUDIO MOD ...      ***********======="
-
 if [ $COMPAT_GROUP -lt 5 ]
 then
-	cp -a ${MYDIR}/config/USBAudioMod/NowPlaying4Ctrl.js /jci/gui/common/controls/NowPlaying4/js/
-	log_message "===                     Copied NowPlaying4Ctrl.js                     ==="
-	cp -a ${MYDIR}/config/USBAudioMod/usbaudioApp.js /jci/gui/apps/usbaudio/js/
-	log_message "===                      Copied usbaudioApp.js                        ==="
-	cp -a ${MYDIR}/config/USBAudioMod/*.png /jci/gui/common/images/icons/
-	log_message "===                         Copied images                             ==="
+  backup_org /jci/gui/common/controls/NowPlaying4/js/NowPlaying4Ctrl.js
+  backup_org /jci/gui/common/controls/NowPlaying4/css/NowPlaying4Ctrl.css
+  backup_org /jci/gui/apps/usbaudio/js/usbaudioApp.js
+  # USB Audio Mod
+  show_message "INSTALL USB AUDIO MOD ..."
+  log_message "======*************     INSTALL USB AUDIO MOD ...      ***********======="
+  cp -a ${MYDIR}/config/USBAudioMod/NowPlaying4Ctrl.js /jci/gui/common/controls/NowPlaying4/js/
+  log_message "===                     Copied NowPlaying4Ctrl.js                     ==="
+  cp -a ${MYDIR}/config/USBAudioMod/usbaudioApp.js /jci/gui/apps/usbaudio/js/
+  log_message "===                      Copied usbaudioApp.js                        ==="
+  cp -a ${MYDIR}/config/USBAudioMod/*.png /jci/gui/common/images/icons/
+  log_message "===                         Copied images                             ==="
   sed -i "s/GRACENOTETEXT/${GRACENOTE}/g" /jci/gui/apps/usbaudio/js/usbaudioApp.js
   log_message "===                      Changed Gracenote Text                       ==="
-	# Remove Existing CSS
-	remove_aio_css /jci/gui/common/controls/NowPlaying4/css/NowPlaying4Ctrl.css USBAUDIOMOD
-	# Add CSS
-	cat ${MYDIR}/config/USBAudioMod/USBAudioMod.css >> /jci/gui/common/controls/NowPlaying4/css/NowPlaying4Ctrl.css
-	log_message "===                    CSS Added for USB Audio Mod                    ==="
+  # Remove Existing CSS
+  remove_aio_css /jci/gui/common/controls/NowPlaying4/css/NowPlaying4Ctrl.css USBAUDIOMOD
+  # Add CSS
+  cat ${MYDIR}/config/USBAudioMod/USBAudioMod.css >> /jci/gui/common/controls/NowPlaying4/css/NowPlaying4Ctrl.css
+  log_message "===                    CSS Added for USB Audio Mod                    ==="
+  log_message "======************* END INSTALLATION OF USB AUDIO MOD  **************===="
 else
-	log_message "===         v59.00.500+ is not compatible with USB Audio Mod          ==="
+  show_message "USB AUDIO MOD IS NOT COMPATIBLE WITH FW v59.00.502+ ...\nTHIS TWEAK WILL NOT BE INSTALLED!"
+  log_message "===***USBAudioMod Not Compatible With v59.00.500+... Install Skipped**==="
 fi
-
-log_message "======************* END INSTALLATION OF USB AUDIO MOD  **************===="
 log_message " "

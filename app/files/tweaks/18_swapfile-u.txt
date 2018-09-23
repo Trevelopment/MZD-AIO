@@ -3,25 +3,25 @@ show_message "REMOVE SWAP FILE ..."
 log_message "==========***********     UNINSTALL SWAP FILE ...   ***********=========="
 if [ $TESTBKUPS -eq 1 ]
 then
-  cp /jci/scripts/stage_wifi.sh "${MYDIR}/bakups/test/stage_wifi_swap-before.sh"
+  cp ${STAGE_WIFI} "${MYDIR}/bakups/test/stage_wifi_swap-before.sh"
 fi
-sed -i '/swap file/d' /jci/scripts/stage_wifi.sh
-sed -i '/for USB in/d' /jci/scripts/stage_wifi.sh
-sed -i '/USBPATH/d' /jci/scripts/stage_wifi.sh
-sed -i '/USBDRV/d' /jci/scripts/stage_wifi.sh
-sed -i '/SWAPFILE/d' /jci/scripts/stage_wifi.sh
-sed -i '/rw,remount/d' /jci/scripts/stage_wifi.sh
-sed -i '/	sleep 5/d' /jci/scripts/stage_wifi.sh
-sed -i '/	do/d' /jci/scripts/stage_wifi.sh
-sed -i '/	then/d' /jci/scripts/stage_wifi.sh
-sed -i '/	break/d' /jci/scripts/stage_wifi.sh
-sed -i '/	fi/d' /jci/scripts/stage_wifi.sh
-sed -i '/	done/d' /jci/scripts/stage_wifi.sh
+sed -i '/swap file/d' ${STAGE_WIFI}
+sed -i '/for USB in/d' ${STAGE_WIFI}
+sed -i '/USBPATH/d' ${STAGE_WIFI}
+sed -i '/USBDRV/d' ${STAGE_WIFI}
+sed -i '/SWAPFILE/d' ${STAGE_WIFI}
+sed -i '/rw,remount/d' ${STAGE_WIFI}
+sed -i '/	sleep 5/d' ${STAGE_WIFI}
+sed -i '/	do/d' ${STAGE_WIFI}
+sed -i '/	then/d' ${STAGE_WIFI}
+sed -i '/	break/d' ${STAGE_WIFI}
+sed -i '/	fi/d' ${STAGE_WIFI}
+sed -i '/	done/d' ${STAGE_WIFI}
 sleep 2
-log_message "===       Deleted modifications from /jci/scripts/stage_wifi.sh       ==="
+log_message "===       Deleted modifications from ${STAGE_WIFI}       ==="
 if [ $TESTBKUPS -eq 1 ]
 then
-  cp /jci/scripts/stage_wifi.sh "${MYDIR}/bakups/test/stage_wifi_swap-after.sh"
+  cp ${STAGE_WIFI} "${MYDIR}/bakups/test/stage_wifi_swap-after.sh"
 fi
 if [ -e /tmp/mnt/resources/swapfile ]
 then

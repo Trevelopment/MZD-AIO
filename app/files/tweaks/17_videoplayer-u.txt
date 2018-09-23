@@ -1,5 +1,5 @@
 # Remove videoplayer v2
-show_message "REMOVE VIDEOPLAYER V2 ..."
+show_message "REMOVE VIDEOPLAYER APP ..."
 log_message "===========************  UNINSTALL VIDEOPLAYER ... ************=========="
 
 ### kills all WebSocket daemons
@@ -7,55 +7,55 @@ pkill websocketd
 
 if [ $TESTBKUPS -eq 1 ]
 then
-	cp /jci/scripts/stage_wifi.sh "${MYDIR}/bakups/test/stage_wifi_videoplayer-before.sh"
-	cp /jci/opera/opera_dir/userjs/additionalApps.json "${MYDIR}/bakups/test/additionalApps_videoplayer-1._before.json"
+	cp ${STAGE_WIFI} "${MYDIR}/bakups/test/stage_wifi_videoplayer-before.sh"
+	[ -f ${ADDITIONAL_APPS_JSON} ] && cp ${ADDITIONAL_APPS_JSON} "${MYDIR}/bakups/test/additionalApps_videoplayer-before.json"
 fi
 
-sed -i '/Speedo-Compass-Video_Tweak/d' /jci/scripts/stage_wifi.sh
-sed -i '/v3.2/d' /jci/scripts/stage_wifi.sh
-sed -i '/Removed requirement/d' /jci/scripts/stage_wifi.sh
-sed -i '/# mount /d' /jci/scripts/stage_wifi.sh
-sed -i '/Added additional/d' /jci/scripts/stage_wifi.sh
-sed -i '/get-vehicle-speed.sh/d' /jci/scripts/stage_wifi.sh
-sed -i '/get-vehicle-data-other.sh/d' /jci/scripts/stage_wifi.sh
-sed -i '/get-gps-data.sh/d' /jci/scripts/stage_wifi.sh
-sed -i '/Need to set defaults/d' /jci/scripts/stage_wifi.sh
-sed -i '/myVideoList /d' /jci/scripts/stage_wifi.sh
-sed -i '/playbackAction /d' /jci/scripts/stage_wifi.sh
-sed -i '/playbackOption /d' /jci/scripts/stage_wifi.sh
-sed -i '/playbackStatus /d' /jci/scripts/stage_wifi.sh
-sed -i '/playback/d' /jci/scripts/stage_wifi.sh
-sed -i '/myVideoList/d' /jci/scripts/stage_wifi.sh
-sed -i '/Video player action watch/d' /jci/scripts/stage_wifi.sh
-sed -i '/playback-action.sh/d' /jci/scripts/stage_wifi.sh
-sed -i '/Log data collection/d' /jci/scripts/stage_wifi.sh
-sed -i '/get-log-data/d' /jci/scripts/stage_wifi.sh
-sed -i '/### Video player/d' /jci/scripts/stage_wifi.sh
-sed -i '/_videoplayer/d' /jci/scripts/stage_wifi.sh
-sed -i '/addon-player.sh &/d' /jci/scripts/stage_wifi.sh
+sed -i '/Speedo-Compass-Video_Tweak/d' ${STAGE_WIFI}
+sed -i '/v3.2/d' ${STAGE_WIFI}
+sed -i '/Removed requirement/d' ${STAGE_WIFI}
+sed -i '/# mount /d' ${STAGE_WIFI}
+sed -i '/Added additional/d' ${STAGE_WIFI}
+sed -i '/get-vehicle-speed.sh/d' ${STAGE_WIFI}
+sed -i '/get-vehicle-data-other.sh/d' ${STAGE_WIFI}
+sed -i '/get-gps-data.sh/d' ${STAGE_WIFI}
+sed -i '/Need to set defaults/d' ${STAGE_WIFI}
+sed -i '/myVideoList /d' ${STAGE_WIFI}
+sed -i '/playbackAction /d' ${STAGE_WIFI}
+sed -i '/playbackOption /d' ${STAGE_WIFI}
+sed -i '/playbackStatus /d' ${STAGE_WIFI}
+sed -i '/playback/d' ${STAGE_WIFI}
+sed -i '/myVideoList/d' ${STAGE_WIFI}
+sed -i '/Video player action watch/d' ${STAGE_WIFI}
+sed -i '/playback-action.sh/d' ${STAGE_WIFI}
+sed -i '/Log data collection/d' ${STAGE_WIFI}
+sed -i '/get-log-data/d' ${STAGE_WIFI}
+sed -i '/### Video player/d' ${STAGE_WIFI}
+sed -i '/_videoplayer/d' ${STAGE_WIFI}
+sed -i '/addon-player.sh &/d' ${STAGE_WIFI}
 
-sed -i '/Video/d' /jci/scripts/stage_wifi.sh
-sed -i '/--port=9998/d' /jci/scripts/stage_wifi.sh
+sed -i '/Video/d' ${STAGE_WIFI}
+sed -i '/--port=9998/d' ${STAGE_WIFI}
 
-# delete videoplayer entry from /jci/opera/opera_dir/userjs/additionalApps.json
+# delete videoplayer entry from additionalApps.json
 ADDIT_APPS=0
 if [ -e /jci/opera/opera_dir/userjs/CustomApplicationsProxy.js ] || [ -e /jci/opera/opera_dir/userjs/nativeApps.js ]
 then
-  log_message "===                          Found CASDK                              ==="
-  ADDIT_APPS=1
-elif grep -Fq "_aiotweaks" /jci/opera/opera_dir/userjs/additionalApps.json
+	log_message "===                          Found CASDK                              ==="
+	ADDIT_APPS=1
+elif grep -Fq "_aiotweaks" ${ADDITIONAL_APPS_JSON}
 then
 	log_message "===          Found AIOTweaksApp entry in additionalApps.json          ==="
 	ADDIT_APPS=1
-elif grep -Fq "_androidauto" /jci/opera/opera_dir/userjs/additionalApps.json
+elif grep -Fq "_androidauto" ${ADDITIONAL_APPS_JSON}
 then
 	log_message "===           Found androidauto entry in additionalApps.json          ==="
 	ADDIT_APPS=1
-elif grep -Fq "_speedometer" /jci/opera/opera_dir/userjs/additionalApps.json
+elif grep -Fq "_speedometer" ${ADDITIONAL_APPS_JSON}
 then
 	log_message "===           Found speedometer entry in additionalApps.json          ==="
 	ADDIT_APPS=1
-elif grep -Fq "_mzdmeter" /jci/opera/opera_dir/userjs/additionalApps.json
+elif grep -Fq "_mzdmeter" ${ADDITIONAL_APPS_JSON}
 then
 	log_message "===           Found mzd meter entry in additionalApps.json            ==="
 	ADDIT_APPS=1
@@ -70,7 +70,7 @@ else
 fi
 
 ### cleanup old versions
-if [ ! -e /jci/opera/opera_dir/userjs/additionalApps.json ]; then
+if [ ! -e ${ADDITIONAL_APPS_JSON} ]; then
 	rm -fr /jci/gui/addon-common
 	log_message "===      Removed /jci/gui/addon-common because no more AIO apps       ==="
 fi
@@ -78,6 +78,7 @@ rm -fr /jci/gui/addon-player
 rm -fr /jci/gui/addon-speedometer
 rm -fr /jci/gui/speedometer
 rm -fr /jci/gui/apps/_videoplayer
+rm -fr /tmp/mnt/resources/aio/apps/_videoplayer
 rm -f /jci/opera/opera_dir/userjs/addon-startup.js
 rm -f /jci/opera/opera_dir/userjs/mySpeedometer*
 rm -f /jci/scripts/get-gps-data*
@@ -85,11 +86,11 @@ rm -f /jci/scripts/get-log-data*
 rm -f /jci/scripts/get-vehicle-data-other*
 rm -f /jci/scripts/get-vehicle-gear*
 rm -f /jci/scripts/get-vehicle-speed*
-rm -f /jci/scripts/stage_wifi.sh.bak?
+rm -f ${STAGE_WIFI}.bak?
 
 if [ $TESTBKUPS -eq 1 ]
 then
-	cp /jci/scripts/stage_wifi.sh "${MYDIR}/bakups/test/stage_wifi_videoplayer-after.sh"
+	cp ${STAGE_WIFI} "${MYDIR}/bakups/test/stage_wifi_videoplayer-after.sh"
 fi
 
 log_message "==========********* END UNINSTALLATION OF VIDEOPLAYER **********========="

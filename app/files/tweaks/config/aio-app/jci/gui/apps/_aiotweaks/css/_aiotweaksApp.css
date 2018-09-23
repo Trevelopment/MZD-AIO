@@ -8,12 +8,10 @@ body.ellipse .MainMenuCtrlEllipse {
   background-image: none !important;
 }
 /* Remove Button Backgrounds */
-
 body.no-btn-bg .Ump3CtrlBgArch, body.no-btn-bg .Ump3CtrlBackground, body.no-btn-bg .Ump3CtrlSeparator {
   background: none !important;
 }
 /* CSS For Bigger Album Art */
-
 body.bgrAlbmArt .NowPlaying4CtrlTitle, body.bgrAlbmArt .NowPlaying4CtrlTitleFull {
   top: 0px;
   left: 14px;
@@ -181,7 +179,6 @@ body.star2 .MainMenuCtrlComDiv.MainMenuCtrlCoinFocus {
   transform: scale(1.2, 1.2) translate(0px, -10px);
 }
 /* Alternate Layout Large Star */
-
 body.star3 .MainMenuCtrlComDiv {
   top: 30px;
 }
@@ -245,7 +242,6 @@ body.star3 .MainMenuCtrlNavDiv.MainMenuCtrlCoinFocus {
   transform: scale(1.2, 1.2) translate(25px, -50px);
 }
 /* Alternate Layout Flatline */
-
 body.star4 .MainMenuCtrlComDiv {
   top: 280px;
 }
@@ -317,13 +313,11 @@ body.star4 .MainMenuCtrlComDiv.MainMenuCtrlCoinFocus {
   transform: scale(1.2, 1.2) translate(0px, -60px);
 }
 /* Small Main Menu Coins */
-
 body.minicoins .MainMenuCtrlAppDiv, body.minicoins .MainMenuCtrlNavDiv, body.minicoins .MainMenuCtrlComDiv, body.minicoins .MainMenuCtrlSetDiv, body.minicoins .MainMenuCtrlEntDiv {
   -o-transform: scale(.5, .5);
   transform: scale(.5, .5);
 }
 /* 3D MAIN MENU TEXT! */
-
 body.label3d .MainMenuCtrlIconName.Visible {
   text-shadow: 0 1px 0 #ccc, 0 2px 0 #c9c9c9, 0 3px 0 #bbb, 0 4px 0 #b9b9b9, 0 5px 0 #aaa, 0 6px 1px rgba(0, 0, 0, .1), 0 0 5px rgba(0, 0, 0, .1), 0 1px 3px rgba(0, 0, 0, .3), 0 3px 5px rgba(0, 0, 0, .2), 0 5px 10px rgba(0, 0, 0, .25), 0 10px 10px rgba(0, 0, 0, .2), 0 20px 20px rgba(0, 0, 0, .15) !important;
 }

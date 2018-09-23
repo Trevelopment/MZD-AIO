@@ -1,20 +1,23 @@
-# remove track-order and FLAC support
-show_message "REMOVE TRACK-ORDER AND FLAC SUPPORT ..."
-log_message "=======*******   UNINSTALL TRACK-ORDER AND FLAC SUPPORT   *******========"
-
-if [ -e /jci/lib/libmc_user.so.org ]
+if [ $COMPAT_GROUP -lt 5 ]
 then
-	cp -a /jci/lib/libmc_user.so.org /jci/lib/libmc_user.so
-  /bin/fsync /jci/lib/libmc_user.so
-	log_message "===  Restored original /jci/lib/libmc_user.so from libmc_user.so.org  ==="
+	# remove track-order and FLAC support
+	show_message "REMOVE TRACK-ORDER AND FLAC SUPPORT ..."
+	log_message "=======*******   UNINSTALL TRACK-ORDER AND FLAC SUPPORT   *******========"
+
+	if [ -e /jci/lib/libmc_user.so.org ]
+	then
+		cp -a /jci/lib/libmc_user.so.org /jci/lib/libmc_user.so
+		/bin/fsync /jci/lib/libmc_user.so
+		log_message "===  Restored original /jci/lib/libmc_user.so from libmc_user.so.org  ==="
+	fi
+
+	chmod 755 /jci/lib/libmc_user.so
+	rm -f /usr/lib/gstreamer-0.10/libgstflac.so
+	rm -f /usr/lib/libFLAC.so.8.3.0
+	rm -f /usr/lib/libFLAC.so.8
+	rm -f /tmp/mnt/data_persist/dev/bin/flac-usb-recovery
+	log_message "===                   Removed FLAC support files                      ==="
+
+	log_message "======***** END UNINSTALLATION OF TRACK-ORDER AND FLAC SUPPORT ****======"
+	log_message " "
 fi
-
-chmod 755 /jci/lib/libmc_user.so
-rm -f /usr/lib/gstreamer-0.10/libgstflac.so
-rm -f /usr/lib/libFLAC.so.8.3.0
-rm -f /usr/lib/libFLAC.so.8
-rm -f /tmp/mnt/data_persist/dev/bin/flac-usb-recovery
-log_message "===                   Removed FLAC support files                      ==="
-
-log_message "======***** END UNINSTALLATION OF TRACK-ORDER AND FLAC SUPPORT ****======"
-log_message " "

@@ -22,7 +22,7 @@
 }
 
 .FuelConsumptionCtrlHiddenOpacity {
-	
+
 	opacity: 0;
 }
 
@@ -31,7 +31,7 @@
 	position: inherit;
   	top: 0px;
   	left: 0px;
-	width: 800px; 
+	width: 800px;
   	height: 100px;
 	background: none;
 	z-index: 10;
@@ -42,7 +42,7 @@
 	position: inherit;
   	top: 0px;
   	left: 0px;
-	width: 800px; 
+	width: 800px;
   	height: 100px;
 	background: none;
 	z-index: 10;
@@ -73,15 +73,15 @@ h2.FuelConsumptionCtrlFuelEfficiencyTitle {
   line-height: 120%;
   font-family: Tipperary, Arial, Helvetica, sans-serif;
   font-size: 27px;
-  color: #ffffff; 
+  color: #ffffff;
      overflow:hidden;
     text-overflow:ellipsis;
     -o-text-overflow:ellipsis;
-    white-space:nowrap; 
+    white-space:nowrap;
  }
 
 .FuelConsumptionCtrlFuelEfficiencyThisDrive {
-   
+
    position: absolute;
     top: 95px;
     left:648px;
@@ -91,11 +91,11 @@ h2.FuelConsumptionCtrlFuelEfficiencyTitle {
      line-height: 120%;
      font-family: Tipperary, Arial, Helvetica, sans-serif;
      font-size: 27px;
-     color: #ffffff; 
+     color: #ffffff;
      overflow:hidden;
     text-overflow:ellipsis;
     -o-text-overflow:ellipsis;
-    white-space:nowrap; 
+    white-space:nowrap;
 }
 
 .FuelConsumptionCtrlFuelEfficiencyValue {
@@ -107,12 +107,12 @@ h2.FuelConsumptionCtrlFuelEfficiencyTitle {
   text-align: center;
   font-family: "Tipperary Semibold", Arial, Helvetica, sans-serif;
   font-size: 30px;
-  color: #95BFEB; 
+  color: #95BFEB;
   }
 
 .FuelConsumptionCtrlFuelEfficiencyUnit {
   position:absolute;
-  font-size: 30px; 
+  font-size: 30px;
   width:140px;
   height: 210px;
   top:188px;
@@ -122,7 +122,7 @@ h2.FuelConsumptionCtrlFuelEfficiencyTitle {
    text-overflow: ellipsis;
    -o-text-overflow: ellipsis;
    white-space: nowrap;}
-  
+
 
 .FuelConsumptionCtrlSwitchView {
   position:absolute;
@@ -154,13 +154,13 @@ h2.FuelConsumptionCtrlFuelEfficiencyTitle {
   height: 111px;
   background: url('../images/FuelConsBgBars1.png') center no-repeat;
  }
-  
+
   .FuelConsumptionCtrlCDFEGraphRight {
   position: absolute;
   top: 58px;
   left: 76px;
   width: 473px;
-  height: 111px; 
+  height: 111px;
   }
 
 /*.FuelConsumptionCtrlCDFEGraphClipMask {/*
@@ -171,7 +171,7 @@ h2.FuelConsumptionCtrlFuelEfficiencyTitle {
   height: 109px;
   overflow: hidden;
   }*/
-  
+
   .FuelConsumptionCtrlCDFEGraphClipMask {
   position: absolute;
   top: 1px;
@@ -180,14 +180,14 @@ h2.FuelConsumptionCtrlFuelEfficiencyTitle {
   height: 109px;
   overflow: hidden;
   }
-  
+
   .FuelConsumptionCtrlCDFEGraphClipMaskRight {
   position: absolute;
   top: 1px;
   left: 1px;
   width: 240px;
   height: 109px;
-  overflow: hidden; 
+  overflow: hidden;
  }
 
 .FuelConsumptionCtrlCDFEGraphArea {
@@ -198,7 +198,7 @@ h2.FuelConsumptionCtrlFuelEfficiencyTitle {
   /* include 16th "hidden" bar & spacer for new values */
   height: 109px;
     }
-  
+
   .FuelConsumptionCtrlCDFEGraphAreaRight {
   position: absolute;
   top: 1px;
@@ -223,7 +223,7 @@ h2.FuelConsumptionCtrlCDFEGraphTitle {
   	overflow:hidden;
     text-overflow:ellipsis;
     -o-text-overflow:ellipsis;
-    white-space:nowrap; 
+    white-space:nowrap;
   }
 
 .FuelConsumptionCtrlCDFEGraphXAxisLabel {
@@ -232,10 +232,10 @@ h2.FuelConsumptionCtrlCDFEGraphTitle {
   left: -5px;
   width: 473px;
   text-align: center;
-  color: #fff; 
-  font-size:21px; 
+  color: #fff;
+  font-size:21px;
   font-family: Tipperary, Arial, Helvetica, sans-serif;
-  
+
   }
 
 .FuelConsumptionCtrlCDFEGraphYAxisLabel span {
@@ -243,10 +243,10 @@ h2.FuelConsumptionCtrlCDFEGraphTitle {
   top: -10px;
   left: 478px;
   width: 48px;
-  color: #fff; 
-  font-size:21px; 
+  color: #fff;
+  font-size:21px;
   font-family: Tipperary, Arial, Helvetica, sans-serif;
-  
+
   }
 
 .FuelConsumptionCtrlCDFEBarGraphCore {
@@ -257,7 +257,7 @@ h2.FuelConsumptionCtrlCDFEGraphTitle {
   background: url("../images/FuelConsBar_Narrow.png") center repeat-y;
   background-size: 21px 100%;
   }
-  
+
   .FuelConsumptionCtrlCDFEBarGraphCoreRight {
   position: absolute;
   width: 44px;
@@ -266,7 +266,7 @@ h2.FuelConsumptionCtrlCDFEGraphTitle {
   background:url("../images/FuelConsBar_wide.png") center repeat-y;
   background-size: 44px 100%;
   }
-  
+
   .FuelConsumptionCtrlCDFEBarGraphCoreGreenRight {
   position: absolute;
   width: 44px;
@@ -275,7 +275,7 @@ h2.FuelConsumptionCtrlCDFEGraphTitle {
   background:url("../images/FuelConsBar_wide_green.png") center repeat-y;
   background-size: 44px 100%;
   }
-  
+
   .FuelConsumptionCtrlCDFEBarGraphCoreCurrent {
   position: absolute;
   width: 21px;
@@ -309,7 +309,7 @@ h2.FuelConsumptionCtrlCDFEGraphTitle {
   width: 473px;
   height: 111px;
   background: url('../images/FuelConsBgBars2.png') no-repeat;
-  
+
   }
 
 .FuelConsumptionCtrlCFERGraphClipMask {
@@ -320,7 +320,7 @@ h2.FuelConsumptionCtrlCDFEGraphTitle {
   height: 109px;
   overflow: hidden;
   }
- 
+
 
 .FuelConsumptionCtrlCFERGraphArea {
   position: absolute;
@@ -340,11 +340,11 @@ h2.FuelConsumptionCtrlCFERGraphTitle {
   height:31px;
   font-family: "Tipperary Semibold", Arial, Helvetica, sans-serif;
   font-size: 28px;
-  color: #ffffff; 
+  color: #ffffff;
   	overflow:hidden;
     text-overflow:ellipsis;
     -o-text-overflow:ellipsis;
-    white-space:nowrap; 
+    white-space:nowrap;
   }
 
 .FuelConsumptionCtrlCFERGraphXAxisLabel {
@@ -352,10 +352,10 @@ h2.FuelConsumptionCtrlCFERGraphTitle {
   top: 115px;
   left:0px;
   width: 473px;
-  font-size:21px; 
+  font-size:21px;
   font-family: Tipperary, Arial, Helvetica, sans-serif;
-  color: #fff; 
-   
+  color: #fff;
+
   }
 
 .FuelConsumptionCtrlCFERGraphYAxisLabel span {
@@ -363,7 +363,7 @@ h2.FuelConsumptionCtrlCFERGraphTitle {
   top: -10px;
   left: 478px;
   width: 48px;
-  font-size:21px; 
+  font-size:21px;
   font-family: Tipperary, Arial, Helvetica, sans-serif;
   color: #fff;
    }
@@ -409,7 +409,7 @@ h2.FuelConsumptionCtrlCFERGraphTitle {
 }
 
 .FuelConsumptionCtrlCFERCurrentBarValue {
-	
+
 	position: absolute;
 	width:50px;
 	height: 0px;
@@ -418,10 +418,10 @@ h2.FuelConsumptionCtrlCFERGraphTitle {
 }
 
 .FuelConsumptionCtrlHevCDFEDisc_1 {
-	
+
 	width:22px;
 	height:13px;
-	
+
 }
 
 .FuelConsumptionCtrlHevCDFEDisc_2 {
@@ -430,13 +430,13 @@ h2.FuelConsumptionCtrlCFERGraphTitle {
 }
 
 .FuelConsumptionCtrlHevCDFEDisc_3 {
-	
+
 	width:22px;
 	height:39px;
 }
 
 .FuelConsumptionCtrlHevCDFEDisc_4 {
-	
+
 	width:22px;
 	height:52px;
 }
@@ -462,7 +462,7 @@ h2.FuelConsumptionCtrlCFERGraphTitle {
 }
 
 .FuelConsumptionCtrlHevCDFEDiscBg_Blue {
-	
+
 	position: relative;
 	background: url('../images/GeneratedEnergy_NarrowPurple.png') center repeat-y;
 	bottom: 0px;
@@ -479,7 +479,7 @@ h2.FuelConsumptionCtrlCFERGraphTitle {
 }
 
 .FuelConsumptionCtrlHevCDFEDiscBg_Green {
-	
+
 	 position: absolute;
   width: 21px;
   height: 0px;
@@ -488,15 +488,15 @@ h2.FuelConsumptionCtrlCFERGraphTitle {
 }
 
 .FuelConsumptionCtrlHevCDFEDiscBg_White {
-	
+
 	background: url('../images/GeneratedEnergy_NarrowCurrent.png') center repeat-y;
 }
 
 .FuelConsumptionCtrlHevCDFEDiscWide_1 {
-	
+
 	width:44px;
 	height:13px;
-	
+
 }
 
 .FuelConsumptionCtrlHevCDFEDiscWide_2 {
@@ -505,13 +505,13 @@ h2.FuelConsumptionCtrlCFERGraphTitle {
 }
 
 .FuelConsumptionCtrlHevCDFEDiscWide_3 {
-	
+
 	width:44px;
 	height:39px;
 }
 
 .FuelConsumptionCtrlHevCDFEDiscWide_4 {
-	
+
 	width:44px;
 	height:52px;
 }
@@ -537,11 +537,11 @@ h2.FuelConsumptionCtrlCFERGraphTitle {
 }
 
 .FuelConsumptionCtrlHevAverageText {
-	
+
 }
 
 .FuelConsumptionCtrlHevThisDriveText {
-	
+
 }
 
 .FuelConsumptionCtrlFuelEfficiencyTitleHev{
@@ -554,11 +554,11 @@ h2.FuelConsumptionCtrlCFERGraphTitle {
   line-height: 120%;
   font-family: Tipperary, Arial, Helvetica, sans-serif;
   font-size: 27px;
-  color: #ffffff; 
+  color: #ffffff;
   	overflow:hidden;
     text-overflow:ellipsis;
     -o-text-overflow:ellipsis;
-    white-space:nowrap; 
+    white-space:nowrap;
 
 }
 
@@ -572,11 +572,11 @@ h2.FuelConsumptionCtrlCFERGraphTitle {
   line-height: 120%;
   font-family: Tipperary, Arial, Helvetica, sans-serif;
   font-size: 27px;
-  color: #ffffff; 
+  color: #ffffff;
   	overflow:hidden;
     text-overflow:ellipsis;
     -o-text-overflow:ellipsis;
-    white-space:nowrap; 
+    white-space:nowrap;
 }
 .FuelConsumptionCtrlFuelEfficiencyValueHev{
   position: absolute;
@@ -587,9 +587,9 @@ h2.FuelConsumptionCtrlCFERGraphTitle {
   text-align: center;
   font-family: "Tipperary Semibold", Arial, Helvetica, sans-serif;
   font-size: 40px;
-  color: #ffffff; 
+  color: #ffffff;
   }
-  
+
   .FuelConsumptionCtrlFuelEfficiencyHevDivider{
   position:absolute;
   top:205px;
@@ -598,7 +598,7 @@ h2.FuelConsumptionCtrlCFERGraphTitle {
   width:146px;
   height:1px;
   }
-  
+
   .FuelConsumptionCtrlHevOneDriveText {
   position: absolute;
   left:648px;
@@ -609,11 +609,11 @@ h2.FuelConsumptionCtrlCFERGraphTitle {
   line-height: 120%;
   font-family: Tipperary, Arial, Helvetica, sans-serif;
   font-size: 27px;
-  color: #ffffff; 
+  color: #ffffff;
   	overflow:hidden;
     text-overflow:ellipsis;
     -o-text-overflow:ellipsis;
-    white-space:nowrap; 
+    white-space:nowrap;
 }
 
 .FuelConsumptionCtrlHevEVDistanceText {
@@ -626,11 +626,11 @@ h2.FuelConsumptionCtrlCFERGraphTitle {
   line-height: 120%;
   font-family: Tipperary, Arial, Helvetica, sans-serif;
   font-size: 26px;
-  color: #ffffff; 
+  color: #ffffff;
   	overflow:hidden;
     text-overflow:ellipsis;
     -o-text-overflow:ellipsis;
-    white-space:nowrap; 
+    white-space:nowrap;
 }
 
 .FuelConsumptionCtrlHevDistanceValue {
@@ -643,7 +643,7 @@ h2.FuelConsumptionCtrlCFERGraphTitle {
   line-height: 120%;
   font-family: Tipperary, Arial, Helvetica, sans-serif;
   font-size: 40px;
-  color: #ffffff; 
+  color: #ffffff;
 }
 
 .FuelConsumptionCtrlHevDistanceUnit {
@@ -656,7 +656,7 @@ h2.FuelConsumptionCtrlCFERGraphTitle {
   line-height: 120%;
   font-family: Tipperary, Arial, Helvetica, sans-serif;
   font-size: 28px;
-  color: #ffffff; 	
+  color: #ffffff;
 }
 
 .FuelConsumptionCtrlHevPercentValue {
@@ -730,7 +730,7 @@ h2.FuelConsumptionCtrlCFERGraphTitle {
   top: 58px;
   left: 76px;
   width: 473px;
-  height: 111px; 
+  height: 111px;
 }
 
 .FuelConsumptionCtrlCDFEDiscGraphClipMaskRight {
@@ -739,7 +739,7 @@ h2.FuelConsumptionCtrlCFERGraphTitle {
   left: 1px;
   width: 240px;
   height: 109px;
-  overflow: hidden; 
+  overflow: hidden;
 }
 
 
@@ -770,7 +770,7 @@ h2.FuelConsumptionCtrlCFERGraphTitle {
 }
 
 .FuelConsumptionCtrlCFERBarGraphCurrentMask {
-	
+
 	position: absolute;
 	width:50px;
 	height: 109px;
@@ -781,7 +781,7 @@ h2.FuelConsumptionCtrlCFERGraphTitle {
 
 .FuelConsumptionCtrlFuelEfficiencyUnitHev{
   position:absolute;
-  font-size: 28px; 
+  font-size: 28px;
   width:80px;
   height: 31px;
   top:146px;
@@ -790,11 +790,11 @@ h2.FuelConsumptionCtrlCFERGraphTitle {
   	overflow:hidden;
     text-overflow:ellipsis;
     -o-text-overflow:ellipsis;
-    white-space:nowrap; 
-  } 
-  
+    white-space:nowrap;
+  }
+
  .FuelConsumptionCtrlOneDiscValue {
- 	
+
  	position:absolute;
  	width: 95px;
  	height: 31px;
@@ -808,21 +808,21 @@ h2.FuelConsumptionCtrlCFERGraphTitle {
       	overflow:hidden;
     text-overflow:ellipsis;
     -o-text-overflow:ellipsis;
-    white-space:nowrap;  	
- } 
- 
+    white-space:nowrap;
+ }
+
  .FuelConsumptionCtrlOneDiscIndicator {
- 
+
  	position:absolute;
  	width: 19px;
  	height: 13px;
  	background: url('../images/GeneratedEnergy_NarrowCurrent.png') center no-repeat;
  	left:437px;
- 	top:27px; 
+ 	top:27px;
  }
- 
+
  .FuelConsumptionCtrlHalfWayLabel1 {
- 	
+
  	position:absolute;
  	width: 24px;
  	height: 24px;
@@ -831,12 +831,12 @@ h2.FuelConsumptionCtrlCFERGraphTitle {
  	text-align: left;
     font-family: Tipperary, Arial, Helvetica, sans-serif;
     font-size: 21px;
-    color: #ffffff; 	
-    
- } 
- 
+    color: #ffffff;
+
+ }
+
   .FuelConsumptionCtrlHalfWayLabel2 {
- 	
+
  	position:absolute;
  	width: 24px;
  	height: 24px;
@@ -846,8 +846,8 @@ h2.FuelConsumptionCtrlCFERGraphTitle {
     font-family: Tipperary, Arial, Helvetica, sans-serif;
     font-size: 21px;
     color: #ffffff;
- } 
- 
+ }
+
  .FuelConsumptionCtrlCDFEBarGraphCoreCurrentGreenHighLighted {
   position: absolute;
   width: 21px;
@@ -856,9 +856,9 @@ h2.FuelConsumptionCtrlCFERGraphTitle {
   background:url("../images/FuelConsBar_NarrowGreenCurrent.png") center repeat-y;
   background-size: 21px 100%;
   }
-  
-  
-  
+
+
+
   .FuelConsumptionCtrlHevCDFEBarGraphCoreCurrentGreenHighLighted {
   position: absolute;
   width: 21px;

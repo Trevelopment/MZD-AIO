@@ -28,13 +28,25 @@ const { writeFileSync } = require('fs')
 const isDev = require('electron-is-dev')
 const path = require('path')
 const os = require('os')
+const appender = require('appender') // Appends the tweak files syncronously
+const crlf = require('crlf') // Converts line endings (from CRLF to LF)
+const copydir = require('copy-dir') // Copys full directories
+const drivelist = require('drivelist') // Module that gets the list of available USB drives
+const extract = require('extract-zip') // For Unzipping
+const mkdirp = require('mkdirp') // Equiv of Unix command mkdir -p
+const rimraf = require('rimraf') // Equiv of Unix command rm -rf
 var copyFolderLocation = persistantData.get('copyFolderLocation')
 var visits = persistantData.get('visits') || 0
 var hasColorFiles = fs.existsSync(`${app.getPath('userData')}/color-schemes/`)
 var hasSpeedCamFiles = fs.existsSync(`${app.getPath('userData')}/speedcam-patch/`)
 var translateSchema, langPath, lang, langDefault
-var tempDir = `${app.getPath('userData')}/background`
+var approot = (isDev ? './app/' : app.getAppPath())
+var builddir = `${approot}/files/tweaks/` // Location of tweak files (as .txt files)
+var colordir = `${app.getPath('userData')}/color-schemes` // Location of downloaded tweak files (userData)
+var logFileName = 'MZD_LOG' // Name of log file (without extension)
+var varDir = `${app.getPath('userData')}/background/` // Location of files with saved variables
 var date = function() { return new Date() }
+var updateVer = 281
 // require('./lib/log')('MZD-AIO-LOG')
 // var output = process.stdout
 // var errorOutput = process.stderr
@@ -74,7 +86,7 @@ fs.readdir(testFolder, (err, files) => {
 })
 */
 function getBackground() {
-  return `${tempDir}/background.png`
+  return `${varDir}/background.png`
 }
 
 function saveMenuLock() {
@@ -82,14 +94,17 @@ function saveMenuLock() {
   $('body, .hideNav, .w3-overlay').toggleClass('showNav')
 }
 /* Create Temporary Folder To Hold Images Before Compiling */
-if (!fs.existsSync(tempDir)) {
-  fs.mkdirSync(tempDir)
+if (!fs.existsSync(varDir)) {
+  fs.mkdirSync(varDir)
 }
 
 function helpMessageFreeze(item) {
   $(item).children().toggleClass('w3-show')
 }
 
+function runAAPatcher(apk) {
+  require('./assets/js/aapatcher.js')(apk)
+}
 
 function runInstallCSApp() {
   require('./assets/js/installCS.js')()
@@ -139,48 +154,55 @@ function openDlFolder() {
 function openDefaultFolder() {
   shell.showItemInFolder(path.normalize(path.join('file://', __dirname, '../background-images/default/defaut.png')))
 }
+
 function autoHelp() {
   $.featherlight('views/autoHelp.htm', { closeSpeed: 500, variant: 'autoHelpBox' })
 }
+
 function myStance() {
-  //updateNotesCallback()
-  //ipc.send('reset-window-size')
+  ipc.send('reset-window-size')
   $.featherlight('views/stance.htm', { closeSpeed: 2000, variant: 'myStance', afterClose: updateNotesCallback })
 }
+
 function announcement() {
-  var anoncmntNum = localStorage.getItem('anoncmnt')
+
+// announcement
 }
+
 function showAnnouncement() {
-  $.featherlight('https://aio.trevelopment.com/aio.php',{closeSpeed:1000,variant:'announcementWindow'})
-      }
+//announcement
+}
+
 function hideAnnouncement(anonNum) {
   $('.communicationFile').hide()
   $.featherlight.close()
   localStorage.setItem('anoncmnt', anonNum)
 }
+
 function anonData(anonNum) {
   localStorage.setItem('anondat', anonNum)
 }
+
 function updateNotes() {
   $.get('views/update.htm', function(data) { $('#changelog').html(data) })
   bootbox.dialog({
     title: `<div class='w3-center'>Welcome To MZD-AIO-TI v${app.getVersion()} | MZD All In One Tweaks Installer</div>`,
-    message: `<div id='changelog'></div><button id='newVerBtn' style='display:none;font-weight:800;' class='w3-btn w3-hover-green w3-hover-text-black w3-display-bottommiddle' onclick='bootbox.hideAll()'>OK</button><br>`,
+    message: `<div id='changelog'></div><button id='upVerBtn' style='display:none;font-weight:800;' class='w3-btn w3-hover-green w3-hover-text-black w3-display-bottommiddle' onclick='bootbox.hideAll();'>OK</button><br>`,
     className: 'update-info',
     size: 'large',
     closeButton: true
   })
-  setTimeout(function() {
+  setTimeout(() => {
     $('.modal-dialog').animate({ 'margin-top': '40px', 'margin-bottom': '60px' }, 3000)
-    $('#newVerBtn').fadeIn(5000)
+    $('#upVerBtn').fadeIn(5000)
   }, 2000)
 }
 
 function firstTimeVisit() {
-  if (!persistantData.has('updateVer') || persistantData.get('updateVer') < 280) {
+  if (!persistantData.has('updateVer') || persistantData.get('updateVer') < updateVer) {
     myStance()
     settings.set('reset', true)
-    persistantData.set('updateVer', 280)
+    persistantData.set('updateVer', updateVer)
     persistantData.set('updated', false)
     persistantData.delete('ver270')
     persistantData.delete('message-502')
@@ -214,13 +236,12 @@ function updateNotesCallback() {
       closeButton: false,
       className: "first-time-dialog"
     })
-    setTimeout(function() { $('#super-overlay').remove() }, 3000)
-    setTimeout(function() {
+    setTimeout(() => { $('#super-overlay').remove() }, 3000)
+    setTimeout(() => {
       $('#first-time-msg-btn').html(`<button id='newVerBtn' style='display:none' class='w3-btn w3-hover-text-light-blue w3-display-bottommiddle' onclick='bootbox.hideAll()'>OK</button><br>`)
       $('#newVerBtn').fadeIn(10000)
     }, 5000)
   }
-
 }
 var helpClick = false
 
@@ -382,7 +403,7 @@ function toggleOverDraws() {
 
 function writeRotatorVars() {
   if ($('#imgCount').text() > 1) {
-    fs.writeFileSync(`${tempDir}/bg-rotator.txt`, `BG_STEPS=${$('#imgCount').text()}\nBG_SECONDS=${$('#imgCount').text() * $('#bgRotatorSeconds').val()}\nBG_SEC_EACH=${$('#bgRotatorSeconds').val()}\nBG_WIDTH=${$('#imgCount').text() * 800}`)
+    fs.writeFileSync(`${varDir}/bg-rotator.txt`, `BG_STEPS=${$('#imgCount').text()}\nBG_SECONDS=${$('#imgCount').text() * $('#bgRotatorSeconds').val()}\nBG_SEC_EACH=${$('#bgRotatorSeconds').val()}\nBG_WIDTH=${$('#imgCount').text() * 800}`)
   }
 }
 
@@ -394,7 +415,7 @@ function saveAIOLogHTML() {
 }
 
 function checkForUpdate(ver) {
-  $.featherlight(`https://aio.trevelopment.com/update.php?ver=280`, { closeSpeed: 100, variant: 'checkForUpdate' })
+  $.featherlight(`https://aio.trevelopment.com/update.php?ver=${updateVer}`, { closeSpeed: 100, variant: 'checkForUpdate' })
 }
 
 function formatDateCustom(dateFormatType) {
@@ -436,13 +457,13 @@ function showCompatibility() {
   </header>
   <div class="w3-container">
   <div class="w3-panel w3-center">
-  <H2> **AIO IS COMPATIBLE WITH ALL FW V55, V56, V58, V59 AND UP TO V70.00.000** </H2>
+  <H2> **AIO IS COMPATIBLE WITH ALL FW V55, V56, V58, V59 AND UP TO V70.00.021** </H2>
   <h3 style="text-transform: capitalize;">NOTE: FW v59.00.502+ <a href="" onclick="externalLink('im-super-serial')">Requires Additional Steps To Install Tweaks.</a>  If updating to v59.00.502+ install Autorun & Recovery Scripts to allow Tweaks to be installed after updating.</h3>
   </div>`).insertAfter($('#mzd-title'))
 }
 $(function() {
   $('.toggleExtra.1').addClass('icon-plus-square').removeClass('icon-minus-square')
-  setTimeout(function() {
+  setTimeout(() => {
     $('#IN21').click(function() {
       snackbar('THERE MAY BE ISSUES REGARDING COMPATIBILITY WITH THIS TWEAK. AFTER INSTALLING, YOUR USB PORTS MAY BECOME UNREADABLE TO THE CMU. <h5>AUTORUN-RECOVERY SCRIPT WILL BE INSTALLED IN CASE RECOVERY BY SD CARD SLOT IS NEEDED TO RECOVER USB FUNCTION</h5>')
     })

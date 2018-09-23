@@ -44,7 +44,7 @@
     "title": "Tweaking",
     "msg": "<h3> All changes happen at your own risk! </h3>\n <b>Please understand that you can damage or brick your infotainment system running these tweaks! </b>\n Anyone who is unsure should leave it alone, ask someone with experience to help or ask in the <a href='' onclick=externalLink('mazda3revolution')>forum</a>.<h5> I am not responsible for damages that may incur from the use.</h5>Having said that, MZD-AIO-TI was built with Safety in mind so any incompatible tweaks will be skipped during installation.<br>USE EXTREME CAUTION IF INSTALLING ON V700.00.100+",
     "t2": "Compatible Firmware Versions:",
-    "msg2": "  <H2 style='text-align:center'> **AIO IS COMPATIBLE WITH <br>ALL FW V55, V56, V58, V59 AND V70.00.000**  \n\n###### Only use with FirmWare Versions >= v55. DO NOT USE with V30/31/33 OR YOU WILL BRICK YOUR SYSTEM IT WILL FOREVER STAY LOOPING THE MAZDA BOOT LOGO!  \n\nTo Be Safe, For now AIO-TI Will Automatically Abort The Installation If No Compadible Firmware Version Is Found.  \n\nTo override this you have to be comfortable editing tweaks.sh directly, find the code that performs the firmware check and disable or add your version to the list of Compatible firmwares.  **Do This At Your Own Risk!**"
+    "msg2": "  <H2 style='text-align:center'> **AIO IS COMPATIBLE WITH <br>ALL FW V55, V56, V58, V59 AND V70.00.021**  \n\n###### Only use with FirmWare Versions >= v55. DO NOT USE with V30/31/33 OR YOU WILL BRICK YOUR SYSTEM IT WILL FOREVER STAY LOOPING THE MAZDA BOOT LOGO!  \n\nTo Be Safe, For now AIO-TI Will Automatically Abort The Installation If No Compadible Firmware Version Is Found.  \n\nTo override this you have to be comfortable editing tweaks.sh directly, find the code that performs the firmware check and disable or add your version to the list of Compatible firmwares.  **Do This At Your Own Risk!**"
   }, {
     "id": 2,
     "title": "Reverting",
@@ -249,7 +249,7 @@
       "testlabel": "Test Backups",
       "skipconfirm": "Skip Confirmation",
       "safetylvl": "safe",
-      "toolTip": "<h5>Retrieve CMU Data</h5><p>Dump diagnostic files from the CMU to the USB Drive.  Cleans out error files and core dumps from the system.</p><h5>Skip Confirmation</h5><p>Allows for the installation to run without prompting for confirmation to begin the install. Mainly this is used for recovering when the touchscreen is not responding.  </p><h5>Copy Backups:</h5> <p> Copy original backups of modified system files, for safe keeping. </p><h5>Test Backups:</h5> <p>Some tweaks have before and after copies of the files modified during the installation.  If you like that kind of thing they will be copied to your-usb/bakups/test/.</p>"
+      "toolTip": "<h5>Build \"run.sh\"</h5><p>Install tweaks using autorun.  Changes the filename of \"tweaks.sh\" to \"run.sh\" <br>NOTE: To use this you must have autorun script installed for this to work.</p><h5>Retrieve CMU Data</h5><p>Dump diagnostic files from the CMU to the USB Drive.  Cleans out error files and core dumps from the system.</p><h5>Skip Confirmation</h5><p>Allows for the installation to run without prompting for confirmation to begin the install. Mainly this is used for recovering when the touchscreen is not responding.  </p><h5>Copy Backups:</h5> <p> Copy original backups of modified system files, for safe keeping. </p><h5>Test Backups:</h5> <p>Some tweaks have before and after copies of the files modified during the installation.  If you like that kind of thing they will be copied to your-usb/bakups/test/.</p><h5>Copy Backups:</h5> <p> Copy original backups of modified system files, for safe keeping. </p><h5>Apps to Resources:</h5> <p>Install app files to the \"resources\" partition instead of the Root Filesystem.</p>"
     },
     "mainmenu": {
       "id": 8,
@@ -911,7 +911,7 @@
     "toolTip": "<h5>Remove Message Replies </h5>Removes the text 'Sent from my Mazda Quick Text System' if answering messages.",
     "img": "",
     "safetylvl": "safe",
-    "extraOps": false,
+    "extraOps": true,
     "advancedOp": false
   }, {
     "id": 12,
@@ -998,7 +998,7 @@
     "OpName": "Swapfile",
     "INST": "Generate swapfile for media player v2",
     "DEINST": "Remove swapfile",
-    "toolTip": "<h5>Swapfile </h5>The Swapfile will provide your system with an additionasl 1 GB of RAM running from the USB drive for playing videos.  The installation of the swap file must be done on a USB drive with music and/or movies, that remains in the car..  The installation files are automatically deleted, the drive may no longer be removed during operation, because the system will use it also as memory.  Only remove the USB drive if the MZD system is off.<br><strong>It is recomended to unmount the swapfile using the VideoPlayer or AIO Tweaks App before shutting down the system.  This is because the shutdown sequence does not give enough time for the swapfile to properly unmount.</strong>",
+    "toolTip": "<h5>Swapfile </h5>The Swapfile will provide your system with an additional 1 GB of RAM running from the USB drive for playing videos.  The installation of the swap file must be done on a USB drive with music and/or movies, that remains in the car..  The installation files are automatically deleted, the drive may no longer be removed during operation, because the system will use it also as memory.  Only remove the USB drive if the MZD system is off.<br><strong>It is recomended to unmount the swapfile using the VideoPlayer or AIO Tweaks App before shutting down the system.  This is because the shutdown sequence does not give enough time for the swapfile to properly unmount.</strong>",
     "img": "",
     "safetylvl": "warning",
     "extraOps": true,

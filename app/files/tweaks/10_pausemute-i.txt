@@ -9,6 +9,10 @@ if grep -Fq 'isMuted ? "Global.Pause" : "Global.Resume"' /jci/gui/common/js/Comm
 || grep -Fq 'AIO Pause on Mute' /jci/gui/common/js/Common.js
 then
 	log_message "===               Pause On Mute Mod is already installed              ==="
+elif [ $COMPAT_GROUP -gt 5 ]
+then
+	log_message "===                 Pause On Mute is included in v70+                 ==="
+	show_message "PAUSE_ON_MUTE IS NOT COMPATIBLE WITH v70+ ..."
 else
 	# Add this one line of code that does the magic
 	sed -i '/this._isMutedChanged();/ a\            framework.sendEventToMmui("Common", isMuted ? "Global.Pause" : "Global.Resume"); //AIO Pause on Mute ~Trez' /jci/gui/common/js/Common.js

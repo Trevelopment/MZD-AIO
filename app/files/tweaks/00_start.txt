@@ -29,14 +29,12 @@ aio_info()
 {
   if [ $KEEPBKUPS -eq 1 ]
   then
-    echo "$*" 1>&2
+    # echo "$*" 1>&2
     echo "$*" >> "${MYDIR}/AIO_info.json"
     /bin/fsync "${MYDIR}/AIO_info.json"
   fi
 }
 # CASDK functions
-MZD_APP_SD=/tmp/mnt/sd_nav
-MZD_APP_DIR=/tmp/mnt/resources/aio/mzd-casdk/apps
 get_casdk_mode()
 {
   if [ -e /jci/casdk/casdk.aio ]
@@ -72,15 +70,16 @@ remove_casdk_app()
     log_message "===                Uninstalled CASDK App: ${CASDK_APP:0:10}                  ==="
   fi
 }
+# Compatibility check falls into 7 groups:
+# 70.00.100+ ($COMPAT_GROUP=7 *Temporary, until tested*)
+# 70.00.XXX ($COMPAT_GROUP=6)
+# 59.00.5XX ($COMPAT_GROUP=5)
+# 59.00.4XX ($COMPAT_GROUP=4)
+# 59.00.3XX ($COMPAT_GROUP=3)
+# 58.00.XXX ($COMPAT_GROUP=2)
+# 55.00.XXX - 56.00.XXX ($COMPAT_GROUP=1)
 compatibility_check()
 {
-  # Compatibility check falls into 6 groups:
-  # 70.00.XXX ($COMPAT_GROUP=6)
-  # 59.00.5XX ($COMPAT_GROUP=5)
-  # 59.00.4XX ($COMPAT_GROUP=4)
-  # 59.00.3XX ($COMPAT_GROUP=3)
-  # 58.00.XXX ($COMPAT_GROUP=2)
-  # 55.00.XXX - 56.00.XXX ($COMPAT_GROUP=1)
   _VER=$(get_cmu_ver)
   _VER_EXT=$(grep "^JCI_SW_VER=" /jci/version.ini | sed 's/^.*_\([^_]*\)\"$/\1/' | cut -d '.' -f 3)
   _VER_MID=$(grep "^JCI_SW_VER=" /jci/version.ini | sed 's/^.*_\([^_]*\)\"$/\1/' | cut -d '.' -f 2)
@@ -129,71 +128,153 @@ remove_aio_js()
   INPUT=${1##*/}
   log_message "===            Removed ${2:0:11} JavaScript From ${INPUT:0:13}    ==="
 }
+backup_failed()
+{
+  FILE="${1}"
+  # Double Check The Backup
+  if [ -s $FILE ]
+  then
+    return
+  else
+    rm -f $FILE
+    show_message "FAILED TO CREATE BACKUP FILE:\n$FILE\nCHECK AIO_log.txt FOR MORE INFO"
+    log_message "BACKUP FOR $FILE FAILED... SEE FOLLOWING LINES FOR SPACE ANALYSIS"
+    df -h >> "${MYDIR}/AIO_log.txt"
+    sleep 10
+    show_message "THE INSTALLATION HAS ABORTED... REMOVE USB DRIVE NOW\nTHE SYSTEM WILL REBOOT"
+    sleep 2
+    reboot
+    exit 1
+  fi
+}
+# Make a ".org" backup
+# pass the full file path
+# If creating backup fails the installation is aborted
 backup_org()
 {
-  FILE=${1}
+  FILE="${1}"
   BACKUP_FILE="${1}.org"
   FILENAME=$(basename -- "$FILE")
   FEXT="${FILENAME##*.}"
   FNAME="${FILENAME%.*}"
   if [ ! -e "${BACKUP_FILE}" ]
   then
-    cp -a "${FILE}" "${BACKUP_FILE}"
-    log_message "***+++---===|___ Created Backup of ${FILENAME} ___|===---+++***"
+    cp -a "${FILE}" "${BACKUP_FILE}" && log_message "===+++---***|\___  Created Backup of ${FILENAME}  ___/|***---+++==="
   fi
   if [ $KEEPBKUPS -eq 1 ] && [ ! -e "${MYDIR}/bakups/${FILENAME}.org" ]
   then
-   cp -a "${BACKUP_FILE}" "${MYDIR}/bakups/"
-   aio_info \"${FILENAME}\",
+    cp "${BACKUP_FILE}" "${MYDIR}/bakups/"
+    aio_info \"${FILENAME}\",
   fi
   if [ $TESTBKUPS -eq 1 ] && [ ! -e "${MYDIR}/bakups/test/${FNAME}_before.${FEXT}" ]
   then
-    cp -a ${FILE} "${MYDIR}/bakups/test/${FNAME}_before.${FEXT}"
+    cp ${FILE} "${MYDIR}/bakups/test/${FNAME}_before.${FEXT}"
+  fi
+  # checks to make sure the backup created is not an empty file
+  [ -s ${BACKUP_FILE} ] || backup_failed ${BACKUP_FILE}
+}
+# Restore file from the ".org" backup
+# pass the full file path (without ".org")
+# return 1 if no ".org" file exists, 0 if it does
+restore_org()
+{
+  FILE="${1}"
+  BACKUP_FILE="${1}.org"
+  FILENAME=$(basename -- "$FILE")
+  FEXT="${FILENAME##*.}"
+  FNAME="${FILENAME%.*}"
+  if [ -s "${BACKUP_FILE}" ]
+  then
+    if [ $TESTBKUPS -eq 1 ] && [ ! -e "${MYDIR}/bakups/test/${FNAME}_before-uninstall.${FEXT}" ]
+    then
+      cp ${FILE} "${MYDIR}/bakups/test/${FNAME}_before-uninstall.${FEXT}"
+    fi
+    cp -a "${BACKUP_FILE}" "${FILE}" && log_message "===+++---***|\___ Restored ${FILENAME} From Backup ___/|***---+++==="
+    if [ $KEEPBKUPS -eq 1 ] && [ ! -e "${MYDIR}/bakups/${FILENAME}.org" ]
+    then
+      cp "${BACKUP_FILE}" "${MYDIR}/bakups/"
+      aio_info \"${FILENAME}\",
+    fi
+    return 0
+  else
+    return 1
   fi
 }
 show_message()
 {
   sleep 5
-  killall jci-dialog
+  killall -q jci-dialog
   #	log_message "= POPUP: $* "
   /jci/tools/jci-dialog --info --title="MZD-AIO-TI  v.${AIO_VER}" --text="$*" --no-cancel &
 }
 show_message_OK()
 {
   sleep 4
-  killall jci-dialog
+  killall -q jci-dialog
   #	log_message "= POPUP: $* "
   /jci/tools/jci-dialog --confirm --title="MZD-AIO-TI | CONTINUE INSTALLATION?" --text="$*" --ok-label="YES - GO ON" --cancel-label="NO - ABORT"
   if [ $? != 1 ]
   then
-    killall jci-dialog
+    killall -q jci-dialog
     return
   else
     log_message "********************* INSTALLATION ABORTED *********************"
     show_message "INSTALLATION ABORTED! PLEASE UNPLUG USB DRIVE"
     sleep 10
-    killall jci-dialog
+    killall -q jci-dialog
     exit 0
   fi
 }
-# Shotrhand for location of additionalApps.json
-ADDITIONAL_APPS_JSON="/jci/opera/opera_dir/userjs/additionalApps.json"
+# create additionalApps.json file from scratch if the file does not exist
+create_app_json()
+{
+  if [ ! -e ${ADDITIONAL_APPS_JSON} ]
+  then
+    echo "[" > ${ADDITIONAL_APPS_JSON}
+    echo "]" >> ${ADDITIONAL_APPS_JSON}
+    chmod 755 ${ADDITIONAL_APPS_JSON}
+    log_message "===                   Created additionalApps.json                     ==="
+  fi
+}
+info_log()
+{
+  INFOLOG="${MYDIR}/bakups/info.log"
+  rm -f $INFOLOG
+  show_version.sh > $INFOLOG
+  echo "INFO LOG: ${INFOLOG} $(timestamp)" >> $INFOLOG
+  echo "> df -h" >> $INFOLOG
+  df -h >> $INFOLOG
+  echo "> cat /proc/mounts" >> $INFOLOG
+  cat /proc/mounts >> $INFOLOG
+  echo "> cat /proc/meminfo" >> $INFOLOG
+  cat /proc/meminfo >> $INFOLOG
+  echo "> ps" >> $INFOLOG
+  ps >> $INFOLOG
+  # echo "> netstat -a" >> $INFOLOG
+  # netstat -a >> $INFOLOG
+  # echo "> du -h /jci" >> $INFOLOG
+  # du -h /jci >> $INFOLOG
+  # echo "> du -h /tmp/mnt/resources" >> $INFOLOG
+  # du -h /tmp/mnt/resources >> $INFOLOG
+  echo "END INFO LOG: $(timestamp)" >> $INFOLOG
+}
 # script by vic_bam85
 add_app_json()
 {
-  if which node > /dev/null && which add_app_json.js > /dev/null
+  # check if entry in additionalApps.json still exists, if so nothing is to do
+  count=$(grep -c '{ "name": "'"${1}"'"' ${ADDITIONAL_APPS_JSON})
+  if [ $count -eq 0 ]
   then
-    add_app_json.js ${ADDITIONAL_APPS_JSON} "${1}" "${2}" "${3}" >> ${MYDIR}/node.log 2>&1
-    log_message "===                node add_app_json.js ${2:0:10}                    ==="
-  elif [ -e ${MYDIR}/config/bin/node ] && [ -e ${MYDIR}/config/bin/add_app_json.js ]
-  then
-    ${MYDIR}/config/bin/node ${MYDIR}/config/bin/add_app_json.js ${ADDITIONAL_APPS_JSON} "${1}" "${2}" "${3}" >> ${MYDIR}/node.log 2>&1
-    log_message "===   ${MYDIR}/config/bin/node add_app_json.js ${2:0:10}        ==="
-  else
-    # check if entry in additionalApps.json still exists, if so nothing is to do
-    count=$(grep -c '{ "name": "'"${1}"'"' ${ADDITIONAL_APPS_JSON})
-    if [ $count -eq 0 ]
+    # try to use node if it exists
+    if which node > /dev/null && which add_app_json.js > /dev/null
     then
+      add_app_json.js ${ADDITIONAL_APPS_JSON} "${1}" "${2}" "${3}" >> ${MYDIR}/node.log 2>&1
+      log_message "===                node add_app_json.js ${2:0:10}                    ==="
+    elif [ -e ${MYDIR}/config/bin/node ] && [ -e ${MYDIR}/config/bin/add_app_json.js ]
+    then
+      ${MYDIR}/config/bin/node ${MYDIR}/config/bin/add_app_json.js ${ADDITIONAL_APPS_JSON} "${1}" "${2}" "${3}" >> ${MYDIR}/node.log 2>&1
+      log_message "===   ${MYDIR}/config/bin/node add_app_json.js ${2:0:10}        ==="
+    else
       log_message "===  ${2:0:10} not found in additionalApps.json, first installation  ==="
       mv ${ADDITIONAL_APPS_JSON} ${ADDITIONAL_APPS_JSON}.old
       sleep 2
@@ -215,7 +296,7 @@ add_app_json()
       log_message "===        Add ${2:0:10} to last line of additionalApps.json         ==="
       echo '  { "name": "'"${1}"'", "label": "'"${2}"'" }' >> ${ADDITIONAL_APPS_JSON}
       sleep 2
-      if [ ${3} != "" ]
+      if [ "${3}" != "" ]
       then
         sed -i 's/"label": "'"${2}"'" \}/"label": "'"${2}"'", "preload": "'"${3}"'" \}/g' ${ADDITIONAL_APPS_JSON}
       fi
@@ -223,19 +304,19 @@ add_app_json()
       echo "]" >> ${ADDITIONAL_APPS_JSON}
       sleep 2
       rm -f ${ADDITIONAL_APPS_JSON}.old
-    else
-      log_message "===         ${2:0:10} already exists in additionalApps.json          ==="
     fi
-  fi
-  cp ${ADDITIONAL_APPS_JSON} "${MYDIR}/bakups/test/additionalApps${1}-5._after.json"
-  if [ -e /jci/opera/opera_dir/userjs/nativeApps.js ]
-  then
-    echo "additionalApps = $(cat ${ADDITIONAL_APPS_JSON})" > /jci/opera/opera_dir/userjs/nativeApps.js
-    log_message "===                    Updated nativeApps.js                          ==="
+    cp ${ADDITIONAL_APPS_JSON} "${MYDIR}/bakups/test/additionalApps${1}-5._after.json"
+    if [ -e /jci/opera/opera_dir/userjs/nativeApps.js ]
+    then
+      echo "additionalApps = $(cat ${ADDITIONAL_APPS_JSON})" > /jci/opera/opera_dir/userjs/nativeApps.js
+      log_message "===                    Updated nativeApps.js                          ==="
+    fi
+  else
+    log_message "===         ${2:0:10} already exists in additionalApps.json          ==="
   fi
 }
-remove_app_json()
 # script by vic_bam85
+remove_app_json()
 {
   if which node > /dev/null && which remove_app_json.js > /dev/null
   then
@@ -262,7 +343,7 @@ remove_app_json()
       json="$(cat ${ADDITIONAL_APPS_JSON})"
       # check if last sign is comma
       rownend=$(echo -n $json | tail -c 1)
-      if [ "$rownend" == "," ]
+      if [ "$rownend" = "," ]
       then
         # if so, remove "," from back end
         echo ${json%,*} > ${ADDITIONAL_APPS_JSON}
@@ -296,30 +377,37 @@ remove_app_json()
 # disable watchdog and allow write access
 echo 1 > /sys/class/gpio/Watchdog\ Disable/value
 mount -o rw,remount /
-# mount resources
-mount -o rw,remount /tmp/mnt/resources/
 
 MYDIR=$(dirname "$(readlink -f "$0")")
+mount -o rw,remount ${MYDIR}
+
 CMU_VER=$(get_cmu_ver)
 CMU_SW_VER=$(get_cmu_sw_version)
 COMPAT_GROUP=$(compatibility_check)
 get_casdk_mode
+info_log
 
 # save logs
 mkdir -p "${MYDIR}/bakups/test/"
+logfile="${MYDIR}/bakups/AIO_log.log"
 if [ -f "${MYDIR}/AIO_log.txt" ]; then
   if [ ! -f "${MYDIR}/bakups/count.txt" ]; then
     echo 0 > "${MYDIR}/bakups/count.txt"
   fi
   logcount=$(cat ${MYDIR}/bakups/count.txt)
-  mv "${MYDIR}/AIO_log.txt" "${MYDIR}/bakups/AIO_log-${logcount}.txt"
+  #mv "${MYDIR}/AIO_log.txt" "${MYDIR}/bakups/AIO_log-${logcount}.txt"
+  logfile="${MYDIR}/bakups/AIO_log-${logcount}.log"
   echo $((logcount+1)) > "${MYDIR}/bakups/count.txt"
+  rm -f "${MYDIR}/AIO_log.txt"
 fi
 rm -f "${MYDIR}/AIO_info.json"
-
+# experimental new log will expose
+# all the errors in my scripts ^_^
+exec > $logfile 2>&1
 log_message "========================================================================="
 log_message "=======================   START LOGGING TWEAKS...  ======================"
 log_message "======================= AIO v.${AIO_VER}  -  ${AIO_DATE} ======================"
+log_message "=$(/jci/scripts/show_version.sh)"
 log_message "======================= CMU_SW_VER = ${CMU_SW_VER} ======================"
 log_message "=======================  COMPATIBILITY_GROUP  = ${COMPAT_GROUP} ======================="
 #log_message "======================== CMU_VER = ${CMU_VER} ====================="
@@ -362,19 +450,19 @@ then
   log_message "************************* INSTALLATION ABORTED **************************" && reboot
   exit 1
 fi
- # Compatibility Check
+# Compatibility Check
 
 if [ $COMPAT_GROUP -ge 6 ]
 then
   sleep 2
-  killall jci-dialog
-  /jci/tools/jci-dialog --confirm --title="MZD-AIO-TI | CONTINUE INSTALLATION?" --text="WARNING! VERSION ${CMU_SW_VER} DETECTED\nAIO COMPATIBILITY HAS ONLY BEEN TESTED UP TO V70.00.000\nIF YOU ARE RUNNING A LATER FW VERSION USE EXTREME CAUTION!" --ok-label="YES - GO ON" --cancel-label="NO - ABORT"
+  killall -q jci-dialog
+  /jci/tools/jci-dialog --confirm --title="MZD-AIO-TI | CONTINUE INSTALLATION?" --text="WARNING! VERSION ${CMU_SW_VER} DETECTED\nAIO COMPATIBILITY HAS ONLY BEEN TESTED UP TO V70.00.021\nIF YOU ARE RUNNING A LATER FW VERSION USE EXTREME CAUTION!" --ok-label="YES - GO ON" --cancel-label="NO - ABORT"
   if [ $? = 1 ]
   then
     log_message "********************* INSTALLATION ABORTED *********************"
     show_message "INSTALLATION ABORTED! PLEASE UNPLUG USB DRIVE"
     sleep 10
-    killall jci-dialog
+    killall -q jci-dialog
     exit 0
   fi
 fi
@@ -396,7 +484,7 @@ else
   sleep 10
   show_message "UNPLUG USB DRIVE NOW"
   sleep 15
-  killall jci-dialog
+  killall -q jci-dialog
   # To run unknown FW you need to comment out or remove the following 2 lines
   mount -o ro,remount /
   exit 0
@@ -424,6 +512,8 @@ then
   cp -a /jci/opera/opera_home/opera.ini /jci/opera/opera_home/opera.ini.org
   log_message "======== Backup /jci/opera/opera_home/opera.ini to opera.ini.org ========"
 else
+  # checks to make sure opera.ini is not an empty file
+  [ -s /jci/opera/opera_home/opera.ini ] || cp /jci/opera/opera_home/opera.ini.org /jci/opera/opera_home/opera.ini
   log_message "================== Backup of opera.ini already there! ==================="
 fi
 sed -i 's/User JavaScript=0/User JavaScript=1/g' /jci/opera/opera_home/opera.ini
@@ -453,26 +543,48 @@ then
   mkdir -p /tmp/mnt/data_persist/dev/bin/
   log_message "======== Restored Missing Folder /tmp/mnt/data_persist/dev/bin/ ========="
 fi
-if grep -Fq ,, ${ADDITIONAL_APPS_JSON}
+if [ -e ${ADDITIONAL_APPS_JSON} ] && grep -Fq ,, ${ADDITIONAL_APPS_JSON}
 then
   # remove double commas
   sed -i 's/,,/,/g' ${ADDITIONAL_APPS_JSON}
   log_message "================ Fixed Issue with additionalApps.json ==================="
 fi
 DATA_PERSIST=$(df -h | (grep 'data_persist' || echo 0) | awk '{ print $5 " " $1 }')
-#log_message $DATA_PERSIST
+_ROOTFS=$(df -h | (grep 'rootfs' || echo 0) | awk '{ print $5 " " $1 }')
+_RESOURCES=$(df -h | (grep 'resources' || echo 0) | awk '{ print $5 " " $1 }')
 USED=$(echo $DATA_PERSIST | awk '{ print $1}' | cut -d'%' -f1  )
-#log_message $USED
-log_message "==================== data_persist partition ${USED}% used ===================="
-if [ $USED -ge 80 ]; then
-	rm -f /tmp/mnt/data_persist/log/dumps/*
+USED_ROOTFS=$(echo $_ROOTFS | awk '{ print $1}' | cut -d'%' -f1  )
+USED_RESOURCES=$(echo $_RESOURCES | awk '{ print $1}' | cut -d'%' -f1  )
+log_message "======================= data_persist ${USED}% used ==========================="
+log_message "======================== rootfs ${USED_ROOTFS}% used ========================="
+log_message "====================== resources ${USED_RESOURCES}% used ====================="
+
+if [ $USED -ge 80 ]
+then
+  rm -f /tmp/mnt/data_persist/log/dumps/*.bz2
   log_message "===                 Over 80% Used Delete Dump Files                   ==="
 fi
-log_message "=========************ END PRE-INSTALL OPERATIONS ***************========="
-log_message " "
-
+if [ $USED_ROOTFS -ge 95 ]
+then
+  show_message "=== WARNING: ROOT FILESYSTEM OVER 95% FULL!! ==="
+  log_message "===             WARNING: ROOT FILESYSTEM OVER 95% FULL!!              ==="
+  APPS2RESOURCES=1
+fi
+# mount resources
+mount -o rw,remount /tmp/mnt/resources/
+log_message "===                  Remounted /tmp/mnt/resources                     ==="
+if [ $APPS2RESOURCES -eq 1 ]
+then
+  # set installation location for AIO apps
+  AIO_APP_DIR="/tmp/mnt/resources/aio/apps"
+  sleep 2
+  [ -e ${AIO_APP_DIR} ] || mkdir -p ${AIO_APP_DIR}
+  log_message "===             App Install Locatiation set to resources              ==="
+fi
 # start JSON array of backups
 if [ $KEEPBKUPS -eq 1 ]
 then
   aio_info '"Backups": ['
 fi
+log_message "=========************ END PRE-INSTALL OPERATIONS ***************========="
+log_message " "

@@ -177,6 +177,7 @@ function StartVideoPlayerApp() {
       }
       vpColorClass = "selectedItem" + vpColor;
     }
+
     if (JSON.parse(localStorage.getItem('videoplayer.background'))) {
       $('#myVideoContainer').addClass('noBg');
     }
@@ -464,7 +465,7 @@ function StartVideoPlayerApp() {
   }, 10); //some performance issues ??
   // unmount swap on boot
   setTimeout(function() {
-    myVideoWs('[ -e /tmp/mnt/sd*/swapfile ] && echo VP_SWAP || echo VP_NOSWAP', true);
+    myVideoWs('[ -e ' + folderPath + '/sd*/swapfile ] && echo VP_SWAP || echo VP_NOSWAP', true);
   }, 1000);
 }
 
@@ -491,12 +492,13 @@ function myVideoListRequest() {
     $('#myVideoList').html("<img id='ajaxLoader' src='apps/_videoplayer/templates/VideoPlayer/images/ajax-loader.gif'>");
     src = '';
     src += 'FILES=""; ';
+
     if (!PlayMusic) {
-      src += 'for VIDEO in /tmp/mnt/resources/Movies/*.mp4 /tmp/mnt/sd*/Movies/*.mp4 /tmp/mnt/sd*/Movies/*.avi /tmp/mnt/sd*/Movies/*.flv /tmp/mnt/sd*/Movies/*.wmv /tmp/mnt/sd*/Movies/*.3gp /tmp/mnt/sd*/Movies/*.mkv;';
+      src += 'for VIDEO in ' + folderPath + '/resources/Movies/*.mp4 ' + folderPath + '/sd*/Movies/*.mp4 ' + folderPath + '/sd*/Movies/*.avi ' + folderPath + '/sd*/Movies/*.flv ' + folderPath + '/sd*/Movies/*.wmv ' + folderPath + '/sd*/Movies/*.3gp ' + folderPath + '/sd*/Movies/*.mkv;';
       $('#myVideoFullScrBtn').css({ 'visibility': '' });
       $("#myVideoFullScrBtn").addClass('playbackOption');
     } else {
-      src += 'for VIDEO in /tmp/mnt/sd*/Music/*.flac /tmp/mnt/sd*/Music/*.mp3;';
+      src += 'for VIDEO in ' + folderPath + '/sd*/Music/*.flac ' + folderPath + '/sd*/Music/*.mp3;';
       $('#myVideoFullScrBtn').css({ 'visibility': 'hidden' });
       $("#myVideoFullScrBtn").removeClass('playbackOption');
     }
@@ -679,7 +681,12 @@ function myVideoStartRequest(obj) {
   }
   //myVideoWs('killall -9 gplay', false); //start-playback
 
-  myVideoWs('sync; for n in 0 1 2 3; do echo $n > /proc/sys/vm/drop_caches; done;', false);
+  //myVideoWs('sync; for n in 0 1 2 3; do echo $n > /proc/sys/vm/drop_caches; done;', false);
+  var PrePlayVP = 'sync; for n in 0 1 2 3; do echo $n > /proc/sys/vm/drop_caches; done;';
+  // PrePlayVP += 'echo 1 > /proc/sys/vm/overcommit_memory; ';
+  // PrePlayVP += 'free -k >> /tmp/root/casdk-error.log; ';
+  // PrePlayVP += 'sleep 0.3; ';
+  //myVideoWs(PrePlayVP, false);
 
   $('.VideoPlayerTmplt').addClass('videoPlaying');
   $('#myVideoName').html(obj.attr('video-name').replace(/ /g, "&nbsp;"));
@@ -727,12 +734,12 @@ function myVideoStartRequest(obj) {
       //{
       wsVideo.send('/usr/bin/gst-discoverer-0.10 -v "' + videoToPlay + '"');
       //}
-      wsVideo.send(src);
+      wsVideo.send(PrePlayVP + src);
       if (CurrentVideoPlayTime > 1) {
         setTimeout(function() {
-          wsVideo.send('e 0 t' + (CurrentVideoPlayTime - 1));
+          wsVideo.send('e 0 t' + (CurrentVideoPlayTime--));
           wsVideo.send('h');
-        }, 600);
+        }, 900);
       }
 
     };
@@ -1033,9 +1040,9 @@ function checkStatus(state) {
     }
     if (CurrentVideoPlayTime > 1) {
       setTimeout(function() {
-        wsVideo.send('e 0 t' + CurrentVideoPlayTime - 1);
+        wsVideo.send('e 0 t' + CurrentVideoPlayTime--);
         wsVideo.send('h');
-      }, 500);
+      }, 900);
     }
     player.resumePlay = null;
     retryAttempts = 0;
@@ -1209,7 +1216,8 @@ function CloseVideoFrame() {
 /* Unmount Swapfile
 ============================================================================================= */
 function unmountSwap() {
-  var unmount = 'USBDRV="resources $(ls /mnt | grep sd)"; ' +
+  var unmount = 'swapoff -a';
+  var unmount = 'USBDRV="$(ls /mnt | grep sd)"; ' +
     'for USB in ${USBDRV}; ' +
     'do ' +
     'USBPATH=/tmp/mnt/${USB}; ' +
@@ -1217,10 +1225,12 @@ function unmountSwap() {
     'if [ -e "${SWAPFILE}" ]; ' +
     'then ' +
     'mount -o rw,remount ${USBPATH}; ' +
+    '/jci/tools/jci-dialog --info --title="VIDEO PLAYER" --text="UNMOUNTING SWAPFILE... " --no-cancel &; ' +
     'swapoff ${SWAPFILE}; ' +
     'break; ' +
     'fi; ' +
-    'done ';
+    'done; ' +
+    'sleep 5 && killall -q jci-dialog ';
   myVideoWs(unmount, false);
 }
 
@@ -1458,7 +1468,7 @@ function myVideoWs(action, waitMessage) {
     } else if (res.indexOf('VP_SWAP') !== -1) {
       $('#unmountSwapVP').show();
       // start unmount swapfile function
-      if (vpWaitingForShutdown === null) {
+      if (!vpWaitingForShutdown) {
         videoPlayerShutdown();
       }
     } else if (res.indexOf('VP_NOSWAP') !== -1) {
@@ -1480,7 +1490,8 @@ function videoPlayerShutdown() {
     if (framework.getCurrCtxtId() === 'WaitForEnding' || framework.getCurrCtxtId() === 'PowerDownAnimation') {
       clearInterval(vpWaitingForShutdown);
       vpWaitingForShutdown = null;
-      unmountSwap();
+      console.log(framework.getCurrCtxtId() + ": unmountSwap")
+      //unmountSwap();
     }
   }, 100);
 }

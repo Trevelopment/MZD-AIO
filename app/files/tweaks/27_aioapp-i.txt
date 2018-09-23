@@ -7,43 +7,36 @@ log_message "=========************   INSTALL AIO TWEAKS APP   *************=====
 
 if [ $TESTBKUPS -eq 1 ]
 then
-  cp /jci/scripts/stage_wifi.sh "${MYDIR}/bakups/test/stage_wifi_aio-before.sh"
-  cp /jci/opera/opera_dir/userjs/additionalApps.json "${MYDIR}/bakups/test/additionalApps_aio_before.json"
+  cp ${STAGE_WIFI} "${MYDIR}/bakups/test/stage_wifi_aio-before.sh"
+  [ -f ${ADDITIONAL_APPS_JSON} ] && cp ${ADDITIONAL_APPS_JSON} "${MYDIR}/bakups/test/additionalApps_aio-before.json"
 fi
 
 ### Kills all WebSocket daemons
 pkill websocketd
 
 # Remove previous files
-rm -fr /jci/gui/apps/_aiotweaks/
+rm -fr /jci/gui/apps/_aiotweaks
+rm -fr /tmp/mnt/resources/aio/apps/_aiotweaks
+rm -fr /tmp/mnt/data_persist/dev/system_restore
 # Remove old aio-startup
 rm -f /jci/opera/opera_dir/userjs/aio-startup.js
+log_message "===                 Removed Old AIO Tweaks App Files                  ==="
 
 # Copies the additionalApps.js
 if [ $CASDK_MODE -eq 0 ]
 then
   cp -a ${MYDIR}/config/jci/opera/opera_dir/userjs/additionalApps.js /jci/opera/opera_dir/userjs/ && CASDK_MODE=1
   chmod 755 /jci/opera/opera_dir/userjs/additionalApps.js
-  chown 1018:3015 /jci/opera/opera_dir/userjs/additionalApps.js
   log_message "===                    Copied  additionalApps.js                      ==="
 fi
 
 cp -a ${MYDIR}/config/jci/opera/opera_dir/userjs/aio.js /jci/opera/opera_dir/userjs/
 chmod 755 /jci/opera/opera_dir/userjs/aio.js
-chown 1018:3015 /jci/opera/opera_dir/userjs/aio.js
 log_message "===                        Copied  aio.js                             ==="
 
-# create additionalApps.json file from scratch if the file does not exist
-if [ ! -e /jci/opera/opera_dir/userjs/additionalApps.json ]
-then
-  echo "[" > /jci/opera/opera_dir/userjs/additionalApps.json
-  echo "]" >> /jci/opera/opera_dir/userjs/additionalApps.json
-  chmod 755 /jci/opera/opera_dir/userjs/additionalApps.json
-  log_message "===                   Created additionalApps.json                     ==="
-fi
-
+create_app_json
 # Remove old json entries
-if ! grep -q "AIO-startup.js" /jci/opera/opera_dir/userjs/additionalApps.json
+if grep -q "_aiotweaks" ${ADDITIONAL_APPS_JSON} && ! grep -q "AIO-startup.js" ${ADDITIONAL_APPS_JSON}
 then
   remove_app_json "_aiotweaks"
 fi
@@ -58,27 +51,33 @@ if [ ! -e /jci/gui/addon-common/websocketd ]  || [ ! -e /jci/gui/addon-common/jq
   log_message "===                    Copied addon-common folder                     ==="
 fi
 
-sed -i '/AIO/d' /jci/scripts/stage_wifi.sh
-sed -i '/--port=9997/d' /jci/scripts/stage_wifi.sh
-sed -i '/--passenv/d' /jci/scripts/stage_wifi.sh
+sed -i '/AIO/d' ${STAGE_WIFI}
+sed -i '/--port=9997/d' ${STAGE_WIFI}
+sed -i '/--passenv/d' ${STAGE_WIFI}
 
-#echo -e '\n\n\n### AIO Tweaks App' >> /jci/scripts/stage_wifi.sh
-#echo -e '\n/jci/gui/addon-common/websocketd --passenv $(env | grep XDG_ | sed "s/=.*$//g" | tr "\\n" ",")PATH,SHELL --port=9997 sh &' >> /jci/scripts/stage_wifi.sh
-sed -i '/#!/ a\### AIO Tweaks App' /jci/scripts/stage_wifi.sh
+#echo -e '\n\n\n### AIO Tweaks App' >> ${STAGE_WIFI}
+#echo -e '\n/jci/gui/addon-common/websocketd --passenv $(env | grep XDG_ | sed "s/=.*$//g" | tr "\\n" ",")PATH,SHELL --port=9997 sh &' >> ${STAGE_WIFI}
+sed -i '/#!/ a\### AIO Tweaks App' ${STAGE_WIFI}
 sleep 1
-sed -i '/AIO Tweaks/ i\ ' /jci/scripts/stage_wifi.sh
-sed -i '/AIO Tweaks/ a\/jci/gui/addon-common/websocketd --passenv $(env | grep XDG_ | sed "s/=.*$//g" | tr "\\n" ",")PATH,SHELL --port=9997 sh &' /jci/scripts/stage_wifi.sh
+sed -i '/AIO Tweaks/ i\ ' ${STAGE_WIFI}
+sed -i '/AIO Tweaks/ a\/jci/gui/addon-common/websocketd --passenv $(env | grep XDG_ | sed "s/=.*$//g" | tr "\\n" ",")PATH,SHELL --port=9997 sh &' ${STAGE_WIFI}
 # delete empty lines
-sed -i '/^ *$/ d' /jci/scripts/stage_wifi.sh
-sed -i '/#!/ a\ ' /jci/scripts/stage_wifi.sh
-chmod 755 /jci/scripts/stage_wifi.sh
+sed -i '/^ *$/ d' ${STAGE_WIFI}
+sed -i '/#!/ a\ ' ${STAGE_WIFI}
+chmod 755 ${STAGE_WIFI}
 log_message "===           Set Websocketd for AIO in Stage_wifi.sh                 ==="
 
-
-
-cp -a ${MYDIR}/config/aio-app/jci/gui/apps/* /jci/gui/apps/
+cp -a ${MYDIR}/config/aio-app/jci/gui/apps/_aiotweaks ${AIO_APP_DIR}
 cp -a ${MYDIR}/config/aio-app/data_persist/* /tmp/mnt/data_persist/
-chmod 755 -R /jci/gui/apps/_aiotweaks/
+
+# symlink to resources
+if [ $APPS2RESOURCES -eq 1 ]
+then
+  ln -sf /tmp/mnt/resources/aio/apps/_aiotweaks /jci/gui/apps/_aiotweaks
+  log_message "===                Created Symlink To Resources Partition             ==="
+fi
+
+chmod 755 -R ${AIO_APP_DIR}
 chmod 755 -R /tmp/mnt/data_persist/dev/system_restore/
 chmod 755 /jci/scripts/jci-fw.sh
 chmod 755 /jci/scripts/jci-wifiap.sh

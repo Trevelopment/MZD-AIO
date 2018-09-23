@@ -5,61 +5,26 @@ log_message "========*********      UNINSTALL LIST_LOOP_MOD ...      ********===
 grep -Fq "No More Beep" /jci/gui/common/controls/List2/js/List2Ctrl.js && REMOVE_BEEP=1 || REMOVE_BEEP=0
 
 grep -Fq "Shorter Delay Mod" /jci/gui/common/controls/List2/js/List2Ctrl.js && SHORTER_DELAY_MOD=1 || SHORTER_DELAY_MOD=0
-# If Backup is available, then we are done.
-if [ -e /jci/gui/common/controls/List2/js/List2Ctrl.js.org ]
-then
-	cp /jci/gui/common/controls/List2/js/List2Ctrl.js.org /jci/gui/common/controls/List2/js/List2Ctrl.js
-	log_message "===             Original List2Ctrl.js is available as backup          ==="
-else
-	# Fallback check, Only those who have never installed this tweak with AIO will reach this case
-	# Just in case it is needed, you have to remove the comments below to copy the fallback files
-	TRACKORDER_LIST=0
-	# Compatibility Check
-	log_message "===       FW ${CMU_SW_VER} detected, copy matching List2Ctrl.js       ==="
-	if [ $COMPAT_GROUP -eq 4 ]
-	then
-		TRACKORDER_LIST=1
-		TRACKORDER_LIST_FILE="59"
-	elif [ $COMPAT_GROUP -eq 3 ]
-	then
-		TRACKORDER_LIST=1
-		TRACKORDER_LIST_FILE="59.330"
-	elif [ $COMPAT_GROUP -eq 2 ]
-	then
-		TRACKORDER_LIST=1
-		TRACKORDER_LIST_FILE="58"
-	fi
 
-	if [ $COMPAT_GROUP -eq 1 ]
-	then
-		# Uncomment the following line if you need the fallback file (v55-56)
-		# cp -a "${MYDIR}/config_org/list-loop/jci/gui/common/controls/List2/js/List2Ctrl.js" /jci/gui/common/controls/List2/js/
-		log_message "===     No backup of List2Ctrl.js available, No changes were made     ==="
-	elif [ $TRACKORDER_LIST -eq 1 ]
-	then
-		# Uncomment the following line if you need the fallback file (v58+)
-		# cp -a "${MYDIR}/config_org/list-loop/jci/gui/common/controls/List2/js/List2Ctrl.${TRACKORDER_LIST_FILE}.js" /jci/gui/common/controls/List2/js/List2Ctrl.js
-		# log_message "===          Restored List2Ctrl.js for ${CMU_SW_VER} from SD card          ==="
-		log_message "===     No backup of List2Ctrl.js available, No changes were made     ==="
-	else
-		log_message "===     No backup of List2Ctrl.js available, No changes were made     ==="
-		# log_message "===                 No List2Ctrl.js found for ${CMU_SW_VER}           ==="
-	fi
-fi
-# Reapply tweaks
-if [ $REMOVE_BEEP -eq 1 ]
+if (restore_org /jci/gui/common/controls/List2/js/List2Ctrl.js)
 then
-	sed -i 's/return framework.common.beep(pressType, eventCause);/\/\/ return framework.common.beep(pressType, eventCause); \/\/No More Beeps/g' /jci/gui/common/controls/List2/js/List2Ctrl.js
-	log_message "===               Reapplied Disable Beeps in List2Ctrl.js             ==="
-fi
-if [ $SHORTER_DELAY_MOD -eq 1 ]
-then
-	sed -i 's/autoscrollTier1Timeout :                1500,/autoscrollTier1Timeout :                150,/g' /jci/gui/common/controls/List2/js/List2Ctrl.js
-	sed -i 's/autoscrollTier2Timeout :                5000,/autoscrollTier2Timeout :                300,/g' /jci/gui/common/controls/List2/js/List2Ctrl.js
-	sed -i 's/autoscrollTier1Interval :               500,/autoscrollTier1Interval :               200,/g' /jci/gui/common/controls/List2/js/List2Ctrl.js
-	sed -i 's/autoscrollTier2Interval :               1000,/autoscrollTier2Interval :               300,/g' /jci/gui/common/controls/List2/js/List2Ctrl.js
-	sed -i '/autoscrollTier2Interval :               300,/ a\        \/\/Shorter Delay Mod' /jci/gui/common/controls/List2/js/List2Ctrl.js
-	log_message "===                   Modified Delay in List2Ctrl.js                  ==="
+  # Reapply tweaks
+  if [ $REMOVE_BEEP -eq 1 ]
+  then
+    sed -i 's/return framework.common.beep(pressType, eventCause);/\/\/ return framework.common.beep(pressType, eventCause); \/\/No More Beeps/g' /jci/gui/common/controls/List2/js/List2Ctrl.js
+    log_message "===               Reapplied Disable Beeps in List2Ctrl.js             ==="
+  fi
+  if [ $SHORTER_DELAY_MOD -eq 1 ]
+  then
+    sed -i 's/autoscrollTier1Timeout :                1500,/autoscrollTier1Timeout :                150,/g' /jci/gui/common/controls/List2/js/List2Ctrl.js
+    sed -i 's/autoscrollTier2Timeout :                5000,/autoscrollTier2Timeout :                300,/g' /jci/gui/common/controls/List2/js/List2Ctrl.js
+    sed -i 's/autoscrollTier1Interval :               500,/autoscrollTier1Interval :               200,/g' /jci/gui/common/controls/List2/js/List2Ctrl.js
+    sed -i 's/autoscrollTier2Interval :               1000,/autoscrollTier2Interval :               300,/g' /jci/gui/common/controls/List2/js/List2Ctrl.js
+    sed -i '/autoscrollTier2Interval :               300,/ a\        \/\/Shorter Delay Mod' /jci/gui/common/controls/List2/js/List2Ctrl.js
+    log_message "===                   Modified Delay in List2Ctrl.js                  ==="
+  fi
+else
+  log_message "===     No backup of List2Ctrl.js available, No changes were made     ==="
 fi
 log_message "=====********      END UNINSTALLATION OF LIST_LOOP_MOD      *******======"
 log_message " "

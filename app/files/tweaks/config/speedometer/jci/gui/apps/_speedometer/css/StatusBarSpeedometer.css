@@ -49,7 +49,6 @@
   width: 100%;
 }
 /* #SbSpeedo .SbMain:not([class*="speed"]):not(.gpsSpeedValue):not(.vehicleSpeed) { */
-
 #SbSpeedo .SbMain {
   padding-right: 22px;
   padding-left: 5px;
@@ -102,12 +101,10 @@
   font-size: 30px;
 }
 /*** Statusbar speedo style if more than 3 SbIcons ***/
-
 #SbSpeedo.morespace [class*='SbVal'] {
   right: 40px;
 }
 /*** Statusbar speedo style inside backupparking app ***/
-
 #SbSpeedo.parking {
   width: 180px;
   height: 45px;
@@ -141,7 +138,6 @@
   display: none !important;
 }
 /* *** Statusbar adjustments *** */
-
 .SbnCtrl {
   background-image: none !important;
 }
@@ -152,7 +148,6 @@
   left: 270px !important;
 }
 /**  Status Bar Fuel Meter * */
-
 .fuel-bar-wrapper {
   width: 100%;
   position: absolute;
@@ -191,7 +186,7 @@
 #Sbfuel-bar-container {
   background: none;
 }
-.StatusBarCtrl .StatusBarCtrlClock {
+.OffScreenCtrl .StatusBarCtrlClock, .StatusBarCtrl .StatusBarCtrlClock {
   right: 10px;
   top: 22px;
   height: 40px;
@@ -201,9 +196,15 @@
 .StatusBarCtrl .StatusBarCtrlIconContainer {
   height: 23px;
   margin-right: 10px;
-  margin-left: 600px;
+  margin-left: 652px;
   margin-bottom: -20px;
   /*opacity: 0.8;*/
+}
+.StatusBarCtrlIconContainer:nth-child(2) {
+  margin-right: 80px;
+}
+.StatusBarCtrlIconContainer:nth-child(2).morespace {
+  margin-right: 100px;
 }
 .StatusBarCtrl .StatusBarCtrlIcon {
   width: 23px;
@@ -211,7 +212,6 @@
   background-size: 27px 23px;
 }
 /* hide in reverse */
-
 /* Digital Clock Mod - Remove this to apply
 #SbSpeedo, .StatusBarCtrlDate, .StatusBarCtrlClock {
     font-family: "Crystal"!important;

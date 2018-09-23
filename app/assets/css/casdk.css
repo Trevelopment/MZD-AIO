@@ -121,7 +121,6 @@ hr {
   margin: 0 !important;
 }
 /*Exclusive Theme Colors Configuration*/
-
 .label-theme {
   background-color: #68dff0;
 }
@@ -140,7 +139,6 @@ ul.top-menu>li>.logout {
   margin-top: 15px;
 }
 /*sidebar navigation*/
-
 #sidebar {
   width: 210px;
   height: 100%;
@@ -161,7 +159,6 @@ ul.top-menu>li>.logout {
   padding-bottom: 10px;
 }
 /*notification*/
-
 #top_menu .nav>li, ul.top-menu>li {
   float: left;
 }
@@ -212,7 +209,6 @@ ul.top-menu>li>a:hover, ul.top-menu>li>a:focus {
   -webkit-border-radius: 4px;
 }
 /* Dash Side */
-
 .ds {
   background: #ffffff;
   padding-top: 20px;
@@ -267,7 +263,6 @@ ul.top-menu>li>a:hover, ul.top-menu>li>a:focus {
   color: #68dff0;
 }
 /* LINE ICONS CONFIGURATION */
-
 .mtbox {
   margin-top: 80px;
   margin-bottom: 40px;
@@ -302,9 +297,7 @@ ul.top-menu>li>a:hover, ul.top-menu>li>a:focus {
 /* *************************************************************************************
 PANELS CONFIGURATIONS
 *************************************************************************************** */
-
 /*Panel Size*/
-
 .pn {
   height: 315px;
   box-shadow: 0 2px 1px rgba(0, 0, 0, 0.2);
@@ -313,7 +306,6 @@ PANELS CONFIGURATIONS
   box-shadow: 2px 3px 2px rgba(0, 0, 0, 0.3);
 }
 /*Grey Panel*/
-
 .grey-panel {
   text-align: center;
   background: #dfdfe1;
@@ -331,7 +323,6 @@ PANELS CONFIGURATIONS
   margin-left: 5px;
 }
 /* Specific Conf for Donut Charts*/
-
 .donut-chart p {
   margin-top: 5px;
   font-weight: 700;
@@ -343,7 +334,6 @@ PANELS CONFIGURATIONS
   font-size: 38px;
 }
 /* Dark Blue*/
-
 .darkblue-panel {
   text-align: center;
   background: #444c57;
@@ -370,7 +360,6 @@ PANELS CONFIGURATIONS
   font-weight: 700;
 }
 /*Green Panel*/
-
 .green-panel {
   text-align: center;
   background: #68dff0;
@@ -393,7 +382,6 @@ PANELS CONFIGURATIONS
   color: white;
 }
 /*White Panel */
-
 .white-panel {
   text-align: center;
   background: #ffffff;
@@ -420,7 +408,6 @@ PANELS CONFIGURATIONS
   font-size: 14px;
 }
 /*STOCK CARD Panel*/
-
 .card {
   background: white;
   box-shadow: 0 2px 1px rgba(0, 0, 0, 0.2);
@@ -467,7 +454,6 @@ PANELS CONFIGURATIONS
   font-size: 14px;
 }
 /*Content Panel*/
-
 .content-panel {
   background: #ffffff;
   box-shadow: 0px 3px 2px #aab2bd;
@@ -478,7 +464,6 @@ PANELS CONFIGURATIONS
   margin-left: 10px;
 }
 /* BLOG PANEL */
-
 #blog-bg {
   background: url(../../files/img/casdk.jpg) no-repeat center top;
   margin-top: -15px;
@@ -512,7 +497,6 @@ PANELS CONFIGURATIONS
   font-size: 12px;
 }
 /* Calendar Configuration */
-
 #calendar {
   color: white;
   padding: 0px !important;
@@ -521,7 +505,6 @@ PANELS CONFIGURATIONS
   background: #43b1a9;
 }
 /* TODO PANEL */
-
 .mb.casdk-apps {
   display: block;
   overflow: auto;
@@ -566,6 +549,8 @@ PANELS CONFIGURATIONS
   cursor: pointer;
   transition: all 0.7s ease;
   margin: 0px;
+  white-space: nowrap;
+  overflow: hidden;
 }
 .steps>label:before {
   content: "";
@@ -595,9 +580,7 @@ PANELS CONFIGURATIONS
   transform: translate(-42%, 0);
 }
 /* PROFILE PANELS */
-
 /* Profile 01*/
-
 #profile-01 {
   background: url(files/img/casdk.jpg) no-repeat center top;
   margin-top: -15px;
@@ -646,7 +629,6 @@ PANELS CONFIGURATIONS
   font-size: 15px;
 }
 /* Profile 02*/
-
 #profile-02 {
   margin-top: -15px;
   background-attachment: relative;
@@ -683,7 +665,6 @@ PANELS CONFIGURATIONS
   font-size: 20px;
 }
 /*spark line*/
-
 .chart {
   display: inline-block;
   text-align: center;
@@ -747,7 +728,6 @@ PANELS CONFIGURATIONS
   display: inline-block;
 }
 /* showcase background */
-
 .showback {
   background: #ffffff;
   padding: 15px;
@@ -755,7 +735,6 @@ PANELS CONFIGURATIONS
   box-shadow: 0px 3px 2px #aab2bd;
 }
 /* Calendar Events - Calendar.html*/
-
 .external-event {
   cursor: move;
   display: inline-block !important;
@@ -775,7 +754,6 @@ PANELS CONFIGURATIONS
   background: #FFFFFF;
 }
 /* Gallery Configuration */
-
 .photo-wrapper {
   display: block;
   position: relative;
@@ -821,7 +799,6 @@ PANELS CONFIGURATIONS
   filter: alpha(opacity=100);
 }
 /* EZ Checklist */
-
 .ez-checkbox {
   margin-right: 5px;
 }
@@ -833,7 +810,6 @@ PANELS CONFIGURATIONS
   background: #fffbcc !important;
 }
 /* FORMS CONFIGURATION */
-
 .form-panel {
   background: #ffffff;
   margin: 10px;
@@ -872,7 +848,6 @@ label {
   height: 34px;
 }
 /* TOGGLE CONFIGURATION */
-
 .has-switch {
   border-radius: 30px;
   -webkit-border-radius: 30px;
@@ -1089,14 +1064,23 @@ span.casdk-apps {
 .casdk-app-img {
   width: 95%;
   max-width: 300px;
+  cursor: help;
 }
 .reset-fade {
   z-index: 999;
   color: #fff;
 }
-div#file a {
+span.flacmsg, input#legacyAppInst, input#legacyAppInst+label, input#advancedOptions, input#advancedOptions+label, div#file a {
   display: none;
 }
 div#file a:last-child {
   display: block;
+}
+.casdk-help-img {
+  width: 100%;
+  text-align: center;
+}
+.casdk-help-img img {
+  width: 80%;
+  max-width: 500px;
 }

@@ -2409,7 +2409,7 @@ usbaudioApp.prototype._DeviceNormalizedMsgHandler = function (msg)
             //this._currentContextTemplate.nowPlaying4Ctrl.umpCtrl.setButtonDisabled("GenerateMoreLikeThis", !this._connectedDevs.selectedDevCataloged);
             if (this._connectedDevs.showGracenote == true)
             {
-                this._currentContextTemplate.nowPlaying4Ctrl.setDetailLine3({detailText: AIO_gracenoteText});
+                this._currentContextTemplate.nowPlaying4Ctrl.setDetailLine3({detailText: this.AIO_gracenoteText});
                 this._gracenoteTimeout = setTimeout(this._removeGracenote.bind(this), this._gracenoteTimeoutTime);
             }
         }
@@ -2443,7 +2443,7 @@ usbaudioApp.prototype._BODReadyMsgHandler = function (msg)
 
             if (this._connectedDevs.showGracenote == true && this._cachedSongDetails.title)
             {
-                this._currentContextTemplate.nowPlaying4Ctrl.setDetailLine3({detailText: AIO_gracenoteText});
+                this._currentContextTemplate.nowPlaying4Ctrl.setDetailLine3({detailText: this.AIO_gracenoteText});
                 this._gracenoteTimeout = setTimeout(this._removeGracenote.bind(this), this._gracenoteTimeoutTime);
             }
         }
@@ -2821,7 +2821,7 @@ usbaudioApp.prototype._ObjectInfoMsgHandler = function (msg)
             //this._currentContextTemplate.nowPlaying4Ctrl.umpCtrl.setButtonDisabled("GenerateMoreLikeThis", !this._connectedDevs.selectedDevCataloged);
             if (this._connectedDevs.showGracenote == true)
             {
-                this._currentContextTemplate.nowPlaying4Ctrl.setDetailLine3({detailText: AIO_gracenoteText});
+                this._currentContextTemplate.nowPlaying4Ctrl.setDetailLine3({detailText: this.AIO_gracenoteText});
                 this._gracenoteTimeout = setTimeout(this._removeGracenote.bind(this), this._gracenoteTimeoutTime);
             }
             else // ---MZDMOD--- setDetailLine3 to genre about 10 seconds
@@ -4276,7 +4276,7 @@ usbaudioApp.prototype._populateNowPlayingCtrl = function (tmplt, songDetails)
         }
         if (this._connectedDevs.showGracenote == true && songDetails.title && songDetails.artist && songDetails.album && this._connectedDevs.selectedDevCataloged)
         {
-            tmplt.nowPlaying4Ctrl.setDetailLine3({detailText: AIO_gracenoteText});
+            tmplt.nowPlaying4Ctrl.setDetailLine3({detailText: this.AIO_gracenoteText});
             this._gracenoteTimeout = setTimeout(this._removeGracenote.bind(this), this._gracenoteTimeoutTime);
         }
     }

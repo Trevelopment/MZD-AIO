@@ -2,6 +2,8 @@
 if [ -e ${MYDIR}/config/androidautowifi ]
 then
 	cp -a ${MYDIR}/config/androidautowifi/* /tmp/mnt/data_persist/dev/bin
+	sed -i '/headunit-wrapper &/ a\check-usb.sh &' ${STAGE_WIFI}
+
   log_message "===                     Android Auto WiFi Support                     ==="
 fi
 log_message "====******** END INSTALLATION OF ANDROID AUTO HEADUNIT APP *********====="

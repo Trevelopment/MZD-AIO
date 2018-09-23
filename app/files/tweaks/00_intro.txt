@@ -1,23 +1,35 @@
 #!/bin/sh
-# tweaks.sh - MZD-AIO-TI Version 2.8.0
+# tweaks.sh - MZD-AIO-TI Version 2.8.1
 # Special thanks to Siutsch for collecting all the tweaks and for the original AIO
 # Big Thanks to Modfreakz, khantaena, Xep, ID7, Doog, Diginix, oz_paulb, VIC_BAM85, & lmagder
 # For more information visit https://mazdatweaks.com
 # Enjoy, Trezdog44 - Trevelopment.com
+# (C) 2018 Trevor G Martin
 
 # Time
 hwclock --hctosys
 
 # AIO Variables
-AIO_VER=2.8.0
-AIO_DATE=2018.08.01
-# Android Auto Version
-AA_VER=1.09
+AIO_VER=2.8.1
+AIO_DATE=2018.10.01
+# Android Auto Headunit App Version
+AA_VER=1.10
 # Video Player Version
-VP_VER=3.5
+VP_VER=3.6
 # Speedometer Version
-SPD_VER=5.7
+SPD_VER=5.8
 # AIO Tweaks App Version
-AIO_TWKS_VER=0.7
+AIO_TWKS_VER=0.8
 # CASDK Version
 CASDK_VER=0.0.5
+# Variable paths to common locations for better code readability
+# additionalApps.json
+ADDITIONAL_APPS_JSON="/jci/opera/opera_dir/userjs/additionalApps.json"
+# stage_wifi.sh
+STAGE_WIFI="/jci/scripts/stage_wifi.sh"
+# location of SD card
+MZD_APP_SD="/tmp/mnt/sd_nav"
+# CASDK Apps location
+MZD_APP_DIR="/tmp/mnt/resources/aio/mzd-casdk/apps"
+# Install location for native AIO apps
+AIO_APP_DIR="/jci/gui/apps"

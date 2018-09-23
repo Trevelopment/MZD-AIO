@@ -2,28 +2,25 @@
 show_message "RESTORE BOOT ANIMATION ..."
 log_message "======**********   UNINSTALL DISABLE BOOT ANIMATION ...  **********======"
 
-if [ -e /jci/resources/LoopLogo.ivf.org ]
+if ! (restore_org /jci/resources/LoopLogo.ivf)
 then
-	cp -a /jci/resources/LoopLogo.ivf.org /jci/resources/LoopLogo.ivf
-	log_message "===           Restored original /jci/resources/LoopLogo.ivf           ==="
-else
-	log_message "===        No LoopLogo.ivf.org available, no changes were made        ==="
+  log_message "===        No LoopLogo.ivf.org available, no changes were made        ==="
 fi
-if [ -e /jci/resources/TranLogo.ivf.org ]
-	then
-		cp -a /jci/resources/TranLogo.ivf.org /jci/resources/TranLogo.ivf
-		log_message "===          Restored original /jci/resources/TranLogo.ivf            ==="
-	else
-		# cp -a "${MYDIR}/config_org/bootanimation/jci/resources/TranLogo.ivf" /jci/resources/
- 		log_message "===        No TranLogo.ivf.org available, no changes were made        ==="
+if ! (restore_org /jci/resources/TranLogo.ivf)
+then
+  log_message "===        No TranLogo.ivf.org available, no changes were made        ==="
 fi
-if [ -e /jci/resources/TranLogoEnd.ivf.org ]
-	then
-		cp -a /jci/resources/TranLogoEnd.ivf.org /jci/resources/TranLogoEnd.ivf
-		log_message "===         Restored original /jci/resources/TranLogoEnd.ivf          ==="
-	else
-		# cp -a "${MYDIR}/config_org/bootanimation/jci/resources/TranLogoEnd.ivf" /jci/resources/
-		log_message "===       No TranLogoEnd.ivf.org available, no changes were made      ==="
+if ! (restore_org /jci/resources/TranLogoEnd.ivf)
+then
+  log_message "===       No TranLogoEnd.ivf.org available, no changes were made      ==="
+fi
+if ! (restore_org /jci/resources/ExitLogo.ivf)
+then
+  log_message "===        No ExitLogo.ivf.org available, no changes were made        ==="
+fi
+if ! (restore_org /jci/resources/newLoopLogo.ivf)
+then
+  log_message "===       No newLoopLogo.ivf.org available, no changes were made      ==="
 fi
 log_message "===            End restoring boot animation to original               ==="
 

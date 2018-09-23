@@ -139,7 +139,7 @@ log_message "===                     Modified  MainMenuCtrl.css                 
 
 if [ $TESTBKUPS -eq 1 ]
 then
-  cp -a /jci/gui/apps/system/controls/MainMenu/css/MainMenuCtrl.css "${MYDIR}/bakups/test/MainMenuCtrl_after.css"
+  cp /jci/gui/apps/system/controls/MainMenu/css/MainMenuCtrl.css "${MYDIR}/bakups/test/MainMenuCtrl_after.css"
 fi
 
 log_message "=====**********   END INSTALLATION OF MAIN MENU TWEAKS    **********====="

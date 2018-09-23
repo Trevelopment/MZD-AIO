@@ -1,7 +1,7 @@
 backup_org /jci/gui/apps/system/controls/MainMenu/js/MainMenuCtrl.js
 # main menu loop
 show_message "INSTALL MAIN_MENU_LOOP ..."
-log_message "=====*******            INSTALL MAIN_MENU_LOOP ...           *******====="
+log_message "=====*****************  INSTALL MAIN_MENU_LOOP ... *****************====="
 
 if [ $COMPAT_GROUP -le 6 ]
 then

@@ -804,9 +804,9 @@ $(document).ready(function() {
         if ($(this).css('display').indexOf('inline-block') !== -1) visibleIcons++;
       });
       if (visibleIcons > 3) {
-        $('#SbSpeedo').addClass('morespace');
+        $('#SbSpeedo, .StatusBarCtrlIconContainer:nth-child(2)').addClass('morespace');
       } else {
-        $('#SbSpeedo').removeClass('morespace');
+        $('#SbSpeedo, .StatusBarCtrlIconContainer:nth-child(2)').removeClass('morespace');
       }
     }
   }, 1000);
@@ -831,36 +831,16 @@ $(document).ready(function() {
         var barClassName = '.speedBar_' + i;
         if (speed >= i) {
           switch (i) {
-            case 150:
-              backgroundColor = '#FF0000';
-              break;
-            case 145:
-              backgroundColor = '#FF0000';
-              break;
-            case 140:
-              backgroundColor = '#FF0000';
-              break;
-            case 135:
-              backgroundColor = '#FF0000';
-              break;
-            case 130:
-              backgroundColor = '#FF0000';
-              break;
-            case 125:
-              backgroundColor = '#FE2E2E';
-              break;
-            case 120:
-              backgroundColor = '#FF451C';
-              break;
-            case 115:
-              backgroundColor = '#FF6932';
-              break;
-            case 110:
-              backgroundColor = '#FE9A2E';
-              break;
-            case 105:
-              backgroundColor = '#FECC20';
-              break;
+            case 150: backgroundColor = '#FF0000'; break;
+            case 145: backgroundColor = '#FF0000'; break;
+            case 140: backgroundColor = '#FF0000'; break;
+            case 135: backgroundColor = '#FF0000'; break;
+            case 130: backgroundColor = '#FF0000'; break;
+            case 125: backgroundColor = '#FE2E2E'; break;
+            case 120: backgroundColor = '#FF451C'; break;
+            case 115: backgroundColor = '#FF6932'; break;
+            case 110: backgroundColor = '#FE9A2E'; break;
+            case 105: backgroundColor = '#FECC20'; break;
           }
           $(barClassName).css({ 'background-color': backgroundColor });
         } else {
@@ -871,36 +851,16 @@ $(document).ready(function() {
         var barClassName2 = '.speedBar_' + j;
         if (speed >= j) {
           switch (j) {
-            case 100:
-              backgroundColor = '#FFED2E';
-              break;
-            case 95:
-              backgroundColor = '#FFF430';
-              break;
-            case 90:
-              backgroundColor = '#F7FE2E';
-              break;
-            case 85:
-              backgroundColor = '#C8FE2E';
-              break;
-            case 80:
-              backgroundColor = '#9AFE2E';
-              break;
-            case 75:
-              backgroundColor = '#64FE2E';
-              break;
-            case 70:
-              backgroundColor = '#2EFE2E';
-              break;
-            case 65:
-              backgroundColor = '#2EFE64';
-              break;
-            case 60:
-              backgroundColor = '#2EFE9A';
-              break;
-            case 55:
-              backgroundColor = '#58FAD0';
-              break;
+            case 100: backgroundColor = '#FFED2E'; break;
+            case 95: backgroundColor = '#FFF430'; break;
+            case 90: backgroundColor = '#F7FE2E'; break;
+            case 85: backgroundColor = '#C8FE2E'; break;
+            case 80: backgroundColor = '#9AFE2E'; break;
+            case 75: backgroundColor = '#64FE2E'; break;
+            case 70: backgroundColor = '#2EFE2E'; break;
+            case 65: backgroundColor = '#2EFE64'; break;
+            case 60: backgroundColor = '#2EFE9A'; break;
+            case 55: backgroundColor = '#58FAD0'; break;
           }
           $(barClassName2).css({ 'background-color': backgroundColor });
         } else {
@@ -911,36 +871,16 @@ $(document).ready(function() {
         var barClassName3 = '.speedBar_' + k;
         if (speed >= k) {
           switch (k) {
-            case 50:
-              backgroundColor = '#58FAD0';
-              break;
-            case 45:
-              backgroundColor = '#58FAD0';
-              break;
-            case 40:
-              backgroundColor = '#58FAD0';
-              break;
-            case 35:
-              backgroundColor = '#58FAD0';
-              break;
-            case 30:
-              backgroundColor = '#58FAD0';
-              break;
-            case 25:
-              backgroundColor = '#81F7D8';
-              break;
-            case 20:
-              backgroundColor = '#A9F5E1';
-              break;
-            case 15:
-              backgroundColor = '#CEF6EC';
-              break;
-            case 10:
-              backgroundColor = '#E0F8F1';
-              break;
-            case 5:
-              backgroundColor = '#EFFBF8';
-              break;
+            case 50: backgroundColor = '#58FAD0'; break;
+            case 45: backgroundColor = '#58FAD0'; break;
+            case 40: backgroundColor = '#58FAD0'; break;
+            case 35: backgroundColor = '#58FAD0'; break;
+            case 30: backgroundColor = '#58FAD0'; break;
+            case 25: backgroundColor = '#81F7D8'; break;
+            case 20: backgroundColor = '#A9F5E1'; break;
+            case 15: backgroundColor = '#CEF6EC'; break;
+            case 10: backgroundColor = '#E0F8F1'; break;
+            case 5: backgroundColor = '#EFFBF8'; break;
           }
           $(barClassName3).css({ 'background-color': backgroundColor });
         } else {

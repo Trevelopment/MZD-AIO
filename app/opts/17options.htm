@@ -15,6 +15,23 @@
 				<button id="tchCtrlMapBtn" data-toggle="tooltip" data-placement="auto bottom" title="View the map for touch controls during video playback" class="w3-btn w3-blue w3-half" data-featherlight="./files/img/scrnCtrlMap.jpg"><i class="icon-map"></i>Touch Control Map</button>
 			</td>
 		</tr>
+    <tr><td class="w3-row w3-col vpOps">
+      <div class="w3-third">
+        <span>Shuffle</span>
+        <select class="w3-select" ng-model="user.vpOps.shuffle" ng-value="user.vpOps.shuffle" ng-options="x for (x,y) in vpOpsShuffle">
+        </select>
+      </div>
+      <div class="w3-third">
+        <span>Repeat</span>
+        <select class="w3-select" ng-model="user.vpOps.repeat" ng-value="user.vpOps.repeat" ng-options="x for (x,y) in vpOpsRepeat">
+        </select>
+      </div>
+      <div class="w3-third">
+        <span>Fullscreen</span>
+        <select class="w3-select" ng-model="user.vpOps.fullscreen" ng-value="user.vpOps.fullscreen" ng-options="x for (x,y) in vpOpsFullscreen">
+        </select>
+      </div>
+  </td></tr>
     <tr><td>
 			<div class="vpaudioHack">
 				<h4>Pause Audio Hack</h4>

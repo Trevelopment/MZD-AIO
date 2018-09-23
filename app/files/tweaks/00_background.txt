@@ -4,7 +4,7 @@ log_message "=======*********  INSTALL CHANGE BACKGROUND IMAGE ...   *********==
 
 if [ $KEEPBKUPS -eq 1 ]
 then
-  cp -a /jci/gui/common/images/background.png "${MYDIR}/bakups/background.png"
+  cp /jci/gui/common/images/background.png "${MYDIR}/bakups/background.png"
   aio_info \"background.png\",
   log_message "===             Previous Infotainment Background Saved To:            === "
   log_message "===                ${MYDIR}/bakups/background.png                ==="

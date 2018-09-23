@@ -20,51 +20,51 @@ chmod 600 -v /tmp/mnt/resources/swapfile >> "${MYDIR}/AIO_log.txt"
 mkswap /tmp/mnt/resources/swapfile
 swapon /tmp/mnt/resources/swapfile
 log_message "===                   Swapfile added to resources                     ==="
-sed -i '/swap file/d' /jci/scripts/stage_wifi.sh
-sed -i '/for USB in/d' /jci/scripts/stage_wifi.sh
-sed -i '/USBPATH/d' /jci/scripts/stage_wifi.sh
-sed -i '/USBDRV/d' /jci/scripts/stage_wifi.sh
-sed -i '/SWAPFILE/d' /jci/scripts/stage_wifi.sh
-sed -i '/rw,remount/d' /jci/scripts/stage_wifi.sh
-sed -i '/	sleep 5/d' /jci/scripts/stage_wifi.sh
-sed -i '/	do/d' /jci/scripts/stage_wifi.sh
-sed -i '/	then/d' /jci/scripts/stage_wifi.sh
-sed -i '/	break/d' /jci/scripts/stage_wifi.sh
-sed -i '/	fi/d' /jci/scripts/stage_wifi.sh
-sed -i '/	done/d' /jci/scripts/stage_wifi.sh
-log_message "===    First deleted modifications from /jci/scripts/stage_wifi.sh    ==="
+sed -i '/swap file/d' ${STAGE_WIFI}
+sed -i '/for USB in/d' ${STAGE_WIFI}
+sed -i '/USBPATH/d' ${STAGE_WIFI}
+sed -i '/USBDRV/d' ${STAGE_WIFI}
+sed -i '/SWAPFILE/d' ${STAGE_WIFI}
+sed -i '/rw,remount/d' ${STAGE_WIFI}
+sed -i '/	sleep 5/d' ${STAGE_WIFI}
+sed -i '/	do/d' ${STAGE_WIFI}
+sed -i '/	then/d' ${STAGE_WIFI}
+sed -i '/	break/d' ${STAGE_WIFI}
+sed -i '/	fi/d' ${STAGE_WIFI}
+sed -i '/	done/d' ${STAGE_WIFI}
+log_message "===    First deleted modifications from ${STAGE_WIFI}    ==="
 
 # add commands for swap file to stage_wifi.sh
 log_message "===             Add commands for swap file to stage_wifi.sh           ==="
-if grep -Fq 'swap file' /jci/scripts/stage_wifi.sh
+if grep -Fq 'swap file' ${STAGE_WIFI}
 then
 	echo "exist"
-	log_message "=== Modifications for swapfile already in /jci/scripts/stage_wifi.sh  ==="
+	log_message "=== Modifications for swapfile already in ${STAGE_WIFI}  ==="
 else
-  echo '### find swap file' >> /jci/scripts/stage_wifi.sh
-	echo '	sleep 5' >> /jci/scripts/stage_wifi.sh
-	echo '	USBDRV="resources $(ls /mnt | grep sd)"' >> /jci/scripts/stage_wifi.sh
-	echo '	for USB in $USBDRV' >> /jci/scripts/stage_wifi.sh
-	echo '	do' >> /jci/scripts/stage_wifi.sh
-	echo '		USBPATH=/tmp/mnt/${USBDRV}' >> /jci/scripts/stage_wifi.sh
-	echo '		SWAPFILE="${USBPATH}"/swapfile' >> /jci/scripts/stage_wifi.sh
-	echo '		if [ -e "${SWAPFILE}" ]' >> /jci/scripts/stage_wifi.sh
-	echo '			then' >> /jci/scripts/stage_wifi.sh
-	echo '				mount -o rw,remount ${USBPATH}' >> /jci/scripts/stage_wifi.sh
-	echo '				mkswap ${SWAPFILE}' >> /jci/scripts/stage_wifi.sh
-	echo '				swapon ${SWAPFILE}' >> /jci/scripts/stage_wifi.sh
-	echo '				break' >> /jci/scripts/stage_wifi.sh
-	echo '		fi' >> /jci/scripts/stage_wifi.sh
-	echo '	done' >> /jci/scripts/stage_wifi.sh
+  echo '### find swap file' >> ${STAGE_WIFI}
+	echo '	sleep 5' >> ${STAGE_WIFI}
+	echo '	USBDRV="resources $(ls /mnt | grep sd)"' >> ${STAGE_WIFI}
+	echo '	for USB in $USBDRV' >> ${STAGE_WIFI}
+	echo '	do' >> ${STAGE_WIFI}
+	echo '		USBPATH=/tmp/mnt/${USBDRV}' >> ${STAGE_WIFI}
+	echo '		SWAPFILE="${USBPATH}"/swapfile' >> ${STAGE_WIFI}
+	echo '		if [ -e "${SWAPFILE}" ]' >> ${STAGE_WIFI}
+	echo '			then' >> ${STAGE_WIFI}
+	echo '				mount -o rw,remount ${USBPATH}' >> ${STAGE_WIFI}
+	echo '				mkswap ${SWAPFILE}' >> ${STAGE_WIFI}
+	echo '				swapon ${SWAPFILE}' >> ${STAGE_WIFI}
+	echo '				break' >> ${STAGE_WIFI}
+	echo '		fi' >> ${STAGE_WIFI}
+	echo '	done' >> ${STAGE_WIFI}
 	sleep 1
-	sed -i '/find swap file/ i\ ' /jci/scripts/stage_wifi.sh
-	log_message "===  Modifications for swapfile added to /jci/scripts/stage_wifi.sh   ==="
+	sed -i '/find swap file/ i\ ' ${STAGE_WIFI}
+	log_message "===  Modifications for swapfile added to ${STAGE_WIFI}   ==="
 fi
 df -h >> "${MYDIR}/AIO_log.txt"
 cat /proc/meminfo >> "${MYDIR}/AIO_log.txt"
 cat /proc/swaps >> "${MYDIR}/AIO_log.txt"
 cat /etc/fstab >> "${MYDIR}/AIO_log.txt"
-cp /jci/scripts/stage_wifi.sh ${MYDIR}/bakups/test/stage_wifi_swap-after.sh
+cp ${STAGE_WIFI} ${MYDIR}/bakups/test/stage_wifi_swap-after.sh
 log_message "===                   Swap File Added To USB Drive                    ==="
 
 log_message "===========********** END INSTALLATION OF SWAP FILE **********==========="

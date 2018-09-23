@@ -1,0 +1,16 @@
+show_message "INSTALL ${COLORTHEME} CUSTOM INFOTAINMENT COLOR THEME ..."
+log_message "=====****** INSTALL ${COLORTHEME} CUSTOM INFOTAINMENT COLOR THEME ... *******====="
+
+cp -a ${MYDIR}/config/color-schemes/${COLORTHEME}/jci / && log_message "===                       COLORTHEME = ${COLORTHEME}                           ==="
+
+rm -f /jci/gui/common/images/*.aio
+
+# Change NAV App color scheme if Blue is chosen
+if [ ${COLORTHEME} = "Blue" ] && [ -e ${MYDIR}/config/color-schemes/Blue/_skin_jci_bluedemo.zip ]
+then
+	cp -a ${MYDIR}/config/color-schemes/Blue/_skin_jci_bluedemo.zip /jci/nng/ux/
+	log_message "===               Change NAV App color scheme to Blue too             ==="
+fi
+
+log_message "=====******** END INSTALLATION OF ${COLORTHEME} CUSTOM COLOR THEME *********======"
+log_message " "

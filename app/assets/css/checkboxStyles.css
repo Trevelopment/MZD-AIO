@@ -7,7 +7,6 @@ label {
   padding: 3px 6px;
 }
 /* Checkbox Styles */
-
 input[type=checkbox] {
   visibility: hidden;
 }
@@ -20,7 +19,7 @@ input[type=checkbox] {
   background: -o-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
   background: -ms-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
   background: linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcfff4', endColorstr='#b3bead', GradientType=0);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fcfff4', endColorstr='#b3bead', GradientType=0);
   margin: 4px auto;
   -webkit-box-shadow: inset 0px 1px 1px white, 0px 1px 3px rgba(0, 0, 0, 0.5);
   -moz-box-shadow: inset 0px 1px 1px white, 0px 1px 3px rgba(0, 0, 0, 0.5);
@@ -43,7 +42,7 @@ input[type=checkbox] {
   background: -o-linear-gradient(top, #222 0%, #45484d 100%);
   background: -ms-linear-gradient(top, #222 0%, #45484d 100%);
   background: linear-gradient(top, #222 0%, #45484d 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#222', endColorstr='#45484d', GradientType=0);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#222', endColorstr='#45484d', GradientType=0);
 }
 .install-check label:hover::after, .uninstall-check label:hover::after {
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
@@ -84,7 +83,6 @@ input[type=checkbox] {
   background: linear-gradient(top, #bf0000 0%, #940000 100%);
 }
 /* Help Toggler */
-
 .helpToggle {
   width: 80px;
   height: 26px;
@@ -143,7 +141,7 @@ input[type=checkbox] {
   background: -o-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
   background: -ms-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
   background: linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcfff4', endColorstr='#b3bead', GradientType=0);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fcfff4', endColorstr='#b3bead', GradientType=0);
 }
 .helpToggle input[type=checkbox]:checked+label {
   left: 3px;
@@ -160,7 +158,7 @@ input[type=checkbox] {
   background: -o-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
   background: -ms-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
   background: linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcfff4', endColorstr='#b3bead', GradientType=0);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fcfff4', endColorstr='#b3bead', GradientType=0);
   margin: 20px auto;
   -webkit-border-radius: 50px;
   -moz-border-radius: 50px;
@@ -188,7 +186,7 @@ input[type=checkbox] {
   background: -o-linear-gradient(top, #222 0%, #45484d 100%);
   background: -ms-linear-gradient(top, #222 0%, #45484d 100%);
   background: linear-gradient(top, #222 0%, #45484d 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#222', endColorstr='#45484d', GradientType=0);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#222', endColorstr='#45484d', GradientType=0);
 }
 .menuCheck label:after {
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
@@ -278,7 +276,7 @@ input[type=checkbox] {
   background: -o-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
   background: -ms-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
   background: linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcfff4', endColorstr='#b3bead', GradientType=0);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fcfff4', endColorstr='#b3bead', GradientType=0);
   /*margin: 20px auto;*/
   -webkit-border-radius: 50px;
   -moz-border-radius: 50px;
@@ -306,7 +304,7 @@ input[type=checkbox] {
   background: -o-linear-gradient(top, #222 0%, #45484d 100%);
   background: -ms-linear-gradient(top, #222 0%, #45484d 100%);
   background: linear-gradient(top, #222 0%, #45484d 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#222', endColorstr='#45484d', GradientType=0);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#222', endColorstr='#45484d', GradientType=0);
 }
 .extraCheck, .extraRadio label:after {
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
@@ -344,7 +342,7 @@ input[type=checkbox] {
 span.toggleExtra:before {
   font-size: 16px;
   padding: 2px;
-  z-index: 8;
+  z-index: 2;
   position: absolute;
   cursor: pointer;
   display: inline-block !important;
@@ -360,7 +358,6 @@ span.toggleExtra.icon-plus-square:before {
 padding: 3px 4px;
 outline: 1px double transparent;
 }*/
-
 span.toggleExtra.icon-plus-square+* {
   display: none !important;
 }
@@ -447,7 +444,6 @@ span.toggleExtra:hover:before {
 }
 /* Do not change following properties, they aren't
 generated automatically and are common for each slider. */
-
 .accordion {
   overflow: hidden;
 }
@@ -633,14 +629,14 @@ input[type=color]::-webkit-color-swatch {
   border: 1px solid #000;
 }
 /* Popover Body */
-
 .icon-question~.popover .popover-content {
   background-color: #000;
   color: #FFFFFF;
-  padding: 15px;
+  padding: 8px 0px;
   border: 2px groove #0000ff;
-  width: 500px;
+  width: 700px;
   border-radius: 10px;
+  line-height: 1.2;
 }
 .icon-question~.popover {
   background-color: #000;

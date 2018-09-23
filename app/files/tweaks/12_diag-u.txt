@@ -9,7 +9,6 @@ then
 fi
 if grep -Fq '"settleTime" : 20000,' /jci/gui/apps/diag/js/diagApp.js
 then
-	echo "exist"
 	log_message "===          /jci/gui/apps/diag/js/diagApp.js was not modified        ==="
 else
 	sed -i 's/"settleTime" : 1000,/"settleTime" : 20000,/g' /jci/gui/apps/diag/js/diagApp.js
@@ -17,7 +16,6 @@ else
 fi
 if grep -Fq '"holdTimeout" : 5000,' /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js
 then
-	echo "exist"
 	log_message "===                   StatusBarCtrl.js not modified                   ==="
 else
 	sed -i 's/"holdTimeout" : 1000,/"holdTimeout" : 5000,/g' /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js
@@ -30,15 +28,13 @@ then
 else
 	log_message "===          /jci/gui/common/js/Common.js was not modified            ==="
 fi
-if [ -e /jci/gui/apps/diag/controls/Test/js/TestCtrl.js.org ]
+if ! (restore_org /jci/gui/apps/diag/controls/Test/js/TestCtrl.js)
 then
-	cp -a /jci/gui/apps/diag/controls/Test/js/TestCtrl.js.org /jci/gui/apps/diag/controls/Test/js/TestCtrl.js
-	log_message "===                Restored  TestCtrl.js  From  Backup                ==="
+	log_message "===                 No Backup of TestCtrl.js was found                ==="
 fi
-if [ -e /jci/gui/apps/diag/controls/Test/css/TestCtrl.css.org ]
+if ! (restore_org /jci/gui/apps/diag/controls/Test/css/TestCtrl.css)
 then
-	cp -a /jci/gui/apps/diag/controls/Test/css/TestCtrl.css.org /jci/gui/apps/diag/controls/Test/css/TestCtrl.css
-	log_message "===                Restored  TestCtrl.css From  Backup                ==="
+  log_message "===                No Backup of TestCtrl.css was found                ==="
 fi
 if [ $TESTBKUPS -eq 1 ]
 then

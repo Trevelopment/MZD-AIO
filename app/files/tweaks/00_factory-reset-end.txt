@@ -1,0 +1,32 @@
+sleep 2
+log_message "======================= END OF TWEAKS INSTALLATION ======================"
+show_message "========== END OF TWEAKS INSTALLATION =========="
+if [ -e ${MYDIR}/AIO_info.json ]
+then
+  rm -f ${MYDIR}/AIO_info.json
+fi
+# a window will appear before the system reboots automatically
+sleep 3
+if [ $SKIPCONFIRM -eq 1 ]
+then
+  show_message "THE SYSTEM WILL BE FACTORY RESET TO APPLY\n\nMESSAGE REPLY AND DEFAULT SETTINGS TWEAKS"
+  sleep 5
+else
+  killall -q jci-dialog
+  /jci/tools/jci-dialog --confirm --title="MZD-AIO-TI | FACTORY RESET?" --text="TO APPLY MESSAGE REPLY AND DEFAULT SETTINGS TWEAKS\nTHE SYSTEM NEEDS TO BE FACTORY RESET\nNOTE: ALL SETTINGS AND FAVORITES WILL BE RESET" --ok-label="FACTORY RESET" --cancel-label="REBOOT ONLY"
+fi
+if [ $? = 0 ] || [ $SKIPCONFIRM -eq 1 ]
+then
+  log_message "=======********************* FACTORY RESET!! *********************=======*"
+  show_message "NOTE: THE *ONLY* TWEAK THAT WILL BE RESET IS\n\"TOUCHSCREEN WHILE DRIVING\"\nALL OTHER TWEAKS WILL REMAIN"
+  sleep 5
+  show_message "FACTORY RESET!!"
+  sleep 2
+  /jci/scripts/jci-factoryreset.sh -r
+else
+  killall -q jci-dialog
+  /jci/tools/jci-dialog --info --title="SELECTED AIO TWEAKS APPLIED" --text="THE SYSTEM WILL REBOOT IN A FEW SECONDS!" --no-cancel &
+  sleep 3
+  reboot
+fi
+exit 0

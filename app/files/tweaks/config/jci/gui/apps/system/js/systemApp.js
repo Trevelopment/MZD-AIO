@@ -755,7 +755,7 @@ systemApp.prototype._enableAppListItem = function(appName, isDisabled, dataList)
   var vehicleConfigurationType = framework.getSharedData("syssettings", "VehicleConfigData");
   //Need to update _applicationsCtxtWiseAppNames (ApplicationStructure) if vehicle configuration has changed.
   if (vehicleConfigurationType !== this._vehicleConfigurationType) {
-    log.info("VehicleConfigurationType is changed to " + vehicleConfigurationType)
+    log.info("VehicleConfigurationType is changed to " + vehicleConfigurationType);
     this._vehicleConfigurationType = vehicleConfigurationType;
     this._updateApplicationStructure(vehicleConfigurationType);
   }

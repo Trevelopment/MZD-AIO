@@ -9,18 +9,10 @@ log_message "===            Removed MZD-AIO-TI Custom CSS in common.css         
 if grep -Fq "animation: slide .* infinite" /jci/gui/common/css/common.css
 then
 	log_message "===             Leftover code found Restoring common.css              ==="
-	if [ -e /jci/gui/common/css/common.css.org ]
+	if ! (restore_org /jci/gui/common/css/common.css)
 	then
-		if [ $KEEPBKUPS -eq 1 ]
-		then
-			cp /jci/gui/common/css/common.css.org "${MYDIR}/bakups/"
-			aio_info \"common.css.org\",
-		fi
-		cp /jci/gui/common/css/common.css.org /jci/gui/common/css/common.css
-		log_message "===        Restored /jci/gui/common/css/common.css from backup        ==="
-	else
 		cp -a "${MYDIR}/config_org/BackgroundRotator/jci/gui/common/css/common.css" /jci/gui/common/css
-		log_message "===  No backup available. Restored /jci/gui/common/css/common.css USB ==="
+		log_message "===    No backup available. Restored common.css from USB Fallback     ==="
 	fi
 fi
 

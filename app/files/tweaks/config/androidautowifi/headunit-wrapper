@@ -2,26 +2,17 @@
 
 SCRIPT=$(readlink -f "$0")
 SCRIPTPATH=$(dirname "$SCRIPT")
-LOGPATH=/tmp/mnt/data/headunit.log
+LOGPATH=/tmp/root/headunit.log
 SCRIPT_ARGS=$@
 
 export LD_LIBRARY_PATH="${SCRIPTPATH}/headunit_libs:/jci/lib:/jci/opera/3rdpartylibs/freetype:/usr/lib/imx-mm/audio-codec:/usr/lib/imx-mm/parser:/data_persist/dev/lib:"
 #override some GST plugins with these
 export GST_PLUGIN_PATH="${SCRIPTPATH}/headunit_libs:/usr/lib/gstreamer-0.10"
 
-# This function starts the headunit process and
-# sets the process affinity via taskset. The
-# return value of this function is the pid of
-# the headunit process.
-
-conf='{
-    "launchOnDevice": true,
-    "carGPS": true,
-    "wifiTransport": false
-}'
+DEBUG=0
 
 if ! [ -e /tmp/root/headunit.json ]; then
- printf "%s\n" "$conf" > /tmp/root/headunit.json
+ cp /tmp/mnt/data_persist/dev/bin/headunit.json /tmp/root/
 fi
 
 start_headunit()
@@ -31,6 +22,9 @@ start_headunit()
    taskset 0xFFFFFFFF "${SCRIPTPATH}/headunit" "$@" > /dev/null 2>&1 &
    sleep 2
    touch /tmp/root/headunit.status
+   [ $DEBUG -eq 1 ] && echo "=== headunit-usb ==="
+   [ $DEBUG -eq 1 ] && cat /tmp/root/headunit.json  >> ${LOGPATH}
+   [ $DEBUG -eq 1 ] && echo "===================="
 }
 
 start_AAwireless()
@@ -40,39 +34,64 @@ start_AAwireless()
     taskset 0xFFFFFFFF "${SCRIPTPATH}/headunit" "$@" > /dev/null 2>&1 &
     sleep 2
     touch /tmp/root/headunit-wireless.status
+   [ $DEBUG -eq 1 ] && echo "=== headunit-wifi ==="
+   [ $DEBUG -eq 1 ] && cat /tmp/root/headunit.json  >> ${LOGPATH}
+   [ $DEBUG -eq 1 ] && echo "===================="
 }
 
-rm -f /tmp/root/headunit-wireless.status
 rm -f /tmp/root/headunit.status
+rm -f /tmp/root/headunit-wireless.status
+
+# prevent conflict by Official AA
+pkill -f 'aap_service'
 
 #default USB
 start_headunit
 
 # loop forever. every 5 seconds, 
-# if headunit not running, start it again.
 while true
 do
- NET_CHECK=`netstat -rn|awk '$2=="192.168.43.1" {print}'|wc -l`
- if [ $NET_CHECK == 1 ]; then
-    #echo "WLAN"
+ NET_CHECK=`netstat -rn|awk '$2=="192.168.43.1" {print}'|wc -l|awk '{print $1}'`
+
+ if [ -e /tmp/root/usb_connect ]; then
+  USBCHECK=1
+  [ $DEBUG -eq 1 ] && echo "USB attach" >> ${LOGPATH}
+ else
+  USBCHECK=0
+  [ $DEBUG -eq 1 ] && echo "USB detach" >> ${LOGPATH}
+ fi
+
+ if [ $NET_CHECK == 1 ] && [ $USBCHECK == 0 ]; then
+    [ $DEBUG -eq 1 ] && echo "WLAN Mode" >> ${LOGPATH}
     if [ -e /tmp/root/headunit.status ]; then
         killall -q headunit
     fi
 
     if ! [ -e /tmp/root/headunit-wireless.status ]; then
-        #echo "Start WIRELESS"
+        [ $DEBUG -eq 1 ] && echo "Start WIRELESS" >> ${LOGPATH}
         start_AAwireless
     fi
 
  else
     #echo "USB"
+    [ $DEBUG -eq 1 ] && echo "USB Mode" >> /tmp/root/headunit.log  
+    check_headunit=`ps|grep 'bin/headunit'|grep -v wrapper|grep -v grep|wc -l|awk '{print $1}'`
+    [ $DEBUG -eq 1 ] && echo "check_headunit = $check_headunit" >> ${LOGPATH} 
+
+    [ $check_headunit -eq 0 ] && rm -f /tmp/root/headunit-wireless.status
+    [ $check_headunit -eq 0 ] && rm -f /tmp/root/headunit.status
+
     if [ -e /tmp/root/headunit-wireless.status ]; then
         killall -q headunit
     fi
     if ! [ -e /tmp/root/headunit.status ]; then
-        #echo "Start USB"
+        [ $DEBUG -eq 1 ] && echo "Start USB" >> ${LOGPATH}
         start_headunit
     fi
  fi
- sleep 5
+
+ RAND=`expr $RANDOM % 5`
+ echo "go sleep $RAND"
+ sleep $RAND
+
 done

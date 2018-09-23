@@ -1,0 +1,51 @@
+<!--
+- MZD-AIO-TI
+- By: Trezdog44 - Trevor Martin
+- http://mazdatweaks.com
+- ©2017 Trevelopment
+-
+- Custom Options For USB Audio MOD
+-
+-->
+<table>
+  <tbody class="w3-row w3-col messageReplies">
+    <tr id="messageReplyLanguages" class="w3-hover-pale-green w3-tooltip w3-row w3-col">
+      <td class="w3-threequarter">
+        <select class="w3-select" ng-model="user.replyMsgLang" ng-options="x for x in replyLangs">
+          <option value="" selected="selected" style="font-weight: 600" disabled>--- Edit Preset Text Messages --- Choose Language ---</option>
+        </select>
+      </td>
+      <td class="w3-quarter">
+        <button class="w3-btn w3-col w3-blue w3-hover-light-green" ng-click="getMsgsForLang()" ng-disabled="user.replyMsgLang === 0">Edit <span ng-hide="user.replyMsgLang === 0">{{user.replyMsgLang}}</span></button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<div id="presetMessageEditor" class="w3-modal" style="dispay:none">
+  <div class="w3-modal-content w3-animate-top w3-card-4 w3-large">
+    <header class="w3-container w3-amber w3-xlarge w3-padding"> Edit Preset Text Messages For {{user.replyMsgLang}}
+      <span onclick="$('#presetMessageEditor').fadeOut()" class="w3-button w3-display-topright w3-padding w3-hover-red closeBtn">&times;</span>
+    </header>
+    <div class="w3-container w3-padding">
+      <input type="text" class="w3-input w3-third" ng-model="replyMsgs[0]" />
+      <input type="text" class="w3-input w3-third" ng-model="replyMsgs[1]" />
+      <input type="text" class="w3-input w3-third" ng-model="replyMsgs[2]" />
+      <input type="text" class="w3-input w3-third" ng-model="replyMsgs[3]" />
+      <input type="text" class="w3-input w3-third" ng-model="replyMsgs[4]" />
+      <input type="text" class="w3-input w3-third" ng-model="replyMsgs[5]" />
+      <input type="text" class="w3-input w3-third" ng-model="replyMsgs[6]" />
+      <input type="text" class="w3-input w3-third" ng-model="replyMsgs[7]" />
+      <input type="text" class="w3-input w3-third" ng-model="replyMsgs[8]" />
+      <input type="text" class="w3-input w3-third" ng-model="replyMsgs[9]" />
+      <input type="text" class="w3-input w3-third" ng-model="replyMsgs[10]" />
+      <input type="text" class="w3-input w3-third" ng-model="replyMsgs[11]" />
+      <input type="text" class="w3-input w3-third" ng-model="replyMsgs[12]" />
+      <input type="text" class="w3-input w3-third" ng-model="replyMsgs[13]" />
+      <input type="text" class="w3-input w3-third" ng-model="replyMsgs[14]" />
+    </div>
+    <footer class="w3-container w3-deep-purple">
+      <div class="btn-group w3-quarter"><a class="w3-btn w3-red w3-hover-yellow" onclick="resetMsgLang();$('#presetMessageEditor').fadeOut()">Reset</a></div>
+      <div class="btn-group w3-threequarter"><a class="w3-btn w3-green w3-hover-light-blue" ng-click="savePresetMsgs()" onclick="$('#presetMessageEditor').fadeOut()">Save {{user.replyMsgLang}}</a></div>
+    </footer>
+  </div>
+</div>

@@ -6,31 +6,31 @@ pkill websocketd
 
 if [ $TESTBKUPS -eq 1 ]
 then
-	cp /jci/scripts/stage_wifi.sh "${MYDIR}/bakups/test/stage_wifi_mzd-before.sh"
-	cp /jci/opera/opera_dir/userjs/additionalApps.json "${MYDIR}/bakups/test/additionalApps_mzd_before.json"
+	cp ${STAGE_WIFI} "${MYDIR}/bakups/test/stage_wifi_mzd-before.sh"
+	[ -f ${ADDITIONAL_APPS_JSON} ] && cp ${ADDITIONAL_APPS_JSON} "${MYDIR}/bakups/test/additionalApps_mzd-before.json"
 fi
 
-sed -i '/### MZD Meter/d' /jci/scripts/stage_wifi.sh
-sed -i '/mzdmonitor.sh/d' /jci/scripts/stage_wifi.sh
+sed -i '/### MZD Meter/d' ${STAGE_WIFI}
+sed -i '/mzdmonitor.sh/d' ${STAGE_WIFI}
 
 ADDIT_APPS=0
 if [ -e /jci/opera/opera_dir/userjs/CustomApplicationsProxy.js ] || [ -e /jci/opera/opera_dir/userjs/nativeApps.js ]
 then
-  log_message "===                          Found CASDK                              ==="
-  ADDIT_APPS=1
-if grep -Fq "_androidauto" /jci/opera/opera_dir/userjs/additionalApps.json
+	log_message "===                          Found CASDK                              ==="
+	ADDIT_APPS=1
+elif grep -Fq "_androidauto" ${ADDITIONAL_APPS_JSON}
 then
 	log_message "===           Found androidauto entry in additionalApps.json          ==="
 	ADDIT_APPS=1
-elif grep -Fq "_speedometer" /jci/opera/opera_dir/userjs/additionalApps.json
+elif grep -Fq "_speedometer" ${ADDITIONAL_APPS_JSON}
 then
 	log_message "===           Found speedometer entry in additionalApps.json          ==="
 	ADDIT_APPS=1
-elif grep -Fq "_videoplayer" /jci/opera/opera_dir/userjs/additionalApps.json
+elif grep -Fq "_videoplayer" ${ADDITIONAL_APPS_JSON}
 then
 	log_message "===           Found videoplayer entry in additionalApps.json          ==="
 	ADDIT_APPS=1
-elif grep -Fq "_aiotweaks" /jci/opera/opera_dir/userjs/additionalApps.json
+elif grep -Fq "_aiotweaks" ${ADDITIONAL_APPS_JSON}
 then
 	log_message "===          Found aiotweaksapp entry in additionalApps.json          ==="
 	ADDIT_APPS=1
@@ -40,7 +40,7 @@ if [ $ADDIT_APPS -eq 0 ]
 then
 	log_message "===    No more entrys in additionalApps.json, files will be deleted   ==="
 	rm -f /jci/opera/opera_dir/userjs/additionalApps.*
-  rm -f /jci/opera/opera_dir/userjs/app.js
+	rm -f /jci/opera/opera_dir/userjs/app.js
 fi
 
 rm -f /jci/opera/opera_dir/userjs/speedometer-startup.js
@@ -51,9 +51,9 @@ rm -fr /paa
 
 if [ $TESTBKUPS -eq 1 ]
 then
-	cp /jci/scripts/stage_wifi.sh "${MYDIR}/bakups/test/stage_wifi_mzd-after.sh"
-  cp /jci/opera/opera_dir/userjs/additionalApps.json "${MYDIR}/bakups/test/additionalApps_mzd_after.json"
+	cp ${STAGE_WIFI} "${MYDIR}/bakups/test/stage_wifi_mzd-after.sh"
+	[ -f ${ADDITIONAL_APPS_JSON} ] && cp ${ADDITIONAL_APPS_JSON} "${MYDIR}/bakups/test/additionalApps_mzd-after.json"
 fi
 
-log_message "====-==************* END UNINSTALLATION OF MZD METER *************======="
+log_message "=======************* END UNINSTALLATION OF MZD METER *************======="
 log_message " "

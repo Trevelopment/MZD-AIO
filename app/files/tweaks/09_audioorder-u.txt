@@ -33,15 +33,11 @@ then
     cp -a ${MYDIR}/config/audio_order_AND_no_More_Disclaimer/only_no_More_Disclaimer/jci/gui/apps/system/js/systemApp.js /jci/gui/apps/system/js/
     log_message "===    Restored order of audio source list, disclaimer still gone     ==="
   fi
-elif [ -e /jci/gui/apps/system/js/systemApp.js.org ]
+elif ! (restore_org /jci/gui/apps/system/js/systemApp.js)
 then
-  cp -a /jci/gui/apps/system/js/systemApp.js.org /jci/gui/apps/system/js/systemApp.js
-  log_message "===                  Restored systemApp.js from backup                ==="
-else
-  log_message "===                   No Compatible systemApp.js found                ==="
+  log_message "===                  No Backup of systemApp.js found                  ==="
 fi
 rm -f /jci/gui/apps/system/js/systemApp.js.audio
 log_message "===         Removed /jci/gui/apps/system/js/systemApp.js.audio        ==="
-log_message "===      End restoring order of the audio source list to original     ==="
 log_message "========******** END UNINSTALLATION OF AUDIO SOURCE LIST ********========"
 log_message " "

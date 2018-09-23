@@ -1,5 +1,6 @@
 var turnScreenOff = false;
 var turnWifiOn = false; // this is experimental and may not work yet
+var AIOlonghold = false;
 
 function applyTweaks() {
   var head = document.querySelector("head");

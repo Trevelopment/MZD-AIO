@@ -53,6 +53,7 @@
         colors: 1,
         aaVer: 1,
         d2sbOps: 3,
+        replyMsgLang: 0,
         zipbackup: false,
         forcessh: false,
         useColorBG: false,
@@ -65,7 +66,9 @@
         aaWifi: true,
         autosort: true,
         barautosort: true,
-        gracenoteText: "Powered By Gracenote®",
+        runsh: false,
+        screenOffBoot: false,
+        gracenoteText: 'Powered By Gracenote®',
         altLayout: settings.get('altLayout') || false,
         darkMode: settings.get('darkMode') || false,
         flipOption: settings.get('flipOption') || '',
@@ -102,13 +105,13 @@
       $scope.user.casdk = {
         inst: false,
         uninst: false,
-        region: "na"
+        region: 'na'
       }
-
       $scope.user.backups = {
         org: settings.get('keepBackups') || false,
         test: settings.get('testBackups') || true,
-        skipconfirm: settings.get('skipConfirm') || false
+        skipconfirm: settings.get('skipConfirm') || false,
+        apps2resources: settings.get('apps2resources') || false
       }
       $scope.user.boot = {
         logo1: 0,
@@ -167,6 +170,25 @@
       $scope.user.swapOps = {
         mount: true,
         resources: false
+      }
+      $scope.user.vpOps = {
+        shuffle: true,
+        repeat: 2,
+        fullscreen: 1
+      }
+      $scope.vpOpsRepeat = {
+        None: 0,
+        One: 1,
+        All: 2
+      }
+      $scope.vpOpsFullscreen = {
+        Windowed: 0,
+        "Keep Aspect Ratio": 1,
+        Full: 2
+      }
+      $scope.vpOpsShuffle = {
+        On: true,
+        Off: false
       }
       $scope.user.rmvallbg = function() {
         $scope.user.uistyle.nobtnbg = true
@@ -240,6 +262,17 @@
         { bootLogo: 'MZD Title Slam', logo: 10 },
         { bootLogo: 'Trans End (Default)', logo: 11 }
       ]
+      $scope.replyLangs = msgLangs
+      $scope.getMsgsForLang = function() {
+        getMsgsForLang($scope.user.replyMsgLang)
+        $scope.replyMsgs = currLangMsgs
+        if ($scope.replyMsgs.length > 0) {
+          $('#presetMessageEditor').show()
+        }
+      }
+      $scope.savePresetMsgs = function() {
+        rebuildMessageXml($scope.user.replyMsgLang, $scope.replyMsgs)
+      }
       $scope.checkDuplicatePos = function(inputArray) {
         var lastSeenDuplicate,
           seenDuplicate = [],
@@ -250,7 +283,7 @@
         inputArray.map(function(item) {
           var itemPosition = item[propertyName]
           // Don't count hidden values
-          if (itemPosition[0] !== "2") {
+          if (itemPosition[0] !== '2') {
             var itemName = item[elmntName]
             if (itemPosition in testObject) {
               testObject[itemPosition].duplicate = true
@@ -267,11 +300,9 @@
       }
       $scope.colorDuplicates = function() {
         var duplicates = $scope.checkDuplicatePos($scope.user.spdValues)
-        //$('.spdOps span~select').css({ "color": "" })
         $('.spdOps span~select').removeClass("ng-invalid")
         for (var x in duplicates) {
           $('#spdOp-' + duplicates[x] + '~select').addClass("ng-invalid")
-          //$('#spdOp-' + duplicates[x] + '~select').css({ "color": "red" })
         }
       }
       $scope.checkForMain = function(value) {
@@ -412,7 +443,7 @@
               $(this).fadeOut(500)
               $('#ctxt-title').fadeIn(500)
             })
-            $('#background').on('click', function() { $('#infotnmtBG,#modalimg').attr('src', `${tempDir}/background.png`) })
+            $('#background').on('click', function() { $('#infotnmtBG,#modalimg').attr('src', `${varDir}/background.png`) })
             $('[data-toggle="tooltip"]').tooltip({ html: true, delay: { show: 1200, hide: 200 } })
             $('[data-toggle="popover"]').popover({ html: true })
             $('.imgframe').mousewheel(function(event, delta) {
@@ -426,18 +457,6 @@
             })
             $('.twkfltr input').on('blur', function() {
               $('#compileButton').removeClass('left')
-            })
-            $('.slide-out-div').tabSlideOut({
-              tabHandle: '.handle', // class of the element that will become your tab
-              // pathToTabImage: 'files/img/tab.png', //path to the image for the tab //Optionally can be set using css
-              imageHeight: '40px', // height of tab image           //Optionally can be set using css
-              imageWidth: '90px', // width of tab image            //Optionally can be set using css
-              tabLocation: 'left', // side of screen where tab lives, top, right, bottom, or left
-              speed: 300, // speed of animation
-              action: 'click', // options: 'click' or 'hover', action to trigger animation
-              topPos: '90px', // position from the top/ use if tabLocation is left or right
-              leftPos: '50px', // position from left/ use if tabLocation is bottom or top
-              fixedPosition: false // options: true makes it stick(fixed position) on scroll
             })
             startTime()
           })
@@ -793,6 +812,7 @@
           },
           callback: function(result) {
             if (result) {
+              $('button.btn.btn-success').prop('disabled', true)
               if ($scope.user.mainOps.indexOf(2) !== -1) {
                 $('#imgframe').click()
                 $('#slideShowBtn').click()
@@ -861,13 +881,10 @@
             return scope.$eval(attrs.compile)
           },
           function(value) {
-            // when the 'compile' expression changes
-            // assign it into the current DOM
+            // when the 'compile' expression changes assign it into the current DOM
             element.html(value)
-            // compile the new DOM and link it to the current
-            // scope.
-            // NOTE: we only compile .childNodes so that
-            // we don't get into infinite loop compiling ourselves
+            // compile the new DOM and link it to the current scope.
+            // NOTE: we only compile .childNodes so that we don't get into infinite loop compiling ourselves
             $compile(element.contents())(scope)
           }
         )
@@ -941,6 +958,61 @@
     }
     $scope.secretCodes = function(code) {
       switch (code.replace(/(\(.*\)|[\ \(\)\\\/\_\-])/g, '').toLowerCase()) {
+        case "vdvda":
+          $scope.visibleApps.vdd = true
+          casdkApps.set('vdd', true)
+          snackbar("Unlocked: Vehicle Data Diagnostic (VDD)")
+          break
+        case "dultimash":
+          $scope.visibleApps.multidash = true
+          casdkApps.set('multidash', true)
+          snackbar("Unlocked: MultiDash Speedometer")
+          break
+        case "terminator":
+          $scope.visibleApps.terminal = true
+          casdkApps.set('terminal', true)
+          snackbar("Unlocked: Terminal")
+          break
+        case "gpspeed":
+          $scope.visibleApps.gpsspeed = true
+          casdkApps.set('gpsspeed', true)
+          snackbar("Unlocked: GPS Speedometer")
+          break
+        case "trevelop":
+          $scope.visibleApps.devtools = true
+          casdkApps.set('devtools', true)
+          snackbar("Unlocked: Dev Tools")
+          break
+        case "frontsky":
+          $scope.visibleApps.background = true
+          casdkApps.set('background', true)
+          snackbar("Unlocked: Background")
+          break
+        case "dropblocks":
+          $scope.visibleApps.tetris = true
+          casdkApps.set('tetris', true)
+          snackbar("Unlocked: Tetris")
+          break
+        case "trousersnake":
+          $scope.visibleApps.snake = true
+          casdkApps.set('snake', true)
+          snackbar("Unlocked: Snake")
+          break
+        case "outbreak":
+          $scope.visibleApps.breakout = true
+          casdkApps.set('breakout', true)
+          snackbar("Unlocked: Breakout")
+          break
+        case "ticktock":
+          $scope.visibleApps.clock = true
+          casdkApps.set('clock', true)
+          snackbar("Unlocked: Clock")
+          break
+        case "ss":
+          $scope.visibleApps.simplespeedo = true
+          casdkApps.set('simplespeedo', true)
+          snackbar("Unlocked: Simple Speedometer")
+          break
         case "reset":
           casdkApps.set('clock', false)
           casdkApps.set('multidash', false)

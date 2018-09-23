@@ -2,26 +2,16 @@
 show_message "RESTORE BIGGER ALBUM ART ..."
 log_message "=======************   UNINSTALL BIGGER ALBUM ART ...  ************======="
 
-# Restore images
-# cp -a ${MYDIR}/config_org/bigger-album-art/jci/gui/common/controls/InCall2/images/NowPlayingImageFrame.png /jci/gui/common/controls/InCall2/images/
-# cp -a ${MYDIR}/config_org/bigger-album-art/jci/gui/common/controls/NowPlaying4/images/NowPlayingImageFrame.png /jci/gui/common/controls/NowPlaying4/images/
-
 # Remove CSS
 remove_aio_css /jci/gui/common/controls/NowPlaying4/css/NowPlaying4Ctrl.css BIGGERALBM
 
 # Look for old installations (pre v2.2.4)
-if grep -Fq "max-height: 210px" /jci/gui/common/controls/NowPlaying4/css/NowPlaying4Ctrl.css
+if grep -Fq "max-height: 210px" /jci/gui/common/controls/NowPlaying4/css/NowPlaying4Ctrl.css && ! (restore_org /jci/gui/common/controls/NowPlaying4/css/NowPlaying4Ctrl.css)
 then
-	if [ -e /jci/gui/common/controls/NowPlaying4/css/NowPlaying4Ctrl.css.org ]
-	then
-		cp /jci/gui/common/controls/NowPlaying4/css/NowPlaying4Ctrl.css.org /jci/gui/common/controls/NowPlaying4/css/NowPlaying4Ctrl.css
-		log_message "===             Restored NowPlaying4Ctrl.css from backup              ==="
-	else
-		# cp -a ${MYDIR}/config_org/bigger-album-art/jci/gui/common/controls/NowPlaying4/css/NowPlaying4Ctrl.css /jci/gui/common/controls/NowPlaying4/css/
-		log_message "===        No NowPlaying4Ctrl.css.org found, No changes were made     ==="
-	fi
+  log_message "===        No NowPlaying4Ctrl.css.org found, No changes were made     ==="
+else
+  log_message "===                     Album Art Size Restored                       ==="
 fi
-log_message "===                     Album Art Size Restored                       ==="
 
 log_message "======*******    END UNINSTALATION OF BIGGER ALBUM ART     ********======"
 log_message " "

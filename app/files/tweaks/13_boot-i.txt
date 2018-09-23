@@ -1,6 +1,12 @@
-backup_org /jci/resources/LoopLogo.ivf
-backup_org /jci/resources/TranLogo.ivf
-backup_org /jci/resources/TranLogoEnd.ivf
+LOOP_LOGO="/jci/resources/LoopLogo.ivf"
+if [ -e /jci/resources/newLoopLogo.ivf ]
+then
+  LOOP_LOGO="/jci/resources/newLoopLogo.ivf"
+else
+  backup_org /jci/resources/TranLogo.ivf
+  backup_org /jci/resources/TranLogoEnd.ivf
+fi
+backup_org "$LOOP_LOGO"
 backup_org /jci/resources/ExitLogo.ivf
 # Disable Boot Animation
 show_message "CUSTOMIZE BOOT ANIMATION ..."
@@ -8,130 +14,134 @@ log_message "======***********        INSTALL BOOT ANIMATION ...      **********
 
 if [ $BOOTLOGO1 -eq 0 ]
 then
-	cp -a "${MYDIR}/config/bootanimation/jci/resources/LoopLogo.ivf" /jci/resources/
-	log_message "===                 LoopLogo.ivf set to Mazda Logo                    ==="
+  cp -a "${MYDIR}/config/bootanimation/jci/resources/LoopLogo.ivf" "$LOOP_LOGO"
+  log_message "===                 LoopLogo.ivf set to Mazda Logo                    ==="
 elif [ $BOOTLOGO1 -eq 1 ]
 then
-	cp -a "${MYDIR}/config/bootanimation/jci/resources/LoopLogoMatrix.ivf" /jci/resources/LoopLogo.ivf
-	log_message "===                 LoopLogo.ivf set to Matrix                        ==="
+  cp -a "${MYDIR}/config/bootanimation/jci/resources/LoopLogoMatrix.ivf" "$LOOP_LOGO"
+  log_message "===                 LoopLogo.ivf set to Matrix                        ==="
 elif [ $BOOTLOGO1 -eq 2 ]
 then
-	cp -a "${MYDIR}/config/bootanimation/jci/resources/TranLogoRace.ivf" /jci/resources/LoopLogo.ivf
-	log_message "===                 LoopLogo.ivf set to Large Mazda Logo              ==="
+  cp -a "${MYDIR}/config/bootanimation/jci/resources/TranLogoRace.ivf" "$LOOP_LOGO"
+  log_message "===                 LoopLogo.ivf set to Large Mazda Logo              ==="
 elif [ $BOOTLOGO1 -eq 3 ]
 then
-	cp -a "${MYDIR}/config/bootanimation/jci/resources/LoopLogoFiat.ivf" /jci/resources/LoopLogo.ivf
-	log_message "===                 LoopLogo.ivf set to Fiat Logo                     ==="
+  cp -a "${MYDIR}/config/bootanimation/jci/resources/LoopLogoFiat.ivf" "$LOOP_LOGO"
+  log_message "===                 LoopLogo.ivf set to Fiat Logo                     ==="
 elif [ $BOOTLOGO1 -eq 4 ]
 then
-	cp -a "${MYDIR}/config/bootanimation/jci/resources/LoopLogoZ.ivf" /jci/resources/LoopLogo.ivf
-	log_message "===                LoopLogo.ivf set to MaZda Logo                     ==="
+  cp -a "${MYDIR}/config/bootanimation/jci/resources/LoopLogoZ.ivf" "$LOOP_LOGO"
+  log_message "===                LoopLogo.ivf set to MaZda Logo                     ==="
 elif [ $BOOTLOGO1 -eq 5 ]
 then
-	cp -a "${MYDIR}/config/bootanimation/jci/resources/LoopLogoCinema.ivf" /jci/resources/LoopLogo.ivf
-	log_message "===                 LoopLogo.ivf set to MZD Cinema Loop               ==="
+  cp -a "${MYDIR}/config/bootanimation/jci/resources/LoopLogoCinema.ivf" "$LOOP_LOGO"
+  log_message "===                 LoopLogo.ivf set to MZD Cinema Loop               ==="
 elif [ $BOOTLOGO1 -eq 6 ]
 then
-	cp -a "${MYDIR}/config/bootanimation/jci/resources/TranLogoCrissCross.ivf" /jci/resources/LoopLogo.ivf
-	log_message "===                 LoopLogo.ivf set to MZD Criss Cross               ==="
+  cp -a "${MYDIR}/config/bootanimation/jci/resources/TranLogoCrissCross.ivf" "$LOOP_LOGO"
+  log_message "===                 LoopLogo.ivf set to MZD Criss Cross               ==="
 elif [ $BOOTLOGO1 -eq 7 ]
 then
-	cp -a "${MYDIR}/config/bootanimation/jci/resources/LoopLogoRace.ivf" /jci/resources/LoopLogo.ivf
-	log_message "===                 LoopLogo.ivf set to MZD Race Loop                 ==="
+  cp -a "${MYDIR}/config/bootanimation/jci/resources/LoopLogoRace.ivf" "$LOOP_LOGO"
+  log_message "===                 LoopLogo.ivf set to MZD Race Loop                 ==="
 else
-	log_message "===                   LoopLogo.ivf was not changed                    ==="
+  log_message "===                   LoopLogo.ivf was not changed                    ==="
 fi
-
-if [ $BOOTLOGO2 -eq 0 ]
+if [ -e /jci/resources/newLoopLogo.ivf ]
 then
-	cp -a "${MYDIR}/config/bootanimation/jci/resources/LoopLogo.ivf" /jci/resources/TranLogo.ivf
-	log_message "===                 TranLogo.ivf set to Mazda Logo                    ==="
-elif [ $BOOTLOGO2 -eq 1 ]
-then
-	cp -a "${MYDIR}/config/bootanimation/jci/resources/LoopLogoMatrix.ivf" /jci/resources/TranLogo.ivf
-	log_message "===                  TranLogo.ivf set to Matrix                       ==="
-elif [ $BOOTLOGO2 -eq 2 ]
-then
-	cp -a "${MYDIR}/config/bootanimation/jci/resources/TranLogoRace.ivf" /jci/resources/TranLogo.ivf
-	log_message "===                 TranLogo.ivf set to Large Mazda Logo              ==="
-elif [ $BOOTLOGO2 -eq 3 ]
-then
-	cp -a "${MYDIR}/config/bootanimation/jci/resources/TranLogo124Spider.ivf" /jci/resources/TranLogo.ivf
-	log_message "===                 TranLogo.ivf set to Spider 124 Trans              ==="
-elif [ $BOOTLOGO2 -eq 4 ]
-then
-	cp -a "${MYDIR}/config/bootanimation/jci/resources/LoopLogoZ.ivf" /jci/resources/TranLogo.ivf
-	log_message "===                  TranLogo.ivf set to MaZda Logo                   ==="
-elif [ $BOOTLOGO2 -eq 5 ]
-then
-	cp -a "${MYDIR}/config/bootanimation/jci/resources/LoopLogoCinema.ivf" /jci/resources/TranLogo.ivf
-	log_message "===                TranLogo.ivf set to MZD Cinema Loop                ==="
-elif [ $BOOTLOGO2 -eq 6 ]
-then
-	cp -a "${MYDIR}/config/bootanimation/jci/resources/TranLogoCrissCross.ivf" /jci/resources/TranLogo.ivf
-	log_message "===                 TranLogo.ivf set to MZD Criss Cross               ==="
-elif [ $BOOTLOGO2 -eq 7 ]
-then
-	cp -a "${MYDIR}/config/bootanimation/jci/resources/LoopLogoRace.ivf" /jci/resources/TranLogo.ivf
-	log_message "===                TranLogo.ivf set to MZD Race Loop                  ==="
-elif [ $BOOTLOGO2 -eq 8 ]
-then
-	cp -a "${MYDIR}/config/bootanimation/jci/resources/TranLogo.ivf" /jci/resources/
-	log_message "===               TranLogo.ivf set to Default Mazda Intro             ==="
+  log_message "===   Found newLoopLogo.ivf, other boot animations will be skipped   ==="
 else
-	log_message "===                  TranLogo.ivf was not changed                     ==="
-fi
+  if [ $BOOTLOGO2 -eq 0 ]
+  then
+    cp -a "${MYDIR}/config/bootanimation/jci/resources/LoopLogo.ivf" /jci/resources/TranLogo.ivf
+    log_message "===                 TranLogo.ivf set to Mazda Logo                    ==="
+  elif [ $BOOTLOGO2 -eq 1 ]
+  then
+    cp -a "${MYDIR}/config/bootanimation/jci/resources/LoopLogoMatrix.ivf" /jci/resources/TranLogo.ivf
+    log_message "===                  TranLogo.ivf set to Matrix                       ==="
+  elif [ $BOOTLOGO2 -eq 2 ]
+  then
+    cp -a "${MYDIR}/config/bootanimation/jci/resources/TranLogoRace.ivf" /jci/resources/TranLogo.ivf
+    log_message "===                 TranLogo.ivf set to Large Mazda Logo              ==="
+  elif [ $BOOTLOGO2 -eq 3 ]
+  then
+    cp -a "${MYDIR}/config/bootanimation/jci/resources/TranLogo124Spider.ivf" /jci/resources/TranLogo.ivf
+    log_message "===                 TranLogo.ivf set to Spider 124 Trans              ==="
+  elif [ $BOOTLOGO2 -eq 4 ]
+  then
+    cp -a "${MYDIR}/config/bootanimation/jci/resources/LoopLogoZ.ivf" /jci/resources/TranLogo.ivf
+    log_message "===                  TranLogo.ivf set to MaZda Logo                   ==="
+  elif [ $BOOTLOGO2 -eq 5 ]
+  then
+    cp -a "${MYDIR}/config/bootanimation/jci/resources/LoopLogoCinema.ivf" /jci/resources/TranLogo.ivf
+    log_message "===                TranLogo.ivf set to MZD Cinema Loop                ==="
+  elif [ $BOOTLOGO2 -eq 6 ]
+  then
+    cp -a "${MYDIR}/config/bootanimation/jci/resources/TranLogoCrissCross.ivf" /jci/resources/TranLogo.ivf
+    log_message "===                 TranLogo.ivf set to MZD Criss Cross               ==="
+  elif [ $BOOTLOGO2 -eq 7 ]
+  then
+    cp -a "${MYDIR}/config/bootanimation/jci/resources/LoopLogoRace.ivf" /jci/resources/TranLogo.ivf
+    log_message "===                TranLogo.ivf set to MZD Race Loop                  ==="
+  elif [ $BOOTLOGO2 -eq 8 ]
+  then
+    cp -a "${MYDIR}/config/bootanimation/jci/resources/TranLogo.ivf" /jci/resources/
+    log_message "===               TranLogo.ivf set to Default Mazda Intro             ==="
+  else
+    log_message "===                  TranLogo.ivf was not changed                     ==="
+  fi
 
-if [ $BOOTLOGO3 -eq 0 ]
-then
-	cp -a "${MYDIR}/config/bootanimation/jci/resources/LoopLogo.ivf" /jci/resources/TranLogoEnd.ivf
-	log_message "===                 TranLogoEnd.ivf set to Mazda Logo                 ==="
-elif [ $BOOTLOGO3 -eq 1 ]
-then
-	cp -a "${MYDIR}/config/bootanimation/jci/resources/LoopLogoMatrix.ivf" /jci/resources/TranLogoEnd.ivf
-	log_message "===                 TranLogoEnd.ivf set to Matrix                     ==="
-elif [ $BOOTLOGO3 -eq 2 ]
-then
-	cp -a "${MYDIR}/config/bootanimation/jci/resources/TranLogoEndRace.ivf" /jci/resources/TranLogoEnd.ivf
-	log_message "===               TranLogoEnd.ivf set to Mazda Race Logo              ==="
-elif [ $BOOTLOGO3 -eq 3 ]
-then
-	cp -a "${MYDIR}/config/bootanimation/jci/resources/TranLogoCarFlash.ivf" /jci/resources/TranLogoEnd.ivf
-	log_message "===                 TranLogoEnd.ivf set to Car Flash                  ==="
-elif [ $BOOTLOGO3 -eq 4 ]
-then
-	cp -a "${MYDIR}/config/bootanimation/jci/resources/LoopLogoZ.ivf" /jci/resources/TranLogoEnd.ivf
-	log_message "===                TranLogoEnd.ivf set to MaZda Logo                  ==="
-elif [ $BOOTLOGO3 -eq 5 ]
-then
-	cp -a "${MYDIR}/config/bootanimation/jci/resources/TranLogoEndCinema.ivf" /jci/resources/TranLogoEnd.ivf
-	log_message "===                TranLogoEnd.ivf set to MZD Cinema                  ==="
-elif [ $BOOTLOGO3 -eq 6 ]
-then
-	cp -a "${MYDIR}/config/bootanimation/jci/resources/TranLogoEndCrissCross.ivf" /jci/resources/TranLogoEnd.ivf
-	log_message "===               TranLogoEnd.ivf set to MZD Criss Cross              ==="
-elif [ $BOOTLOGO3 -eq 7 ]
-then
-	cp -a "${MYDIR}/config/bootanimation/jci/resources/TranLogoEndRace.ivf" /jci/resources/TranLogoEnd.ivf
-	log_message "===                TranLogoEnd.ivf set to MZD Race                    ==="
-elif [ $BOOTLOGO3 -eq 8 ]
-then
-	cp -a "${MYDIR}/config/bootanimation/jci/resources/TranLogoEndSpace.ivf" /jci/resources/TranLogoEnd.ivf
-	log_message "===                TranLogoEnd.ivf set to MZD Space                   ==="
-elif [ $BOOTLOGO3 -eq 9 ]
-then
-	cp -a "${MYDIR}/config/bootanimation/jci/resources/TranRace.ivf" /jci/resources/TranLogoEnd.ivf
-	log_message "===                TranLogoEnd.ivf set to MZD Race                    ==="
-elif [ $BOOTLOGO3 -eq 10 ]
-then
-	cp -a "${MYDIR}/config/bootanimation/jci/resources/TranIntroM.ivf" /jci/resources/TranLogoEnd.ivf
-	log_message "===              TranLogoEnd.ivf set to MZD Title Slam                ==="
-elif [ $BOOTLOGO3 -eq 11 ]
-then
-	cp -a "${MYDIR}/config/bootanimation/jci/resources/TranLogoEnd.ivf" /jci/resources/
-	log_message "===                TranLogoEnd.ivf set to Default                     ==="
-else
-	log_message "===                TranLogoEnd.ivf was not changed                    ==="
+  if [ $BOOTLOGO3 -eq 0 ]
+  then
+    cp -a "${MYDIR}/config/bootanimation/jci/resources/LoopLogo.ivf" /jci/resources/TranLogoEnd.ivf
+    log_message "===                 TranLogoEnd.ivf set to Mazda Logo                 ==="
+  elif [ $BOOTLOGO3 -eq 1 ]
+  then
+    cp -a "${MYDIR}/config/bootanimation/jci/resources/LoopLogoMatrix.ivf" /jci/resources/TranLogoEnd.ivf
+    log_message "===                 TranLogoEnd.ivf set to Matrix                     ==="
+  elif [ $BOOTLOGO3 -eq 2 ]
+  then
+    cp -a "${MYDIR}/config/bootanimation/jci/resources/TranLogoEndRace.ivf" /jci/resources/TranLogoEnd.ivf
+    log_message "===               TranLogoEnd.ivf set to Mazda Race Logo              ==="
+  elif [ $BOOTLOGO3 -eq 3 ]
+  then
+    cp -a "${MYDIR}/config/bootanimation/jci/resources/TranLogoCarFlash.ivf" /jci/resources/TranLogoEnd.ivf
+    log_message "===                 TranLogoEnd.ivf set to Car Flash                  ==="
+  elif [ $BOOTLOGO3 -eq 4 ]
+  then
+    cp -a "${MYDIR}/config/bootanimation/jci/resources/LoopLogoZ.ivf" /jci/resources/TranLogoEnd.ivf
+    log_message "===                TranLogoEnd.ivf set to MaZda Logo                  ==="
+  elif [ $BOOTLOGO3 -eq 5 ]
+  then
+    cp -a "${MYDIR}/config/bootanimation/jci/resources/TranLogoEndCinema.ivf" /jci/resources/TranLogoEnd.ivf
+    log_message "===                TranLogoEnd.ivf set to MZD Cinema                  ==="
+  elif [ $BOOTLOGO3 -eq 6 ]
+  then
+    cp -a "${MYDIR}/config/bootanimation/jci/resources/TranLogoEndCrissCross.ivf" /jci/resources/TranLogoEnd.ivf
+    log_message "===               TranLogoEnd.ivf set to MZD Criss Cross              ==="
+  elif [ $BOOTLOGO3 -eq 7 ]
+  then
+    cp -a "${MYDIR}/config/bootanimation/jci/resources/TranLogoEndRace.ivf" /jci/resources/TranLogoEnd.ivf
+    log_message "===                TranLogoEnd.ivf set to MZD Race                    ==="
+  elif [ $BOOTLOGO3 -eq 8 ]
+  then
+    cp -a "${MYDIR}/config/bootanimation/jci/resources/TranLogoEndSpace.ivf" /jci/resources/TranLogoEnd.ivf
+    log_message "===                TranLogoEnd.ivf set to MZD Space                   ==="
+  elif [ $BOOTLOGO3 -eq 9 ]
+  then
+    cp -a "${MYDIR}/config/bootanimation/jci/resources/TranRace.ivf" /jci/resources/TranLogoEnd.ivf
+    log_message "===                TranLogoEnd.ivf set to MZD Race                    ==="
+  elif [ $BOOTLOGO3 -eq 10 ]
+  then
+    cp -a "${MYDIR}/config/bootanimation/jci/resources/TranIntroM.ivf" /jci/resources/TranLogoEnd.ivf
+    log_message "===              TranLogoEnd.ivf set to MZD Title Slam                ==="
+  elif [ $BOOTLOGO3 -eq 11 ]
+  then
+    cp -a "${MYDIR}/config/bootanimation/jci/resources/TranLogoEnd.ivf" /jci/resources/
+    log_message "===                TranLogoEnd.ivf set to Default                     ==="
+  else
+    log_message "===                TranLogoEnd.ivf was not changed                    ==="
+  fi
 fi
 log_message "=========******* END INSTALLATION OF TWEAK BOOT ANIMATION ******========="
 log_message " "

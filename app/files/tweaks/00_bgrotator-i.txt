@@ -5,29 +5,30 @@ log_message "==========********** INSTALL BACKGROUND ROTATOR ... ************===
 
 sed -i "/.. MZD-AIO-TI CSS ../,/.. END AIO CSS ../d" /jci/gui/common/css/common.css
 log_message "===             Removed old AIO Custom CSS in common.css              ==="
-
-cat <<EOT >> /jci/gui/common/css/common.css
-/* MZD-AIO-TI CSS */
-/* Custom Background Animation */
-.CommonBgImg {
-	background-position:0;
-	animation: slide ${BG_SECONDS}s steps(${BG_STEPS},end) infinite;
-}
-/* The Animation */
-@keyframes slide {
-  to {
-    background-position:-${BG_WIDTH}px;
+if [ "${BG_SECONDS}" != "" ]
+then
+  cat <<EOT >> /jci/gui/common/css/common.css
+  /* MZD-AIO-TI CSS */
+  /* Custom Background Animation */
+  .CommonBgImg {
+    background-position:0;
+    animation: slide ${BG_SECONDS}s steps(${BG_STEPS},end) infinite;
   }
-}
-/* END AIO CSS */
+  /* The Animation */
+  @keyframes slide {
+    to {
+      background-position:-${BG_WIDTH}px;
+    }
+  }
+  /* END AIO CSS */
 EOT
-log_message "===                 Background Set To Show ${BG_STEPS} Images                  ==="
-log_message "===                        For ${BG_SEC_EACH} Seconds Each                        ==="
-log_message "===             Background Animation Added to common.css              ==="
-
+  log_message "===                 Background Set To Show ${BG_STEPS} Images                  ==="
+  log_message "===                        For ${BG_SEC_EACH} Seconds Each                        ==="
+  log_message "===             Background Animation Added to common.css              ==="
+fi
 if [ $TESTBKUPS -eq 1 ]
 then
-  cp -a /jci/gui/common/css/common.css "${MYDIR}/bakups/test/common_after-background.css"
+  cp /jci/gui/common/css/common.css "${MYDIR}/bakups/test/common_after-background.css"
 fi
 log_message "========********** END INSTALLATION OF BACKGROUND ROTATOR *********======"
 log_message " "

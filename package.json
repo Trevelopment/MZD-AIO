@@ -2,7 +2,7 @@
   "name": "MZD-AIO-TI",
   "productName": "MZD All In One Tweaks Installer",
   "description": "An Installer/Uninstaller for Over 50 System Tweaks for the Mazda MZD Infotainment System.",
-  "version": "2.8.0",
+  "version": "2.8.1",
   "homepage": "http://mazdatweaks.com",
   "license": "GPL-3.0",
   "main": "main.js",
@@ -57,7 +57,7 @@
     "release": "build",
     "postbuild": "node build/target.js --clean",
     "xinstall": "cd app && ncu -u --packageFile package.json && ncu -a --packageFile package.json && npm i && cd .. && ncu -u --packageFile package.json && ncu -a --packageFile package.json && npm i",
-    "postinstall": "install-app-deps && electron-rebuild -w drivelist"
+    "postinstall": "electron-builder install-app-deps && electron-rebuild -w drivelist"
   },
   "standard": {
     "globals": [
@@ -165,11 +165,11 @@
   },
   "devDependencies": {
     "async": "^2.6.1",
-    "chai": "^4.1.2",
+    "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
     "dependency-check": "^3.2.0",
     "devtron": "^1",
-    "electron": "^2.0.5",
+    "electron": "^2.0.8",
     "electron-builder": "20.23.1",
     "electron-debug": "^2.0.0",
     "electron-is-dev": "^0.3",
@@ -186,12 +186,13 @@
     "bluebird-lst": "^1.0.5",
     "copy-dir": "^0.4.0",
     "crlf": "^1.1.1",
-    "drivelist": "^6.3.0",
+    "drivelist": "^6.4.0",
     "electron-context-menu": "^0.10.0",
     "electron-image-resize": "^1.2.4",
     "electron-store": "^2.0.0",
     "extract-zip": "^1.6.7",
     "jquery": "^3.3.1",
-    "mkdirp": "^0.5.1"
+    "mkdirp": "^0.5.1",
+    "xml2js": "^0.4.19"
   }
 }

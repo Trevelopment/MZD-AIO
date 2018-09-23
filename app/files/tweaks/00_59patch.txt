@@ -1,11 +1,11 @@
-backup_org /jci/gui/apps/system/js/systemApp.js
 # for FW v59 if they do not have No more disclamer or order of audio source
 # apply patch to show apps in app List
 if [ $COMPAT_GROUP -gt 2 ] && ! grep -Fq "app.casdkapps" /jci/gui/apps/system/js/systemApp.js
 then
+  backup_org /jci/gui/apps/system/js/systemApp.js
   if [ $COMPAT_GROUP -lt 6 ]
   then
-    cp -a ${MYDIR}/config/jci/gui/apps/system/js/systemApp.js /jci/gui/apps/system/js
+    cp -a ${MYDIR}/config/jci/gui/apps/system/js/systemApp.js /jci/gui/apps/system/js/
     log_message "===        Patched systemApp.js for AIO + CASDK apps for v59          ==="
   elif [ $COMPAT_GROUP -eq 6 ]
   then

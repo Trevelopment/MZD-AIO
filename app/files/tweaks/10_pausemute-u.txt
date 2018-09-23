@@ -10,12 +10,8 @@ then
   # Looks for this line of code that doesnt exist in the original file for installations prior to AIO v2.1
 elif grep -Fq 'isMuted ? "Global.Pause" : "Global.Resume"' /jci/gui/common/js/Common.js
 then
-  # If Backup is Available then we're done
-  if [ -e /jci/gui/common/js/Common.js.org ]
+  if ! (restore_org /jci/gui/common/js/Common.js)
   then
-    cp -a /jci/gui/common/js/Common.js.org /jci/gui/common/js/Common.js
-    log_message "===             Common.js Restored From Original Backup               ==="
-  else
     log_message "===  No Suitable Backup Available! No Changes Were Made to Common.js. ==="
   fi
 else

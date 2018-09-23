@@ -90,7 +90,7 @@ Permanently visible date + icons above the clock, even if system messages are di
 
 ##### USB Audio Mod. By: Enlsen
 
-## **NOT Compatible with FW v59.00.502+**
+*(NOT Compatible with FW v59.00.502+)*
 
 \*\*Patches The USB Audio App With These Mods:  
 

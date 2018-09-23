@@ -5,7 +5,76 @@
 <p><a href="changelog.htm" data-featherlight="ajax">Full Changelog</a></p>
 
 <h1>AIO + CASDK</h1>
+<h3>v2.8.1</h3>
 
+<h4><strong>Android Auto Headunit App v1.10</strong></h4>
+<ul>
+  <li>HUD Support</li>
+  <li>USB/WiFi Switching Improvements</li>
+  <li>Various Codeing Improvements/Bug Fixes</li>
+</ul>
+<h4><strong>Video Player App v3.6</strong></h4>
+<ul>
+  <li>Choose defaults for Shuffle, Repeat, &amp; fullscreen</li>
+  <li>Video will resume where it left off after a phone call</li>
+</ul>
+<h4><strong>AIO Tweaks App v0.8</strong></h4>
+<ul>
+  <li>Home &amp; Playback buttons changed to icons</li>
+  <li>Added &quot;Shell&quot; tab and moved most of the shell commands</li>
+  <li>Controls change: Left/Right - Switch Tabs; Up/Down - Open Info Panel</li>
+  <li>Faster loading responses from shell commands<ul>
+      <li>Before response came through line by line via websocket (~.3 second per line)</li>
+      <li>Now response is written to temp file and the file&#39;s contents are loaded &amp; displayed. (~1 second per command)</li>
+    </ul>
+  </li>
+  <li><strong>Show Version</strong> - Shows FW Version</li>
+  <li><strong>Vehicle Data</strong> - Shows Shared Vehicle Data</li>
+  <li><s><b>Reverse Cam</b> - Shows Reverse Camera</s> (<em>So close!</em>)</li>
+</ul>
+<h4><strong>Remove Message Replies</strong>:</h4>
+<ul>
+  <li>Set the <strong>preset text messages</strong> in <em>ANY</em> available language even edit multiple languages.</li>
+  <li>After installing will prompt to perform a Factory Reset to apply message settings (or normal reboot, message setting will not be applied until the system is factory reset).<ul>
+      <li>NOTE: IF <em>&quot;SKIP CONFIRMATION&quot;</em> INSTALL OPTION IS CHOSEN THIS PROMP WILL BE SKIPPED AND FACTORY RESET WILL BE DONE AUTOMATIICALLY</li>
+    </ul>
+  </li>
+</ul>
+<h4><strong>Install Options:</strong></h4>
+<ul>
+  <li><strong>Build &quot;run.sh&quot;</strong>: Renames &quot;tweaks.sh&quot; to &quot;run.sh&quot; to be executed by autorun<ul>
+      <li><em>Must have autorun installed prior to running</em></li>
+      <li>Only runs once when the system is booting up.</li>
+      <li>Mostly for recovery purposes.</li>
+    </ul>
+  </li>
+  <li><strong>Apps To Resources</strong>: Install App Files To The &quot;/resources&quot; Partition<ul>
+      <li>Resources is about 3GB (rootfs is only about 500MB) mostly used for language files (because some regions have many languages available)</li>
+      <li><strong>(v70)</strong> If space on rootfs is low (under 5% free) apps will Be Installed to resources automatically</li>
+      <li><em>Recomended for all app installations</em> (checked by default)</li>
+    </ul>
+  </li>
+</ul>
+<h4><strong>CASDK:</strong></h4>
+<ul>
+  <li>In AIO: Help/Controls/Info panel for each app when you click the app&#39;s image.</li>
+</ul>
+<h4><strong>Bug Fixes:</strong></h4>
+<li><strong>No More Disclaimer/Order Audio Sources &amp; App List Patch (v59+):</strong> Uses proper Application list structure based on vehicle configuration type (old or new)<ul>
+    <li><strong>(v70)</strong> Fixed AA/CarPlay button disappearing from statusbar.</li>
+  </ul>
+</li>
+<li><strong>USB Audio Mod</strong>: Fixed &quot;Powered by Gracenote&quot; text not displaying (normal &amp; custom text)</li>
+<li><strong>Pause On Mute (v70)</strong>: Installation is skipped for v70+ because pause on mute behavior is built in.</li>
+<li><strong>Boot Animations (v59.00.502+)</strong> Fixed Custom Boot Animations, v59.00.502+ only one boot animation is used (LoopLogo in AIO Options)</li>
+<li><strong>tweaks.sh</strong>: Coding/Error handling improvements.<ul>
+    <li>AIO_logs saved in <code>/bakups/</code> folder on USB now contain all error output from stdout &amp; stderr</li>
+    <li>Additional log is created <code>/bakups/info.log</code> with some general system information for troubleshooting issues if needed</li>
+    <li>The Most important thing AIO does is create backups of the original system files before modifying them<ul><li>If a file backup fails the install will abort with a warning message</li><li>This issue was seen on v70.00.021, Backups could not be created due to lack of disk space making it very difficult to revert tweaks.</li></ul></li>
+  </ul>
+
+    <li>AIO will use a default image when no image is chosen in the options (instead of hanging during compile due to missing image file) for tweaks that are expecting an image (Background, Change Blank Album Art, etc.).</li>
+    <li>Install Options tab is shown in all applicable views (CASDK, Full System Recovery &amp; autorun).</li>
 <h3>v2.8.0</h3>
 <h2>CASDK</h2>
 <p>

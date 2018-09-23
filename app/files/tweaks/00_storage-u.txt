@@ -1,0 +1,20 @@
+# reset storage
+if [ -e /jci/opera/opera_home/pstorage/psindex.dat ]
+then
+  if [ -f /jci/opera/opera_home/pstorage/psindex.dat.org ]
+  then
+    log_message "===                 Reverting localStorage Settings                   ==="
+    cp -a /jci/opera/opera_home/pstorage/psindex.dat.org /jci/opera/opera_home/pstorage/psindex.dat
+  	rm /jci/opera/opera_home/pstorage/psindex.dat.org
+  else
+    log_message "===             Removing localStorage Settings & pstorage             ==="
+    rm -rf /jci/opera/opera_home/pstorage
+    if [ -e /tmp/mnt/data_persist/storage ]
+    then
+      log_message "===                    Removing Storage Folder                        ==="
+      rm -rf /tmp/mnt/data_persist/storage
+    else
+      log_message "===                   Storage Folder Not Present                      ==="
+    fi
+  fi
+fi

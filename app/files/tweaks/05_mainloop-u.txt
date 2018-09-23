@@ -2,17 +2,11 @@
 show_message "REMOVE MAIN-MENU-LOOP  ..."
 log_message "=========************* UNINSTALL MAIN-MENU-LOOP ... ************========="
 
-# IF Backup is available, we are done
-if [ -e /jci/gui/apps/system/controls/MainMenu/js/MainMenuCtrl.js.org ]
+if ! (restore_org /jci/gui/apps/system/controls/MainMenu/js/MainMenuCtrl.js)
 then
-  cp /jci/gui/apps/system/controls/MainMenu/js/MainMenuCtrl.js.org /jci/gui/apps/system/controls/MainMenu/js/MainMenuCtrl.js
-  log_message "===           Restored Original MainMenuCtrl.js From Backup           ==="
-else
-  log_message "===   No backup of MainMenuCtrl.js available, no changes were made    ==="
-  # if you need the fallback file, uncomment the next line
-  # cp -a "${MYDIR}/config_org/main-menu-loop/jci/gui/apps/system/controls/MainMenu/js/MainMenuCtrl.js" /jci/gui/apps/system/controls/MainMenu/js/
-  # log_message "=== Copied /jci/gui/apps/system/controls/MainMenu/js/MainMenuCtrl.js from USB Drive ==="
+  log_message "===                 No Backup of MainMenuCtrl.js found                ==="
 fi
+
 
 log_message "======*********** END UNINSTALLATION OF MAIN-MENU-LOOP ***********======="
 log_message " "
