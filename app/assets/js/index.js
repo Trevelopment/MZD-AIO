@@ -3,14 +3,14 @@
 ** MZD-AIO-TI                                                                 **
 ** By: Trezdog44 - Trevor Martin                                              **
 ** http://mazdatweaks.com                                                    **
-** ©2017 Trevelopment                                                         **
+** ©2019 Trevelopment                                                         **
 **                                                                            **
 ** index.js - Helper javascript functions for the main view using electron    **
 ** renderer process modules.                                                  **
 **                                                                            **
 ** ************************************************************************** **
 \* ************************************************************************** */
-/* jshint esversion:6, -W033 */
+/* jshint esversion:6, -W033, -W117, -W097, -W116 */
 const { electron, nativeImage, remote, clipboard, shell } = require('electron')
 const { app, BrowserWindow } = remote
 const _ = require('lodash')
@@ -46,7 +46,9 @@ var colordir = `${app.getPath('userData')}/color-schemes` // Location of downloa
 var logFileName = 'MZD_LOG' // Name of log file (without extension)
 var varDir = `${app.getPath('userData')}/background/` // Location of files with saved variables
 var date = function() { return new Date() }
-var updateVer = 281
+process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = true
+var helpClick = false
+var updateVer = 282
 // require('./lib/log')('MZD-AIO-LOG')
 // var output = process.stdout
 // var errorOutput = process.stderr
@@ -132,15 +134,17 @@ ipc.on('open-copy-folder', () => {
 })
 
 function openCopyFolder() {
-  copyFolderLocation = path.normalize(path.join(persistantData.get('copyFolderLocation'), '/_copy_to_usb/config'))
-  if (!shell.showItemInFolder(copyFolderLocation)) {
-    copyFolderLocation = path.normalize(path.join(persistantData.get('copyFolderLocation'), '/_copy_to_usb/tweaks.sh'))
-    if (!shell.showItemInFolder(copyFolderLocation)) {
+  if (!fs.existsSync(`${copyFolderLocation}/_copy_to_usb`)) {
+    mkdirp.sync(`${copyFolderLocation}/_copy_to_usb`)
+  }
+  var openCopy = (process.platform === "win32" ? `${copyFolderLocation}/_copy_to_usb/*`:`${copyFolderLocation}/_copy_to_usb/tweaks.sh`)
+  shell.showItemInFolder(openCopy, { activate: true }, (err) => {
+    if (err) {
       bootbox.alert({
         message: `"${copyFolderLocation.replace('config', '')}" Does Not Exist.  Click "Start Compilation" to Run The Tweak Builder and Create the _copy_to_usb Folder.`
       })
     }
-  }
+  })
 }
 
 function openApkFolder() {
@@ -161,7 +165,7 @@ function autoHelp() {
 
 function myStance() {
   ipc.send('reset-window-size')
-  $.featherlight('views/stance.htm', { closeSpeed: 2000, variant: 'myStance', afterClose: updateNotesCallback })
+  // $.featherlight('views/stance.htm', { closeSpeed: 2000, variant: 'myStance', afterClose: updateNotesCallback })
 }
 
 function announcement() {
@@ -271,10 +275,13 @@ function helpDropdown() {
 }
 
 function closeHelpDrop() {
-  var x = document.getElementById('helpDrop')
-  var y = document.getElementById('helpDropBtn')
-  x.className = x.className.replace(' w3-show', '')
-  y.innerHTML = "<span class='icon-cog3'></span>"
+  var x, y
+  if (x = document.getElementById('helpDrop')) {
+    x.className = x.className.replace(' w3-show', '')
+  }
+  if (y = document.getElementById('helpDropBtn')) {
+    y.innerHTML = "<span class='icon-cog3'></span>"
+  }
 }
 // Normal Drop Down Menus
 function dropDownMenu(id) {

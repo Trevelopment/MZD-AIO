@@ -655,7 +655,8 @@ log_message "=======*********  ANDROID AUTO & CASTSCREEN RECIEVER ... ********==
 ### kills all WebSocket daemons
 killall -q -9 headunit
 pkill cs_receiver_arm
-rm -rf /jci/gui/addon-common
+rm -rf /jci/gui/
+rm -rf /tmp/mnt/resources/aio/addon-common
 log_message "===                   Removed /jci/gui/addon-common                   ==="
 
 if grep -Fq "input_filter" /jci/sm/sm.conf

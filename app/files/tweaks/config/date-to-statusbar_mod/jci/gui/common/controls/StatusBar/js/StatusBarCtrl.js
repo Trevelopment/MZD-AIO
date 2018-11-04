@@ -304,7 +304,7 @@ StatusBarCtrl.prototype._updateClock = function()
     {
         timeStr = "";
     }
-else
+    else if(typeof utility.formatDateCustom === "function")
     {
         dateStr = utility.formatDateCustom(currentTime);
     }
@@ -609,7 +609,7 @@ StatusBarCtrl.prototype.updateClock = function(currentTime)
     {
         timeStr = "";
     }
-    else
+    else if(typeof utility.formatDateCustom === "function")
     {
         dateStr = utility.formatDateCustom(currentTime);
     }

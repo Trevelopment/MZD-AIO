@@ -1,23 +1,23 @@
-backup_org /jci/gui/common/js/Common.js
-
 # pause on mute
-show_message "INSTALL PAUSE_ON_MUTE ..."
-log_message "============**********    INSTALL PAUSE_ON_MUTE ... **********==========="
-
-# Search a specific, unique code snippet to check if modification has already been done
-if grep -Fq 'isMuted ? "Global.Pause" : "Global.Resume"' /jci/gui/common/js/Common.js \
-|| grep -Fq 'AIO Pause on Mute' /jci/gui/common/js/Common.js
+if [ $COMPAT_GROUP -ge 5 ]
 then
-	log_message "===               Pause On Mute Mod is already installed              ==="
-elif [ $COMPAT_GROUP -gt 5 ]
-then
-	log_message "===                 Pause On Mute is included in v70+                 ==="
-	show_message "PAUSE_ON_MUTE IS NOT COMPATIBLE WITH v70+ ..."
+	show_message "PAUSE_ON_MUTE IS NOT COMPATIBLE WITH ${CMU_SW_VER} ..."
+	log_message "====*********     Pause On Mute is included in v59.00.502+  *********===="
 else
-	# Add this one line of code that does the magic
-	sed -i '/this._isMutedChanged();/ a\            framework.sendEventToMmui("Common", isMuted ? "Global.Pause" : "Global.Resume"); //AIO Pause on Mute ~Trez' /jci/gui/common/js/Common.js
-	log_message "===              Modified /jci/gui/common/js/Common.js                ==="
-fi
+	backup_org /jci/gui/common/js/Common.js
+	show_message "INSTALL PAUSE_ON_MUTE ..."
+	log_message "============**********    INSTALL PAUSE_ON_MUTE ... **********==========="
+	# Search a specific, unique code snippet to check if modification has already been done
+	if grep -Fq 'isMuted ? "Global.Pause" : "Global.Resume"' /jci/gui/common/js/Common.js \
+	|| grep -Fq 'AIO Pause on Mute' /jci/gui/common/js/Common.js
+	then
+		log_message "===               Pause On Mute Mod is already installed              ==="
+	else
+		# Add this one line of code that does the magic
+		sed -i '/this._isMutedChanged();/ a\            framework.sendEventToMmui("Common", isMuted ? "Global.Pause" : "Global.Resume"); //AIO Pause on Mute ~Trez' /jci/gui/common/js/Common.js
+		log_message "===              Modified /jci/gui/common/js/Common.js                ==="
+	fi
 
-log_message "========**********  END INSTALLATION OF PAUSE_ON_MUTE  *********========="
-log_message " "
+	log_message "========**********  END INSTALLATION OF PAUSE_ON_MUTE  *********========="
+	log_message " "
+fi

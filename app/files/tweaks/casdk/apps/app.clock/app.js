@@ -125,6 +125,7 @@ CustomApplicationsHandler.register("app.clock", new CustomApplication({
         framework.common.statusBar.setVisible("slide", this.showSB);
         $('.StatusBarCtrlAppName').text("Clock")
         $('.StatusBarCtrlDomainIcon').css({ "backgroundImage": "url(apps/custom/apps/app.clock/app.png)" });
+        framework.common.statusBar.divElt.style.visibility = this.showSB;
         break;
       case this.DOWN:
         this.showBG = !this.showBG;

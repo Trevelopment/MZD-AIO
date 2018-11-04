@@ -1,3 +1,4 @@
+/* jshint esversion:6, -W083 */
 const electron = require('electron')
 const ipc = electron.ipcRenderer
 

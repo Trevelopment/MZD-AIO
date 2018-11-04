@@ -1,11 +1,27 @@
-backup_org /jci/gui/common/controls/List2/js/List2Ctrl.js
+backup_org /jci/gui/common/js/Common.js
 
 show_message "INSTALL REMOVE SYSTEM BEEPS ..."
 log_message "============******* INSTALL REMOVE SYSTEM BEEPS ...  *******============="
 
-# Modify List2Ctrl.js
-sed -i 's/        return framework.common.beep(pressType, eventCause);/        \/\/ return framework.common.beep(pressType, eventCause); \/\/No More Beeps/g' /jci/gui/common/controls/List2/js/List2Ctrl.js
-log_message "===                  Modified Beeps in List2Ctrl.js                   ==="
-
+# Modify List2Ctrl.js Old Method
+#sed -i 's/        return framework.common.beep(pressType, eventCause);/        \/\/ return framework.common.beep(pressType, eventCause); \/\/No More Beeps/g' /jci/gui/common/controls/List2/js/List2Ctrl.js
+#log_message "===                  Modified Beeps in List2Ctrl.js                   ==="
+if grep -Fq "No More Beeps" /jci/gui/common/controls/List2/js/List2Ctrl.js
+then
+  sed -i '/No More Beeps/ c\        return framework.common.beep(pressType, eventCause);' /jci/gui/common/controls/List2/js/List2Ctrl.js
+  log_message "===              Restored Old Style Remove Beeps Tweak                ==="
+fi
+# New Method modify Common.js
+if grep -Fq "No More Beeps" /jci/gui/common/js/Common.js
+then
+  log_message "===                   System Beeps Already Disabled                   ==="
+else
+  sed -i 's/framework.sendEventToMmui("system", "PlayAudioBeep", args);/\/\/ framework.sendEventToMmui("system", "PlayAudioBeep", args); \/\/ No More Beeps/g' /jci/gui/common/js/Common.js
+  log_message "===     Modified The Beep Method Used By Framework in Common.js       ==="
+fi
+if [ $TESTBKUPS -eq 1 ]
+then
+  cp /jci/gui/common/js/Common.js "${MYDIR}/bakups/test/Common_after-nobeeps.js"
+fi
 log_message "========******* END INSTALLATION OF REMOVE SYSTEM BEEPS  *******========="
 log_message " "

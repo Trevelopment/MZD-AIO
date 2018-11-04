@@ -3,7 +3,7 @@
 #######################################################################
 show_message "INSTALLING MZD METER ..."
 log_message "=========***************   INSTALL MZD METER   ***************==========="
-
+space_check
 if [ $TESTBKUPS -eq 1 ]
 then
   cp ${STAGE_WIFI} "${MYDIR}/bakups/test/stage_wifi_mzd-before.sh"
@@ -24,12 +24,7 @@ then
   log_message "===                     Copied additionalApps.js                      ==="
 fi
 
-# Copies the content of the addon-common folder
-if [ ! -e /jci/gui/addon-common/websocketd ]  || [ ! -e /jci/gui/addon-common/jquery.min.js ]; then
-  cp -a ${MYDIR}/config/jci/gui/addon-common/ /jci/gui/
-  chmod 755 -R /jci/gui/addon-common/
-  log_message "===                     Copied addon-common folder                    ==="
-fi
+addon_common
 
 count=$(grep -c 'mzdmonitor.sh' ${STAGE_WIFI})
 if [ "$count" = "0" ]

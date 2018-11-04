@@ -2,9 +2,9 @@
 # AIO Tweaks Headunit App
 # By: Trezdog44
 #######################################################################
+space_check
 show_message "INSTALLING AIO TWEAKS APP v${AIO_TWKS_VER}..."
 log_message "=========************   INSTALL AIO TWEAKS APP   *************==========="
-
 if [ $TESTBKUPS -eq 1 ]
 then
   cp ${STAGE_WIFI} "${MYDIR}/bakups/test/stage_wifi_aio-before.sh"
@@ -44,12 +44,7 @@ fi
 # Call to the function to populate the json
 add_app_json "_aiotweaks" "AIO Tweaks" "AIO-startup.js"
 
-# Copies the content of the addon-common folder
-if [ ! -e /jci/gui/addon-common/websocketd ]  || [ ! -e /jci/gui/addon-common/jquery.min.js ]; then
-  cp -a ${MYDIR}/config/jci/gui/addon-common/ /jci/gui/
-  chmod 755 -R /jci/gui/addon-common/
-  log_message "===                    Copied addon-common folder                     ==="
-fi
+addon_common
 
 sed -i '/AIO/d' ${STAGE_WIFI}
 sed -i '/--port=9997/d' ${STAGE_WIFI}

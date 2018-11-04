@@ -1,3 +1,4 @@
+/* jshint esversion:6, -W117*/
 var translateData = new Config({ 'name': 'aio-translate-save' })
 document.getElementById('submit').innerHTML = langObj.translatorWindow[14].label
 

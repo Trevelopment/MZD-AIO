@@ -3,7 +3,7 @@
 ** MZD-AIO-TI                                                                 **
 ** By: Trezdog44 - Trevor Martin                                              **
 ** http://mazdatweaks.com                                                     **
-** ©2017 Trevelopment                                                         **
+** ©2019 Trevelopment                                                         **
 **                                                                            **
 ** home.js - The main AngularJS module & controller used to connect the main  **
 ** process and in the build process.                                          **
@@ -64,6 +64,7 @@
         dataDump: false,
         aaBetaVer: false,
         aaWifi: true,
+        aaHUD: false,
         autosort: true,
         barautosort: true,
         runsh: false,
@@ -174,7 +175,8 @@
       $scope.user.vpOps = {
         shuffle: true,
         repeat: 2,
-        fullscreen: 1
+        fullscreen: 1,
+        v4lsink: true
       }
       $scope.vpOpsRepeat = {
         None: 0,
@@ -400,7 +402,7 @@
         $scope.reset_entertainmentItems()
       }
 
-      $scope.$on('$routeChangeSuccess', function() {
+      $scope.$on('$routeChangeSuccess', () => {
         $scope.getLanguage()
         if ($location.path().includes('translate')) {
           $scope.getScript('assets/js/translator.js')
@@ -410,14 +412,12 @@
           $scope.getScript('PhotoJoiner_files/jquery-ui.js')
           $scope.getScript('PhotoJoiner_files/jquery.fineuploader-3.0.min.js')
           $scope.getScript('PhotoJoiner_files/PhotoJoin.js')
-          $(function() {
+          $(() => {
             $scope.getScript('../assets/vendor/jquery.mousewheel.min.js')
-            setTimeout(function() {
-              $('#thumbs').mousewheel(function(event, delta) {
-                this.scrollLeft -= (delta * 200)
-                event.preventDefault()
-              })
-            }, 5000)
+            $('#thumbs').mousewheel(function(event, delta) {
+              this.scrollLeft -= (delta * 200)
+              event.preventDefault()
+            })
           })
         } else {
           $scope.getScript('assets/js/tour.js')
@@ -435,15 +435,15 @@
             })
             $('.draggable').draggable({ scroll: false, distance: 10 })
 
-            $('#ctxt-title').on('click', function() {
+            $('#ctxt-title').on('click', function(event) {
               $(this).fadeOut(500)
               $('#ctxt-notif').fadeIn(500)
             })
-            $('#ctxt-notif').on('click', function() {
+            $('#ctxt-notif').on('click', function(event) {
               $(this).fadeOut(500)
               $('#ctxt-title').fadeIn(500)
             })
-            $('#background').on('click', function() { $('#infotnmtBG,#modalimg').attr('src', `${varDir}/background.png`) })
+            $('#background').on('click', () => { $('#infotnmtBG,#modalimg').attr('src', `${varDir}/background.png`) })
             $('[data-toggle="tooltip"]').tooltip({ html: true, delay: { show: 1200, hide: 200 } })
             $('[data-toggle="popover"]').popover({ html: true })
             $('.imgframe').mousewheel(function(event, delta) {
@@ -566,6 +566,7 @@
       })
       ipc.on('set-copy-loc', (loc) => {
         $scope.user.copydir = loc
+        snackbar(`Save _copy_to_usb folder to ${persistantData.get('copyFolderLocation')}`,3)
       })
       $scope.instAll = function() {
         $scope.user.mainOps = [0, 2, 3, 4, 5, 7, 8, 9]

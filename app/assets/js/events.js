@@ -1,8 +1,5 @@
+/* jshint esversion:6, -W033, -W117, -W097, -W116 */
 /* Automatically Open Background Dialog, Color DL and Speedcam DL On First Checkbox Click Only */
-/* jshint esversion:6 */
-/* jshint -W033 */
-/* jshint -W117*/
-/* jshint -W097*/
 const selectBgDir = $('.menuCheck.bg input')
 const selectColorsDL = $('.menuCheck.colors input')
 $(function() {

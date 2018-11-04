@@ -108,7 +108,7 @@ compatibility_check()
   then
     if [ $_VER_EXT -le 100 ]
     then
-      echo 6 && return # v70 compatibility is still being analyzed
+      echo 6 && return # v70.00.100 For Integrity check
     else
       echo 7 && return # Past v70.00.100 is unknown and cannot be trusted
     fi
@@ -128,23 +128,49 @@ remove_aio_js()
   INPUT=${1##*/}
   log_message "===            Removed ${2:0:11} JavaScript From ${INPUT:0:13}    ==="
 }
-backup_failed()
+rootfs_full_message()
 {
-  FILE="${1}"
-  # Double Check The Backup
-  if [ -s $FILE ]
+  show_message "DANGER!! ROOTFS IS 100% FULL!\nRUN FULL SYSTEM RESTORE OR UNINSTALL TWEAKS\nTO RECOVER SPACE AND RELOCATE FILES"
+  sleep 15
+  log_message "ROOTFS IS 100% FULL - RUN FULL SYSTEM RESTORE TO RECOVER SPACE AND RELOCATE FILES - CHOOSE \"APPS TO RESOURCES\" OPTION WHEN INSTALLING TWEAKS TO AVOID RUNNING OUT OF SPACE"
+  show_message_OK "DANGER!! ROOTFS IS 100% FULL!\nCONTINUING THE INSTALLATION COULD BE DANGEROUS!\nCONTINUE?"
+  APPS2RESOURCES=1
+}
+# checks for remaining space
+space_check()
+{
+  DATA_PERSIST=$(df -h | (grep 'data_persist' || echo 0) | awk '{ print $5 " " $1 }')
+  _ROOTFS=$(df -h | (grep 'rootfs' || echo 0) | awk '{ print $5 " " $1 }')
+  _RESOURCES=$(df -h | (grep 'resources' || echo 0) | awk '{ print $5 " " $1 }')
+  USED=$(echo $DATA_PERSIST | awk '{ print $1}' | cut -d'%' -f1  )
+  USED_ROOTFS=$(echo $_ROOTFS | awk '{ print $1}' | cut -d'%' -f1  )
+  USED_RESOURCES=$(echo $_RESOURCES | awk '{ print $1}' | cut -d'%' -f1  )
+  if [ $APPS2RESOURCES -ne 1 ]
   then
-    return
-  else
-    rm -f $FILE
-    show_message "FAILED TO CREATE BACKUP FILE:\n$FILE\nCHECK AIO_log.txt FOR MORE INFO"
-    log_message "BACKUP FOR $FILE FAILED... SEE FOLLOWING LINES FOR SPACE ANALYSIS"
-    df -h >> "${MYDIR}/AIO_log.txt"
-    sleep 10
-    show_message "THE INSTALLATION HAS ABORTED... REMOVE USB DRIVE NOW\nTHE SYSTEM WILL REBOOT"
-    sleep 2
-    reboot
-    exit 1
+    if [ $USED_ROOTFS -gt 94 ]
+    then
+      log_message "=============== WARNING: ROOT FILESYSTEM OVER ${USED_ROOTFS}% FULL!! ================"
+      APPS2RESOURCES=1
+      TESTBKUPS=1
+      KEEPBKUPS=1
+      [ $COMPAT_GROUP -eq 6 ] && v70_integrity_check
+    fi
+    if [ $APPS2RESOURCES -eq 1 ]
+    then
+      AIO_APP_DIR="/tmp/mnt/resources/aio/apps"
+      [ -e ${AIO_APP_DIR} ] || mkdir -p ${AIO_APP_DIR}
+      [ -e ${NEW_BKUP_DIR} ] || mkdir -p ${NEW_BKUP_DIR}
+      log_message "================= App Install Location set to resources ================="
+    fi
+  elif [ $USED_ROOTFS -gt 95 ]
+  then
+    log_message "======================== rootfs ${USED_ROOTFS}% used ================================"
+  fi
+  _ROOTFS=$(df -h | (grep 'rootfs' || echo 0) | awk '{ print $5 " " $1 }')
+  USED_ROOTFS=$(echo $_ROOTFS | awk '{ print $1}' | cut -d'%' -f1  )
+  if [ $USED_ROOTFS -ge 100 ]
+  then
+    rootfs_full_message
   fi
 }
 # Make a ".org" backup
@@ -152,26 +178,38 @@ backup_failed()
 # If creating backup fails the installation is aborted
 backup_org()
 {
+  space_check
   FILE="${1}"
   BACKUP_FILE="${1}.org"
   FILENAME=$(basename -- "$FILE")
   FEXT="${FILENAME##*.}"
   FNAME="${FILENAME%.*}"
+  NEW_BKUP_FILE="${NEW_BKUP_DIR}/${FILENAME}.org"
+  # Test backup "before" copy
+  if [ $TESTBKUPS -eq 1 ] && [ ! -e "${MYDIR}/bakups/test/${FNAME}_before.${FEXT}" ]
+  then
+    cp "${FILE}" "${MYDIR}/bakups/test/${FNAME}_before.${FEXT}"
+  fi
+  # New backup exists, return
+  [ -e "${NEW_BKUP_FILE}" ] && return 0
   if [ ! -e "${BACKUP_FILE}" ]
   then
-    cp -a "${FILE}" "${BACKUP_FILE}" && log_message "===+++---***|\___  Created Backup of ${FILENAME}  ___/|***---+++==="
+    if [ $COMPAT_GROUP -gt 5 ] && [ $APPS2RESOURCES -eq 1 ]
+    then
+      # new location for storing .org files for v70+
+      [ -e "${NEW_BKUP_DIR}" ] || mkdir -p "${NEW_BKUP_DIR}"
+      BACKUP_FILE="${NEW_BKUP_FILE}"
+    fi
+    cp -a "${FILE}" "${BACKUP_FILE}" && log_message "***\___  Created Backup of ${FILENAME} to ${BACKUP_FILE}  ___/***"
   fi
+  # Make sure the backup is not an empty file
+  [ ! -s "${BACKUP_FILE}" ] && v70_integrity_check
+  # Keep backup copy
   if [ $KEEPBKUPS -eq 1 ] && [ ! -e "${MYDIR}/bakups/${FILENAME}.org" ]
   then
     cp "${BACKUP_FILE}" "${MYDIR}/bakups/"
     aio_info \"${FILENAME}\",
   fi
-  if [ $TESTBKUPS -eq 1 ] && [ ! -e "${MYDIR}/bakups/test/${FNAME}_before.${FEXT}" ]
-  then
-    cp ${FILE} "${MYDIR}/bakups/test/${FNAME}_before.${FEXT}"
-  fi
-  # checks to make sure the backup created is not an empty file
-  [ -s ${BACKUP_FILE} ] || backup_failed ${BACKUP_FILE}
 }
 # Restore file from the ".org" backup
 # pass the full file path (without ".org")
@@ -183,22 +221,99 @@ restore_org()
   FILENAME=$(basename -- "$FILE")
   FEXT="${FILENAME##*.}"
   FNAME="${FILENAME%.*}"
-  if [ -s "${BACKUP_FILE}" ]
+  NEW_BKUP_FILE="${NEW_BKUP_DIR}/${FILENAME}.org"
+  # Test backups "before-restore" copy
+  if [ $TESTBKUPS -eq 1 ] && [ ! -e "${MYDIR}/bakups/test/${FNAME}_before-restore.${FEXT}" ]
   then
-    if [ $TESTBKUPS -eq 1 ] && [ ! -e "${MYDIR}/bakups/test/${FNAME}_before-uninstall.${FEXT}" ]
+    cp "${FILE}" "${MYDIR}/bakups/test/${FNAME}_before-restore.${FEXT}"
+  fi
+  if [ -e "${BACKUP_FILE}" ]
+  then
+    if [ -s "${BACKUP_FILE}" ]
     then
-      cp ${FILE} "${MYDIR}/bakups/test/${FNAME}_before-uninstall.${FEXT}"
-    fi
-    cp -a "${BACKUP_FILE}" "${FILE}" && log_message "===+++---***|\___ Restored ${FILENAME} From Backup ___/|***---+++==="
-    if [ $KEEPBKUPS -eq 1 ] && [ ! -e "${MYDIR}/bakups/${FILENAME}.org" ]
-    then
-      cp "${BACKUP_FILE}" "${MYDIR}/bakups/"
-      aio_info \"${FILENAME}\",
+      cp -a "${BACKUP_FILE}" "${FILE}" && log_message "***+++ Restored ${FILENAME} From Backup ${BACKUP_FILE} +++***"
+      if [ $KEEPBKUPS -eq 1 ] && [ ! -e "${MYDIR}/bakups/${FILENAME}.org" ]
+      then
+        cp "${BACKUP_FILE}" "${MYDIR}/bakups/"
+        aio_info \"${FILENAME}\",
+      fi
+    else
+      # backup file is blank so run v70_integrity check
+      log_message "!!!*** WARNING: BACKUP FILE ${BACKUP_FILE} WAS BLANK!!! ***!!!"
+      v70_integrity_check || return 1
     fi
     return 0
   else
+    # new secondary location for storing .org files for v70+
+    if [ -s "${NEW_BKUP_FILE}" ]
+    then
+      cp -a "${NEW_BKUP_FILE}" "${FILE}" && log_message "+++ Restored ${FILENAME} From Backup ${NEW_BKUP_FILE} +++"
+      return 0
+    fi
     return 1
   fi
+}
+# v70 integrity check will check all .org files in the /jci folder
+# the files are either moved to the new backup location in /resources
+# or deleted if a new backup exists or the file is blank
+# if the file is blank a fallback file (from v70.00.100) is saved to the new backup location
+# NO SYSTEM FILES ARE RESTORED WITH THIS FUNCION ONLY BACKUP ".org" FILES
+v70_integrity_check()
+{
+  # if not v70.00.000 - 100 return
+  log_message "*************************************************************************"
+  log_message "********************** v70 INTEGRITY CHECK BEGIN ************************"
+  if [ $COMPAT_GROUP -ne 6 ] || [ ! -d "${MYDIR}/config_org/v70/" ]
+  then
+    [ $COMPAT_GROUP -ne 6 ] && log_message "**************************** NOT V70 SKIPPING ***************************" \
+    || log_message "*********************** FALBACK FILES UNAVAILABLE ***********************"
+    return 1
+  fi
+  [ -e ${NEW_BKUP_DIR} ] || mkdir -p ${NEW_BKUP_DIR}
+  orgs=$(find /jci -type f -name "*.org")
+  for i in $orgs; do
+    ORG_FILE="$i"
+    FILENAME=$(basename -- $ORG_FILE)
+    [ "${FILENAME}" = "sm.conf.org" ] || [ "${FILENAME}" = "fps.js.org" ] && continue
+    FILESIZE=$(stat -c%s $ORG_FILE || echo 0)
+    FALLBK="${MYDIR}/config_org/v70/${FILENAME}"
+    [ -e ${FALLBK} ] || continue
+    FALBKSIZ=$(stat -c%s $FALLBK || echo 0)
+    NEWBKUP="${NEW_BKUP_DIR}/${FILENAME}"
+    [ -e ${NEWBKUP} ] && NEWSIZE=$(stat -c%s $NEWBKUP) || NEWSIZE=0
+    # log_message "${FILENAME}: $FILESIZE, ${FALLBK}: $FALBKSIZ, ${NEWBKUP}: $NEWSIZE"
+    sleep 1
+    # New backup exists & is different from the jci backup file
+    if [ -s "${NEWBKUP}" ] && [ $NEWSIZE -ne $FILESIZE ]
+    then
+      # New backup different from fallback
+      if [ $NEWSIZE -ne $FALBKSIZ ]
+      then
+        cp -a "${FALLBK}" "${NEWBKUP}"
+        log_message "***+++ Restored Backup ${NEWBKUP} From Fallback +++***"
+      fi
+      # backup exists in new locaion already delete extra bkup
+      rm -f $ORG_FILE
+      log_message "***--- Backup in New Location ${NEWBKUP}... Removing ${ORG_FILE} ---***"
+    # No new backup or same as jci .org and dont match fallback
+    elif [ $FILESIZE -ne $FALBKSIZ ]
+    then
+      # backup is invalid size
+      cp -a "${FALLBK}" "${NEWBKUP}" && rm -f "${ORG_FILE}"
+      log_message "***+++ Repaired Invalid Backup ${FILENAME} +++***"
+    elif [ "${FILENAME}" != "opera.ini.org" ]
+    then
+      # move backup file to new location (all backups will be moved except opera.ini and sm.conf)
+      mv "${ORG_FILE}" "${NEWBKUP}"
+      log_message "***+++ Moved Backup ${FILENAME} to New Location ${NEWBKUP} +++***"
+    else
+      continue
+    fi
+  done
+  log_message "*************************************************************************"
+  log_message "$(df -h)"
+  log_message "******************* v70 INTEGRITY CHECK COMPLETE ************************"
+  log_message "*************************************************************************"
 }
 show_message()
 {
@@ -218,7 +333,7 @@ show_message_OK()
     killall -q jci-dialog
     return
   else
-    log_message "********************* INSTALLATION ABORTED *********************"
+    log_message "************************ INSTALLATION ABORTED ***************************"
     show_message "INSTALLATION ABORTED! PLEASE UNPLUG USB DRIVE"
     sleep 10
     killall -q jci-dialog
@@ -236,6 +351,40 @@ create_app_json()
     log_message "===                   Created additionalApps.json                     ==="
   fi
 }
+addon_common()
+{
+  # Copies the content of the addon-common folder
+  if [ $APPS2RESOURCES -eq 1 ]
+  then
+    # symlink to resources
+    if [ ! -e /tmp/mnt/resources/aio/addon-common ]
+    then
+      [ -e /tmp/mnt/resources/aio ] || mkdir /tmp/mnt/resources/aio
+      cp -a ${MYDIR}/config/jci/gui/addon-common /tmp/mnt/resources/aio
+      chmod 755 -R /tmp/mnt/resources/aio
+      log_message "===            Copied addon-common folder to resources                ==="
+    fi
+    if [ ! -L /jci/gui/addon-common ]
+    then
+      rm -rf /jci/gui/addon-common
+      ln -sf /tmp/mnt/resources/aio/addon-common /jci/gui/addon-common
+      log_message "===         Created Symlink to resources for addon-common             ==="
+    fi
+  else
+    if [ -L /jci/gui/addon-common ]
+    then
+      rm -rf /jci/gui/addon-common
+      rm -rf /tmp/mnt/resources/aio/addon-common
+      log_message "===         Removed Symlink to resources for addon-common             ==="
+    fi
+    if [ ! -e /jci/gui/addon-common/websocketd ] || [ ! -e /jci/gui/addon-common/jquery.min.js ]
+    then
+      cp -a ${MYDIR}/config/jci/gui/addon-common/ /jci/gui/
+      chmod 755 -R /jci/gui/addon-common/
+      log_message "===                   Copied addon-common folder                      ==="
+    fi
+  fi
+}
 info_log()
 {
   INFOLOG="${MYDIR}/bakups/info.log"
@@ -250,6 +399,8 @@ info_log()
   cat /proc/meminfo >> $INFOLOG
   echo "> ps" >> $INFOLOG
   ps >> $INFOLOG
+  echo "> dmesg" >> $INFOLOG
+  dmesg >> $INFOLOG
   # echo "> netstat -a" >> $INFOLOG
   # netstat -a >> $INFOLOG
   # echo "> du -h /jci" >> $INFOLOG
@@ -452,21 +603,11 @@ then
 fi
 # Compatibility Check
 
-if [ $COMPAT_GROUP -ge 6 ]
+if [ $COMPAT_GROUP -gt 6 ]
 then
   sleep 2
-  killall -q jci-dialog
-  /jci/tools/jci-dialog --confirm --title="MZD-AIO-TI | CONTINUE INSTALLATION?" --text="WARNING! VERSION ${CMU_SW_VER} DETECTED\nAIO COMPATIBILITY HAS ONLY BEEN TESTED UP TO V70.00.021\nIF YOU ARE RUNNING A LATER FW VERSION USE EXTREME CAUTION!" --ok-label="YES - GO ON" --cancel-label="NO - ABORT"
-  if [ $? = 1 ]
-  then
-    log_message "********************* INSTALLATION ABORTED *********************"
-    show_message "INSTALLATION ABORTED! PLEASE UNPLUG USB DRIVE"
-    sleep 10
-    killall -q jci-dialog
-    exit 0
-  fi
-fi
-if [ $COMPAT_GROUP -ne 0 ]
+  show_message_OK "WARNING! VERSION ${CMU_SW_VER} DETECTED\nAIO COMPATIBILITY HAS ONLY BEEN TESTED UP TO V70.00.100\nIF YOU ARE RUNNING A LATER FW VERSION\nUSE EXTREME CAUTION!!"
+elif [ $COMPAT_GROUP -ne 0 ]
 then
   if [ $SKIPCONFIRM -eq 1 ]
   then
@@ -493,6 +634,8 @@ fi
 show_message "START OF TWEAK INSTALLATION\nMZD-AIO-TI v.${AIO_VER} By: Trezdog44 & Siutsch\n(This and the following message popup windows\n DO NOT have to be confirmed with OK)\nLets Go!"
 log_message " "
 log_message "======***********    BEGIN PRE-INSTALL OPERATIONS ...    **********======"
+mount -o rw,remount /tmp/mnt/resources/
+log_message "================== Remounted /tmp/mnt/resources ========================="
 
 # disable watchdogs in /jci/sm/sm.conf to avoid boot loops if something goes wrong
 if [ ! -e /jci/sm/sm.conf.org ]
@@ -502,12 +645,21 @@ then
 else
   log_message "================== Backup of sm.conf.org already there! ================="
 fi
-sed -i 's/watchdog_enable="true"/watchdog_enable="false"/g' /jci/sm/sm.conf
-sed -i 's|args="-u /jci/gui/index.html"|args="-u /jci/gui/index.html --noWatchdogs"|g' /jci/sm/sm.conf
-log_message "===============  Watchdog In sm.conf Permanently Disabled! =============="
-
+if ! grep -Fq 'watchdog_enable="false"' /jci/sm/sm.conf || ! grep -Fq 'args="-u /jci/gui/index.html --noWatchdogs"' /jci/sm/sm.conf
+then
+  sed -i 's/watchdog_enable="true"/watchdog_enable="false"/g' /jci/sm/sm.conf
+  sed -i 's|args="-u /jci/gui/index.html"|args="-u /jci/gui/index.html --noWatchdogs"|g' /jci/sm/sm.conf
+  log_message "===============  Watchdog In sm.conf Permanently Disabled! =============="
+else
+  log_message "=====================  Watchdog Already Disabled! ======================="
+fi
+if [ ! -s /jci/opera/opera_home/opera.ini ] && [ -e ${MYDIR}/config_org/v70/opera.ini.org ]
+then
+  cp -a ${MYDIR}/config_org/v70/opera.ini.org /jci/opera/opera_home/opera.ini
+  log_message "======********** DANGER opera.ini WAS MISSING!! REPAIRED **********======"
+fi
 # -- Enable userjs and allow file XMLHttpRequest in /jci/opera/opera_home/opera.ini - backup first - then edit
-if [ ! -e /jci/opera/opera_home/opera.ini.org ]
+if [ ! -s /jci/opera/opera_home/opera.ini.org ]
 then
   cp -a /jci/opera/opera_home/opera.ini /jci/opera/opera_home/opera.ini.org
   log_message "======== Backup /jci/opera/opera_home/opera.ini to opera.ini.org ========"
@@ -516,7 +668,10 @@ else
   [ -s /jci/opera/opera_home/opera.ini ] || cp /jci/opera/opera_home/opera.ini.org /jci/opera/opera_home/opera.ini
   log_message "================== Backup of opera.ini already there! ==================="
 fi
-sed -i 's/User JavaScript=0/User JavaScript=1/g' /jci/opera/opera_home/opera.ini
+if ! grep -Fq 'User JavaScript=1' /jci/opera/opera_home/opera.ini
+then
+  sed -i 's/User JavaScript=0/User JavaScript=1/g' /jci/opera/opera_home/opera.ini
+fi
 count=$(grep -c "Allow File XMLHttpRequest=" /jci/opera/opera_home/opera.ini)
 skip_opera=$(grep -c "Allow File XMLHttpRequest=1" /jci/opera/opera_home/opera.ini)
 if [ $skip_opera -eq 0 ]
@@ -537,6 +692,7 @@ then
   mv /jci/opera/opera_dir/userjs/fps.js /jci/opera/opera_dir/userjs/fps.js.org
   log_message "======== Moved /jci/opera/opera_dir/userjs/fps.js to fps.js.org ========="
 fi
+
 # Fix missing /tmp/mnt/data_persist/dev/bin/ if needed
 if [ ! -e /tmp/mnt/data_persist/dev/bin/ ]
 then
@@ -549,37 +705,23 @@ then
   sed -i 's/,,/,/g' ${ADDITIONAL_APPS_JSON}
   log_message "================ Fixed Issue with additionalApps.json ==================="
 fi
-DATA_PERSIST=$(df -h | (grep 'data_persist' || echo 0) | awk '{ print $5 " " $1 }')
-_ROOTFS=$(df -h | (grep 'rootfs' || echo 0) | awk '{ print $5 " " $1 }')
-_RESOURCES=$(df -h | (grep 'resources' || echo 0) | awk '{ print $5 " " $1 }')
-USED=$(echo $DATA_PERSIST | awk '{ print $1}' | cut -d'%' -f1  )
-USED_ROOTFS=$(echo $_ROOTFS | awk '{ print $1}' | cut -d'%' -f1  )
-USED_RESOURCES=$(echo $_RESOURCES | awk '{ print $1}' | cut -d'%' -f1  )
+
+space_check
 log_message "======================= data_persist ${USED}% used ==========================="
-log_message "======================== rootfs ${USED_ROOTFS}% used ========================="
-log_message "====================== resources ${USED_RESOURCES}% used ====================="
+log_message "======================== rootfs ${USED_ROOTFS}% used ================================"
+log_message "====================== resources ${USED_RESOURCES}% used ==============================="
 
 if [ $USED -ge 80 ]
 then
   rm -f /tmp/mnt/data_persist/log/dumps/*.bz2
-  log_message "===                 Over 80% Used Delete Dump Files                   ==="
+  log_message "================== Over 80% Used Delete Dump Files  ====================="
 fi
-if [ $USED_ROOTFS -ge 95 ]
-then
-  show_message "=== WARNING: ROOT FILESYSTEM OVER 95% FULL!! ==="
-  log_message "===             WARNING: ROOT FILESYSTEM OVER 95% FULL!!              ==="
-  APPS2RESOURCES=1
-fi
-# mount resources
-mount -o rw,remount /tmp/mnt/resources/
-log_message "===                  Remounted /tmp/mnt/resources                     ==="
 if [ $APPS2RESOURCES -eq 1 ]
 then
-  # set installation location for AIO apps
   AIO_APP_DIR="/tmp/mnt/resources/aio/apps"
-  sleep 2
   [ -e ${AIO_APP_DIR} ] || mkdir -p ${AIO_APP_DIR}
-  log_message "===             App Install Locatiation set to resources              ==="
+  [ -e ${NEW_BKUP_DIR} ] || mkdir -p ${NEW_BKUP_DIR}
+  log_message "=============== App Install Locatiation set to resources ================"
 fi
 # start JSON array of backups
 if [ $KEEPBKUPS -eq 1 ]

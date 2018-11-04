@@ -1,19 +1,19 @@
 backup_org /jci/scripts/jci-fw.sh
 # Install Castscreen receiver
+space_check
 show_message "INSTALL CASTSCREEN-RECEIVER ..."
 log_message "=====**************  INSTALL CASTSCREEN-RECEIVER ...   *************====="
-
-cp -a ${MYDIR}/config/castscreen-receiver/* /jci/scripts/
-cp -a /jci/scripts/adb /usr/bin/
+cp -a ${MYDIR}/config/castscreen-receiver/*.sh /jci/scripts
+cp -a ${MYDIR}/config/castscreen-receiver/cs_receiver_arm /jci/scripts
+cp -a ${MYDIR}/config/castscreen-receiver/adb /tmp/mnt/resources/dev/bin
 rm -f /jci/scripts/cs_receiver_conn_arm
+rm -f /jci/scripts/adb
 rm -f /jci/scripts/castscreen-1.0.apk
 rm -f /jci/scripts/castscreen-1.0.1.apk
 log_message "===        Copied castscreen-receiver files to /jci/scripts/          ==="
 chmod 755 /jci/scripts/wait_adb_arm.sh
 chmod 755 /jci/scripts/cs_receiver_arm
 chmod 755 /jci/scripts/mirroring.sh
-chmod 755 /jci/scripts/adb
-chmod 755 /usr/bin/adb
 if [ $TESTBKUPS -eq 1 ]
 then
 	cp ${STAGE_WIFI} ${MYDIR}/bakups/test/stage_wifi_castscreen-before.sh

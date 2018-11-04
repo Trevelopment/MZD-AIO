@@ -2,20 +2,36 @@
 - MZD-AIO-TI
 - By: Trezdog44 - Trevor Martin
 - http://mazdatweaks.com
-- ©2017 Trevelopment
+- ©2019 Trevelopment
 -
 - Custom Options For Android Auto Tweak
 -
 -->
 <div class="w3-hover-pale-blue w3-row w3-col">
   <!--ng-hide="user.aaBetaVer"-->
-  <div class="aa-side w3-col w3-half" style="font-size:15px;padding:10px;">
-    <span class="icon-android"></span><strong style="padding-left:10px">AA v1.10</strong>
+  <div class="aa-side w3-col w3-third" style="font-size:15px;padding:10px;">
+    <span class="icon-android"></span><strong style="padding-left:10px">AA v1.10+</strong>
   </div>
-  <div class="aa-side w3-col w3-half" style="font-size:15px;">
+  <div class="aa-side w3-col w3-third" style="font-size:15px;">
     <input class="w3-check" id="aaWifi" type="checkbox" name="aaWifi" ng-model="user.aaWifi" ng-value="user.aaWifi">
-    <span class="icon-signal_wifi_4_bar"></span><strong style="padding-left:10px">Wi-Fi Support</strong>
+    <label for="aaWifi"><span class="icon-signal_wifi_4_bar"></span><strong style="padding-left:10px">Wi-Fi Support</strong></label>
   </div>
+  <div class="aa-side w3-col w3-third" style="font-size:15px;" ng-show="user.aaWifi">
+    <input class="w3-check" id="aaHUD" type="checkbox" name="aaHUD" ng-model="user.aaHUD" ng-value="user.aaHUD">
+    <label for="aaHUD"><span class="icon-location"></span><strong style="padding-left:10px">HUD Support </strong><var>*Beta*</var></label>
+  </div>
+</div>
+<div class="w3-hover-pale-blue w3-row w3-col">
+  <div class="w3-twothird w3-padding">
+<input class="w3-check" id="aaBetaVer" type="checkbox" name="aaBetaVer" ng-model="user.aaBetaVer" ng-value="user.aaBetaVer">
+<label for="aaBetaVer" data-toggle="tooltip" data-placement="auto bottom" title="Check this if you have a reversed compass in AA">
+  <b style="font-size:15px"> Reverse Compass</b>
+</label>
+<br>*If you experience reversed compass navigaion issue this setting flips the heading data 180°<small> (deprecated)</small>
+</div>
+<div class="w3-third w3-padding w3-panel">
+  <a style="display:inline-block" class="w3-btn w3-green w3-hover-blue" href onclick="externalLink('aainfo')"  data-toggle="tooltip" data-placement="bottom" title="Check for older & newer versions of the Headunit App" >Other Versions</a>
+</div>
 </div>
 <div class="w3-row w3-col" ng-show="user.aaWifi">
   <strong>Instructions For Android Auto WiFi Support:

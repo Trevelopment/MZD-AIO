@@ -1,3 +1,4 @@
+/* jshint esversion:6, -W117*/
 var translateData = new Config({ 'name': 'speedo-config' })
 
 // Hook up the Restore to Default button

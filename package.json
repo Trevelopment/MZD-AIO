@@ -2,7 +2,7 @@
   "name": "MZD-AIO-TI",
   "productName": "MZD All In One Tweaks Installer",
   "description": "An Installer/Uninstaller for Over 50 System Tweaks for the Mazda MZD Infotainment System.",
-  "version": "2.8.1",
+  "version": "2.8.2",
   "homepage": "http://mazdatweaks.com",
   "license": "GPL-3.0",
   "main": "main.js",
@@ -20,7 +20,7 @@
     "url": "https://github.com/Trevelopment/MZD-AIO/issues"
   },
   "engines": {
-    "node": "^8.2.x"
+    "node": "^11.1.x"
   },
   "keywords": [
     "Mazda",
@@ -50,14 +50,14 @@
     "build:osx": "npm run prebuild && build --mac && npm run postbuild",
     "build:win": "npm run prebuild && build --win --x64 && npm run postbuild",
     "build:win64": "npm run prebuild && build --win --x64 && npm run postbuild",
-    "build:win32": "npm run prebuild && build --win --ia32 && npm run postbuild",
+    "build:win32": "npm run prebuild && build --win --ia32 && npm run postbuild && mv releases/MZD-AIO-TI_Setup_2.8.2.exe releases/MZD-AIO-TI_Setup_2.8.2_Win32.exe",
     "build:linux:x64": "npm run prebuild && build --linux deb AppImage --x64 && npm run postbuild",
     "build:linux:deb": "./scripts/build_linux_deb.sh",
     "build": "build",
     "release": "build",
     "postbuild": "node build/target.js --clean",
     "xinstall": "cd app && ncu -u --packageFile package.json && ncu -a --packageFile package.json && npm i && cd .. && ncu -u --packageFile package.json && ncu -a --packageFile package.json && npm i",
-    "postinstall": "electron-builder install-app-deps && electron-rebuild -w drivelist"
+    "postinstall": "electron-builder install-app-deps && cd app && electron-rebuild -w drivelist && cd .."
   },
   "standard": {
     "globals": [
@@ -167,32 +167,33 @@
     "async": "^2.6.1",
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
-    "dependency-check": "^3.2.0",
+    "dependency-check": "^3.2.1",
     "devtron": "^1",
-    "electron": "^2.0.8",
-    "electron-builder": "20.23.1",
+    "electron": "^3.0.8",
+    "electron-builder": "20.34.0",
     "electron-debug": "^2.0.0",
-    "electron-is-dev": "^0.3",
-    "electron-rebuild": "^1.8.1",
+    "electron-is-dev": "^1.0",
+    "electron-rebuild": "^1.8.2",
     "istanbul": "^0.4",
     "mocha": "^5.2.0",
     "rimraf": "^2.6.2",
     "shelljs": "^0.8.2",
-    "spectron": "^3.8.0",
-    "standard": "^11.0.1"
+    "spectron": "^5.0.0",
+    "standard": "^12.0.1"
   },
   "dependencies": {
     "appender": "^0.0.2",
-    "bluebird-lst": "^1.0.5",
+    "bluebird-lst": "^1.0.6",
     "copy-dir": "^0.4.0",
     "crlf": "^1.1.1",
-    "drivelist": "^6.4.0",
-    "electron-context-menu": "^0.10.0",
+    "drivelist": "^6.4.3",
+    "electron-context-menu": "^0.10.1",
     "electron-image-resize": "^1.2.4",
     "electron-store": "^2.0.0",
     "extract-zip": "^1.6.7",
     "jquery": "^3.3.1",
     "mkdirp": "^0.5.1",
+    "node-abi": "^2.5.0",
     "xml2js": "^0.4.19"
   }
 }

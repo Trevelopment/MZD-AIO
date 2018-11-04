@@ -1,3 +1,4 @@
+/* jshint esversion:6, -W117 */
 var listOrder = ''
 var entertainmentItems = [
   { label: 'USB A', menuItem: 'UsbAudioAPos', pos: 1 },

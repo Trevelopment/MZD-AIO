@@ -1,3 +1,4 @@
+/* jshint esversion:6, -W117*/
 function startTour(tourMsgs) {
   var tour = introJs().setOptions({ 'skipLabel': 'Skip Tour', 'doneLabel': 'Start!', 'tooltipClass': 'w3-pale-green w3-center', 'showStepNumbers': false, 'scrollToItem': true, 'exitOnOverlayClick': false, 'hideNext': true, 'hidePrev': true })
   tour.setOptions({

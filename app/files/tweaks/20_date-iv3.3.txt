@@ -1,9 +1,9 @@
-backup_org /jci/gui/framework/js/Utility.js
 backup_org /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js
 backup_org /jci/gui/common/controls/Sbn/css/SbnCtrl.css
 backup_org /jci/gui/common/controls/StatusBar/css/StatusBarCtrl.css
-backup_org /jci/gui/common/controls/StatusBar/images/StatusBarBg.png
-backup_org /jci/gui/common/images/icons/IcnSbRoaming.png
+#backup_org /jci/gui/common/controls/StatusBar/images/StatusBarBg.png
+#backup_org /jci/gui/common/images/icons/IcnSbRoaming.png
+backup_org /jci/gui/framework/js/Utility.js
 # date_to_statusbar_mod_V3.3 by Trez
 # Changes by Trezdog44:
 # v3.3 Less file replacement for better Compatibility
@@ -11,8 +11,8 @@ backup_org /jci/gui/common/images/icons/IcnSbRoaming.png
 # Compatibility Check for StatusBarCtrl.js
 # Give a choice for date format given by a variable
 # 'DATE_FORMAT' Provided by MZD-AIO-TI
-show_message "INSTALL DATE_TO_STATUSBAR MOD V3.3 ..."
-log_message "=====*********    INSTALL DATE_TO_STATUSBAR MOD V3.3 ...   *********====="
+show_message "INSTALL DATE_TO_STATUSBAR MOD V3.4 ..."
+log_message "=====*********    INSTALL DATE_TO_STATUSBAR MOD V3.4 ...   *********====="
 
 # STATUSBAR_COPY=0
 # # Strict Compatability Check
@@ -126,7 +126,7 @@ then
 	cp -a "${MYDIR}/config/date-to-statusbar_mod/jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js" /jci/gui/common/controls/StatusBar/js
   log_message "===                     Copied StatusBarCtrl.js                       ==="
 else # only v70.00.100+ will fail because compatibility is unknown
-	log_message "***** date_to_statusbar_mod v3.3 not compatible to your FW, no installation made! ******"
+	log_message "***** date_to_statusbar_mod v3.4 not compatible to your FW, no installation made! ******"
 	log_message "*********** Please email your FW version:${CMU_SW_VER} to aio@mazdatweaks.com **********"
 fi
 

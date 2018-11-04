@@ -1,3 +1,4 @@
+/* jshint esversion:6, -W117, -W116 */
 var xml2js = require('xml2js')
 //var settingsData = new Config({ 'name': 'msgSettings' })
 var data2edit, msgLangs = [],

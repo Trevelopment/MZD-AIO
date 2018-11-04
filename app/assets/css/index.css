@@ -2559,3 +2559,10 @@ input:disabled {
 #PhotoJoiner #mzd-title small {
   display: initial;
 }
+.isink input[type=checkbox].w3-check {
+    height: 15px;
+    width: 15px;
+}
+.isink {
+    text-align: center;
+}

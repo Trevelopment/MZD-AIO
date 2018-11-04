@@ -103,7 +103,7 @@ function StartAIOApp() {
   $(".toggleTweaks").on("click", saveTweaks);
   $(".tablinks").on("click", function() {
     $("#MainMenuMsg").html("");
-    localStorage.setItem("aio.prevtab",$(this).attr("tabindex"));
+    localStorage.setItem("aio.prevtab", $(this).attr("tabindex"));
   });
   $("#openNav").on("click", function() {
     document.getElementById("mySidenav").style.width = "250px";
@@ -525,13 +525,17 @@ function showVersion() {
 }
 
 function displayOff() {
-  if (framework.getAppInstance('syssettings') === undefined) {
-    framework.sendEventToMmui("common", "Global.IntentHome");
-    framework.sendEventToMmui("common", "Global.IntentSettingsTab", { payload: { settingsTab: "Display" } });
+  if (typeof framework.common._sendDisplayOffNotification !== "undefined") {
+    framework.common._sendDisplayOffNotification(0);
+  } else {
+    if (framework.getAppInstance('syssettings') === undefined) {
+      framework.sendEventToMmui("common", "Global.IntentHome");
+      framework.sendEventToMmui("common", "Global.IntentSettingsTab", { payload: { settingsTab: "Display" } });
+    }
+    framework.sendEventToMmui("system", "SelectIdleStandby");
+    framework.sendEventToMmui("system", "DisplayOffGUIActivity");
+    framework.sendEventToMmui("syssettings", "SelectDisplayOff");
   }
-  framework.sendEventToMmui("system", "SelectIdleStandby");
-  framework.sendEventToMmui("system", "DisplayOffGUIActivity");
-  framework.sendEventToMmui("syssettings", "SelectDisplayOff");
 }
 
 function showHeadunitLog() {
@@ -542,9 +546,11 @@ function showErrLog() {
   showFile('/tmp/root/casdk-error.log');
 }
 
-function exeCmd(command) {
+function exeCmd(command, silent) {
   aioWs(command + " > /tmp/root/stdout", 0)
-  showFile("/tmp/root/stdout", command);
+  setTimeout(function() {
+    !silent ? showFile("/tmp/root/stdout", command) : null;
+  }, 1000)
 }
 
 function showFile(filepath, command) {

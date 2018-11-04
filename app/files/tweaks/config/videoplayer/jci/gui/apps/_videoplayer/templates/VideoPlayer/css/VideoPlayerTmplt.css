@@ -278,6 +278,9 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+.VideoPlayerTmplt #myVideoList ul li.hasPath {
+  padding: 14px 15px 6px;
+}
 .VideoPlayerTmplt #myVideoList .videoListContainer li:last-child {
   border: none;
 }
@@ -508,4 +511,11 @@
 }
 .VideoPlayerTmplt #unmountSwapVP {
   float: right;
+}
+.VideoPlayerTmplt .videoPath {
+  position: absolute;
+  padding-left: 0px;
+  font-size: 14px;
+  line-height: 8px;
+  margin-top: -10px;
 }

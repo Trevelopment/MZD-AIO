@@ -7,8 +7,8 @@ pkill websocketd
 
 if [ $TESTBKUPS -eq 1 ]
 then
-	cp ${STAGE_WIFI} "${MYDIR}/bakups/test/stage_wifi_videoplayer-before.sh"
-	[ -f ${ADDITIONAL_APPS_JSON} ] && cp ${ADDITIONAL_APPS_JSON} "${MYDIR}/bakups/test/additionalApps_videoplayer-before.json"
+  cp ${STAGE_WIFI} "${MYDIR}/bakups/test/stage_wifi_videoplayer-before.sh"
+  [ -f ${ADDITIONAL_APPS_JSON} ] && cp ${ADDITIONAL_APPS_JSON} "${MYDIR}/bakups/test/additionalApps_videoplayer-before.json"
 fi
 
 sed -i '/Speedo-Compass-Video_Tweak/d' ${STAGE_WIFI}
@@ -39,41 +39,36 @@ sed -i '/--port=9998/d' ${STAGE_WIFI}
 
 # delete videoplayer entry from additionalApps.json
 ADDIT_APPS=0
-if [ -e /jci/opera/opera_dir/userjs/CustomApplicationsProxy.js ] || [ -e /jci/opera/opera_dir/userjs/nativeApps.js ]
+if [ -e ${ADDITIONAL_APPS_JSON} ]
 then
-	log_message "===                          Found CASDK                              ==="
-	ADDIT_APPS=1
-elif grep -Fq "_aiotweaks" ${ADDITIONAL_APPS_JSON}
-then
-	log_message "===          Found AIOTweaksApp entry in additionalApps.json          ==="
-	ADDIT_APPS=1
-elif grep -Fq "_androidauto" ${ADDITIONAL_APPS_JSON}
-then
-	log_message "===           Found androidauto entry in additionalApps.json          ==="
-	ADDIT_APPS=1
-elif grep -Fq "_speedometer" ${ADDITIONAL_APPS_JSON}
-then
-	log_message "===           Found speedometer entry in additionalApps.json          ==="
-	ADDIT_APPS=1
-elif grep -Fq "_mzdmeter" ${ADDITIONAL_APPS_JSON}
-then
-	log_message "===           Found mzd meter entry in additionalApps.json            ==="
-	ADDIT_APPS=1
+  if [ -e /jci/opera/opera_dir/userjs/CustomApplicationsProxy.js ] || [ -e /jci/opera/opera_dir/userjs/nativeApps.js ]
+  then
+    log_message "===                          Found CASDK                              ==="
+    ADDIT_APPS=1
+  elif grep -Fq "_aiotweaks" ${ADDITIONAL_APPS_JSON} \
+  || grep -Fq "_androidauto" ${ADDITIONAL_APPS_JSON} \
+  || grep -Fq "_speedometer" ${ADDITIONAL_APPS_JSON} \
+  || grep -Fq "_mzdmeter" ${ADDITIONAL_APPS_JSON}
+  then
+    log_message "===          Found other apps in additionalApps.json          ==="
+    ADDIT_APPS=1
+  fi
 fi
 if [ $ADDIT_APPS -eq 0 ]
 then
-	log_message "===    No more entrys in additionalApps.json, files will be deleted   ==="
-	rm -f /jci/opera/opera_dir/userjs/additionalApps.*
-	rm -f /jci/opera/opera_dir/userjs/app.js
+  log_message "===    No more entrys in additionalApps.json, files will be deleted   ==="
+  rm -f /jci/opera/opera_dir/userjs/additionalApps.*
+  rm -f /jci/opera/opera_dir/userjs/app.js
 else
-	remove_app_json "_videoplayer"
+  remove_app_json "_videoplayer"
+fi
+if [ ! -e ${ADDITIONAL_APPS_JSON} ]
+then
+  rm -rf /jci/gui/addon-common
+  rm -rf /tmp/mnt/resources/aio/addon-common
+  log_message "===          Removed addon-common because no more AIO apps            ==="
 fi
 
-### cleanup old versions
-if [ ! -e ${ADDITIONAL_APPS_JSON} ]; then
-	rm -fr /jci/gui/addon-common
-	log_message "===      Removed /jci/gui/addon-common because no more AIO apps       ==="
-fi
 rm -fr /jci/gui/addon-player
 rm -fr /jci/gui/addon-speedometer
 rm -fr /jci/gui/speedometer
@@ -87,10 +82,11 @@ rm -f /jci/scripts/get-vehicle-data-other*
 rm -f /jci/scripts/get-vehicle-gear*
 rm -f /jci/scripts/get-vehicle-speed*
 rm -f ${STAGE_WIFI}.bak?
+log_message "===                     Removed Video Player Files                    ==="
 
 if [ $TESTBKUPS -eq 1 ]
 then
-	cp ${STAGE_WIFI} "${MYDIR}/bakups/test/stage_wifi_videoplayer-after.sh"
+  cp ${STAGE_WIFI} "${MYDIR}/bakups/test/stage_wifi_videoplayer-after.sh"
 fi
 
 log_message "==========********* END UNINSTALLATION OF VIDEOPLAYER **********========="

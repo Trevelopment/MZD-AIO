@@ -65,7 +65,7 @@ var Gritter = function() {
       sticky: false,
       // (function) before the gritter notice is opened
       before_open: function() {
-        if ($('.gritter-item-wrapper').length == 3) {
+        if ($('.gritter-item-wrapper').length === 3) {
           // Returning false prevents a new gritter from opening
           return false;
         }

@@ -59,7 +59,7 @@ else
   log_message "********** Please Email ${MYDIR}/systemApp.js FW:${CMU_SW_VER} to aio@mazdatweaks.com  **********"
   cp -a /jci/gui/apps/system/js/systemApp.js "${MYDIR}/"
 fi
-if [ $TESTBKUPS = 1 ]
+if [ $TESTBKUPS -eq 1 ]
 then
   cp /jci/gui/apps/system/js/systemApp.js "${MYDIR}/bakups/test/systemApp_after-disclaimer.js"
 fi

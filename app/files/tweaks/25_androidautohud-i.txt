@@ -1,0 +1,10 @@
+# Android Auto Headunit App w/ Wifi Support
+if [ -e ${MYDIR}/config/androidautohud ]
+then
+	cp -a ${MYDIR}/config/androidautohud/* /tmp/mnt/data_persist/dev/bin
+	sed -i '/headunit-wrapper &/ a\check-usb.sh &' ${STAGE_WIFI}
+
+  log_message "===                      Android Auto HUD Support                     ==="
+fi
+log_message "====******** END INSTALLATION OF ANDROID AUTO HEADUNIT APP *********====="
+log_message " "

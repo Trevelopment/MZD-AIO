@@ -3310,6 +3310,27 @@ List2Ctrl.prototype._getListItem = function(listItem, dataListIndex)
         li.classList.add("disabledWhite");
     }
 
+    //CRI-1000 start
+    var currentUiaId = framework.getCurrentApp(); // Get current app name
+    if ('schedmaint' === currentUiaId)
+    {
+        var currentContextId = framework.getCurrCtxtId(); // Get current screen name
+
+        if ( ('OilChangeDetail'  === currentContextId          ) &&
+             ('normal'           === listItem.disabledStyleMod )    )
+        {
+
+           li.classList.remove("disabledWhite"); // Remove disabledWhite from classlist
+
+        }else{
+            //do noting
+        }
+
+    }else{
+        //do noting
+    }
+    //CRI-1000 end
+
     // return it
     return li;
 

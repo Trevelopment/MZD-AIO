@@ -2,9 +2,9 @@
 # Video_Player by many many people
 # Mods by vic_bam85 & Trezdog44
 #######################################################################
+space_check
 show_message "VIDEOPLAYER v${VP_VER}\nMODS BY VIC_BAM85 & TREZDOG44"
 log_message "============***********   INSTALL VIDEOPLAYER   ************============="
-
 log_message "===             Begin Installation of VideoPlayer V${VP_VER}                ==="
 
 if [ $TESTBKUPS -eq 1 ]
@@ -17,8 +17,8 @@ fi
 pkill websocketd
 
 # Remove previous files
-rm -fr /jci/gui/apps/_videoplayer/
-rm -fr /tmp/mnt/resources/aio/apps/_videoplayer/
+rm -fr /jci/gui/apps/_videoplayer
+rm -fr /tmp/mnt/resources/aio/apps/_videoplayer
 sed -i '/Video/d' ${STAGE_WIFI}
 sed -i '/--port=9998/d' ${STAGE_WIFI}
 log_message "===                   Removed Old VideoPlayer Files                   ==="
@@ -40,12 +40,7 @@ create_app_json
 # Call to the function to populate the json
 add_app_json "_videoplayer" "Video Player"
 
-# Copies the content of the addon-common folder
-if [ ! -e /jci/gui/addon-common/websocketd ]  || [ ! -e /jci/gui/addon-common/jquery.min.js ]; then
-  cp -a ${MYDIR}/config/jci/gui/addon-common/ /jci/gui/
-  chmod 755 -R /jci/gui/addon-common/
-  log_message "===                   Copied addon-common folder                      ==="
-fi
+
 
 # Remove old port configuration
 count=$(grep -c '/jci/gui/addon-common/websocketd --port=55555 sh' ${STAGE_WIFI})
@@ -73,6 +68,8 @@ cp -a ${MYDIR}/config/videoplayer/jci/gui/apps/_videoplayer ${AIO_APP_DIR}
 chmod 755 -R ${AIO_APP_DIR}
 log_message "===                    Copy VideoPlayer Files                         ==="
 
+addon_common
+
 # symlink to resources
 if [ $APPS2RESOURCES -eq 1 ]
 then
@@ -83,8 +80,11 @@ fi
 sed -r -i "s/var Repeat = (.*)[0-2];/var Repeat = \1$VP_REPEAT;/g" /jci/gui/apps/_videoplayer/js/videoplayer-v3.js
 sed -r -i "s/var FullScreen = (.*)[0-2];/var FullScreen = \1$VP_FULLSCRN;/g" /jci/gui/apps/_videoplayer/js/videoplayer-v3.js
 sed -r -i "s/var Shuffle = (.*)(true|false);/var Shuffle = \1$VP_SHUFFLE;/g" /jci/gui/apps/_videoplayer/js/videoplayer-v3.js
+if $VP_V4LSINK && [ $COMPAT_GROUP -lt 6 ]
+then
+  sed -i "s/var useisink = true/var useisink = false/g" /jci/gui/apps/_videoplayer/js/videoplayer-v3.js
+fi
 log_message "===                   Set Video Player Options                        ==="
-
 cp -a ${MYDIR}/config/videoplayer/usr/lib/gstreamer-0.10/* /usr/lib/gstreamer-0.10/
 cp -a ${MYDIR}/config/videoplayer/usr/lib/libFLAC.so.8.3.0 /usr/lib/
 chmod 755 -R /usr/lib/gstreamer-0.10/libgstautodetect.so
@@ -93,7 +93,7 @@ chmod 755 -R /usr/lib/libFLAC.so.8.3.0
 [ -L /usr/lib/libFLAC.so.8 ] || ln -s /usr/lib/libFLAC.so.8.3.0 /usr/lib/libFLAC.so.8
 log_message "===              Copy libs to usr/lib/gstreamer-0.10                  ==="
 
-count=$(grep -c '/imx-mm/video-codec' /etc/profile)
+count=$(grep -c '/imx-mm/video-codec' /etc/profile || echo 2)
 if [ $count -eq 0 ]
 then
   backup_org /etc/profile

@@ -1,3 +1,4 @@
+/* jshint esversion:6, -W033, -W117, -W097, -W116 */
 const electron = require('electron')
 const BrowserWindow = electron.BrowserWindow
 const Menu = electron.Menu

@@ -1,3 +1,4 @@
+/* jshint esversion:6, -W033, -W117, -W097, -W116 */
 var vardir = `${app.getPath('userData')}/background/`;
 var style = 1;
 var JoinedHeight = 0,

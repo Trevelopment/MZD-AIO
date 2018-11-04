@@ -1,0 +1,420 @@
+/* TestCtrl.css */
+
+.TestCtrl {
+  width: 800px;
+  height: 600px;
+  position: absolute;
+  left: 0px;
+  bottom: 0;
+  background: #F0F8FF; }
+.TestCtrl .title {
+    width: 175.2px;
+    height: 45.3px;
+    position: absolute;
+    top: 120px;
+    left: 20px;
+    padding: 0;
+    font-size: 20px;
+    color: black; }
+.TestCtrl .input {
+    width: 175.2px;
+    height: 45.3px;
+    font-size: 20px;
+    position: absolute;
+    top: 180px;
+    left: 93px;
+    border: 1px solid black;
+    padding: 0;
+    background: black;
+    color: white; 
+    text-align: center;
+    line-height:47px;  }
+.TestCtrl .data {
+    width: 375.2px;
+    height: 200.4px;
+    font-size: 15px;
+    position: absolute;
+    top: 252px;
+    left: 408px;
+    border: 1px solid black;
+    padding: 0;
+    background: black;
+    text-align: center;
+    color: white; 
+    display: inline-block;
+    overflow: auto;
+    overflow-x: hidden;
+    }
+.TestCtrl .status{
+    width: 375.2px;
+    height: 45.3px;
+    font-size: 17px;
+    position: absolute;
+    top: 180px;
+    left: 408px;
+    border: 1px solid black;
+    padding: 0;
+    line-height: 44.4px;
+    background: black;
+    color: white;
+    cursor : inherit;
+    -webkit-user-select:none;
+    overflow: auto;
+    overflow-x: hidden;
+    }
+
+.TestCtrl .enter {
+    width: 90.9px;
+    height: 45.3px;
+    line-height: 44.4px;
+    position: absolute;
+    bottom: 72px;
+    right: 220px;
+    border: 1px solid black;
+    font-size: 20px;
+    overflow: hidden;
+    text-align: center; 
+    color : black;}
+.TestCtrl .enterDisable{
+    width: 90.9px;
+    height: 45.3px;
+    line-height: 44.4px;
+    position: absolute;
+    bottom: 72px;
+    right: 220px;
+    border: 1px solid grey;
+    font-size: 20px;
+    overflow: hidden;
+    text-align: center; 
+    color : grey;}
+.TestCtrl .exit {
+    width: 90.9px;
+    height: 45.3px;
+    line-height: 44.4px;
+    position: absolute;
+    bottom: 72px;
+    right: 15px;
+    border: 1px solid black;
+    font-size: 20px;
+    overflow: hidden;
+    text-align: center;
+    color : black;    }
+
+.TestCtrl .exitDisable{
+    width: 90.9px;
+    height: 45.3px;
+    line-height: 44.4px;
+    position: absolute;
+    bottom: 72px;
+    right: 15px;
+    border: 1px solid grey;
+    font-size: 20px;
+    overflow: hidden;
+    text-align: center;
+    color : grey;    }
+.TestCtrl .clear {
+    width: 90.9px;
+    height: 45.3px;
+    line-height: 44.4px;
+    position: absolute;
+    bottom: 72px;
+    right: 118px;
+    border: 1px solid black;
+    font-size: 20px;
+    overflow: hidden;
+    text-align: center;
+    color : black;    }
+.TestCtrl .clearDisable {
+    width: 90.9px;
+    height: 45.3px;
+    line-height: 44.4px;
+    position: absolute;
+    bottom: 72px;
+    right: 118px;
+    border: 1px solid grey;
+    font-size: 20px;
+    overflow: hidden;
+    text-align: center;
+    color : grey;    }
+.TestCtrl .del {
+    width: 220.65px;
+    height: 45.3px;
+    line-height: 50.3px;
+    position: absolute;
+    bottom: 72px;
+    left: 140px;
+    border: 1px solid black;
+    font-size: 20px;
+    overflow: hidden;
+    text-align: center; 
+    color : black;}
+.TestCtrl .delDisable {
+    width: 220.65px;
+    height: 45.3px;
+    line-height: 50.3px;
+    position: absolute;
+    bottom: 72px;
+    left: 140px;
+    border: 1px solid grey;
+    font-size: 20px;
+    overflow: hidden;
+    text-align: center; 
+    color : grey;}
+.TestCtrl .btn0:active {
+    color: #F7B76D; }
+.TestCtrl .btn1:active {
+    color: #F7B76D; }
+.TestCtrl .btn2:active {
+    color: #F7B76D; }
+.TestCtrl .btn3:active {
+    color: #F7B76D; }
+.TestCtrl .btn4:active {
+    color: #F7B76D; }
+.TestCtrl .btn5:active {
+    color: #F7B76D; }
+.TestCtrl .btn6:active {
+    color: #F7B76D; }
+.TestCtrl .btn7:active {
+    color: #F7B76D; }
+.TestCtrl .btn8:active {
+    color: #F7B76D; }
+.TestCtrl .btn9:active {
+    color: #F7B76D; }
+.TestCtrl .enter:active {
+    color: #F7B76D; }
+.TestCtrl .exitActive {
+    width: 90.9px;
+    height: 45.3px;
+    line-height: 44.4px;
+    position: absolute;
+    bottom: 72px;
+    right: 15px;
+    border: 1px solid black;
+    font-size: 20px;
+    overflow: hidden;
+    text-align: center;
+    color : #F7B76D;    }
+.TestCtrl .del:active {
+    color: #F7B76D; }
+.TestCtrl .clear:active {
+    color: #F7B76D; }
+.TestCtrl .btn0 {
+    bottom: 72px;
+    left: 6px; 
+    width: 85.25px;
+    height: 45.3px;
+    line-height: 50.3px;
+    text-align: center;
+    border: 1px solid black;
+    position: absolute;
+    font-size: 20px; 
+    color : black}
+.TestCtrl .btn0Disable {
+    bottom: 72px;
+    left: 6px; 
+    width: 85.25px;
+    height: 45.3px;
+    line-height: 50.3px;
+    text-align: center;
+    border: 1px solid grey;
+    position: absolute;
+    font-size: 20px; 
+    color : grey}
+.TestCtrl .btn3 {
+    bottom: 300.9px;
+    left: 274.5px; 
+    width: 85.25px;
+    height: 45.3px;
+    line-height: 50.3px;
+    text-align: center;
+    border: 1px solid black;
+    position: absolute;
+    font-size: 20px; 
+    color : black}
+.TestCtrl .btn3Disable {
+    bottom: 300.9px;
+    left: 274.5px; 
+    width: 85.25px;
+    height: 45.3px;
+    line-height: 50.3px;
+    text-align: center;
+    border: 1px solid grey;
+    position: absolute;
+    font-size: 20px; 
+    color : grey}
+.TestCtrl .btn2 {
+    bottom: 300.9px;
+    left: 140.25px; 
+    width: 85.25px;
+    height: 45.3px;
+    line-height: 50.3px;
+    text-align: center;
+    border: 1px solid black;
+    position: absolute;
+    font-size: 20px; 
+    color : black}
+.TestCtrl .btn2Disable {
+    bottom: 300.9px;
+    left: 140.25px; 
+    width: 85.25px;
+    height: 45.3px;
+    line-height: 50.3px;
+    text-align: center;
+    border: 1px solid grey;
+    position: absolute;
+    font-size: 20px; 
+    color : grey}
+.TestCtrl .btn1 {
+    bottom: 300.9px;
+    left: 6px; 
+    width: 85.25px;
+    height: 45.3px;
+    line-height: 50.3px;
+    text-align: center;
+    border: 1px solid black;
+    position: absolute;
+    font-size: 20px; 
+    color : black}
+.TestCtrl .btn1Disable {
+    bottom: 300.9px;
+    left: 6px; 
+    width: 85.25px;
+    height: 45.3px;
+    line-height: 50.3px;
+    text-align: center;
+    border: 1px solid grey;
+    position: absolute;
+    font-size: 20px; 
+    color : grey}
+.TestCtrl .btn6 {
+    bottom: 224.6px;
+    left: 274.5px; 
+    width: 85.25px;
+    height: 45.3px;
+    line-height: 50.3px;
+    text-align: center;
+    border: 1px solid black;
+    position: absolute;
+    font-size: 20px; 
+    color : black}
+.TestCtrl .btn6Disable {
+    bottom: 224.6px;
+    left: 274.5px; 
+    width: 85.25px;
+    height: 45.3px;
+    line-height: 50.3px;
+    text-align: center;
+    border: 1px solid grey;
+    position: absolute;
+    font-size: 20px; 
+    color : grey}
+.TestCtrl .btn5 {
+    bottom: 224.6px;
+    left: 140.25px; 
+    width: 85.25px;
+    height: 45.3px;
+    line-height: 50.3px;
+    text-align: center;
+    border: 1px solid black;
+    position: absolute;
+    font-size: 20px; 
+    color : black}
+.TestCtrl .btn5Disable {
+    bottom: 224.6px;
+    left: 140.25px; 
+    width: 85.25px;
+    height: 45.3px;
+    line-height: 50.3px;
+    text-align: center;
+    border: 1px solid grey;
+    position: absolute;
+    font-size: 20px; 
+    color : grey}
+.TestCtrl .btn4 {
+    bottom: 224.6px;
+    left: 6px; 
+    width: 85.25px;
+    height: 45.3px;
+    line-height: 50.3px;
+    text-align: center;
+    border: 1px solid black;
+    position: absolute;
+    font-size: 20px; 
+    color : black}
+.TestCtrl .btn4Disable {
+    bottom: 224.6px;
+    left: 6px; 
+    width: 85.25px;
+    height: 45.3px;
+    line-height: 50.3px;
+    text-align: center;
+    border: 1px solid grey;
+    position: absolute;
+    font-size: 20px; 
+    color : grey}
+.TestCtrl .btn9 {
+    bottom: 148.3px;
+    left: 274.5px; 
+    width: 85.25px;
+    height: 45.3px;
+    line-height: 50.3px;
+    text-align: center;
+    border: 1px solid black;
+    position: absolute;
+    font-size: 20px; 
+    color : black}
+.TestCtrl .btn9Disable {
+    bottom: 148.3px;
+    left: 274.5px; 
+    width: 85.25px;
+    height: 45.3px;
+    line-height: 50.3px;
+    text-align: center;
+    border: 1px solid grey;
+    position: absolute;
+    font-size: 20px; 
+    color : grey}
+.TestCtrl .btn8 {
+    bottom: 148.3px;
+    left: 140.25px; 
+    width: 85.25px;
+    height: 45.3px;
+    line-height: 50.3px;
+    text-align: center;
+    border: 1px solid black;
+    position: absolute;
+    font-size: 20px; 
+    color : black}
+.TestCtrl .btn8Disable {
+    bottom: 148.3px;
+    left: 140.25px; 
+    width: 85.25px;
+    height: 45.3px;
+    line-height: 50.3px;
+    text-align: center;
+    border: 1px solid grey;
+    position: absolute;
+    font-size: 20px; 
+    color : grey}
+.TestCtrl .btn7 {
+    bottom: 148.3px;
+    left: 6px; 
+    width: 85.25px;
+    height: 45.3px;
+    line-height: 50.3px;
+    text-align: center;
+    border: 1px solid black;
+    position: absolute;
+    font-size: 20px; 
+    color : black}
+.TestCtrl .btn7Disable {
+    bottom: 148.3px;
+    left: 6px; 
+    width: 85.25px;
+    height: 45.3px;
+    line-height: 50.3px;
+    text-align: center;
+    border: 1px solid grey;
+    position: absolute;
+    font-size: 20px; 
+    color : grey}

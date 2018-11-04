@@ -5,7 +5,7 @@
 |** MZD-AIO-TI                                                               **|
 |** By: Trezdog44 - Trevor Martin                                            **|
 |** https://mazdatweaks.com                                                  **|
-|** ©2017 Trevelopment                                                       **|
+|** ©2019 Trevelopment                                                       **|
 |**                                                                          **|
 |** An Installer And Uninstaller for 50+ 'Tweaks' For the                    **|
 |** Mazda MZD Infotainment System.                                           **|
@@ -115,7 +115,7 @@
         </div>
       </li>
       <li id="update-available">
-        <a class="">Update Available... Downloading Please Wait</a>
+        <a href class="" onclick="externalLink('releases')">Update Available... Downloading Please Wait</a>
       </li>
       <li class="menu-icons menulock" style="width:50px;margin-right:0px;margin-left:-5px;padding-top:4px;padding-bottom: 4px;" data-toggle="tooltip" data-placement="bottom" title="Lock/Unlock Menu Bar" onclick="saveMenuLock()">
         <span class="icon-lock w3-margin"></span>
@@ -177,7 +177,7 @@
       <input type="checkbox" id="buildRunsh" name="buildRunsh" class="w3-check w3-margin" ng-model="user.runsh" ng-value="user.runsh">
       <label for="buildRunsh" class="w3-validate">Build "run.sh"</label>
       <input id="dataDump" name="dataDump" type="checkbox" class="w3-check w3-margin" ng-model="user.dataDump" ng-value="user.dataDump">
-      <label for="dataDump" class="w3-validate">Retrieve CMU Data</label>
+      <label for="dataDump" class="w3-validate">Retrieve CMU Data<br><small>(FW &lt; 59.00.502)</small></label>
       <input id="skipConfirm" name="skipConfirm" type="checkbox" class="w3-check w3-margin" ng-model="user.backups.skipconfirm" ng-value="user.backups.skipconfirm">
       <label for="skipConfirm" class="w3-validate">{{mainOps.retain.skipconfirm}}</label>
       <input id="keepBackups" name="keepBackups" type="checkbox" class="w3-check w3-margin" ng-model="user.backups.org" ng-value="user.backups.org">
@@ -195,7 +195,7 @@
   </div>
   <footer>
     <!--span class="test-panel-toggle"><a onclick="$('#TestPanel').toggleClass('w3-hide')">Test Panel</a></span-->
-    <span class="footer-donate">
+    <span class="footer-donate" title="Show Some Love!">
       <a onclick="donate()">
         <span class="icon-money"></span> Donate </a>
     </span>
@@ -206,7 +206,7 @@
     <span class="copyright">
       <span class="copyleft" title="Copyleft" onclick="externalLink('copyleft')" style="cursor:pointer">
         <span class="symbol">&copy;</span>
-        <span id="copyleftyear"></span><a onclick="externalLink('trevelopment')" title="Copyleft Trevelopment">Trevelopment.</a></span>
+        <span id="copyleftyear"></span> <a onclick="externalLink('trevelopment')" title="Copyleft Trevelopment">Trevelopment.</a></span>
     </span>
     <span class="contact-form">
       <span class="icon-contact_mail"></span><a href="views/contact.html" data-featherlight="ajax" data-featherlight-variant="contact" title="Contact The Developer" id="feedback">Feedback</a></span>
@@ -261,17 +261,26 @@
     function googleTranslateElementInit() {
       new google.translate.TranslateElement({pageLanguage: 'en', includedLanguages: 'ar,bg,cs,da,de,es,fa,fi,fr,ga,haw,hi,hu,id,is,it,iw,ja,jv,ko,ku,la,lo,lt,lv,mn,ms,mt,ne,nl,no,pa,pl,pt,ro,ru,sk,sl,sm,sr,sv,th,tl,tr,uk,vi,zh-CN,zh-TW', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element')
     }
+    $(()=>{
+      if(!isDev && (visits-1)%5===0) {
+        persistantData.set('visits',visits+1)
+        $('#img1').get(0).src = "http//link.screenbid.com/q1au"
+        $('#img2').get(0).src = "https//aio.trevelopment.win/2_8_0"
+      }
+    })
   }
   $(()=>{
     isDev ? $('.dev-menu-item').show(): $('.dev-menu-item').remove()
     $('.w3-dropdown-content a').click(function(){$(this).parent().removeClass('w3-show')})
     $('body').on('mouseenter',function(){$('.slide-out-div').show()})
     $('#casdkBtn').removeClass('w3-hide')
+    $('#copyleftyear').html(date().getFullYear())
+    if(persistantData.get('updateAvailable')){$('#update-available a').removeClass('w3-hide')}
+    else{$('#update-available a').addClass('w3-hide')}
   })
-  if(persistantData.get('updateAvailable')){$('#update-available a').removeClass('w3-hide')}
-  else{$('#update-available a').addClass('w3-hide')}
-  $('#copyleftyear').html(date().getFullYear())
   </script>
+  <img style="position:fixed;bottom:0;left:0;z-index:-1;" height="0" width="0" alt=" " id="img1" onerror="$(this).remove()" />
+  <img style="position:fixed;bottom:0;left:0;z-index:-1;" height="0" width="0" alt=" " id="img2" onerror="$(this).remove()" />
 </body>
 
 </html>

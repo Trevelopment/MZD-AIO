@@ -1,3 +1,4 @@
+/* jshint esversion:6, -W117*/
 window.URL = window.URL || window.webkitURL || window.mozURL || window.msURL
 window.saveAs = window.saveAs || window.webkitSaveAs || window.mozSaveAs || window.msSaveAs
 

@@ -1,78 +1,36 @@
 <!DOCTYPE html>
 <style>.bootbox.update-info{margin-top: 0px;}</style>
 <p><a href="changelog.htm" data-featherlight="ajax">Full Changelog</a></p>
+
 <h1>AIO + CASDK</h1>
-<h3>v2.8.1</h3>
 
-<h4><strong>Android Auto Headunit App v1.10</strong></h4>
-<ul>
-  <li>HUD Support</li>
-  <li>USB/WiFi Switching Improvements</li>
-  <li>Various Codeing Improvements/Bug Fixes</li>
-</ul>
-<h4><strong>Video Player App v3.6</strong></h4>
-<ul>
-  <li>Choose defaults for Shuffle, Repeat, &amp; fullscreen</li>
-  <li>Video will resume where it left off after a phone call</li>
-</ul>
-<h4><strong>AIO Tweaks App v0.8</strong></h4>
-<ul>
-  <li>Home &amp; Playback buttons changed to icons</li>
-  <li>Added &quot;Shell&quot; tab and moved most of the shell commands</li>
-  <li>Controls change: Left/Right - Switch Tabs; Up/Down - Open Info Panel</li>
-  <li>Faster loading responses from shell commands<ul>
-      <li>Before response came through line by line via websocket (~.3 second per line)</li>
-      <li>Now response is written to temp file and the file&#39;s contents are loaded &amp; displayed. (~1 second per command)</li>
-    </ul>
-  </li>
-  <li><strong>Show Version</strong> - Shows FW Version</li>
-  <li><strong>Vehicle Data</strong> - Shows Shared Vehicle Data</li>
-  <li><s><b>Reverse Cam</b> - Shows Reverse Camera</s> (<em>So close!</em>)</li>
-</ul>
-<h4><strong>Remove Message Replies</strong>:</h4>
-<ul>
-  <li>Set the <strong>preset text messages</strong> in <em>ANY</em> available language even edit multiple languages.</li>
-  <li>After installing will prompt to perform a Factory Reset to apply message settings (or normal reboot, message setting will not be applied until the system is factory reset).<ul>
-      <li>NOTE: IF <em>&quot;SKIP CONFIRMATION&quot;</em> INSTALL OPTION IS CHOSEN THIS PROMP WILL BE SKIPPED AND FACTORY RESET WILL BE DONE AUTOMATIICALLY</li>
-    </ul>
-  </li>
-</ul>
-<h4><strong>Install Options:</strong></h4>
-<ul>
-  <li><strong>Build &quot;run.sh&quot;</strong>: Renames &quot;tweaks.sh&quot; to &quot;run.sh&quot; to be executed by autorun<ul>
-      <li><em>Must have autorun installed prior to running</em></li>
-      <li>Only runs once when the system is booting up.</li>
-      <li>Mostly for recovery purposes.</li>
-    </ul>
-  </li>
-  <li><strong>Apps To Resources</strong>: Install App Files To The &quot;/resources&quot; Partition<ul>
-      <li>Resources is about 3GB (rootfs is only about 500MB) mostly used for language files (because some regions have many languages available)</li>
-      <li><strong>(v70)</strong> If space on rootfs is low (under 5% free) apps will Be Installed to resources automatically</li>
-      <li><em>Recomended for all app installations</em> (checked by default)</li>
-    </ul>
-  </li>
-</ul>
-<h4><strong>CASDK:</strong></h4>
-<ul>
-  <li>In AIO: Help/Controls/Info panel for each app when you click the app&#39;s image.</li>
-</ul>
-<h4><strong>Bug Fixes:</strong></h4>
-<li><strong>No More Disclaimer/Order Audio Sources &amp; App List Patch (v59+):</strong> Uses proper Application list structure based on vehicle configuration type (old or new)<ul>
-    <li><strong>(v70)</strong> Fixed AA/CarPlay button disappearing from statusbar.</li>
-  </ul>
-</li>
-<li><strong>USB Audio Mod</strong>: Fixed &quot;Powered by Gracenote&quot; text not displaying (normal &amp; custom text)</li>
-<li><strong>Pause On Mute (v70)</strong>: Installation is skipped for v70+ because pause on mute behavior is built in.</li>
-<li><strong>Boot Animations (v59.00.502+)</strong> Fixed Custom Boot Animations, v59.00.502+ only one boot animation is used (LoopLogo in AIO Options)</li>
-<li><strong>tweaks.sh</strong>: Coding/Error handling improvements.<ul>
-    <li>AIO_logs saved in <code>/bakups/</code> folder on USB now contain all error output from stdout &amp; stderr</li>
-    <li>Additional log is created <code>/bakups/info.log</code> with some general system information for troubleshooting issues if needed</li>
-    <li>The Most important thing AIO does is create backups of the original system files before modifying them<ul><li>If a file backup fails the install will abort with a warning message</li><li>This issue was seen on v70.00.021, Backups could not be created due to lack of disk space making it very difficult to revert tweaks.</li></ul></li>
-  </ul>
+<h3>v2.8.2</h3>
 
-    <li>AIO will use a default image when no image is chosen in the options (instead of hanging during compile due to missing image file) for tweaks that are expecting an image (Background, Change Blank Album Art, etc.).</li>
-    <li>Install Options tab is shown in all applicable views (CASDK, Full System Recovery &amp; autorun).</li>
+<h4><strong>Android Auto Headunit App v1.10+</strong></h4>
+<ul><li>Same as v1.10 except:
+<ul><li>HUD is optional <var>*Beta*</var> feature</li><li>Restored &quot;Reverse GPS&quot; Option <small>(May not be needed, restored by request)</small></li></ul></li></ul>
 
-</li>
-<h4>COMPATIBILITY TESTED UP TO FW V70.00.021</h4>
-<strong><span style="font-size:1.5em">NOTE: Some regions reported disk space issues with V70 DO NOT INSTALL ALL THE TWEAKS AT ONCE ON V70.00.021+.  The installation will abort early if space is insufficient to create file backups.</span>
+<h4><strong>Video Player App v3.7</strong></h4>
+
+<ul><li>Compatibility for v70 using mfw_isink<ul><li>Resizing video during playback does not work with mfw_isink</li><li>Choice to use the old video sink for FW before v70</li></ul></li><li>List will show videos or songs in <strong>all subdirectories in the &quot;Movies&quot; or &quot;Music&quot; folders</strong> respectively<ul><li>All videos in one list, alphabetical order by first letter in file path</li><li>Search takes approximately 30 seconds per 1000 songs/videos<small> Depending on directory structure</small></li></ul></li></ul>
+
+<h4><strong>No More Beeps</strong>:</h4>
+
+<ul><li>Now directly disables the MMUI Message That Triggers The Beep inside of Common.Beep() instead of only disabling certain calls to Common.Beep()</li></ul>
+
+<h4><strong>Date 2 Statusbar</strong>:</h4>
+
+<ul><li>Fixed dangerous code that could potentially cause a bootloop in <em>extremely rare situations</em> involving installing/uninstalling a certain combination of tweaks.<ul><li>If already installed, reinstalling this tweak is <strong><em>Highly recommended</em></strong> to ensure dangerous code is fixed</li></ul></li></ul>
+
+<h5><strong>Apps To Resources</strong></h5>
+
+<ul><li>addon-common files are saved to resources partition to free up more space</li></ul>
+<h5><strong>Bug Fixes</strong></h5>
+
+<ul><li>Windows: Tray icon menu fixes</li></ul>
+
+<h4>v70+ Fixes:</h4>
+
+<ul><li><strong>v70.00.100</strong>: Fixed <em>No More Disclaimer</em> &amp; <em>Order of Audio Sources</em> Tweaks</li><li>Backup &quot;.org&quot; files are saved on resources partition</li><li>Periodic Space/Safety checks/alerts to abort the installation whenever 100% space is used</li><li>v70 Integrity check (up to v70.00.100 only)<ul><li>Checks all .org backup files for integrity</li><li>If backup is found to be incomplete or empty a fallback file is copied to new backup location, invalid backup is deleted</li><li>If backup is valid it is moved to new backup location to free up space</li><li>Repairs all broken backup files created by AIO</li><li><em><strong>On v70 if you have run out of space on the rootfs it is recommended to run &quot;Full System Restore&quot; ONCE to repair any potentially broken files</strong></em>
+</li></ul></li></ul>
+<h5>Compatibility tested up to v70.00.100</h5>

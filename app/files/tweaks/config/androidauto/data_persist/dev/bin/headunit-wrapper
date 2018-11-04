@@ -2,34 +2,81 @@
 
 SCRIPT=$(readlink -f "$0")
 SCRIPTPATH=$(dirname "$SCRIPT")
-HEADUNIT_CMD="${SCRIPTPATH}/headunit"
-LOGPATH=/tmp/mnt/data/headunit.log
+LOGPATH=/tmp/root/headunit.log
 SCRIPT_ARGS=$@
 
 export LD_LIBRARY_PATH="${SCRIPTPATH}/headunit_libs:/jci/lib:/jci/opera/3rdpartylibs/freetype:/usr/lib/imx-mm/audio-codec:/usr/lib/imx-mm/video-codec:/usr/lib/imx-mm/parser:/data_persist/dev/lib:"
 #override some GST plugins with these
-export GST_PLUGIN_PATH="${SCRIPTPATH}/headunit_libs"
+export GST_PLUGIN_PATH="${SCRIPTPATH}/headunit_libs:/usr/lib/gstreamer-0.10"
 
-# This function starts the headunit process and
-# sets the process affinity via taskset. The
-# return value of this function is the pid of
-# the headunit process.
+DEBUG=0
+
+if ! [ -e /tmp/root/headunit.json ]; then
+ cp "${SCRIPTPATH}/headunit.json" /tmp/root/
+fi
+
 start_headunit()
 {
-    local pid
-    taskset 0xFFFFFFFF "${HEADUNIT_CMD}" "$@" 2>&1 | tee ${LOGPATH}
-    # return the pid -- technically this is for "tee", but if
-    # headunit crashes, the pipe will break and tee should exit.
-    echo $!
+   rm -f /tmp/root/headunit-wireless.status
+   sed -i 's."wifiTransport": true."wifiTransport": false.g' /tmp/root/headunit.json
+   #taskset 0xFFFFFFFF "${SCRIPTPATH}/headunit" "$@" > /dev/null 2>&1 &
+   taskset 0xFFFFFFFF ionice -c 1 -n 0 nice -n -20 "${SCRIPTPATH}/headunit" "$@" > /dev/null 2>&1 &
+   sleep 2
+   touch /tmp/root/headunit.status
 }
 
-headunit_pid=$(start_headunit "${SCRIPT_ARGS}")
-# loop forever. every 10 seconds, check if headunit is running.
-# if it's not running, start it again.
+start_AAwireless()
+{
+    rm -f /tmp/root/headunit.status
+    sed -i 's."wifiTransport": false."wifiTransport": true.g' /tmp/root/headunit.json
+    taskset 0xFFFFFFFF "${SCRIPTPATH}/headunit" "$@" > /dev/null 2>&1 &
+    sleep 2
+    touch /tmp/root/headunit-wireless.status
+}
+
+rm -f /tmp/root/headunit.status /tmp/root/headunit-wireless.status
+
+# prevent conflict by Official AA
+pkill -f 'aap_service'
+
+#default USB
+start_headunit
+
+# loop forever. every 5 seconds,
 while true
 do
-    sleep 10
-    if ! kill -0 ${headunit_pid} >/dev/null 2>&1 ; then
-        headunit_pid=$(start_headunit "${SCRIPT_ARGS}")
+ NET_CHECK=`netstat -rn|awk '$2=="192.168.43.1" {print}'|wc -l|awk '{print $1}'`
+
+ if [ -e /tmp/root/usb_connect ]; then
+  USBCHECK=1
+ else
+  USBCHECK=0
+ fi
+
+ if [ $NET_CHECK == 1 ] && [ $USBCHECK == 0 ]; then
+    if [ -e /tmp/root/headunit.status ]; then
+        killall -q headunit
     fi
+
+    if ! [ -e /tmp/root/headunit-wireless.status ]; then
+        start_AAwireless
+    fi
+
+ else
+    check_headunit=`ps|grep 'bin/headunit'|grep -v wrapper|grep -v grep|wc -l|awk '{print $1}'`
+
+    [ $check_headunit -eq 0 ] && rm -f /tmp/root/headunit-wireless.status /tmp/root/headunit.status
+
+    if [ -e /tmp/root/headunit-wireless.status ]; then
+        killall -q headunit
+    fi
+    if ! [ -e /tmp/root/headunit.status ]; then
+        start_headunit
+    fi
+ fi
+
+ RAND=`expr $RANDOM % 5`
+ echo "go sleep $RAND"
+ sleep $RAND
+
 done

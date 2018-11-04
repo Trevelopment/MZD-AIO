@@ -1,3 +1,4 @@
+/* jshint esversion:6, -W117 */
 'use strict'
 
 const path = require('path')

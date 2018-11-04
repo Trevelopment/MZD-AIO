@@ -2,18 +2,11 @@
 show_message "REMOVE LIST_LOOP_MOD  ..."
 log_message "========*********      UNINSTALL LIST_LOOP_MOD ...      ********========="
 # Check for Remove Beep and Shorter Delay Mods to reapply after copying List2Crl.js
-grep -Fq "No More Beep" /jci/gui/common/controls/List2/js/List2Ctrl.js && REMOVE_BEEP=1 || REMOVE_BEEP=0
 
 grep -Fq "Shorter Delay Mod" /jci/gui/common/controls/List2/js/List2Ctrl.js && SHORTER_DELAY_MOD=1 || SHORTER_DELAY_MOD=0
 
 if (restore_org /jci/gui/common/controls/List2/js/List2Ctrl.js)
 then
-  # Reapply tweaks
-  if [ $REMOVE_BEEP -eq 1 ]
-  then
-    sed -i 's/return framework.common.beep(pressType, eventCause);/\/\/ return framework.common.beep(pressType, eventCause); \/\/No More Beeps/g' /jci/gui/common/controls/List2/js/List2Ctrl.js
-    log_message "===               Reapplied Disable Beeps in List2Ctrl.js             ==="
-  fi
   if [ $SHORTER_DELAY_MOD -eq 1 ]
   then
     sed -i 's/autoscrollTier1Timeout :                1500,/autoscrollTier1Timeout :                150,/g' /jci/gui/common/controls/List2/js/List2Ctrl.js

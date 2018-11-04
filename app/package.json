@@ -1,6 +1,6 @@
 {
   "name": "MZD-AIO-TI",
-  "version": "2.8.1",
+  "version": "2.8.2",
   "productName": "MZD-AIO-TI",
   "description": "MZD All In One Tweaks Installer",
   "homepage": "http://mazdatweaks.com",
@@ -36,21 +36,22 @@
     "copy-dir": "^0.4.0",
     "crlf": "^1.1.1",
     "devtron": "^1",
-    "drivelist": "^6.4.0",
-    "electron-context-menu": "^0.10.0",
+    "drivelist": "^6.4.3",
+    "electron-context-menu": "^0.10.1",
     "electron-debug": "^2.0.0",
     "electron-image-resize": "^1.2.4",
-    "electron-is-dev": "^0.3",
+    "electron-is-dev": "^1.0",
     "electron-store": "^2.0.0",
-    "electron-updater": "^3.1.1",
-    "electron-window-state": "^4.1.1",
+    "electron-updater": "^3.2.3",
+    "electron-window-state": "^5.0.2",
     "extract-zip": "^1.6.7",
-    "lodash": "^4.17.10",
+    "lodash": "^4.17.11",
     "mkdirp": "^0.5.1",
+    "node-abi": "^2.5.0",
     "rimraf": "^2.6.2"
   },
   "engines": {
-    "node": "^8.2.x"
+    "node": "^10.10.x"
   },
-  "electronVersion": "2.0.x"
+  "electronVersion": "2.x.x"
 }

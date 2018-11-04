@@ -7,7 +7,7 @@ else
   backup_org /jci/resources/TranLogoEnd.ivf
 fi
 backup_org "$LOOP_LOGO"
-backup_org /jci/resources/ExitLogo.ivf
+# backup_org /jci/resources/ExitLogo.ivf
 # Disable Boot Animation
 show_message "CUSTOMIZE BOOT ANIMATION ..."
 log_message "======***********        INSTALL BOOT ANIMATION ...      **********======"

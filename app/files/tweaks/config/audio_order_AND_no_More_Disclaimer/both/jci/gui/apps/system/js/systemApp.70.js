@@ -507,6 +507,11 @@ systemApp.prototype.appInit = function() {
     "Global.AtSpeed": this._AtSpeedMsgHandler.bind(this),
     //At No Speed
     "Global.NoSpeed": this._NoSpeedMsgHandler.bind(this),
+
+        //FQIR-4475 add start
+        //Health Check Counter 
+        "HealthCheckCounter"          : this._HealthCheckCounterMsgHandler.bind(this),
+        //FQIR-4475 add end
   };
   //@formatter:on
   // (Object) Related values needed to implement the Disclaimer timeout. From the requirements:
@@ -2040,5 +2045,19 @@ systemApp.prototype._updateSpeedRestrictedApps = function(isDisabled) {
     }
   }
 };
+
+//FQIR-4475 add start
+systemApp.prototype._HealthCheckCounterMsgHandler = function(msg)
+{
+    var count = 0;
+    if(msg && msg.params && msg.params.payload && msg.params.payload.counter )
+    {
+        log.info(" Receive health check counter from MMUI. Counter is : "+msg.params.payload.counter);
+        count = msg.params.payload.counter;
+        framework.sendEventToMmui(this.uiaId, "HealthCheckResponse", {"payload":{"healthCheckResponseCounter" : count}});
+    }
+}
+//FQIR-4475 add end
+
 // Tell framework that system app has finished loading
 framework.registerAppLoaded("system", null, true);

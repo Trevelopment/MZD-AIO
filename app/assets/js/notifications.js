@@ -1,3 +1,4 @@
+/* jshint esversion:6, -W117 */
 // Display a notification message when a new version is ready for install
 var dll = null
 ipc.on('update-not available', (event) => {
@@ -104,7 +105,7 @@ function snackbar(message, mtime) {
   $.gritter.add({
     title: 'MZD-AIO',
     text: message,
-    time: mtime * 1000 || 10000
+    time: mtime * 1000 || 5000
   });
 }
 

@@ -232,8 +232,9 @@ StatusBarCtrl.prototype._updateClock = function()
             timeStr = (hours > 9 ? hours : '0' + hours) + ':' + (mins > 9 ? mins : '0' + mins);
         }
     }
-
-    this.date.innerText = utility.formatDateCustom(currentTime);
+    if(typeof utility.formatDateCustom === "function") {
+      this.date.innerText = utility.formatDateCustom(currentTime);
+    }
     this.clock.innerText = timeStr;
 };
 
@@ -527,8 +528,9 @@ StatusBarCtrl.prototype.updateClock = function(currentTime)
             timeStr = (hours > 9 ? hours : '0' + hours) + ':' + (mins > 9 ? mins : '0' + mins);
         }
     }
-
-    this.date.innerText = utility.formatDateCustom(currentTime);
+    if(typeof utility.formatDateCustom === "function") {
+      this.date.innerText = utility.formatDateCustom(currentTime);
+    }
     this.clock.innerText = timeStr;
 
 };

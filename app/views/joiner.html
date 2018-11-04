@@ -72,12 +72,13 @@
 <body ng-app="AIO" ng-controller="MainCtrl" id="PhotoJoiner">
   <ng-view></ng-view>
   <footer>
-    <span class="copyleft" title="Copyleft">&copy; 2018 <a href="#" onclick="externalLink('copyleft')">Trevelopment.</a></span>
+    <span class="copyleft" title="Copyleft">&copy; <span id="copyleftyear"></span> <a href="#" onclick="externalLink('copyleft')">Trevelopment.</a></span>
   </footer>
 </body>
 <script>
-  $(function(){
+  $(() => {
     $('[data-toggle="tooltip"]').tooltip({html: true, delay: {show: 1200, hide: 200}});
+    $('#copyleftyear').html(date().getFullYear())
   })
 </script>
 </html>

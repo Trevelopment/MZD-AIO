@@ -1,4 +1,5 @@
 # Install Android Auto Headunit App
+space_check
 show_message "INSTALL ANDROID AUTO HEADUNIT APP v${AA_VER} ..."
 log_message "====************  INSTALL ANDROID AUTO HEADUNIT APP v${AA_VER}...*********===="
 TESTBKUPS=1

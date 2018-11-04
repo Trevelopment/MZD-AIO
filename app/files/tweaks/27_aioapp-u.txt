@@ -6,53 +6,55 @@ pkill websocketd
 
 if [ $TESTBKUPS -eq 1 ]
 then
-	cp ${STAGE_WIFI} "${MYDIR}/bakups/test/stage_wifi-aio_before.sh"
-	[ -f ${ADDITIONAL_APPS_JSON} ] && cp ${ADDITIONAL_APPS_JSON} "${MYDIR}/bakups/test/additionalApps-aio_before.json"
+  cp ${STAGE_WIFI} "${MYDIR}/bakups/test/stage_wifi-aio_before.sh"
+  [ -f ${ADDITIONAL_APPS_JSON} ] && cp ${ADDITIONAL_APPS_JSON} "${MYDIR}/bakups/test/additionalApps-aio_before.json"
 fi
 
 if [ ! -e /jci/gui/apps/_videoplayer ]
 then
-	sed -i '/### AIO/d' ${STAGE_WIFI}
-	sed -i '/--port=9997/d' ${STAGE_WIFI}
-	log_message "===                 Removed Entries in stage_wifi.sh                  ==="
+  sed -i '/### AIO/d' ${STAGE_WIFI}
+  sed -i '/--port=9997/d' ${STAGE_WIFI}
+  log_message "===                 Removed Entries in stage_wifi.sh                  ==="
 fi
 
 ADDIT_APPS=0
-# delete aiotweaks entry from additionalApps.json
-if [ -e /jci/opera/opera_dir/userjs/CustomApplicationsProxy.js ] || [ -e /jci/opera/opera_dir/userjs/nativeApps.js ]
+if [ -e ${ADDITIONAL_APPS_JSON} ]
 then
-	log_message "===                          Found CASDK                              ==="
-	ADDIT_APPS=1
-elif grep -Fq "_androidauto" ${ADDITIONAL_APPS_JSON}
-then
-	log_message "===           Found androidauto entry in additionalApps.json          ==="
-	ADDIT_APPS=1
-elif grep -Fq "_speedometer" ${ADDITIONAL_APPS_JSON}
-then
-	log_message "===           Found speedometer entry in additionalApps.json          ==="
-	ADDIT_APPS=1
-elif grep -Fq "_videoplayer" ${ADDITIONAL_APPS_JSON}
-then
-	log_message "===           Found videoplayer entry in additionalApps.json          ==="
-	ADDIT_APPS=1
-elif grep -Fq "_mzdmeter" ${ADDITIONAL_APPS_JSON}
-then
-	log_message "===           Found mzd meter entry in additionalApps.json            ==="
-	ADDIT_APPS=1
+  if [ -e /jci/opera/opera_dir/userjs/CustomApplicationsProxy.js ] || [ -e /jci/opera/opera_dir/userjs/nativeApps.js ]
+  then
+    log_message "===                          Found CASDK                              ==="
+    ADDIT_APPS=1
+  elif grep -Fq "_androidauto" ${ADDITIONAL_APPS_JSON}
+  then
+    log_message "===           Found androidauto entry in additionalApps.json          ==="
+    ADDIT_APPS=1
+  elif grep -Fq "_speedometer" ${ADDITIONAL_APPS_JSON}
+  then
+    log_message "===           Found speedometer entry in additionalApps.json          ==="
+    ADDIT_APPS=1
+  elif grep -Fq "_videoplayer" ${ADDITIONAL_APPS_JSON}
+  then
+    log_message "===           Found videoplayer entry in additionalApps.json          ==="
+    ADDIT_APPS=1
+  elif grep -Fq "_mzdmeter" ${ADDITIONAL_APPS_JSON}
+  then
+    log_message "===           Found mzd meter entry in additionalApps.json            ==="
+    ADDIT_APPS=1
+  fi
 fi
 if [ $ADDIT_APPS -eq 0 ]
 then
-	log_message "===   No more entrys in additionalApps.json, files will be deleted    ==="
-	rm -f /jci/opera/opera_dir/userjs/additionalApps.*
-	rm -f /jci/opera/opera_dir/userjs/aio.js
+  log_message "===   No more entrys in additionalApps.json, files will be deleted    ==="
+  rm -f /jci/opera/opera_dir/userjs/additionalApps.*
+  rm -f /jci/opera/opera_dir/userjs/aio.js
 else
-	remove_app_json "_aiotweaks"
+  remove_app_json "_aiotweaks"
 fi
-
-### cleanup old versions
-if [ ! -e ${ADDITIONAL_APPS_JSON} ]; then
-	rm -fr /jci/gui/addon-common
-	log_message "===   Removed /jci/gui/addon-common:  no speedometer or videoplayer   ==="
+if [ ! -e ${ADDITIONAL_APPS_JSON} ]
+then
+  rm -rf /jci/gui/addon-common
+  rm -rf /tmp/mnt/resources/aio/addon-common
+  log_message "===          Removed addon-common because no more AIO apps            ==="
 fi
 
 rm -fr /jci/gui/apps/_aiotweaks
@@ -63,8 +65,8 @@ log_message "===                     Removed AIO Tweaks App files               
 
 if [ $TESTBKUPS -eq 1 ]
 then
-	cp ${STAGE_WIFI} "${MYDIR}/bakups/test/stage_wifi-aio_after.sh"
-	[ -f ${ADDITIONAL_APPS_JSON} ] && cp ${ADDITIONAL_APPS_JSON} "${MYDIR}/bakups/test/additionalApps-aio_after.json"
+  cp ${STAGE_WIFI} "${MYDIR}/bakups/test/stage_wifi-aio_after.sh"
+  [ -f ${ADDITIONAL_APPS_JSON} ] && cp ${ADDITIONAL_APPS_JSON} "${MYDIR}/bakups/test/additionalApps-aio_after.json"
 fi
 
 log_message "======*********** END UNINSTALLATION OF AIO TWEAKS APP ***********======="

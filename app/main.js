@@ -3,16 +3,13 @@
 ** MZD-AIO-TI                                                                 **
 ** By: Trezdog44 - Trevor Martin                                              **
 ** http://mazdatweaks.com                                                     **
-** ©2017 Trevelopment                                                         **
+** ©2019 Trevelopment                                                         **
 **                                                                            **
 ** main.js - The main process to run in electron.                             **
 **                                                                            **
 ** ************************************************************************** **
 \* ************************************************************************** */
-/* jshint esversion:6 */
-/* jshint -W033 */
-/* jshint -W117*/
-/* jshint -W097*/
+/* jshint esversion:6, -W033, -W117, -W097, -W116 */
 'use strict'
 const electron = require('electron')
 const app = electron.app
@@ -95,18 +92,22 @@ require('electron-debug')({
 // Prevent window being garbage collected
 let mainWindow
 // Other windows we may need
+let devtools = null
 let infoWindow = null
 let downloadwin = null
 let mailform = null
 let tray = null
 let imageJoin = null
 app.setName(pjson.productName || 'MZD-AIO-TI')
+
 function initialize() {
-  var shouldQuit = makeSingleInstance()
-  if (shouldQuit) { return app.quit() }
+  const gotTheLock = app.requestSingleInstanceLock()
+  makeSingleInstance(gotTheLock)
+
   if (!persistantData.has('copyFolderLocation')) {
     persistantData.set('copyFolderLocation', app.getPath('desktop'))
   }
+
   function onClosed() {
     // Dereference used windows
     downloadwin = null
@@ -116,6 +117,7 @@ function initialize() {
     imageJoin = null
     app.quit()
   }
+
   function createMainWindow() {
     let mainWindowState = windowStateKeeper({
       defaultWidth: 1280,
@@ -174,15 +176,15 @@ function initialize() {
     })
     win.webContents.on('crashed', () => {
       // In the real world you should display a box and do something
-      window.alert('MZD-AIO-TI has crashed', 'MZD-AIO-TI ERROR')
+      dialog.showErrorBox('MZD-AIO-TI has crashed', 'MZD-AIO-TI ERROR')
       console.error('The window has just crashed')
     })
-    win.webContents.on('did-finish-load', () => {
-    })
+    win.webContents.on('did-finish-load', () => {})
     win.on('ready-to-show', () => {
       win.show()
       win.focus()
     })
+
     function setCopyLoc(loc) {
       persistantData.set('copyFolderLocation', app.getPath(loc))
       mainWindow.webContents.send('set-copy-loc', app.getPath(loc))
@@ -194,9 +196,9 @@ function initialize() {
       var template = [{
           label: 'Location of _copy_to_usb',
           submenu: [
-            { label: 'Desktop', id: 'desktop', type: 'radio', checked: (persistantData.get('copyFolderLocation').includes('desktop') || false), click: function(menuItem, browserWindow, event) { setCopyLoc('desktop') } },
-            { label: 'Downloads', id: 'downloads', type: 'radio', checked: (persistantData.get('copyFolderLocation').includes('downloads') || false), click: function(menuItem, browserWindow, event) { setCopyLoc('downloads') } },
-            { label: 'Documents', id: 'documents', type: 'radio', checked: (persistantData.get('copyFolderLocation').includes('documents') || false), click: function(menuItem, browserWindow, event) { setCopyLoc('documents') } }
+            { label: 'Desktop', id: 'desktop', type: 'radio', checked: persistantData.get('copyFolderLocation').includes('Desktop'), click: function(menuItem, browserWindow, event) { setCopyLoc('desktop') } },
+            { label: 'Downloads', id: 'downloads', type: 'radio', checked: persistantData.get('copyFolderLocation').includes('Downloads'), click: function(menuItem, browserWindow, event) { setCopyLoc('downloads') } },
+            { label: 'Documents', id: 'documents', type: 'radio', checked: persistantData.get('copyFolderLocation').includes('Documents'), click: function(menuItem, browserWindow, event) { setCopyLoc('documents') } }
           ]
         },
         { type: 'separator' },
@@ -208,9 +210,10 @@ function initialize() {
             rimraf(path.normalize(path.join(persistantData.get('copyFolderLocation'), '_copy_to_usb')), function(e) {
               if (e) {
                 console.error(e.message)
-                window.alert(e.message, `Error Deleting ${path.normalize(path.join(persistantData.get('copyFolderLocation'), '_copy_to_usb'))}`)
+                dialog.showErrorBox(`Error Deleting ${path.normalize(path.join(persistantData.get('copyFolderLocation'), '_copy_to_usb'))}`, `${e.message}`)
               } else {
                 console.log(`Deleted ${path.normalize(path.join(persistantData.get('copyFolderLocation'), '_copy_to_usb'))}`)
+                win.webContents.send('snackbar-msg', `Deleted ${path.normalize(path.join(persistantData.get('copyFolderLocation'), '_copy_to_usb'))}`)
               }
             })
           }
@@ -236,7 +239,11 @@ function initialize() {
         tray.setHighlightMode('never')
       })
     }
-    if (pjson.config.debug) { win.openDevTools() }
+    if (pjson.config.debug) {
+      devtools = new BrowserWindow()
+      win.webContents.setDevToolsWebContents(devtools.webContents)
+      win.webContents.openDevTools({ mode: 'detach' })
+    }
     return win
   }
   app.on('window-all-closed', () => {
@@ -283,7 +290,7 @@ function initialize() {
     try {
       getUSBDrives()
     } catch (e) {
-      // Do nothing
+      console.error(`Could not find USB Drives ${e.message}`)
     }
   })
   app.on('will-quit', () => {})
@@ -331,8 +338,7 @@ function initialize() {
       resizable: true
     })
     imageJoin.loadURL(`file://${__dirname}/views/joiner.html#joiner`)
-    imageJoin.on('did-finish-load', () => {
-    })
+    imageJoin.on('did-finish-load', () => {})
     ipc.on('bg-prev', () => {
       previewClose = true
     })
@@ -344,20 +350,21 @@ function initialize() {
   })
 }
 // Make this app a single instance app.
-//
 // The main window will be restored and focused instead of a second window
 // opened when a person attempts to launch a second instance.
-//
-// Returns true if the current version of the app should quit instead of
-// launching.
-function makeSingleInstance() {
-  return app.makeSingleInstance(() => {
-    if (mainWindow) {
-      if (mainWindow.isMinimized()) { mainWindow.restore() }
-      mainWindow.focus()
-    }
-  })
+function makeSingleInstance(lock) {
+  if (!lock) {
+    app.quit()
+  } else {
+    app.on('second-instance', (event, commandLine, workingDirectory) => {
+      if (mainWindow) {
+        if (mainWindow.isMinimized()) { mainWindow.restore() }
+        mainWindow.focus()
+      }
+    })
+  }
 }
+
 function getUSBDrives() {
   var disks = []
   var aioInfo
@@ -414,6 +421,7 @@ ipc.on('open-file-default', function(event) {
   event.sender.send('selected-bg', defaultDir + 'default.png')
   // openBGFolder(defaultDir, event)
 })
+
 function openBGFolder(path, event) {
   dialog.showOpenDialog({
     title: 'MZD-AIO-TI | Background Image Will Be Resized To: 800 px X 480 px and converted to png format.',
@@ -475,6 +483,7 @@ ipc.on('bg-no-resize', (event, arg) => {
 ipc.on('theme-jci', function(event) {
   openThemeDialog(event)
 })
+
 function openThemeDialog(event) {
   dialog.showOpenDialog({
     title: 'MZD-AIO-TI | Choose The JCI Folder From Any Theme Package.',
@@ -507,6 +516,7 @@ ipc.on('download-aio-files', (event, arg) => {
   ipc.once('resume-dl', (event) => {
     downloadZip(`${fileName}`)
   })
+
   function downloadZip(arg) {
     downloadwin = new BrowserWindow({
       show: false,
@@ -519,6 +529,7 @@ ipc.on('download-aio-files', (event, arg) => {
       downloadwin = null
     })
   }
+
   function resetDL() {
     downloadwin.webContents.session.once('will-download', (event, item, webContents) => {
       // fileSize = (typeof fileSize === 'undefined') ? item.getTotalBytes() : fileSize;

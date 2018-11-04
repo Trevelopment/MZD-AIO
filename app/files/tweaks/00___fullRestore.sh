@@ -7,20 +7,36 @@ restore_full()
   FILE="${1}"
   BACKUP_FILE="${1}.org"
   FILENAME=$(basename -- "$FILE")
-  if [ -s "${BACKUP_FILE}" ]
+  if [ -e "${BACKUP_FILE}" ]
   then
-    cp "${BACKUP_FILE}" "${MYDIR}/org_files/"
-    cp -a "${BACKUP_FILE}" "${FILE}" && log_message "***+++---===|___ Restored ${FILENAME} From Backup ___|===---+++***"
-    if [ $DEL_BAKUPS -eq 1 ]
+    if [ -s "${BACKUP_FILE}" ]
     then
-      rm -f "${BACKUP_FILE}"
-      log_message "===               Deleted backup: ${FILENAME}.org                    ==="
+      cp "${BACKUP_FILE}" "${MYDIR}/org_files/"
+      cp -a "${BACKUP_FILE}" "${FILE}" && log_message "***+++ Restored ${FILENAME} From ${BACKUP_FILE} +++***"
+      if [ $DEL_BAKUPS -eq 1 ]
+      then
+        rm -f "${BACKUP_FILE}"
+        log_message "===               Deleted backup: ${FILENAME}.org                    ==="
+      fi
+    else
+      # Backup file is blank, run integrity check
+      log_message "!!!+++ WARNING: BACKUP FILE ${BACKUP_FILE} WAS BLANK!!! +++!!!"
+      v70_integrity_check
     fi
     return 0
   else
+    # New secondary location for storing .org files for v70+
+    BACKUP_FILE="${NEW_BKUP_DIR}/${FILENAME}.org"
+    if [ -s "${BACKUP_FILE}" ]
+    then
+      cp "${BACKUP_FILE}" "${MYDIR}/org_files/"
+      cp -a "${BACKUP_FILE}" "${FILE}" && log_message "+++*** Restored ${FILENAME} From Backup ${BACKUP_FILE} ***+++"
+      return 0
+    fi
     return 1
   fi
 }
+[ $COMPAT_GROUP -eq 6 ] && v70_integrity_check
 log_message "*************************************************************************"
 log_message "********************* BEGIN FULL SYSTEM RESTORE *************************"
 log_message "*************************************************************************"
@@ -102,7 +118,7 @@ elif (restore_full /jci/gui/apps/diag/js/diagApp.js)
 then
   log_message "============*************  diagApp.js RESTORED   *************==========="
 fi
-if [ -e /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js.org2 ]
+if [ -s /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js.org2 ]
 then
   if ! grep -Fq "formatDateCustom" /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js.org2
   then
@@ -185,6 +201,10 @@ then
 fi
 
 # restore boot animation
+if (restore_full /jci/resources/newLoopLogo.ivf)
+then
+  log_message "============*********** newLoopLogo.ivf RESTORED ************============"
+fi
 if (restore_full /jci/resources/LoopLogo.ivf)
 then
   log_message "============************ LoopLogo.ivf RESTORED **************============"
@@ -322,12 +342,6 @@ rm -f /jci/scripts/adb
 rm -f /jci/scripts/cs_receiver_arm
 rm -f /jci/scripts/cs_receiver_conn_arm
 rm -f /jci/scripts/mirroring.sh
-rm -f ${STAGE_WIFI}.bak?
-rm -f ${STAGE_WIFI}.old
-rm -f ${STAGE_WIFI}.org
-rm -f ${STAGE_WIFI}.org2
-rm -f ${STAGE_WIFI}.org3
-rm -f ${STAGE_WIFI}.AA
 rm -f /tmp/mnt/data_persist/dev/bin/flac-usb-recover
 rm -f /tmp/mnt/data_persist/dev/bin/websocketd
 rm -f /tmp/mnt/data_persist/dev/bin/aaserver
@@ -337,6 +351,7 @@ rm -f /tmp/mnt/data_persist/dev/bin/usb-allow.list
 rm -f /tmp/mnt/data/enable_input_filter
 rm -f /tmp/mnt/data/input_filter
 rm -f /usr/lib/gstreamer-0.10/libgsth264parse.so
+rm -f ${STAGE_WIFI}.*
 # if [ -e /usr/lib/gstreamer-0.10/libgstalsa.so.org ]
 # then
 # 		cp -a /usr/lib/gstreamer-0.10/libgstalsa.so.org /usr/lib/gstreamer-0.10/libgstalsa.so
@@ -346,10 +361,10 @@ rm -f /usr/lib/gstreamer-0.10/libgsth264parse.so
 # 		/bin/fsync /usr/lib/gstreamer-0.10/libgstalsa.so
 # fi
 echo "#!/bin/sh" > ${STAGE_WIFI}
-if (restore_full /jci/scripts/jci-fw.sh)
-then
-  log_message "===========************* jci-fw.js RESTORED ****************============="
-fi
+# if (restore_full /jci/scripts/jci-fw.sh)
+# then
+#   log_message "===========************* jci-fw.js RESTORED ****************============="
+# fi
 show_message "RESTORE ALL INFOTAINMENT COLORS AND IMAGES\n(BACK TO RED) ..."
 cp -a ${MYDIR}/config_org/safety-warning-reverse-camera/jci/nativegui/images/*.png /jci/nativegui/images/
 log_message "=======******* SAFETY WARNING FROM REVERSE CAMERA RESTORED *******======="

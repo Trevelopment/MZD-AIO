@@ -1,7 +1,7 @@
 # Speedometer v4.8
 show_message "INSTALL SPEEDOMETER v${SPD_VER} ..."
+space_check
 log_message "==========**************** INSTALL SPEEDOMETER *****************========="
-
 log_message "===                 Begin Installation of Speedometer                 ==="
 if [ $TESTBKUPS -eq 1 ]
 then
@@ -102,13 +102,8 @@ then
   cp -a ${MYDIR}/config/speedometer/speedometer-controls.js /jci/gui/apps/_speedometer/js
   log_message "===                Copied Speedometer controls File                   ==="
 fi
-if [ ! -e /jci/gui/addon-common/websocketd ]  || [ ! -e /jci/gui/addon-common/cufon-yui.js ]; then
-  cp -a "${MYDIR}/config/jci/gui/addon-common/" /jci/gui/
-  chmod 755 /jci/gui/addon-common/websocketd
-  log_message "===   Copied websocketd and jquery.min.js to /jci/gui/addon-common/   ==="
-else
-  log_message "===       websocketd and jquery.min.js available, no copy needed      ==="
-fi
+
+addon_common
 
 # check for 1st line of stage_wifi.sh
 if grep -Fq "#!/bin/sh" ${STAGE_WIFI}

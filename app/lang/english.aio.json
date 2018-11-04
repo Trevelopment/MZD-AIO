@@ -861,7 +861,7 @@
     "toolTip": "<h5>Improved List Loop. </h5>Loop for all lists and submenu (music, contacts, etc.).<br>You can now jump from the top position of a list to the bottom and vice versa.",
     "img": "",
     "safetylvl": "safe",
-    "extraOps": true,
+    "extraOps": false,
     "advancedOp": false
   }, {
     "id": 7,

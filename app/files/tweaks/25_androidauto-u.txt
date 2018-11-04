@@ -28,26 +28,29 @@ log_message "===             Removed files for Android Auto Headunit App        
 
 # delete Android Auto entry from additionalApps.json
 ADDIT_APPS=0
-if [ -e /jci/opera/opera_dir/userjs/CustomApplicationsProxy.js ] || [ -e /jci/opera/opera_dir/userjs/nativeApps.js ]
+if [ -e ${ADDITIONAL_APPS_JSON} ]
 then
-  log_message "===                          Found CASDK                              ==="
-  ADDIT_APPS=1
-elif grep -Fq "_aiotweaks" ${ADDITIONAL_APPS_JSON}
-then
-  log_message "===          Found AIOTweaksApp entry in additionalApps.json          ==="
-  ADDIT_APPS=1
-elif grep -Fq "_speedometer" ${ADDITIONAL_APPS_JSON}
-then
-  log_message "===           Found speedometer entry in additionalApps.json          ==="
-  ADDIT_APPS=1
-elif grep -Fq "_videoplayer" ${ADDITIONAL_APPS_JSON}
-then
-  log_message "===           Found videoplayer entry in additionalApps.json          ==="
-  ADDIT_APPS=1
-elif grep -Fq "_mzdmeter" ${ADDITIONAL_APPS_JSON}
-then
-  log_message "===           Found mzd meter entry in additionalApps.json            ==="
-  ADDIT_APPS=1
+  if [ -e /jci/opera/opera_dir/userjs/CustomApplicationsProxy.js ] || [ -e /jci/opera/opera_dir/userjs/nativeApps.js ]
+  then
+    log_message "===                          Found CASDK                              ==="
+    ADDIT_APPS=1
+  elif grep -Fq "_aiotweaks" ${ADDITIONAL_APPS_JSON}
+  then
+    log_message "===          Found AIOTweaksApp entry in additionalApps.json          ==="
+    ADDIT_APPS=1
+  elif grep -Fq "_speedometer" ${ADDITIONAL_APPS_JSON}
+  then
+    log_message "===           Found speedometer entry in additionalApps.json          ==="
+    ADDIT_APPS=1
+  elif grep -Fq "_videoplayer" ${ADDITIONAL_APPS_JSON}
+  then
+    log_message "===           Found videoplayer entry in additionalApps.json          ==="
+    ADDIT_APPS=1
+  elif grep -Fq "_mzdmeter" ${ADDITIONAL_APPS_JSON}
+  then
+    log_message "===           Found mzd meter entry in additionalApps.json            ==="
+    ADDIT_APPS=1
+  fi
 fi
 if [ $ADDIT_APPS -eq 0 ]
 then

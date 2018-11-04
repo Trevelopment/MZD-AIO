@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+/* jshint esversion:6, -W033, -W117, -W097, -W116 */
 var fs = require('fs');
 
 var args=process.argv.slice(2);

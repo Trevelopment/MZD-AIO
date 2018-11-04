@@ -1,0 +1,82 @@
+#!/bin/sh
+
+SCRIPT=$(readlink -f "$0")
+SCRIPTPATH=$(dirname "$SCRIPT")
+LOGPATH=/tmp/root/headunit.log
+SCRIPT_ARGS=$@
+
+export LD_LIBRARY_PATH="${SCRIPTPATH}/headunit_libs:/jci/lib:/jci/opera/3rdpartylibs/freetype:/usr/lib/imx-mm/audio-codec:/usr/lib/imx-mm/video-codec:/usr/lib/imx-mm/parser:/data_persist/dev/lib:"
+#override some GST plugins with these
+export GST_PLUGIN_PATH="${SCRIPTPATH}/headunit_libs:/usr/lib/gstreamer-0.10"
+
+DEBUG=0
+
+if ! [ -e /tmp/root/headunit.json ]; then
+ cp "${SCRIPTPATH}/headunit.json" /tmp/root/
+fi
+
+start_headunit()
+{
+   rm -f /tmp/root/headunit-wireless.status
+   sed -i 's."wifiTransport": true."wifiTransport": false.g' /tmp/root/headunit.json
+   #taskset 0xFFFFFFFF "${SCRIPTPATH}/headunit" "$@" > /dev/null 2>&1 &
+   taskset 0xFFFFFFFF ionice -c 1 -n 0 nice -n -20 "${SCRIPTPATH}/headunit" "$@" > /dev/null 2>&1 &
+   sleep 2
+   touch /tmp/root/headunit.status
+}
+
+start_AAwireless()
+{
+    rm -f /tmp/root/headunit.status
+    sed -i 's."wifiTransport": false."wifiTransport": true.g' /tmp/root/headunit.json
+    taskset 0xFFFFFFFF ionice -c 1 -n 0 nice -n -20 "${SCRIPTPATH}/headunit" "$@" > /dev/null 2>&1 &
+    sleep 2
+    touch /tmp/root/headunit-wireless.status
+}
+
+rm -f /tmp/root/headunit.status /tmp/root/headunit-wireless.status
+
+# prevent conflict by Official AA
+pkill -f 'aap_service'
+
+#default USB
+start_headunit
+
+# loop forever. every 5 seconds,
+while true
+do
+ NET_CHECK=`netstat -rn|awk '$2=="192.168.43.1" {print}'|wc -l|awk '{print $1}'`
+
+ if [ -e /tmp/root/usb_connect ]; then
+  USBCHECK=1
+ else
+  USBCHECK=0
+ fi
+
+ if [ $NET_CHECK == 1 ] && [ $USBCHECK == 0 ]; then
+    if [ -e /tmp/root/headunit.status ]; then
+        killall -q headunit
+    fi
+
+    if ! [ -e /tmp/root/headunit-wireless.status ]; then
+        start_AAwireless
+    fi
+
+ else
+    check_headunit=`ps|grep 'bin/headunit'|grep -v wrapper|grep -v grep|wc -l|awk '{print $1}'`
+
+    [ $check_headunit -eq 0 ] && rm -f /tmp/root/headunit-wireless.status /tmp/root/headunit.status
+
+    if [ -e /tmp/root/headunit-wireless.status ]; then
+        killall -q headunit
+    fi
+    if ! [ -e /tmp/root/headunit.status ]; then
+        start_headunit
+    fi
+ fi
+
+ RAND=`expr $RANDOM % 5`
+ echo "go sleep $RAND"
+ sleep $RAND
+
+done

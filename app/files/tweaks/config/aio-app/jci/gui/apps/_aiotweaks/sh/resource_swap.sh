@@ -23,7 +23,7 @@ if [ "$CMD" == "" ] || [ "$CMD" == "mount" ] ; then
       show_message "SWAPFILE FOUND, MOUNTING: ${SWAPFILE}"
       mount -o rw,remount ${USBPATH}
       mkswap ${SWAPFILE}
-      swapon ${SWAPFILE}
+      swapon ${SWAPFILE} && show_message "SWAP MOUNT SUCCESS!"
       break
     fi
   done
@@ -40,7 +40,7 @@ if [ "$CMD" == "unmount" ] ; then
     then
       show_message "SWAPFILE FOUND, UNMOUNTING: ${SWAPFILE}"
       mount -o rw,remount ${USBPATH}
-      swapoff ${SWAPFILE}
+      swapoff -a ${SWAPFILE} && show_message "SWAP UNMOUNT SUCCESS!"
       break
     fi
   done

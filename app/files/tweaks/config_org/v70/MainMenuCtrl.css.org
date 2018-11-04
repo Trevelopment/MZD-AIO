@@ -1,0 +1,311 @@
+/* CSS Document */
+.MainMenuCtrl {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 800px;
+  height: 420px;
+  overflow: hidden;
+  -o-transition-property: left;
+  -o-transition-duration: .15s;
+  -o-transition-timing-function: ease-in;
+  -o-transition-delay: 0;
+  -o-transform-origin: top left; }
+
+.MainMenuCtrlEllipse {
+  position: absolute;
+  left: 0px;
+  top: 193px;
+  width: 800px;
+  height: 304px;
+  background: url(../images/Ellipse.png);
+  background-repeat: no-repeat; }
+
+.MainMenuCtrlIconName {
+  position: absolute;
+  top: 337px;
+  left: 108px;
+  width: 586px;
+  height: 51px;
+  text-align: center;
+  line-height: 51px;
+  font-family: "Tipperary", Arial, Helvetica, sans-serif;
+  font-size: 40px;
+  color: white;
+  opacity: 0;
+  -o-transition: opacity 200ms linear; }
+  .MainMenuCtrlIconName.Visible {
+    opacity: 1; }
+
+.MainMenuCtrlCoinAExplode {
+  animation-name: mainMenuCtrlCoinAExplode;
+  animation-duration: 300ms;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards; }
+
+@keyframes mainMenuCtrlCoinAExplode {
+  100% {
+    -o-transform: scale(5, 5);
+    left: 344px;
+    top: 148px;
+    z-index: 1; } }
+
+.MainMenuCtrlCoinBExplode {
+  animation-name: mainMenuCtrlCoinBExplode;
+  animation-duration: 300ms;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards; }
+
+@keyframes mainMenuCtrlCoinBExplode {
+  100% {
+    -o-transform: scale(4, 4);
+    left: 330px;
+    top: 133px;
+    z-index: 1; } }
+
+.MainMenuCtrlHighlightExplode {
+  animation-name: mainMenuCtrlHighlightExplode;
+  animation-duration: 300ms;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards; }
+
+@keyframes mainMenuCtrlHighlightExplode {
+  100% {
+    -o-transform: scale(2.5, 2.5);
+    left: 219.5px;
+    top: -18px; } }
+
+.MainMenuCtrlAppDiv {
+  position: absolute;
+  left: -35px;
+  top: 272px;
+  width: 114px;
+  height: 122px;
+  -o-transition: 0.2s linear; }
+
+.MainMenuCtrlAppNormal {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 114px;
+  height: 122px;
+  background: url(../images/coins/HomeApps.png);
+  background-repeat: no-repeat;
+  -o-transition: opacity 0.2s linear; }
+
+.MainMenuCtrlAppFocus {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 114px;
+  height: 122px;
+  background: url(../images/coins/HomeApps_Focus.png);
+  background-repeat: no-repeat;
+  background-size: 100%; }
+
+.MainMenuCtrlAppDiv.MainMenuCtrlCoinFocus {
+  -o-transform: scale(1.2, 1.2) translate(36px, -33px); }
+
+div.MainMenuCtrlCoinFocus .MainMenuCtrlAppNormal {
+  opacity: 0; }
+
+.MainMenuCtrlEntDiv {
+  position: absolute;
+  left: 105px;
+  top: 164px;
+  width: 142px;
+  height: 152px;
+  -o-transition: 0.2s linear; }
+
+.MainMenuCtrlEntNormal {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 142px;
+  height: 152px;
+  background: url(../images/coins/HomeAudio.png);
+  background-repeat: no-repeat;
+  -o-transition: opacity 0.2s linear; }
+
+.MainMenuCtrlEntFocus {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 142px;
+  height: 152px;
+  background: url(../images/coins/HomeAudio_Focus.png);
+  background-repeat: no-repeat;
+  background-size: 100%; }
+
+.MainMenuCtrlEntDiv.MainMenuCtrlCoinFocus {
+  -o-transform: scale(1.2, 1.2) translate(0px, -10px); }
+
+div.MainMenuCtrlCoinFocus .MainMenuCtrlEntNormal {
+  opacity: 0; }
+
+.MainMenuCtrlComDiv {
+  position: absolute;
+  left: 330px;
+  top: 133px;
+  width: 142px;
+  height: 152px;
+  -o-transition: 0.2s linear; }
+
+.MainMenuCtrlComNormal {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 142px;
+  height: 152px;
+  background: url(../images/coins/HomeCom.png);
+  background-repeat: no-repeat;
+  -o-transition: opacity 0.2s linear; }
+
+.MainMenuCtrlComFocus {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 142px;
+  height: 152px;
+  background: url(../images/coins/HomeCom_Focus.png);
+  background-repeat: no-repeat;
+  background-size: 100%; }
+
+.MainMenuCtrlComDiv.MainMenuCtrlCoinFocus {
+  -o-transform: scale(1.2, 1.2) translate(0px, -10px); }
+
+div.MainMenuCtrlCoinFocus .MainMenuCtrlComNormal {
+  opacity: 0; }
+
+.MainMenuCtrlNavDiv {
+  position: absolute;
+  left: 549px;
+  top: 164px;
+  width: 142px;
+  height: 152px;
+  -o-transition: 0.2s linear; }
+
+.MainMenuCtrlNavNormal {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 142px;
+  height: 152px;
+  background: url(../images/coins/HomeNav.png);
+  background-repeat: no-repeat;
+  -o-transition: opacity 0.2s linear; }
+
+.MainMenuCtrlNavFocus {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 142px;
+  height: 152px;
+  background: url(../images/coins/HomeNav_Focus.png);
+  background-repeat: no-repeat;
+  background-size: 100%; }
+
+.MainMenuCtrlNavDiv.MainMenuCtrlCoinFocus {
+  -o-transform: scale(1.2, 1.2) translate(0px, -10px); }
+
+div.MainMenuCtrlCoinFocus .MainMenuCtrlNavNormal {
+  opacity: 0; }
+
+.MainMenuCtrlSetDiv {
+  position: absolute;
+  left: 721px;
+  top: 272px;
+  width: 114px;
+  height: 122px;
+  -o-transition: 0.2s linear; }
+
+.MainMenuCtrlSetNormal {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 114px;
+  height: 122px;
+  background: url(../images/coins/HomeSet.png);
+  background-repeat: no-repeat;
+  -o-transition: opacity 0.2s linear; }
+
+.MainMenuCtrlSetFocus {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 114px;
+  height: 122px;
+  background: url(../images/coins/HomeSet_Focus.png);
+  background-repeat: no-repeat;
+  background-size: 100%; }
+
+.MainMenuCtrlSetDiv.MainMenuCtrlCoinFocus {
+  -o-transform: scale(1.2, 1.2) translate(-36px, -33px); }
+
+div.MainMenuCtrlCoinFocus .MainMenuCtrlSetNormal {
+  opacity: 0; }
+
+.MainMenuCtrlAppHighlight {
+  opacity: 0;
+  -o-transition: opacity 200ms linear;
+  width: 363px;
+  height: 323px;
+  background: url(../images/highlights/Glow.png);
+  background-repeat: no-repeat;
+  position: absolute;
+  left: -123.5px;
+  top: 68px; }
+  .MainMenuCtrlAppHighlight.Visible {
+    opacity: 1; }
+
+.MainMenuCtrlEntHighlight {
+  opacity: 0;
+  -o-transition: opacity 200ms linear;
+  width: 363px;
+  height: 323px;
+  background: url(../images/highlights/Glow.png);
+  background-repeat: no-repeat;
+  position: absolute;
+  left: -5.5px;
+  top: 13px; }
+  .MainMenuCtrlEntHighlight.Visible {
+    opacity: 1; }
+
+.MainMenuCtrlComHighlight {
+  opacity: 0;
+  -o-transition: opacity 200ms linear;
+  width: 363px;
+  height: 323px;
+  background: url(../images/highlights/Glow.png);
+  background-repeat: no-repeat;
+  position: absolute;
+  left: 219.5px;
+  top: -18px; }
+  .MainMenuCtrlComHighlight.Visible {
+    opacity: 1; }
+
+.MainMenuCtrlNavHighlight {
+  opacity: 0;
+  -o-transition: opacity 200ms linear;
+  width: 363px;
+  height: 323px;
+  background: url(../images/highlights/Glow.png);
+  background-repeat: no-repeat;
+  position: absolute;
+  left: 438.5px;
+  top: 13px; }
+  .MainMenuCtrlNavHighlight.Visible {
+    opacity: 1; }
+
+.MainMenuCtrlSetHighlight {
+  opacity: 0;
+  -o-transition: opacity 200ms linear;
+  width: 363px;
+  height: 323px;
+  background: url(../images/highlights/Glow.png);
+  background-repeat: no-repeat;
+  position: absolute;
+  left: 560.5px;
+  top: 68px; }
+  .MainMenuCtrlSetHighlight.Visible {
+    opacity: 1; }

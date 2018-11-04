@@ -1,0 +1,792 @@
+@charset "utf-8";
+/* CSS Document */
+/* Declare variables */
+.Ump3Ctrl {
+  position: inherit;
+  top: 276px;
+  left: 0px;
+  width: 800px;
+  height: 140px;
+}
+
+.Ump3CtrlBackground {
+  position: inherit;
+  top: 42px;
+  left: 0;
+  width: 800px;
+  height: 98px;
+  background-image: url(../images/UMP_Bg.png);
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.Ump3CtrlSeparator {
+  position: inherit;
+  top: 56px;
+  width: 3px;
+  height: 83px;
+  background-image: url(../images/UMP_Btn_Separator.png);
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.Ump3CtrlBgArch {
+  position: inherit;
+  top: 34px;
+  left: 0;
+  width: 800px;
+  height: 30px;
+  background-image: url(../images/UMP_Bg_Arch.png);
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.Ump3CtrlButtonIcon {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-position: center 62%;
+  background-repeat: no-repeat;
+}
+
+.Ump3CtrlElapsedTime {
+  position: inherit;
+  top: 5px;
+  left: 15px;
+  width: 90px;
+  height: 31px;
+  font-family: "Tipperary", Arial, Helvetica, sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  font-size: 21px;
+  text-align: left;
+  color: #FFFFFF;
+  overflow: hidden;
+}
+
+.Ump3CtrlTotalTime {
+  position: inherit;
+  top: 5px;
+  left: 695px;
+  width: 90px;
+  height: 31px;
+  font-family: "Tipperary", Arial, Helvetica, sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  font-size: 21px;
+  text-align: right;
+  color: #FFFFFF;
+  overflow: hidden;
+}
+
+.Ump3Ctrl2Button_En, .Ump3Ctrl2Button_focused, .Ump3Ctrl2Button_down, .Ump3Ctrl2Button_held, .Ump3Ctrl2Button_Ds {
+  position: inherit;
+  background-position: center;
+  background-repeat: no-repeat;
+  top: 40px;
+  height: 100px;
+  width: 400px;
+}
+
+.Ump3Ctrl2Button_Ds.Ump3Ctrl2Button_focused {
+  background-image: url(../images/UMP_Focus_2.png);
+}
+
+.Ump3Ctrl2Button_En {
+  background-image: none;
+}
+
+.Ump3Ctrl2Button_focused {
+  background-image: url(../images/UMP_Focus_2.png);
+}
+
+.Ump3Ctrl2Button_down {
+  background-image: url(../images/UMP_Hit_2.png);
+}
+
+.Ump3Ctrl2Button_held {
+  /* background-image: url(../images/UMP_Held_2.png); */
+}
+
+.Ump3Ctrl2Button_Ds {
+  background-image: none;
+}
+
+.Ump3Ctrl3Button_En, .Ump3Ctrl3Button_focused, .Ump3Ctrl3Button_down, .Ump3Ctrl3Button_held, .Ump3Ctrl3Button_Ds {
+  position: inherit;
+  background-position: center;
+  background-repeat: no-repeat;
+  top: 40px;
+  height: 100px;
+  width: 266px;
+}
+
+.Ump3Ctrl3Button_Ds.Ump3Ctrl3Button_focused {
+  background-image: url(../images/UMP_Focus_3.png);
+}
+
+.Ump3Ctrl3Button_En {
+  background-image: none;
+}
+
+.Ump3Ctrl3Button_focused {
+  background-image: url(../images/UMP_Focus_3.png);
+}
+
+.Ump3Ctrl3Button_down {
+  background-image: url(../images/UMP_Hit_3.png);
+}
+
+.Ump3Ctrl3Button_held {
+  /* background-image: url(../images/UMP_Held_3.png); */
+}
+
+.Ump3Ctrl3Button_Ds {
+  background-image: none;
+}
+
+.Ump3Ctrl4Button_En, .Ump3Ctrl4Button_focused, .Ump3Ctrl4Button_down, .Ump3Ctrl4Button_held, .Ump3Ctrl4Button_Ds {
+  position: inherit;
+  background-position: center;
+  background-repeat: no-repeat;
+  top: 40px;
+  height: 100px;
+  width: 199px;
+}
+
+.Ump3Ctrl4Button_Ds.Ump3Ctrl4Button_focused {
+  background-image: url(../images/UMP_Focus_4.png);
+}
+
+.Ump3Ctrl4Button_En {
+  background-image: none;
+}
+
+.Ump3Ctrl4Button_focused {
+  background-image: url(../images/UMP_Focus_4.png);
+}
+
+.Ump3Ctrl4Button_down {
+  background-image: url(../images/UMP_Hit_4.png);
+}
+
+.Ump3Ctrl4Button_held {
+  /* background-image: url(../images/UMP_Held_4.png); */
+}
+
+.Ump3Ctrl4Button_Ds {
+  background-image: none;
+}
+
+.Ump3Ctrl5Button_En, .Ump3Ctrl5Button_focused, .Ump3Ctrl5Button_down, .Ump3Ctrl5Button_held, .Ump3Ctrl5Button_Ds {
+  position: inherit;
+  background-position: center;
+  background-repeat: no-repeat;
+  top: 40px;
+  height: 100px;
+  width: 160px;
+}
+
+.Ump3Ctrl5Button_Ds.Ump3Ctrl5Button_focused {
+  background-image: url(../images/UMP_Focus_5.png);
+}
+
+.Ump3Ctrl5Button_En {
+  background-image: none;
+}
+
+.Ump3Ctrl5Button_focused {
+  background-image: url(../images/UMP_Focus_5.png);
+}
+
+.Ump3Ctrl5Button_down {
+  background-image: url(../images/UMP_Hit_5.png);
+}
+
+.Ump3Ctrl5Button_held {
+  /* background-image: url(../images/UMP_Held_5.png); */
+}
+
+.Ump3Ctrl5Button_Ds {
+  background-image: none;
+}
+
+.Ump3Ctrl6Button_En, .Ump3Ctrl6Button_focused, .Ump3Ctrl6Button_down, .Ump3Ctrl6Button_held, .Ump3Ctrl6Button_Ds {
+  position: inherit;
+  background-position: center;
+  background-repeat: no-repeat;
+  top: 40px;
+  height: 100px;
+  width: 135px;
+}
+
+.Ump3Ctrl6Button_Ds.Ump3Ctrl6Button_focused {
+  background-image: url(../images/UMP_Focus_6.png);
+}
+
+.Ump3Ctrl6Button_En {
+  background-image: none;
+}
+
+.Ump3Ctrl6Button_focused {
+  background-image: url(../images/UMP_Focus_6.png);
+}
+
+.Ump3Ctrl6Button_down {
+  background-image: url(../images/UMP_Hit_6.png);
+}
+
+.Ump3Ctrl6Button_held {
+  /* background-image: url(../images/UMP_Held_6.png); */
+}
+
+.Ump3Ctrl6Button_Ds {
+  background-image: none;
+}
+
+.Ump3Ctrl7Button_En, .Ump3Ctrl7Button_focused, .Ump3Ctrl7Button_down, .Ump3Ctrl7Button_held, .Ump3Ctrl7Button_Ds {
+  position: inherit;
+  background-position: center;
+  background-repeat: no-repeat;
+  top: 40px;
+  height: 100px;
+  width: 114px;
+}
+
+.Ump3Ctrl7Button_Ds.Ump3Ctrl7Button_focused {
+  background-image: url(../images/UMP_Focus_7.png);
+}
+
+.Ump3Ctrl7Button_En {
+  background-image: none;
+}
+
+.Ump3Ctrl7Button_focused {
+  background-image: url(../images/UMP_Focus_7.png);
+}
+
+.Ump3Ctrl7Button_down {
+  background-image: url(../images/UMP_Hit_7.png);
+}
+
+.Ump3Ctrl7Button_held {
+  /* background-image: url(../images/UMP_Held_7.png); */
+}
+
+.Ump3Ctrl7Button_Ds {
+  background-image: none;
+}
+
+.Ump3Ctrl8Button_En, .Ump3Ctrl8Button_focused, .Ump3Ctrl8Button_down, .Ump3Ctrl8Button_held, .Ump3Ctrl8Button_Ds {
+  position: inherit;
+  background-position: center;
+  background-repeat: no-repeat;
+  top: 40px;
+  height: 100px;
+  width: 100px;
+}
+
+.Ump3Ctrl8Button_Ds.Ump3Ctrl8Button_focused {
+  background-image: url(../images/UMP_Focus_8.png);
+}
+
+.Ump3Ctrl8Button_En {
+  background-image: none;
+}
+
+.Ump3Ctrl8Button_focused {
+  background-image: url(../images/UMP_Focus_8.png);
+}
+
+.Ump3Ctrl8Button_down {
+  background-image: url(../images/UMP_Hit_8.png);
+}
+
+.Ump3Ctrl8Button_held {
+  /* background-image: url(../images/UMP_Held_8.png); */
+}
+
+.Ump3Ctrl8Button_Ds {
+  background-image: none;
+}
+
+.Ump3Ctrl9Button_En, .Ump3Ctrl9Button_focused, .Ump3Ctrl9Button_down, .Ump3Ctrl9Button_held, .Ump3Ctrl9Button_Ds {
+  position: inherit;
+  background-position: center;
+  background-repeat: no-repeat;
+  top: 40px;
+  height: 100px;
+  width: 89px;
+}
+
+.Ump3Ctrl9Button_Ds.Ump3Ctrl9Button_focused {
+  background-image: url(../images/UMP_Focus_9.png);
+}
+
+.Ump3Ctrl9Button_En {
+  background-image: none;
+}
+
+.Ump3Ctrl9Button_focused {
+  background-image: url(../images/UMP_Focus_9.png);
+}
+
+.Ump3Ctrl9Button_down {
+  background-image: url(../images/UMP_Hit_9.png);
+}
+
+.Ump3Ctrl9Button_held {
+  /* background-image: url(../images/UMP_Held_9.png); */
+}
+
+.Ump3Ctrl9Button_Ds {
+  background-image: none;
+}
+
+.Ump3Ctrl10Button_En, .Ump3Ctrl10Button_focused, .Ump3Ctrl10Button_down, .Ump3Ctrl10Button_held, .Ump3Ctrl10Button_Ds {
+  position: inherit;
+  background-position: center;
+  background-repeat: no-repeat;
+  top: 40px;
+  height: 100px;
+  width: 80px;
+}
+
+.Ump3Ctrl10Button_Ds.Ump3Ctrl10Button_focused {
+  background-image: url(../images/UMP_Focus_10.png);
+}
+
+.Ump3Ctrl10Button_En {
+  background-image: none;
+}
+
+.Ump3Ctrl10Button_focused {
+  background-image: url(../images/UMP_Focus_10.png);
+}
+
+.Ump3Ctrl10Button_down {
+  background-image: url(../images/UMP_Hit_10.png);
+}
+
+.Ump3Ctrl10Button_held {
+  /* background-image: url(../images/UMP_Held_10.png); */
+}
+
+.Ump3Ctrl10Button_Ds {
+  background-image: none;
+}
+
+.UmpScrubberStyle01 {
+  position: absolute;
+  top: 13px;
+  left: 109px;
+  width: 582px;
+  height: 12px;
+  background-image: url(../images/UMP_ScrubberBg01.png);
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.UmpScrubberFillStyle01 {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 578px;
+  height: 8px;
+  background-image: url(../images/UMP_Scrubber_Fill01.png);
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.UmpScrubberFocusedFillStyle01 {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 578px;
+  height: 8px;
+  background-image: url(../images/UMP_Scrubber_Fill_Focus01.png);
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.UmpScrubberHandleStyle01 {
+  position: absolute;
+  width: 66px;
+  height: 66px;
+  background-repeat: no-repeat;
+  background-position: center;
+  top: -26px;
+  left: -32px;
+  background-image: url(../images/UMP_ScrubberKnob.png);
+}
+
+.UmpScrubberFocusedHandleStyle01 {
+  position: absolute;
+  width: 66px;
+  height: 66px;
+  background-repeat: no-repeat;
+  background-position: center;
+  top: -26px;
+  left: -32px;
+  background-image: url(../images/UMP_ScrubberHighlight.png);
+}
+
+.UmpScrubberStyle02 {
+  position: absolute;
+  top: 13px;
+  left: 109px;
+  width: 668px;
+  height: 12px;
+  background-image: url(../images/UMP_ScrubberBg02.png);
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.UmpScrubberFillStyle02 {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 664px;
+  height: 8px;
+  background-image: url(../images/UMP_Scrubber_Fill02.png);
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.UmpScrubberFocusedFillStyle02 {
+  background-image: url(../images/UMP_Scrubber_Fill_Focus02.png);
+}
+
+.UmpScrubberHandleStyle02 {
+  position: absolute;
+  width: 66px;
+  height: 66px;
+  background-repeat: no-repeat;
+  background-position: center;
+  top: -26px;
+  left: -32px;
+  background-image: url(../images/UMP_ScrubberKnob.png);
+}
+
+.UmpScrubberFocusedHandleStyle02 {
+  position: absolute;
+  width: 66px;
+  height: 66px;
+  background-repeat: no-repeat;
+  background-position: center;
+  top: -26px;
+  left: -32px;
+  background-image: url(../images/UMP_ScrubberHighlight.png);
+}
+
+.UmpScrubberStyle03 {
+  position: absolute;
+  top: 13px;
+  left: 23px;
+  width: 754px;
+  height: 12px;
+  background-image: url(../images/UMP_ScrubberBg03.png);
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.UmpScrubberFillStyle03 {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 750px;
+  height: 8px;
+  background-image: url(../images/UMP_Scrubber_Fill03.png);
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.UmpScrubberFocusedFillStyle03 {
+  background-image: url(../images/UMP_Scrubber_Fill_Focus03.png);
+}
+
+.UmpScrubberHandleStyle03 {
+  position: absolute;
+  width: 66px;
+  height: 66px;
+  background-repeat: no-repeat;
+  background-position: center;
+  top: -26px;
+  left: -32px;
+  background-image: url(../images/UMP_ScrubberKnob.png);
+}
+
+.UmpScrubberFocusedHandleStyle03 {
+  position: absolute;
+  width: 66px;
+  height: 66px;
+  background-repeat: no-repeat;
+  background-position: center;
+  top: -26px;
+  left: -32px;
+  background-image: url(../images/UMP_ScrubberHighlight.png);
+}
+
+.Ump3CtrlBufferStyle01 {
+  position: absolute;
+  top: 15px;
+  left: 109px;
+  width: 580px;
+  height: 8px;
+  border: 1px solid #FFFFFF;
+  overflow: hidden;
+  white-space: nowrap;
+  background-image: url(../images/UMP_Buffer.png);
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.Ump3CtrlBufferStyle02 {
+  position: absolute;
+  top: 15px;
+  left: 109px;
+  width: 666px;
+  height: 8px;
+  border: 1px solid #FFFFFF;
+  overflow: hidden;
+  white-space: nowrap;
+  background-image: url(../images/UMP_Buffer.png);
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.Ump3CtrlBufferStyle03 {
+  position: absolute;
+  top: 15px;
+  left: 23px;
+  width: 752px;
+  height: 8px;
+  border: 1px solid #FFFFFF;
+  overflow: hidden;
+  white-space: nowrap;
+  background-color: #FFF;
+  background-image: url(../images/UMP_Buffer.png);
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.Ump3CtrlBufferStyle04 {
+  position: absolute;
+  top: 15px;
+  left: 109px;
+  width: 666px;
+  height: 8px;
+  border: 1px solid #FFFFFF;
+  overflow: hidden;
+  white-space: nowrap;
+  background-image: url(../images/UMP_Buffer.png);
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.Ump3CtrlBufferStyle05 {
+  position: absolute;
+  top: 15px;
+  left: 23px;
+  width: 752px;
+  height: 8px;
+  border: 1px solid #FFFFFF;
+  overflow: hidden;
+  white-space: nowrap;
+  background-color: #FFF;
+  background-image: url(../images/UMP_Buffer.png);
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.UmpScrubberStyle06 {
+  position: absolute;
+  top: 13px;
+  left: 109px;
+  width: 582px;
+  height: 12px;
+  background-image: url(../images/UMP_ScrubberBg01.png);
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.UmpScrubberFillStyle06 {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 578px;
+  height: 8px;
+  background-image: url(../images/UMP_Scrubber_Fill01.png);
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.UmpScrubberFocusedFillStyle06 {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 578px;
+  height: 8px;
+  background-image: url(../images/UMP_Scrubber_Fill_Focus01.png);
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.UmpScrubberHandleStyle06 {
+  position: absolute;
+  width: 66px;
+  height: 66px;
+  background-repeat: no-repeat;
+  background-position: center;
+  top: -26px;
+  left: -32px;
+  background-image: url(../images/UMP_ScrubberKnob.png);
+}
+
+.UmpScrubberFocusedHandleStyle06 {
+  position: absolute;
+  width: 66px;
+  height: 66px;
+  background-repeat: no-repeat;
+  background-position: center;
+  top: -26px;
+  left: -32px;
+  background-image: url(../images/UMP_ScrubberHighlight.png);
+}
+
+.Ump3CtrlDarStyle06 {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 578px;
+  height: 8px;
+  background-image: url(../images/UMP_Scrubber_DarFill.png);
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.Ump3CtrlDarDisabledStyle06 {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 578px;
+  height: 8px;
+  background-image: url(../images/UMP_Scrubber_Fill.png);
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.Ump3CtrlBufferStyle01 hr {
+  margin: 0;
+  display: inline-block;
+  margin-left: 9px;
+  width: 12px;
+  height: 20px;
+  background: #666666;
+  opacity: 0.6;
+  -o-transform: skew(44deg);
+  transform: skew(44deg);
+}
+
+.Ump3CtrlBufferStyle02 hr {
+  margin: 0;
+  display: inline-block;
+  margin-left: 9px;
+  width: 12px;
+  height: 20px;
+  background: #666666;
+  opacity: 0.6;
+  -o-transform: skew(44deg);
+  transform: skew(44deg);
+}
+
+.Ump3CtrlBufferStyle03 hr {
+  margin: 0;
+  display: inline-block;
+  margin-left: 9px;
+  width: 12px;
+  height: 20px;
+  background: #666666;
+  opacity: 0.6;
+  -o-transform: skew(44deg);
+  transform: skew(44deg);
+}
+
+.Ump3Ctrl.RetractedFalse {
+  top: 276px;
+}
+
+.Ump3Ctrl.RetractedTrue {
+  top: 480px;
+}
+
+.Ump3Ctrl.SlideUp {
+  animation-name: keyframesRetractedFalse;
+  animation-delay: 5000ms;
+  animation-duration: 500ms;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+
+@keyframes keyframesRetractedFalse {
+  100% {
+    top: 276px;
+  }
+}
+.Ump3Ctrl.SlideDown {
+  animation-name: keyframesRetractedTrue;
+  animation-delay: 5000ms;
+  animation-duration: 500ms;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+
+@keyframes keyframesRetractedTrue {
+  100% {
+    top: 480px;
+  }
+}
+.Ump3CtrlTooltip {
+  position: absolute;
+  top: -37px;
+  left: 0px;
+  height: 91px;
+  white-space: nowrap;
+  margin: 0;
+  padding: 0;
+  -o-transition: opacity 0.25s linear;
+  opacity: 0;
+  z-index: 10;
+}
+
+.Ump3CtrlTooltipBalloon {
+  font-family: "Tipperary", Arial, Helvetica, sans-serif;
+  font-weight: normal;
+  font-style: normal;
+  font-size: 35px;
+  color: #FFF;
+  text-align: center;
+  display: inline-block;
+  min-width: 148px;
+  padding-top: 20px;
+  padding-bottom: 23px;
+  padding-left: 30px;
+  padding-right: 30px;
+  background-image: url(../images/UmpPopupLt.png), url(../images/UMPPopupRt.png), url(../images/UMPPopupMd.png);
+  background-repeat: no-repeat, no-repeat, no-repeat;
+  background-position: left top, right top, 49px 0;
+  background-size: 49px 86px, 99px 86px, 100px 86px;
+}
+
+.Ump3CtrlTooltipPoint {
+  position: absolute;
+  top: 69px;
+  left: 0;
+  width: 36px;
+  height: 22px;
+  background-image: url(../images/UMP_Popup_Point.png);
+  background-position: center;
+  background-repeat: no-repeat;
+}
