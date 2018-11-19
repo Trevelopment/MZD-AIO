@@ -335,7 +335,11 @@ function initialize() {
       title: 'Join Images Together to Create a Your Rotating Background Images',
       autoHideMenuBar: true,
       parent: mainWindow,
-      resizable: true
+      resizable: true,
+      'webPreferences': {
+        'nodeIntegration': pjson.config.nodeIntegration || true,
+        'preload': path.resolve(path.join(__dirname, 'preload.js'))
+      }
     })
     imageJoin.loadURL(`file://${__dirname}/views/joiner.html#joiner`)
     imageJoin.on('did-finish-load', () => {})
@@ -476,7 +480,7 @@ ipc.on('bg-no-resize', (event, arg) => {
     ]
   }, function(files) {
     if (files) {
-      event.webContents.send('selected-joined-bg', files)
+      event.sender.send('selected-joined-bg', files)
     }
   })
 })
@@ -521,7 +525,10 @@ ipc.on('download-aio-files', (event, arg) => {
     downloadwin = new BrowserWindow({
       show: false,
       frame: false,
-      focusable: false
+      focusable: false,
+      'webPreferences': {
+        'nodeIntegration': false
+      }
     })
     resetDL()
     downloadwin.loadURL(path.join("http://trevelopment.win", `${arg}`))

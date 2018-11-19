@@ -1104,7 +1104,7 @@ function usbDrives() {
         for (var j = 0; j < usb.length; j++) {
           var mpLoc = (process.platform === 'win32') ? `${usb[j].mp.replace('\\', '/')}` : `${usb[j].mp}`
           lst += `<h4> ${mpLoc.replace('/','')} ${usb[j].desc} `
-          lst += `<button class="w3-round w3-btn w3-ripple w3-hover-indigo w3-border w3-hover-border-pink w3-large" title='${langObj.popupMsgs[5].msg} ${mpLoc.replace(':/','')}' onclick="shell.showItemInFolder('${mpLoc}')"></span><span class="icon-usb2"></span> ${langObj.popupMsgs[5].msg} ${mpLoc.replace(':/','')}</button></h4>`
+          lst += `<button class="w3-round w3-btn w3-ripple w3-hover-indigo w3-border w3-hover-border-pink w3-large" title='${langObj.popupMsgs[5].msg} ${mpLoc.replace(':/','')}' onclick="shell.showItemInFolder('${mpLoc}', { activate: true }, (err) => {})"></span><span class="icon-usb2"></span> ${langObj.popupMsgs[5].msg} ${mpLoc.replace(':/','')}</button></h4>`
           appendAIOlog(`<li style='color:#005182'>Found USB Drive #${j + 1} - ${mpLoc.replace(':/','')} ${usb[j].desc}</li>`)
         }
         lst += `<h5><b>${langObj.popupMsgs[8].msg}:</b></h5>${langObj.popupMsgs[2].msg}`
@@ -1141,7 +1141,7 @@ function usbDrives() {
         }
         var mpLocation = (process.platform === 'win32') ? `${usb[0].mp.replace('\\', '/')}` : `${usb[0].mp}`
         lst += `<b>${langObj.popupMsgs[7].msg} ${mpLocation.replace('/', '')}?</b><br>${langObj.popupMsgs[2].msg}`
-        lst += `<button class="w3-large w3-blue-grey w3-btn w3-ripple w3-hover-teal w3-border w3-border-orange w3-large w3-display-bottomleft" style="margin-bottom: -55px;margin-left: 10px;" title='${langObj.popupMsgs[5].msg}' onclick="shell.showItemInFolder('${mpLocation}')"></span><span class="icon-usb3"></span> ${langObj.popupMsgs[5].msg}</button>`
+        lst += `<button class="w3-large w3-blue-grey w3-btn w3-ripple w3-hover-teal w3-border w3-border-orange w3-large w3-display-bottomleft" style="margin-bottom: -55px;margin-left: 10px;" title='${langObj.popupMsgs[5].msg}' onclick="shell.showItemInFolder('${mpLocation}', { activate: true }, (err) => {})"></span><span class="icon-usb3"></span> ${langObj.popupMsgs[5].msg}</button>`
         lst += `<label class="delCopyLabel w3-display-bottomright"><input type="checkbox" id="rmCpDirCheck" class="w3-check">${langObj.popupMsgs[21].msg}</label>`
         bootbox.confirm({
           title: `Copy files to USB drive?`,
@@ -1292,7 +1292,7 @@ function finishedMessage(mp) {
       cleanCopyDir()
       cp2usb = ''
     }
-    openUSB = `<h3><button class="w3-round-large w3-amber w3-btn w3-ripple w3-hover-blue w3-large w3-border w3-border-pink" title='${langObj.popupMsgs[5].msg}' onclick="shell.showItemInFolder('${process.platform === 'win32' ? mp.replace('\\','/'): mp}')"></span><span class="icon-usb3"></span>${langObj.popupMsgs[5].msg}</button></h3>`
+    openUSB = `<h3><button class="w3-round-large w3-amber w3-btn w3-ripple w3-hover-blue w3-large w3-border w3-border-pink" title='${langObj.popupMsgs[5].msg}' onclick="shell.showItemInFolder('${process.platform === 'win32' ? mp.replace('\\','/'): mp}', { activate: true }, (err) => {})"></span><span class="icon-usb3"></span>${langObj.popupMsgs[5].msg}</button></h3>`
   }
   bootbox.hideAll()
   if (errFlag) {

@@ -1,6 +1,191 @@
 # MZD-AIO-TI 2.x.x CHANGELOG  [![Download](https://api.bintray.com/packages/trevelopment/MZD-AIO-TI/AIO/images/download.svg?version=MZD-AIO-TI)](http://dl.mazdatweaks.win)
 ##### FOR [AIO v1.x.x CHANGELOG](https://github.com/Siutsch/AIO---All-in-one-tweaks/blob/master/CHANGELOG.md) or visit [MazdaTweaks.com]
 
+### v2.8.2
+
+#### **Android Auto Headunit App v1.10+**
+
+*   Same as v1.10 except:
+    *   HUD is optional <var>*Beta*</var> feature
+    *   Restored "Reverse GPS" Option
+
+#### **Video Player App v3.7**
+
+*   Compatibility for v70 using mfw_isink
+    *   Resizing video during playback does not work with mfw_isink
+    *   Choice to use the old video sink for FW before v70
+*   Shows videos or songs in **all subdirectories in the "Movies" or "Music" folders** respectively
+    *   All videos in one list alphabetical order by first letter in file path
+    *   Search takes approximately 30 seconds per 1000 songs/videos
+
+#### **No More Beeps**:
+
+*   Now Disables Beeps By directly disabling the MMUI Message That Triggers The Beep instead of disabling certain Calls to Common.Beep()
+
+#### **Date 2 Statusbar**:
+
+*   Fixed dangerous code that could potentially cause a bootloop in _extremely rare situations_
+    *   If already installed, reinstalling this tweak is recommended to ensure dangerous code is fixed
+
+##### **Apps To Resources**
+
+*   addon-common files are saved to resources partition to free up more space
+
+#### v70+ Fixes:
+
+*   **v70.00.100**: Fixed _No More Disclaimer_ & _Order of Audio Sources_ Tweaks
+*   Backup ".org" files are saved on resources partition
+*   Periodic Space/Safety checks/alerts to abort the installation whenever 100% space is used
+*   v70 Integrity check (up to v70.00.100 only)
+    *   Checks all .org backup files for integrity
+    *   If backup is found to be incomplete or empty a fallback file is copied to new backup location, invalid backup is deleted
+    *   If backup is valid it is moved to new backup location to free up space
+    *   Repairs all broken backup files created by AIO
+    *   _**On v70 if you have run out of space on the rootfs it is recommended to run "Full System Restore" ONCE to repair any potentially broken files**_
+
+### v2.8.1
+
+#### **Android Auto Headunit App v1.10**
+
+*   HUD Support
+*   USB/WiFi Switching Improvements
+*   Various Codeing Improvements/Bug Fixes
+
+#### **Video Player App v3.6**
+
+*   Choose defaults for Shuffle, Repeat, & fullscreen
+*   Video will resume where it left off after a phone call
+
+#### **AIO Tweaks App v0.8**
+
+*   Home & Playback buttons changed to icons
+*   Added "Shell" tab and moved most of the shell commands
+*   Controls change: Left/Right - Switch Tabs; Up/Down - Open Info Panel
+*   Faster loading responses from shell commands
+    *   Before response came through line by line via websocket (~.3 second per line)
+    *   Now response is written to temp file and the file's contents are loaded & displayed. (~1 second per command)
+*   **Show Version** - Shows FW Version
+*   **Vehicle Data** - Shows Shared Vehicle Data
+*   ~~**Reverse Cam** - Shows Reverse Camera~~ (_So close!_)
+
+#### **Remove Message Replies**:
+
+*   Set the **preset text messages** in _ANY_ available language even edit multiple languages.
+*   After installing will prompt to perform a Factory Reset to apply message settings (or normal reboot, message setting will not be applied until the system is factory reset).
+    *   NOTE: IF _"SKIP CONFIRMATION"_ INSTALL OPTION IS CHOSEN THIS PROMP WILL BE SKIPPED AND FACTORY RESET WILL BE DONE AUTOMATIICALLY
+
+#### **Install Options:**
+
+*   **Build "run.sh"**: Renames "tweaks.sh" to "run.sh" to be executed by autorun
+    *   _Must have autorun installed prior to running_
+    *   Only runs once when the system is booting up.
+    *   Mostly for recovery purposes.
+*   **Apps To Resources**: Install App Files To The "/resources" Partition
+    *   Resources is about 3GB (rootfs is only about 500MB) mostly used for language files (because some regions have many languages available)
+    *   **(v70)** If space on rootfs is low (under 5% free) apps will Be Installed to resources automatically
+    *   _Recomended for all app installations_ (checked by default)
+
+#### **CASDK:**
+
+*   In AIO: Help/Controls/Info panel for each app when you click the app's image.
+
+#### **Bug Fixes:**
+
+*   **No More Disclaimer/Order Audio Sources & App List Patch (v59+):** Uses proper Application list structure based on vehicle configuration type (old or new)
+    *   **(v70)** Fixed AA/CarPlay button disappearing from statusbar.*   **USB Audio Mod**: Fixed "Powered by Gracenote" text not displaying (normal & custom text)*   **Pause On Mute (v70)**: Installation is skipped for v70+ because pause on mute behavior is built in.*   **Boot Animations (v59.00.502+)** Fixed Custom Boot Animations, v59.00.502+ only one boot animation is used (LoopLogo in AIO Options)*   **tweaks.sh**: Coding/Error handling improvements.
+    *   AIO_logs saved in `/bakups/` folder on USB now contain all error output from stdout & stderr
+    *   Additional log is created `/bakups/info.log` with some general system information for troubleshooting issues if needed
+    *   The Most important thing AIO does is create backups of the original system files before modifying them
+        *   If a file backup fails the install will abort with a warning message
+        *   This issue was seen on v70.00.021, Backups could not be created due to lack of disk space making it very difficult to revert tweaks.*   AIO will use a default image when no image is chosen in the options (instead of hanging during compile due to missing image file) for tweaks that are expecting an image (Background, Change Blank Album Art, etc.).*   Install Options tab is shown in all applicable views (CASDK, Full System Recovery & autorun).
+
+### v2.8.0
+
+## CASDK
+
+> CASDK is a micro framework that allows developers to write and deploy custom applications which integrate natively into the existing JCI framework without hassle. CASDK simplifies the app development process with a straight-forward, and slimmed down but powerful API. This version is integrated to run AIO apps alongside CASDK apps with no conflicts and imperceptible performance impact. Together they create a unique framework and a new realm of customization and application possibilities.
+
+##### CASDK Comes With:
+
+*   **CASDK Proxy** - Proxy registers both CASDK and AIO apps.
+*   **Custom Application Runtime** - A microframework that handles the custom applications during runtime.
+*   **Data Readers** - Poll vehicle data an certain intervals (1s, 60s, & 300s)
+*   **JS logging** - JavaScript (and CSS) console log is written to /tmp/root/casdk-error.log
+*   **LocalStorage** - Moves the save location of localStorage to /tmp/mnt/data_persist/storage/
+*   **NodeJS** - Powerful Server-side JavaScript.
+*   **ADB** - Android Debug Bridge for Android devices.
+*   **Custom Applications** - Apps that run on the CASDK framework
+
+**AIO + CASDK Framework and Apps are installed internally to the 'resources' partition by default, optionally CASDK apps can be run from an SD Card.**
+
+**Native apps installed with AIO (Speedometer, Video Player, AA, etc.) will run on the CASDK framework although apps need to be installed differently with CASDK. The AIO Tweak installer will detect if CASDK is installed when running tweaks and adjust the installation accordingly but older app installers may not work while CASDK is installed.**
+
+
+### CASDK Apps will be unlockable using codes found @ <a href="" onclick="externalLink('casdk')">https://mazdatweaks.com/casdk</a>
+
+*   Simple Dashboard App will be available by default and 2 more will be available by visiting the blog and entering the codes.
+*   I did not create any of the CASDK apps but I did make numerous enhancements and bug fixes, you may report CASDK bugs in the <a href="" onclick="externalLink('issues')">MZD-AIO Github Repository Issues Section</a>.
+
+#### Android Auto Headunit App v1.09 w/ Wifi Support
+
+Instructions For Android Auto WiFi: 0\. Before you start: Activate Android Auto developer mode by going to about and tapping the title bar until it says you are a developer 1\. From Android Phone: Create Hotspot 2\. From Vehicle: Turn on Wifi, connect to phone hotspot 3\. Phone: In Android Auto app go to about screen menu and start headunit server 4\. Android Auto will start automatically, if it does not or you get a black screen you can open Android Auto from the applications menu.
+
+#### VideoPlayer v3.5
+
+*   Fullscreen button toggles: Boxed - Keep Aspect Ratio - Fullscreen
+*   Repeat is one button toggles: none - 1 - all
+*   StatusBarNotifications for toggles
+*   Video title will filter out the extension and turn underscores to spaces
+*   Shows gplay error in error message
+*   After hitting an error will make up to 3 attempts to re-start the video in 10 second intervals
+*   Video Resumes where it left off when shifting out of reverse
+*   Added to option "Resume Play" - when checked:
+    *   Resumes the video where you left off if it was interrupted or the app was exited while playing.
+    *   Saves video list to reopen and resume quickly (reloads if switch to music or press reload button)
+    *   If the video is stopped and you are in the list view when you exit you will return to the list when reopened.
+*   "Black Out Background" option - Will overlay all other GUI layers leaving only the video and solid black background
+    *   If "Title to Statusbar" is checked, Video Title will show centered above video and time in the bottom left corner (but can be toggled with the multicontroller).
+    *   This is ON TOP of all layers including the statusbar and bottom controls while the video player background is ON THE BOTTOM of all the other layers
+    *   Pausing the video temporarily hides the overlay
+*   In VideoPlayer Info panel (tab next to options) will show swap memory data and "unmount swap" button (if swapfile is present) - Makes an attempt to unmount swapfile on shutdown to avoid freezing. NOTES ON SWAPFILE: When using the swapfile it is recommended to use the "unmount swap" button before turning off and shutting down the system. If a significant amount of memory is "swapped" then the shutdown sequence is not enough time for the swapfile to fully unmount and the system will freeze. In the list view long hold down to check how much memory is in the swap cache, manually unmounting a few seconds before system shutdown solves the freezing issue.
+*   Added Multicontroller 'hold' actions
+    *   While media is playing:
+        *   Up - Toggle Title
+        *   Down - Toggle Shuffle
+        *   Left - Toggle VideoPlayer Background (Behind Layers)
+        *   Right - Toggle Blackout Overlay
+        *   Select - Toggle Repeat
+    *   Video List View:
+        *   Up - Open Options
+        *   Down - Open Info
+        *   Left - Play Next Video
+        *   Right - Play Previous Video
+        *   Select - Select Last Played Video
+
+#### AIO Tweaks App v0.7
+
+*   Turn Off Display On startup **(Experimental)**
+    *   Screen will automatically turn off after boot up sequence is complete.
+    *   System will be fully booted before display is turned off
+    *   Pushing buttons before the boot sequence is complete may have unexpected effects
+*   If the touchscreen is NOT enabled while driving, AIO will display the word "Driving..." (This was to test the new 'Touchscreen While Moving' tweak to make sure I completely stopped the signal from reaching the GUI)
+*   Also, will display the word "Stop!" when you stop (This was also for testing intercepting speed signals from the CMU)
+
+#### Speedometer v5.7, Sb Speedo, & Date2Statusbar Tweaks
+
+*   Option: Temporarily hide Sb Speedometer during Statusbar notifications
+*   Date to Statusbar is not needed anymore with Sb Speedometer (icons will be moved above clock)
+*   Note: If installing SB Speedometer and Date2Statusbar is already installed then reinstall (or uninstall) to update, this only need to be done once.
+*   Icons for Trip Dist, Coolant and Intake Temp.
+
+#### Touching Up The Classics
+
+*   **No More Disclaimer & Order of Audio Source List** tweaks revamped and added support for FW v59.00.545+ & v70.00.000
+*   Removed No More Disclaimer option 'Reduce Time To .5 seconds' to not complicate compatibility/because it is pointless.
+*   Background Rotator window handles errors better and shows error messages when variables are outside of the boundaries. + A bunch of new backgrounds
+*   Redone "App List Patch" for v59, this patch is applied during app installation for FW v59 only if both 'No More Disclaimer' & 'Order of Audio Source List' are not installed.
+*   NOTE: **When installing apps on v59+ with AIO v2.8.0 for the first time only, "No More Disclaimer" and "Order of Audio Source List" tweaks will need to be reinstalled because of the new patch.**
+
 ### 2.7.9
 
 #### Order Audio Source List:

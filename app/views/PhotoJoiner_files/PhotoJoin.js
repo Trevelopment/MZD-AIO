@@ -40,14 +40,8 @@ $(function() {
     }
   })
   colorPicker();*/
-  $("#thumbs").sortable({
-    update: function(event, ui) {
-      makeArray();
-    }
-  });
-  $("#thumbs").disableSelection();
   makeArray();
-  setTimeout("hideMsg();", 5000);
+  setTimeout(hideMsg, 5000);
 });
 
 function selectFiles() {
@@ -103,6 +97,21 @@ function selectFiles() {
     }*/
   }
   numberOfImages()
+}
+
+function joinedPhoto(photo) {
+  var outImage = document.getElementById("imgJoined");
+  fs.copyFile(photo, `${vardir}/background.png`, (err) => {
+    if (err) {
+      console.log(err);
+      window.close();
+      return
+    }
+    $("#Panel2").show();
+    $("#Panel1").hide();
+    outImage.src = `${vardir}/background.png`;
+    $('#imgJoined').attr("src", outImage.src);
+  })
 }
 
 function JoinPhotos() {
@@ -531,17 +540,18 @@ function ShowErrorMessage(AllowedImages) {
   ErrorLabel.html("You can add maximum of " + AllowedImages + " images.");
   ErrorLabel.addClass("err");
   ErrorLabel.slideDown();
-  setTimeout("hideMsg();", 5000);
+  setTimeout(hideMsg, 5000);
 }
+
 function ShowTimeError(seconds) {
   var ErrorLabel = $("#joinError");
-  ErrorLabel.html("INVALID X = " + seconds +"! Seconds per background must be between 10 and 300 Seconds.");
+  ErrorLabel.html("INVALID X = " + seconds + "! Seconds per background must be between 10 and 300 Seconds.");
   ErrorLabel.addClass("err");
   ErrorLabel.slideDown();
   $('#bgRotatorSeconds').addClass("error");
-  $('#bgRotatorSeconds').click(()=>{$('#bgRotatorSeconds').removeClass('error')});
+  $('#bgRotatorSeconds').click(() => { $('#bgRotatorSeconds').removeClass('error') });
   $('#bgRotatorSeconds').focus();
-  setTimeout("hideMsg();", 5000);
+  setTimeout(hideMsg, 5000);
 }
 
 function ValidateAllowedImages() {

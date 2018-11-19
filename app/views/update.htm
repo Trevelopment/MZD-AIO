@@ -1,36 +1,29 @@
 <!DOCTYPE html>
 <style>.bootbox.update-info{margin-top: 0px;}</style>
 <p><a href="changelog.htm" data-featherlight="ajax">Full Changelog</a></p>
-
-<h1>AIO + CASDK</h1>
-
-<h3>v2.8.2</h3>
-
-<h4><strong>Android Auto Headunit App v1.10+</strong></h4>
-<ul><li>Same as v1.10 except:
-<ul><li>HUD is optional <var>*Beta*</var> feature</li><li>Restored &quot;Reverse GPS&quot; Option <small>(May not be needed, restored by request)</small></li></ul></li></ul>
-
-<h4><strong>Video Player App v3.7</strong></h4>
-
-<ul><li>Compatibility for v70 using mfw_isink<ul><li>Resizing video during playback does not work with mfw_isink</li><li>Choice to use the old video sink for FW before v70</li></ul></li><li>List will show videos or songs in <strong>all subdirectories in the &quot;Movies&quot; or &quot;Music&quot; folders</strong> respectively<ul><li>All videos in one list, alphabetical order by first letter in file path</li><li>Search takes approximately 30 seconds per 1000 songs/videos<small> Depending on directory structure</small></li></ul></li></ul>
-
-<h4><strong>No More Beeps</strong>:</h4>
-
-<ul><li>Now directly disables the MMUI Message That Triggers The Beep inside of Common.Beep() instead of only disabling certain calls to Common.Beep()</li></ul>
-
-<h4><strong>Date 2 Statusbar</strong>:</h4>
-
-<ul><li>Fixed dangerous code that could potentially cause a bootloop in <em>extremely rare situations</em> involving installing/uninstalling a certain combination of tweaks.<ul><li>If already installed, reinstalling this tweak is <strong><em>Highly recommended</em></strong> to ensure dangerous code is fixed</li></ul></li></ul>
-
-<h5><strong>Apps To Resources</strong></h5>
-
-<ul><li>addon-common files are saved to resources partition to free up more space</li></ul>
-<h5><strong>Bug Fixes</strong></h5>
-
-<ul><li>Windows: Tray icon menu fixes</li></ul>
-
-<h4>v70+ Fixes:</h4>
-
-<ul><li><strong>v70.00.100</strong>: Fixed <em>No More Disclaimer</em> &amp; <em>Order of Audio Sources</em> Tweaks</li><li>Backup &quot;.org&quot; files are saved on resources partition</li><li>Periodic Space/Safety checks/alerts to abort the installation whenever 100% space is used</li><li>v70 Integrity check (up to v70.00.100 only)<ul><li>Checks all .org backup files for integrity</li><li>If backup is found to be incomplete or empty a fallback file is copied to new backup location, invalid backup is deleted</li><li>If backup is valid it is moved to new backup location to free up space</li><li>Repairs all broken backup files created by AIO</li><li><em><strong>On v70 if you have run out of space on the rootfs it is recommended to run &quot;Full System Restore&quot; ONCE to repair any potentially broken files</strong></em>
-</li></ul></li></ul>
-<h5>Compatibility tested up to v70.00.100</h5>
+<h1>AIO</h1>
+<h3><a id="v283_4"></a>v2.8.3</h3>
+<h4><a id="AIO_Tweaks_App_v09_6"></a>AIO Tweaks App v0.9</h4>
+<ul>
+<li><em><strong>CRITICAL FIX</strong></em> <strong>System Restore</strong> - Rewritten to accommodate new backup methods in v70</li>
+</ul>
+<h4><a id="Background_Rotator_9"></a><strong>Background Rotator</strong></h4>
+<ul>
+<li><em>Fixed</em> Drag &amp; Drop reordering functionality</li>
+<li><em>Fixed</em> Sideways scrolling with mouse wheel</li>
+<li><em>Fixed</em> “Use Your Own Joined Image (No Resize)” Button
+<ul>
+<li>Completely works now, choose seconds-per-background first</li>
+</ul>
+</li>
+</ul>
+<h4><a id="Google_Translate_15"></a>Google Translate</h4>
+<ul>
+<li>Hide “contribute to a better translation” pop-up (would cover AIO tooltips)</li>
+</ul>
+<h4><a id="CASDK_Apps_available_by_default_18"></a><strong>CASDK</strong> Apps available by default</h4>
+<ul>
+<li>Clock</li>
+<li>Tetris</li>
+<li>Multidash</li>
+</ul>

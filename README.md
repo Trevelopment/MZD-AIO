@@ -1,4 +1,4 @@
-# MZD-AIO-TI 2.8 [![Download](aio.svg?version=MZD-AIO-TI) ](http://dl.mazdatweaks.win)
+# MZD-AIO-TI 2.8 [![Download](./aio.svg?version=MZD-AIO-TI) ](http://dl.mazdatweaks.win)
 
 ## MZD All In One tweaks Installer
 
@@ -90,7 +90,7 @@ Permanently visible date + icons above the clock, even if system messages are di
 
 ##### USB Audio Mod. By: Enlsen
 
-*(NOT Compatible with FW v59.00.502+)*
+## **NOT Compatible with FW v59.00.502+**
 
 \*\*Patches The USB Audio App With These Mods:  
 
@@ -125,7 +125,7 @@ The empty album cover frame is removed, which is displayed when there is no entr
 
 ##### Swapfile
 
-The Swapfile will provide your system with an additionasl 1 GB of RAM running from the USB drive for playing videos. The installation of the swap file must be done on a USB drive with music and/or movies, that remains in the car.. The installation files are automatically deleted, the drive may no longer be removed during operation, because the system will use it also as memory.. Only remove the USB drive if the MZD system is off.
+The Swapfile will provide your system with an additional 1 GB of RAM running from the USB drive for playing videos. The installation of the swap file must be done on a USB drive with music and/or movies, that remains in the car.. The installation files are automatically deleted, the drive may no longer be removed during operation, because the system will use it also as memory.. Only remove the USB drive if the MZD system is off.
 
 ##### Fuel Consumption Tweak.
 

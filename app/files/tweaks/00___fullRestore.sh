@@ -180,9 +180,9 @@ if (restore_full /jci/gui/framework/js/Utility.js)
 then
   log_message "============************* Utility.js RESTORED **************============="
 fi
-sed -i 's/"settleTime" : 1000,/"settleTime" : 20000,/g' /jci/gui/apps/diag/js/diagApp.js
-sed -i '/Sumire Racing/d' /jci/gui/common/js/Common.js
-sed -i 's/"holdTimeout" : 1000,/"holdTimeout" : 5000,/g' /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js
+grep -Fq '"settleTime" : 1000,' /jci/gui/apps/diag/js/diagApp.js && sed -i 's/"settleTime" : 1000,/"settleTime" : 20000,/g' /jci/gui/apps/diag/js/diagApp.js
+grep -Fq 'Sumire Racing' /jci/gui/common/js/Common.js && sed -i '/Sumire Racing/d' /jci/gui/common/js/Common.js
+grep -Fq '"holdTimeout" : 1000,' /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js && sed -i 's/"holdTimeout" : 1000,/"holdTimeout" : 5000,/g' /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js
 # restore background image and common.css to original
 if (restore_full /jci/gui/common/css/common.css)
 then
@@ -412,10 +412,8 @@ then
   pkill -f 'watch -n 60'
   pkill -f 'watch -n 300'
   pkill -f 'mzd-casdk.start'
-  rm -rf /jci/casdk
-  rm -rf /jci/gui/apps/custom
-  rm -f /jci/opera/opera_dir/userjs/CustomApplicationsProxy.js
-  rm -f /jci/opera/opera_dir/userjs/nativeApps.js
+  rm -rf /jci/casdk /jci/gui/apps/custom
+  rm -f /jci/opera/opera_dir/userjs/CustomApplicationsProxy.js /jci/opera/opera_dir/userjs/nativeApps.js
   log_message "==========************ Removing watch processes ************==========="
 
   # reset storage

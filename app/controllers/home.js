@@ -408,16 +408,17 @@
           $scope.getScript('assets/js/translator.js')
           $scope.getScript('assets/vendor/bootstrap.min.js')
         } else if ($location.path().includes('joiner')) {
-          $scope.getScript('PhotoJoiner_files/jquery-1.8.3.min.js')
-          $scope.getScript('PhotoJoiner_files/jquery-ui.js')
-          $scope.getScript('PhotoJoiner_files/jquery.fineuploader-3.0.min.js')
-          $scope.getScript('PhotoJoiner_files/PhotoJoin.js')
-          $(() => {
-            $scope.getScript('../assets/vendor/jquery.mousewheel.min.js')
+          $(function() {
             $('#thumbs').mousewheel(function(event, delta) {
               this.scrollLeft -= (delta * 200)
               event.preventDefault()
             })
+            $("#thumbs").sortable({
+              update: function(event, ui) {
+                makeArray()
+              }
+            })
+            $("#thumbs").disableSelection();
           })
         } else {
           $scope.getScript('assets/js/tour.js')
@@ -941,16 +942,16 @@
       sdcard: false
     }
     $scope.visibleApps = {
-      simpledashboard: casdkApps.get('simpledashboard') || true,
-      clock: casdkApps.get('clock') || false,
-      multidash: casdkApps.get('multidash') || false,
-      vdd: casdkApps.get('vdd') || true,
+      simpledashboard: true,
+      clock: true,
+      multidash: true,
+      vdd: true,
+      tetris: true,
       terminal: casdkApps.get('terminal') || false,
       gpsspeed: casdkApps.get('gpsspeed') || false,
       aio: casdkApps.get('aio') || false,
       speedometer: casdkApps.get('speedometer') || false,
       simplespeedo: casdkApps.get('simplespeedo') || false,
-      tetris: casdkApps.get('tetris') || false,
       snake: casdkApps.get('snake') || false,
       breakout: casdkApps.get('breakout') || false,
       background: casdkApps.get('background') || false,
@@ -1015,14 +1016,10 @@
           snackbar("Unlocked: Simple Speedometer")
           break
         case "reset":
-          casdkApps.set('clock', false)
-          casdkApps.set('multidash', false)
-          casdkApps.set('vdd', true)
           casdkApps.set('terminal', false)
           casdkApps.set('gpsspeed', false)
           casdkApps.set('aio', false)
           casdkApps.set('simplespeedo', false)
-          casdkApps.set('tetris', false)
           casdkApps.set('snake', false)
           casdkApps.set('breakout', false)
           casdkApps.set('background', false)

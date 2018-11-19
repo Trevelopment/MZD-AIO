@@ -314,6 +314,9 @@ div#fullSystemRestore~#helpDrop {
 input[type=checkbox]#bgrotator, .accordion-content input[type=checkbox] {
   visibility: visible;
 }
+tr.bgrotator-button {
+    height: 100%;
+}
 img.loader {}
 #bg-img {
   float: left;
@@ -1730,11 +1733,8 @@ select#spdOp-barThemeStart {
         .w3-col.mainmenuoptions {
           width: 49.999%;
         }
-        .bgrotator.w3-half {
+        .bgrotator-button .w3-half {
           white-space: nowrap;
-        }
-        .bgrotator-button.w3-half {
-          width: 20%;
         }
         tr#customThemeOps {
           max-width: 50%;
@@ -2565,4 +2565,11 @@ input:disabled {
 }
 .isink {
     text-align: center;
+}
+div#goog-gt-tt {
+    display: none!important;
+}
+.goog-text-highlight {
+  box-shadow:none!important;
+  background: transparent!important;
 }

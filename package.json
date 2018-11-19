@@ -2,7 +2,7 @@
   "name": "MZD-AIO-TI",
   "productName": "MZD All In One Tweaks Installer",
   "description": "An Installer/Uninstaller for Over 50 System Tweaks for the Mazda MZD Infotainment System.",
-  "version": "2.8.2",
+  "version": "2.8.3",
   "homepage": "http://mazdatweaks.com",
   "license": "GPL-3.0",
   "main": "main.js",
@@ -20,7 +20,7 @@
     "url": "https://github.com/Trevelopment/MZD-AIO/issues"
   },
   "engines": {
-    "node": "^11.1.x"
+    "node": "^10.x.x"
   },
   "keywords": [
     "Mazda",
@@ -95,7 +95,7 @@
   "build": {
     "appId": "com.trevelopment.mzd-aio-ti",
     "productName": "MZD-AIO-TI",
-    "copyright": "© 2018 Trevelopment By Trevor G Martin",
+    "copyright": "© 2019 Trevelopment By Trevor G Martin",
     "artifactName": "${productName}-${os}_${version}.${ext}",
     "extraResources": [
       "background-images/**/*"
@@ -170,7 +170,7 @@
     "dependency-check": "^3.2.1",
     "devtron": "^1",
     "electron": "^3.0.8",
-    "electron-builder": "20.34.0",
+    "electron-builder": "^20.34.0",
     "electron-debug": "^2.0.0",
     "electron-is-dev": "^1.0",
     "electron-rebuild": "^1.8.2",

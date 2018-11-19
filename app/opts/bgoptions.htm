@@ -49,14 +49,12 @@
       <label id="label-{{mainOps.offscreenbg.id}}" class="w3-validate" for="IN{{mainOps.offscreenbg.id}}BG" value="mainOps.offscreenbg.label" data-toggle="tooltip" data-placement="auto bottom" title="{{mainOps.offscreenbg.toolTip}}">{{mainOps.offscreenbg.label}}</label>
     </td>
   </tr>
-  <tr class="w3-hover-pale-blue bgrotator-button w3-half"  ng-show="user.mainOps.includes(6)">
-    <td class="w3-col">
-      <a class="w3-btn w3-ripple w3-indigo" href="" onclick="ipc.send('open-joiner-window')" data-toggle="tooltip" data-placement="auto bottom" title="{{mainOps.backgroundrotator.button}}"><span class="icon-images"></span> {{mainOps.backgroundrotator.btntxt}}</a>
-    </td>
-  </tr>
-  <tr class="w3-hover-pale-blue bgrotator-button w3-half" ng-show="user.mainOps.includes(10)">
-    <td class="w3-col">
-      <a class="w3-btn w3-ripple w3-indigo" href="" onclick="ipc.send('open-offscreen-bg')"><span class="icon-images"></span> {{mainOps.offscreenbg.label}}</a>
+  <tr class="bgrotator-button w3-row w3-col">
+    <td class="w3-col w3-half" ng-show="user.mainOps.includes(6)">
+      <a class="w3-btn w3-ripple w3-indigo w3-hover-pale-blue" href="" onclick="ipc.send('open-joiner-window')" data-toggle="tooltip" data-placement="auto bottom" title="{{mainOps.backgroundrotator.button}}"><span class="icon-images"></span> {{mainOps.backgroundrotator.btntxt}}</a>
+  </td>
+  <td class="w3-col w3-half" ng-show="user.mainOps.includes(10)">
+      <a class="w3-btn w3-ripple w3-indigo w3-hover-pale-blue" href="" onclick="ipc.send('open-offscreen-bg')"><span class="icon-images"></span> {{mainOps.offscreenbg.label}}</a>
     </td>
   </tr>
 </tbody>

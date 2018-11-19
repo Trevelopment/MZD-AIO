@@ -314,6 +314,7 @@ v70_integrity_check()
   log_message "$(df -h)"
   log_message "******************* v70 INTEGRITY CHECK COMPLETE ************************"
   log_message "*************************************************************************"
+  return 0
 }
 show_message()
 {

@@ -3,10 +3,10 @@ backup_org /jci/gui/common/css/common.css
 show_message "INSTALL BACKGROUND ROTATOR ...\n Background Set To Show ${BG_STEPS} Images\nFor ${BG_SEC_EACH} Seconds Each"
 log_message "==========********** INSTALL BACKGROUND ROTATOR ... ************========="
 
-sed -i "/.. MZD-AIO-TI CSS ../,/.. END AIO CSS ../d" /jci/gui/common/css/common.css
-log_message "===             Removed old AIO Custom CSS in common.css              ==="
 if [ "${BG_SECONDS}" != "" ]
 then
+  sed -i "/.. MZD-AIO-TI CSS ../,/.. END AIO CSS ../d" /jci/gui/common/css/common.css
+  log_message "===             Removed old AIO Custom CSS in common.css              ==="
   cat <<EOT >> /jci/gui/common/css/common.css
   /* MZD-AIO-TI CSS */
   /* Custom Background Animation */

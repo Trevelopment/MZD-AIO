@@ -78,17 +78,14 @@ ipc.on('already-downloaded', function(event, filename) {
 })
 ipc.on('selected-joined-bg', function(event, filepath) {
   var outFile = `${varDir}/background.png`
-  document.getElementById('selected-file').innerHTML = `Your Selected Background Image: ${filepath}`
   clipboard.writeImage(filepath[0])
-  // save it as a png file
-  writeFileSync(`${outFile}`, clipboard.readImage().toPng())
+  joinedPhoto(filepath[0])
   let bgNotification = new Notification('Background', {
     body: `Your Infotainment Background Will Be Changed To: ${filepath}`,
     icon: 'favicon.ico',
     silent: true
   })
   bgNotification.onclick = () => {}
-  ipc.emit('set-bg')
 })
 ipc.on('selected-bg', function(event, filepath) {
   var outFile = `${varDir}/background.png`

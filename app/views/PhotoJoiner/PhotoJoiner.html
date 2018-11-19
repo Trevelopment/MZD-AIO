@@ -186,11 +186,11 @@
                 </div>
               </div>
               <div style="margin-top: 0px; display: none;" id="joinbtn">
-                <input type="button" id="btnJoinPhotos" value="Save Backgound" class="big2 btn w3-btn w3-hover-teal w3-hover-text-indigo" onclick="JoinPhotos();writeRotatorVars()">
+                <input type="button" id="btnJoinPhotos" value="Save Backgound" class="big2 btn w3-btn w3-hover-teal w3-hover-text-indigo" onclick="JoinPhotos()">
               </div>
-              <!-- <div style="margin-top: 30px;" id="mintwo" class="big2">
-                {{imgOps[4].label}}<input type="button" id="useAlreadyJoined" value="{{imgOps[5].label}}" class="big2 btn w3-btn w3-hover-teal w3-hover-text-indigo" onclick="ipc.send('bg-no-resize');window.close();">
-              </div> -->
+              <div style="margin-top: 30px;" id="mintwo" class="big2">
+                {{imgOps[4].label}}<input type="button" id="useAlreadyJoined" value="{{imgOps[5].label}}" class="big2 btn w3-btn w3-hover-teal w3-hover-text-indigo" onclick="ipc.send('bg-no-resize')">
+              </div>
             </td>
           </tr>
         </tbody>
@@ -203,7 +203,7 @@
         {{imgOps[6].label}}
         <br>
         <br>
-        <img id="imgJoined" width="1400" onerror="$(this).attr('src',app.getPath('userData') + '/background/background.png?' + Math.round(Math.random()*1000,0))" onclick="window.close()" title="{{menu.close.label}} &amp; Preview" style="cursor:pointer">
+        <img id="imgJoined" width="1400" onerror="$(this).attr('src',app.getPath('userData') + '/background/background.png?' + Math.round(Math.random()*1000,0))" onclick="window.close()" onload="writeRotatorVars(parseInt(this.naturalWidth / 800))" title="{{menu.close.label}} &amp; Preview" style="cursor:pointer">
         <br>
         <div id="saveStat"></div>
         <br>
@@ -217,7 +217,6 @@
       </div>
     </div>
   </div>
-</div>
-<input type="hidden" id="order" name="order" value="">
-<input type="hidden" id="hdnImageData" name="hdnImageData" value="">
+  <input type="hidden" id="order" name="order" value="">
+  <input type="hidden" id="hdnImageData" name="hdnImageData" value="">
 </ng-form>

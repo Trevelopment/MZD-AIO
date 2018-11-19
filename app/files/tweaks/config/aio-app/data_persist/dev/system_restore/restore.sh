@@ -8,11 +8,14 @@
 hwclock --hctosys
 
 # AIO Variables
-AIO_VER=0.7
-AIO_DATE=2018.06.01
+AIO_VER=0.9
+AIO_DATE=2018.11.20
 
 # TO DELETE ALL BACKUP FILES CHENGE DEL_BAKUPS=0 TO DEL_BAKUPS=1
 DEL_BAKUPS=0
+
+# New location for backup ".org" files (v70+)
+NEW_BKUP_DIR="/tmp/mnt/resources/dev/org_files"
 
 timestamp()
 {
@@ -106,7 +109,32 @@ show_message_OK()
     exit 0
   fi
 }
-
+restore_full()
+{
+  FILE="${1}"
+  BACKUP_FILE="${1}.org"
+  FILENAME=$(basename -- "$FILE")
+  if [ -e "${BACKUP_FILE}" ]
+  then
+    if [ -s "${BACKUP_FILE}" ]
+    then
+      cp -a "${BACKUP_FILE}" "${FILE}" && log_message "***+++ Restored ${FILENAME} From ${BACKUP_FILE} +++***"
+    else
+      # Backup file is blank, run integrity check
+      show_message "!!!+++ WARNING: BACKUP FILE ${BACKUP_FILE} IS BLANK!!! +++!!!"
+    fi
+    return 0
+  else
+    # New secondary location for storing .org files for v70+
+    BACKUP_FILE="${NEW_BKUP_DIR}/${FILENAME}.org"
+    if [ -s "${BACKUP_FILE}" ]
+    then
+      cp -a "${BACKUP_FILE}" "${FILE}" && log_message "+++*** Restored ${FILENAME} From Backup ${BACKUP_FILE} ***+++"
+      return 0
+    fi
+    return 1
+  fi
+}
 # disable watchdog and allow write access
 echo 1 > /sys/class/gpio/Watchdog\ Disable/value
 mount -o rw,remount /
@@ -222,440 +250,225 @@ fi
 #fi
 
 # restore systemApp.js
-if [ -e /jci/gui/apps/system/js/systemApp.js.org ]
+if (restore_full /jci/gui/apps/system/js/systemApp.js)
 then
-	show_message "RESTORE DISCLAIMER & ORDER OF AUDIO SOURCE LIST ..."
-	log_message "===*** UNINSTALL NO-MORE-DISCLAIMER & ORDER OF AUDIO SOURCE LIST...***==="
-	cp -a /jci/gui/apps/system/js/systemApp.js.org /jci/gui/apps/system/js/systemApp.js
-	log_message "===                  Restored systemApp.js from backup                ==="
-	rm -f /jci/gui/apps/system/js/systemApp.js.audio
-	rm -f /jci/gui/apps/system/js/systemApp.js.disclaimer
-	log_message "===   Removed systemApp.js.audio and systemApp.js.disclaimer flags    ==="
-	if [ $DEL_BAKUPS -eq 1 ]
-	then
-		rm -f /jci/gui/apps/system/js/systemApp.js.org
-		log_message "===               Deleted backup: systemApp.js.org                    ==="
-	fi
-	log_message "=====**********  END UNINSTALLATION OF NO-MORE-DISCLAIMER *********======"
-	log_message "=====***************  AND ORDER OF AUDIO SOURCE LIST   ************======"
-	log_message " "
+  log_message "==========***************  systemApp.js RESTORED   ************=========="
+  rm -f /jci/gui/apps/system/js/systemApp.js.audio
+  rm -f /jci/gui/apps/system/js/systemApp.js.disclaimer
+  log_message "===***  Removed systemApp.js.audio & systemApp.js.disclaimer flags ***==="
 fi
 
 # restore MainMenuCtrl.js
-if [ -e /jci/gui/apps/system/controls/MainMenu/js/MainMenuCtrl.js.org ]
+if (restore_full /jci/gui/apps/system/controls/MainMenu/js/MainMenuCtrl.js)
 then
-	# remove main menu loop
-	show_message "REMOVE MAIN-MENU-LOOP  ..."
-	log_message "============********** UNINSTALL MAIN-MENU-LOOP ... ********============="
-	cp -a /jci/gui/apps/system/controls/MainMenu/js/MainMenuCtrl.js.org /jci/gui/apps/system/controls/MainMenu/js/MainMenuCtrl.js
-	log_message "===          Restored Original MainMenuCtrl.js From Backup            ==="
-	if [ $DEL_BAKUPS -eq 1 ]
-	then
-		rm -f /jci/gui/apps/system/controls/MainMenu/js/MainMenuCtrl.js.org
-		log_message "===               Deleted backup: MainMenuCtrl.js.org                 ==="
-	fi
-	log_message "========******** END UNINSTALLATION OF MAIN-MENU-LOOP ***********========"
-	log_message " "
+  log_message "==========************  MainMenuCtrl.js RESTORED   ************=========="
 fi
 
 # restore List2Ctrl.js
-if [ -e /jci/gui/common/controls/List2/js/List2Ctrl.js.org ]
+if (restore_full /jci/gui/common/controls/List2/js/List2Ctrl.js)
 then
-	show_message "REMOVE LIST_LOOP_MOD  ..."
-	log_message "=========********      UNINSTALL LIST_LOOP_MOD ...       *********======="
-	cp -a /jci/gui/common/controls/List2/js/List2Ctrl.js.org /jci/gui/common/controls/List2/js/List2Ctrl.js
-	log_message "===                Restored List2Ctrl.js from backup                  ==="
-	if [ $DEL_BAKUPS -eq 1 ]
-	then
-		rm -f /jci/gui/common/controls/List2/js/List2Ctrl.js.org
-		log_message "===               Deleted backup: List2Ctrl.js.org                    ==="
-	fi
-	log_message "======*******      END UNINSTALLATION OF LIST_LOOP_MOD      *******======"
-	log_message " "
+  log_message "============************  List2Ctrl.js RESTORED   *************=========="
 fi
-
-
-#remove diagmenu with 1 sec. press at clock in display settings menu, script made by Sumire_Racing_JPN
 if [ -e /jci/gui/apps/diag/js/diagApp.js.org2 ]
 then
-	show_message "REMOVE DIAGMENU W. 1 SEC. PRESS AT CLOCK \nIN DISPLAY SETTINGS MENU"
-	log_message "===**** UNINSTALL DIAGMENU AT CLOCK IN DISPLAY SETTINGS MENU ... *****==="
-	cp -a /jci/gui/apps/diag/js/diagApp.js.org2 /jci/gui/apps/diag/diagApp.js
-elif [ -e /jci/gui/apps/diag/js/diagApp.js.org ]
+  cp -a /jci/gui/apps/diag/js/diagApp.js.org2 /jci/gui/apps/diag/diagApp.js
+  log_message "============*************  diagApp.js RESTORED   *************==========="
+  rm -f /jci/gui/apps/diag/js/diagApp.js.org2
+elif (restore_full /jci/gui/apps/diag/js/diagApp.js)
 then
-	show_message "REMOVE DIAGMENU W. 1 SEC. PRESS AT CLOCK \nIN DISPLAY SETTINGS MENU"
-	log_message "===**** UNINSTALL DIAGMENU AT CLOCK IN DISPLAY SETTINGS MENU ... *****==="
-	cp -a /jci/gui/apps/diag/js/diagApp.js.org /jci/gui/apps/diag/diagApp.js
+  log_message "============*************  diagApp.js RESTORED   *************==========="
 fi
-if [ -e /jci/gui/apps/diag/js/diagApp.js.org ] || [ -e /jci/gui/apps/diag/js/diagApp.js.org2 ]
+if [ -s /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js.org2 ]
 then
-	if [ $DEL_BAKUPS -eq 1 ]
-	then
-		rm -f /jci/gui/apps/diag/js/diagApp.js.org
-		rm -f /jci/gui/apps/diag/js/diagApp.js.org2
-		log_message "===                 Deleted backup:  diagApp.js.org                   ==="
-	fi
-fi
-if [ -e /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js.org2 ]
-then
-	if ! grep formatDateCustom /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js.org2
-	then
-		cp -a /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js.org2 /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js
-	fi
-	rm -f /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js.org2
-fi
-if [ -e /jci/gui/common/js/Common.js.org2 ]
-then
-	if ! grep "isMuted \? \"Global.Pause\" : \"Global.Resume\");" /jci/gui/common/js/Common.js.org2
-	then
-		cp -a /jci/gui/common/js/Common.js.org2  /jci/gui/common/js/Common.js.org
-	fi
-	rm -f /jci/gui/common/js/Common.js.org2
-fi
-# remove pause on mute
-if [ -e /jci/gui/common/js/Common.js.org ]
-then
-	show_message "REMOVE PAUSE_ON_MUTE  ..."
-	log_message "===========*********** UNINSTALL PAUSE_ON_MUTE ... **********============"
-	if ! grep "Sumire Racing" /jci/gui/common/js/Common.js.org
-	then
-		cp -a /jci/gui/common/js/Common.js.org  /jci/gui/common/js/Common.js
-	else
-		rm -f /jci/gui/common/js/Common.js.org
-	fi
-	cp -a /jci/gui/common/js/Common.js.org /jci/gui/common/js/Common.js
-	log_message "===                 Common.js Restored From Backup                    ==="
-	if [ $DEL_BAKUPS -eq 1 ]
-	then
-		rm -f /jci/gui/common/js/Common.js.org
-		log_message "===                  Deleted backup: Common.js.org                    ==="
-	fi
-	log_message "========********** END UNINSTALLATION OF PAUSE-ON-MUTE **********========"
-	log_message " "
-fi
-sed -i 's/"settleTime" : 1000,/"settleTime" : 20000,/g' /jci/gui/apps/diag/js/diagApp.js
-sed -i '/Sumire Racing/d' /jci/gui/common/js/Common.js
-sed -i 's/"holdTimeout" : 1000,/"holdTimeout" : 5000,/g' /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js
-
-# restore background image and common.css to original
-if [ -e /jci/gui/common/css/common.css.org ]
-then
-	show_message "UNINSTALL BACKGROUND ROTATOR ..."
-	log_message "========**********    UNINSTALL BACKGROUND ROTATOR ...    *******========"
-	cp -a /jci/gui/common/css/common.css.org /jci/gui/common/css/common.css
-	log_message "===         Restored /jci/gui/common/css/common.css from backup       ==="
-	if [ $DEL_BAKUPS -eq 1 ]
-	then
-		rm -f /jci/gui/common/css/common.css.org
-		log_message "===               Deleted backup: common.css.org                      ==="
-	fi
-	log_message "=====*********** END UNINSTALLATION OF BACKGROUND ROTATOR **********====="
-	log_message " "
-fi
-# restore message replies
-if [ -e /jci/settings/configurations/blm_msg-system.xml.org ]
-then
-	show_message "RESTORE MESSAGE REPLIES ..."
-	log_message "=========********* UNINSTALL REMOVE MESSAGE REPLIES ... ********========="
-	cp -a /jci/settings/configurations/blm_msg-system.xml.org /jci/settings/configurations/blm_msg-system.xml
-	log_message "===    Message Replies Restored From Backup blm_msg-system.xml.org    ==="
-	if [ $DEL_BAKUPS -eq 1 ]
-	then
-		rm -f /jci/settings/configurations/blm_msg-system.xml.org
-		log_message "===             Deleted backup: blm_msg-system.xml.org                ==="
-	fi
-	log_message "=====******** END UNINSTALLATION OF REMOVE MESSAGE REPLIES ********======"
-	log_message " "
-fi
-
-# restore boot animation
-if [ -e /jci/resources/LoopLogo.ivf.org ]
-then
-	show_message "RESTORE BOOT ANIMATION ..."
-	log_message "========********   UNINSTALL DISABLE BOOT ANIMATION ...  ********========"
-	cp -a /jci/resources/LoopLogo.ivf.org /jci/resources/LoopLogo.ivf
-	log_message "===           Restored original /jci/resources/LoopLogo.ivf           ==="
-	if [ $DEL_BAKUPS -eq 1 ]
-	then
-		rm -f /jci/resources/LoopLogo.ivf.org
-		log_message "===                  Deleted backup: LoopLogo.ivf.org                 ==="
-	fi
-fi
-if [ -e /jci/resources/ExitLogo.ivf.org ]
-then
-	cp -a /jci/resources/ExitLogo.ivf.org /jci/resources/ExitLogo.ivf
-	log_message "===           Restored original /jci/resources/ExitLogo.ivf           ==="
-	if [ $DEL_BAKUPS -eq 1 ]
-	then
-		rm -f /jci/resources/ExitLogo.ivf.org
-		log_message "===                 Deleted backup: ExitLogo.ivf.org                  ==="
-	fi
-fi
-if [ -e /jci/resources/TranLogo.ivf.org ]
-then
-	cp -a /jci/resources/TranLogo.ivf.org /jci/resources/TranLogo.ivf
-	log_message "===           Restored original /jci/resources/TranLogo.ivf           ==="
-	if [ $DEL_BAKUPS -eq 1 ]
-	then
-		rm -f /jci/resources/TranLogo.ivf.org
-		log_message "===              Deleted backup: TranLogo.ivf.org                     ==="
-	fi
-fi
-if [ -e /jci/resources/TranLogoEnd.ivf.org ]
-then
-	cp -a /jci/resources/TranLogoEnd.ivf.org /jci/resources/TranLogoEnd.ivf
-	log_message "===         Restored original /jci/resources/TranLogoEnd.ivf          ==="
-	if [ $DEL_BAKUPS -eq 1 ]
-	then
-		rm -f /jci/resources/TranLogoEnd.ivf.org
-		log_message "===             Deleted backup: TranLogoEnd.ivf.org                   ==="
-	fi
-	log_message "======******** END UNINSTALLATION OF DISABLE BOOT ANIMATION  ******======"
-	log_message " "
-fi
-# remove Date_to_Statusbar mod
-if [ -e /jci/gui/common/controls/Sbn/css/SbnCtrl.css.org ]
-then
-	show_message "REMOVE STATUSBAR TWEAKS ..."
-	log_message "=======*********    UNINSTALL STATUSBAR TWEAKS ...     **********========"
-	cp -a /jci/gui/common/controls/Sbn/css/SbnCtrl.css.org /jci/gui/common/controls/Sbn/css/SbnCtrl.css
-	log_message "===              Restored backup from SbnCtrl.css.org                 ==="
-	rm -f /jci/gui/common/controls/Sbn/css/SbnCtrl.all.css
-	if [ $DEL_BAKUPS -eq 1 ]
-	then
-		rm -f /jci/gui/common/controls/Sbn/css/SbnCtrl.css.org
-		log_message "===               Deleted backup: SbnCtrl.css.org                     ==="
-	fi
-fi
-if [ -e /jci/gui/common/controls/StatusBar/css/StatusBarCtrl.css.org ]
-then
-	cp -a /jci/gui/common/controls/StatusBar/css/StatusBarCtrl.css.org /jci/gui/common/controls/StatusBar/css/StatusBarCtrl.css
-	log_message "===            Restored backup from StatusBarCtrl.css.org             ==="
-	if [ $DEL_BAKUPS -eq 1 ]
-	then
-		rm -f /jci/gui/common/controls/StatusBar/css/StatusBarCtrl.css.org
-		log_message "===              Deleted backup: StatusBarCtrl.css.org                ==="
-	fi
-fi
-if [ -e /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js.org ]
-then
-  # make sure the backup does not have date entries from a bug in AIO v1.x
-	if grep formatDateCustom /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js.org
-	then
-    log_message "===           Repairing backup file StatusBarCtrl.js.org             ==="
-    sed -i '/this.date/d' /jci/gui/common/controls/StatusBar/css/StatusBarCtrl.js.org
-  fi
-  cp -a /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js.org /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js
-  log_message "===             Restored backup from StatusBarCtrl.js.org             ==="
-  if [ $DEL_BAKUPS -eq 1 ]
+  if ! grep -Fq "formatDateCustom" /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js.org2
   then
-    rm -f /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js.org
-    log_message "===             Deleted backup: StatusBarCtrl.js.org                  ==="
+    cp -a /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js.org2 /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js.org
   fi
+  rm -f /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js.org2
+fi
+if [ -e /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js.org ] && grep -Fq "formatDateCustom" /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js.org
+then
+  log_message "===           Repairing backup file StatusBarCtrl.js.org             ==="
+  sed -i '/this.date/d' /jci/gui/common/controls/StatusBar/css/StatusBarCtrl.js.org
+fi
+if (restore_full /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js)
+then
+  log_message "============*********** StatusBarCtrl.js RESTORED **************========="
 else
   # in this scenerio we need to repair StatusBarCtrl.js since there is no backup file
   # but there is leftover code from date2statusbar because of a bug in AIO 1.x
-  if grep formatDateCustom /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js
+  if grep -Fq "formatDateCustom" /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js
   then
-    log_message "===               Repairing file StatusBarCtrl.js                     ==="
+    log_message "==========********* Repairing file StatusBarCtrl.js ***********=========="
     sed -i '/this.date/d' /jci/gui/common/controls/StatusBar/css/StatusBarCtrl.js
   fi
 fi
-if [ -e /jci/gui/common/controls/StatusBar/images/StatusBarBg.png.org ]
+if [ -e /jci/gui/common/js/Common.js.org2 ]
 then
-	cp -a /jci/gui/common/controls/StatusBar/images/StatusBarBg.png.org /jci/gui/common/controls/StatusBar/images/StatusBarBg.png
-	log_message "===               Restored backup from StatusBarBg.png.org            ==="
-	if [ $DEL_BAKUPS -eq 1 ]
-	then
-		rm -f /jci/gui/common/controls/StatusBar/images/StatusBarBg.png.org
-		log_message "===               Deleted backup: StatusBarBg.png.org                 ==="
-	fi
+  if ! grep -q "isMuted \? \"Global.Pause\" : \"Global.Resume\");" /jci/gui/common/js/Common.js.org2
+  then
+    cp -a /jci/gui/common/js/Common.js.org2  /jci/gui/common/js/Common.js.org
+  fi
+  rm -f /jci/gui/common/js/Common.js.org2
 fi
-if [ -e /jci/gui/framework/js/Utility.js.org ]
+if (restore_full /jci/gui/common/js/Common.js)
 then
-	cp -a /jci/gui/framework/js/Utility.js.org /jci/gui/framework/js/Utility.js
-	log_message "===                Restored backup from Utility.js.org                ==="
-	if [ $DEL_BAKUPS -eq 1 ]
-	then
-		rm -f /jci/gui/framework/js/Utility.js.org
-		log_message "===                Deleted backup: Utility.js.org                     ==="
-	fi
-	log_message "=====*********    END UNINSTALLATION OF STATUSBAR TWEAKS     *******====="
-	log_message " "
+  log_message "==============*********** Common.js RESTORED ***********================="
 fi
-# restore button background graphics
-if [ -e /jci/gui/common/controls/Ump3/css/Ump3Ctrl.css.org ]
+if (restore_full /jci/gui/apps/diag/controls/Test/js/TestCtrl.js)
 then
-	show_message "RESTORE BUTTON BACKGROUND GRAPHICS ..."
-	log_message "======*********  UNINSTALL NO BUTTON BACKGROUND GRAPHICS ... ******======"
-	cp -a /jci/gui/common/controls/Ump3/css/Ump3Ctrl.css.org /jci/gui/common/controls/Ump3/css/Ump3Ctrl.css
-	log_message "===            Restored Ump3Ctrl.css from backup                      ==="
-	if [ $DEL_BAKUPS -eq 1 ]
-	then
-		rm -f /jci/gui/common/controls/Ump3/css/Ump3Ctrl.css.org
-		log_message "===                Deleted backup: Ump3Ctrl.css.org                   ==="
-	fi
-	log_message "=====********* END UNINSTALLATION OF NO BUTTON BACKGROUND *******========"
-	log_message " "
+  log_message "============*********** TestCtrl.js RESTORED ***********================="
 fi
-# Restore Backgounds that were changed prior to AIO v2.1
-if [ -e /jci/gui/common/controls/Ump3/images/UMP_Bg.png.org ]
+if (restore_full /jci/gui/apps/diag/controls/Test/css/TestCtrl.css)
 then
-	rm -f /jci/gui/common/controls/Ump3/images/UMP_Bg.png
-	mv /jci/gui/common/controls/Ump3/images/UMP_Bg.png.org /jci/gui/common/controls/Ump3/images/UMP_Bg.png
-	log_message "===                  Restored Original UMP_Bg.png                     ==="
-	if [ -e /jci/gui/common/controls/Ump3/images/UMP_Bg_Arch.png.org ]
-	then
-		rm -f /jci/gui/common/controls/Ump3/images/UMP_Bg_Arch.png
-		mv /jci/gui/common/controls/Ump3/images/UMP_Bg_Arch.png.org /jci/gui/common/controls/Ump3/images/UMP_Bg_Arch.png
-		log_message "===                Restored Original UMP_Bg_Arch.png                  ==="
-		if [ -e /jci/gui/common/controls/Ump3/images/UMP_Btn_Separator.png.org ]
-		then
-			rm -f /jci/gui/common/controls/Ump3/images/UMP_Btn_Separator.png
-			mv /jci/gui/common/controls/Ump3/images/UMP_Btn_Separator.png.org /jci/gui/common/controls/Ump3/images/UMP_Btn_Separator.png
-			log_message "===              Restored Original UMP_Btn_Separator.png              ==="
-		fi
-	fi
+  log_message "===========*********** TestCtrl.css RESTORED ***********================="
 fi
-# UI Style Tweaks
-if [ -e /jci/gui/common/controls/List2/css/List2Ctrl.css.org ]
+if (restore_full /jci/gui/common/controls/Sbn/css/SbnCtrl.css)
 then
-	show_message "UNINSTALL USER INTERFACE TEXT STYLE TWEAKS ..."
-	log_message "========********    UNINSTALL UI TEXT STYLE TWEAKS ...   ********========"
-	cp -a /jci/gui/common/controls/List2/css/List2Ctrl.css.org /jci/gui/common/controls/List2/css/List2Ctrl.css
-	log_message "===             Restored backup from List2Ctrl.css.org                ==="
-	if [ $DEL_BAKUPS -eq 1 ]
-	then
-		rm -f /jci/gui/common/controls/List2/css/List2Ctrl.css.org
-		log_message "===                  Deleted backup: List2Ctrl.css.org                ==="
-	fi
+  log_message "============************* SbnCtrl.css RESTORED ***************==========="
+  rm -f /jci/gui/common/controls/Sbn/css/SbnCtrl.all.css
 fi
-if [ -e /jci/gui/common/controls/NowPlaying4/css/NowPlaying4Ctrl.css.org ]
+if (restore_full /jci/gui/common/controls/StatusBar/css/StatusBarCtrl.css)
 then
-	cp -a /jci/gui/common/controls/NowPlaying4/css/NowPlaying4Ctrl.css.org /jci/gui/common/controls/NowPlaying4/css/NowPlaying4Ctrl.css
-	log_message "===         Restored backup from NowPlaying4Ctrl.css.org              ==="
-	if [ $DEL_BAKUPS -eq 1 ]
-	then
-		rm -f /jci/gui/common/controls/NowPlaying4/css/NowPlaying4Ctrl.css.org
-		log_message "===              Deleted backup: NowPlaying4Ctrl.css.org              ==="
-	fi
+  log_message "===========************ StatusBarCtrl.css RESTORED ************=========="
 fi
-if [ -e /jci/gui/apps/system/controls/MainMenu/css/MainMenuCtrl.css.org ]
+if (restore_full /jci/gui/common/controls/StatusBar/images/StatusBarBg.png)
 then
-	cp -a /jci/gui/apps/system/controls/MainMenu/css/MainMenuCtrl.css.org /jci/gui/apps/system/controls/MainMenu/css/MainMenuCtrl.css
-	log_message "===           Restored backup from MainMenuCtrl.css.org               ==="
-	if [ $DEL_BAKUPS -eq 1 ]
-	then
-		rm -f /jci/gui/apps/system/controls/MainMenu/css/MainMenuCtrl.css.org
-		log_message "===               Deleted backup: MainMenuCtrl.css.org                ==="
-	fi
-	log_message "=====*****    END UNINSTALLATION OF UI TEXT STYLE TWEAKS ...   *****====="
-	log_message " "
+  log_message "============************ StatusBarBg.png RESTORED ***************========"
 fi
-# FuelConsumptionTweak
-if [ -e /jci/gui/apps/ecoenergy/controls/FuelConsumption/css/FuelConsumptionCtrl.css.org ]
+if (restore_full /jci/gui/framework/js/Utility.js)
 then
-	show_message "REMOVE FUEL CONSUMPTION TWEAK  ..."
-	log_message "========********* UNINSTALL FUEL CONSUMPTION TWEAK  ... *********========"
-	cp -a /jci/gui/apps/ecoenergy/controls/FuelConsumption/css/FuelConsumptionCtrl.css.org /jci/gui/apps/ecoenergy/controls/FuelConsumption/css/FuelConsumptionCtrl.css
-	log_message "===        Restored original FuelConsumptionCtrl.css from backup      ==="
-	if [ $DEL_BAKUPS -eq 1 ]
-	then
-		rm -f /jci/gui/apps/ecoenergy/controls/FuelConsumption/css/FuelConsumptionCtrl.css.org
-		log_message "===            Deleted backup: FuelConsumptionCtrl.css.org            ==="
-	fi
+  log_message "============************* Utility.js RESTORED **************============="
 fi
-if [ -e /jci/gui/apps/ecoenergy/controls/FuelConsumption/images/FuelConsBG.png.org ]
+grep -Fq '"settleTime" : 1000,' /jci/gui/apps/diag/js/diagApp.js && sed -i 's/"settleTime" : 1000,/"settleTime" : 20000,/g' /jci/gui/apps/diag/js/diagApp.js
+grep -Fq 'Sumire Racing' /jci/gui/common/js/Common.js && sed -i '/Sumire Racing/d' /jci/gui/common/js/Common.js
+grep -Fq '"holdTimeout" : 1000,' /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js && sed -i 's/"holdTimeout" : 1000,/"holdTimeout" : 5000,/g' /jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js
+# restore background image and common.css to original
+if (restore_full /jci/gui/common/css/common.css)
 then
-	cp -a /jci/gui/apps/ecoenergy/controls/FuelConsumption/images/FuelConsBG.png.org /jci/gui/apps/ecoenergy/controls/FuelConsumption/images/FuelConsBG.png
-	log_message "===        Restored original FuelConsumptionCtrl.png from backup      ==="
-	if [ $DEL_BAKUPS -eq 1 ]
-	then
-		rm -f /jci/gui/apps/ecoenergy/controls/FuelConsumption/images/FuelConsBG.png.org
-		log_message "===                 Deleted backup: FuelConsBG.png.org                ==="
-	fi
+  log_message "=============*********** Common.css RESTORED ***********================="
 fi
-if [ -e /jci/gui/apps/ecoenergy/controls/FuelConsumption/js/FuelConsumptionCtrl.js.org ]
+if grep -Fq "keyframes slide" /jci/gui/common/css/common.css
 then
-	cp -a /jci/gui/apps/ecoenergy/controls/FuelConsumption/js/FuelConsumptionCtrl.js.org /jci/gui/apps/ecoenergy/controls/FuelConsumption/js/FuelConsumptionCtrl.js
-	log_message "===          Restored original FuelConsBG.png from backup             ==="
-	if [ $DEL_BAKUPS -eq 1 ]
-	then
-		rm -f /jci/gui/apps/ecoenergy/controls/FuelConsumption/js/FuelConsumptionCtrl.js.org
-		log_message "===              Deleted backup: FuelConsumptionCtrl.js.org           ==="
-	fi
-	log_message "=======******* END UNINSTALLATION OF FUEL CONSUMPTION TWEAK *******======"
-	log_message " "
+  cp -a ${MYDIR}/config_org/BackgroundRotator/jci/gui/common/css/common.css /jci/gui/common/css/
+  log_message "=======******* Common.css RESTORED FROM USB FALLBACK **********=========="
 fi
-# change off screen background image
-if [ -e /jci/gui/apps/system/controls/OffScreen/images/OffScreenBackground.png.org ]
+show_message "RESTORING TWEAKED FILES ...\nPLEASE WAIT ..."
+# restore message replies
+if (restore_full /jci/settings/configurations/blm_msg-system.xml)
 then
-	show_message "REVERTING OFF SCREEN BACKGROUND IMAGE ..."
-	log_message "========******* UNINSTALL OFF SCREEN BACKGROUND IMAGE ... *******========"
-	cp -a /jci/gui/apps/system/controls/OffScreen/images/OffScreenBackground.png.org /jci/gui/apps/system/controls/OffScreen/images/OffScreenBackground.png
-	log_message "===       Reverting From Backup OffScreenBackground.png.org           ==="
-	if [ $DEL_BAKUPS -eq 1 ]
-	then
-		rm -f /jci/gui/apps/system/controls/OffScreen/images/OffScreenBackground.png.org
-		log_message "===            Deleted backup: OffScreenBackground.png.org            ==="
-	fi
-	log_message "=====****** END UNINSTALLATION OF OFF SCREEN BACKGROUND IMAGE ******====="
-	log_message " "
+  log_message "==========*********** blm_msg-system.xml RESTORED ***********============"
 fi
 
-if [ -e /jci/gui/apps/usbaudio/js/usbaudioApp.js.org ]
+# restore boot animation
+if (restore_full /jci/resources/newLoopLogo.ivf)
 then
-	log_message "==========************ UNINSTALL USB AUDIO MOD ... ************=========="
-	cp -a /jci/gui/apps/usbaudio/js/usbaudioApp.js.org /jci/gui/apps/usbaudio/js/usbaudioApp.js
-	log_message "=== /jci/gui/apps/usbaudio/js/usbaudioApp.js Restored from backup     ==="
-	if [ $DEL_BAKUPS -eq 1 ]
-	then
-		rm -f  /jci/gui/apps/usbaudio/js/usbaudioApp.js.org
-		log_message "===               Deleted backup: usbaudioApp.js.org                  ==="
-	fi
+  log_message "============*********** newLoopLogo.ivf RESTORED ************============"
 fi
-if [ -e /jci/gui/common/controls/NowPlaying4/js/NowPlaying4Ctrl.js.org ]
+if (restore_full /jci/resources/LoopLogo.ivf)
 then
-	cp -a /jci/gui/common/controls/NowPlaying4/js/NowPlaying4Ctrl.js.org /jci/gui/common/controls/NowPlaying4/js/NowPlaying4Ctrl.js
-	log_message "===                Restored NowPlaying4Ctrl.js from backup            ==="
-	if [ $DEL_BAKUPS -eq 1 ]
-	then
-		rm -f /jci/gui/common/controls/NowPlaying4/js/NowPlaying4Ctrl.js.org
-		log_message "===               Deleted backup: NowPlaying4Ctrl.js.org              ==="
-	fi
-	log_message "==========****** END UNINSTALLATION OF OFF USB AUDIO MOD ******=========="
-	log_message " "
+  log_message "============************ LoopLogo.ivf RESTORED **************============"
 fi
-# Remove patch to asound.conf from AA 1.03
-SOUND_X=$(grep -c "tel_asymed" /etc/asound.conf)
-if [ $SOUND_X -eq 1 ]; then
-	# remove patch to /etc/asound.conf Bluetooth calling Bug is fixed
-	log_message "===     Detected Bluetooth call patch in asound.conf reverting file   ==="
-	if [ -e /etc/asound.conf.org ];	then
-		if mv /etc/asound.conf.org /etc/asound.conf; then
-			log_message "===     /etc/asound.conf reverted from backup /etc/asound.conf.org    ==="
-		else
-			log_message "===           Error removing patch from /etc/asound.conf              ==="
-		fi
-	fi
+if (restore_full /jci/resources/ExitLogo.ivf)
+then
+  log_message "============************ ExitLogo.ivf RESTORED **************============"
+fi
+if (restore_full /jci/resources/TranLogo.ivf)
+then
+  log_message "============************ TranLogo.ivf RESTORED ***************==========="
+fi
+if (restore_full /jci/resources/TranLogoEnd.ivf)
+then
+  log_message "============*********** TranLogoEnd.ivf RESTORED **************=========="
+fi
+# restore button background graphics
+if (restore_full /jci/gui/common/controls/Ump3/css/Ump3Ctrl.css)
+then
+  log_message "===========************ Ump3Ctrl.css RESTORED **************============="
+fi
+# Restore Backgounds that were changed prior to AIO v2.1
+if (restore_full /jci/gui/common/controls/Ump3/images/UMP_Bg.png)
+then
+  rm -f /jci/gui/common/controls/Ump3/images/UMP_Bg.png.org
+  log_message "==============************** UMP_Bg RESTORED ****************============"
+  if (restore_full /jci/gui/common/controls/Ump3/images/UMP_Bg_Arch.png)
+  then
+    rm -f /jci/gui/common/controls/Ump3/images/UMP_Bg_Arch.png.org
+    log_message "============************* UMP_Bg_Arch RESTORED **************============"
+    if (restore_full /jci/gui/common/controls/Ump3/images/UMP_Btn_Separator.png)
+    then
+      rm -f /jci/gui/common/controls/Ump3/images/UMP_Btn_Separator.png.org
+      log_message "===========*********** UMP_Btn_Separator RESTORED ************==========="
+    fi
+  fi
+fi
+# UI Style Tweaks
+if (restore_full /jci/gui/common/controls/List2/css/List2Ctrl.css)
+then
+  log_message "============************ List2Ctrl.css RESTORED *************============"
+fi
+if (restore_full /jci/gui/common/controls/NowPlaying4/css/NowPlaying4Ctrl.css)
+then
+  log_message "==========*********** NowPlaying4Ctrl.css RESTORED ***********==========="
+fi
+if (restore_full /jci/gui/apps/system/controls/MainMenu/css/MainMenuCtrl.css)
+then
+  log_message "===========*********** MainMenuCtrl.css RESTORED *************==========="
+fi
+# FuelConsumptionTweak
+if (restore_full /jci/gui/apps/ecoenergy/controls/FuelConsumption/css/FuelConsumptionCtrl.css)
+then
+  log_message "========************ FuelConsumptionCtrl.css RESTORED ************======="
+fi
+if (restore_full /jci/gui/apps/ecoenergy/controls/FuelConsumption/images/FuelConsBG.png)
+then
+  log_message "=========*************** FuelConsBG.png RESTORED **************=========="
+fi
+if (restore_full /jci/gui/apps/ecoenergy/controls/FuelConsumption/js/FuelConsumptionCtrl.js)
+then
+  log_message "========*********** FuelConsumptionCtrl.js RESTORED *************======="
+fi
+# change off screen background image
+if (restore_full /jci/gui/apps/system/controls/OffScreen/images/OffScreenBackground.png)
+then
+  log_message "========********** OffScreenBackground.png RESTORED *************======="
+fi
+
+if (restore_full /jci/gui/apps/usbaudio/js/usbaudioApp.js)
+then
+  log_message "===========************ usbaudioApp.js RESTORED **************=========="
+fi
+if (restore_full /jci/gui/common/controls/NowPlaying4/js/NowPlaying4Ctrl.js)
+then
+  log_message "=========*********** NowPlaying4Ctrl.js RESTORED **************=========="
+fi
+if [ -e /etc/asound.conf.org ]
+then
+  # fix link from previous version
+  if ! [ -L /etc/asound.conf ]; then
+    mv /etc/asound.conf ${MYDIR}/asound.conf.AA
+    ln -sf /data/asound.conf /etc/asound.conf
+  fi
+  rm -f /etc/asound.conf.org
+  log_message "===     /etc/asound.conf reverted from factory /data/asound.conf    ==="
 fi
 # restore phoneApp if the pach was applied
-if [ -e /jci/gui/apps/phone/js/phoneApp.js.org ]
+if (restore_full /jci/gui/apps/phone/js/phoneApp.js)
 then
-  cp -a /jci/gui/apps/phone/js/phoneApp.js.org /jci/gui/apps/phone/js/phoneApp.js
-  log_message "===                 Restored phoneApp.js From Backup                  ==="
   rm -f /jci/gui/apps/phone/js/phoneApp.js.org
-  log_message "===                 Deleted backup: phoneApp.js.org                   ==="
+  log_message "=======*********   Deleted backup: phoneApp.js.org      ********========"
 fi
 # Remove APPS
-show_message "REMOVE VIDEOPLAYER - SPEEDOMETER \n ANDROID AUTO - CASTSCREEN \n & AIO TWEAKS APP FILES ..."
+show_message "REMOVE VIDEOPLAYER - SPEEDOMETER \n ANDROID AUTO - CASTSCREEN FILES \n & AIO TWEAKS APP FILES..."
 log_message "=======*********  UNINSTALL VIDEOPLAYER, SPEEDOMETER,    ********========"
 log_message "=======*********  ANDROID AUTO & CASTSCREEN RECIEVER ... ********========"
 
-### kills all WebSocket daemons
+# kills all WebSocket daemons, headunit process, and castscreen receiver
 killall -q -9 headunit
 pkill cs_receiver_arm
-rm -rf /jci/gui/
+pkill websocketd
+
+rm -rf /jci/gui/addon-common
 rm -rf /tmp/mnt/resources/aio/addon-common
 log_message "===                   Removed /jci/gui/addon-common                   ==="
 
@@ -664,8 +477,6 @@ then
 	sed -i '/input_filter/d' /jci/sm/sm.conf
 	log_message "===               input_filter removed from sm.conf.                  ==="
 fi
-
-
 rm -fr /tmp/mnt/data_persist/dev/androidauto
 rm -fr /tmp/mnt/data_persist/dev/headunit*
 rm -fr /tmp/mnt/data_persist/dev/system_restore
@@ -739,7 +550,7 @@ log_message " "
 #cp -a "${MYDIR}/config_org/blank-album-art-frame/jci/gui/common/controls/NowPlaying4/images/NowPlayingImageFrame.png" /jci/gui/common/controls/NowPlaying4/images
 #cp -a "${MYDIR}/config_org/blank-album-art-frame/jci/gui/common/images/no_artwork_icon.png" /jci/gui/common/images
 
-cp -a "${MYDIR}/config_org/background.png" /jci/gui/common/images
+[ -e ${MYDIR}/config_org/background.png ] && cp -a ${MYDIR}/config_org/background.png /jci/gui/common/images
 log_message "============******** RESTORED ORIGINAL BACKGROUND ***********============"
 log_message " "
 # uninstall CASDK
