@@ -1,4 +1,4 @@
-# add spwap file for media player
+# add swap file for media player
 show_message "ADD SWAP FILE TO RESOURCES ..."
 log_message "=========**************   INSTALL SWAP FILE ...  *************==========="
 

@@ -26,17 +26,17 @@ log_message "===                 Removed Old AIO Tweaks App Files               
 if [ $CASDK_MODE -eq 0 ]
 then
   cp -a ${MYDIR}/config/jci/opera/opera_dir/userjs/additionalApps.js /jci/opera/opera_dir/userjs/ && CASDK_MODE=1
-  chmod 755 /jci/opera/opera_dir/userjs/additionalApps.js
+  chmod 777 /jci/opera/opera_dir/userjs/additionalApps.js
   log_message "===                    Copied  additionalApps.js                      ==="
 fi
 
 cp -a ${MYDIR}/config/jci/opera/opera_dir/userjs/aio.js /jci/opera/opera_dir/userjs/
-chmod 755 /jci/opera/opera_dir/userjs/aio.js
+chmod 777 /jci/opera/opera_dir/userjs/aio.js
 log_message "===                        Copied  aio.js                             ==="
 
 create_app_json
 # Remove old json entries
-if grep -q "_aiotweaks" ${ADDITIONAL_APPS_JSON} && ! grep -q "AIO-startup.js" ${ADDITIONAL_APPS_JSON}
+if grep -Fq "aiotweaks" ${ADDITIONAL_APPS_JSON} && ! grep -Fq "AIO-startup.js" ${ADDITIONAL_APPS_JSON}
 then
   remove_app_json "_aiotweaks"
 fi
@@ -59,7 +59,7 @@ sed -i '/AIO Tweaks/ a\/jci/gui/addon-common/websocketd --passenv $(env | grep X
 # delete empty lines
 sed -i '/^ *$/ d' ${STAGE_WIFI}
 sed -i '/#!/ a\ ' ${STAGE_WIFI}
-chmod 755 ${STAGE_WIFI}
+chmod 777 ${STAGE_WIFI}
 log_message "===           Set Websocketd for AIO in Stage_wifi.sh                 ==="
 
 cp -a ${MYDIR}/config/aio-app/jci/gui/apps/_aiotweaks ${AIO_APP_DIR}
@@ -72,10 +72,10 @@ then
   log_message "===                Created Symlink To Resources Partition             ==="
 fi
 
-chmod 755 -R ${AIO_APP_DIR}
-chmod 755 -R /tmp/mnt/data_persist/dev/system_restore/
-chmod 755 /jci/scripts/jci-fw.sh
-chmod 755 /jci/scripts/jci-wifiap.sh
+chmod 777 -R ${AIO_APP_DIR}
+chmod 777 /jci/scripts/jci-fw.sh
+chmod 777 /jci/scripts/jci-wifiap.sh
+chmod 777 -R /tmp/mnt/data_persist/dev/system_restore/
 log_message "===                  Copied Files For AIO Tweak App                   ==="
 sed -i "s/var aioTweaksVer = .*;/var aioTweaksVer = ${AIO_TWKS_VER};/g" /jci/gui/apps/_aiotweaks/js/mzd.js
 

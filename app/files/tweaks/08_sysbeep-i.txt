@@ -15,9 +15,16 @@ fi
 if grep -Fq "No More Beeps" /jci/gui/common/js/Common.js
 then
   log_message "===                   System Beeps Already Disabled                   ==="
-else
-  sed -i 's/framework.sendEventToMmui("system", "PlayAudioBeep", args);/\/\/ framework.sendEventToMmui("system", "PlayAudioBeep", args); \/\/ No More Beeps/g' /jci/gui/common/js/Common.js
+elif grep -Fq '    framework.sendEventToMmui("system", "PlayAudioBeep", args);' /jci/gui/common/js/Common.js
+then
+  sed -i 's/    framework.sendEventToMmui("system", "PlayAudioBeep", args);/    \/\/ framework.sendEventToMmui("system", "PlayAudioBeep", args); \/\/ No More Beeps/g' /jci/gui/common/js/Common.js
   log_message "===     Modified The Beep Method Used By Framework in Common.js       ==="
+elif grep -Fq '    framework.sendEventToMmui("audiosettings", "PlayAudioBeep", args);' /jci/gui/common/js/Common.js
+then
+  sed -i 's/    framework.sendEventToMmui("audiosettings", "PlayAudioBeep", args);/    \/\/ framework.sendEventToMmui("audiosettings", "PlayAudioBeep", args); \/\/ No More Beeps/g' /jci/gui/common/js/Common.js
+  log_message "===     Modified The Beep Method Used By Framework in Common.js       ==="
+else
+  log_message "===              Beep Method Was Not Found in Common.js               ==="
 fi
 if [ $TESTBKUPS -eq 1 ]
 then

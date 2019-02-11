@@ -19,18 +19,18 @@
   font-size: 40px;
   line-height: 40px;
   height: 40px;
-  top: 23px;
+  top: 22px;
   right: 16px;
   width: 200px;
 }
 #SbSpeedo .SbUnit {
   color: #DDDDDD;
-  font-size: 12px;
+  font-size: 11px;
   position: absolute;
   width: 30px;
   right: 8px;
   transform: rotate(-90deg);
-  bottom: 12px;
+  bottom: 13px;
   white-space: nowrap;
 }
 #SbSpeedo [class*='SbVal'] {
@@ -45,12 +45,12 @@
   line-height: 17px;
   height: 20px;
   top: 6px;
-  right: 17px;
+  right: 16px;
   width: 100%;
 }
 /* #SbSpeedo .SbMain:not([class*="speed"]):not(.gpsSpeedValue):not(.vehicleSpeed) { */
 #SbSpeedo .SbMain {
-  padding-right: 22px;
+  padding-right: 18px;
   padding-left: 5px;
   background-position: 100%;
   background-size: 20px;

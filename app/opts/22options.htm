@@ -4,17 +4,15 @@
 - http://mazdatweaks.com
 - ©2019 Trevelopment
 -
-- Custom Options For Date_To_Statusbar_Mod Tweak
+- Custom Options For Fuel Consumption Tweak
 -
 -->
 
-<tbody class="w3-col w3-row">
-  <tr class="w3-hover-pale-blue w3-tooltip w3-col w3-row">
-    <td class="w3-col w3-row">
-      <span class="fuel-check speedo-radio" ng-repeat="option in fuelOps | filter:twkfltr">
-        <input id="fuel{{option.id}}" type="radio" name="{{option.label}}" ng-model="user.fuelOps" ng-value="option.id" ng-disabled="user.fuelOps.indexOf({{option.id}}) == -1 && user.fuelOps.length > 0">
+<div class="w3-col w3-row">
+  <div class="w3-hover-pale-blue w3-row">
+      <div class="fuel-check speedo-radio w3-third" ng-repeat="option in fuelOps | filter:twkfltr">
+        <input id="fuel{{option.id}}" type="radio" name="{{option.label}}" ng-model="user.fuelOps" ng-value="option.id" ng-disabled="!user.fuelOps.includes({{option.id}}) && user.fuelOps.length > 0">
         <label for="fuel{{option.id}}" data-toggle="tooltip" data-placement="auto bottom" title="{{option.label}}">{{option.label}}</label>
-      </span>
-    </td>
-  </tr>
+      </div>
+  </div>
 </tbody>

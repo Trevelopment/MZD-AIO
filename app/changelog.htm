@@ -1,17 +1,37 @@
-<!DOCTYPE html>
-<h1 id="">MZD-AIO-TI v2 CHANGELOG</h1>
-<!DOCTYPE html>
+<h1 id="changelog">MZD-AIO-TI v2 CHANGELOG</h1>
 <style>
-  .bootbox.update-info {
-    margin-top: 0px;
-  }
   h5.featherlight-inner {
     text-align:left;
     font-weight: 500;
   }
 </style>
-<p><a href="changelog.htm" data-featherlight="ajax">Full Changelog</a></p>
 <h1>AIO + CASDK</h1>
+<h1>AIO</h1>
+<h3>v2.8.4</h3>
+<h4>Android Auto Headunit App v1.11</h4>
+<ul><li>Tweaked Linux Stack TCP Buffers</li><li>More Stable HUD support (It is not perfect yet)<ul><li>Detects if HUD is present, if not available the feature is not used</li></ul></li><li><strong>Buttons Remapped:</strong><ul><li>Home: AA Home screen</li><li>Ent: AA Music screen</li><li>Nav: AA Navigation screen</li><li>Fav: Switch Audio Focus (MZD &lt;-&gt; AA)</li><li>Call End (Steering Wheel): Exit AA (when not in active call otherwise reject/end call)</li></ul></li></ul>
+<h4>AIO Tweaks App v1.0</h4>
+<ul><li>Applies CASDK localStorage tweak for saving options (for Video Player app too)</li><li><em>Show localStorage</em> Button shows the contents of localStorage (Values saved by Video Player, AIO Tweaks, and CASDK apps)</li><li><em>adb kill-server</em> Button kills adb server</li><li><em>Check IP Address</em> Button shows IP address (if WIFI or hotspot is connected or else there is no IP address)</li><li><em>Wink Test</em> Button shows test wink notification</li><li>Better behavior from &quot;Start/Stop&quot; Android Auto buttons</li></ul>
+<h4>Date 2 Statusbar / Statusbar Speedometer</h4>
+<ul><li>Minor spacing adjustments for date</li><li>Coolant temp color (blue = under 30º; yellow = under 55º)</li></ul>
+<h4>Touchscreen While Driving Option - <strong>DVDs While Driving</strong></h4>
+<ul><li>Enable Playing DVDs while driving (DVD Player Required)</li></ul>
+<h4>Fuel Consumption Tweak <em>FIXED</em></h4>
+<ul><li>Added calculations for km/L (as default)</li><li>Added L/100km option (as converted)</li><li>Fixed all calculations (L/100km &lt;-&gt; km/L &lt;-&gt; mpg)</li><li>If you choose the same unit as your default, will show the same value twice - this is expected behavior<ul><li>Example: If your default is mpg and you choose mpg will show same number (in mpg) for both top and bottom values</li><li>The top value is in your default unit, bottom value is converted to chosen unit</li></ul></li></ul>
+<h4>Semi-Transparent Parking Sensors</h4>
+<ul><li>Now are in relevant colors (Green - Yellow - Orange - Red)</li></ul>
+<h4>No More Beeps</h4>
+<ul><li>Fixed for FW v59.00.502+</li></ul>
+<h4>Autorun &amp; Recovery</h4>
+<ul><li>Fixed Firewall Recovery (jci-fw.sh)</li><li>Fixed a bug where selecting autorun before compiling Full System Restore would create an autorun installer.</li><li>Added additional WARNING message that tweaking ability will be lost and chance to cancel uninstallation when choosing to uninstall on FW 59.00.502+ (that tweaking ability will be lost)</li></ul>
+<h4><a id="CASDK_Apps_available_by_default_284"></a><strong>CASDK</strong> Apps available by default</h4>
+<ul>
+<li>Clock</li>
+<li>Tetris</li>
+<li>Multidash</li>
+</ul>
+<h4><em><strong>Mac &amp; Linux Quirks</strong></em></h4>
+<ul><li><em>Fixed</em> Blank window sometimes when navigating between Tweaks, CASDK, Autorun, &amp; System Restore views</li><li><p><em>Fixed</em> Some of the &quot;Open&quot; buttons opening incorrect folders or none at all</p></li><li><p>Various other bug fixes</p></li></ul>
 <h3><a id="v283_4"></a>v2.8.3</h3>
 <h4><a id="AIO_Tweaks_App_v09_6"></a>AIO Tweaks App v0.9</h4>
 <ul>

@@ -3,13 +3,13 @@ if [ -f "${MYDIR}/AIO_log.txt" ]
 then
   END_ROOTFS=$(df -h | (grep 'rootfs' || echo 0) | awk '{ print $5 " " $1 }')
   END_RESOURCES=$(df -h | (grep 'resources' || echo 0) | awk '{ print $5 " " $1 }')
+  END_ROOTFS="$(echo $END_ROOTFS | awk '{ print $1}' | cut -d'%' -f1)"
+  END_RESOURCES="$(echo $END_RESOURCES | awk '{ print $1}' | cut -d'%' -f1)"
   sleep 2
-  log_message "======================== rootfs $(echo $END_ROOTFS | awk '{ print $1}' | cut -d'%' -f1)% used ================================"
-  log_message "====================== resources $(echo $END_RESOURCES | awk '{ print $1}' | cut -d'%' -f1)% used ==============================="
-  log_message " "
+  log_message "======================== rootfs $END_ROOTFS% used ================================"
+  log_message "====================== resources $END_RESOURCES% used ==============================="
+  [ $END_ROOTFS -gt 95 ] && log_message "$(df -h )"
   log_message "======================= END OF TWEAKS INSTALLATION ======================"
-  log_message " "
-  log_message "$(df -h )"
 fi
 if [ $KEEPBKUPS -eq 1 ] && [ -e ${MYDIR}/AIO_info.json ]
 then
@@ -24,12 +24,12 @@ then
   aio_info ']}'
 fi
 # a window will appear before the system reboots automatically
-sleep 3
+sleep 1
 killall -q jci-dialog
 /jci/tools/jci-dialog --info --title="SELECTED AIO TWEAKS APPLIED" --text="THE SYSTEM WILL REBOOT IN A FEW SECONDS!" --no-cancel &
-sleep 9
+sleep 5
 killall -q jci-dialog
 /jci/tools/jci-dialog --info --title="MZD-AIO-TI v.${AIO_VER}" --text="YOU CAN REMOVE THE USB DRIVE NOW\n\nENJOY!" --no-cancel &
-sleep 1
+sleep 0.1
 reboot &
 exit 0

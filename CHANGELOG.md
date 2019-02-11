@@ -1,5 +1,23 @@
 # MZD-AIO-TI 2.x.x CHANGELOG  [![Download](https://api.bintray.com/packages/trevelopment/MZD-AIO-TI/AIO/images/download.svg?version=MZD-AIO-TI)](http://dl.mazdatweaks.win)
 ##### FOR [AIO v1.x.x CHANGELOG](https://github.com/Siutsch/AIO---All-in-one-tweaks/blob/master/CHANGELOG.md) or visit [MazdaTweaks.com]
+### v2.8.3
+
+#### AIO Tweaks App v0.9
+- **System Restore** - Rewritten to accommodate new backup methods in v70
+
+#### **Background Rotator**
+- *Fixed* Drag & Drop reordering functionality
+- *Fixed* Sideways scrolling with mouse wheel
+- *Fixed* "Use Your Own Joined Image (No Resize)" Button
+  - Completely works now, choose seconds-per-background first
+
+#### Google Translate
+- Hide "contribute to a better translation" pop-up (would cover AIO tooltips)
+
+#### **CASDK** Apps available by default
+- Clock
+- Tetris
+- Multidash
 
 ### v2.8.2
 

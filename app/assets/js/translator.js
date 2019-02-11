@@ -1,4 +1,4 @@
-/* jshint esversion:6, -W117*/
+/* jshint esversion:6, -W117 */
 var translateData = new Config({ 'name': 'aio-translate-save' })
 document.getElementById('submit').innerHTML = langObj.translatorWindow[14].label
 
@@ -10,7 +10,7 @@ document.getElementById('restore').addEventListener('click', function () {
 document.getElementById('restore').innerHTML = langObj.translatorWindow[1].label + ` (${lang})`
 document.getElementById('loadLang').innerHTML = `${lang}`
 
-function gotoTranslator() {
+function gotoTranslator () {
   $(this).hide()
 }
 // This is the starting value for the editor
@@ -69,13 +69,13 @@ document.getElementById('submit').addEventListener('click', function () {
   fs.writeFile(`${app.getPath('documents')}/${fileName}.aio.json`, JSON.stringify(editor.getValue()), function () {
     bootbox.alert({
       title: `${fileName}.aio.json Saved`,
-      message: `${fileName}.aio.json ${langObj.translatorWindow[7].label} <button class="w3-btn" onclick="shell.showItemInFolder(path.normalize(path.join('file://', app.getPath('documents'), '${fileName}.aio.json')))">${langObj.translatorWindow[8].label}</button>`
+      message: `${fileName}.aio.json ${langObj.translatorWindow[7].label} <button class="w3-btn" onclick="shell.openItem(path.normalize(path.join('file://', app.getPath('documents'))))">${langObj.translatorWindow[8].label}</button><button class="w3-btn" onclick="shell.openItem(path.normalize(path.join('file://', app.getPath('documents'), '${fileName}.aio.json')))">Open ${fileName} JSON File</button>`
     })
   })
 })
 document.getElementById('import').addEventListener('click', function () {
   // var jsonData
-  remote.dialog.showOpenDialog({
+  dialog.showOpenDialog({
     title: `MZD-AIO-TI | ${langObj.translatorWindow[11].label}.`,
     properties: ['openFile'],
     defaultPath: app.getPath('documents'),
@@ -102,7 +102,7 @@ ipc.on('translate-file', function (data) {
 
 document.getElementById('import').innerHTML = langObj.translatorWindow[9].label
 
-function gotoTranslator() {
+function gotoTranslator () {
   $(this).hide()
 }
 

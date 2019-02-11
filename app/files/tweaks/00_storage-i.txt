@@ -1,3 +1,4 @@
+log_message "=========**************** LOCALSTORAGE TWEAK *****************==========="
 # modify opera storage and move to persistant data
 if [ ! -e /tmp/mnt/data_persist/storage ]
 then
@@ -9,18 +10,27 @@ fi
 
 if [ ! -e /jci/opera/opera_home/pstorage/psindex.dat.org ]
 then
-	# check if system file exists
 	if [ -e /jci/opera/opera_home/pstorage/psindex.dat ]
 	then
-		# make a copy
 		cp -a /jci/opera/opera_home/pstorage/psindex.dat /jci/opera/opera_home/pstorage/psindex.dat.org
+		log_message "===                    Created psindex.dat.org                        ==="
 	else
-		# create directory
 		mkdir -p /jci/opera/opera_home/pstorage/
+		log_message "===                    Created pstorage folder                        ==="
 	fi
-	# copy psindex file
-	cp -a ${MYDIR}/casdk/storage/psindex.dat /jci/opera/opera_home/pstorage/
-	log_message "===                    Copied psindex.dat file                        ==="
+	if [ -e ${MYDIR}/casdk/storage/psindex.dat ]
+	then
+		cp -a ${MYDIR}/casdk/storage/psindex.dat /jci/opera/opera_home/pstorage/
+		log_message "===                    Copied psindex.dat file                        ==="
+	elif [ -e ${MYDIR}/config/jci/storage/psindex.dat ]
+	then
+		cp -a ${MYDIR}/config/jci/storage/psindex.dat /jci/opera/opera_home/pstorage/
+		log_message "===                    Copied psindex.dat file                        ==="
+	else
+		log_message "===               ERROR: psindex.dat FILE NOT FOUND                   ==="
+	fi
 else
   log_message "===              Persistant Storage Already Modified                  ==="
 fi
+log_message "=======************** LOCALSTORAGE TWEAK COMPLETE **************========="
+log_message ""

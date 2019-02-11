@@ -11,9 +11,9 @@ rm -f /jci/scripts/adb
 rm -f /jci/scripts/castscreen-1.0.apk
 rm -f /jci/scripts/castscreen-1.0.1.apk
 log_message "===        Copied castscreen-receiver files to /jci/scripts/          ==="
-chmod 755 /jci/scripts/wait_adb_arm.sh
-chmod 755 /jci/scripts/cs_receiver_arm
-chmod 755 /jci/scripts/mirroring.sh
+chmod 777 /jci/scripts/wait_adb_arm.sh
+chmod 777 /jci/scripts/cs_receiver_arm
+chmod 777 /jci/scripts/mirroring.sh
 if [ $TESTBKUPS -eq 1 ]
 then
 	cp ${STAGE_WIFI} ${MYDIR}/bakups/test/stage_wifi_castscreen-before.sh
@@ -40,7 +40,7 @@ then
 	fi
 fi
 # Fix Firewall Settings
-if ! grep -q "Allow ScreenCast rule" /jci/scripts/jci-fw.sh
+if ! grep -Fq "Allow ScreenCast rule" /jci/scripts/jci-fw.sh
 then
 	sed -i '/\$IPTABLES -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT/a \
 	\

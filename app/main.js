@@ -13,13 +13,19 @@
 'use strict'
 const electron = require('electron')
 const app = electron.app
-const BrowserWindow = require('electron').BrowserWindow
-const Menu = require('electron').Menu
-const dialog = require('electron').dialog
-const Tray = require('electron').Tray
-const ipc = require('electron').ipcMain
-const nativeImage = require('electron').nativeImage
-const crashReporter = require('electron').crashReporter
+const BrowserWindow = electron.BrowserWindow
+const Menu = electron.Menu
+const dialog = electron.dialog
+const Tray = electron.Tray
+const ipc = electron.ipcMain
+const nativeImage = electron.nativeImage
+const crashReporter = electron.crashReporter
+// Manage unhandled exceptions as early as possible
+process.on('uncaughtException', (e) => {
+  console.error(`Caught unhandled exception: ${e}`)
+  dialog.showErrorBox('Caught unhandled exception', e.message || 'Unknown error message')
+  app.quit()
+})
 const windowStateKeeper = require('electron-window-state')
 const path = require('path')
 const pjson = require('./package.json')
@@ -28,12 +34,16 @@ const fs = require('fs')
 const rimraf = require('rimraf')
 const extract = require('extract-zip') // For Unzipping
 const drivelist = require('drivelist') // Module that gets the available USB drives
-require('./menus/menu.js') // Menu
-require('./menus/context-menu.js')
-require('./menus/shortcuts.js')
+const backgroundDir = path.resolve(path.join(`${__dirname}`, `../background-images/`))
+const defaultDir = path.join(backgroundDir, 'default/')
+const blankAlbumArtDir = path.join(backgroundDir, 'blank-album-art/')
 const Config = require('electron-store')
 const persistantData = new Config({ 'name': 'aio-persist' })
 const userThemes = new Config({ 'name': 'user-themes' })
+const gotTheLock = app.requestSingleInstanceLock()
+require('./menus/menu.js') // Menu
+require('./menus/context-menu.js')
+require('./menus/shortcuts.js')
 require('./lib/log')(pjson.productName || 'MZD-AIO-TI')
 var hasColorFiles = fs.existsSync(`${app.getPath('userData')}/color-schemes/`)
 var hasSpeedCamFiles = fs.existsSync(`${app.getPath('userData')}/speedcam-patch/`)
@@ -43,13 +53,8 @@ if (process.platform === 'win32') {
   iconLoc = path.join(app.getAppPath(), "icon.ico")
   favicon = './app/icon.ico'
 }
-let nimage = nativeImage.createFromPath(iconLoc);
-// Manage unhandled exceptions as early as possible
-process.on('uncaughtException', (e) => {
-  console.error(`Caught unhandled exception: ${e}`)
-  dialog.showErrorBox('Caught unhandled exception', e.message || 'Unknown error message')
-  app.quit()
-})
+let nimage = nativeImage.createFromPath(iconLoc)
+
 console.log('Locale: ' + persistantData.get('locale'))
 if (!persistantData.has('visits')) {
   persistantData.set('visits', 0)
@@ -101,9 +106,6 @@ let imageJoin = null
 app.setName(pjson.productName || 'MZD-AIO-TI')
 
 function initialize() {
-  const gotTheLock = app.requestSingleInstanceLock()
-  makeSingleInstance(gotTheLock)
-
   if (!persistantData.has('copyFolderLocation')) {
     persistantData.set('copyFolderLocation', app.getPath('desktop'))
   }
@@ -167,7 +169,7 @@ function initialize() {
         errorMessage = errorDescription || '[Connection Error] The host name could not be resolved, check your network connection'
         console.log(errorMessage)
       } else {
-        errorMessage = errorDescription || 'Unknown error'
+        errorMessage = error + ' ' + errorCode + ' - ' + (errorDescription || 'Unknown error')
       }
       error.sender.loadURL(`file://${__dirname}/views/404.html`)
       win.webContents.on('did-finish-load', () => {
@@ -187,7 +189,7 @@ function initialize() {
 
     function setCopyLoc(loc) {
       persistantData.set('copyFolderLocation', app.getPath(loc))
-      mainWindow.webContents.send('set-copy-loc', app.getPath(loc))
+      win.webContents.send('set-copy-loc', app.getPath(loc))
       console.log(`Copy_to_usb: ${persistantData.get('copyFolderLocation')}`)
     }
     console.log(`Copy_to_usb: ${persistantData.get('copyFolderLocation')}`)
@@ -239,11 +241,11 @@ function initialize() {
         tray.setHighlightMode('never')
       })
     }
-    if (pjson.config.debug) {
-      devtools = new BrowserWindow()
-      win.webContents.setDevToolsWebContents(devtools.webContents)
-      win.webContents.openDevTools({ mode: 'detach' })
-    }
+    // if (isDev) {
+    //   devtools = new BrowserWindow()
+    //   win.webContents.setDevToolsWebContents(devtools.webContents)
+    //   win.webContents.openDevTools({ mode: 'detach' })
+    // }
     return win
   }
   app.on('window-all-closed', () => {
@@ -257,10 +259,13 @@ function initialize() {
     }
   })
   app.on('ready', () => {
-    mainWindow = createMainWindow()
+    if (!mainWindow) {
+      mainWindow = createMainWindow()
+    }
+    makeSingleInstance(gotTheLock)
     persistantData.set('locale', app.getLocale())
-    if (persistantData.get('locale').includes('en-US') && persistantData.get('visits') > 250) {
-      if (!persistantData.get('Diehard') || persistantData.get('visits') > 500) {
+    if (persistantData.get('locale', 'unknown').includes('en-US') && persistantData.get('visits', 0) > 250) {
+      if (!persistantData.get('Diehard', false) || persistantData.get('visits', 0) > 500) {
         persistantData.set('checkMeter', true)
         persistantData.set('Diehard', true)
       }
@@ -358,6 +363,7 @@ function initialize() {
 // opened when a person attempts to launch a second instance.
 function makeSingleInstance(lock) {
   if (!lock) {
+    console.warn("Single Instance App - Quit")
     app.quit()
   } else {
     app.on('second-instance', (event, commandLine, workingDirectory) => {
@@ -386,11 +392,16 @@ function getUSBDrives() {
           disks.push({ 'desc': drive.description, 'mp': drive.mountpoints[0].path })
         }
       })
-      if (disks.length && typeof disks !== "undefined") {
+      if (typeof disks !== "undefined" && disks.length) {
         disks.forEach((drive) => {
-          if (fs.existsSync(`${drive.mp}/AIO_info.json`)) {
-            console.log(`Found AIO_info.json on USB Drive - ${drive.mp} ${drive.desc}`)
-            aioJSON = fs.readFileSync(`${drive.mp}/AIO_info.json`)
+          try {
+            if (fs.existsSync(`${drive.mp}/AIO_info.json`)) {
+              console.log(`Found AIO_info.json on USB Drive - ${drive.mp} ${drive.desc}`)
+              aioJSON = fs.readFileSync(`${drive.mp}/AIO_info.json`)
+            }
+          } catch (e) {
+            console.dir(e)
+            dialog.showErrorBox("USB DRIVE ERROR", `Error reading from ${drive.mp} ${drive.desc}: ${e.toString()}.  Data on the device might be corrupt.`)
           }
         })
       }
@@ -404,8 +415,10 @@ function getUSBDrives() {
           persistantData.set('FW', aioInfo.info.CMU_SW_VER)
           persistantData.set('last_aio', aioInfo.info.AIO_VER)
           //_.pullAll(aioBkups)
-          mainWindow.webContents.send('aio-info')
-        } catch (e) { console.log(e.message) }
+          if (mainWindow) {
+            mainWindow.webContents.send('aio-info')
+          }
+        } catch (e) { console.error(e.toString()) }
       }
     }
   })
@@ -414,10 +427,8 @@ function getUSBDrives() {
   return Menu.buildFromTemplate(require('./lib/menu'))
 } */
 // Manage Squirrel startup event (Windows)
-require('./lib/auto-update/startup')(initialize)
-var backgroundDir = path.resolve(path.join(`${__dirname}`, `../background-images/`))
-var defaultDir = path.join(backgroundDir, 'default/')
-var blankAlbumArtDir = path.join(backgroundDir, 'blank-album-art/')
+// require('./lib/auto-update/startup')(initialize)
+
 ipc.on('open-file-bg', function(event) {
   openBGFolder(backgroundDir, event)
 })
@@ -597,3 +608,4 @@ ipc.on('download-aio-files', (event, arg) => {
     })
   }
 })
+initialize()

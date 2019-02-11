@@ -1,0 +1,13 @@
+backup_org /jci/gui/apps/system/js/systemApp.js
+# Disable the message "Unable to Reconnect Bluetooth Audio"
+show_message "INSTALL DISABLE RECONNECTING MESSAGE ..."
+log_message "=======*********** START DISABLE RECONNECT MESSAGE  *************========"
+
+if ! grep -Fq 'Disable_Reconnect_Msg' /jci/gui/apps/system/js/systemApp.js
+then
+  # sed -i 's/this._currentContextTemplate.dialog3Ctrl.setText1Id("ReconnectFailedBTAudio");/\/\/ this._currentContextTemplate.dialog3Ctrl.setText1Id("ReconnectFailedBTAudio");/' /jci/gui/apps/system/js/systemApp.js
+  sed -i '/this._currentContextTemplate.dialog3Ctrl.setText1Id("ReconnectFailedBTAudio")/ a\        framework.sendEventToMmui("common", "Global.Yes"); // Disable_Reconnect_Msg' /jci/gui/apps/system/js/systemApp.js
+fi
+
+log_message "=======************ END DISABLE RECONNECT MESSAGE  **************========"
+log_message " "

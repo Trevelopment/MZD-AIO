@@ -44,7 +44,7 @@
     "title": "Tweaking",
     "msg": "<h3> All changes happen at your own risk! </h3>\n <b>Please understand that you can damage or brick your infotainment system running these tweaks! </b>\n Anyone who is unsure should leave it alone, ask someone with experience to help or ask in the <a href='' onclick=externalLink('mazda3revolution')>forum</a>.<h5> I am not responsible for damages that may incur from the use.</h5>Having said that, MZD-AIO-TI was built with Safety in mind so any incompatible tweaks will be skipped during installation.<br>USE EXTREME CAUTION IF INSTALLING ON V700.00.100+",
     "t2": "Compatible Firmware Versions:",
-    "msg2": "  <H2 style='text-align:center'> **AIO IS COMPATIBLE WITH <br>ALL FW V55, V56, V58, V59 AND V70.00.021**  \n\n###### Only use with FirmWare Versions >= v55. DO NOT USE with V30/31/33 OR YOU WILL BRICK YOUR SYSTEM IT WILL FOREVER STAY LOOPING THE MAZDA BOOT LOGO!  \n\nTo Be Safe, For now AIO-TI Will Automatically Abort The Installation If No Compadible Firmware Version Is Found.  \n\nTo override this you have to be comfortable editing tweaks.sh directly, find the code that performs the firmware check and disable or add your version to the list of Compatible firmwares.  **Do This At Your Own Risk!**"
+    "msg2": "  <H2 style='text-align:center'> **AIO IS COMPATIBLE WITH <br>ALL FW V55, V56, V58, V59 AND V70.00.100**  \n\n###### Only use with FirmWare Versions >= v55. DO NOT USE with V30/31/33 OR YOU WILL BRICK YOUR SYSTEM IT WILL FOREVER STAY LOOPING THE MAZDA BOOT LOGO!  \n\nTo Be Safe, For now AIO-TI Will Automatically Abort The Installation If No Compadible Firmware Version Is Found.  \n\nTo override this you have to be comfortable editing tweaks.sh directly, find the code that performs the firmware check and disable or add your version to the list of Compatible firmwares.  **Do This At Your Own Risk!**"
   }, {
     "id": 2,
     "title": "Reverting",
@@ -681,6 +681,9 @@
   }, {
     "id": 1,
     "label": "MPG"
+  }, {
+    "id": 2,
+    "label": "L/100Km"
   }],
   "d2sbOps": [{
     "id": 0,
@@ -898,10 +901,10 @@
     "OpName": "Pause on mute",
     "INST": "Install Pause On Mute",
     "DEINST": "Remove Pause On Mute",
-    "toolTip": "<h5>Pause On Mute. </h5>  When pressing mute (pressing the volume button) played media are also paused (only pauses while in entertainment context).",
+    "toolTip": "<h5>Pause On Mute. </h5>  When pressing mute (pressing the volume button) played media are also paused (only pauses while in entertainment context).<br><strong><em class='w3-border w3-border-red'>NOT COMPATIBLE WITH v70.00.XXX+</em></strong>",
     "img": "",
     "safetylvl": "safe",
-    "extraOps": false,
+    "extraOps": true,
     "advancedOp": false
   }, {
     "id": 11,
@@ -948,7 +951,7 @@
     "OpName": "USB Audio Mod",
     "INST": "Install USB Audio Mod",
     "DEINST": "Remove USB Audio Mod",
-    "toolTip": "<h5>USB Audio Mod. <small>By: Enlsen</small> </h5><b>Patches The USB Audio App With These Mods:   <br><ol><li>Long press (click hold) folders/all songs to play</li><li>Adds new icon for USB root menu on the UMP control</li> <li>Removes \"More like this\" button from UMP control</li><li>Adds folders button to UMP control</li><li>Set folders and song list icons correctly (were switched) on UMP control</li><li>Removes trailing \"/\" character from folder names for list control and title of now playing</li><li>Adds folder and song icons to the list control</li><li>Adds folder and playlist icons to now playing</li><li>Statusbar notifications *(Artist - Song)*</li></ol>",
+    "toolTip": "<h5>USB Audio Mod. <small>By: Enlsen</small> </h5><b>Patches The USB Audio App With These Mods:   <br><ol><li>Long press (click hold) folders/all songs to play</li><li>Adds new icon for USB root menu on the UMP control</li> <li>Removes \"More like this\" button from UMP control</li><li>Adds folders button to UMP control</li><li>Set folders and song list icons correctly (were switched) on UMP control</li><li>Removes trailing \"/\" character from folder names for list control and title of now playing</li><li>Adds folder and song icons to the list control</li><li>Adds folder and playlist icons to now playing</li><li>Statusbar notifications *(Artist - Song)*</li></ol><br><strong><em class='w3-border w3-border-red'>NOT COMPATIBLE WITH v59.00.502+</em></strong>",
     "img": "USBAudioMod.jpg",
     "safetylvl": "safe",
     "extraOps": true,
@@ -998,7 +1001,7 @@
     "OpName": "Swapfile",
     "INST": "Generate swapfile for media player v2",
     "DEINST": "Remove swapfile",
-    "toolTip": "<h5>Swapfile </h5>The Swapfile will provide your system with an additional 1 GB of RAM running from the USB drive for playing videos.  The installation of the swap file must be done on a USB drive with music and/or movies, that remains in the car..  The installation files are automatically deleted, the drive may no longer be removed during operation, because the system will use it also as memory.  Only remove the USB drive if the MZD system is off.<br><strong>It is recomended to unmount the swapfile using the VideoPlayer or AIO Tweaks App before shutting down the system.  This is because the shutdown sequence does not give enough time for the swapfile to properly unmount.</strong>",
+    "toolTip": "<h5>Swapfile </h5>The Swapfile will provide your system with an additional 1 GB of RAM running from the USB drive for playing videos.  The installation of the swap file must be done on a USB drive with music and/or movies, that remains in the car.  The installation files are automatically deleted, the drive may no longer be removed during operation, because the system will use it also as memory. <br><strong style='font-size:1.5em'>*** Only remove the USB drive if the MZD system is off.***</strong><br><strong>It is recomended to unmount the swapfile using the VideoPlayer or AIO Tweaks App before shutting down the system.  This is because the shutdown sequence does not give enough time for the swapfile to properly unmount.</strong>",
     "img": "",
     "safetylvl": "warning",
     "extraOps": true,
@@ -1018,7 +1021,7 @@
     "OpName": "Fuel Consumption Tweak",
     "INST": "Install Fuel Consumption Tweak",
     "DEINST": "Remove Fuel Consumption Tweak",
-    "toolTip": "<h5>Fuel Consumption Tweak. </h5> Additional display of KM / L (or MPG).",
+    "toolTip": "<h5>Fuel Consumption Tweak. </h5> Additionally display fuel consumption in Km/L, MPG, or L/100Km under your default unit of measurement.",
     "img": "FuelConsumptionTweak.jpg",
     "safetylvl": "safe",
     "extraOps": true,

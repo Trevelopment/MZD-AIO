@@ -9,7 +9,12 @@ then
 fi
 if grep -Fq "No More Beeps" /jci/gui/common/js/Common.js
 then
-  sed -i '/No More Beeps/ c\    framework.sendEventToMmui("system", "PlayAudioBeep", args);' /jci/gui/common/js/Common.js
+  if grep -Fq 'framework.sendEventToMmui("audiosettings", "PlayAudioBeep", args);' /jci/gui/common/js/Common.js
+  then
+    sed -i '/No More Beeps/ c\    framework.sendEventToMmui("audiosettings", "PlayAudioBeep", args);' /jci/gui/common/js/Common.js
+  else
+    sed -i '/No More Beeps/ c\    framework.sendEventToMmui("system", "PlayAudioBeep", args);' /jci/gui/common/js/Common.js
+  fi
   log_message "===                   Restored Beeps in Common.js                     ==="
 fi
 log_message "======*******   END UNINSTALLATION OF REMOVE SYSTEM BEEP   *******======="

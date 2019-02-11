@@ -743,6 +743,9 @@ tr.w3-row.w3-col td strong {
 #sidePanel .speedo-color .speedo-radio label {
   padding: 5px 0px;
 }
+#sidePanel .fuel-check.speedo-radio label {
+  width: 100%;
+}
 tbody.hasColorFiles tr {
   max-height: 200px;
   height: 100%;

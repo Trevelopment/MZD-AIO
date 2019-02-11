@@ -420,53 +420,22 @@ $(document).ready(function() {
           headingSwitchValue = Math.round(currentGPShead / 22.5);
           // Close enough
           switch (headingSwitchValue) {
-            case 1:
-              direction = "NNE";
-              break;
-            case 2:
-              direction = "NE";
-              break;
-            case 3:
-              direction = "ENE";
-              break;
-            case 4:
-              direction = "E";
-              break;
-            case 5:
-              direction = "ESE";
-              break;
-            case 6:
-              direction = "SE";
-              break;
-            case 7:
-              direction = "SSE";
-              break;
-            case 8:
-              direction = "S";
-              break;
-            case 9:
-              direction = "SSW";
-              break;
-            case 10:
-              direction = "SW";
-              break;
-            case 11:
-              direction = "WSW";
-              break;
-            case 12:
-              direction = "W";
-              break;
-            case 13:
-              direction = "WNW";
-              break;
-            case 14:
-              direction = "NW";
-              break;
-            case 15:
-              direction = "NNW";
-              break;
-            default:
-              direction = "N";
+            case 1: direction = "NNE"; break;
+            case 2: direction = "NE"; break;
+            case 3: direction = "ENE"; break;
+            case 4: direction = "E"; break;
+            case 5: direction = "ESE"; break;
+            case 6: direction = "SE"; break;
+            case 7: direction = "SSE"; break;
+            case 8: direction = "S"; break;
+            case 9: direction = "SSW"; break;
+            case 10: direction = "SW"; break;
+            case 11: direction = "WSW"; break;
+            case 12: direction = "W"; break;
+            case 13: direction = "WNW"; break;
+            case 14: direction = "NW"; break;
+            case 15: direction = "NNW"; break;
+            default: direction = "N";
           }
           if (language === 'DE') {
             direction = direction.replace(/E/g, "O");
@@ -490,53 +459,22 @@ $(document).ready(function() {
         headingSwitchValue = Math.round(currentGPShead / 22.5);
         // Close enough
         switch (headingSwitchValue) {
-          case 1:
-            direction = "SSW";
-            break;
-          case 2:
-            direction = "SW";
-            break;
-          case 3:
-            direction = "WSW";
-            break;
-          case 4:
-            direction = "W";
-            break;
-          case 5:
-            direction = "WNW";
-            break;
-          case 6:
-            direction = "NW";
-            break;
-          case 7:
-            direction = "NNW";
-            break;
-          case 8:
-            direction = "N";
-            break;
-          case 9:
-            direction = "NNE";
-            break;
-          case 10:
-            direction = "NE";
-            break;
-          case 11:
-            direction = "ENE";
-            break;
-          case 12:
-            direction = "E";
-            break;
-          case 13:
-            direction = "ESE";
-            break;
-          case 14:
-            direction = "SE";
-            break;
-          case 15:
-            direction = "SSE";
-            break;
-          default:
-            direction = "S";
+          case 1: direction = "SSW"; break;
+          case 2: direction = "SW"; break;
+          case 3: direction = "WSW"; break;
+          case 4: direction = "W"; break;
+          case 5: direction = "WNW"; break;
+          case 6: direction = "NW"; break;
+          case 7: direction = "NNW"; break;
+          case 8: direction = "N"; break;
+          case 9: direction = "NNE"; break;
+          case 10: direction = "NE"; break;
+          case 11: direction = "ENE"; break;
+          case 12: direction = "E"; break;
+          case 13: direction = "ESE"; break;
+          case 14: direction = "SE"; break;
+          case 15: direction = "SSE"; break;
+          default: direction = "S";
         }
         if (language === 'DE') {
           direction = direction.replace(/E/g, "O");
@@ -687,8 +625,11 @@ $(document).ready(function() {
   // --------------------------------------------------------------------------
   function updateCoolantTemp(coolTemp) {
     coolTemp = $.trim(coolTemp);
+    var tempColor = '';
     if ($.isNumeric(coolTemp) && coolTemp !== "0") {
       coolantTemp = coolTemp -= 40;
+      if (coolTemp < 55) tempColor = 'yellow'; // engine cold light threshold
+      if (coolTemp < 30) tempColor = 'blue'; // engine too cold for start
       if (tempIsF) {
         coolTemp = coolTemp * 1.8 + 32;
         coolantTemp = parseFloat(coolTemp.toFixed(1));
@@ -697,6 +638,7 @@ $(document).ready(function() {
     } else {
       coolantTemp = "---"
     }
+    $('.coolantTempValue').css('color', tempColor);
     $('.coolantTempValue').html(coolantTemp);
   }
   // --------------------------------------------------------------------------
@@ -716,19 +658,11 @@ $(document).ready(function() {
     gearLeverPos = $.trim(gearLeverPos);
     if ($.isNumeric(gearLeverPos) && gearLeverPos !== "0") {
       switch (gearLeverPos) {
-        case "1":
-          lastGearLeverPositionValue = "P";
-          break;
-        case "2":
-          lastGearLeverPositionValue = "R";
-          break;
-        case "3":
-          lastGearLeverPositionValue = "N";
-          break;
-        case "4":
-          lastGearLeverPositionValue = "D";
-          break;
-        default:
+        case "1": lastGearLeverPositionValue = "P"; break;
+        case "2": lastGearLeverPositionValue = "R"; break;
+        case "3": lastGearLeverPositionValue = "N"; break;
+        case "4": lastGearLeverPositionValue = "D"; break;
+        default: lastGearLeverPositionValue = "---";
       }
       $('.gearLeverPositionValue').html(lastGearLeverPositionValue);
       automaticTrans = true;

@@ -16,7 +16,7 @@ restore_full()
       if [ $DEL_BAKUPS -eq 1 ]
       then
         rm -f "${BACKUP_FILE}"
-        log_message "===               Deleted backup: ${FILENAME}.org                    ==="
+        log_message "***===---      Deleted backup: ${FILENAME}.org           ---===***"
       fi
     else
       # Backup file is blank, run integrity check
@@ -314,19 +314,18 @@ then
   sed -i '/input_filter/d' /jci/sm/sm.conf
   log_message "========********* input_filter removed from sm.conf. ************========"
 fi
-rm -fr /jci/gui/apps/_androidauto
-rm -fr /tmp/mnt/data_persist/dev/androidauto
-rm -fr /tmp/mnt/data_persist/dev/bin/headunit*
-rm -fr /tmp/mnt/data_persist/dev/headunit*
-rm -fr /tmp/mnt/data_persist/dev/system_restore
-rm -fr /jci/gui/addon-player
-rm -fr /jci/gui/addon-speedometer
-rm -fr /jci/gui/speedometer
-rm -fr /jci/gui/apps/_speedometer
-rm -fr /jci/gui/apps/_videoplayer
-rm -fr /jci/gui/apps/_aiotweaks
-rm -fr /jci/gui/apps/_androidauto
-rm -fr /jci/gui/apps/_mzdmeter
+rm -rf /tmp/mnt/data_persist/dev/androidauto
+rm -rf /tmp/mnt/data_persist/dev/bin/headunit*
+rm -rf /tmp/mnt/data_persist/dev/headunit*
+rm -rf /tmp/mnt/data_persist/dev/system_restore
+rm -rf /jci/gui/addon-player
+rm -rf /jci/gui/addon-speedometer
+rm -rf /jci/gui/speedometer
+rm -rf /jci/gui/apps/_speedometer
+rm -rf /jci/gui/apps/_videoplayer
+rm -rf /jci/gui/apps/_aiotweaks
+rm -rf /jci/gui/apps/_androidauto
+rm -rf /jci/gui/apps/_mzdmeter
 rm -f /jci/opera/opera_dir/userjs/mySpeedometer*
 rm -f /jci/opera/opera_dir/userjs/speedometer*
 rm -f /jci/opera/opera_dir/userjs/*-startup.*
@@ -366,11 +365,9 @@ echo "#!/bin/sh" > ${STAGE_WIFI}
 #   log_message "===========************* jci-fw.js RESTORED ****************============="
 # fi
 show_message "RESTORE ALL INFOTAINMENT COLORS AND IMAGES\n(BACK TO RED) ..."
-cp -a ${MYDIR}/config_org/safety-warning-reverse-camera/jci/nativegui/images/*.png /jci/nativegui/images/
+cp -a ${MYDIR}/config_org/safety-warning-reverse-camera/jci/nativegui/images /jci/nativegui
 log_message "=======******* SAFETY WARNING FROM REVERSE CAMERA RESTORED *******======="
-cp -a ${MYDIR}/config_org/transparent-parking-sensor/jci/nativegui/images/VerticalSensors/*  /jci/nativegui/images/VerticalSensors/
-cp -a ${MYDIR}/config_org/transparent-parking-sensor/jci/nativegui/images/HorizontalSensors/*  /jci/nativegui/images/HorizontalSensors/
-cp -a ${MYDIR}/config_org/transparent-parking-sensor/jci/nativegui/images/MiniView/*  /jci/nativegui/images/MiniView/
+cp -a ${MYDIR}/config_org/transparent-parking-sensor/jci/nativegui/images  /jci/nativegui
 log_message "===========********* PARKING SENSOR GRAPHICS RESTORED **********========="
 cp -a "${MYDIR}/config_org/blank-album-art-frame/jci/gui/common/controls/InCall2/images/NowPlayingImageFrame.png" /jci/gui/common/controls/InCall2/images
 cp -a "${MYDIR}/config_org/blank-album-art-frame/jci/gui/common/controls/NowPlaying4/images/NowPlayingImageFrame.png" /jci/gui/common/controls/NowPlaying4/images
@@ -393,13 +390,12 @@ then
   rm -f /jci/gui/common/images/purple.aio
   rm -f /jci/gui/common/images/silver.aio
   rm -f /jci/gui/common/images/yellow.aio
-
 fi
 cp -a "${MYDIR}/config_org/background.png" /jci/gui/common/images
 log_message "============******** RESTORED ORIGINAL BACKGROUND ***********============"
 mount -o rw,remount /tmp/mnt/resources
 sleep 2
-rm -fr /tmp/mnt/resources/aio
+rm -rf /tmp/mnt/resources/aio
 # uninstall CASDK
 if [ -e /jci/casdk/casdk.aio ]
 then

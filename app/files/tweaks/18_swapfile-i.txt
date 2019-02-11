@@ -1,4 +1,4 @@
-# add spwap file for media player
+# add swap file for media player
 show_message "ADD SWAP FILE TO USB DRIVE ..."
 log_message "=========**************   INSTALL SWAP FILE ...  *************==========="
 
@@ -56,23 +56,5 @@ else
 fi
 cp ${STAGE_WIFI} ${MYDIR}/bakups/test/stage_wifi_swap-after.sh
 log_message "===                   Swap File Added To USB Drive                    ==="
-log_message "===                       Deleting Tweak Files                        ==="
-rm -fr ${MYDIR}/VehDataPull
-rm -f ${MYDIR}/cmu_dataretrieval.up
-rm -f ${MYDIR}/dataRetrieval_config.txt
-rm -f ${MYDIR}/jci-autoupdate
-rm -f ${MYDIR}/MZD_LOG.md
-rm -f ${MYDIR}/AIO_info.json
-
-log_message "===                        Copying Log Files                          ==="
-log_message "===========********** END INSTALLATION OF SWAP FILE **********==========="
-# Changed this to save logs and backup files just in case something goes wrong
-mv ${MYDIR}/*.log ${MYDIR}/bakups
-mv ${MYDIR}/*.txt ${MYDIR}/bakups
-mv ${MYDIR}/*.sh ${MYDIR}/bakups
-[ -d ${MYDIR}/config ] && mv ${MYDIR}/config ${MYDIR}/bakups
-[ -d ${MYDIR}/config_org ] && mv ${MYDIR}/config_org ${MYDIR}/bakups
-[ -d ${MYDIR}/casdk ] && mv ${MYDIR}/casdk ${MYDIR}/bakups
-[ -d ${MYDIR}/bakups ] && mv ${MYDIR}/bakups ${MYDIR}/logs
-
 swapoff ${MYDIR}/swapfile
+log_message "===========********** END INSTALLATION OF SWAP FILE **********==========="

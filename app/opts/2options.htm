@@ -13,7 +13,7 @@
 		<tr ng-repeat="option in disclaimOps | filter:twkfltr" class="w3-hover-pale-blue w3-tooltip w3-half">
 			<td>
 				<div class="disclaim-check extraRadio">
-					<input id="disclaim{{option.id}}" type="radio" name="{{option.label}}" ng-model="user.disclaimOps" ng-value="option.id" ng-disabled="user.disclaimOps.indexOf({{option.id}}) == -1 && user.disclaimOps.length > 0">
+					<input id="disclaim{{option.id}}" type="radio" name="{{option.label}}" ng-model="user.disclaimOps" ng-value="option.id" ng-disabled="!user.disclaimOps.includes({{option.id}}) && user.disclaimOps.length > 0">
 					<label for="disclaim{{option.id}}" title="{{option.label}}" class="{{option.label}}"></label>
 				</div>
 			</td>

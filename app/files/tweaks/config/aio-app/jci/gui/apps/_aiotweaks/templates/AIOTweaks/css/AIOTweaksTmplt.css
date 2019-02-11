@@ -3,7 +3,7 @@
   text-align: center;
   font-family: "Tipperary", Arial, Helvetica, sans-serif;
 }
-.AIOTweaksTmplt textarea, .AIOTweaksTmplt input, .AIOTweaksTmplt button {
+.AIOTweaksTmplt textarea, .AIOTweaksTmplt input, .AIOTweaksTmplt button, .AIOTweaksTmplt #AioInfoPanel pre {
   font-family: 'DejaVu Sans Mono', "monospace", "Tipperary", "Arial", "Helvetica", "sans-serif";
 }
 .AIOTweaksTmplt ul.tab {
@@ -52,6 +52,15 @@
   border: 1px solid #ccc;
   border-top: none;
   background: rgba(52, 52, 53, 0.78);
+  overflow: visible;
+}
+.AIOTweaksTmplt #devModeSecretBtn {
+  position: fixed;
+  height: 100px;
+  width: 100px;
+  top: 380px;
+  left: 700px;
+  display: none;
 }
 .AIOTweaksTmplt #MainMenuMsg {
   font-size: 24px;
@@ -327,4 +336,16 @@
 }
 .AIOTweaksTmplt .devTools {
   display: none;
+}
+.AIOTweaksTmplt .json-key {
+  color: #39ff39;
+}
+.AIOTweaksTmplt .json-value {
+  color: #44e4ff;
+}
+.AIOTweaksTmplt .json-boolean {
+  color: #9875ff;
+}
+.AIOTweaksTmplt .json-string {
+  color: #ffb352;
 }

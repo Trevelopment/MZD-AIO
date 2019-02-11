@@ -92,7 +92,7 @@ add_casdk_app "${APPBREAKOUT}" "breakout"
 add_casdk_app "${APPSNAKE}" "snake"
 
 echo '];' >> ${MZD_APPS_JS}
-chmod -R 755 ${MZD_APP_DIR}
+chmod 777 -R ${MZD_APP_DIR}
 
 # for FW v59 if they do not have No more disclamer or order of audio source
 # apply patch to show apps in app List

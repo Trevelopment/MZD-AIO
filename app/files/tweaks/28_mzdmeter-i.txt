@@ -20,7 +20,7 @@ rm -fr /jci/gui/apps/_mzdmeter/ /paa/
 if [ $CASDK_MODE -eq 0 ]
 then
 	cp -a ${MYDIR}/config/jci/opera/opera_dir/userjs/*.js /jci/opera/opera_dir/userjs/ && CASDK_MODE=1
-	chmod 755 /jci/opera/opera_dir/userjs/additionalApps.js
+	chmod 777 /jci/opera/opera_dir/userjs/additionalApps.js
   log_message "===                     Copied additionalApps.js                      ==="
 fi
 
@@ -31,7 +31,7 @@ if [ "$count" = "0" ]
 then
 	echo -e '\n\n\n### MZD Meter' >> ${STAGE_WIFI}
 	echo -e '\nwatch /jci/gui/apps/_mzdmeter/sh/mzdmonitor.sh &' >> ${STAGE_WIFI}
-	chmod 755 ${STAGE_WIFI}
+	chmod 777 ${STAGE_WIFI}
   log_message "===                      Modified Stage_wifi.sh                       ==="
 fi
 
@@ -40,10 +40,10 @@ create_app_json
 add_app_json "_mzdmeter" "MZD Meter"
 
 cp -a ${MYDIR}/config/mzdmeter/jci/gui/apps/* /jci/gui/apps/
-chmod 755 -R /jci/gui/apps/_mzdmeter/
+chmod 777 -R /jci/gui/apps/_mzdmeter/
 
 cp -a ${MYDIR}/config/mzdmeter/paa /
-chmod 755 -R /paa/
+chmod 777 -R /paa/
 
 log_message "======************* END INSTALLATION OF MZD METER APP ************======="
 log_message " "

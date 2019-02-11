@@ -67,7 +67,8 @@ sed -i '/#!/ a\ ' ${STAGE_WIFI}
 # Remove startup file from userjs
 rm -f /jci/opera/opera_dir/userjs/speedometer-startup.js
 rm -f /jci/opera/opera_dir/userjs/speedometer.js
-log_message "===                    Remover Old Speedometer Files                  ==="
+rm -f /jci/gui/common/images/*.aio
+log_message "===                    Removed Old Speedometer Files                  ==="
 
 cp -a ${MYDIR}/config/speedometer/jci/gui/apps/_speedometer ${AIO_APP_DIR}
 log_message "===                       Copied Speedometer Files                    ==="
@@ -79,11 +80,11 @@ then
   log_message "===                Created Symlink To Resources Partition             ==="
 fi
 
-find /jci/gui/apps/_*/ -type f -name '*.js' -exec chmod 755 {} \;
-find /jci/gui/apps/_*/ -type f -name '*.sh' -exec chmod 755 {} \;
+find /jci/gui/apps/_*/ -type f -name '*.js' -exec chmod 777 {} \;
+find /jci/gui/apps/_*/ -type f -name '*.sh' -exec chmod 777 {} \;
 
 cp -a ${MYDIR}/config/speedometer/jci/fonts /jci
-chmod -R 755 /jci/fonts
+chmod 777 -R /jci/fonts
 log_message "===                  Copied Speedometer Font Files                    ==="
 
 if [ -e ${MYDIR}/config/speedometer/speedometer-config.js ]
@@ -133,9 +134,9 @@ fi
 # copy additionalApps.js, if not already present
 if [ $CASDK_MODE -eq 0 ]
 then
-  log_message "===           No additionalApps.js available, will copy one           ==="
   cp -a ${MYDIR}/config/jci/opera/opera_dir/userjs/*.js /jci/opera/opera_dir/userjs/ && CASDK_MODE=1
-  find /jci/opera/opera_dir/userjs/ -type f -name '*.js' -exec chmod 755 {} \;
+  find /jci/opera/opera_dir/userjs/ -type f -name '*.js' -exec chmod 777 {} \;
+  log_message "===                  Copied additionalApps.js & aio.js                ==="
 fi
 
 sed -i 's/var speedMod = false;/var speedMod = true;/g' /jci/gui/apps/_speedometer/js/speedometer-startup.js
@@ -143,7 +144,7 @@ sed -i 's/var speedMod = false;/var speedMod = true;/g' /jci/gui/apps/_speedomet
 create_app_json
 
 # Remove old json entries
-if grep -q "_speedometer" ${ADDITIONAL_APPS_JSON} && ! grep -q "speedometer-startup.js" ${ADDITIONAL_APPS_JSON}
+if grep -Fq "speedometer" ${ADDITIONAL_APPS_JSON} && ! grep -Fq "speedometer-startup.js" ${ADDITIONAL_APPS_JSON}
 then
 	remove_app_json "_speedometer"
 fi
@@ -180,7 +181,6 @@ fi
 
 if [ "${SPEEDCOLOR}" != "0" ]
 then
-  rm -f /jci/gui/common/images/*.aio
   touch /jci/gui/common/images/${SPEEDCOLOR}.aio
   log_message "===                   Set Speedometer Color: ${SPEEDCOLOR}                    ==="
 fi

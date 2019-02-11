@@ -2266,50 +2266,70 @@ FuelConsumptionCtrl.prototype.setFuelEfficiency = function(fuelEfficiencyData)
     this.properties.fuelEfficiencyData = new Object();
 
     if (fuelEfficiencyData &&
-        (fuelEfficiencyData.fuelEfficiency || fuelEfficiencyData.fuelEfficiency == 0)  &&
-        fuelEfficiencyData.fuelEfficiencyUnit)
-    {
+      (fuelEfficiencyData.fuelEfficiency || fuelEfficiencyData.fuelEfficiency === 0)  &&
+      fuelEfficiencyData.fuelEfficiencyUnit)
+      {
+        // Set the displayed data/unit string
+        var newFuelEfficiencyUnitText = "km/L";
         // Remember the passed-in data
         this.properties.fuelEfficiencyData.fuelEfficiency = fuelEfficiencyData.fuelEfficiency;
         this.properties.fuelEfficiencyData.fuelEfficiencyUnit = fuelEfficiencyData.fuelEfficiencyUnit;
 
         // Translate the fuel efficiency unit (e.g. "MPG" or "KML") into a readable unit string (e.g. "mpg" or "km/L")
         var fuelEfficiencyUnitText = this._translateString(this.properties.fuelEfficiencyData.fuelEfficiencyUnit,
-                                                           this.properties.fuelEfficiencyData.fuelEfficiencyUnit,
-                                                           this.properties.subMap);
+          this.properties.fuelEfficiencyData.fuelEfficiencyUnit,
+          this.properties.subMap);
 
-        // Set the displayed data/unit string
-          // **** Add the fuel efficiency "km/L"
-        // calculate km/L if the fuel efficiency unit is "L/100km"
-        if (fuelEfficiencyUnitText == "L/100km")
-        {
-                  // Prevent Divide-By-Zero Error
-              if (parseFloat(this.properties.fuelEfficiencyData.fuelEfficiency) > 0)
-              {
-                    this.fuelEfficiencyValue.innerHTML = this.properties.fuelEfficiencyData.fuelEfficiency +
-                    "</br>" + "</br>" + "</br>" + ((100/parseFloat(this.properties.fuelEfficiencyData.fuelEfficiency)).toFixed(1)).toString();
+          var newEfficiency = this.properties.fuelEfficiencyData.fuelEfficiency + "</br></br></br>";
+          // Prevent Divide-By-Zero Error
+          if (parseFloat(this.properties.fuelEfficiencyData.fuelEfficiency) > 0 && newFuelEfficiencyUnitText)
+          {
+            if (fuelEfficiencyUnitText === "L/100km") // calculate if the vehicle fuel efficiency unit is "L/100km"
+            {
+              if (newFuelEfficiencyUnitText === "mpg") {
+                newEfficiency += ((235.215/parseFloat(this.properties.fuelEfficiencyData.fuelEfficiency)).toFixed(1)).toString();
+              } else if (newFuelEfficiencyUnitText === "km/L"){
+                newEfficiency += ((100/parseFloat(this.properties.fuelEfficiencyData.fuelEfficiency)).toFixed(1)).toString();
+              } else {
+                newEfficiency += (parseFloat(this.properties.fuelEfficiencyData.fuelEfficiency).toFixed(1)).toString();
               }
-              else
-              {
-                    this.fuelEfficiencyValue.innerHTML = this.properties.fuelEfficiencyData.fuelEfficiency + "</br>" + "</br>" + "</br>" + "0.0";
+            }
+            else if (fuelEfficiencyUnitText === "km/L") // calculate if the vehicle fuel efficiency unit is "km/L"
+            {
+              if (newFuelEfficiencyUnitText === "mpg") {
+                newEfficiency += ((parseFloat(this.properties.fuelEfficiencyData.fuelEfficiency)*2.352).toFixed(1)).toString();
+              } else if (newFuelEfficiencyUnitText === "L/100km"){
+                newEfficiency += ((100/parseFloat(this.properties.fuelEfficiencyData.fuelEfficiency)).toFixed(1)).toString();
+              } else {
+                newEfficiency += (parseFloat(this.properties.fuelEfficiencyData.fuelEfficiency).toFixed(1)).toString();
               }
+            }
+            else // calculate if the vehicle fuel efficiency unit is "mpg"
+            {
+              if (newFuelEfficiencyUnitText === "L/100km") {
+                newEfficiency += ((235.215/parseFloat(this.properties.fuelEfficiencyData.fuelEfficiency)).toFixed(1)).toString();
+              } else if (newFuelEfficiencyUnitText === "km/L"){
+                newEfficiency += ((parseFloat(this.properties.fuelEfficiencyData.fuelEfficiency)*0.4251).toFixed(1)).toString();
+              } else {
+                newEfficiency += (parseFloat(this.properties.fuelEfficiencyData.fuelEfficiency).toFixed(1)).toString();
+              }
+            }
+            this.fuelEfficiencyValue.innerHTML = newEfficiency;
+          }
+          else
+          {
+            this.fuelEfficiencyValue.innerHTML = this.properties.fuelEfficiencyData.fuelEfficienc + "</br></br></br>0.0";
+          }
+          this.fuelEfficiencyUnit.innerHTML = fuelEfficiencyUnitText + "</br></br></br>" + newFuelEfficiencyUnitText;
+          // **** End of the fuel efficiency tweak
         }
-        // calculate km/L if the fuel efficiency unit is "mpg"
         else
         {
-                    this.fuelEfficiencyValue.innerHTML = this.properties.fuelEfficiencyData.fuelEfficiency +
-                    "</br>" + "</br>" + "</br>" + ((parseFloat(this.properties.fuelEfficiencyData.fuelEfficiency)*0.4251).toFixed(1)).toString();
-        }
-           this.fuelEfficiencyUnit.innerHTML = fuelEfficiencyUnitText + "</br>" + "</br>" + "</br>" + "km/L";
-           // **** End of the fuel efficiency "km/L"
-    }
-    else
-    {
-        log.warn("Invalid fuel efficiency data received -- blanking display");
+          log.warn("Invalid fuel efficiency data received -- blanking display");
 
-        this.fuelEfficiencyValue.innerHTML = "--.-";
-        this.fuelEfficiencyUnit.innerHTML = "";
-    }
+          this.fuelEfficiencyValue.innerHTML = "--.-";
+          this.fuelEfficiencyUnit.innerHTML = "";
+        }
 }
 
 FuelConsumptionCtrl.prototype.setEvDrvDistance = function(evObj)

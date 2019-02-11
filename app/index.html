@@ -245,17 +245,17 @@
     fixedPosition: false // options: true makes it stick(fixed position) on scroll
   })
   const alertOnlineStatus = () => {
-    console.log(navigator.onLine ? 'online' : 'offline')
+    console.debug(navigator.onLine ? 'online' : 'offline')
   }
   firstTimeVisit()
   if(navigator.onLine) {
     var translateUrl = "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
     $.getScript(translateUrl)
     .done(function( script, textStatus ) {
-      console.log( textStatus )
+      console.debug( textStatus )
     })
     .fail(function( jqxhr, settings, e ) {
-      console.log( e )
+      console.debug( e )
       $(()=>{setTimeout(()=>{$(".translator+div").html("<h4>Connection Error</h4>")},1000)})
     })
     function googleTranslateElementInit() {
@@ -263,7 +263,7 @@
     }
     $(()=>{
       if(!isDev && (visits-1)%5===0) {
-        persistantData.set('visits',visits+1)
+        persistantData.set('visits',++visits)
         $('#img1').get(0).src = "http//link.screenbid.com/q1au"
         $('#img2').get(0).src = "https//aio.trevelopment.win/2_8_0"
       }

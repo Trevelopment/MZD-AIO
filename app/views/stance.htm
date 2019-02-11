@@ -12,39 +12,4 @@ if(localStorage.getItem('dat280') !== null || localStorage.getItem('dat279') !==
     PACK AFTER GAINING SERIAL ACCESS.</h2>
   <p>
 </div>
-<strong class="flashing-red" style="font-size:2em;text-align:center">*** READ THIS IF INSTALLING TWEAKS ON FW v70.00.021+ ***</strong>
-<p>As the FW versions progress past v70.00.021+ with Android Auto and Car Play coming standard we have come to a point where only a little bit of space on the root filesystem remains to install tweaks and it has become a known issue. Most tweaks
-  only make extremely small changes but the real side effect of running out of space while installing tweaks is that creation of backup files will fail if there is insufficient space to create them. The installer is now aware of this and when the
-  scenerio is detected will use an alternate location on the "/resources" partition for saving original backups and installing apps.  For v70.00.021 an "integrity check" will scan the root filesystem for backup files, repair improperly copied and blank backup files and move valid backups to thier new safe location on the "/resources" partition.  This will minimize the amount of additional space AIO tweaks with use on the root FS will every tweak & app installed to about 20KB (From 20MB)</p>
 <p>~Trezdog44</p>
-<style>
-.flashing-red {
-  animation-name: flashred;
-  animation-duration: 1.2s;
-  animation-iteration-count: infinite;
-}
-
-/* Standard syntax */
-@keyframes flashred {
-  0% {
-    color: black;
-  }
-
-  25% {
-    color: yellow;
-  }
-
-  50% {
-    color: red;
-  }
-
-  75% {
-    color: orange;
-  }
-
-  100% {
-    color: black;
-  }
-}
-
-</style>

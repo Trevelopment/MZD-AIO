@@ -65,7 +65,8 @@ _aiotweaksApp.prototype.appInit = function() {
     //Speed Handlers
     "Global.AtSpeed": this._AtSpeedMsgHandler.bind(this),
     "Global.NoSpeed": this._NoSpeedMsgHandler.bind(this),
-    "TimedSbn_CurrentSong": this._TimedSbn_CurrentSongMsgHandler.bind(this)
+    "TimedSbn_CurrentSong": this._TimedSbn_CurrentSongMsgHandler.bind(this),
+    "NowPlayingData" : this._NowPlayingDataMsgHandler.bind(this)
   };
 };
 
@@ -86,18 +87,40 @@ _aiotweaksApp.prototype._NoSpeedMsgHandler = function(msg) {
     if (framework.getCurrentApp() === '_aiotweaks') {
       framework.common.setSbName("AIO Tweaks");
     }
-  }, 2000); // Show for 2 seconds
+  }, 3000); // Show for 3 seconds
 
 }
 // from usbaudioApp - test to see if this works
 _aiotweaksApp.prototype._TimedSbn_CurrentSongMsgHandler = function(msg) {
-  framework.common.startTimedSbn(this.uiaId, 'TimedSbn_UsbAudio_CurrentSong', 'typeE', {
+  /*framework.common.startTimedSbn(this.uiaId, 'TimedSbn_UsbAudio_CurrentSong', 'typeE', {
     sbnStyle: 'Style02',
     imagePath1: 'IcnSbnEnt.png',
     text1: "USB",
     text2: msg.params.payload.title,
-  });
+  });*/
+  var aioWink;
+  var properties = {
+    "style": "style03",
+    "text1": msg.params.payload.title,
+    "winkTimeout": 5000,
+    "alertId": "",
+  };
+
+  aioWink = framework.instantiateControl("common", document.body, "WinkCtrl", properties);
 };
+
+_aiotweaksApp.prototype._NowPlayingDataMsgHandler = function (msg) {
+  var aioWink;
+  var properties = {
+    "style": "style03",
+    "text1": msg.params.payload,
+    "winkTimeout": 5000,
+    "alertId": "",
+  };
+
+  aioWink = framework.instantiateControl("common", document.body, "WinkCtrl", properties);
+}
+
 _aiotweaksApp.prototype._StartContextReady = function() {
   framework.common.setSbDomainIcon("apps/_aiotweaks/app.png");
 };

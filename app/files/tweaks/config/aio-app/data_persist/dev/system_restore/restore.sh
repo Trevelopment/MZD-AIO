@@ -1,5 +1,5 @@
 #!/bin/sh
-# restore.sh - MZD-AIO-TI Version 2.7.9
+# restore.sh - MZD-AIO-TI Version 2.8.3
 # The Full Restore script for the AIO Tweaks app
 # For more information visit http://mazdatweaks.com
 # By Trezdog44 - Trevelopment.com
@@ -105,7 +105,7 @@ show_message_OK()
     show_message "SYSTEM RESTORE ABORTED!"
     sleep 10
     killall -q jci-dialog
-	mount -o ro,remount /
+    mount -o ro,remount /
     exit 0
   fi
 }
@@ -192,41 +192,41 @@ log_message " "
 # restore data.zip back to original
 if [ -e /jci/nng/data.zip.org ]
 then
-	# remove speedcam patch and speedcam.txt
-	show_message "REMOVE SPEEDCAM PATCH AND SPEEDCAM.TXT ..."
-	log_message "===******      UNINSTALL SPEEDCAM PATCH AND SPEEDCAM.TXT ...    ******==="
-	log_message "===              Original data.zip is available as backup             ==="
-	cp -a /jci/nng/data.zip.org /jci/nng/data.zip
-	log_message "===               Renamed data.zip.org back to data.zip               ==="
-	if [ $DEL_BAKUPS -eq 1 ]
-	then
-		rm -f /jci/nng/data.zip.org
-		log_message "===                 Deleted backup: data.zip.org                      ==="
-	fi
-	chmod 755 /jci/nng/data.zip
+  # remove speedcam patch and speedcam.txt
+  show_message "REMOVE SPEEDCAM PATCH AND SPEEDCAM.TXT ..."
+  log_message "===******      UNINSTALL SPEEDCAM PATCH AND SPEEDCAM.TXT ...    ******==="
+  log_message "===              Original data.zip is available as backup             ==="
+  cp -a /jci/nng/data.zip.org /jci/nng/data.zip
+  log_message "===               Renamed data.zip.org back to data.zip               ==="
+  if [ $DEL_BAKUPS -eq 1 ]
+  then
+    rm -f /jci/nng/data.zip.org
+    log_message "===                 Deleted backup: data.zip.org                      ==="
+  fi
+  chmod 755 /jci/nng/data.zip
 fi
 # restore jci-linux_imx6_volans-release back to original
 if [ -e /jci/nng/jci-linux_imx6_volans-release.org ]
 then
-	mv /jci/nng/jci-linux_imx6_volans-release.org /jci/nng/jci-linux_imx6_volans-release
-	show_message "RESTORED JCI-LINUX_IMX6_VOLANS-RELEASE BACK TO ORIGINAL"
-	if [ $DEL_BAKUPS -eq 1 ]
-	then
-		rm -f /jci/nng/jci-linux_imx6_volans-release.org
-		log_message "===       Deleted backup: jci-linux_imx6_volans-release.org           ==="
-	fi
-	chmod 755 /jci/nng/jci-linux_imx6_volans-release
+  mv /jci/nng/jci-linux_imx6_volans-release.org /jci/nng/jci-linux_imx6_volans-release
+  show_message "RESTORED JCI-LINUX_IMX6_VOLANS-RELEASE BACK TO ORIGINAL"
+  if [ $DEL_BAKUPS -eq 1 ]
+  then
+    rm -f /jci/nng/jci-linux_imx6_volans-release.org
+    log_message "===       Deleted backup: jci-linux_imx6_volans-release.org           ==="
+  fi
+  chmod 755 /jci/nng/jci-linux_imx6_volans-release
 fi
 rm -f /jci/nng/2
 if [ -e /mnt/sd_nav/content/speedcam ]
 then
-	#	cp -a /mnt/sd_nav/content/speedcam/speedcam.txt ${MYDIR}
-	#	log_message "=== Copied speedcam.txt to USB ==="
-	#	rm -f /mnt/sd_nav/content/speedcam/speedcam.txt
-	#	rm -f /mnt/sd_nav/content/speedcam/speedcam.spdb
-	log_message "***Remove speedcam.txt and speedcam.spdb from SD card to complete uninstalation of speedcam patch***"
-	log_message "===***** END UNINSTALLATION OF SPEEDCAM PATCH AND SPEEDCAM.TXT  ******==="
-	log_message " "
+  #	cp -a /mnt/sd_nav/content/speedcam/speedcam.txt ${MYDIR}
+  #	log_message "=== Copied speedcam.txt to USB ==="
+  #	rm -f /mnt/sd_nav/content/speedcam/speedcam.txt
+  #	rm -f /mnt/sd_nav/content/speedcam/speedcam.spdb
+  log_message "***Remove speedcam.txt and speedcam.spdb from SD card to complete uninstalation of speedcam patch***"
+  log_message "===***** END UNINSTALLATION OF SPEEDCAM PATCH AND SPEEDCAM.TXT  ******==="
+  log_message " "
 fi
 
 # remove track-order and FLAC support
@@ -463,10 +463,9 @@ show_message "REMOVE VIDEOPLAYER - SPEEDOMETER \n ANDROID AUTO - CASTSCREEN FILE
 log_message "=======*********  UNINSTALL VIDEOPLAYER, SPEEDOMETER,    ********========"
 log_message "=======*********  ANDROID AUTO & CASTSCREEN RECIEVER ... ********========"
 
-# kills all WebSocket daemons, headunit process, and castscreen receiver
+# kills daemons, headunit process, and castscreen receiver
 killall -q -9 headunit
 pkill cs_receiver_arm
-pkill websocketd
 
 rm -rf /jci/gui/addon-common
 rm -rf /tmp/mnt/resources/aio/addon-common
@@ -474,8 +473,8 @@ log_message "===                   Removed /jci/gui/addon-common                
 
 if grep -Fq "input_filter" /jci/sm/sm.conf
 then
-	sed -i '/input_filter/d' /jci/sm/sm.conf
-	log_message "===               input_filter removed from sm.conf.                  ==="
+  sed -i '/input_filter/d' /jci/sm/sm.conf
+  log_message "===               input_filter removed from sm.conf.                  ==="
 fi
 rm -fr /tmp/mnt/data_persist/dev/androidauto
 rm -fr /tmp/mnt/data_persist/dev/headunit*
@@ -520,13 +519,13 @@ rm -f /usr/lib/gstreamer-0.10/libgsth264parse.so
 echo "#!/bin/sh" > /jci/scripts/stage_wifi.sh
 if [ -e /jci/scripts/jci-fw.sh.org ]
 then
-	log_message "===               Restoring /jci/scripts/jci-fw.sh                    ==="
-	cp -a /jci/scripts/jci-fw.sh.org /jci/scripts/jci-fw.sh
-	if [ $DEL_BAKUPS -eq 1 ]
-	then
-		rm -f /jci/scripts/jci-fw.sh.org
-		log_message "===                     Deleted backup: jci-fw.sh.org                 ==="
-	fi
+  log_message "===               Restoring /jci/scripts/jci-fw.sh                    ==="
+  cp -a /jci/scripts/jci-fw.sh.org /jci/scripts/jci-fw.sh
+  if [ $DEL_BAKUPS -eq 1 ]
+  then
+    rm -f /jci/scripts/jci-fw.sh.org
+    log_message "===                     Deleted backup: jci-fw.sh.org                 ==="
+  fi
 fi
 log_message "=======************ END UNINSTALLATION OF VIDEOPLAYER ************======="
 log_message "=======************* END UNISTALLATION OF SPEEDOMETER ************======="
@@ -574,16 +573,16 @@ then
   # reset storage
   if [ -e /tmp/mnt/data_persist/storage ]
   then
-  	log_message "- Removing storage folder"
-  	rm -rf /tmp/mnt/data_persist/storage
+    log_message "- Removing storage folder"
+    rm -rf /tmp/mnt/data_persist/storage
   fi
   if [ -e /jci/opera/opera_home/pstorage/psindex.dat ]
   then
     if [ -f /jci/opera/opera_home/pstorage/psindex.dat.org ]
     then
-    	log_message "- Removing local storage settings"
+      log_message "- Removing local storage settings"
       cp -a /jci/opera/opera_home/pstorage/psindex.dat.org /jci/opera/opera_home/pstorage/psindex.dat
-    	rm /jci/opera/opera_home/pstorage/psindex.dat.org
+      rm /jci/opera/opera_home/pstorage/psindex.dat.org
     else
       log_message "- Removing local storage settings and pstorage"
       rm -rf /jci/opera/opera_home/pstorage
@@ -593,9 +592,9 @@ then
   # remove data reader files
   if [ -e /jci/casdk ]
   then
-  	log_message "- Removing data script folder /jci/casdk"
-  	rm /jci/casdk/*
-  	rmdir --ignore-fail-on-non-empty /jci/casdk
+    log_message "- Removing data script folder /jci/casdk"
+    rm /jci/casdk/*
+    rmdir --ignore-fail-on-non-empty /jci/casdk
   else
     log_message "- CASDK Data script folder '/jci/casdk' not found"
   fi
@@ -603,30 +602,30 @@ then
   # remove proxy
   if [ -f /jci/opera/opera_dir/userjs/CustomApplicationsProxy.js ]
   then
-  	log_message "- Removing proxys & startups"
-  	rm -f /jci/opera/opera_dir/userjs/CustomApplicationsProxy.js
-  	rm -f /jci/opera/opera_dir/userjs/nativeApps.js
+    log_message "- Removing proxys & startups"
+    rm -f /jci/opera/opera_dir/userjs/CustomApplicationsProxy.js
+    rm -f /jci/opera/opera_dir/userjs/nativeApps.js
   fi
 
   if [ -f /jci/opera/opera_dir/userjs/additionalApps.js.org ]
   then
-  	log_message "- Restoring additionalApps.js"
-  	mv /jci/opera/opera_dir/userjs/additionalApps.js.org /jci/opera/opera_dir/userjs/additionalApps.js
+    log_message "- Restoring additionalApps.js"
+    mv /jci/opera/opera_dir/userjs/additionalApps.js.org /jci/opera/opera_dir/userjs/additionalApps.js
   fi
 
   # delete custom
   if [ -e /jci/gui/apps/custom ]
   then
-  	log_message "- Removing custom application folder"
-  	rm -rf /jci/gui/apps/custom||true
+    log_message "- Removing custom application folder"
+    rm -rf /jci/gui/apps/custom||true
   else
     log_message "- Custom application folder does not exist"
   fi
 
   if [ -e /tmp/mnt/resources/aio ]
   then
-  	log_message "- Removing custom runtime & apps"
-  	rm -rf /resources/aio/mzd-casdk||true
+    log_message "- Removing custom runtime & apps"
+    rm -rf /resources/aio/mzd-casdk||true
   else
     log_message "- CASDK runtime & apps do not exist"
   fi

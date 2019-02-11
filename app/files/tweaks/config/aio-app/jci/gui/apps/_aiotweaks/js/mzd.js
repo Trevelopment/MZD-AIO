@@ -1,13 +1,13 @@
 // *****************************
-// ** AIO Tweaks App v0.7 - mzd.js
+// ** AIO Tweaks App v0.9 - mzd.js
 // ** All the functions for Buttons in AIO Tweaks App
 // ** By Trezdog44
 // *****************************
 /* jshint -W117 */
-var aioTweaksVer = 0.8;
+var aioTweaksVer = 0.9;
 var AArunning = false;
 var appListData = [];
-
+var globalAIOerror = null;
 //var wsAIO = null;
 //var aioWsVideo = null;
 //var AIOvideo = false;
@@ -15,26 +15,25 @@ function StartAIOApp() {
   try {
     $('#SbSpeedo, #Sbfuel-bar-wrapper').fadeOut();
     //framework.sendEventToMmui("common", "SelectBTAudio");
-  } catch (err) {
-
-  }
+  } catch (err) {}
   // *****************************
   // ** Setting of Buttons BEGIN!
   // *****************************
   // AIO info
   getAppListData();
-  $('button').on('click', function() {
+  $('button').on('click', function () {
     $('button').removeClass('selectedItem');
     $(this).addClass('selectedItem')
   });
-  $("#aioInfo").on("click", function() { showAioInfo("<div class='infoMessage'><h1>AIO Tweaks App v" + aioTweaksVer + " </h1>This is an experimental app by Trezdog44 made to test the capabilities, functionalities, and limitations of apps in the MZD Infotainment System.<br>This app has some useful and fun functions although it is not guaranteed that everything works.  There may be non-functioning or experimental features.</div>"); });
+  $("#aioInfo").on("click", function () { showAioInfo("<div class='infoMessage'><h1>AIO Tweaks App v" + aioTweaksVer + " </h1>This is an experimental app by Trezdog44 made to test the capabilities, functionalities, and limitations of apps in the MZD Infotainment System.<br>This app has some useful and fun functions although it is not guaranteed that everything works.  There may be non-functioning or experimental features.</div>"); });
   $("#aioReboot").on("click", myRebootSystem);
   //$("#mainMenuLoop").on("click",setMainMenuLoop);
-  $("#test").on("click", myTest);
+  $("#test").on("click", aioSBNtest);
   $("#touchscreenBtn").on("click", enableTouchscreen);
   $("#touchscreenOffBtn").on("click", disableTouchscreen);
   $("#touchscreenCompassBtn").on("click", enableCompass);
   $("#adbBtn").on("click", adbDevices);
+  $("#adbKillBtn").on("click", adbKillServer);
   $("#adbRevBtn").on("click", adbReverse);
   $("#messageTestBtn").on("click", messageTest);
   //$("#screenshotBtn").on("click",takeScreenshot);
@@ -48,7 +47,7 @@ function StartAIOApp() {
   //$("#chooseBg").on("click",chooseBackground);
   $("#systemTab").on("click", settingsSystemTab);
   $("#wifiSettings").on("click", wifiSettings);
-  //$("#runTweaksBtn").on("click",playAllVideos);
+  $("#runTweaksBtn").on("click", runTweaks);
   $("#fullRestoreConfirmBtn").on("click", fullSystemRestoreConfirm);
   $("#headunitLogBtn").on("click", showHeadunitLog);
   $("#scrollUpBtn").on("click", scrollUp);
@@ -72,27 +71,29 @@ function StartAIOApp() {
   $("#reverseAppListBtn").on("click", reverseApplicationList);
   $("#shiftEntListBtn").on("click", shiftEntertainmentList);
   $("#devModeSecretBtn").on("click", toggleDevMode);
+  $("#showLocalStorage").on("click", showLocalStorage);
   $("#wifiToggle").on("click", turnOnWifi);
   $("#verBtn").on("click", showVersion);
-  $("#showBgBtn").on("click", function() { $("html").addClass("showBg") });
-  $("#twkOut").on("click", function() { framework.sendEventToMmui("common", "Global.IntentHome") });
-  $("#usba").on("click", function() { framework.sendEventToMmui("system", "SelectUSBA") });
-  $("#usbb").on("click", function() { framework.sendEventToMmui("system", "SelectUSBB") });
-  $("#pauseBtn").on("click", function() { localStorage.clear(); });
+  $("#showWinkBtn").on("click", function () { aioWink("Wink Test... It works!! :-)") });
+  $("#showBgBtn").on("click", function () { $("html").addClass("showBg") });
+  $("#twkOut").on("click", function () { framework.sendEventToMmui("common", "Global.IntentHome") });
+  $("#usba").on("click", function () { framework.sendEventToMmui("system", "SelectUSBA") });
+  $("#usbb").on("click", function () { framework.sendEventToMmui("system", "SelectUSBB") });
+  $("#pauseBtn").on("click", function () { localStorage.clear(); });
   //$("#previousTrackBtn").on("click",function(){framework.sendEventToMmui("common", "Global.PreviousHoldStop")});
   //$("#nextTrackBtn").on("click",function(){framework.sendEventToMmui("common", "Global.NextHoldStop")});
-  $("#BluetoothAudio").on("click", function() { framework.sendEventToMmui("system", "SelectBTAudio") });
-  $("#previousTrackBtn").on("click", function() { framework.sendEventToMmui("Common", "Global.Previous") });
-  $("#nextTrackBtn").on("click", function() { framework.sendEventToMmui("Common", "Global.Next") });
-  $(".mmLayout").on("click", function() {
+  $("#BluetoothAudio").on("click", function () { framework.sendEventToMmui("system", "SelectBTAudio") });
+  $("#previousTrackBtn").on("click", function () { framework.sendEventToMmui("Common", "Global.Previous") });
+  $("#nextTrackBtn").on("click", function () { framework.sendEventToMmui("Common", "Global.Next") });
+  $(".mmLayout").on("click", function () {
     changeLayout($(this).attr("id"));
     $("#MainMenuMsg").html($(this).text());
   });
-  $(".toggleTweaks").on("click", function() {
+  $(".toggleTweaks").on("click", function () {
     $("body").toggleClass($(this).attr("id"));
     $("#MainMenuMsg").html($(this).text());
   });
-  $("#clearTweaksBtn").on("click", function() {
+  $("#clearTweaksBtn").on("click", function () {
     $("body").attr("class", "");
     $("#MainMenuMsg").text("Main Menu Restored");
     localStorage.removeItem("aio.tweaks");
@@ -101,15 +102,15 @@ function StartAIOApp() {
   $("#closeTouchPanel").on("click", closeTSPanel);
   // Tab select & localStrage save on each button press
   $(".toggleTweaks").on("click", saveTweaks);
-  $(".tablinks").on("click", function() {
+  $(".tablinks").on("click", function () {
     $("#MainMenuMsg").html("");
     localStorage.setItem("aio.prevtab", $(this).attr("tabindex"));
   });
-  $("#openNav").on("click", function() {
+  $("#openNav").on("click", function () {
     document.getElementById("mySidenav").style.width = "250px";
     document.getElementById("main").style.marginLeft = "250px";
   });
-  $("#closeNav").on("click", function() {
+  $("#closeNav").on("click", function () {
     document.getElementById("mySidenav").style.width = "0";
     document.getElementById("main").style.marginLeft = "0";
   });
@@ -138,7 +139,7 @@ function changeLayout(newlayout) {
 
 function getAppListData() {
   try {
-    $.getJSON("../opera/opera_dir/userjs/additionalApps.json", function(data) {
+    $.getJSON("../opera/opera_dir/userjs/additionalApps.json", function (data) {
       appListData = data;
       hasAA();
       hasCS();
@@ -146,7 +147,7 @@ function getAppListData() {
       hasErrLog();
       if (typeof CustomApplicationsHandler === "object") {
         var custApps = CustomApplicationsHandler.getMenuItems();
-        custApps.forEach(function(elmt) {
+        custApps.forEach(function (elmt) {
           appListData.push({ "name": elmt.text1Id, "label": elmt.title });
         })
       }
@@ -158,25 +159,24 @@ function getAppListData() {
 /*this.unsetMainMenuLoop = function() {
 this.offSetFocus = MainMenuCtrl.prototype._offsetFocus.toString();
 }*/
-function setMainMenuLoop() {
-  MainMenuCtrl.prototype._offsetFocus = this._MainMenuLoop;
-  $('#MainMenuMsg').text('Main Menu Loop');
-}
-_MainMenuLoop = function(direction) {
+var __MainMenuLoop = function (direction) {
   var index = this._getFocus();
   index += direction;
-
   if (index < 0) {
     index = 4;
   }
   if (index > 4) {
     index = 0;
   }
-
   if (index !== this._getFocus()) {
     this._setFocus(index);
     this._setHighlight(index);
   }
+}
+
+function setMainMenuLoop() {
+  MainMenuCtrl.prototype._offsetFocus = __MainMenuLoop;
+  $('#MainMenuMsg').text('Main Menu Loop');
 }
 
 function turnOnWifi() {
@@ -187,7 +187,7 @@ function turnOnWifi() {
     framework.sendEventToMmui("syssettings", "SelectNetworkManagement"); // this may not be needed
     framework.sendEventToMmui("common", "Global.IntentHome"); // Jump back to home screen?
   }
-  setTimeout(function() {
+  setTimeout(function () {
     net = framework.getAppInstance('netmgmt');
     if (!net._onOffStatus) {
       framework.sendEventToMmui('netmgmt', 'SetWifiConnection', { payload: { offOn: wifiOn } });
@@ -230,7 +230,7 @@ function showEnvVar() {
 
 function takeScreenshot() {
   showAioInfo('Screenshot in 10 Seconds');
-  setTimeout(function() {
+  setTimeout(function () {
     closeAioInfo(true);
     showSaveScreenshotBtn();
   }, 10000);
@@ -296,8 +296,13 @@ function adbDevices() {
   exeCmd('adb devices -l');
 }
 
+function adbKillServer() {
+  // showAioInfo("$ adb ");
+  exeCmd('adb kill-server');
+}
+
 function adbReverse() {
-  exeCmd('adb reverse tcp:2222 tcp:22');
+  exeCmd('adb reverse tcp:2222 tcp:22', 1);
 }
 
 function TerminalConfirm() {
@@ -309,20 +314,37 @@ function RunTerminal() {
 }
 
 function RunCheckIP() {
-  aioWs('ifconfig wlan0 | grep \'inet addr\' | cut -d: -f2 | awk \'{print $1}\'', 0);
+  globalAIOerror = "No Ip Address"
+  showAioInfo("$ # IP Address:");
+  exeCmd('ifconfig wlan0 | grep "inet addr" | cut -d: -f2 | awk "{print $1}"');
 }
 
-function myTest() {
-  var msgChoice = Math.round(Math.random() * 10 / 3);
+function aioSBNtest() {
+  var msg, msgChoice = Math.round(Math.random() * 10 / 3);
   switch (msgChoice) {
-    case 1:
-      framework.common.startTimedSbn(this.uiaId, "SbnAIOTest", "typeE", { sbnStyle: "Style02", imagePath1: 'apps/_aiotweaks/panda.png', text1: this.uiaId, text2: "Pandamonium!!" });
-      break
-    case 2:
-      framework.common.startTimedSbn(this.uiaId, "SbnAIOTest", "typeE", { sbnStyle: "Style02", imagePath1: 'apps/_aiotweaks/panda.png', text1: this.uiaId, text2: "Enter the Panda!!" });
-      break
-    default:
-      framework.common.startTimedSbn(this.uiaId, "SbnAIOTest", "typeE", { sbnStyle: "Style02", imagePath1: 'apps/_aiotweaks/panda.png', text1: this.uiaId, text2: "Pandas are coming for you!!" });
+    case 1: msg = "Pandamonium!!"; break
+    case 2: msg = "Enter the Panda!!"; break
+    default: msg = "Pandas are coming for you!!";
+  }
+  framework.common.startTimedSbn(this.uiaId, "SbnAIOTest", "typeE", { sbnStyle: "Style02", imagePath1: 'apps/_aiotweaks/panda.png', text1: this.uiaId, text2: msg });
+}
+
+function aioWink(msg) {
+  var wink;
+  var properties = {
+    "style": "style03",
+    "text1": msg,
+    "winkTimeout": 5000,
+    "alertId": "",
+    "completeCallback": function () { aioRemoveWink(wink) }
+  };
+  wink = framework.instantiateControl("common", document.body, "WinkCtrl", properties);
+}
+
+function aioRemoveWink(_wink) {
+  if (_wink) {
+    framework.destroyControl(_wink);
+    _wink = null;
   }
 }
 
@@ -344,24 +366,34 @@ function fullSystemRestore() {
   aioWs('/bin/sh /tmp/mnt/data_persist/dev/system_restore/restore.sh', 2); // Run Full Restore Script
 }
 
+function runRemount() {
+  showAioInfo("Remounted RW /")
+  aioWs('mount -o rw,remount /', 0);
+}
+
+function runTweaks() {
+  aioWs('/bin/sh /tmp/mnt/sd*/tweaks.sh', 50);
+}
+
 function backUpCam() {
-  utility.setRequiredSurfaces(["NATGUI_SURFACE"], true);
-  $("body").css({ "display": "none" });
-  aioWs('/bin/sh /jci/backupcam/start_cam.sh', 2);
+  //$("body").css({ "display": "none" });
+  aioWs('export WAYLAND_IVI_SURFACE_ID=BACKUPCAM_SURFACE_ID; export DBUS_SYSTEM_BUS_ADDRESS=unix:path=/tmp/dbus_hmi_socket', 0);
+  aioWs('gst-launch -v mfw_v4lsrc ! mfw_v4lsink device=/dev/video17', 2);
+  utility.setRequiredSurfaces(["BACKUPCAM_SURFACE_ID"], true);
+  //'aioWs('/bin/sh /jci/backupcam/start_cam.sh', 2);
   // aioMagicRoute("_aiotweaks", "RevCam");
-  aioMagicRoute("backupparking", "BackupCameraDisplay");
+  // aioMagicRoute("backupparking", "BackupCameraDisplay");
 }
 
 function toggleWifiAP() {
   // showAioInfo("$ start_wifi.sh && jci-wifiap.sh start");
   // aioWs('/bin/sh /jci/scripts/start_wifi.sh; /bin/sh /jci/scripts/jci-wifiap.sh start && echo DONE  ', 5);
-  exeCmd("start_wifi.sh && jci-wifiap.sh start");
+  exeCmd("start_wifi.sh; jci-wifiap.sh start");
 }
 
 function stopFirewall() {
-  // showAioInfo("$ jci-fw.sh stop");
-  // aioWs('/bin/sh /jci/scripts/jci-fw.sh stop && echo "DONE" || echo "FAILBOAT" ', 1);
-  exeCmd("jci-fw.sh stop");
+  showAioInfo("$ jci-fw.sh stop");
+  aioWs('/bin/sh /jci/scripts/jci-fw.sh stop && echo "DONE" || echo "FAILBOAT" ', 1);
 }
 /*function myMessage(){
   var msg = '/jci/gui/apps/_aiotweaks/sh/message.sh "MESSAGES DISPLAY SUCCESS!!<br>THIS IS A P.O.C. FOR DISPAYING JCI-DIALOG<br>MESSAGES USING WEBSOCKETS AND JAVASCRIPT"';
@@ -369,7 +401,7 @@ function stopFirewall() {
 }*/
 function hasAA() {
   var AA = false;
-  $.each(appListData, function(key, val) {
+  $.each(appListData, function (key, val) {
     if (val.name === "_androidauto") {
       AA = true;
     }
@@ -392,41 +424,41 @@ function hasErrLog() {
 function AioFileCheck(fc) {
   var FC = fc.substr(fc.lastIndexOf("_"));
   switch (FC) {
-    case "_NOAA":
-      $('#aaTitle, .aaFunc, #headunitLogBtn').remove();
-      $('#csTitle').addClass('centered');
-      break;
-    case "_CS":
-      appListData.push({ "name": "cs", "label": "CastScreen Receiver" });
-      break;
-    case "_NOCS":
-      $('#csTitle, .csFunc').remove();
-      $('#aaTitle').addClass('centered');
-      break;
-    case "_SWAP":
-      //$('#mountSwapBtn').html('<a>Mount Swapfile</a>').show();
-      //$('#createSwapBtn').off('click').on('click',deleteSwap).html('<a>Delete Swapfile</a>');
-      if (framework.getCurrentApp() === "_aiotweaks") {
-        $('#mountSwapBtn').show();
-        $('#unmountSwapBtn').show();
-      } else if (UMswap === null) {
-        swapfileShutdownUnmount();
-      }
-      break;
-    case "_NOSWAP":
-      $('#mountSwapBtn').remove();
-      $('#unmountSwapBtn').remove();
-      //$('#mountSwapBtn').html('').hide();
-      //$('#createSwapBtn').off('click').on('click',createSwap).html('<a>Create Swapfile</a>');
-      break;
-    case "_ERR":
-      $('#errLogBtn').show();
-      break;
-    case "_NOERR":
-      $('#errLogBtn').remove();
-      break;
-    default:
-      showAioInfo('INVALID FILE CHECK: ' + fc);
+  case "_NOAA":
+    $('#aaTitle, .aaFunc, #headunitLogBtn').remove();
+    $('#csTitle').addClass('centered');
+    break;
+  case "_CS":
+    appListData.push({ "name": "cs", "label": "CastScreen Receiver" });
+    break;
+  case "_NOCS":
+    $('#csTitle, .csFunc').remove();
+    $('#aaTitle').addClass('centered');
+    break;
+  case "_SWAP":
+    //$('#mountSwapBtn').html('<a>Mount Swapfile</a>').show();
+    //$('#createSwapBtn').off('click').on('click',deleteSwap).html('<a>Delete Swapfile</a>');
+    if (framework.getCurrentApp() === "_aiotweaks") {
+      $('#mountSwapBtn').show();
+      $('#unmountSwapBtn').show();
+    } else if (UMswap === null) {
+      swapfileShutdownUnmount();
+    }
+    break;
+  case "_NOSWAP":
+    $('#mountSwapBtn').remove();
+    $('#unmountSwapBtn').remove();
+    //$('#mountSwapBtn').html('').hide();
+    //$('#createSwapBtn').off('click').on('click',createSwap).html('<a>Create Swapfile</a>');
+    break;
+  case "_ERR":
+    $('#errLogBtn').show();
+    break;
+  case "_NOERR":
+    $('#errLogBtn').remove();
+    break;
+  default:
+    showAioInfo('INVALID FILE CHECK: ' + fc);
   }
 }
 
@@ -447,7 +479,7 @@ function showVehicleData() {
 
 function showAppList() {
   var items = [];
-  $.each(appListData, function(key, val) {
+  $.each(appListData, function (key, val) {
     items.push("<li id='" + key + "'>" + val.label + "</li>");
   });
   showAioInfo('<b>Installed AIO Apps:</b>');
@@ -470,29 +502,29 @@ function enableCompass() {
 }
 
 function startHeadunit() {
-  AArunning = true;
-  // showAioInfo("$ /tmp/mnt/data_persist/dev/bin/headunit-wrapper &");
+  showAioInfo("$ headunit-wrapper 2>&1 &");
+  // AArunning = true;
+  // showAioInfo("$ headunit-wrapper 2>&1 &");
   // aioWs('/tmp/mnt/data_persist/dev/bin/headunit-wrapper 2>&1 & ', 30);
-  exeCmd("headunit-wrapper 2>&1 &");
+  aioWs("headunit-wrapper 2>&1 &", 10);
 }
 
 function stopHeadunit() {
-  // showAioInfo("$ killall headunit");
-  // aioWs('killall headunit 2>&1', 0);
-  exeCmd("killall headunit 2>&1");
+  showAioInfo("$ killall headunit-wrapper headunit 2>&1");
+  aioWs("killall headunit-wrapper headunit 2>&1", 1);
 }
 
 function startCastScreen() {
   // showAioInfo("$ cd /jci/scripts && ./cs_receiver_arm mfw_v4lsink");
   // aioWs('cd /jci/scripts; killall cs_receiver_arm; sleep 1; ./cs_receiver_arm mfw_v4lsink 2>&1', 5);
-  aioWs('killall -q -9 cs_receiver_arm', 0);
-  exeCmd("cd /jci/scripts && ./cs_receiver_arm mfw_v4lsink");
+  aioWs('killall -q -9 cs_receiver_arm; cd /jci/scripts', 0);
+  exeCmd("./cs_receiver_arm mfw_v4lsink", true);
 }
 
 function stopCastScreen() {
-  // showAioInfo("$ killall cs_receiver_arm");
+  showAioInfo("$ killall cs_receiver_arm");
   // aioWs('killall cs_receiver_arm 2>&1', 0);
-  exeCmd('killall -9 cs_receiver_arm')
+  aioWs('killall -q -9 cs_receiver_arm', 0)
 }
 /*function startSpeedometer(){
   utility.loadScript('apps/_speedometer/js/speedometer.js');
@@ -519,9 +551,8 @@ function messageTest() {
 }
 
 function showVersion() {
-  //showAioInfo("$ show_version.sh");
-  //aioWs('show_version.sh', 1);
-  exeCmd('show_version.sh')
+  showAioInfo("$ show_version.sh");
+  aioWs('show_version.sh', 1);
 }
 
 function displayOff() {
@@ -539,37 +570,41 @@ function displayOff() {
 }
 
 function showHeadunitLog() {
+  globalAIOerror = "headunit log not available";
   showFile('/tmp/mnt/data/headunit.log');
 }
 
 function showErrLog() {
+  globalAIOerror = "error log not available";
   showFile('/tmp/root/casdk-error.log');
 }
 
 function exeCmd(command, silent) {
-  aioWs(command + " > /tmp/root/stdout", 0)
-  setTimeout(function() {
-    !silent ? showFile("/tmp/root/stdout", command) : null;
-  }, 1000)
+  silent ? aioWs(command, 10) : aioWs(command + " > /tmp/root/stdout", 0);
+  setTimeout(function () {
+    silent ? null : showFile("/tmp/root/stdout", command);
+  }, 2500)
 }
 
 function showFile(filepath, command) {
   showAioInfo(command ? "$ " + command : "Loading " + filepath + " ...");
-  setTimeout(function() {
+  setTimeout(function () {
     $.ajax({
       url: filepath,
       dataType: "text",
-      success: function(data) {
+      success: function (data) {
         $("#AioInformation").append(data);
+        globalAIOerror = null;
       },
-      error: function(e) {
-        showAioInfo("ERROR: " + JSON.stringify(e), true);
+      error: function (e) {
+        showAioInfo("ERROR: " + (globalAIOerror ? globalAIOerror : JSON.stringify(e)), true);
+        globalAIOerror = null;
       }
     });
   }, command ? 1000 : 1);
 }
 
-function showBodyClassName() {
+function bodyClass() {
   // showAioInfo("Body className: <br> " + document.getElementsByTagName("body")[0].className + "<br><br>localStorage.getItem(\"aiotweaks\"): <br> " + JSON.parse(localStorage.getItem("aiotweaks")));
   str = JSON.stringify(localStorage);
   str = str.replace(/,/g, '<br>');
@@ -583,9 +618,9 @@ function showDFH() {
 }
 
 function showMeminfo() {
-  // showAioInfo("$ cat /proc/swaps");
+  showAioInfo("$ cat /proc/meminfo");
   // aioWs('cat /proc/swaps && echo "$ cat /proc/meminfo" && cat /proc/meminfo && echo DONE 2>&1', 3);
-  exeCmd('cat /proc/swaps && cat /proc/meminfo');
+  exeCmd('cat /proc/meminfo', true);
 }
 
 function showPS() {
@@ -612,6 +647,33 @@ function unmountSwap() {
   showAioInfo('$ swapoff -a /tmp/mnt/sd*/swapfile<br>');
   aioWs('sh /jci/gui/apps/_aiotweaks/sh/resource_swap.sh unmount 2>&1 && echo DONE');
   $("#unmountSwapBtn").fadeOut(500);
+}
+
+function replacer(match, p1, p2, p3, p4) {
+  var part = { indent: p1, key: p2, value: p3, end: p4 };
+  var key = '<span class="json-key">';
+  var val = '<span class="json-value">';
+  var bool = '<span class="json-boolean">';
+  var str = '<span class="json-string">';
+  var findName = /"([\w]+)": |"(.*)": /;
+  var isStr = /[a-zA-Z]/.test(part.value);
+  var isArray = /^"\[/.test(part.value);
+  var isBool = /true|false/.test(part.value);
+  var valSpan = isBool ? bool : isStr ? str : val;
+  var indentHtml = part.indent || '';
+  var keyHtml = part.key ? key + part.key.replace(findName, '"$1$2"') + '</span>: ' : '';
+  var valueHtml = part.value ? valSpan + (isStr && !isArray && !isBool ? part.value : part.value.replace(/\"/g, '')) + '</span>' : '';
+  var endHtml = part.end ? part.end + '\n' : '\n';
+  return indentHtml + keyHtml + valueHtml + endHtml;
+}
+
+function showLocalStorage() {
+  // Pretty Print JSON Data in Color
+  var prettyPrintJson = function (obj) {
+    return JSON.stringify(obj, null, 3).replace(/&/g, '&amp;').replace(/\\"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/( *)("[^"]+": )?("[^"]*"|[\w.+-]*)?([{}[\],]*)?\n/g, replacer);
+  };
+  showAioInfo('localStorage: ');
+  showAioInfo(prettyPrintJson(localStorage), true);
 }
 /*
 function createSwap() {
@@ -647,19 +709,25 @@ framework.sendEventToMmui("usbaudio", "SelectSongs"); // these functions would a
 /* websocket
 ============================================================================================= */
 function aioWs(action, waitMessage) {
+  function closeWS() {
+    if (ws !== null) {
+      ws.close();
+      ws = null;
+    }
+    $('button').css({ 'background': '', 'color': '' });
+  }
   var msgnum = -1;
   var ws = new WebSocket('ws://127.0.0.1:9997/');
-
   var focusBtn = $('button.selectedItem');
-  ws.onmessage = function(event) {
+  ws.onmessage = function (event) {
     var res = event.data;
     //console.log(res);
     if (res.indexOf('AIO_FC_') !== -1) {
       AioFileCheck(res);
-      ws.close();
+      closeWS();
       return;
     } else if (res.indexOf('DONE') === -1) {
-      focusBtn.css({ 'background': '-o-linear-gradient(top,rgba(255,0,0,0),rgba(255,0,000,1))' });
+      focusBtn.css({ 'background': '-o-linear-gradient(top,rgba(255,0,0,0.7),rgba(255,0,0,1))', 'color': '#f00fff' });
       if (AArunning) {
         AAInfo(res);
       } else {
@@ -668,36 +736,27 @@ function aioWs(action, waitMessage) {
     }
     msgnum++;
     if (msgnum > waitMessage || res.indexOf('DONE') !== -1) {
-      focusBtn.css({ 'background': '-o-linear-gradient(top,rgba(0,0,0,0),rgba(0,0,0,1))', 'color': '#fff' });
-      setTimeout(function() {
-        if (ws !== null) {
-          ws.close();
-          ws = null;
-        }
+      focusBtn.css({ 'background': '-o-linear-gradient(top,rgba(0,0,0,0.3),rgba(0,0,0,1))', 'color': '#ff0000' });
+      setTimeout(function () {
+        closeWS();
         AArunning = false;
-        $('button').css({ 'background': '' });
       }, 4000);
     }
   };
-
-  ws.onopen = function() {
+  ws.onopen = function () {
     ws.send(action);
-    focusBtn.css({ 'background': '-o-linear-gradient(top,rgba(255,255,255,.5),rgba(255,255,255,1))', 'color': '#000' });
-    //console.info(action);
+    focusBtn.css({ 'background': '-o-linear-gradient(top,rgba(255,255,255,0.5),rgba(255,255,255,1))', 'color': '#000fff' });
     if (waitMessage < 1) {
-      setTimeout(function() {
-        if (ws !== null) {
-          ws.close();
-          ws = null;
-        }
+      setTimeout(function () {
+        closeWS()
       }, 4000);
     }
   };
-  ws.onclose = function() {
-    $('button').css({ 'background': '', 'color': '' });
+  ws.onclose = function () {
+    closeWS()
   };
-  ws.onerror = function() {
-    $('button').css({ 'background': '', 'color': '' });
+  ws.onerror = function () {
+    closeWS()
   };
 }
 /*function nodeWs(action, waitMessage){
@@ -729,4 +788,3 @@ wsn.onclose = function(){
 $('button:focus').css({'background':'','color':''});
 };
 }*/
-// #############################################################################################

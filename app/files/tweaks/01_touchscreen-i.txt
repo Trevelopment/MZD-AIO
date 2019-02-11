@@ -21,6 +21,10 @@ then
   sed -i 's/ .Global.AtSpeed/ \/\/"Global.AtSpeed/g' /jci/gui/common/js/Common.js
 fi
 log_message "===             Touchscreen Speed Restriction Disabled                ==="
-
+if [ $ENABLE_DVD -eq 1 ]
+then
+  dbus-send --address=unix:path=/tmp/dbus_hmi_socket /com/jci/testdiag com.jci.testdiag.DVD_SpeedRestriction_Enable boolean:false
+  log_message "===               Playing DVDs While Driving Enabled                  ==="
+fi
 log_message "====****** END INSTALLATION OF REMOVE TOUCHSCREEN RESTRICTION  ******===="
 log_message " "

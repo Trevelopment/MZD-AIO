@@ -37,11 +37,11 @@
   <tr class="w3-hover-pale-blue w3-tooltip w3-col w3-row bgrotator w3-half">
     <td style="padding:0 5px;min-width: 80px;">
       <div class="install-check">
-        <input id="IN{{mainOps.offscreenbg.id}}BG" type="checkbox" name="{{mainOps.offscreenbg.label}}" checklist-model="user.mainOps" checklist-value="mainOps.offscreenbg.id" ng-disabled="user.mainOps.indexOf({{mainOps.offscreenbg.id}}+100) != -1">
+        <input id="IN{{mainOps.offscreenbg.id}}BG" type="checkbox" name="{{mainOps.offscreenbg.label}}" checklist-model="user.mainOps" checklist-value="mainOps.offscreenbg.id" ng-disabled="user.mainOps.includes({{mainOps.offscreenbg.id}}+100)">
         <label for="IN{{mainOps.offscreenbg.id}}BG" data-toggle="tooltip" data-placement="auto bottom" title="{{menu.install.label}} {{mainOps.offscreenbg.label}}"></label>
       </div>
       <div class="uninstall-check">
-        <input id="UN{{mainOps.offscreenbg.id}}BG" type="checkbox" name="{{mainOps.offscreenbg.label}}" checklist-model="user.mainOps" checklist-value="mainOps.offscreenbg.id+100" ng-disabled="user.mainOps.indexOf({{mainOps.offscreenbg.id}}) != -1">
+        <input id="UN{{mainOps.offscreenbg.id}}BG" type="checkbox" name="{{mainOps.offscreenbg.label}}" checklist-model="user.mainOps" checklist-value="mainOps.offscreenbg.id+100" ng-disabled="user.mainOps.includes({{mainOps.offscreenbg.id}})">
         <label for="UN{{mainOps.offscreenbg.id}}BG" data-toggle="tooltip" data-placement="auto bottom" title="{{menu.uninstall.label}} {{mainOps.offscreenbg.label}}"></label>
       </div>
     </td>

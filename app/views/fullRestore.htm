@@ -7,10 +7,10 @@
     <span class="caret"></span>
   </button>
   <ul class="dropdown-menu" role="menu">
-    <li class="fullrestore-link"><a href="#" ng-click="user.restore.full = false; user.autorun.installer = true">Autorun & Recovery</a></li>
-    <li class="autorun-link"><a href="#" ng-click="user.restore.full = true">System Restore</a></li>
+    <li class="fullrestore-link"><a href ng-click="user.restore.full = false; user.autorun.installer = true">Autorun & Recovery</a></li>
+    <li class="autorun-link"><a href ng-click="user.restore.full = true">System Restore</a></li>
     <li class="divider"></li>
-    <li class="home-tweaks"><a href="#" ng-click="user.restore.full = user.autorun.installer = false">Tweaks</a></li>
+    <li class="home-tweaks"><a href ng-click="user.restore.full = user.autorun.installer = false">Tweaks</a></li>
     <li class="casdk-link"><a href="#/casdk" ng-click="user.restore.full = user.autorun.installer = false">CASDK</a></li>
   </ul>
 </div>
@@ -21,29 +21,34 @@
     <span class="w3-display-topright icon-remove w3-hover-text-red w3-hover-black" style="cursor:pointer" ng-click="user.restore.full = false"></span>
     <input type="checkbox" id="fullRestoreChk" class="w3-check" ng-model="user.restore.full" />
     <label for="fullRestoreChk">
-      <span class='icon-stop_screen_share'></span> FULL SYSTEM RESTORE</label>
+      <span class='icon-stop_screen_share'></span> FULL SYSTEM RESTORE
+    </label>
     <br>
     <input type="checkbox" id="deleteBackupsChk" class="w3-check" ng-model="user.restore.delBackups" ng-disabled="!user.restore.full" />
     <label for="deleteBackupsChk">
-      <span class='icon-caution'></span> DELETE ALL BACKUPS</label>
+      <span class='icon-caution'></span> DELETE ALL BACKUPS
+    </label>
   </div>
   <center>
     <h5>
       <strong>This script is optimized to remove all AIO tweaks by restoring files from their original backups
-        <br>and restores image files to the default Red color scheme. </strong>
+        <br>and restores image files to the default Red color scheme.
+      </strong>
     </h5>
     <br>
-    <b class="w3-medium">This script will safely restore your system if all modified files have a corresponding backup of the original file in same location with added '.org' extension, AIO does this automatically before modifying each file for the first time. </b>
+    <b class="w3-medium">This script will safely restore your system if all modified files have a corresponding backup of the original file in same location with added '.org' extension, AIO does this automatically before modifying each file for the
+      first time.</b>
     <br>
     <h6>
       <em>
         <b>If you have modified any important files yourself I assume you know what you are doing.</b>
       </em>
+    </h6>
   </center>
-  </h6>
   <br>Although it is strongly recommended that backups files are kept since they are not a detriment to the system, the option to delete all backups is provided to use at your own risk.
   <h5>Files that will not be reverted:</h5> For safety, AIO does not re-enable watchdog nor revert the files sm.conf and opera.ini. This is to prevent your system from ending up in a bootloop.
   <br>
-  <b>*Autorun & Recovery scrtpts are not removed to ensure access is not lost if firmware version is currently on or updated to v59.00.502+.</b> Removing autorun scripts from v59.00.502+ may result in a full lockout of access from your CMU including tweak
+  <b>*Autorun & Recovery scripts are not removed to ensure access is not lost if firmware version is currently on or updated to v59.00.502+.</b> Removing autorun scripts from v59.00.502+ may result in a full lockout of access from your CMU including
+  tweak
   installs.
 </div>

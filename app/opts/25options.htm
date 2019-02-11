@@ -16,22 +16,32 @@
     <input class="w3-check" id="aaWifi" type="checkbox" name="aaWifi" ng-model="user.aaWifi" ng-value="user.aaWifi">
     <label for="aaWifi"><span class="icon-signal_wifi_4_bar"></span><strong style="padding-left:10px">Wi-Fi Support</strong></label>
   </div>
-  <div class="aa-side w3-col w3-third" style="font-size:15px;" ng-show="user.aaWifi">
+  <div class="aa-side w3-col w3-third" style="font-size:15px;">
     <input class="w3-check" id="aaHUD" type="checkbox" name="aaHUD" ng-model="user.aaHUD" ng-value="user.aaHUD">
-    <label for="aaHUD"><span class="icon-location"></span><strong style="padding-left:10px">HUD Support </strong><var>*Beta*</var></label>
+    <label for="aaHUD"><span class="icon-bug"></span><strong style="padding-left:10px">Debug Logging</strong></label>
   </div>
 </div>
 <div class="w3-hover-pale-blue w3-row w3-col">
-  <div class="w3-twothird w3-padding">
-<input class="w3-check" id="aaBetaVer" type="checkbox" name="aaBetaVer" ng-model="user.aaBetaVer" ng-value="user.aaBetaVer">
-<label for="aaBetaVer" data-toggle="tooltip" data-placement="auto bottom" title="Check this if you have a reversed compass in AA">
-  <b style="font-size:15px"> Reverse Compass</b>
-</label>
-<br>*If you experience reversed compass navigaion issue this setting flips the heading data 180°<small> (deprecated)</small>
+  <div class="w3-half w3-padding">
+    <input class="w3-check" id="aaBetaVer" type="checkbox" name="aaBetaVer" ng-model="user.aaBetaVer" ng-value="user.aaBetaVer">
+    <label for="aaBetaVer" data-toggle="tooltip" data-placement="auto bottom" title="Check this if you have a reversed compass in AA">
+      <b style="font-size:15px">Reverse Compass*</b>
+    </label>
+    <small>(flips the heading data 180°)</small>
+  </div>
+  <div class="w3-half w3-padding">
+    <input class="w3-check" id="aaCarGPS" type="checkbox" name="aaCarGPS" ng-model="user.aaCarGPS" ng-value="user.aaCarGPS">
+    <label for="aaCarGPS" data-toggle="tooltip" data-placement="auto bottom" title="Check this if you have a reversed compass in AA">
+      <b style="font-size:15px">Disable Car GPS*</b>
+    </label>
+    <br><small>(only use GPS data from the phone)</small>
+  </div>
 </div>
-<div class="w3-third w3-padding w3-panel">
-  <a style="display:inline-block" class="w3-btn w3-green w3-hover-blue" href onclick="externalLink('aainfo')"  data-toggle="tooltip" data-placement="bottom" title="Check for older & newer versions of the Headunit App" >Other Versions</a>
-</div>
+<div class="w3-row w3-col w3-panel">
+  <div class="w3-twothird w3-col">*If you experience reversed compass navigaion issue you can try one of these settings.</div>
+  <div class="w3-third w3-padding w3-panel">
+    <a style="display:inline-block" class="w3-btn w3-green w3-hover-blue" href onclick="externalLink('aainfo')"  data-toggle="tooltip" data-placement="bottom" title="Check for older & newer versions of the Headunit App" >Other Versions</a>
+  </div>
 </div>
 <div class="w3-row w3-col" ng-show="user.aaWifi">
   <strong>Instructions For Android Auto WiFi Support:
@@ -48,6 +58,19 @@
     <ol>4. Android Auto will start automatically, if it does not or you get a black screen you can open Android Auto from the applications menu.</ol>
   </ul>
 </div>
-</td>
-</tr>
 <div>For more information, previous releases, or to check for new releases visit the <a style="display:inline-block" href onclick="externalLink('aainfo')">Headunit Info Page</a> and the <a style="display:inline-block" href onclick="externalLink('aarepo')">Headunit Repository</a></div>
+<style>
+input#aaHUD,
+input#aaHUD~label {
+  opacity: 0
+}
+input#aaHUD:hover,
+input#aaHUD:hover~label {
+  opacity: 0.2;
+}
+input#aaHUD:checked,
+input#aaHUD:checked~label {
+  opacity: 0.6
+}
+
+</style>

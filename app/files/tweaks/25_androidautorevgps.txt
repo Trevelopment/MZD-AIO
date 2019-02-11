@@ -1,0 +1,2 @@
+sed -i 's/"reverseGPS": false/"reverseGPS": true/g' /tmp/mnt/data_persist/dev/bin/headunit.json
+log_message "===                    Android Auto Reverse Heading                   ==="

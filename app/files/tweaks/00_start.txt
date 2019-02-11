@@ -118,15 +118,19 @@ compatibility_check()
 }
 remove_aio_css()
 {
-  sed -i "/.. MZD-AIO-TI *${2} *CSS ../,/.. END AIO *${2} *CSS ../d" "${1}"
-  INPUT="${1##*/}               "
-  log_message "===               Removed CSS From ${INPUT:0:20}               ==="
+  if grep -Fq "${2}" "${1}"; then
+    sed -i "/.. MZD-AIO-TI *${2} *CSS ../,/.. END AIO *${2} *CSS ../d" "${1}"
+    INPUT="${1##*/}               "
+    log_message "===               Removed CSS From ${INPUT:0:20}               ==="
+  fi
 }
 remove_aio_js()
 {
-  sed -i "/.. MZD-AIO-TI.${2}.JS ../,/.. END AIO.${2}.JS ../d" "${1}"
-  INPUT=${1##*/}
-  log_message "===            Removed ${2:0:11} JavaScript From ${INPUT:0:13}    ==="
+  if grep -Fq "${2}" "${1}"; then
+    sed -i "/.. MZD-AIO-TI.${2}.JS ../,/.. END AIO.${2}.JS ../d" "${1}"
+    INPUT=${1##*/}
+    log_message "===            Removed ${2:0:11} JavaScript From ${INPUT:0:13}    ==="
+  fi
 }
 rootfs_full_message()
 {
@@ -295,7 +299,7 @@ v70_integrity_check()
       # backup exists in new locaion already delete extra bkup
       rm -f $ORG_FILE
       log_message "***--- Backup in New Location ${NEWBKUP}... Removing ${ORG_FILE} ---***"
-    # No new backup or same as jci .org and dont match fallback
+      # No new backup or same as jci .org and dont match fallback
     elif [ $FILESIZE -ne $FALBKSIZ ]
     then
       # backup is invalid size
@@ -348,7 +352,7 @@ create_app_json()
   then
     echo "[" > ${ADDITIONAL_APPS_JSON}
     echo "]" >> ${ADDITIONAL_APPS_JSON}
-    chmod 755 ${ADDITIONAL_APPS_JSON}
+    chmod 777 ${ADDITIONAL_APPS_JSON}
     log_message "===                   Created additionalApps.json                     ==="
   fi
 }
@@ -362,7 +366,7 @@ addon_common()
     then
       [ -e /tmp/mnt/resources/aio ] || mkdir /tmp/mnt/resources/aio
       cp -a ${MYDIR}/config/jci/gui/addon-common /tmp/mnt/resources/aio
-      chmod 755 -R /tmp/mnt/resources/aio
+      chmod 777 -R /tmp/mnt/resources/aio
       log_message "===            Copied addon-common folder to resources                ==="
     fi
     if [ ! -L /jci/gui/addon-common ]
@@ -381,7 +385,7 @@ addon_common()
     if [ ! -e /jci/gui/addon-common/websocketd ] || [ ! -e /jci/gui/addon-common/jquery.min.js ]
     then
       cp -a ${MYDIR}/config/jci/gui/addon-common/ /jci/gui/
-      chmod 755 -R /jci/gui/addon-common/
+      chmod 777 -R /jci/gui/addon-common/
       log_message "===                   Copied addon-common folder                      ==="
     fi
   fi
@@ -549,7 +553,7 @@ if [ -f "${MYDIR}/AIO_log.txt" ]; then
   logcount=$(cat ${MYDIR}/bakups/count.txt)
   #mv "${MYDIR}/AIO_log.txt" "${MYDIR}/bakups/AIO_log-${logcount}.txt"
   logfile="${MYDIR}/bakups/AIO_log-${logcount}.log"
-  echo $((logcount+1)) > "${MYDIR}/bakups/count.txt"
+  echo $(($logcount + 1)) > "${MYDIR}/bakups/count.txt"
   rm -f "${MYDIR}/AIO_log.txt"
 fi
 rm -f "${MYDIR}/AIO_info.json"
@@ -700,6 +704,7 @@ then
   mkdir -p /tmp/mnt/data_persist/dev/bin/
   log_message "======== Restored Missing Folder /tmp/mnt/data_persist/dev/bin/ ========="
 fi
+chmod 777 -R /tmp/mnt/data_persist/dev
 if [ -e ${ADDITIONAL_APPS_JSON} ] && grep -Fq ,, ${ADDITIONAL_APPS_JSON}
 then
   # remove double commas
@@ -722,7 +727,7 @@ then
   AIO_APP_DIR="/tmp/mnt/resources/aio/apps"
   [ -e ${AIO_APP_DIR} ] || mkdir -p ${AIO_APP_DIR}
   [ -e ${NEW_BKUP_DIR} ] || mkdir -p ${NEW_BKUP_DIR}
-  log_message "=============== App Install Locatiation set to resources ================"
+  log_message "================= App Install Location set to resources ================="
 fi
 # start JSON array of backups
 if [ $KEEPBKUPS -eq 1 ]

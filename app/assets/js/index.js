@@ -12,7 +12,7 @@
 \* ************************************************************************** */
 /* jshint esversion:6, -W033, -W117, -W097, -W116 */
 const { electron, nativeImage, remote, clipboard, shell } = require('electron')
-const { app, BrowserWindow } = remote
+const { app, BrowserWindow, dialog } = remote
 const _ = require('lodash')
 const fs = require('fs')
 const ipc = require('electron').ipcRenderer
@@ -35,29 +35,36 @@ const drivelist = require('drivelist') // Module that gets the list of available
 const extract = require('extract-zip') // For Unzipping
 const mkdirp = require('mkdirp') // Equiv of Unix command mkdir -p
 const rimraf = require('rimraf') // Equiv of Unix command rm -rf
-var copyFolderLocation = persistantData.get('copyFolderLocation')
-var visits = persistantData.get('visits') || 0
-var hasColorFiles = fs.existsSync(`${app.getPath('userData')}/color-schemes/`)
+var copyFolderLocation = persistantData.get('copyFolderLocation', app.getPath('desktop'))
+var visits = persistantData.get('visits', 0)
 var hasSpeedCamFiles = fs.existsSync(`${app.getPath('userData')}/speedcam-patch/`)
 var translateSchema, langPath, lang, langDefault
+var colordir = `${app.getPath('userData')}/color-schemes/` // Location of downloaded color theme files (userData)
+var hasColorFiles = fs.existsSync(`${colordir}`)
 var approot = (isDev ? './app/' : app.getAppPath())
 var builddir = `${approot}/files/tweaks/` // Location of tweak files (as .txt files)
-var colordir = `${app.getPath('userData')}/color-schemes` // Location of downloaded tweak files (userData)
 var logFileName = 'MZD_LOG' // Name of log file (without extension)
 var varDir = `${app.getPath('userData')}/background/` // Location of files with saved variables
-var date = function() { return new Date() }
+var getBackground = `${varDir}/background.png`
+var date = function () { return new Date() }
 process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = true
 var helpClick = false
-var updateVer = 282
+var updateVer = 284
 // require('./lib/log')('MZD-AIO-LOG')
 // var output = process.stdout
 // var errorOutput = process.stderr
 /* TODO: REMOVE LOGS */
-/* console.log("colorfiles: "+hasColorFiles)
-console.log("speedcamfiles: "+hasSpeedCamFiles) */
-// console.log(visits)
+/* console.debug("colorfiles: "+hasColorFiles)
+console.debug("speedcamfiles: "+hasSpeedCamFiles) */
+// console.debug(visits)
 /* END LOGS */
-lang = persistantData.get('lang') || 'english'
+// Manage unhandled exceptions as early as possible
+process.on('uncaughtException', (e) => {
+  console.error(`Caught unhandled exception: ${e}`)
+  dialog.showErrorBox('Caught unhandled exception: ' + (e.message || 'Unknown error message'), 'You can report this error to aio@mazdatweaks.com\nor open in issue in the repo https://github.com/Trevelopment/MZD-AIO')
+  app.quit()
+})
+lang = persistantData.get('lang', 'english')
 if (window.location.pathname.includes('joiner')) {
   langPath = `../lang/${lang}.aio.json`
   langDefault = '../lang/english.aio.json'
@@ -74,24 +81,22 @@ langObj = _.merge(langDef, langObj)
 var bg-images = []
 fs.readdir('./background-images/', (err, files) => {
 files.forEach(file => {
-console.log(file)
+console.debug(file)
 bg-images.push('<img src="file">')
 })
 })
-const testFolder = './background-images/';
-var bgpics = [];
+const testFolder = './background-images/'
+var bgpics = []
 fs.readdir(testFolder, (err, files) => {
   files.forEach(file => {
     bgpics.push('<img src="'+file+'" alt="" >')
-    console.log(file);
-  });
+    console.debug(file)
+  })
 })
 */
-function getBackground() {
-  return `${varDir}/background.png`
-}
 
-function saveMenuLock() {
+
+function saveMenuLock () {
   persistantData.set('menuLock', !persistantData.get('menuLock'))
   $('body, .hideNav, .w3-overlay').toggleClass('showNav')
 }
@@ -100,19 +105,19 @@ if (!fs.existsSync(varDir)) {
   fs.mkdirSync(varDir)
 }
 
-function helpMessageFreeze(item) {
+function helpMessageFreeze (item) {
   $(item).children().toggleClass('w3-show')
 }
 
-function runAAPatcher(apk) {
-  require('./assets/js/aapatcher.js')(apk)
+function runAAPatcher (apk) {
+  //require('./assets/js/aapatcher.js')(apk)
 }
 
-function runInstallCSApp() {
+function runInstallCSApp () {
   require('./assets/js/installCS.js')()
 }
 /* Clock for Background preview */
-function startTime() {
+function startTime () {
   var today = new Date()
   var h = today.getHours()
   var m = today.getMinutes()
@@ -124,51 +129,48 @@ function startTime() {
   formatDateCustom(2)
 }
 
-function checkTime(i) {
+function checkTime (i) {
   if (i < 10) { i = '0' + i } // add zero in front of numbers < 10
   return i
 }
 
-ipc.on('open-copy-folder', () => {
-  openCopyFolder()
-})
+ipc.on('open-copy-folder', openCopyFolder)
 
-function openCopyFolder() {
-  if (!fs.existsSync(`${copyFolderLocation}/_copy_to_usb`)) {
-    mkdirp.sync(`${copyFolderLocation}/_copy_to_usb`)
+function openCopyFolder () {
+  var openCopy = `${persistantData.get('copyFolderLocation', copyFolderLocation)}/_copy_to_usb/`
+  if (!fs.existsSync(openCopy)) {
+    mkdirp.sync(openCopy)
   }
-  var openCopy = (process.platform === "win32" ? `${copyFolderLocation}/_copy_to_usb/*`:`${copyFolderLocation}/_copy_to_usb/tweaks.sh`)
-  shell.showItemInFolder(openCopy, { activate: true }, (err) => {
-    if (err) {
-      bootbox.alert({
-        message: `"${copyFolderLocation.replace('config', '')}" Does Not Exist.  Click "Start Compilation" to Run The Tweak Builder and Create the _copy_to_usb Folder.`
-      })
-    }
-  })
+  if (!shell.openItem(openCopy)) {
+    bootbox.alert({
+      message: `"${copyFolderLocation.replace('config', '')}" Does Not Exist.  Click "Start Compilation" to Run The Tweak Builder and Create the _copy_to_usb Folder.`
+    })
+  }
 }
 
-function openApkFolder() {
-  shell.showItemInFolder(path.normalize(path.join('file://', __dirname, '../../castscreenApp/castscreen-1.0.apk')))
+function openApkFolder () {
+  shell.openItem(path.normalize(path.join('file://', __dirname, '../../castscreenApp/')))
 }
 
-function openDlFolder() {
-  shell.showItemInFolder(path.normalize(path.join(app.getPath('userData'), 'color-schemes/Blue')))
+function openDlFolder () {
+  shell.openItem(path.normalize(path.join(app.getPath('userData'), 'color-schemes/')))
 }
 
-function openDefaultFolder() {
-  shell.showItemInFolder(path.normalize(path.join('file://', __dirname, '../background-images/default/defaut.png')))
+function openDefaultFolder () {
+  shell.openItem(path.normalize(path.join('file://', __dirname, '../background-images/default/')))
 }
 
-function autoHelp() {
+function autoHelp () {
   $.featherlight('views/autoHelp.htm', { closeSpeed: 500, variant: 'autoHelpBox' })
 }
 
-function myStance() {
+function myStance () {
   ipc.send('reset-window-size')
   // $.featherlight('views/stance.htm', { closeSpeed: 2000, variant: 'myStance', afterClose: updateNotesCallback })
+  updateNotesCallback()
 }
 
-function announcement() {
+function announcement () {
 
 // announcement
 }
@@ -177,18 +179,18 @@ function showAnnouncement() {
 //announcement
 }
 
-function hideAnnouncement(anonNum) {
+function hideAnnouncement (anonNum) {
   $('.communicationFile').hide()
   $.featherlight.close()
   localStorage.setItem('anoncmnt', anonNum)
 }
 
-function anonData(anonNum) {
+function anonData (anonNum) {
   localStorage.setItem('anondat', anonNum)
 }
 
-function updateNotes() {
-  $.get('views/update.htm', function(data) { $('#changelog').html(data) })
+function updateNotes () {
+  $.get('views/update.htm', function (data) { $('#changelog').html(data) })
   bootbox.dialog({
     title: `<div class='w3-center'>Welcome To MZD-AIO-TI v${app.getVersion()} | MZD All In One Tweaks Installer</div>`,
     message: `<div id='changelog'></div><button id='upVerBtn' style='display:none;font-weight:800;' class='w3-btn w3-hover-green w3-hover-text-black w3-display-bottommiddle' onclick='bootbox.hideAll();'>OK</button><br>`,
@@ -202,10 +204,11 @@ function updateNotes() {
   }, 2000)
 }
 
-function firstTimeVisit() {
-  if (!persistantData.has('updateVer') || persistantData.get('updateVer') < updateVer) {
+function firstTimeVisit () {
+  if (persistantData.get('updateVer', 0) < updateVer) {
     myStance()
     settings.set('reset', true)
+    lastView.clear()
     persistantData.set('updateVer', updateVer)
     persistantData.set('updated', false)
     persistantData.delete('ver270')
@@ -225,9 +228,9 @@ function firstTimeVisit() {
   }
 }
 
-function updateNotesCallback() {
+function updateNotesCallback () {
   if (visits > 0) {
-    if (!persistantData.get('updated')) {
+    if (!persistantData.get('updated', false)) {
       updateNotes()
       persistantData.set('updated', true)
     }
@@ -238,7 +241,7 @@ function updateNotesCallback() {
       title: `<div class='w3-center'>Welcome To MZD-AIO-TI v${app.getVersion()} | MZD All In One Tweaks Installer</div>`,
       message: `<div class='w3-center'><h3>Welcome to the AIO!</h3></div><div class='w3-justify'> <b>All changes happen at your own risk! Please understand that you can damage or brick your infotainment system running these tweaks!  If you are careful, follow all instructions carefully, and heed all warnings, the chances of damaging your system are greatly reduced.<br>For more help, open the <a href='' onclick='helpDropdown()'>Help Panel</a> or visit <a href='https://mazdatweaks.com' class="link">MazdaTweaks.com</a><br><br>I appreciate feedback<br>use the <a href='' onclick='$("#feedback").click()'>feedback link</a> below to let me know what you think.<br><br><a href class='w3-btn w3-blue' onclick='$("#tourBtn").click()'>Take The Tour</a><br></center><br><h2><b>***NOTE: FOR FIRMWARE V59.00.502+*** CAN ONLY INSTALL TWEAKS AFTER <a href="" onclick="externalLink('im-super-serial')" title="By Serial Connection">GAINING ACCESS VIA SERIAL CONNECTION </a><b>.  THEN YOU WILL NEED TO INSTALL THE AUTORUN & RECOVERY SCRIPTS AFTER GAINING SERIAL ACCESS.</h2><br></b></div><div id="first-time-msg-btn" class="w3-center"><img class='loader' src='./files/img/load-0.gif' alt='...' /></div>`,
       closeButton: false,
-      className: "first-time-dialog"
+      className: 'first-time-dialog'
     })
     setTimeout(() => { $('#super-overlay').remove() }, 3000)
     setTimeout(() => {
@@ -246,13 +249,13 @@ function updateNotesCallback() {
       $('#newVerBtn').fadeIn(10000)
     }, 5000)
   }
+  dataCheck()
 }
-var helpClick = false
 
-function helpDropdown() {
+function helpDropdown () {
   var x = document.getElementById('helpDrop')
   var y = document.getElementById('helpDropBtn')
-  if (x.className.indexOf('w3-show') === -1) {
+  if (!x.className.includes('w3-show')) {
     x.className += ' w3-show'
     y.innerHTML = "<span class='icon-x'></span>"
     document.getElementById('sidenavOverlay').display = 'block'
@@ -274,7 +277,7 @@ function helpDropdown() {
   }
 }
 
-function closeHelpDrop() {
+function closeHelpDrop () {
   var x, y
   if (x = document.getElementById('helpDrop')) {
     x.className = x.className.replace(' w3-show', '')
@@ -284,34 +287,34 @@ function closeHelpDrop() {
   }
 }
 // Normal Drop Down Menus
-function dropDownMenu(id) {
+function dropDownMenu (id) {
   var x = document.getElementById(id)
   var y = $('#' + id)
-  if (x.className.indexOf('w3-show') === -1) {
+  if (!x.className.includes('w3-show')) {
     $('.w3-dropdown-content').removeClass('w3-show')
     x.className += ' w3-show'
   } else {
     x.className = x.className.replace(' w3-show', '')
   }
   y.on({
-    mouseleave: function() {
+    mouseleave: function () {
       y.toggleClass('w3-show')
     }
   })
 }
 
-function toggleFullScreen() {
+function toggleFullScreen () {
   remote.BrowserWindow.getFocusedWindow().setFullScreen(!remote.BrowserWindow.getFocusedWindow().isFullScreen())
   $('.icon-fullscreen').toggleClass('icon-fullscreen-exit')
 }
 // Extra Options Togglers
 var togg = false
 
-function toggleOps(x) {
+function toggleOps (x) {
   $(x).toggleClass('icon-plus-square').toggleClass('icon-minus-square')
 }
 
-function toggleAllOps() {
+function toggleAllOps () {
   var x = $('.toggleExtra')
   if (togg) {
     $('#alltoggle').addClass('icon-minus-alt').removeClass('icon-plus-alt')
@@ -323,11 +326,11 @@ function toggleAllOps() {
   togg = !togg
 }
 
-function externalLink(link) {
+function externalLink (link) {
   shell.openExternal(`http://trevelopment.win/${link}`)
 }
 
-function cleanArray(actual) {
+function cleanArray (actual) {
   var newArray = []
   for (var i = 0; i < actual.length; i++) {
     if (actual[i]) {
@@ -337,32 +340,32 @@ function cleanArray(actual) {
   return newArray
 }
 
-function donate() {
+function donate () {
   shell.openExternal('http://trevelopment.win/donate')
-  let donatewin = new remote.BrowserWindow({
+  /*let donatewin = new remote.BrowserWindow({
     width: 500,
     height: 600,
     resizable: false,
     movable: false,
-    'parent': remote.BrowserWindow.fromId(1),
-    'icon': './app/favicon.ico',
-    'autoHideMenuBar': true
+    parent: remote.BrowserWindow.fromId(1),
+    icon: './app/favicon.ico',
+    autoHideMenuBar: true
   })
   donatewin.loadURL('http://trevelopment.win/donate')
   donatewin.on('closed', () => {
     remote.BrowserWindow.fromId(1).focus()
-  })
+  })*/
 }
 // Returns list of USB Drives
-function getUSBDrives() {
+function getUSBDrives () {
   var disks = []
-  drivelist.list(function(error, dsklst) {
+  drivelist.list(function (error, dsklst) {
     if (error) {
       console.error('Error finding USB drives')
     }
     for (var i = 0; i < dsklst.length; i++) {
       if (!dsklst[i].system) {
-        // console.log(disks[i]);console.log(disks[i].name);console.log(disks[i].description);
+        // console.debug(disks[i]);console.debug(disks[i].name);console.debug(disks[i].description)
         disks.push({ 'name': dsklst[i].name, 'desc': dsklst[i].description, 'mp': dsklst[i].mountpoint })
       }
     }
@@ -370,7 +373,7 @@ function getUSBDrives() {
   })
 }
 
-function getParameterByName(name, url) {
+function getParameterByName (name, url) {
   if (!url) url = window.location.href
   url = url.toLowerCase() // This is just to avoid case sensitiveness
   name = name.replace(/[[\]]/g, '\\$&').toLowerCase() // This is just to avoid case sensitiveness for query parameter name
@@ -381,11 +384,11 @@ function getParameterByName(name, url) {
   return decodeURIComponent(results[2].replace(/\+/g, ' '))
 }
 
-function alternateLayout() {
+function alternateLayout () {
   $('#options, #sidePanel').toggleClass('alt-layout')
 }
 
-function secretMenu() {
+function secretMenu () {
   $(`<div id="secretMenu" class="w3-card-12 w3-container">
   <header class="w3-container w3-teal">
   <span onclick="$(this).parent().parent().remove()"
@@ -404,28 +407,30 @@ function secretMenu() {
   $('#secretMenu').fadeOut(10000)
 }
 
-function toggleOverDraws() {
-  $('.spdConfigInst').click(function() { $('#autorunCheck').toggle() })
+function toggleOverDraws () {
+  $('.spdConfigInst').click(function () { $('#autorunCheck').toggle() })
 }
 
-function writeRotatorVars() {
-  if ($('#imgCount').text() > 1) {
-    fs.writeFileSync(`${varDir}/bg-rotator.txt`, `BG_STEPS=${$('#imgCount').text()}\nBG_SECONDS=${$('#imgCount').text() * $('#bgRotatorSeconds').val()}\nBG_SEC_EACH=${$('#bgRotatorSeconds').val()}\nBG_WIDTH=${$('#imgCount').text() * 800}`)
+function writeRotatorVars (imgs) {
+  if (imgs > 1) {
+    fs.writeFileSync(`${varDir}/bg-rotator.txt`, `BG_STEPS=${imgs}\nBG_SECONDS=${imgs * $('#bgRotatorSeconds').val()}\nBG_SEC_EACH=${$('#bgRotatorSeconds').val()}\nBG_WIDTH=${imgs * 800}`)
+  } else {
+    fs.writeFileSync(`${varDir}/bg-rotator.txt`, '')
   }
 }
 
-function saveAIOLogHTML() {
+function saveAIOLogHTML () {
   var a = document.body.appendChild(document.createElement('a'))
   a.download = 'AIO_Log.html'
   a.href = 'data:text/html,' + document.getElementById('aio-comp-log').innerHTML
   a.click()
 }
 
-function checkForUpdate(ver) {
+function checkForUpdate (ver) {
   $.featherlight(`https://aio.trevelopment.com/update.php?ver=${updateVer}`, { closeSpeed: 100, variant: 'checkForUpdate' })
 }
 
-function formatDateCustom(dateFormatType) {
+function formatDateCustom (dateFormatType) {
   var currentTime = new Date()
   var dateStr = null
 
@@ -451,11 +456,11 @@ function formatDateCustom(dateFormatType) {
   $('#date').text(dateStr)
 }
 
-function getAIOver() {
+function getAIOver () {
   return app.getVersion()
 }
 
-function showCompatibility() {
+function showCompatibility () {
   $(`<div id="compatibilityCheck" class="w3-small w3-padding" style="width:100%;max-width:1200px;margin:auto;background:rgba(0,0,0,.8);color:#fff;">
   <header class="w3-container w3-indigo">
   <span onclick="$(this).parent().parent().remove()"
@@ -464,17 +469,17 @@ function showCompatibility() {
   </header>
   <div class="w3-container">
   <div class="w3-panel w3-center">
-  <H2> **AIO IS COMPATIBLE WITH ALL FW V55, V56, V58, V59 AND UP TO V70.00.021** </H2>
+  <H2> **AIO IS COMPATIBLE WITH ALL FW V55, V56, V58, V59 AND UP TO V70.00.100** </H2>
   <h3 style="text-transform: capitalize;">NOTE: FW v59.00.502+ <a href="" onclick="externalLink('im-super-serial')">Requires Additional Steps To Install Tweaks.</a>  If updating to v59.00.502+ install Autorun & Recovery Scripts to allow Tweaks to be installed after updating.</h3>
   </div>`).insertAfter($('#mzd-title'))
 }
-$(function() {
+$(function () {
   $('.toggleExtra.1').addClass('icon-plus-square').removeClass('icon-minus-square')
   setTimeout(() => {
-    $('#IN21').click(function() {
+    $('#IN21').click(function () {
       snackbar('THERE MAY BE ISSUES REGARDING COMPATIBILITY WITH THIS TWEAK. AFTER INSTALLING, YOUR USB PORTS MAY BECOME UNREADABLE TO THE CMU. <h5>AUTORUN-RECOVERY SCRIPT WILL BE INSTALLED IN CASE RECOVERY BY SD CARD SLOT IS NEEDED TO RECOVER USB FUNCTION</h5>')
     })
-    $('#advancedOptions').click(function() {
+    $('#advancedOptions').click(function () {
       $('.advancedOp, #twkOpsTitle').toggle()
       $('.sidePanel').toggleClass('adv')
       if ($('#IN21').prop('checked')) { $('#IN21').click() }
@@ -483,14 +488,38 @@ $(function() {
   $('body').css('overflow', 'auto')
 })
 
-function toggleTips() {
+function toggleTips () {
   showSpdHints = !showSpdHints
   showSpdHints ? $('#SpdOpsTips').slideDown() : $('#SpdOpsTips').slideUp()
 }
 
-function numberReplacer(key, value) {
-  if (key === "pos" && value !== null) {
-    value = value.toString();
+function numberReplacer (key, value) {
+  if (key === 'pos' && value !== null) {
+    value = value.toString()
   }
-  return value;
+  return value
+}
+
+function replaceInFile (someFile, toReplace, replacement, callback) {
+  fs.readFile(someFile, 'utf8', function (err,data) {
+    if (err) {
+      err = err.toString()
+      return console.error(err)
+      dialog.showErrorBox("ERROR",err)
+    }
+    var re = new RegExp(toReplace,"g");
+    var result = data.replace(re, replacement)
+    fs.writeFile(someFile, result, 'utf8', function (err) {
+      if (err){
+        err = err.toString()
+        return console.error(err)
+        dialog.showErrorBox("ERROR",err)
+      }
+      if(typeof callback === "function") callback()
+    })
+  })
+}
+
+function updateBgModal () {
+  $('#infotnmtBG,#modalimg').attr('src', `${getBackground}`)
 }

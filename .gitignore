@@ -17,3 +17,7 @@ launch*
 /tools
 sign.sh
 /app/.pki
+
+AIO\.sh
+
+app/files/tweaks/cmu-autorun/

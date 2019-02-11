@@ -1,18 +1,18 @@
 # Install Android Auto Headunit App
 space_check
+
 show_message "INSTALL ANDROID AUTO HEADUNIT APP v${AA_VER} ..."
 log_message "====************  INSTALL ANDROID AUTO HEADUNIT APP v${AA_VER}...*********===="
 TESTBKUPS=1
 if [ $TESTBKUPS -eq 1 ]
 then
   cp ${STAGE_WIFI} "${MYDIR}/bakups/test/stage_wifi_androidauto-before.sh"
-  cp /jci/sm/sm.conf "${MYDIR}/bakups/test/sm_androidauto-before.conf"
   [ -f ${ADDITIONAL_APPS_JSON} ] && cp ${ADDITIONAL_APPS_JSON} "${MYDIR}/bakups/test/additionalApps_androidauto-1_before.json"
 fi
 
 ### kills all WebSocket daemons
+killall -q -9 headunit-wrapper
 killall -q -9 headunit
-pkill websocketd
 
 rm -fr /jci/gui/apps/_androidauto
 rm -fr /tmp/mnt/resources/aio/apps/_androidauto
@@ -31,8 +31,10 @@ sed -i '/check-usb/d' ${STAGE_WIFI}
 log_message "===                   Removed old Android Auto App                    ==="
 if grep -Fq "input_filter" /jci/sm/sm.conf
 then
+  cp /jci/sm/sm.conf "${MYDIR}/bakups/test/sm_androidauto-before.conf"
   sed -i '/input_filter/ d' /jci/sm/sm.conf
   log_message "===           Clean obsolete input_filter to /jci/sm/sm.conf          ==="
+  cp /jci/sm/sm.conf "${MYDIR}/bakups/test/sm_androidauto-after_fix.conf"
 fi
 
 # delete empty lines
@@ -53,7 +55,7 @@ log_message "===      Added Android Auto entry to ${STAGE_WIFI}       ==="
 
 cp -a ${MYDIR}/config/androidauto/jci/gui/apps/_androidauto ${AIO_APP_DIR}
 cp -a ${MYDIR}/config/androidauto/data_persist/dev/* /tmp/mnt/data_persist/dev
-chmod -R 755 /tmp/mnt/data_persist/dev/bin/
+chmod 777 -R /tmp/mnt/data_persist/dev/bin/
 log_message "===                Copied Android Auto Headunit App files             ==="
 
 # symlink to resources
@@ -68,12 +70,12 @@ if [ $CASDK_MODE -eq 0 ]
 then
   log_message "===           No additionalApps.js available, will copy one           ==="
   cp -a ${MYDIR}/config/jci/opera/opera_dir/userjs/*.js /jci/opera/opera_dir/userjs/ && CASDK_MODE=1
-  find /jci/opera/opera_dir/userjs/ -type f -name '*.js' -exec chmod 755 {} \;
+  find /jci/opera/opera_dir/userjs/ -type f -name '*.js' -exec chmod 777 {} \;
 fi
 
 create_app_json
 # add preload to the AA json entry if needed
-if grep -q "_androidauto" ${ADDITIONAL_APPS_JSON} && ! grep -q "preload.js" ${ADDITIONAL_APPS_JSON}
+if grep -Fq "androidauto" ${ADDITIONAL_APPS_JSON} && ! grep -Fq "preload.js" ${ADDITIONAL_APPS_JSON}
 then
   remove_app_json "_androidauto"
 fi

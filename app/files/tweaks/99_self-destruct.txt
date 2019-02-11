@@ -1,0 +1,30 @@
+# SELF DESTRUCT!!!
+# Deletes installer files and consolidates and saves logs and backups to 'logs' folder
+log_message "=========**************  TWEAKS SELF DESTRUCT!!  *************==========="
+log_message "===                       Deleting Tweak Files                        ==="
+rm -f ${MYDIR}/cmu_dataretrieval.up
+rm -f ${MYDIR}/dataRetrieval_config.txt
+rm -f ${MYDIR}/jci-autoupdate
+rm -f ${MYDIR}/MZD_LOG.md
+rm -f ${MYDIR}/AIO_info.json
+rm -f ${MYDIR}/adb
+rm -f ${MYDIR}/autorun
+rm -f ${MYDIR}/autorun.temp
+rm -f ${MYDIR}/utils.sh
+rm -f ${MYDIR}/usb-serial.config
+rm -rf ${MYDIR}/00-run-tweaks-from-usb
+rm -rf ${MYDIR}/00-start-adb
+rm -rf ${MYDIR}/00-start-wifiAP
+rm -rf ${MYDIR}/00-update-etc-passwd-if-needed
+rm -rf ${MYDIR}/00-update-sshd-config-if-needed
+rm -rf ${MYDIR}/VehDataPull
+rm -rf ${MYDIR}/XX
+log_message "===                        Copying Log Files                          ==="
+log_message "======================= END OF TWEAKS INSTALLATION ======================"
+mv ${MYDIR}/*.log ${MYDIR}/bakups
+mv ${MYDIR}/*.txt ${MYDIR}/bakups
+mv ${MYDIR}/*.sh ${MYDIR}/bakups
+[ -d ${MYDIR}/config ] && mv ${MYDIR}/config ${MYDIR}/bakups
+[ -d ${MYDIR}/config_org ] && mv ${MYDIR}/config_org ${MYDIR}/bakups
+[ -d ${MYDIR}/casdk ] && mv ${MYDIR}/casdk ${MYDIR}/bakups
+[ -d ${MYDIR}/bakups ] && mv ${MYDIR}/bakups ${MYDIR}/logs

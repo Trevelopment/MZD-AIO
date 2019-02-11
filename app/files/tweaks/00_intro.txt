@@ -1,5 +1,5 @@
 #!/bin/sh
-# tweaks.sh - MZD-AIO-TI Version 2.8.3
+# tweaks.sh - MZD-AIO-TI Version 2.8.4
 # Special thanks to Siutsch for collecting all the tweaks and for the original AIO
 # Big Thanks to Modfreakz, khantaena, Xep, ID7, Doog, Diginix, oz_paulb, VIC_BAM85, & lmagder
 # For more information visit https://mazdatweaks.com
@@ -10,16 +10,16 @@
 hwclock --hctosys
 
 # AIO Variables
-AIO_VER=2.8.3
-AIO_DATE=2018.11.21
+AIO_VER=2.8.4
+AIO_DATE=2019.28.02
 # Android Auto Headunit App Version
-AA_VER=1.10+
+AA_VER=1.11
 # Video Player Version
 VP_VER=3.7
 # Speedometer Version
 SPD_VER=5.8
 # AIO Tweaks App Version
-AIO_TWKS_VER=0.9
+AIO_TWKS_VER=1.0
 # CASDK Version
 CASDK_VER=0.0.5
 # Variable paths to common locations for better code readability

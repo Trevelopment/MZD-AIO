@@ -417,7 +417,7 @@ Utility.prototype.formatDateCustom = function(currentTime) {
     var month   = (currentTime.getMonth()+1);
     var dayStr = ((day < 10) ? ('0' + day) : day);
     var monthStr = ((month < 10) ? ('0' + month) : month);
-    return dayStr + "." + monthStr + ".";
+    return dayStr + ". " + monthStr + ".";
 
     // Localize the month.  Includes the month/moon glyph for Oriental languages.
     var localeMonthName = this._localeMonthNames[month];

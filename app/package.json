@@ -1,6 +1,6 @@
 {
   "name": "MZD-AIO-TI",
-  "version": "2.8.3",
+  "version": "2.8.4",
   "productName": "MZD-AIO-TI",
   "description": "MZD All In One Tweaks Installer",
   "homepage": "http://mazdatweaks.com",
@@ -24,34 +24,33 @@
     "angular"
   ],
   "bugs": {
-    "url": "https://gitlab/Trezdog44/MZD-AIO-TI/issues",
+    "url": "https://github/Trevelopment/MZD-AIO/issues",
     "email": "aio@mazdatweaks.com"
   },
   "config": {
     "url": "index.html"
   },
   "dependencies": {
-    "angular-dragula": "^1.2.8",
     "appender": "^0.0.2",
     "copy-dir": "^0.4.0",
     "crlf": "^1.1.1",
     "devtron": "^1",
-    "drivelist": "^6.4.3",
+    "drivelist": "^6.4.6",
     "electron-context-menu": "^0.10.1",
-    "electron-debug": "^2.0.0",
+    "electron-debug": "^2.1.0",
     "electron-image-resize": "^1.2.4",
     "electron-is-dev": "^1.0",
     "electron-store": "^2.0.0",
-    "electron-updater": "^3.2.3",
-    "electron-window-state": "^5.0.2",
+    "electron-updater": "^4.0.6",
+    "electron-window-state": "^5.0.3",
     "extract-zip": "^1.6.7",
     "lodash": "^4.17.11",
     "mkdirp": "^0.5.1",
-    "node-abi": "^2.5.0",
-    "rimraf": "^2.6.2"
+    "node-abi": "^2.7.0",
+    "rimraf": "^2.6.3"
   },
   "engines": {
-    "node": "^10.10.x"
+    "node": "^10"
   },
-  "electronVersion": "2.x.x"
+  "electronVersion": "^5"
 }

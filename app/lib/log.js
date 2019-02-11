@@ -3,9 +3,9 @@
 /**
  * Redirects default log functions
  *
- * On Mac   => ~/Library/Logs/[AppName-WithoutSpaces|Electron].log
- * On Win   => C:\Users\[UserName]\AppData\Local\[AppName-WithoutSpaces|Electron].log
- * On Linux => ~/.[AppName-WithoutSpaces|Electron].log
+ * On Mac   => ~/Library/Logs/[AppName-WithoutSpaces|AIO].log
+ * On Win   => C:\Users\[UserName]\AppData\Local\[AppName-WithoutSpaces|AIO].log
+ * On Linux => ~/.[AppName-WithoutSpaces|AIO].log
  */
 
 const os = require('os')
@@ -19,23 +19,23 @@ var errorOutput = process.stderr
 var logFile = null
 
 module.exports = (logFileName) => {
-	try {
-  switch (os.platform()) {
-    case 'darwin':
-      logFile = path.join(os.homedir(), 'Library/Logs', (logFileName || 'Electron').replace(' ', '') + '.log')
-      break
-    case 'win32':
-      logFile = path.join(os.homedir(), 'AppData', 'Local', (logFileName || 'Electron').replace(' ', '') + '.log')
-      break
-    case 'linux':
-      logFile = path.join(os.homedir(), '.' + (logFileName || 'Electron').replace(' ', '') + '.log')
-      break
-    default:
+  try {
+    switch (os.platform()) {
+      case 'darwin':
+        logFile = path.join(os.homedir(), 'Library/Logs', (logFileName || 'AIO').replace(' ', '') + '.log')
+        break
+      case 'win32':
+        logFile = path.join(os.homedir(), 'AppData', 'Local', (logFileName || 'AIO').replace(' ', '') + '.log')
+        break
+      case 'linux':
+        logFile = path.join(os.homedir(), '.' + (logFileName || 'AIO').replace(' ', '') + '.log')
+        break
+      default:
       // Others: leave untouched
+    }
+  } catch (e) {
+    console.warn('Error creating log file: ' + e)
   }
-	} catch(e){
-		console.warn("Error creating log file: " + e)
-	}
 
   // If we are in production and a log file is defined we redirect logs to that file
   if (!isDev && logFile) {

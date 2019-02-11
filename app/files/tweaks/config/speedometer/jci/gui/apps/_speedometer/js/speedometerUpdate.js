@@ -43,14 +43,13 @@ function updateSpeedoApp() {
     // touch to toggle Analog / Digital
     // --------------------------------------------------------------------------
     $('.spdBtn0').click(function() {
-      if ($('#analog').is(':visible')) {
-        $('#digital').show();
-        $('#analog').hide();
-        startAnalog = false;
-      } else {
+      startAnalog = !$('#analog').is(':visible');
+      if (startAnalog) {
         $('#digital').hide();
         $('#analog').show();
-        startAnalog = true;
+      } else {
+        $('#digital').show();
+        $('#analog').hide();
       }
       AIO_SBN((startAnalog ? SPDSBN_Speed_Analog : SPDSBN_Speed_Digital), "apps/_speedometer/templates/SpeedoMeter/images/digital.png");
     })

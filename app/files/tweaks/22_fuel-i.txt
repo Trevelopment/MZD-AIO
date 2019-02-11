@@ -6,10 +6,22 @@ show_message "INSTALL FUEL CONSUMPTION TWEAK ..."
 log_message "=======************  INSTALL FUEL CONSUMPTION TWEAK ... **********======="
 
 cp -a "${MYDIR}/config/FuelConsumptionTweak/jci/gui/apps/ecoenergy/controls/FuelConsumption/css/FuelConsumptionCtrl.css" /jci/gui/apps/ecoenergy/controls/FuelConsumption/css/
-log_message "===                 Copied css/FuelConsumptionCtrl.css                ==="
+log_message "===                   Copied FuelConsumptionCtrl.css                  ==="
 cp -a "${MYDIR}/config/FuelConsumptionTweak/jci/gui/apps/ecoenergy/controls/FuelConsumption/images/FuelConsBG.png" /jci/gui/apps/ecoenergy/controls/FuelConsumption/images/
-log_message "===                    Copied images/FuelConsBG.png                   ==="
+log_message "===                        Copied FuelConsBG.png                      ==="
 cp -a "${MYDIR}/config/FuelConsumptionTweak/jci/gui/apps/ecoenergy/controls/FuelConsumption/js/FuelConsumptionCtrl.js" /jci/gui/apps/ecoenergy/controls/FuelConsumption/js/
+log_message "===                    Copied FuelConsumptionCtrl.js                  ==="
+if [ $FUEL_CONS_UNIT -eq 1 ] # MPG
+then
+  sed -i 's/var newFuelEfficiencyUnitText = "km\/L"/var newFuelEfficiencyUnitText = "mpg"/g' /jci/gui/apps/ecoenergy/controls/FuelConsumption/js/FuelConsumptionCtrl.js
+  log_message "===                            SET TO MPG                            ==="
+elif [ $FUEL_CONS_UNIT -eq 2 ] # L/100KM
+then
+  sed -i 's/var newFuelEfficiencyUnitText = "km\/L"/var newFuelEfficiencyUnitText = "L\/100km"/g' /jci/gui/apps/ecoenergy/controls/FuelConsumption/js/FuelConsumptionCtrl.js
+  log_message "===                          SET TO L/100KM                          ==="
+else # KM/L
+  log_message "===                            SET TO KM/L                           ==="
+fi
 log_message "===                  Copied js/FuelConsumptionCtrl.js                 ==="
 
 if [ $TESTBKUPS -eq 1 ]

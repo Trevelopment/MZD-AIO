@@ -12,7 +12,7 @@ const { autoUpdater } = require('electron-updater')
 
 let win = BrowserWindow.fromId(1)
 
-module.exports = function update(options) {
+module.exports = function update (options) {
   /* if (!options.url) {
   console.log('Automatic updates disabled')
   return
@@ -25,7 +25,8 @@ module.exports = function update(options) {
     autoUpdater.checkForUpdates()
   } catch (e) {
     console.error(e.message)
-    //throw e
+    ipc.emit('update-err', autoUpdater)
+    win.webContents.send('update-err')
   }
 
   autoUpdater.on('error', (e) => {

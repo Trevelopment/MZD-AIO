@@ -1,5 +1,5 @@
 # pause on mute
-if [ $COMPAT_GROUP -ge 5 ]
+if [ $COMPAT_GROUP -gt 5 ]
 then
 	show_message "PAUSE_ON_MUTE IS NOT COMPATIBLE WITH ${CMU_SW_VER} ..."
 	log_message "====*********     Pause On Mute is included in v59.00.502+  *********===="

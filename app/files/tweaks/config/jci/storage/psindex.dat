@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<preferences>
+  <section id="1241C190692F64A79C4DDA328A901C183BC7C232">
+    <value id="Type" xml:space="preserve">localstorage</value>
+    <value id="Origin" xml:space="preserve">file://localhost</value>
+    <value id="DataFile" xml:space="preserve">/tmp/mnt/data_persist/storage/pstorage/00/11/00000000</value>
+  </section>
+</preferences>

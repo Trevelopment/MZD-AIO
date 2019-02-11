@@ -29,7 +29,7 @@ start_AAwireless()
 {
     rm -f /tmp/root/headunit.status
     sed -i 's."wifiTransport": false."wifiTransport": true.g' /tmp/root/headunit.json
-    taskset 0xFFFFFFFF ionice -c 1 -n 0 nice -n -20 "${SCRIPTPATH}/headunit" "$@" > /dev/null 2>&1 &
+    taskset 0xFFFFFFFF ionice -c 1 -n 0 nice -n -20 "${SCRIPTPATH}/headunit" "$@" >> ${LOGPATH} 2>&1 &
     sleep 2
     touch /tmp/root/headunit-wireless.status
 }
@@ -37,7 +37,7 @@ start_AAwireless()
 rm -f /tmp/root/headunit.status /tmp/root/headunit-wireless.status
 
 # prevent conflict by Official AA
-pkill -f 'aap_service'
+killall -q -9 aap_service carplayd L_jciCARPLAY L_jciAAPA
 
 #default USB
 start_headunit

@@ -1942,8 +1942,16 @@ select#spdOp-barThemeStart {
   .slide-pop {
     bottom: 10%;
   }
+  ::-webkit-scrollbar-button:single-button:start {
+    height: 0px!important;
+  }
+}
+@media only screen and (max-height: 580px) {
   div#header {
-    height: 50px;
+    height: 60px;
+  }
+  h1#mzd-title {
+    margin-top: 10px;
   }
   #mzd-title>*:not(.btn-group) {
     display: none;

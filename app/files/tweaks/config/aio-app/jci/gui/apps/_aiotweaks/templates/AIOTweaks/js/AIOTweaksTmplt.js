@@ -5,9 +5,8 @@ __________________________________________________________________________
 Filename: AIOTweaksTmplt.js
 __________________________________________________________________________
 */
-/* jshint -W108, -W117  */
+/* jshint -W108, -W117, -W116, -W086  */
 log.addSrcFile("AIOTweaksTmplt.js", "AIOTweaks");
-
 /*
  * =========================
  * Constructor
@@ -20,11 +19,8 @@ var maxButtons = 13;
 function AIOTweaksTmplt(uiaId, parentDiv, templateID, controlProperties) {
   this.divElt = null;
   this.templateName = "AIOTweaksTmplt";
-
   this.onScreenClass = "AIOTweaksTmplt";
-
   log.debug("  templateID in AIOTweaksTmplt constructor: " + templateID);
-
   //@formatter:off
   //set the template properties
   this.properties = {
@@ -35,14 +31,11 @@ function AIOTweaksTmplt(uiaId, parentDiv, templateID, controlProperties) {
     "isDialog": false
   };
   //@formatter:on
-
   // create the div for template
   this.divElt = document.createElement('div');
   this.divElt.id = templateID;
   this.divElt.className = "TemplateFull AIOTweaksTmplt";
-
   parentDiv.appendChild(this.divElt);
-
   // Build The Environment
   this.divElt.innerHTML = '<ul id="AIO-Main" class="tab" style="margin-top:60px">' +
     '<li><a href="javascript:void(0)" class="tablinks" id="Twk" tabindex=1>Apps</a></li>' +
@@ -58,11 +51,11 @@ function AIOTweaksTmplt(uiaId, parentDiv, templateID, controlProperties) {
     '</div>' +
     '<div id="Shell" class="tabcontent FadeIn">' +
     '</div>' +
-    '<div id="AioInfoPanel" class="animate-zoom"><div id="AioCmd"></div><div id="AioInformation"></div></div>';
+    '<div id="AioInfoPanel" class="animate-zoom"><div id="AioCmd"></div><pre id="AioInformation"></pre></div>';
 
   function AIOTabs(tab, tabLink) {
     $(".tablinks, .tabcontent").removeClass("active-tab");
-    $(".tabcontent").hide();
+    $(".tabcontent, .devTools, #devModeSecretBtn").hide();
     $(".tabcontent").removeClass("animate-zoom");
     $("button").removeClass("selectedItem");
     maxButtons = $(tab + " a").length - 2;
@@ -72,7 +65,6 @@ function AIOTweaksTmplt(uiaId, parentDiv, templateID, controlProperties) {
     $(tabLink).addClass("active-tab");
     currTab = $(tabLink).attr("tabindex");
   }
-
   // Buttons
   // Tweaks Section
   $("<button/>").attr("id", "star1").addClass('mmLayout').html('<a>Star 1</a>').appendTo($('#MainMenu'));
@@ -91,7 +83,6 @@ function AIOTweaksTmplt(uiaId, parentDiv, templateID, controlProperties) {
   $("<button/>").attr("id", "hideListBg").addClass('toggleTweaks').html('<a>Hide List Background</a>').appendTo($('#MainMenu'));
   $("<button/>").attr("id", "clearTweaksBtn").html('<a>Reset Tweaks</a>').appendTo($('#MainMenu'));
   $("<div/>").attr("id", "MainMenuMsg").css({ "padding": "0px" }).insertAfter($('#MainMenu'));
-
   // Apps Section
   $("<button/>").attr("id", "twkOut").addClass('audioSources mainApps').html('<a><img src="common/images/icons/IcnSbHome.png" alt="Home"></a>').appendTo($('#Tweaks'));
   $("<button/>").attr("id", "BluetoothAudio").addClass('audioSources').html('<a><img src="common/images/icons/IcnListBluetooth_On.png" alt="Bluetooth"></a>').appendTo($('#Tweaks'));
@@ -105,8 +96,8 @@ function AIOTweaksTmplt(uiaId, parentDiv, templateID, controlProperties) {
   $("<button/>").attr("id", "appListBtn").html('<a>App List</a>').appendTo($('#Tweaks'));
   $("<button/>").attr("id", "backupCamBtn").html('<a>Reverse Cam</a>').appendTo($('#Tweaks'));
   $("<button/>").attr("id", "errLogBtn").html('<a>Error Log</a>').appendTo($('#Tweaks')).hide();
+  $("<button/>").attr("id", "headunitLogBtn").addClass('aaLog').html('<a>View Headunit Log</a>').appendTo($('#Tweaks'));
   $("<br>").appendTo($('#Tweaks'));
-  //$("<button/>").attr("id", "headunitLogBtn").addClass('aaLog').html('<a>View Headunit Log</a>').appendTo($('#Tweaks'));
   $('<div/>').attr('id', 'aaTitle').html('Android Auto Headunit').appendTo('#Tweaks');
   $("<button/>").attr("id", "AAstart").addClass('aaFunc fnStart').html('<a>Start</a>').appendTo($('#Tweaks'));
   $("<button/>").attr("id", "AAstop").addClass('aaFunc fnStop').html('<a>Stop</a>').appendTo($('#Tweaks'));
@@ -119,20 +110,20 @@ function AIOTweaksTmplt(uiaId, parentDiv, templateID, controlProperties) {
   //$('<div/>').attr('id','spTitle').html('Speedometer').appendTo('#Tweaks');
   //$("<button/>").attr("id", "SPstart").addClass('spFunc fnStart').html('<a>Start</a>').appendTo($('#Tweaks'));
   //$("<button/>").attr("id", "SPstop").addClass('spFunc fnStop').html('<a>Stop</a>').appendTo($('#Tweaks'));
-
   // Options Section
+  $("<button/>").attr("id", "aioInfo").html('<a>Info</a>').appendTo($('#Options'));
   $("<button/>").attr("id", "verBtn").html('<a>Show Version</a>').appendTo($('#Options'));
   $("<button/>").attr("id", "showVehData").html('<a>Vehicle Data</a>').appendTo($('#Options'));
-  $("<button/>").attr("id", "aioInfo").html('<a>Info</a>').appendTo($('#Options'));
+  $("<button/>").attr("id", "showLocalStorage").html('<a>localStorage</a>').appendTo($('#Options'));
+  $("<button/>").attr("id", "showWinkBtn").html('<a>Wink Test</a>').appendTo($('#Options'));
   $("<button/>").attr("id", "messageTestBtn").html('<a>Message Test</a>').appendTo($('#Options'));
   $("<button/>").attr("id", "test").html('<a>SBN Test</a>').appendTo($('#Options'));
   $("<button/>").attr("id", "Tst").addClass("tablinks").html('<a>Touchscreen</a>').appendTo($('#Options'));
   //$("<button/>").attr("id", "showBgBtn").html('<a>Show Background</a>').appendTo($('#Options'));
   $("<button/>").attr("id", "reverseAppListBtn").html('<a>Reverse App List</a>').appendTo($('#Options'));
   $("<button/>").attr("id", "displayOffBtn").html('<a>Screen Off</a>').appendTo($('#Options'));
-  //$("<button/>").attr("id", "runCheckIPBtn").html('<a>Check IP</a>').appendTo($('#Shell'));
   $("<button/>").attr("id", "systemTab").html('<a>Settings &gt; System</a>').appendTo($('#Options'));
-  $("<button/>").attr("id", "wifiToggle").html('<a>Turn WiFi On</a>').appendTo($('#Options'));
+  // $("<button/>").attr("id", "wifiToggle").html('<a>Turn WiFi On</a>').appendTo($('#Options'));
   $("<button/>").attr("id", "wifiSettings").html('<a>WiFi Settings</a>').appendTo($('#Options'));
   $("<button/>").attr("id", "toggleWifiAPBtn").html('<a>Wifi AP</a>').appendTo($('#Options'));
   $("<button/>").attr("id", "stopFirewallBtn").html('<a>Stop Firewall</a>').appendTo($('#Options'));
@@ -148,16 +139,18 @@ function AIOTweaksTmplt(uiaId, parentDiv, templateID, controlProperties) {
   //$("<button/>").attr("id", "screenshotBtn").html('<a>Screenshot</a>').appendTo($('#Options'));
   //$("<button/>").attr("id", "saveScreenshotBtn").html('<a>Save Screenshot to SD</a>').appendTo($('#Options')).hide();
   //$("<button/>").attr("id", "chooseBg").html('<a>Node Version</a>').appendTo($('#Options'));
-  //$("<button/>").attr("id", "runTweaksBtn").html('<a>VidYos</a>').appendTo($('#Options'));
-  $("<button/>").attr("id", "runTerminalBtn").html('Run Terminal').addClass('devTools').appendTo($('#Options'));
-  $("<div/>").attr("id", "devModeSecretBtn").css({ 'position': 'fixed', 'height': '100px', 'width': '100px', 'bottom': '0', 'right': '0' }).appendTo($('#Options'));
   $("<button/>").attr("id", "adbBtn").html('<a>adb Devices</a>').appendTo($('#Shell'));
+  $("<button/>").attr("id", "adbKillBtn").html('<a>adb kill-server</a>').appendTo($('#Shell'));
   $("<button/>").attr("id", "adbRevBtn").html('<a>adb Reverse Port</a>').appendTo($('#Shell'));
   $("<button/>").attr("id", "showEnvBtn").html('<a>Env</a>').appendTo($('#Shell'));
   $("<button/>").attr("id", "showDFHBtn").html('<a>Disk Space</a>').appendTo($('#Shell'));
   $("<button/>").attr("id", "showMeminfoBtn").html('<a>Memory Info</a>').appendTo($('#Shell'));
   $("<button/>").attr("id", "showPSBtn").html('<a>Running Processes</a>').appendTo($('#Shell'));
-
+  $("<button/>").attr("id", "runCheckIPBtn").html('<a>Check IP</a>').appendTo($('#Shell'));
+  $("<button/>").attr("id", "runTweaksBtn").html('Run Tweaks.sh').addClass('devTools').insertAfter($('#Shell'));
+  $("<button/>").attr("id", "runTerminalBtn").html('Run Terminal').addClass('devTools').insertAfter($('#Shell'));
+  $("<button/>").attr("id", "runRemount").html('Remount RW').addClass('devTools').insertAfter($('#Shell'));
+  $("<div/>").attr("id", "devModeSecretBtn").insertAfter($('#Shell'));
   $("<button/>").attr("id", "scrollUpBtn").addClass('AIO-scroller').html('<img src="apps/_aiotweaks/templates/AIOTweaks/images/scrollUp.png" />').insertAfter($('#AioInfoPanel'));
   $("<button/>").attr("id", "scrollDownBtn").addClass('AIO-scroller').html('<img src="apps/_aiotweaks/templates/AIOTweaks/images/scrollDown.png" />').insertAfter($('#AioInfoPanel'));
   //$("<br>").appendTo($('#Options'));
@@ -166,22 +159,22 @@ function AIOTweaksTmplt(uiaId, parentDiv, templateID, controlProperties) {
   //{Buttons:[{tag:'button',id:'twkOut',label:'Home',tab:'Tweaks',classes:"mainApps audioSources"},]}
   //}
   // Tabs
-  $("#Main").on('click', function() {
+  $("#Main").on('click', function () {
     AIOTabs("#MainMenu", "#Main");
   });
-  $("#Twk").on('click', function() {
+  $("#Twk").on('click', function () {
     AIOTabs("#Tweaks", "#Twk");
   });
-  $("#Opt").on('click', function() {
+  $("#Opt").on('click', function () {
     AIOTabs("#Options", "#Opt");
   });
-  $("#Shll").on('click', function() {
+  $("#Shll").on('click', function () {
     AIOTabs("#Shell", "#Shll");
+    $("#devModeSecretBtn").show();
   });
-  $("#Tst").on('click', function() {
+  $("#Tst").on('click', function () {
     AIOTabs("#touchscreenPanel", "#Tst");
   });
-
   // Start from the last opened tab
   try {
     var prevTab = JSON.parse(localStorage.getItem("aio.prevtab")) || false;
@@ -196,12 +189,11 @@ function AIOTweaksTmplt(uiaId, parentDiv, templateID, controlProperties) {
   }
   utility.loadScript('apps/_aiotweaks/js/mzd.js', null, StartAIOApp);
 }
-
 /*
  *  @param clickTarget (jQuery Object) The jQuery Object to click on a single click action
  *  clickTarget can also be a function or a string of the DOM node to make the jQuery Object
  */
-AIOTweaksTmplt.prototype.singleClick = function(clickTarget) {
+AIOTweaksTmplt.prototype.singleClick = function (clickTarget) {
   if (typeof clickTarget === "string") { clickTarget = $(clickTarget) }
   (AIOlonghold) ? AIOlonghold = false: (typeof clickTarget === "function") ? clickTarget(arguments[1]) : clickTarget.click();
   clearTimeout(this.longholdTimeout);
@@ -211,126 +203,131 @@ AIOTweaksTmplt.prototype.singleClick = function(clickTarget) {
  *  @param clickFunction (function) Function to run on a long click
  *  clickFunction can also be a a string of the DOM node or jQuery Object to click
  */
-AIOTweaksTmplt.prototype.longClick = function(clickFunction) {
+AIOTweaksTmplt.prototype.longClick = function (clickFunction) {
   if (typeof clickFunction === "string") { clickFunction = $(clickFunction) }
   var arg = arguments[1];
-  this.longholdTimeout = setTimeout(function() {
+  this.longholdTimeout = setTimeout(function () {
     AIOlonghold = true;
     (typeof clickFunction === "function") ? clickFunction(arg): clickFunction.click();
   }, 1200);
 };
-
 /*
  * =========================
  * Standard Template API functions
  * =========================
  */
-
 /* (internal - called by the framework)
  * Handles multicontroller events.
  * @param   eventID (string) any of the “Internal event name” values in IHU_GUI_MulticontrollerSimulation.docx (e.g. 'cw',
  * 'ccw', 'select')
  */
-AIOTweaksTmplt.prototype.ControllerEvents = function(eventID) {
+AIOTweaksTmplt.prototype.ControllerEvents = function (eventID) {
   var retValue = null;
   // console.log("EVENT: " + eventID);
   var infoOpen = $("#AioInfoPanel").hasClass("opened");
   switch (eventID) {
-    case "ccw":
-      if (infoOpen) {
-        document.getElementById("AioInformation").scrollTop -= 200;
-      } else {
-        $("button").removeClass("selectedItem");
-        (selectedItem < 0) ? selectedItem = maxButtons: selectedItem--;
-        $(".tabcontent.active-tab a").eq(selectedItem).parent().addClass("selectedItem");
-      }
+  case "ccw":
+    if (infoOpen) {
+      document.getElementById("AioInformation").scrollTop -= 200;
+    } else {
+      $("button").removeClass("selectedItem");
+      (selectedItem < 0) ? selectedItem = maxButtons: selectedItem--;
+      $(".tabcontent.active-tab a").eq(selectedItem).parent().addClass("selectedItem");
+    }
+    break;
+  case "cw":
+    if (infoOpen) {
+      document.getElementById("AioInformation").scrollTop += 200;
+    } else {
+      $("button").removeClass("selectedItem");
+      (selectedItem > maxButtons) ? selectedItem = 0: selectedItem++;
+      $(".tabcontent.active-tab a").eq(selectedItem).parent().addClass("selectedItem");
+    }
+    break;
+  case "left":
+    if (infoOpen) {
+      document.getElementById("AioInformation").scrollLeft -= 1000;
+    } else {
+      currTab--;
+      if (currTab < 1) currTab = 4;
+      $(".tablinks[tabindex=" + currTab + "]").click();
+    }
+    retValue = null;
+    break;
+  case "right":
+    if (infoOpen) {
+      document.getElementById("AioInformation").scrollLeft += 500;
+    } else {
+      currTab++;
+      if (currTab > 4) currTab = 1;
+      $(".tablinks[tabindex=" + currTab + "]").click();
+    }
+    retValue = "consumed";
+    break;
+  case "select":
+    if (infoOpen) {
+      $("#closeAioInfo").click();
+    } else {
+      $(".tabcontent.active-tab a").eq(selectedItem).parent().click();
+    }
+    retValue = "consumed";
+    break;
+  case "down":
+    if (infoOpen) {
+      document.getElementById("AioInformation").scrollTop += 2500;
       break;
-    case "cw":
-      if (infoOpen) {
-        document.getElementById("AioInformation").scrollTop += 200;
-      } else {
-        $("button").removeClass("selectedItem");
-        (selectedItem > maxButtons) ? selectedItem = 0: selectedItem++;
-        $(".tabcontent.active-tab a").eq(selectedItem).parent().addClass("selectedItem");
-      }
-      break;
-    case "left":
-      if (infoOpen) {
-        document.getElementById("AioInformation").scrollLeft -= 1000;
-      } else {
-        currTab--;
-        if (currTab < 1) currTab = 4;
-        $(".tablinks[tabindex=" + currTab + "]").click();
-      }
-      retValue = null;
-      break;
-    case "right":
-      if (infoOpen) {
-        document.getElementById("AioInformation").scrollLeft += 500;
-      } else {
-        currTab++;
-        if (currTab > 4) currTab = 1;
-        $(".tablinks[tabindex=" + currTab + "]").click();
-      }
-      retValue = "consumed";
-      break;
-    case "select":
-      if (infoOpen) {
+    } //intentional fallthrough
+  case "up":
+    if (infoOpen) {
+      if (document.getElementById("AioInformation").scrollTop === 0) {
         $("#closeAioInfo").click();
       } else {
-        $(".tabcontent.active-tab a").eq(selectedItem).parent().click();
+        document.getElementById("AioInformation").scrollTop -= 2500;
       }
-      retValue = "consumed";
       break;
-    case "down":
-      if (infoOpen) {
-        document.getElementById("AioInformation").scrollTop += 2500;
-        break;
-      } //intentional fallthrough
-    case "up":
-      if (infoOpen) {
-        if (document.getElementById("AioInformation").scrollTop === 0) {
-          $("#closeAioInfo").click();
-        } else {
-          document.getElementById("AioInformation").scrollTop -= 2500;
-        }
-        break;
-      } //intentional fallthrough
-    case "holddown":
-      if (infoOpen) {
-        $('#AioInformation').animate({ scrollTop: 999999 }, 3000);
-        break;
-      } //intentional fallthrough
-    case "holdup":
-      if (infoOpen) {
-        if (document.getElementById("AioInformation").scrollTop === 0) {
-          $("#closeAioInfo").click();
-        } else {
-          $('#AioInformation').animate({ scrollTop: 0, scrollLeft: 0 }, 3000);
-        }
+    } //intentional fallthrough
+  case "holddown":
+    if (infoOpen) {
+      $('#AioInformation').animate({ scrollTop: 999999 }, 3000);
+      aioWs("killall -9 gst-launch", 1);
+      break;
+    } //intentional fallthrough
+  case "holdup":
+    if (infoOpen) {
+      if (document.getElementById("AioInformation").scrollTop === 0) {
+        $("#closeAioInfo").click();
       } else {
-        showAioInfo("");
+        $('#AioInformation').animate({ scrollTop: 0, scrollLeft: 0 }, 3000);
       }
-      break;
-    case "holdleft":
-      currTab = 1;
-      $(".tablinks[tabindex=" + currTab + "]").click();
-      break;
-    case "holdright":
-      currTab = 4;
-      $(".tablinks[tabindex=" + currTab + "]").click();
-      break;
-    case "holdselect":
-      $("body").css({ "display": "" });
-      break;
-    default:
-      retValue = "giveFocusLeft";
-      break;
+    } else {
+      showAioInfo("");
+    }
+    break;
+  case "holdleft":
+    currTab = 1;
+    $(".tablinks[tabindex=" + currTab + "]").click();
+    break;
+  case "holdright":
+    currTab = 4;
+    $(".tablinks[tabindex=" + currTab + "]").click();
+    break;
+  case "holdselect":
+    $("body").css({ "display": "" });
+    break;
+  case "controllerActive":
+  case "lostFocus":
+  case "acceptFocusInit":
+  case "nothing":
+    break;
+  default:
+    AIO_SBN(eventID, "apps/_aiotweaks/panda.png");
+    retValue = "giveFocusLeft";
+    break;
   }
   $("button").blur();
   return retValue;
 };
-AIOTweaksTmplt.prototype.handleControllerEvent = function(eventID) {
+AIOTweaksTmplt.prototype.handleControllerEvent = function (eventID) {
   log.debug("handleController() called, eventID: " + eventID);
   var retValue = 'giveFocusLeft';
   var ev = eventID;
@@ -348,11 +345,10 @@ AIOTweaksTmplt.prototype.handleControllerEvent = function(eventID) {
  * Called by the app during templateNoLongerDisplayed. Used to perform garbage collection procedures on the template and
  * its controls.
  */
-AIOTweaksTmplt.prototype.cleanUp = function() {
+AIOTweaksTmplt.prototype.cleanUp = function () {
   $(".AIOTweaksTmplt").remove();
   $("html").removeClass("showBg");
   $("body").css({ "display": "" });
   $('#SbSpeedo, #Sbfuel-bar-wrapper').fadeIn();
 };
-
 framework.registerTmpltLoaded("AIOTweaksTmplt");

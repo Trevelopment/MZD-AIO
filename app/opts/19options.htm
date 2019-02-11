@@ -315,7 +315,7 @@
   </div>
 </div>
 <script>
-  var showSpdHints = persistantData.get('showSpdHints') || true
+  var showSpdHints = persistantData.get('showSpdHints', true)
   $('#SbSpeedoOps').html(SbOpsHTML)
   $('#SpeedoControlOps').html(spdCtrlHTML)
   $('.closeBtn:not(.closeTips)').click(function() {

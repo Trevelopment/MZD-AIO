@@ -27,7 +27,7 @@ fi
 # install data reader files
 [ ! -e /jci/casdk ] && mkdir -p /jci/casdk
 cp -a ${MYDIR}/casdk/scripts/* /jci/casdk
-find /jci/casdk/ -name "vdt*.sh" -exec chmod 755 {} \;
+find /jci/casdk/ -name "vdt*.sh" -exec chmod 777 {} \;
 log_message "===                  Installed data reader files                      ==="
 
 # copy initialization file
@@ -46,17 +46,17 @@ else
   sleep 1
   sed -i '/CASDK Data/ i\ ' ${STAGE_WIFI}
   sed -i '/CASDK Data/ a\sh /tmp/mnt/resources/aio/autorun/mzd-casdk.start &' ${STAGE_WIFI}
-  chmod 755 ${STAGE_WIFI}
+  chmod 777 ${STAGE_WIFI}
   log_message "===              CASDK Entries Added To Stage_wifi.sh                 ==="
 fi
 
-chmod 755 ${STAGE_WIFI}
+chmod 777 ${STAGE_WIFI}
 
 # copy CustomApplicationsProxy and aio.js
 cp -a ${MYDIR}/casdk/proxy/CustomApplicationsProxy.js /jci/opera/opera_dir/userjs/
 cp -a ${MYDIR}/casdk/proxy/aio.js /jci/opera/opera_dir/userjs/
-chmod 755 /jci/opera/opera_dir/userjs/aio.js
-chmod 755 /jci/opera/opera_dir/userjs/CustomApplicationsProxy.js
+chmod 777 /jci/opera/opera_dir/userjs/aio.js
+chmod 777 /jci/opera/opera_dir/userjs/CustomApplicationsProxy.js
 log_message "===               Copied CustomApplicationsProxy.js                   ==="
 
 if [ -e /jci/opera/opera_dir/userjs/additionalApps.js ]
@@ -77,8 +77,8 @@ fi
 
 # install CASDK runtime
 cp -a ${MYDIR}/casdk/resources /tmp/mnt
-chmod -R 755 /tmp/mnt/resources/aio
-chmod -R 755 /tmp/mnt/resources/dev/bin
+chmod 777 -R /tmp/mnt/resources/aio
+chmod 777 -R /tmp/mnt/resources/dev
 echo "_AIO_VER=${AIO_VER}" > /jci/casdk/casdk.aio
 echo "_CASDK_VER=${CASDK_VER}" >> /jci/casdk/casdk.aio
 log_message "===                  Installed CASDK Runtime                          ==="

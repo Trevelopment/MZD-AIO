@@ -17,10 +17,10 @@ var entertainmentItems = [
   { label: 'Stitcher', menuItem: 'StitcherItemPos', pos: 10 },
   { label: 'CD Player', menuItem: 'CdPlayerPos', pos: 11 },
   { label: 'DVD', menuItem: 'DVDItemPos', pos: 12 },
-  { label: 'TV', menuItem: 'TVItemPos', pos: 13 },
+  { label: 'TV', menuItem: 'TVItemPos', pos: 13 }
 ]
 
-function buildEntList(user) {
+function buildEntList (user) {
   mkdirp.sync(`${tmpdir}/config/audio_order_AND_no_More_Disclaimer/both/jci/gui/apps/system/js/`)
   for (var item in user.entertainmentItems) {
     listOrder += 'var ' + user.entertainmentItems[item].menuItem + ' = ' + user.entertainmentItems[item].pos + ';\n'

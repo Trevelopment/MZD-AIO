@@ -38,7 +38,7 @@ ipc.on('update-downloaded', (event) => {
 ipc.on('dl-progress', (event, megaBytes, fileName, totalSize) => {
   if ((megaBytes / totalSize) < 1) {
     if ($('#progress').length) {
-      //document.getElementById('progress').innerHTML = '<div class="w3-progress-container"><div id="progBar" class="w3-progressbar w3-green" style="width:' + parseInt((megaBytes / totalSize) * 100) + '%"><span class="w3-center w3-text-black color-progress">' + megaBytes.toFixed(2) + 'MB | ' + parseInt((megaBytes / totalSize) * 100) + '%</span></div>'
+      // document.getElementById('progress').innerHTML = '<div class="w3-progress-container"><div id="progBar" class="w3-progressbar w3-green" style="width:' + parseInt((megaBytes / totalSize) * 100) + '%"><span class="w3-center w3-text-black color-progress">' + megaBytes.toFixed(2) + 'MB | ' + parseInt((megaBytes / totalSize) * 100) + '%</span></div>'
     } else {
       showNotification('Downloading Please wait <img src="./files/img/load-1.gif" alt="...">', `<div id="dl-notif"><h5>Downloading ${fileName}: </h5><span id="progress"></span></div>`, 0)
     }
@@ -61,7 +61,7 @@ ipc.on('notif-bg-saved', (event, message) => {
   showNotification('Background', `<div id="dl-notif">${message}</div>`, 10)
 })
 
-function showNotification(title, message, fadeouttime, callback) {
+function showNotification (title, message, fadeouttime, callback) {
   $('#notices').show()
   var notice = document.createElement('div')
   notice.setAttribute('class', 'notice')
@@ -96,27 +96,27 @@ ipc.on('snackbar-msg', (event, message) => {
   snackbar(message)
 })
 
-function snackbar(message, mtime) {
-  /*$('#snackbar').append('body')
+function snackbar (message, mtime) {
+  /* $('#snackbar').append('body')
   var x = document.getElementById('snackbar')
   x.innerHTML = message
   x.className = 'show w3-card-12'
-  setTimeout(function () { x.className = x.className.replace('show', '') }, 1500)*/
+  setTimeout(function () { x.className = x.className.replace('show', '') }, 1500) */
   $.gritter.add({
     title: 'MZD-AIO',
     text: message,
     time: mtime * 1000 || 5000
-  });
+  })
 }
 
-function snackbarstay(message) {
-  //$('#snackbar').append('body')
-  //var x = document.getElementById('snackbar')
-  //x.innerHTML = message + '<div onclick="$(this).parent().removeClass(\'stay\')" class="w3-xxlarge w3-display-topright w3-close-btn w3-hover-text-red" style="margin-top:-15px;cursor:pointer;">&times;</div>'
-  //x.className = 'stay w3-card-12'
+function snackbarstay (message) {
+  // $('#snackbar').append('body')
+  // var x = document.getElementById('snackbar')
+  // x.innerHTML = message + '<div onclick="$(this).parent().removeClass(\'stay\')" class="w3-xxlarge w3-display-topright w3-close-btn w3-hover-text-red" style="margin-top:-15px;cursor:pointer;">&times;</div>'
+  // x.className = 'stay w3-card-12'
   $.gritter.add({
     title: 'MZD-AIO',
     text: message,
     sticky: true
-  });
+  })
 }

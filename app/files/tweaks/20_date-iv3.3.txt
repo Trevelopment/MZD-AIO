@@ -14,21 +14,6 @@ backup_org /jci/gui/framework/js/Utility.js
 show_message "INSTALL DATE_TO_STATUSBAR MOD V3.4 ..."
 log_message "=====*********    INSTALL DATE_TO_STATUSBAR MOD V3.4 ...   *********====="
 
-# STATUSBAR_COPY=0
-# # Strict Compatability Check
-# if [ $COMPAT_GROUP -eq 1 ]
-# then
-# 	STATUSBAR_COPY=1
-# 	log_message "===           FW ${CMU_SW_VER} detected, copy matching files          ==="
-# # This Compatability Check is VERY important for v58+ Copying the wrong file will cause a bootloop
-# elif [ $COMPAT_GROUP -gt 1 ]
-# then
-# 	STATUSBAR_COPY=2
-# 	log_message "===           FW ${CMU_SW_VER} detected, copy matching files          ==="
-# else
-# 	log_message "===   FW VERSION ${CMU_SW_VER} IS NOT YET COMPATIBLE WITH THIS TWEAK  ==="
-# fi
-
 # Remove any existing mods
 remove_aio_css /jci/gui/common/controls/StatusBar/css/StatusBarCtrl.css D2SB
 remove_aio_css /jci/gui/common/controls/Sbn/css/SbnCtrl.css D2SB
@@ -119,7 +104,7 @@ else # if [ $DATE_FORMAT -eq 0 ]
 fi
 
 # StatusBarCtrl.js is the file that needs to be compatability checked because of minor changes in FW v59+
-# Compatibility has been fixed now compatible with all FW v55 - v70.00.021
+# Compatibility has been fixed now compatible with all FW v55 - v70.00.100
 # if [ $STATUSBAR_COPY -eq 1 ]
 if [ $COMPAT_GROUP -le 6 ]
 then

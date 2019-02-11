@@ -113,7 +113,7 @@
     <tr ng-repeat="option in d2sbOps | filter:twkfltr" class="w3-hover-pale-blue w3-tooltip w3-third" ng-show="user.statusbar.d2sbinst">
       <td>
         <div class="d2sb-check extraRadio">
-          <input id="d2sb{{option.id}}" type="radio" name="{{option.label}}" ng-model="user.d2sbOps" ng-value="option.id" ng-disabled="user.d2sbOps.indexOf({{option.id}}) == -1 && user.d2sbOps.length > 0">
+          <input id="d2sb{{option.id}}" type="radio" name="{{option.label}}" ng-model="user.d2sbOps" ng-value="option.id" ng-disabled="!user.d2sbOps.includes({{option.id}}) && user.d2sbOps.length > 0">
           <label for="d2sb{{option.id}}" data-toggle="tooltip" data-placement="auto bottom" title="{{option.label}}" class="{{option.label}}"></label>
         </div>
       </td>

@@ -1,4 +1,4 @@
-/* jshint esversion:6, -W117*/
+/* jshint esversion:6, -W117 */
 // Open all external links *with class="link"* outside the app
 // Credit: Electron API Demos app
 var links = document.querySelectorAll('a.link')

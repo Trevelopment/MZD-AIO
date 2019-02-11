@@ -1,0 +1,16 @@
+backup_org /jci/gui/common/js/Multicontroller.js
+# main menu loop
+show_message "INSTALL MULTICONTROLLER BUTTONS..."
+log_message "=====****************  INSTALL MULTICONTROLLER ... *****************====="
+
+if [ $COMPAT_GROUP -le 6 ]
+then
+	# Copy modified MainMenuCtrl.js
+	cp -a "${MYDIR}/config/multicontroller/Multicontroller.js" /jci/gui/common/js/
+	log_message "===                    Copied Multicontrollerl.js                     ==="
+fi
+
+restore_org /jci/gui/common/js/Multicontroller.js
+
+log_message "=======******      END INSTALLATION OF MULTICONTROLLER      ******======="
+log_message " "

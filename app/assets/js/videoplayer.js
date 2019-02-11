@@ -4,7 +4,7 @@ for (var i = 0; i < vidlinks.length; i++) {
   vidlinks[i].onclick = vidhandler
 }
 
-function vidhandler(e) {
+function vidhandler (e) {
   e.preventDefault()
   var videotarget = this.getAttribute('href')
   var filename = videotarget.substr(0, videotarget.lastIndexOf('.')) || videotarget
