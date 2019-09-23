@@ -1,3 +1,4 @@
+/* jshint -W117 */
 function updateSpeedoApp() {
   // remove all disabled/unused values from the DOM
   $('[class*="vehDataBar"].pos0').remove();
@@ -570,7 +571,7 @@ function updateSpeedoApp() {
     $('#fuelGaugeFieldSet legend .fuelUnit').text(fuelGaugeValueSuffix);
   }
   $('.fuelGaugeValue').html(lastFuelGaugeValue + (fuelGaugeValueSuffix === "%" ? "%" : ""));
-  (tempIsF) ? $('.tempUnit').html('F'): $('.tempUnit').html('C');
+  $('.tempUnit').html(tempIsF ? 'F' : 'C');
   $('.tripDistance').html(tripDist);
   $('.speedAvgValue').html(speedAvg);
   $('.gpsAltitudeValue').html(GPSaltCurrent);
@@ -580,7 +581,7 @@ function updateSpeedoApp() {
   $('.gearPositionValue').html(lastGearPositionValue);
   $('.gearLeverPositionValue').html(lastGearLeverPositionValue);
   $('.gearPositionValue').html(lastGearPositionValue);
-  if (altGPSmin != 9999) {
+  if (altGPSmin !== 9999) {
     $('.gpsAltitudeMinMax').html(altGPSmin + ' / ' + altGPSmax);
   }
   if (barSpeedometerMod) {

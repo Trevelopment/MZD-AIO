@@ -31,11 +31,11 @@
         <span class="caret"></span>
       </button>
       <ul class="dropdown-menu" role="menu">
-        <li class="autorun-link"><a href="#/" ng-click="user.autorun.installer = true">Autorun & Recovery</a></li>
-        <li class="fullrestore-link"><a href ng-click="user.restore.full = true">Full System Restore</a></li>
+        <li class="autorun-link"><a href="#/" ng-click="autorestore('autorun')">Autorun & Recovery</a></li>
+        <li class="fullrestore-link"><a href ng-click="autorestore('restore')">Full System Restore</a></li>
         <li class="divider"></li>
-        <li class="casdk-link"><a href="#/casdk" ng-click="user.restore.full = user.autorun.installer = false">CASDK</a></li>
-        <li class="home-tweaks"><a href="#/" ng-click="user.restore.full = user.autorun.installer = false">Tweaks</a></li>
+        <li class="casdk-link"><a href="#/casdk" ng-click="autorestore('CASDK')">CASDK</a></li>
+        <li class="home-tweaks"><a href="#/" ng-click="autorestore('home')">Tweaks</a></li>
       </ul>
     </div>
   </div>

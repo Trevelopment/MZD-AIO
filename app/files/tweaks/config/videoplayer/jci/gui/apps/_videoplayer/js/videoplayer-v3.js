@@ -1,3 +1,4 @@
+/* jshint -W116, -W117 */
 /*
  * v2.0 Initial Version
  * v2.1 Included more video types

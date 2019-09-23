@@ -1,0 +1,11 @@
+#!/bin/sh
+echo 1 > /sys/class/gpio/Watchdog\ Disable/value
+dos2unix `dirname $0`/wifiAP.config
+. `dirname $0`/wifiAP.config
+if [ $NETWORK_WIFI_PASSWORD == "YourSSIDpassword" ]; then 
+  /jci/tools/jci-dialog --info --title="WiFi AP NOT started!" --text="Modify default password in wifiAP.config" --no-cancel &   
+else
+  #/jci/tools/jci-dialog --info --title="WiFi AP" --text="Started" --no-cancel &   
+  /bin/sh /jci/scripts/start_wifi.sh >/dev/null
+  /bin/sh `dirname $0`/jci-wifiap.sh start >/dev/null
+fi

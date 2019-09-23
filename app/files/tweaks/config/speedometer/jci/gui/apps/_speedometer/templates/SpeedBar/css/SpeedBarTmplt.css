@@ -190,7 +190,7 @@
 }
 #speedBarContainer #vehdataMainDiv [class*="vehDataMain"].pos0 {
   border: 2px dashed transparent;
-  left: 360px;
+  left: 340px;
   bottom: 180px;
   position: fixed;
 }
@@ -210,7 +210,7 @@
   bottom: 200px;
 }
 #speedBarContainer #vehdataMainDiv [class*="vehDataMain"].pos0 div[class*=gear], #speedBarContainer #vehdataMainDiv [class*="vehDataMain"].pos0 div[class*=speed], #speedBarContainer #vehdataMainDiv [class*="vehDataMain"].pos0 div[class*=vehicleSpeed], #speedBarContainer #vehdataMainDiv [class*="vehDataMain"].pos0 div[class*=gpsSpeed] {
-  font-size: 225px;
+  font-size: 220px;
 }
 #speedBarContainer #vehdataMainDiv [class*="vehDataMain"].pos0 div[class$=dleTimeValue] {
   font-size: 120px;

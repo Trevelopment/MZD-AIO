@@ -1,0 +1,20 @@
+#!/bin/sh
+echo 1 > /sys/class/gpio/Watchdog\ Disable/value
+
+# sshd_config is fixed
+# /usr/sbin/sshd -f `dirname $0`/sshd_config
+
+DIR=$(dirname "$(readlink -f "$0")")
+
+if [ -f /jci/scripts/jci-fw.sh ] && ! grep -Fq "multiport" /jci/scripts/jci-fw.sh
+then
+  mount -o rw,remount /
+  sleep 2
+  cp -a ${DIR}/jci-fw.sh /jci/scripts/
+  sleep 2
+  mount -o ro,remount /
+  sleep 60
+  /bin/sh /jci/scripts/jci-fw.sh start >/dev/null
+fi
+
+exit 0

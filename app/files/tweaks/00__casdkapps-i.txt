@@ -108,7 +108,7 @@ then
     cp -a ${MYDIR}/casdk/patch/systemApp.70.js /jci/gui/apps/system/js/systemApp.js
     log_message "===        Patched systemApp.js for AIO + CASDK apps for v70          ==="
   else
-    log_message "=== FW > v70.00.100 DETECTED VISIT MAZDATWEAKS.COM FOR MORE DETAILS   ==="
+    log_message "=== FW > v70.00.335 DETECTED VISIT MAZDATWEAKS.COM FOR MORE DETAILS   ==="
   fi
 fi
 

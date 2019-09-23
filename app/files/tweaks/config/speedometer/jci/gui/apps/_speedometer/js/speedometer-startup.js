@@ -1,4 +1,5 @@
 // See speedometer-config.js for user config
+/* jshint -W116, -W117 */
 var enableSmallSbSpeedo = true;
 var isMPH = false;
 var language = 'DE';
@@ -65,13 +66,14 @@ function SbSpeedo() {
     if (framework.getCurrentApp() === 'backupparking') {
       $('#SbSpeedo, #Sbfuel-bar-wrapper').addClass('parking');
       $('#SbSpeedo .SbVal1, #SbSpeedo .SbVal2').fadeIn();
-    } else {
-      $('#SbSpeedo, #Sbfuel-bar-wrapper').removeClass('parking');
+    } else if($('#SbSpeedo').hasClass('parking')) {
+        $('#SbSpeedo .SbVal2').fadeOut()
+        $('#SbSpeedo, #Sbfuel-bar-wrapper').removeClass('parking');
     }
   }, 1000);
 }
 setTimeout(function() {
-  $.getScript("apps/_speedometer/js/speedometer.js", function() {
+  utility.loadScript("apps/_speedometer/js/speedometer.js", null, function() {
     LoadSpeedoTemplate();
     if (enableSmallSbSpeedo) {
       SbSpeedo();

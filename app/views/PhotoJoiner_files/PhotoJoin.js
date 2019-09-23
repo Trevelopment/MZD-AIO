@@ -101,17 +101,19 @@ function selectFiles () {
 
 function joinedPhoto (photo) {
   var outImage = document.getElementById('imgJoined')
-  fs.copyFile(photo, `${getBackground}`, (err) => {
-    if (err) {
-      console.log(err)
-      window.close()
-      return
-    }
-    $('#Panel2').show()
-    $('#Panel1').hide()
-    outImage.src = `${getBackground}`
-    $('#imgJoined').attr('src', outImage.src)
-  })
+  if(photo) {
+    fs.copyFile(photo, `${getBackground}`, (err) => {
+      if (err) {
+        console.log(err)
+        window.close()
+        return
+      }
+      $('#Panel2').show()
+      $('#Panel1').hide()
+      outImage.src = `${getBackground}`
+      $('#imgJoined').attr('src', outImage.src)
+    })
+  }
 }
 
 function JoinPhotos () {

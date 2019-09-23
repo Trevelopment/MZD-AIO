@@ -1,2 +1,2 @@
 sed -i 's/"carGPS": true/"carGPS": false/g' /tmp/mnt/data_persist/dev/bin/headunit.json
-log_message "===                        Only use phone GPS                         ==="
+log_message "===                     DISABLE AA USE OF CAR GPS                     ==="

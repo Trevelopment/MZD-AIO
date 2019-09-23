@@ -7,18 +7,18 @@
     <span class="caret"></span>
   </button>
   <ul class="dropdown-menu" role="menu">
-    <li class="fullrestore-link"><a href ng-click="user.restore.full = false; user.autorun.installer = true">Autorun & Recovery</a></li>
-    <li class="autorun-link"><a href ng-click="user.restore.full = true">System Restore</a></li>
+    <li class="fullrestore-link"><a href ng-click="autorestore('autorun')">Autorun & Recovery</a></li>
+    <li class="autorun-link"><a href ng-click="autorestore('restore')">System Restore</a></li>
     <li class="divider"></li>
-    <li class="home-tweaks"><a href ng-click="user.restore.full = user.autorun.installer = false">Tweaks</a></li>
-    <li class="casdk-link"><a href="#/casdk" ng-click="user.restore.full = user.autorun.installer = false">CASDK</a></li>
+    <li class="home-tweaks"><a href ng-click="autorestore('home')">Tweaks</a></li>
+    <li class="casdk-link"><a href="#/casdk" ng-click="autorestore('CASDK')">CASDK</a></li>
   </ul>
 </div>
 <div class="w3-display-bottom-middle w3-card-4 w3-container w3-padding" title="FULL SYSTEM RESTORE" id="systemRestoreInfo">
   <a href="" onclick="$('#helpDrop').insertAfter($('#fullSystemRestore'));helpDropdown()">
     <span class="icon-question"></span> Help</a>
   <div class="w3-center w3-card-4 w3-panel w3-padding-16" id="fullSystemRestore">
-    <span class="w3-display-topright icon-remove w3-hover-text-red w3-hover-black" style="cursor:pointer" ng-click="user.restore.full = false"></span>
+    <span class="w3-display-topright icon-remove w3-hover-text-red w3-hover-black" style="cursor:pointer" ng-click="autorestore('home')"></span>
     <input type="checkbox" id="fullRestoreChk" class="w3-check" ng-model="user.restore.full" />
     <label for="fullRestoreChk">
       <span class='icon-stop_screen_share'></span> FULL SYSTEM RESTORE
@@ -36,8 +36,7 @@
       </strong>
     </h5>
     <br>
-    <b class="w3-medium">This script will safely restore your system if all modified files have a corresponding backup of the original file in same location with added '.org' extension, AIO does this automatically before modifying each file for the
-      first time.</b>
+    <b class="w3-medium">This script will safely restore your system if all modified files have a corresponding backup of the original file in same location with added '.org' extension, AIO does this automatically before modifying each file for the first time.</b>
     <br>
     <h6>
       <em>
@@ -48,7 +47,6 @@
   <br>Although it is strongly recommended that backups files are kept since they are not a detriment to the system, the option to delete all backups is provided to use at your own risk.
   <h5>Files that will not be reverted:</h5> For safety, AIO does not re-enable watchdog nor revert the files sm.conf and opera.ini. This is to prevent your system from ending up in a bootloop.
   <br>
-  <b>*Autorun & Recovery scripts are not removed to ensure access is not lost if firmware version is currently on or updated to v59.00.502+.</b> Removing autorun scripts from v59.00.502+ may result in a full lockout of access from your CMU including
-  tweak
-  installs.
+  <b>*Autorun & Recovery scripts are not removed to ensure access is not lost if firmware version is currently on or updated to v59.00.502+.</b> Removing autorun scripts from v59.00.502+ may result in a full lockout of access from your CMU including tweak installs.
+  <p class="w3-large"><strong>Alternatively, you can completely refresh your system by reinstalling or updating your firmware<div class="w3-small">(**Reinstalling & updating FW BEFORE v70.00.335+ do NOT remove autorun & recovery)</div></strong></p>
 </div>

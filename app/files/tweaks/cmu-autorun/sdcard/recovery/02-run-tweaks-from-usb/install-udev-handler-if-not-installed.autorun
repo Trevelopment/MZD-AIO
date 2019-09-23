@@ -1,0 +1,41 @@
+#!/bin/sh
+_VER=$(grep "^JCI_SW_VER=" /jci/version.ini | sed 's/^.*_\([^_]*\)\"$/\1/' | cut -d '.' -f 1)
+_VER_EXT=$(grep "^JCI_SW_VER=" /jci/version.ini | sed 's/^.*_\([^_]*\)\"$/\1/' | cut -d '.' -f 3)
+NEED_UPDATE=0
+if [ $_VER -gt 59 ] || ( [ $_VER -eq 59 ] && [ $_VER_EXT -gt 500 ] ); then
+
+	FileName="99-run-tweaks.rules"
+	DestinationPath="/etc/udev/rules.d/"
+	if [ ! -d $DestinationPath ]; then
+		if [ ! -e /mnt/a ]; then
+			echo "Mounting Root File System..."
+			mkdir -p /mnt/a
+			mount /dev/ffx01p1 /mnt/a
+		fi
+		DestinationPath=/mnt/a/$DestinationPath
+	fi
+
+	SrcPath=`dirname $0`
+	SrcFileName=$SrcPath/$FileName
+	DstFileName=$DestinationPath/$FileName
+
+	if [ -f $DstFileName ]; then
+	  MD5Src=`/usr/bin/md5sum $SrcFileName | /usr/bin/awk '{print $1}'`
+	  MD5Dst=`/usr/bin/md5sum $DstFileName | /usr/bin/awk '{print $1}'`
+	  if [ "$MD5Src" != "$MD5Dst" ]; then
+		 NEED_UPDATE=1
+	  fi
+	else
+	  NEED_UPDATE=1
+	fi
+
+	if [ $NEED_UPDATE == 1 ]; then
+	  /bin/mount -o rw,remount /
+	  /bin/cp "$SrcFileName" "$DstFileName"
+	  /bin/chown 1018:3015 "$DstFileName"
+	  sync
+	  /bin/mount -o ro,remount /
+	fi
+
+	watch -n 5 /bin/sh $SrcPath/watch-if-something-need-to-be-executed.sh >/dev/null 2>&1 &
+fi

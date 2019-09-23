@@ -8,9 +8,11 @@ if [ -e "${MYDIR}/AIO_log.txt" ]
 then
   END_ROOTFS=$(df -h | (grep 'rootfs' || echo 0) | awk '{ print $5 " " $1 }')
   END_RESOURCES=$(df -h | (grep 'resources' || echo 0) | awk '{ print $5 " " $1 }')
+  END_ROOTFS="$(echo $END_ROOTFS | awk '{ print $1}' | cut -d'%' -f1)"
+  END_RESOURCES="$(echo $END_RESOURCES | awk '{ print $1}' | cut -d'%' -f1)"
   sleep 2
-  log_message "======================== rootfs $(echo $END_ROOTFS | awk '{ print $1}' | cut -d'%' -f1)% used ================================"
-  log_message "====================== resources $(echo $END_RESOURCES | awk '{ print $1}' | cut -d'%' -f1)% used ==============================="
+  log_message "======================== rootfs $END_ROOTFS% used ================================"
+  log_message "====================== resources $END_RESOURCES% used ==============================="
   # a window will appear before the system reboots automatically
   sleep 3
   log_message " "

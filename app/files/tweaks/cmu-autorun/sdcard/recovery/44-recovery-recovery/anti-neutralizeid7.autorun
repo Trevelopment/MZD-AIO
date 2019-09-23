@@ -1,0 +1,5 @@
+#!/bin/sh
+
+SrcPath=`dirname $0`
+
+/bin/sh $SrcPath/watch-for-missing-recovery.sh &

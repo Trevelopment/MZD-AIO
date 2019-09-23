@@ -1,6 +1,5 @@
 backup_org /jci/gui/apps/system/js/systemApp.js
 # change order of the audio source list
-show_message "CHANGE ORDER OF AUDIO SOURCE LIST ..."
 log_message "======****** INSTALL CHANGE ORDER OF AUDIO SOURCE LIST ... *******======="
 TRACKORDER_AUDIO=2
 # Compatibility Check
@@ -17,7 +16,14 @@ then
   TRACKORDER_AUDIO=1
   TRACKORDER_AUDIO_FILE=70
   log_message "===       FW ${CMU_SW_VER} detected, copy matching systemApp.js       ==="
+elif [ $COMPAT_GROUP -gt 6 ]
+then
+  killall -q jci-dialog
+  /jci/tools/jci-dialog --confirm --title="ORDER OF AUDIO SOURCES TWEAK" --text="YOUR FW VERSION IS ${CMU_SW_VER}\nORDER OF AUDIO SOURCES TWEAK HAS ONLY\n BEEN TESTED UP TO V70.00.335\n\n***** INSTALL AT YOUR OWN RISK! *****" --ok-label="INSTALL" --cancel-label="SKIP"
+  TRACKORDER_AUDIO=$(($?+1))
+  TRACKORDER_AUDIO_FILE=70
 fi
+[ $TRACKORDER_AUDIO -le 1 ] && show_message "CHANGE ORDER OF AUDIO SOURCE LIST ..."
 
 # Compatibility check falls into 3 groups:
 # 70.00.XXX ($COMPAT_GROUP=6)
@@ -49,11 +55,8 @@ then
     fi
   fi
 else
-  # 2 Means unknown firmware version email the address below
-  show_message "******* AUDIO ORDER PATCH HAS NOT BEEN MADE FOR YOUR FW:${CMU_SW_VER}\nPlease Email ${MYDIR}/systemApp.js to aio@mazdatweaks.com  ==="
-  log_message "******** Audio Source List Order Tweak Is Not Compatible With your FW Version ********"
-  log_message "******** Please Email ${MYDIR}/systemApp.js FW:${CMU_SW_VER} to aio@mazdatweaks.com ********"
-  cp -a /jci/gui/apps/system/js/systemApp.js "${MYDIR}/"
+  show_message "=== ORDER OF AUDIO SOURCES PATCH SKIPPED  ==="
+  log_message "********         Audio Source List Order Tweak Skipped           ********"
 fi
 if [ $TESTBKUPS -eq 1 ]
 then

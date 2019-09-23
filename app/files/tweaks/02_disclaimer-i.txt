@@ -1,6 +1,5 @@
 backup_org /jci/gui/apps/system/js/systemApp.js
 # no-more-disclaimer
-show_message "REMOVE DISCLAIMER ..."
 log_message "========***********    INSTALL NO-MORE-DISCLAIMER ... ***********========"
 
 TRACKORDER_DISCLAIMER=2
@@ -18,13 +17,19 @@ then
   TRACKORDER_DISCLAIMER=1
   TRACKORDER_DISCLAIMER_FILE=70
   log_message "===       FW ${CMU_SW_VER} detected, copy matching systemApp.js       ==="
+elif [ $COMPAT_GROUP -gt 6 ]
+then
+  killall -q jci-dialog
+  /jci/tools/jci-dialog --confirm --title="NO MORE DISCLAIMER TWEAK" --text="YOUR FW VERSION IS ${CMU_SW_VER}\nNO MORE DISCLAIMER TWEAK HAS ONLY\n BEEN TESTED UP TO V70.00.335\n\n***** INSTALL AT YOUR OWN RISK! *****" --ok-label="INSTALL" --cancel-label="SKIP"
+  TRACKORDER_DISCLAIMER=$(($?+1))
+  TRACKORDER_DISCLAIMER_FILE=70
 fi
+[ $TRACKORDER_DISCLAIMER -le 1 ] && show_message "REMOVE DISCLAIMER ..."
 
 # Compatibility check falls into 3 groups:
 # 70.00.XXX ($COMPAT_GROUP=6)
 # 58.00.XXX - 59.00.XXX ($COMPAT_GROUP=2-5)
 # 55.XX.XXX - 56.XX.XXX ($COMPAT_GROUP=1)
-# If your firmware version falls out of those ranges email the address below
 if [ $TRACKORDER_DISCLAIMER -ne 2 ]
 then
   cp -a "${MYDIR}/config/audio_order_AND_no_More_Disclaimer/systemApp.js.disclaimer" /jci/gui/apps/system/js/
@@ -53,11 +58,9 @@ then
     fi
   fi
 else
-  # 2 Means unknown firmware version if your firmware version is unknown email the address below
-  show_message "=== NO MORE DISCLIMER PATCH HAS NOT BEEN MADE FOR YOUR FW:${CMU_SW_VER}\nPlease Email ${MYDIR}/systemApp.js to aio@mazdatweaks.com  ==="
-  log_message "********** Removed Disclaimer Mod Is Not Compatible With your FW Version *************"
-  log_message "********** Please Email ${MYDIR}/systemApp.js FW:${CMU_SW_VER} to aio@mazdatweaks.com  **********"
-  cp -a /jci/gui/apps/system/js/systemApp.js "${MYDIR}/"
+  show_message "=== NO MORE DISCLIMER PATCH INSTALLATION SKIPPED  ==="
+  log_message "**********          Remove Disclaimer Mod Skipped           *************"
+  cp /jci/gui/apps/system/js/systemApp.js "${MYDIR}"
 fi
 if [ $TESTBKUPS -eq 1 ]
 then

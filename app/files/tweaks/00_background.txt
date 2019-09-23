@@ -9,8 +9,14 @@ then
   log_message "===             Previous Infotainment Background Saved To:            === "
   log_message "===                ${MYDIR}/bakups/background.png                ==="
 fi
-cp -a "${MYDIR}/config/background.png" /jci/gui/common/images
-log_message "===                   Background Image Changed                        ==="
+if [ -s ${MYDIR}/config/background.png ]
+then
+  cp -a "${MYDIR}/config/background.png" /jci/gui/common/images
+  log_message "===                   Background Image Changed                        ==="
+else
+  show_message "ERROR MISSING BACKGROUND IMAGE FILE!!!"
+  log_message "===              ERROR: Mising Background Image File                  ==="
+fi
 
 log_message "======*********** END INSTALLATION OF BACKGROUND IMAGE ***********======="
 log_message " "

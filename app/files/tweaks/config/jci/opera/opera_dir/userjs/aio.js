@@ -1,5 +1,8 @@
-// aio.js - global helper functions for aio apps (for use with CASDK)
-//console.log("initialize aioMagicRoute - aio.js");
+// *****************************
+// ** aio.js - global helper functions for aio apps (for use with CASDK)
+// ** By Trezdog44
+/* jshint -W116, -W117 */
+// console.log("initialize aioMagicRoute - aio.js");
 var aioContextCount = 1;
 
 // The magic router from Debug.js - Fakes a context change message
@@ -122,8 +125,8 @@ function JSONtoDOM(obj) {
   }
   if (nodeType === 1 || nodeType === 11) {
     var childNodes = obj.childNodes || [];
-    for (i = 0, len = childNodes.length; i < len; i++) {
-      node.appendChild(JSONtoDOM(childNodes[i]));
+    for (var j = 0, leng = childNodes.length; j < leng; j++) {
+      node.appendChild(JSONtoDOM(childNodes[j]));
     }
   }
   return node;

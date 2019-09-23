@@ -21,14 +21,7 @@ if [ $DEBUG -ne 0 ]; then
     fi
   fi
 fi
-
-echo 41943040 > /proc/sys/net/core/rmem_max
-echo 41943040 > /proc/sys/net/core/wmem_max
-echo 17825792 > /proc/sys/net/core/rmem_default
-echo 17825792 > /proc/sys/net/core/wmem_default
-echo 4096 17825792 41943040 > /proc/sys/net/ipv4/tcp_rmem
-echo 4096 17825792 41943040 > /proc/sys/net/ipv4/tcp_wmem
-
+sleep 10
 echo "****************************" >> ${LOGPATH}
 hwclock --hctosys
 echo "START HEADUNIT LOG - $(date +'%D %T')" >> ${LOGPATH}
@@ -40,6 +33,7 @@ fi
 start_headunit()
 {
   sed -i 's."wifiTransport": true."wifiTransport": false.g' /tmp/root/headunit.json
+  killall -q -9 headunit
   sync; echo 3 > /proc/sys/vm/drop_caches
   taskset 0xFFFFFFFF ionice -c 1 -n 0 nice -n -20 "${SCRIPTPATH}/headunit" "$@" >> ${LOGPATH} 2>&1 &
   echo "Start Headunit (USB Mode)"
@@ -52,11 +46,11 @@ killall -q -9 aap_service carplayd L_jciCARPLAY L_jciAAPA
 # loop forever. check for headunit running every 10-15 seconds
 while true
 do
-  check_headunit=`ps|grep 'bin/headunit'|grep -v wrapper|grep -v grep|wc -l|awk '{print $1}'`
+  check_headunit=`ps ax|grep 'bin/headunit'|grep -v wrapper|grep -v grep|wc -l|awk '{print $1}'`
 
   [ $check_headunit -eq 0 ] && start_headunit
 
-  RAND=`expr $RANDOM % 5 + 10`
+  RAND=`expr $RANDOM % 5 + 5`
   sleep $RAND
 
 done

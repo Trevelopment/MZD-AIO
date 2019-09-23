@@ -6,9 +6,9 @@ SCRIPTPATH=$(dirname "$SCRIPT")
 LOGPATH=/dev/null
 SCRIPT_ARGS=$@
 
-export LD_LIBRARY_PATH="/data_persist/dev/lib:${SCRIPTPATH}/headunit_libs:/jci/lib:/jci/opera/3rdpartylibs/freetype:/usr/lib/imx-mm/audio-codec:/usr/lib/imx-mm/video-codec:/usr/lib/imx-mm/parser:"
+export LD_LIBRARY_PATH="${SCRIPTPATH}/headunit_libs:/jci/lib:/jci/opera/3rdpartylibs/freetype:/usr/lib/imx-mm/audio-codec:/usr/lib/imx-mm/video-codec:/usr/lib/imx-mm/parser:/data_persist/dev/lib:"
 #override some GST plugins with these
-export GST_PLUGIN_PATH="${SCRIPTPATH}/headunit_libs:/usr/lib/gstreamer-0.10:"
+export GST_PLUGIN_PATH="${SCRIPTPATH}/headunit_libs:/usr/lib/gstreamer-0.10"
 
 if [ $DEBUG -ne 0 ]; then
   LOGPATH=/data/headunit.log
@@ -21,21 +21,7 @@ if [ $DEBUG -ne 0 ]; then
     fi
   fi
 fi
-
-# Testing this:
-# sysctl -a | grep "mem" 2>&1 >> ${LOGPATH}
-# echo "****************************" >> ${LOGPATH}
-
-echo 41943040 > /proc/sys/net/core/rmem_max
-echo 41943040 > /proc/sys/net/core/wmem_max
-echo 17825792 > /proc/sys/net/core/rmem_default
-echo 17825792 > /proc/sys/net/core/wmem_default
-echo 4096 17825792 41943040 > /proc/sys/net/ipv4/tcp_rmem
-echo 4096 17825792 41943040 > /proc/sys/net/ipv4/tcp_wmem
-# echo 4096 17825792 41943040 > /proc/sys/net/ipv4/tcp_mem
-
-# echo "sysctl -a | grep mem" >> ${LOGPATH}
-# sysctl -a | grep "mem" >> ${LOGPATH} 2>&1
+sleep 10
 echo "****************************" >> ${LOGPATH}
 hwclock --hctosys
 echo "START HEADUNIT LOG - $(date +'%D %T')" >> ${LOGPATH}
@@ -48,22 +34,30 @@ start_headunit()
 {
    rm -f /tmp/root/headunit-wireless.status
    sed -i 's."wifiTransport": true."wifiTransport": false.g' /tmp/root/headunit.json
-   sync; echo 3 > /proc/sys/vm/drop_caches
-   taskset 0xFFFFFFFF ionice -c 1 -n 0 nice -n -20 "${SCRIPTPATH}/headunit" "$@" >> ${LOGPATH} 2>&1 &
+   taskset 0xFFFFFFFF "${SCRIPTPATH}/headunit" "$@" >> ${LOGPATH} 2>&1 &
    sleep 2
-   echo "Start Headunit (USB Mode)"
    touch /tmp/root/headunit.status
+   echo "=== headunit-usb ===" >> ${LOGPATH}
+   cat /tmp/root/headunit.json  >> ${LOGPATH}
+   echo "====================" >> ${LOGPATH}
 }
 
 start_AAwireless()
 {
     rm -f /tmp/root/headunit.status
     sed -i 's."wifiTransport": false."wifiTransport": true.g' /tmp/root/headunit.json
-    sync; echo 3 > /proc/sys/vm/drop_caches
-    taskset 0xFFFFFFFF ionice -c 1 -n 0 nice -n -20 "${SCRIPTPATH}/headunit" "$@" >> ${LOGPATH} 2>&1 &
+    PHONE_IP_ADDRESS=$1
+    shift
+    if [ ! -z $PHONE_IP_ADDRESS ]; then
+        sed -i "s/\"phoneIpAddress\": \".[^\"]*\"/\"phoneIpAddress\": \"$PHONE_IP_ADDRESS\"/g" /tmp/root/headunit.json
+    fi
+    echo "Phone IP: $PHONE_IP_ADDRESS" >> ${LOGPATH}
+    taskset 0xFFFFFFFF "${SCRIPTPATH}/headunit" "$@" >> ${LOGPATH} 2>&1 &
     sleep 2
-    echo "Start Headunit (WiFi Mode)"
     touch /tmp/root/headunit-wireless.status
+    echo "=== headunit-wifi ===" >> ${LOGPATH}
+    cat /tmp/root/headunit.json  >> ${LOGPATH}
+    echo "====================" >> ${LOGPATH}
 }
 
 rm -f /tmp/root/headunit.status /tmp/root/headunit-wireless.status
@@ -74,28 +68,35 @@ killall -q -9 aap_service carplayd L_jciCARPLAY L_jciAAPA
 #default USB
 start_headunit
 
-# loop forever. every 5-10 seconds,
+# loop forever. every 5 seconds,
 while true
 do
- NET_CHECK=`netstat -rn|awk '$2=="192.168.43.1" {print}'|wc -l|awk '{print $1}'`
+ PHONE_IP_ADDRESS=`netstat -rn|awk '$2~/192\.168\.43\.[0-9]{1,3}/ {print $2}'`
 
  if [ -e /tmp/root/usb_connect ]; then
   USBCHECK=1
+  # echo "USB attach" >> ${LOGPATH}
  else
   USBCHECK=0
+  # echo "USB detach" >> ${LOGPATH}
  fi
 
- if [ $NET_CHECK == 1 ] && [ $USBCHECK == 0 ]; then
+ if [ ! -z $PHONE_IP_ADDRESS ] && [ $USBCHECK == 0 ]; then
     if [ -e /tmp/root/headunit.status ]; then
         killall -q headunit
     fi
 
     if ! [ -e /tmp/root/headunit-wireless.status ]; then
-        start_AAwireless
+        echo "WLAN Mode" >> ${LOGPATH}
+        echo "Start Headunit (WiFi Mode)"
+        echo "Phone IP: $PHONE_IP_ADDRESS"
+        start_AAwireless $PHONE_IP_ADDRESS
     fi
 
  else
+    # echo "USB Mode" >> ${LOGPATH}
     check_headunit=`ps|grep 'bin/headunit'|grep -v wrapper|grep -v grep|wc -l|awk '{print $1}'`
+    # echo "check_headunit = $check_headunit" >> ${LOGPATH}
 
     [ $check_headunit -eq 0 ] && rm -f /tmp/root/headunit-wireless.status /tmp/root/headunit.status
 
@@ -103,11 +104,13 @@ do
         killall -q headunit
     fi
     if ! [ -e /tmp/root/headunit.status ]; then
+        echo "Start Headunit (USB Mode)"
+        echo "Start USB" >> ${LOGPATH}
         start_headunit
     fi
  fi
 
- RAND=`expr $RANDOM % 5 + 5`
+ RAND=`expr $RANDOM % 5 + 3`
  #echo "go sleep $RAND"
  sleep $RAND
 

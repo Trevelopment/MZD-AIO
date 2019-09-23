@@ -1,0 +1,6 @@
+#!/bin/sh
+
+# Run in the background, watch for Android device
+if which adb > /dev/null 2>&1; then
+  watch `dirname $0`/ssh-over-adb.sh &
+fi

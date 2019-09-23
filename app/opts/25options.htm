@@ -10,7 +10,7 @@
 <div class="w3-hover-pale-blue w3-row w3-col">
   <!--ng-hide="user.aaBetaVer"-->
   <div class="aa-side w3-col w3-third" style="font-size:15px;padding:10px;">
-    <span class="icon-android"></span><strong style="padding-left:10px">AA v1.10+</strong>
+    <span class="icon-android"></span><strong style="padding-left:10px">AA v1.12</strong>
   </div>
   <div class="aa-side w3-col w3-third" style="font-size:15px;">
     <input class="w3-check" id="aaWifi" type="checkbox" name="aaWifi" ng-model="user.aaWifi" ng-value="user.aaWifi">
@@ -19,6 +19,7 @@
   <div class="aa-side w3-col w3-third" style="font-size:15px;">
     <input class="w3-check" id="aaHUD" type="checkbox" name="aaHUD" ng-model="user.aaHUD" ng-value="user.aaHUD">
     <label for="aaHUD"><span class="icon-bug"></span><strong style="padding-left:10px">Debug Logging</strong></label>
+    <br><small>(to /data/headunit.log)</small>
   </div>
 </div>
 <div class="w3-hover-pale-blue w3-row w3-col">
@@ -27,7 +28,7 @@
     <label for="aaBetaVer" data-toggle="tooltip" data-placement="auto bottom" title="Check this if you have a reversed compass in AA">
       <b style="font-size:15px">Reverse Compass*</b>
     </label>
-    <small>(flips the heading data 180°)</small>
+    <br><small>(flips the heading data 180°)</small>
   </div>
   <div class="w3-half w3-padding">
     <input class="w3-check" id="aaCarGPS" type="checkbox" name="aaCarGPS" ng-model="user.aaCarGPS" ng-value="user.aaCarGPS">
@@ -61,15 +62,18 @@
 <div>For more information, previous releases, or to check for new releases visit the <a style="display:inline-block" href onclick="externalLink('aainfo')">Headunit Info Page</a> and the <a style="display:inline-block" href onclick="externalLink('aarepo')">Headunit Repository</a></div>
 <style>
 input#aaHUD,
-input#aaHUD~label {
+input#aaHUD~label,
+input#aaHUD~label~small {
   opacity: 0
 }
 input#aaHUD:hover,
-input#aaHUD:hover~label {
+input#aaHUD:hover~label,
+input#aaHUD:hover~label~small {
   opacity: 0.2;
 }
 input#aaHUD:checked,
-input#aaHUD:checked~label {
+input#aaHUD:checked~label,
+input#aaHUD:checked~label~small {
   opacity: 0.6
 }
 

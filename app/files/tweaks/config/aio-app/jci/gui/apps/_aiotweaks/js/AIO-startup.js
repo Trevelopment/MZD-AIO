@@ -1,3 +1,12 @@
+/* ****************************
+** AIO Tweaks App
+** Copyright 2019 Trezdog44
+ __________________________________________________________________________
+
+ Filename: AIO-startup.js
+ __________________________________________________________________________
+*/
+/* jshint -W117 */
 var turnScreenOff = false;
 var turnWifiOn = false; // this is experimental and may not work yet
 var AIOlonghold = false;

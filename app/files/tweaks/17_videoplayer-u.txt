@@ -11,30 +11,8 @@ then
   [ -f ${ADDITIONAL_APPS_JSON} ] && cp ${ADDITIONAL_APPS_JSON} "${MYDIR}/bakups/test/additionalApps_videoplayer-before.json"
 fi
 
-sed -i '/Speedo-Compass-Video_Tweak/d' ${STAGE_WIFI}
-sed -i '/v3.2/d' ${STAGE_WIFI}
-sed -i '/Removed requirement/d' ${STAGE_WIFI}
-sed -i '/# mount /d' ${STAGE_WIFI}
-sed -i '/Added additional/d' ${STAGE_WIFI}
-sed -i '/get-vehicle-speed.sh/d' ${STAGE_WIFI}
-sed -i '/get-vehicle-data-other.sh/d' ${STAGE_WIFI}
-sed -i '/get-gps-data.sh/d' ${STAGE_WIFI}
-sed -i '/Need to set defaults/d' ${STAGE_WIFI}
-sed -i '/myVideoList /d' ${STAGE_WIFI}
-sed -i '/playbackAction /d' ${STAGE_WIFI}
-sed -i '/playbackOption /d' ${STAGE_WIFI}
-sed -i '/playbackStatus /d' ${STAGE_WIFI}
-sed -i '/playback/d' ${STAGE_WIFI}
-sed -i '/myVideoList/d' ${STAGE_WIFI}
-sed -i '/Video player action watch/d' ${STAGE_WIFI}
-sed -i '/playback-action.sh/d' ${STAGE_WIFI}
-sed -i '/Log data collection/d' ${STAGE_WIFI}
-sed -i '/get-log-data/d' ${STAGE_WIFI}
-sed -i '/### Video player/d' ${STAGE_WIFI}
-sed -i '/_videoplayer/d' ${STAGE_WIFI}
-sed -i '/addon-player.sh &/d' ${STAGE_WIFI}
-
 sed -i '/Video/d' ${STAGE_WIFI}
+sed -i '/_videoplayer/d' ${STAGE_WIFI}
 sed -i '/--port=9998/d' ${STAGE_WIFI}
 
 # delete videoplayer entry from additionalApps.json
@@ -50,7 +28,7 @@ then
   || grep -Fq "_speedometer" ${ADDITIONAL_APPS_JSON} \
   || grep -Fq "_mzdmeter" ${ADDITIONAL_APPS_JSON}
   then
-    log_message "===          Found other apps in additionalApps.json          ==="
+    log_message "===              Found other apps in additionalApps.json              ==="
     ADDIT_APPS=1
   fi
 fi
@@ -69,19 +47,9 @@ then
   log_message "===          Removed addon-common because no more AIO apps            ==="
 fi
 
-rm -fr /jci/gui/addon-player
-rm -fr /jci/gui/addon-speedometer
-rm -fr /jci/gui/speedometer
+rm -fr ${AIO_APP_DIR}/_videoplayer
 rm -fr /jci/gui/apps/_videoplayer
 rm -fr /tmp/mnt/resources/aio/apps/_videoplayer
-rm -f /jci/opera/opera_dir/userjs/addon-startup.js
-rm -f /jci/opera/opera_dir/userjs/mySpeedometer*
-rm -f /jci/scripts/get-gps-data*
-rm -f /jci/scripts/get-log-data*
-rm -f /jci/scripts/get-vehicle-data-other*
-rm -f /jci/scripts/get-vehicle-gear*
-rm -f /jci/scripts/get-vehicle-speed*
-rm -f ${STAGE_WIFI}.bak?
 log_message "===                     Removed Video Player Files                    ==="
 
 if [ $TESTBKUPS -eq 1 ]

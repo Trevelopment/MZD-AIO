@@ -1,5 +1,6 @@
-/*
-Copyright 2017 Trez
+/* ****************************
+** AIO Tweaks App
+** Copyright 2019 Trezdog44
  __________________________________________________________________________
 
  Filename: _aiotweaksApp.js

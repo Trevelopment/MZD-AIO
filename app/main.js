@@ -9,7 +9,7 @@
 **                                                                            **
 ** ************************************************************************** **
 \* ************************************************************************** */
-/* jshint esversion:6, -W033, -W117, -W097, -W116 */
+/* jshint esversion:8, -W033, -W117, -W097, -W116 */
 'use strict'
 const electron = require('electron')
 const app = electron.app
@@ -47,10 +47,11 @@ require('./menus/shortcuts.js')
 require('./lib/log')(pjson.productName || 'MZD-AIO-TI')
 var hasColorFiles = fs.existsSync(`${app.getPath('userData')}/color-schemes/`)
 var hasSpeedCamFiles = fs.existsSync(`${app.getPath('userData')}/speedcam-patch/`)
-var iconLoc = path.join(app.getAppPath(), "/icon.icns")
-var favicon = "./app/icon.icns"
+var iconLoc = path.join(app.getAppPath(), '/icon.icns')
+var favicon = './app/icon.icns'
+process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = true
 if (process.platform === 'win32') {
-  iconLoc = path.join(app.getAppPath(), "icon.ico")
+  iconLoc = path.join(app.getAppPath(), 'icon.ico')
   favicon = './app/icon.ico'
 }
 let nimage = nativeImage.createFromPath(iconLoc)
@@ -80,7 +81,7 @@ if (isDev) {
   console.info('Running in development')
   app.setPath('home', path.resolve(`${__dirname}`))
   console.log(`Home: ${app.getPath('home')}`)
-  //console.debug(JSON.stringify(pjson))
+  // console.debug(JSON.stringify(pjson))
   console.debug(JSON.stringify(persistantData.store))
   console.debug(JSON.stringify(pjson.config))
 } else {
@@ -105,12 +106,12 @@ let tray = null
 let imageJoin = null
 app.setName(pjson.productName || 'MZD-AIO-TI')
 
-function initialize() {
+function initialize () {
   if (!persistantData.has('copyFolderLocation')) {
     persistantData.set('copyFolderLocation', app.getPath('desktop'))
   }
 
-  function onClosed() {
+  function onClosed () {
     // Dereference used windows
     downloadwin = null
     mailform = null
@@ -120,7 +121,7 @@ function initialize() {
     app.quit()
   }
 
-  function createMainWindow() {
+  function createMainWindow () {
     let mainWindowState = windowStateKeeper({
       defaultWidth: 1280,
       defaultHeight: 800
@@ -138,6 +139,7 @@ function initialize() {
       'icon': favicon,
       'webPreferences': {
         'nodeIntegration': pjson.config.nodeIntegration || true, // Disabling node integration allows to use libraries such as jQuery/React, etc
+        'nodeIntegrationInSubFrames': false,
         'preload': path.resolve(path.join(__dirname, 'preload.js'))
       }
     })
@@ -145,7 +147,7 @@ function initialize() {
     // Remove file:// if you need to load http URLs
     win.loadURL(`file://${__dirname}/${pjson.config.url}`, {})
     win.on('closed', onClosed)
-    win.on('unresponsive', function() {
+    win.on('unresponsive', function () {
       var unresponsiveClose = dialog.showMessageBox({
         type: 'warning',
         title: 'Unresponsive',
@@ -187,7 +189,7 @@ function initialize() {
       win.focus()
     })
 
-    function setCopyLoc(loc) {
+    function setCopyLoc (loc) {
       persistantData.set('copyFolderLocation', app.getPath(loc))
       win.webContents.send('set-copy-loc', app.getPath(loc))
       console.log(`Copy_to_usb: ${persistantData.get('copyFolderLocation')}`)
@@ -196,33 +198,33 @@ function initialize() {
     if (process.platform === 'win32') {
       tray = new Tray(nimage)
       var template = [{
-          label: 'Location of _copy_to_usb',
-          submenu: [
-            { label: 'Desktop', id: 'desktop', type: 'radio', checked: persistantData.get('copyFolderLocation').includes('Desktop'), click: function(menuItem, browserWindow, event) { setCopyLoc('desktop') } },
-            { label: 'Downloads', id: 'downloads', type: 'radio', checked: persistantData.get('copyFolderLocation').includes('Downloads'), click: function(menuItem, browserWindow, event) { setCopyLoc('downloads') } },
-            { label: 'Documents', id: 'documents', type: 'radio', checked: persistantData.get('copyFolderLocation').includes('Documents'), click: function(menuItem, browserWindow, event) { setCopyLoc('documents') } }
-          ]
-        },
+        label: 'Location of _copy_to_usb',
+        submenu: [
+            { label: 'Desktop', id: 'desktop', type: 'radio', checked: persistantData.get('copyFolderLocation').includes('Desktop'), click: function (menuItem, browserWindow, event) { setCopyLoc('desktop') } },
+            { label: 'Downloads', id: 'downloads', type: 'radio', checked: persistantData.get('copyFolderLocation').includes('Downloads'), click: function (menuItem, browserWindow, event) { setCopyLoc('downloads') } },
+            { label: 'Documents', id: 'documents', type: 'radio', checked: persistantData.get('copyFolderLocation').includes('Documents'), click: function (menuItem, browserWindow, event) { setCopyLoc('documents') } }
+        ]
+      },
         { type: 'separator' },
-        { label: 'Open _copy_to_usb Folder', click: function() { win.webContents.send('open-copy-folder') } },
-        {
-          label: 'Delete _copy_to_usb Folder',
-          type: 'normal',
-          click: function(menuItem, browserWindow, event) {
-            rimraf(path.normalize(path.join(persistantData.get('copyFolderLocation'), '_copy_to_usb')), function(e) {
-              if (e) {
-                console.error(e.message)
-                dialog.showErrorBox(`Error Deleting ${path.normalize(path.join(persistantData.get('copyFolderLocation'), '_copy_to_usb'))}`, `${e.message}`)
-              } else {
-                console.log(`Deleted ${path.normalize(path.join(persistantData.get('copyFolderLocation'), '_copy_to_usb'))}`)
-                win.webContents.send('snackbar-msg', `Deleted ${path.normalize(path.join(persistantData.get('copyFolderLocation'), '_copy_to_usb'))}`)
-              }
-            })
-          }
-        },
+        { label: 'Open _copy_to_usb Folder', click: function () { win.webContents.send('open-copy-folder') } },
+      {
+        label: 'Delete _copy_to_usb Folder',
+        type: 'normal',
+        click: function (menuItem, browserWindow, event) {
+          rimraf(path.normalize(path.join(persistantData.get('copyFolderLocation'), '_copy_to_usb')), function (e) {
+            if (e) {
+              console.error(e.message)
+              dialog.showErrorBox(`Error Deleting ${path.normalize(path.join(persistantData.get('copyFolderLocation'), '_copy_to_usb'))}`, `${e.message}`)
+            } else {
+              console.log(`Deleted ${path.normalize(path.join(persistantData.get('copyFolderLocation'), '_copy_to_usb'))}`)
+              win.webContents.send('snackbar-msg', `Deleted ${path.normalize(path.join(persistantData.get('copyFolderLocation'), '_copy_to_usb'))}`)
+            }
+          })
+        }
+      },
         { type: 'separator' },
-        { label: 'Fullscreen', click: function() { win.setFullScreen(!win.isFullScreen()) } },
-        { label: 'Close', role: 'close', click: function() { win.close() } }
+        { label: 'Fullscreen', click: function () { win.setFullScreen(!win.isFullScreen()) } },
+        { label: 'Close', role: 'close', click: function () { win.close() } }
       ]
       var trayMenu = Menu.buildFromTemplate(template)
       tray.setToolTip('MZD-AIO-TI')
@@ -231,14 +233,7 @@ function initialize() {
         win.isVisible() ? win.hide() : win.show()
       })
       tray.on('double-click', () => {
-        win.show()
-        win.setFullScreen(!win.isFullScreen())
-      })
-      win.on('show', () => {
-        tray.setHighlightMode('always')
-      })
-      win.on('hide', () => {
-        tray.setHighlightMode('never')
+        win.setFullScreen(win.isVisible())
       })
     }
     // if (isDev) {
@@ -304,6 +299,20 @@ function initialize() {
     // save some persistant data
     persistantData.set('visits', v)
   })
+  app.on('web-contents-created', (event, contents) => {
+    contents.on('new-window', (event, url, frameName, disposition, options) => {
+      // event.preventDefault()
+      if(options.webPreferences) {
+        options.webPreferences.nodeIntegration = false
+        //console.dir(options.webPreferences)
+        //console.dir(event)
+        //console.log(url)
+        //console.log(disposition)
+        //console.log(frameName)
+        //console.dir(options)
+      }
+    })
+  })
   ipc.on('reset-window-size', () => {
     mainWindow.setSize(1280, 800)
     mainWindow.center()
@@ -361,9 +370,9 @@ function initialize() {
 // Make this app a single instance app.
 // The main window will be restored and focused instead of a second window
 // opened when a person attempts to launch a second instance.
-function makeSingleInstance(lock) {
+function makeSingleInstance (lock) {
   if (!lock) {
-    console.warn("Single Instance App - Quit")
+    console.warn('Single Instance App - Quit')
     app.quit()
   } else {
     app.on('second-instance', (event, commandLine, workingDirectory) => {
@@ -375,53 +384,49 @@ function makeSingleInstance(lock) {
   }
 }
 
-function getUSBDrives() {
+async function getUSBDrives () {
   var disks = []
+  var dsklst = await drivelist.list()
   var aioInfo
   var aioBkups = []
   var aioJSON = null
-  drivelist.list((error, dsklst) => {
-    if (error) {
-      console.error(error)
-      return
-    } else if (typeof dsklst !== "undefined") {
-      dsklst.forEach((drive) => {
-        var sizeGB = Math.round(drive.size / 100000000) / 10
-        if (!drive.system && drive.mountpoints[0]) {
-          console.log(`Raw: ${drive.raw}\n Mountpoint: ${drive.mountpoints[0].path}\n Description: ${drive.description}\n Size: ${sizeGB}GB`)
-          disks.push({ 'desc': drive.description, 'mp': drive.mountpoints[0].path })
+  if (typeof dsklst !== 'undefined') {
+    dsklst.forEach((drive) => {
+      var sizeGB = Math.round(drive.size / 100000000) / 10
+      if (!drive.system && drive.mountpoints[0]) {
+        console.log(`Raw: ${drive.raw}\n Mountpoint: ${drive.mountpoints[0].path}\n Description: ${drive.description}\n Size: ${sizeGB}GB`)
+        disks.push({ 'desc': drive.description, 'mp': drive.mountpoints[0].path })
+      }
+    })
+    if (typeof disks !== 'undefined' && disks.length) {
+      disks.forEach((drive) => {
+        try {
+          if (fs.existsSync(`${drive.mp}/AIO_info.json`)) {
+            console.log(`Found AIO_info.json on USB Drive - ${drive.mp} ${drive.desc}`)
+            aioJSON = fs.readFileSync(`${drive.mp}/AIO_info.json`)
+          }
+        } catch (e) {
+          console.dir(e)
+          dialog.showErrorBox('USB DRIVE ERROR', `Error reading from ${drive.mp} ${drive.desc}: ${e.toString()}.  Data on the device might be corrupt.`)
         }
       })
-      if (typeof disks !== "undefined" && disks.length) {
-        disks.forEach((drive) => {
-          try {
-            if (fs.existsSync(`${drive.mp}/AIO_info.json`)) {
-              console.log(`Found AIO_info.json on USB Drive - ${drive.mp} ${drive.desc}`)
-              aioJSON = fs.readFileSync(`${drive.mp}/AIO_info.json`)
-            }
-          } catch (e) {
-            console.dir(e)
-            dialog.showErrorBox("USB DRIVE ERROR", `Error reading from ${drive.mp} ${drive.desc}: ${e.toString()}.  Data on the device might be corrupt.`)
-          }
-        })
-      }
-      if (aioJSON) {
-        try {
-          aioInfo = JSON.parse(aioJSON)
-          aioBkups = aioInfo.Backups
-          console.log(aioBkups)
-          /* console.log(`FW_VER: ${aioInfo.info.CMU_SW_VER}`)
-          console.log(`AIO_VER: ${aioInfo.info.AIO_VER}`) */
-          persistantData.set('FW', aioInfo.info.CMU_SW_VER)
-          persistantData.set('last_aio', aioInfo.info.AIO_VER)
-          //_.pullAll(aioBkups)
-          if (mainWindow) {
-            mainWindow.webContents.send('aio-info')
-          }
-        } catch (e) { console.error(e.toString()) }
-      }
     }
-  })
+    if (aioJSON) {
+      try {
+        aioInfo = JSON.parse(aioJSON)
+        aioBkups = aioInfo.Backups
+        console.log(aioBkups)
+        /* console.log(`FW_VER: ${aioInfo.info.CMU_SW_VER}`)
+        console.log(`AIO_VER: ${aioInfo.info.AIO_VER}`) */
+        persistantData.set('FW', aioInfo.info.CMU_SW_VER)
+        persistantData.set('last_aio', aioInfo.info.AIO_VER)
+        // _.pullAll(aioBkups)
+        if (mainWindow) {
+          mainWindow.webContents.send('aio-info')
+        }
+      } catch (e) { console.error(e.toString()) }
+    }
+  }
 }
 /* function createMenu () {
   return Menu.buildFromTemplate(require('./lib/menu'))
@@ -429,15 +434,15 @@ function getUSBDrives() {
 // Manage Squirrel startup event (Windows)
 // require('./lib/auto-update/startup')(initialize)
 
-ipc.on('open-file-bg', function(event) {
+ipc.on('open-file-bg', function (event) {
   openBGFolder(backgroundDir, event)
 })
-ipc.on('open-file-default', function(event) {
+ipc.on('open-file-default', function (event) {
   event.sender.send('selected-bg', defaultDir + 'default.png')
   // openBGFolder(defaultDir, event)
 })
 
-function openBGFolder(path, event) {
+function openBGFolder (path, event) {
   dialog.showOpenDialog({
     title: 'MZD-AIO-TI | Background Image Will Be Resized To: 800 px X 480 px and converted to png format.',
     properties: ['openFile'],
@@ -445,11 +450,11 @@ function openBGFolder(path, event) {
     filters: [
       { name: 'Background Image', extensions: ['png', 'jpg', 'jpeg'] }
     ]
-  }, function(files) {
+  }, function (files) {
     if (files) { event.sender.send('selected-bg', files) }
   })
 }
-ipc.on('open-offscreen-bg', function(event) {
+ipc.on('open-offscreen-bg', function (event) {
   dialog.showOpenDialog({
     title: 'MZD-AIO-TI | Off Screen Background Image Will Be Resized To: 800 px X 480 px and converted to png format.',
     properties: ['openFile'],
@@ -457,20 +462,20 @@ ipc.on('open-offscreen-bg', function(event) {
     filters: [
       { name: 'Off Screen Background Image', extensions: ['png', 'jpg', 'jpeg'] }
     ]
-  }, function(files) {
+  }, function (files) {
     if (files) { event.sender.send('selected-offscreen-bg', files) }
   })
 })
-ipc.on('open-offscreen-default', function(event) {
+ipc.on('open-offscreen-default', function (event) {
   event.sender.send('selected-offscreen-bg', defaultDir + 'OffScreenBackground.png')
 })
-ipc.on('default-blnk-art', function(event) {
+ipc.on('default-blnk-art', function (event) {
   event.sender.send('selected-album-art', blankAlbumArtDir + 'no_artwork_icon.png')
 })
-ipc.on('transparent-blnk-art', function(event) {
+ipc.on('transparent-blnk-art', function (event) {
   event.sender.send('selected-album-art', blankAlbumArtDir + 'no_artwork_icon_blank.png')
 })
-ipc.on('open-file-blnk-art', function(event) {
+ipc.on('open-file-blnk-art', function (event) {
   dialog.showOpenDialog({
     title: 'MZD-AIO-TI | Blank Album Art Image Will Be Resized To: 146 px X 146 px and converted to png format.',
     properties: ['openFile'],
@@ -478,7 +483,7 @@ ipc.on('open-file-blnk-art', function(event) {
     filters: [
       { name: 'Blank Album Art', extensions: ['png', 'jpg', 'jpeg'] }
     ]
-  }, function(files) {
+  }, function (files) {
     if (files) { event.sender.send('selected-album-art', files) }
   })
 })
@@ -489,21 +494,21 @@ ipc.on('bg-no-resize', (event, arg) => {
     filters: [
       { name: 'Background Image', extensions: ['png', 'jpg', 'jpeg'] }
     ]
-  }, function(files) {
+  }, function (files) {
     if (files) {
       event.sender.send('selected-joined-bg', files)
     }
   })
 })
-ipc.on('theme-jci', function(event) {
+ipc.on('theme-jci', function (event) {
   openThemeDialog(event)
 })
 
-function openThemeDialog(event) {
+function openThemeDialog (event) {
   dialog.showOpenDialog({
     title: 'MZD-AIO-TI | Choose The JCI Folder From Any Theme Package.',
     properties: ['openDirectory']
-  }, function(files) {
+  }, function (files) {
     if (files) {
       event.sender.send('custom-theme', files)
     } else {
@@ -532,7 +537,7 @@ ipc.on('download-aio-files', (event, arg) => {
     downloadZip(`${fileName}`)
   })
 
-  function downloadZip(arg) {
+  function downloadZip (arg) {
     downloadwin = new BrowserWindow({
       show: false,
       frame: false,
@@ -542,13 +547,13 @@ ipc.on('download-aio-files', (event, arg) => {
       }
     })
     resetDL()
-    downloadwin.loadURL(path.join("http://trevelopment.win", `${arg}`))
+    downloadwin.loadURL(path.join('http://trevelopment.win', `${arg}`))
     downloadwin.on('closed', () => {
       downloadwin = null
     })
   }
 
-  function resetDL() {
+  function resetDL () {
     downloadwin.webContents.session.once('will-download', (event, item, webContents) => {
       // fileSize = (typeof fileSize === 'undefined') ? item.getTotalBytes() : fileSize;
       // Set the save path, making Electron not to prompt a save dialog.
@@ -559,7 +564,7 @@ ipc.on('download-aio-files', (event, arg) => {
       if (fs.existsSync(`${savePath}`)) {
         console.log(`${path.resolve(savePath)} Already Exists`)
         item.cancel()
-        extract(`${savePath}`, { dir: `${app.getPath('userData')}` }, function(err) {
+        extract(`${savePath}`, { dir: `${app.getPath('userData')}` }, function (err) {
           if (err) { console.error(err) }
           fs.unlinkSync(`${savePath}`)
           console.log(`${fileName} unzipped & deleted`)
@@ -570,7 +575,7 @@ ipc.on('download-aio-files', (event, arg) => {
       var fileSize = 107
       if (`${fileName}` === 'speedcam-patch.zip') { fileSize += 80 }
       // var totalSize = parseInt(`${item.getTotalBytes()}`/1000000)
-      item.on('updated', function(event, state) {
+      item.on('updated', function (event, state) {
         if (state === 'interrupted') {
           mainWindow.webContents.send('notif-progress', 'Download interrupted. Please try again.')
           console.log('Download is interrupted, canceling')
@@ -587,7 +592,7 @@ ipc.on('download-aio-files', (event, arg) => {
       item.once('done', (event, state) => {
         if (state === 'completed') {
           console.log(`${savePath} Downloaded successfully`)
-          extract(`${savePath}`, { dir: `${app.getPath('userData')}` }, function(err) {
+          extract(`${savePath}`, { dir: `${app.getPath('userData')}` }, function (err) {
             if (err) { console.error(err) }
             fs.unlinkSync(`${savePath}`)
             console.log(`${fileName} unzipped & deleted`)

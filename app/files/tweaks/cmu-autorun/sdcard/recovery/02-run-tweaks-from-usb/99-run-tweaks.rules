@@ -1,0 +1,1 @@
+ACTION=="add",KERNEL=="sd[abcdef]*", RUN+="/bin/sh /tmp/mnt/data_persist/dev/bin/02-run-tweaks-from-usb/udev_add_action_handler.sh %k"

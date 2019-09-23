@@ -2,9 +2,14 @@ backup_org /jci/gui/apps/system/controls/OffScreen/images/OffScreenBackground.pn
 # change off screen background image
 show_message "CHANGING OFF SCREEN BACKGROUND IMAGE ..."
 log_message "=====********** INSTALL OFF SCREEN BACKGROUND IMAGE ...  ***********====="
-
-cp -a ${MYDIR}/config/OffScreenBackground.png /jci/gui/apps/system/controls/OffScreen/images/
-log_message "===                 Replaced Off Screen Background Image              ==="
+if [ -s ${MYDIR}/config/OffScreenBackground.png ]
+then
+  cp -a ${MYDIR}/config/OffScreenBackground.png /jci/gui/apps/system/controls/OffScreen/images/
+  log_message "===                 Replaced Off Screen Background Image              ==="
+else
+  show_message "ERROR MISSING OFF-SCREEN BACKGROUND FILE!!!"
+  log_message "===             ERROR: Off Screen Background Image not found          ==="
+fi
 
 log_message "====********* END INSTALLATION OFF SCREEN BACKGROUND IMAGE **********===="
 log_message " "

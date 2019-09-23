@@ -1,4 +1,5 @@
 // try not to make changes to the lines below
+/* jshint -W116, -W117 */
 var tripDistCurrent = 0;
 var prevTripDist = 0;
 var tripDistBkp = 0;
@@ -49,6 +50,12 @@ var hideSpeedFuel = false;
 var speedometerLayout = null;
 var speedoClassicLayout = null;
 var speedometerIcon = "apps/_speedometer/IcnSbnSpeedometer.png";
+var vehicleDataConnected = false;
+var gpsDataConnected = false;
+var envDataConnected = false;
+var speedConnectAttempts = 0;
+var speedConnectRetries = 0;
+var speedConMaxRetries = 20;
 
 $.ajax({
   url: 'addon-common/cufon-yui.js',
@@ -72,19 +79,24 @@ $(document).ready(function() {
     speedometerWs.onmessage = function(event) {
       var res = event.data.split('#');
       switch (res[0]) {
-        case 'vehicleData':
+        case 'vehicleSpeed':
           updateVehicleSpeed(res[1]);
-          updateEngineSpeed(res[2]);
-          updateTripDist(res[3]);
-          updateGPSSpeed(res[4]);
-          updateGPSAltitude(res[5]);
-          updateGPSHeading(res[6]);
-          updateGPSLatitude(res[7]);
-          updateGPSLongitude(res[8]);
-          updateEngineLoad(res[9]);
-          updateGearLeverPos(res[10]);
           break;
-        case 'envData':
+        case 'vehdata':
+          vehicleDataConnected = true;
+          updateEngineSpeed(res[1]);
+          updateTripDist(res[2]);
+          break;
+        case 'gpsdata':
+          gpsDataConnected = true;
+          updateGPSSpeed(res[1]);
+          updateGPSAltitude(res[2]);
+          updateGPSHeading(res[3]);
+          updateGPSLatitude(res[4]);
+          updateGPSLongitude(res[5]);
+          break;
+        case 'envdata':
+          envDataConnected = true;
           updateFuelEfficiency(res[1]);
           updateTotFuelEfficiency(res[2]);
           updateAvgFuelEfficiency(res[3]);
@@ -94,6 +106,8 @@ $(document).ready(function() {
           updateGearPos(res[7]);
           updateFuelGauge(res[8]);
           updateBatSOC(res[9]);
+          updateGearLeverPos(res[10]);
+          updateEngineLoad(res[11]);
           break;
         default:
           break;
@@ -103,11 +117,30 @@ $(document).ready(function() {
       speedometerWs.send(action);
     };
     speedometerWs.onerror = function(e) {
-      console.log("err: " + e.toString());
+      if (speedConnectRetries >= speedConMaxRetries) {
+        AIO_SBN("Failed To Start Speedometer", speedometerIcon);
+        console.log("Speedometer Failed to connect to Websocket");
+      } else if (speedConnectRetries < speedConnectAttempts) {
+        speedConnectRetries++;
+        startDataRetrieval(5000);
+      }
     };
   }
-  // --------------------------------------------------------------------------
   // websocket end
+  // --------------------------------------------------------------------------
+  // Start Data Retreval
+  // --------------------------------------------------------------------------
+  function startDataRetrieval(wait) {
+    setTimeout(function() {
+      speedConnectAttempts++;
+      if(!vehicleDataConnected){
+        retrievedata('vehicleSpeed');
+        retrievedata('vehicleData');
+        envDataConnected || retrievedata('envData');
+        gpsDataConnected || retrievedata('gpsData');
+      }
+    }, wait || 5000);
+  }
   // update trip time
   // --------------------------------------------------------------------------
   function updateTripTime() {
@@ -678,7 +711,7 @@ $(document).ready(function() {
         fuelGaugeMax = Math.ceil(fuelGaugeVal);
       }
       var nextFuelPer = Math.round((fuelGaugeVal / fuelGaugeMax) * 100);
-      lastFuelGaugePercent = Math.abs(lastFuelGaugePercent - nextFuelPer) < 3 || lastFuelGaugePercent === 0 ? nextFuelPer : (nextFuelPer < lastFuelGaugePercent ? lastFuelGaugePercent - 3 : lastFuelGaugePercent + 3);;
+      lastFuelGaugePercent = Math.abs(lastFuelGaugePercent - nextFuelPer) < 3 || lastFuelGaugePercent === 0 ? nextFuelPer : (nextFuelPer < lastFuelGaugePercent ? lastFuelGaugePercent - 3 : lastFuelGaugePercent + 3);
       lastFuelGaugeValue = parseFloat((Math.round((fuelGaugeFactor / 10) * lastFuelGaugePercent) / 10).toFixed(1));
       $('.fuelGaugeValue').html(lastFuelGaugeValue + (fuelGaugeValueSuffix === "%" ? "%" : ""));
       $('.fuel-bar').css('width', lastFuelGaugePercent + "%");
@@ -823,11 +856,9 @@ $(document).ready(function() {
       }
     }
   }
+
   // Start data retrieval
-  setTimeout(function() {
-    retrievedata('vehicleData');
-    retrievedata('envData');
-  }, 15000);
+  startDataRetrieval(15000);
 });
 // Loads the override values from speedometer-config.js
 function SpeedometerOverRide(over) {

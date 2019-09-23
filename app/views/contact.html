@@ -53,16 +53,16 @@
     <div>
       <label for="message" class="w3-label">
         <span class="required">Message: *</span>
-        <textarea class="w3-input" id="message" name="message" placeholder="Do you love MZD-AIO-TI?  Have you developed a tweak that should be included?  Did you find a bug?  Type your message here.
+        <textarea class="w3-input" id="message" name="message" type="text" placeholder="Do you love MZD-AIO-TI?  Have you developed a tweak that should be included?  Did you find a bug?  Type your message here.
 **IF YOU ARE ASKING FOR HELP:
 Please check the mazdatweaks.com FAQ page first.**
 ~Trez" tabindex="3" required="required"></textarea>
       </label>
     </div>
-    <input class="w3-hide" name="AIOver" id="AIOver">
+    <input name="AIOver" class="AIOver" type="hidden">
     <script>
     $(function(){
-      $('#AIOver').val(getAIOver());
+      $('.AIOver').val(getAIOver());
       $('.AIOver').text(getAIOver());
       $('[type="submit"]').click(function(){
         if (validateForm()) {

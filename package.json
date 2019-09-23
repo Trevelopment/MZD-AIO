@@ -2,7 +2,7 @@
   "name": "MZD-AIO-TI",
   "productName": "MZD All In One Tweaks Installer",
   "description": "An Installer/Uninstaller for Over 50 System Tweaks for the Mazda MZD Infotainment System.",
-  "version": "2.8.4",
+  "version": "2.8.5",
   "homepage": "http://mazdatweaks.com",
   "license": "GPL-3.0",
   "main": "main.js",
@@ -14,13 +14,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Trevelopment/MZD-AIO"
+    "url": "https://gitlab.com/Trezdog44/MZD-AIO-TI"
   },
   "bugs": {
-    "url": "https://github.com/Trevelopment/MZD-AIO/issues"
+    "url": "https://gitlab.com/Trezdog44/MZD-AIO-TI/issues"
   },
   "engines": {
-    "node": "^10"
+    "node": "^13"
   },
   "keywords": [
     "Mazda",
@@ -53,12 +53,13 @@
     "build:win32": "npm run prebuild && build --win --ia32 && npm run postbuild && npm run win32copy",
     "build:linux:x64": "npm run prebuild && build --linux deb AppImage --x64 && npm run postbuild",
     "build:linux:deb": "./scripts/build_linux_deb.sh",
-    "win32copy": " mv ./releases/MZD-AIO-TI_Setup_2.8.4.exe ./releases/MZD-AIO-TI_Setup_2.8.4_Win32.exe && mv ./releases/MZD-AIO-TI_Setup_2.8.4.exe.blockmap ./releases/MZD-AIO-TI_Setup_2.8.4_Win32.exe.blockmap",
+    "win32copy": " mv ./releases/MZD-AIO-TI_Setup_2.8.5.exe ./releases/MZD-AIO-TI_Setup_2.8.5_Win32.exe && mv ./releases/MZD-AIO-TI_Setup_2.8.5.exe.blockmap ./releases/MZD-AIO-TI_Setup_2.8.5_Win32.exe.blockmap",
     "build": "build",
     "release": "build",
     "postbuild": "node build/target.js --clean",
     "xinstall": "cd app && ncu -u --packageFile package.json && ncu -a --packageFile package.json && npm i && cd .. && ncu -u --packageFile package.json && ncu -a --packageFile package.json && npm i",
-    "postinstall": "electron-builder install-app-deps"
+    "postinstall": "install-app-deps && cd app && sh ../node_modules/.bin/electron-rebuild && cd .. && sh ./node_modules/.bin/electron-rebuild",
+  "dist": "electron-builder"
   },
   "standard": {
     "globals": [
@@ -86,12 +87,13 @@
       "/app/mzd/",
       "/app/gui/",
       "/app/views/Photojoiner_files/",
-      "/app/",
-      "vendor"
+      "vendor",
+      "old_tweak_files",
+      "scripts"
     ]
   },
   "jshintConfig": {
-    "esversion": 6
+    "esversion": 8
   },
   "build": {
     "appId": "com.trevelopment.mzd-aio-ti",
@@ -112,7 +114,7 @@
         "owner": "trevelopment",
         "repo": "MZD-AIO-TI",
         "package": "MZD-AIO-MAC",
-        "user": "trevelopment",
+        "user": "trevelopment"
       }
     },
     "dmg": {
@@ -142,7 +144,7 @@
         "owner": "aio",
         "repo": "aio",
         "package": "aio",
-        "user": "Trezdog44",
+        "user": "Trezdog44"
       }
     },
     "win": {
@@ -154,7 +156,7 @@
         "owner": "aio",
         "repo": "aio",
         "package": "aio",
-        "user": "Trezdog44",
+        "user": "Trezdog44"
       }
     },
     "directories": {
@@ -162,39 +164,40 @@
     },
     "nsis": {
       "artifactName": "${productName}_Setup_${version}.${ext}"
-    }
+    },
+	"forceCodeSigning": false
   },
   "devDependencies": {
-    "async": "^2.6.2",
+    "async": "^3.1.0",
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
-    "dependency-check": "^3.3.0",
+    "dependency-check": "^4.1.0",
     "devtron": "^1",
-    "electron": "4.0.3",
-    "electron-builder": "^20.38.5",
-    "electron-debug": "^2.1.0",
-    "electron-is-dev": "^1.0",
-    "electron-rebuild": "^1.8.4",
-    "istanbul": "^0.4",
-    "mocha": "^5.2.0",
-    "rimraf": "^2.6.3",
+    "electron": "^6.1.7",
+    "electron-builder": "^21.2.0",
+    "electron-debug": "^3.0.1",
+    "electron-is-dev": "^1.1.0",
+    "electron-rebuild": "^1.8.8",
+    "mocha": "^6.2.2",
+    "rimraf": "^3.0.0",
     "shelljs": "^0.8.3",
-    "spectron": "^5.0.0",
-    "standard": "^12.0.1"
+    "spectron": "^8.0.0",
+    "standard": "^13.1.0"
   },
   "dependencies": {
     "appender": "^0.0.2",
-    "bluebird-lst": "^1.0.6",
-    "copy-dir": "^0.4.0",
+    "bluebird-lst": "^1.0.9",
+    "copy-dir": "^1.2.0",
     "crlf": "^1.1.1",
-    "drivelist": "^6.4.6",
-    "electron-context-menu": "^0.10.1",
+    "drivelist": "^8.0.9",
+    "electron-context-menu": "^0.14.0",
     "electron-image-resize": "^1.2.4",
-    "electron-store": "^2.0.0",
+    "electron-store": "^4.0.0",
     "extract-zip": "^1.6.7",
-    "jquery": "^3.3.1",
+    "global": "^4.3.2",
+    "jquery": "^3.4.1",
     "mkdirp": "^0.5.1",
-    "node-abi": "^2.7.1",
-    "xml2js": "^0.4.19"
+    "node-abi": "^2.13.0",
+    "xml2js": "^0.4.23"
   }
 }

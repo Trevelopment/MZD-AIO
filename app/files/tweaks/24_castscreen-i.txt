@@ -5,7 +5,7 @@ show_message "INSTALL CASTSCREEN-RECEIVER ..."
 log_message "=====**************  INSTALL CASTSCREEN-RECEIVER ...   *************====="
 cp -a ${MYDIR}/config/castscreen-receiver/*.sh /jci/scripts
 cp -a ${MYDIR}/config/castscreen-receiver/cs_receiver_arm /jci/scripts
-cp -a ${MYDIR}/config/castscreen-receiver/adb /tmp/mnt/resources/dev/bin
+cp -a ${MYDIR}/config/castscreen-receiver/adb /jci/scripts
 rm -f /jci/scripts/cs_receiver_conn_arm
 rm -f /jci/scripts/adb
 rm -f /jci/scripts/castscreen-1.0.apk
@@ -14,11 +14,19 @@ log_message "===        Copied castscreen-receiver files to /jci/scripts/       
 chmod 777 /jci/scripts/wait_adb_arm.sh
 chmod 777 /jci/scripts/cs_receiver_arm
 chmod 777 /jci/scripts/mirroring.sh
+chmod 777 /jci/scripts/adb
+if [ ! -L /bin/adb ]; then
+    ln -fs /jci/scripts/adb /bin/adb
+		log_message "===                      Created symlink for adb                      ==="
+fi
+
 if [ $TESTBKUPS -eq 1 ]
 then
 	cp ${STAGE_WIFI} ${MYDIR}/bakups/test/stage_wifi_castscreen-before.sh
 fi
 
+sed -i '/mirroring.sh/d' ${STAGE_WIFI}
+sed -i '/### Castscreen/d' ${STAGE_WIFI}
 #add castscreen-receiver to stage_wifi
 if [ -e ${STAGE_WIFI} ]
 then

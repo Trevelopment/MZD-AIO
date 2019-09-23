@@ -1,3 +1,4 @@
+/* jshint -W086, -W116, -W117 */
 var systemAppId = 'system';
 var additionalAppsConfig = '/jci/opera/opera_dir/userjs/additionalApps.json';
 var additionalApps = [];

@@ -1,3 +1,4 @@
+/* jshint -W117 */
 /*
  Copyright 2016 Herko ter Horst
  __________________________________________________________________________
@@ -121,7 +122,7 @@ function SpeedoMeterTmplt(uiaId, parentDiv, templateID, controlProperties) {
     //'<div class="vehicleSpeed pos0">0</div>'+
     //'<div class="speedUnit">---</div>'+
     '</div>';
-  for (speedo in this.classicTemplate) {
+  for (var speedo in this.classicTemplate) {
     this.valuetable += '<fieldset id="' + this.classicTemplate[speedo].id + '">' +
       '<legend>' + this.classicTemplate[speedo].name;
     if (this.classicTemplate[speedo].unitClass !== null) {

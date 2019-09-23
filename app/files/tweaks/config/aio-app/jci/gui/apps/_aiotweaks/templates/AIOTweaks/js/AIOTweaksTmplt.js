@@ -149,7 +149,7 @@ function AIOTweaksTmplt(uiaId, parentDiv, templateID, controlProperties) {
   $("<button/>").attr("id", "runCheckIPBtn").html('<a>Check IP</a>').appendTo($('#Shell'));
   $("<button/>").attr("id", "runTweaksBtn").html('Run Tweaks.sh').addClass('devTools').insertAfter($('#Shell'));
   $("<button/>").attr("id", "runTerminalBtn").html('Run Terminal').addClass('devTools').insertAfter($('#Shell'));
-  $("<button/>").attr("id", "runRemount").html('Remount RW').addClass('devTools').insertAfter($('#Shell'));
+  $("<button/>").attr("id", "runRemountBtn").html('Remount RW').addClass('devTools').insertAfter($('#Shell'));
   $("<div/>").attr("id", "devModeSecretBtn").insertAfter($('#Shell'));
   $("<button/>").attr("id", "scrollUpBtn").addClass('AIO-scroller').html('<img src="apps/_aiotweaks/templates/AIOTweaks/images/scrollUp.png" />').insertAfter($('#AioInfoPanel'));
   $("<button/>").attr("id", "scrollDownBtn").addClass('AIO-scroller').html('<img src="apps/_aiotweaks/templates/AIOTweaks/images/scrollDown.png" />').insertAfter($('#AioInfoPanel'));

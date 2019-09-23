@@ -1,0 +1,113 @@
+#!/bin/sh
+
+SCRIPT="/tmp/root/.aa/headunit"
+SCRIPTPATH="/tmp/root/.aa"
+LOGPATH=/tmp/root/headunit.log
+
+export LD_LIBRARY_PATH="${SCRIPTPATH}/headunit_libs:/jci/lib:/jci/opera/3rdpartylibs/freetype:/usr/lib/imx-mm/audio-codec:/usr/lib/imx-mm/parser"
+ #override some GST plugins with these
+export GST_PLUGIN_PATH="/usr/lib/gstreamer-0.10/:${SCRIPTPATH}/headunit_libs"
+
+DEBUG=0
+
+# Testing this:
+[ $DEBUG -eq 1 ] && sysctl -a | grep "mem" 2>&1 >> ${LOGPATH}
+[ $DEBUG -eq 1 ] && echo "****************************" >> ${LOGPATH}
+
+echo 41943040 > /proc/sys/net/core/rmem_max
+echo 41943040 > /proc/sys/net/core/wmem_max
+echo 17825792 > /proc/sys/net/core/rmem_default
+echo 17825792 > /proc/sys/net/core/wmem_default
+echo 4096 17825792 41943040 > /proc/sys/net/ipv4/tcp_rmem
+echo 4096 17825792 41943040 > /proc/sys/net/ipv4/tcp_wmem
+# echo 4096 17825792 41943040 > /proc/sys/net/ipv4/tcp_mem
+
+[ $DEBUG -eq 1 ] && echo "sysctl -a | grep mem" >> ${LOGPATH}
+[ $DEBUG -eq 1 ] && sysctl -a | grep "mem" >> ${LOGPATH} 2>&1
+[ $DEBUG -eq 1 ] && echo "****************************" >> ${LOGPATH}
+hwclock --hctosys
+[ $DEBUG -eq 1 ] && echo "START HEADUNIT LOG - $(date +'%D %T')" >> ${LOGPATH}
+
+if ! [ -e /tmp/root/headunit.json ]; then
+ cp "${SCRIPTPATH}/headunit.json" /tmp/root/
+fi
+
+start_headunit()
+{
+   rm -f /tmp/root/headunit-wireless.status
+   sed -i 's."wifiTransport": true."wifiTransport": false.g' /tmp/root/headunit.json
+   taskset 0xFFFFFFFF "${SCRIPTPATH}/headunit" "$@" > /dev/null 2>&1 &
+   sleep 2
+   touch /tmp/root/headunit.status
+   [ $DEBUG -eq 1 ] && echo "=== headunit-usb ==="
+   [ $DEBUG -eq 1 ] && cat /tmp/root/headunit.json  >> ${LOGPATH}
+   [ $DEBUG -eq 1 ] && echo "===================="
+}
+
+start_AAwireless()
+{
+    rm -f /tmp/root/headunit.status
+    sed -i 's."wifiTransport": false."wifiTransport": true.g' /tmp/root/headunit.json
+    taskset 0xFFFFFFFF "${SCRIPTPATH}/headunit" "$@" > /dev/null 2>&1 &
+    sleep 2
+    touch /tmp/root/headunit-wireless.status
+   [ $DEBUG -eq 1 ] && echo "=== headunit-wifi ==="
+   [ $DEBUG -eq 1 ] && cat /tmp/root/headunit.json  >> ${LOGPATH}
+   [ $DEBUG -eq 1 ] && echo "===================="
+}
+
+rm -f /tmp/root/headunit.status /tmp/root/headunit-wireless.status
+
+# prevent conflict by Official AA and CP
+killall -q -9 aap_service carplayd L_jciCARPLAY L_jciAAPA
+
+#default USB
+start_headunit
+
+# loop forever. every 5 seconds,
+while true
+do
+ NET_CHECK=`netstat -rn|awk '$2=="192.168.43.1" {print}'|wc -l|awk '{print $1}'`
+
+ if [ -e /tmp/root/usb_connect ]; then
+  USBCHECK=1
+  [ $DEBUG -eq 1 ] && echo "USB attach" >> ${LOGPATH}
+ else
+  USBCHECK=0
+  [ $DEBUG -eq 1 ] && echo "USB detach" >> ${LOGPATH}
+ fi
+
+ if [ $NET_CHECK == 1 ] && [ $USBCHECK == 0 ]; then
+    [ $DEBUG -eq 1 ] && echo "WLAN Mode" >> ${LOGPATH}
+    if [ -e /tmp/root/headunit.status ]; then
+        killall -q headunit
+    fi
+
+    if ! [ -e /tmp/root/headunit-wireless.status ]; then
+        [ $DEBUG -eq 1 ] && echo "Start WIRELESS" >> ${LOGPATH}
+        start_AAwireless
+    fi
+
+ else
+    #echo "USB"
+    [ $DEBUG -eq 1 ] && echo "USB Mode" >> /tmp/root/headunit.log
+    check_headunit=`ps|grep 'bin/headunit'|grep -v wrapper|grep -v grep|wc -l|awk '{print $1}'`
+    [ $DEBUG -eq 1 ] && echo "check_headunit = $check_headunit" >> ${LOGPATH}
+
+    [ $check_headunit -eq 0 ] && rm -f /tmp/root/headunit-wireless.status /tmp/root/headunit.status
+
+    if [ -e /tmp/root/headunit-wireless.status ]; then
+        killall -q headunit
+    fi
+    if ! [ -e /tmp/root/headunit.status ]; then
+        [ $DEBUG -eq 1 ] && echo "Start USB" >> ${LOGPATH}
+        start_headunit
+    fi
+ fi
+
+ # Performance issue when $RANDOM=0 many times in a row
+ RAND=`expr $RANDOM % 5 + 3`
+ echo "go sleep $RAND"
+ sleep $RAND
+
+done

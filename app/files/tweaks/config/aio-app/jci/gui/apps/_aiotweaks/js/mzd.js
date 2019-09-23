@@ -1,10 +1,14 @@
 // *****************************
-// ** AIO Tweaks App v0.9 - mzd.js
+// ** AIO Tweaks App v1.0 - mzd.js
 // ** All the functions for Buttons in AIO Tweaks App
 // ** By Trezdog44
+// __________________________________________________________________________
+//
+// Filename: mzd.js
+// __________________________________________________________________________
 // *****************************
 /* jshint -W117 */
-var aioTweaksVer = 0.9;
+var aioTweaksVer = 1.0;
 var AArunning = false;
 var appListData = [];
 var globalAIOerror = null;
@@ -48,6 +52,7 @@ function StartAIOApp() {
   $("#systemTab").on("click", settingsSystemTab);
   $("#wifiSettings").on("click", wifiSettings);
   $("#runTweaksBtn").on("click", runTweaks);
+  $("#runRemountBtn").on("click", runRemount);
   $("#fullRestoreConfirmBtn").on("click", fullSystemRestoreConfirm);
   $("#headunitLogBtn").on("click", showHeadunitLog);
   $("#scrollUpBtn").on("click", scrollUp);

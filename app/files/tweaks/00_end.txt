@@ -1,4 +1,5 @@
 show_message "========== END OF TWEAKS INSTALLATION =========="
+[ -s /etc/profile ] || restore_org /etc/profile
 if [ -f "${MYDIR}/AIO_log.txt" ]
 then
   END_ROOTFS=$(df -h | (grep 'rootfs' || echo 0) | awk '{ print $5 " " $1 }')

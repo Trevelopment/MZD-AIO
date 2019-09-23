@@ -1,0 +1,29 @@
+#!/bin/sh
+
+FileName="sshd_config"
+DestinationPath="/etc/ssh/"
+
+SrcPath=`dirname $0`
+SrcFileName=$SrcPath/$FileName
+DstFileName=$DestinationPath/$FileName
+
+NEED_UPDATE=0
+if [ -f $DstFileName ]; then
+  if [ -f $SrcFileName ]; then
+    MD5Src=`/usr/bin/md5sum $SrcFileName | /usr/bin/awk '{print $1}'`
+    MD5Dst=`/usr/bin/md5sum $DstFileName | /usr/bin/awk '{print $1}'`
+    if [ "$MD5Src" != "$MD5Dst" ]; then
+       NEED_UPDATE=1
+    fi
+  fi
+else
+  NEED_UPDATE=1
+fi
+
+if [ $NEED_UPDATE == 1 ]; then
+  /bin/mount -o rw,remount /
+  /bin/cp "$SrcFileName" "$DstFileName" 
+  /bin/chown 1018:3015 "$DstFileName"
+  sync
+  /bin/mount -o ro,remount /
+fi

@@ -1,0 +1,24 @@
+alias ll='ls -l'
+alias la='ll -a'
+
+export PATH='/sbin:/usr/sbin:/bin:/usr/bin:/jci/bin/:/resources/dev/bin:/resources/dev/sbin:/data_persist/dev/bin:/data_persist/dev/sbin:/resources/dev/usr/bin'
+
+#export DBus environment variables for the session
+. dbus envset jci
+
+export V4LCAPTURE_DBUS_ADDRESS=$JCI_HMI_BUS
+
+# required for Wayland
+export XDG_RUNTIME_DIR=/tmp
+export WAYLAND_IVI_SURFACE_ID=2      #to set Browser's ID equal to UIA_System_ID (this has to be done before starting SM)
+
+# required for Wayland
+OPERA_ROOT="/jci/opera"
+export FREETYPE_FONT_SET=YES
+export OPERA_DIR="${OPERA_ROOT}/opera_dir"
+export OPERA_HOME="${OPERA_ROOT}/opera_home/"
+export OPERA_FONTS="/jci/fonts/CHN"
+export LD_LIBRARY_PATH="/jci/lib:${OPERA_ROOT}/3rdpartylibs/freetype:/usr/lib/imx-mm/audio-codec:/usr/lib/imx-mm/parser:/data_persist/dev/lib:${LD_LIBRARY_PATH}"
+
+# required for valgrind
+export VALGRIND_LIB=/tmp/mnt/resources/dev/usr/lib/valgrind

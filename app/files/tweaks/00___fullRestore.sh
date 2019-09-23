@@ -62,7 +62,7 @@ fi
 rm -f /jci/nng/2
 if [ -e /mnt/sd_nav/content/speedcam/speedcam.txt ] || [ -e /mnt/sd_nav/content/speedcam/speedcam.spdb ]
 then
-  #	cp -a /mnt/sd_nav/content/speedcam/speedcam.txt ${MYDIR}
+  #	cp /mnt/sd_nav/content/speedcam/speedcam.txt ${MYDIR}
   #	log_message "=== Copied speedcam.txt to USB ==="
   #	rm -f /mnt/sd_nav/content/speedcam/speedcam.txt
   #	rm -f /mnt/sd_nav/content/speedcam/speedcam.spdb

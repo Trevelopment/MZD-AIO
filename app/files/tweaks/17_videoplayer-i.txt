@@ -19,6 +19,7 @@ pkill websocketd
 # Remove previous files
 rm -fr /jci/gui/apps/_videoplayer
 rm -fr /tmp/mnt/resources/aio/apps/_videoplayer
+rm -fr ${AIO_APP_DIR}/_videoplayer
 sed -i '/Video/d' ${STAGE_WIFI}
 sed -i '/--port=9998/d' ${STAGE_WIFI}
 log_message "===                   Removed Old VideoPlayer Files                   ==="
@@ -73,7 +74,7 @@ addon_common
 # symlink to resources
 if [ $APPS2RESOURCES -eq 1 ]
 then
-  ln -sf /tmp/mnt/resources/aio/apps/_videoplayer /jci/gui/apps/_videoplayer
+  ln -sf ${AIO_APP_DIR}/_videoplayer /jci/gui/apps/_videoplayer
   log_message "===                Created Symlink To Resources Partition             ==="
 fi
 

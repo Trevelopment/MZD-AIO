@@ -77,15 +77,18 @@ ipc.on('already-downloaded', function (event, filename) {
   })
 })
 ipc.on('selected-joined-bg', function (event, filepath) {
-  var outFile = `${getBackground}`
-  clipboard.writeImage(filepath[0])
-  joinedPhoto(filepath[0])
-  let bgNotification = new Notification('Background', {
-    body: `Your Infotainment Background Will Be Changed To: ${filepath}`,
-    icon: 'favicon.ico',
-    silent: true
-  })
-  bgNotification.onclick = () => {}
+  if(filepath && filepath[0]) {
+    var outFile = `${getBackground}`
+    clipboard.writeImage(filepath[0])
+    joinedPhoto(filepath[0])
+    let bgNotification = new Notification('Background', {
+      body: `Your Infotainment Background Will Be Changed To: ${filepath[0]}`,
+      icon: 'favicon.ico',
+      silent: true
+    })
+    bgNotification.onclick = () => {}
+    //snackbar(`Your Infotainment Background Will Be Changed To: <img src="${filepath[0]}?` + new Date().getTime() + `" alt="${filepath[0]}">`)
+  }
 })
 ipc.on('selected-bg', function (event, filepath) {
   var outFile = `${getBackground}`
@@ -97,6 +100,7 @@ ipc.on('selected-bg', function (event, filepath) {
     icon: 'favicon.ico',
     silent: true
   })
+  snackbar(`Your Infotainment Background: <img src="${outFile}?` + new Date().getTime() + `" alt="${filepath}">`)
   bgNotification.onclick = () => {
     $('#imgframe').click()
   }
@@ -111,6 +115,7 @@ ipc.on('selected-offscreen-bg', function (event, filepath) {
     silent: true
   })
   bgNotification.onclick = () => {}
+  snackbar(`Your Infotainment Off-Screen Background: <img src="${outFile}?` + new Date().getTime() + `" alt="${filepath}">`)
 })
 ipc.on('set-bg', (prev) => {
   var bgNoCache = `${getBackground}?` + new Date().getTime()
@@ -127,8 +132,9 @@ ipc.on('selected-album-art', function (event, filepath) {
   settings.set('blank-album-art', `${filepath}`)
   fs.writeFileSync(`${outFile}`, nativeImage.createFromPath(`${filepath}`).resize({ 'width': 146, 'height': 146 }).toPNG())
   setTimeout(function () {
-    var bgNoCache = `${varDir}/no_artwork_icon.png?` + new Date().getTime()
-    $('#blnk-albm-img').html(`<img src="${bgNoCache}">`)
+    var bgNoCache = `<img src="${varDir}/no_artwork_icon.png?` + new Date().getTime() + `">`
+    $('#blnk-albm-img').html(`${bgNoCache}`)
+    snackbar(`Blank Album Art: ${bgNoCache}`)
   }, 2000)
 })
 ipc.on('aio-info', function (event) {

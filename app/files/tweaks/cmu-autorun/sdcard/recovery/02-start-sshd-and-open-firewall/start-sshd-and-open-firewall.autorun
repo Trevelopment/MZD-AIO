@@ -1,0 +1,3 @@
+#!/bin/sh
+#start startup script in background (bacause script need over 100sec to run) 
+/bin/sh `dirname $0`/start_fw_in_background &

@@ -1,0 +1,33 @@
+### autorun
+# this script search in his dir and subdirs for *.autorun files
+# *.autorun files not need to have x (execute) bit set
+# and run all *.autorun files in alphabetical order (path+filename)
+# wait for every script to finish and run next script
+# THIS FILE NEED TO BE IN /tmp/mnt/data_persist/dev/bin/
+# THIS FILE NEED TO HAVE x (execute) bit SET TO BE EXECUTED BY CMU !!!
+
+/bin/chmod +x $0 
+/usr/bin/find `dirname $0` -iname \*.autorun -type f | /usr/bin/sort | /usr/bin/xargs -n 1 /bin/sh
+
+# Run the run.sh script
+echo 1 > /sys/class/gpio/Watchdog\ Disable/value
+sleep 40
+if [ -e /mnt/sd_nav/run.sh ]
+then
+  chmod +x /mnt/sd_nav/run.sh
+  sh /mnt/sd_nav/run.sh
+fi
+
+for USB in a b c d e
+do
+	RUNSH="/tmp/mnt/sd${USB}1/run.sh"
+	if [ -e "${RUNSH}" ]
+	then
+		chmod +x "${RUNSH}"
+		sh "${RUNSH}"
+		break
+	fi
+done
+
+exit 0
+### END autorun

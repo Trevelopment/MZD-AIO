@@ -64,7 +64,7 @@
         advancedOps: false,
         dataDump: false,
         aaBetaVer: false,
-        aaWifi: true,
+        aaWifi: false,
         aaHUD: false,
         autosort: true,
         barautosort: true,
@@ -176,7 +176,7 @@
       $scope.user.vpOps = {
         shuffle: true,
         repeat: 2,
-        fullscreen: 1,
+        fullscreen: 2,
         v4lsink: true
       }
       $scope.vpOpsRepeat = {
@@ -193,14 +193,14 @@
         On: true,
         Off: false
       }
-      $scope.user.rmvallbg = function () {
+     /* $scope.user.rmvallbg = function () {
         $scope.user.uistyle.nobtnbg = true
         $scope.user.uistyle.nonpbg = true
         $scope.user.uistyle.nolistbg = true
         $scope.user.uistyle.nocallbg = true
         $scope.user.uistyle.notextbg = true
         $scope.$apply()
-      }
+      } */
       if ($scope.loc.toLowerCase().includes('en-us')) {
         // console.log('ENGLISH')
         $scope.user.speedoOps.lang.id = 0
@@ -571,6 +571,12 @@
         $scope.user.copydir = loc
         snackbar(`Save _copy_to_usb folder to ${persistantData.get('copyFolderLocation')}`, 3)
       })
+      $scope.autorestore = function (win) {
+        $scope.user.restore.full = win === 'restore'
+        $scope.user.autorun.serial = win === 'serial'
+        $scope.user.autorun.installer = (win === 'autorun' || win === 'serial')
+      }
+
       $scope.instAll = function () {
         $scope.user.mainOps = [0, 2, 3, 4, 5, 7, 8, 9]
         $scope.user.options = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 19, 20, 22, 26]
@@ -705,7 +711,7 @@
         var armsg = '<center>CMU-Autorun Scripts<br>Installer/Uninstaller For Autorun Scripts.<br>'
         armsg += '</center>'
         armsg += '<a href class="autorunHelp" onclick="autoHelp()"><span class="icon-question2"></span></a>'
-        bootbox.prompt({
+        var autoPrompt = bootbox.prompt({
           title: armsg,
           className: 'confirmAutorunCompile',
           inputType: 'checkbox',
@@ -733,26 +739,16 @@
           ],
           callback: function (results) {
             if (results === null) { return }
-            if (results.includes('autow')) {
-              $scope.user.autorun.autoWIFI = true
-            }
-            if (results.includes('autoa')) {
-              $scope.user.autorun.autoADB = true
-            }
-            if (results.includes('id7')) {
-              $scope.user.autorun.id7recovery = true
-            }
-            if (results.includes('dryrun')) {
-              $scope.user.autorun.dryrun = true
-            }
-            if (results.includes('serial')) {
-              $scope.user.autorun.serial = true
-              $scope.user.autorun.id7recovery = true
-            }
+            $scope.user.autorun.autoWIFI = results.includes('autow')
+            $scope.user.autorun.autoADB = results.includes('autoa')
+            $scope.user.autorun.dryrun = results.includes('dryrun')
+            $scope.user.autorun.serial = results.includes('serial')
+            $scope.user.autorun.id7recovery = (results.includes('id7') || results.includes('serial'))
             $('#confirmAutorunCompile').hide()
             $scope.compileTweaks()
           }
         })
+        autoPrompt.on('shown.bs.modal', function () { $('.bootbox-input[value=serial]').prop('checked', $scope.user.autorun.serial) })
       }
       $scope.startCompile = function () {
         bootbox.hideAll()
@@ -842,7 +838,14 @@
               setTimeout(function () {
                 introJs().hideHints()
               }, 4000)
-              $scope.compileTweaks()
+              rimraf(`${tmpdir}`, (err) => {
+                if (err) {
+                  let m = `Error occured while deleting old '_copy_to_usb' folder: ${err}\n Try closing all other running programs and folders before compiling.`
+                  aioLog(m, m)
+                  return
+                }
+                $scope.compileTweaks()
+              })
             }
           }
         })
@@ -957,14 +960,14 @@
     }
     $scope.visibleApps = {
       simpledashboard: true,
-      clock: true,
-      multidash: true,
       vdd: true,
+      clock: true,
       tetris: true,
       snake: true,
+      breakout: true,
       simplespeedo: true,
-      breakout: casdkApps.get('breakout', false),
-      gpsspeed: casdkApps.get('gpsspeed', false),
+      gpsspeed: true,
+      multidash: true,
       background: casdkApps.get('background', false),
       terminal: casdkApps.get('terminal', false),
       devtools: casdkApps.get('devtools', false),
@@ -1031,9 +1034,7 @@
           break
         case 'reset':
           casdkApps.set('terminal', false)
-          casdkApps.set('gpsspeed', false)
           casdkApps.set('aio', false)
-          casdkApps.set('breakout', false)
           casdkApps.set('background', false)
           casdkApps.set('multicontroller', false)
           casdkApps.set('devtools', false)

@@ -4,4 +4,7 @@
 
 cd /jci/scripts
 
-./wait_adb_arm.sh
+if which adb >/dev/null
+then
+  ./wait_adb_arm.sh
+fi

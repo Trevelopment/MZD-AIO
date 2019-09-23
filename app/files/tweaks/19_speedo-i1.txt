@@ -25,37 +25,8 @@ rm -fr /jci/gui/addon-speedometer
 rm -fr /jci/gui/speedometer
 rm -fr /jci/gui/apps/_speedometer
 rm -fr /tmp/mnt/resources/aio/apps/_speedometer
+rm -fr ${AIO_APP_DIR}/_speedometer
 
-sed -i '/Speedo-Compass-Video/d' ${STAGE_WIFI}
-sed -i '/v3.2/d' ${STAGE_WIFI}
-sed -i '/Removed requirement/d' ${STAGE_WIFI}
-sed -i '/# mount /d' ${STAGE_WIFI}
-sed -i '/Added additional/d' ${STAGE_WIFI}
-sed -i '/get-vehicle-speed/d' ${STAGE_WIFI}
-sed -i '/get-vehicle-data-other/d' ${STAGE_WIFI}
-sed -i '/get-gps-data/d' ${STAGE_WIFI}
-sed -i '/Need to set defaults/d' ${STAGE_WIFI}
-sed -i '/myVideoList /d' ${STAGE_WIFI}
-sed -i '/playbackAction /d' ${STAGE_WIFI}
-sed -i '/playbackOption /d' ${STAGE_WIFI}
-sed -i '/playbackStatus /d' ${STAGE_WIFI}
-sed -i '/playback/d' ${STAGE_WIFI}
-sed -i '/myVideoList/d' ${STAGE_WIFI}
-sed -i '/Video player action watch/d' ${STAGE_WIFI}
-sed -i '/playback-action.sh/d' ${STAGE_WIFI}
-sed -i '/Log data collection/d' ${STAGE_WIFI}
-sed -i '/get-log-data.sh/d' ${STAGE_WIFI}
-sed -i '/addon-speedometer.sh &/d' ${STAGE_WIFI}
-sed -i '/addon-player.sh &/d' ${STAGE_WIFI}
-sed -i '/stage_vehSpeed.sh/d' ${STAGE_WIFI}
-sed -i '/mount of SD card/d' ${STAGE_WIFI}
-sed -i '/sleep 40/d' ${STAGE_WIFI}
-sed -i '/sleep 55/d' ${STAGE_WIFI}
-sed -i '/sleep 50/d' ${STAGE_WIFI}
-sed -i '/umount -l/d' ${STAGE_WIFI}
-sed -i '/sleep 25/d' ${STAGE_WIFI}
-sed -i '/sleep 4/d' ${STAGE_WIFI}
-sed -i '/sleep 6/d' ${STAGE_WIFI}
 sed -i '/55554/d' ${STAGE_WIFI}
 sed -i '/9969/d' ${STAGE_WIFI}
 sed -i '/## Speedometer/d' ${STAGE_WIFI}
@@ -76,7 +47,7 @@ log_message "===                       Copied Speedometer Files                 
 # symlink to resources
 if [ $APPS2RESOURCES -eq 1 ]
 then
-  ln -sf /tmp/mnt/resources/aio/apps/_speedometer /jci/gui/apps/_speedometer
+  ln -sf ${AIO_APP_DIR}/_speedometer /jci/gui/apps/_speedometer
   log_message "===                Created Symlink To Resources Partition             ==="
 fi
 

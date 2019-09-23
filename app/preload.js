@@ -7,5 +7,5 @@ var _remote = require('electron').remote
 process.once('loaded', () => {
   global.REMOTE = _remote
   // global.nodeRequire = _require; // in case node binding is disabled
-  //require("menus/context-menu.js")
+  // require("menus/context-menu.js")
 })

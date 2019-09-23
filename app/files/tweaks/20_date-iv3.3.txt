@@ -104,15 +104,21 @@ else # if [ $DATE_FORMAT -eq 0 ]
 fi
 
 # StatusBarCtrl.js is the file that needs to be compatability checked because of minor changes in FW v59+
-# Compatibility has been fixed now compatible with all FW v55 - v70.00.100
-# if [ $STATUSBAR_COPY -eq 1 ]
-if [ $COMPAT_GROUP -le 6 ]
+# Compatibility has been fixed now compatible with all FW v55 - v70.00.335
+STATUSBAR_COPY=0
+if [ $COMPAT_GROUP -gt 6 ]
+then
+	killall -q jci-dialog
+	/jci/tools/jci-dialog --confirm --title="DATE TO STATUSBAR" --text="YOUR FW VERSION IS ${CMU_SW_VER}\nDATE TO STATUSBAR TWEAK HAS ONLY\n BEEN TESTED UP TO V70.00.335\n\n***** INSTALL AT YOUR OWN RISK! *****" --ok-label="INSTALL" --cancel-label="SKIP"
+	STATUSBAR_COPY=$?
+fi
+if [ $STATUSBAR_COPY -eq 0 ]
 then
 	cp -a "${MYDIR}/config/date-to-statusbar_mod/jci/gui/common/controls/StatusBar/js/StatusBarCtrl.js" /jci/gui/common/controls/StatusBar/js
   log_message "===                     Copied StatusBarCtrl.js                       ==="
-else # only v70.00.100+ will fail because compatibility is unknown
-	log_message "***** date_to_statusbar_mod v3.4 not compatible to your FW, no installation made! ******"
-	log_message "*********** Please email your FW version:${CMU_SW_VER} to aio@mazdatweaks.com **********"
+else # only v70.00.335+ will be skipped if choice is made
+	log_message "*****       date_to_statusbar_mod v3.4 installation skipped        ******"
+	show_message "DATE_TO_STATUSBAR INSTALLATION SKIPPED ..."
 fi
 
 log_message "======********* END INSTALLATION OF DATE TO STATUSBAR MOD  ********======"

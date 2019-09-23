@@ -14,6 +14,7 @@ fi
 killall -q -9 headunit-wrapper
 killall -q -9 headunit
 
+rm -fr ${AIO_APP_DIR}/_androidauto
 rm -fr /jci/gui/apps/_androidauto
 rm -fr /tmp/mnt/resources/aio/apps/_androidauto
 rm -fr /tmp/mnt/data_persist/dev/androidauto
@@ -61,7 +62,7 @@ log_message "===                Copied Android Auto Headunit App files          
 # symlink to resources
 if [ $APPS2RESOURCES -eq 1 ]
 then
-  ln -sf /tmp/mnt/resources/aio/apps/_androidauto /jci/gui/apps/_androidauto
+  ln -sf ${AIO_APP_DIR}/_androidauto /jci/gui/apps/_androidauto
   log_message "===                Created Symlink To Resources Partition             ==="
 fi
 

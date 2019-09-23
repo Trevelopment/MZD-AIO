@@ -1,11 +1,11 @@
 /*
- Copyright 2016 Herko ter Horst
+ Copyright 2019 Trezdog44 & VIC_BAM85
  __________________________________________________________________________
 
  Filename: VideoPlayerTmplt.js
  __________________________________________________________________________
- */
-
+*/
+/* jshint -W117 */
 log.addSrcFile("VideoPlayerTmplt.js", "videoplayer");
 
 /*

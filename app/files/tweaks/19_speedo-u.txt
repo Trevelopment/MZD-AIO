@@ -10,37 +10,7 @@ then
   [ -f ${ADDITIONAL_APPS_JSON} ] && cp ${ADDITIONAL_APPS_JSON} "${MYDIR}/bakups/test/additionalApps_speedometer-before.json"
 fi
 
-sed -i '/Speedo-Compass-Video_Tweak/d' ${STAGE_WIFI}
-sed -i '/v3.2/d' ${STAGE_WIFI}
-sed -i '/Removed requirement/d' ${STAGE_WIFI}
-sed -i '/# mount /d' ${STAGE_WIFI}
-sed -i '/Added additional/d' ${STAGE_WIFI}
-sed -i '/get-vehicle-speed.sh/d' ${STAGE_WIFI}
-sed -i '/get-vehicle-data-other.sh/d' ${STAGE_WIFI}
-sed -i '/get-gps-data.sh/d' ${STAGE_WIFI}
-sed -i '/Need to set defaults/d' ${STAGE_WIFI}
-sed -i '/myVideoList /d' ${STAGE_WIFI}
-sed -i '/playbackAction /d' ${STAGE_WIFI}
-sed -i '/playbackOption /d' ${STAGE_WIFI}
-sed -i '/playbackStatus /d' ${STAGE_WIFI}
-sed -i '/playback/d' ${STAGE_WIFI}
-sed -i '/myVideoList/d' ${STAGE_WIFI}
-sed -i '/Video player action watch/d' ${STAGE_WIFI}
-sed -i '/playback-action.sh/d' ${STAGE_WIFI}
-sed -i '/Log data collection/d' ${STAGE_WIFI}
-sed -i '/get-log-data/d' ${STAGE_WIFI}
 sed -i '/### Speedometer/d' ${STAGE_WIFI}
-sed -i '/addon-speedometer.sh &/d' ${STAGE_WIFI}
-sed -i '/speedometer.sh &/d' ${STAGE_WIFI}
-sed -i '/addon-player.sh &/d' ${STAGE_WIFI}
-sed -i '/mount of SD card/d' ${STAGE_WIFI}
-sed -i '/umount -l/d' ${STAGE_WIFI}
-sed -i '/sleep 40/d' ${STAGE_WIFI}
-sed -i '/sleep 55/d' ${STAGE_WIFI}
-sed -i '/sleep 50/d' ${STAGE_WIFI}
-sed -i '/sleep 25/d' ${STAGE_WIFI}
-sed -i '/sleep 4/d' ${STAGE_WIFI}
-sed -i '/sleep 6/d' ${STAGE_WIFI}
 sed -i '/9969/d' ${STAGE_WIFI}
 sed -i '/55554/d' ${STAGE_WIFI}
 
@@ -51,21 +21,12 @@ then
   then
     log_message "===                          Found CASDK                              ==="
     ADDIT_APPS=1
-  elif grep -Fq "_aiotweaks" ${ADDITIONAL_APPS_JSON}
+  elif grep -Fq "_aiotweaks" ${ADDITIONAL_APPS_JSON} \
+  || grep -Fq "_androidauto" ${ADDITIONAL_APPS_JSON} \
+  || grep -Fq "_videoplayer" ${ADDITIONAL_APPS_JSON} \
+  || grep -Fq "_mzdmeter" ${ADDITIONAL_APPS_JSON}
   then
-    log_message "===          Found AIOTweaksApp entry in additionalApps.json          ==="
-    ADDIT_APPS=1
-  elif grep -Fq "_androidauto" ${ADDITIONAL_APPS_JSON}
-  then
-    log_message "===          Found androidauto entry in additionalApps.json           ==="
-    ADDIT_APPS=1
-  elif grep -Fq "_videoplayer" ${ADDITIONAL_APPS_JSON}
-  then
-    log_message "===          Found videoplayer entry in additionalApps.json           ==="
-    ADDIT_APPS=1
-  elif grep -Fq "_mzdmeter" ${ADDITIONAL_APPS_JSON}
-  then
-    log_message "===           Found mzd meter entry in additionalApps.json            ==="
+    log_message "===              Found other apps in additionalApps.json              ==="
     ADDIT_APPS=1
   fi
 fi
@@ -84,21 +45,10 @@ then
   rm -rf /tmp/mnt/resources/aio/addon-common
   log_message "===          Removed addon-common because no more AIO apps            ==="
 fi
-rm -fr /jci/gui/addon-player
-rm -fr /jci/gui/addon-speedometer
+rm -fr ${AIO_APP_DIR}/_speedometer
 rm -fr /jci/gui/apps/_speedometer
-rm -fr /jci/gui/speedometer
 rm -fr /tmp/mnt/resources/aio/apps/_speedometer
-rm -f /jci/opera/opera_dir/userjs/addon-startup.js
 rm -f /jci/opera/opera_dir/userjs/speedometer-startup.js
-rm -f ${STAGE_WIFI}.bak?
-rm -f /jci/scripts/get-vehicle-speed.sh
-rm -f /jci/scripts/stage_vehSpeed.sh
-rm -f /jci/scripts/get-vehicle-fuel.sh
-rm -f /jci/scripts/get-gps-speed.sh
-rm -f /jci/scripts/get-engine-speed.sh
-rm -f /jci/scripts/get-gear-position.sh
-rm -f /jci/scripts/get-temp.sh
 log_message "===                      cleanup old versions                         ==="
 
 if [ $TESTBKUPS -eq 1 ]

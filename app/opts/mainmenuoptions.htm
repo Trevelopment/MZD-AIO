@@ -9,9 +9,9 @@
 -->
 <table>
   <tbody class="">
-    <tr class="w3-half mainmenuoptions">
+    <tr class="mainmenuoptions"  ng-class="{'w3-half': !user.uistyle.uninstmain}">
       <td class="">
-        <input id="mainmenuuninstall" class="w3-check" style="top:0" type="checkbox" ng-model="user.uistyle.uninstmain" ng-value="user.uistyle.uninstmain" />
+        <input id="mainmenuuninstall" class="w3-check" style="top:0" type="checkbox" ng-model="user.uistyle.uninstmain" ng-value="user.uistyle.uninstmain"/>
       </td>
       <td>
         <label for="mainmenueuninstall"><strong style="font-size: 12px;">{{menu.uninstall.label}} </strong></label>

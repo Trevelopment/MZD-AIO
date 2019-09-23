@@ -10,7 +10,7 @@
 **                                                                            **
 ** ************************************************************************** **
 \* ************************************************************************** */
-/* jshint esversion:6, -W033, -W117, -W097, -W116 */
+/* jshint esversion:8, -W033, -W117, -W097, -W116 */
 const { electron, nativeImage, remote, clipboard, shell } = require('electron')
 const { app, BrowserWindow, dialog } = remote
 const _ = require('lodash')
@@ -37,7 +37,7 @@ const mkdirp = require('mkdirp') // Equiv of Unix command mkdir -p
 const rimraf = require('rimraf') // Equiv of Unix command rm -rf
 var copyFolderLocation = persistantData.get('copyFolderLocation', app.getPath('desktop'))
 var visits = persistantData.get('visits', 0)
-var hasSpeedCamFiles = fs.existsSync(`${app.getPath('userData')}/speedcam-patch/`)
+var hasSpeedCamFiles = false // fs.existsSync(`${app.getPath('userData')}/speedcam-patch/`)
 var translateSchema, langPath, lang, langDefault
 var colordir = `${app.getPath('userData')}/color-schemes/` // Location of downloaded color theme files (userData)
 var hasColorFiles = fs.existsSync(`${colordir}`)
@@ -47,9 +47,11 @@ var logFileName = 'MZD_LOG' // Name of log file (without extension)
 var varDir = `${app.getPath('userData')}/background/` // Location of files with saved variables
 var getBackground = `${varDir}/background.png`
 var date = function () { return new Date() }
+var dataURL = ''
+var aioURL = ''
 process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = true
 var helpClick = false
-var updateVer = 284
+var updateVer = 285
 // require('./lib/log')('MZD-AIO-LOG')
 // var output = process.stdout
 // var errorOutput = process.stderr
@@ -95,7 +97,6 @@ fs.readdir(testFolder, (err, files) => {
 })
 */
 
-
 function saveMenuLock () {
   persistantData.set('menuLock', !persistantData.get('menuLock'))
   $('body, .hideNav, .w3-overlay').toggleClass('showNav')
@@ -110,7 +111,7 @@ function helpMessageFreeze (item) {
 }
 
 function runAAPatcher (apk) {
-  //require('./assets/js/aapatcher.js')(apk)
+  // require('./assets/js/aapatcher.js')(apk)
 }
 
 function runInstallCSApp () {
@@ -171,12 +172,20 @@ function myStance () {
 }
 
 function announcement () {
-
-// announcement
+  if (persistantData.get('visits', 0) % 20 === 0) {
+	  showAnnouncement()
+  }
 }
 
-function showAnnouncement() {
-//announcement
+function dataCheck () {
+  persistantData.delete('updateAvailable')
+  localStorage.setItem(`dat${updateVer}`, true)
+}
+
+function showAnnouncement () {
+  if (persistantData.get('anon', false)) {
+    $.featherlight(aioURL, { closeSpeed: 1000, variant: 'announcementWindow' })
+  }
 }
 
 function hideAnnouncement (anonNum) {
@@ -190,6 +199,7 @@ function anonData (anonNum) {
 }
 
 function updateNotes () {
+  bootbox.hideAll()
   $.get('views/update.htm', function (data) { $('#changelog').html(data) })
   bootbox.dialog({
     title: `<div class='w3-center'>Welcome To MZD-AIO-TI v${app.getVersion()} | MZD All In One Tweaks Installer</div>`,
@@ -201,6 +211,7 @@ function updateNotes () {
   setTimeout(() => {
     $('.modal-dialog').animate({ 'margin-top': '40px', 'margin-bottom': '60px' }, 3000)
     $('#upVerBtn').fadeIn(5000)
+    persistantData.set('updated', true)
   }, 2000)
 }
 
@@ -209,6 +220,9 @@ function firstTimeVisit () {
     myStance()
     settings.set('reset', true)
     lastView.clear()
+    if(persistantData.has('updateVer')) {
+      updateNotes()
+    }
     persistantData.set('updateVer', updateVer)
     persistantData.set('updated', false)
     persistantData.delete('ver270')
@@ -232,7 +246,6 @@ function updateNotesCallback () {
   if (visits > 0) {
     if (!persistantData.get('updated', false)) {
       updateNotes()
-      persistantData.set('updated', true)
     }
   } else {
     persistantData.set('visits', 1)
@@ -243,7 +256,7 @@ function updateNotesCallback () {
       closeButton: false,
       className: 'first-time-dialog'
     })
-    setTimeout(() => { $('#super-overlay').remove() }, 3000)
+    setTimeout(() => { $('#super-overlay').remove() }, 9000)
     setTimeout(() => {
       $('#first-time-msg-btn').html(`<button id='newVerBtn' style='display:none' class='w3-btn w3-hover-text-light-blue w3-display-bottommiddle' onclick='bootbox.hideAll()'>OK</button><br>`)
       $('#newVerBtn').fadeIn(10000)
@@ -278,11 +291,12 @@ function helpDropdown () {
 }
 
 function closeHelpDrop () {
-  var x, y
-  if (x = document.getElementById('helpDrop')) {
+  var x = document.getElementById('helpDrop'),
+    y = document.getElementById('helpDropBtn')
+  if (x) {
     x.className = x.className.replace(' w3-show', '')
   }
-  if (y = document.getElementById('helpDropBtn')) {
+  if (y) {
     y.innerHTML = "<span class='icon-cog3'></span>"
   }
 }
@@ -340,25 +354,19 @@ function cleanArray (actual) {
   return newArray
 }
 
+function copyCode (x) {
+  $(x).select()
+  var copyText = document.execCommand('Copy')
+  if (copyText) snackbar('Copied "' + $(x).val() + '" to clipboard')
+}
+
 function donate () {
   shell.openExternal('http://trevelopment.win/donate')
-  /*let donatewin = new remote.BrowserWindow({
-    width: 500,
-    height: 600,
-    resizable: false,
-    movable: false,
-    parent: remote.BrowserWindow.fromId(1),
-    icon: './app/favicon.ico',
-    autoHideMenuBar: true
-  })
-  donatewin.loadURL('http://trevelopment.win/donate')
-  donatewin.on('closed', () => {
-    remote.BrowserWindow.fromId(1).focus()
-  })*/
 }
 // Returns list of USB Drives
-function getUSBDrives () {
+async function getUSBDrives () {
   var disks = []
+  var dsklst = await drivelist.list()
   drivelist.list(function (error, dsklst) {
     if (error) {
       console.error('Error finding USB drives')
@@ -377,8 +385,8 @@ function getParameterByName (name, url) {
   if (!url) url = window.location.href
   url = url.toLowerCase() // This is just to avoid case sensitiveness
   name = name.replace(/[[\]]/g, '\\$&').toLowerCase() // This is just to avoid case sensitiveness for query parameter name
-  var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
-    results = regex.exec(url)
+  var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)')
+  var results = regex.exec(url)
   if (!results) return '' // url.substr(url.lastIndexOf('/') + 1)
   if (!results[2]) return ''
   return decodeURIComponent(results[2].replace(/\+/g, ' '))
@@ -469,8 +477,9 @@ function showCompatibility () {
   </header>
   <div class="w3-container">
   <div class="w3-panel w3-center">
-  <H2> **AIO IS COMPATIBLE WITH ALL FW V55, V56, V58, V59 AND UP TO V70.00.100** </H2>
+  <H2> **AIO IS COMPATIBLE WITH ALL FW V55, V56, V58, V59 AND UP TO V70.00.352** </H2>
   <h3 style="text-transform: capitalize;">NOTE: FW v59.00.502+ <a href="" onclick="externalLink('im-super-serial')">Requires Additional Steps To Install Tweaks.</a>  If updating to v59.00.502+ install Autorun & Recovery Scripts to allow Tweaks to be installed after updating.</h3>
+  <h3 style="text-transform: capitalize;">WARNING: FW v70.00.335+ <a href="" onclick="externalLink('id7')">Requires Making A Serial Connection <strong>Before Updating</strong>.</a></h3>
   </div>`).insertAfter($('#mzd-title'))
 }
 $(function () {
@@ -501,21 +510,21 @@ function numberReplacer (key, value) {
 }
 
 function replaceInFile (someFile, toReplace, replacement, callback) {
-  fs.readFile(someFile, 'utf8', function (err,data) {
+  fs.readFile(someFile, 'utf8', function (err, data) {
     if (err) {
       err = err.toString()
+      dialog.showErrorBox('ERROR', err)
       return console.error(err)
-      dialog.showErrorBox("ERROR",err)
     }
-    var re = new RegExp(toReplace,"g");
+    var re = new RegExp(toReplace, 'g')
     var result = data.replace(re, replacement)
     fs.writeFile(someFile, result, 'utf8', function (err) {
-      if (err){
+      if (err) {
         err = err.toString()
+        dialog.showErrorBox('ERROR', err)
         return console.error(err)
-        dialog.showErrorBox("ERROR",err)
       }
-      if(typeof callback === "function") callback()
+      if (typeof callback === 'function') callback()
     })
   })
 }

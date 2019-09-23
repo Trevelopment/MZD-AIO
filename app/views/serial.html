@@ -1,0 +1,55 @@
+<div id="serial-window"  class="w3-modal">
+<div class="w3-card-4 w3-padding w3-modal-content">
+  <a href="javascript:void(0)" onclick="$('#serial-window').hide()" class="w3-hover-red w3-closenav w3-xxlarge w3-right">
+    <span class="icon-x"></span>
+  </a>
+<h1><strong>CMU Serial Access</strong></h1>
+
+<p><strong>In FW v59.00.502 and higher the CMU is locked down and users cannot access to their own systems and can no longer install tweaks.</strong>  Currently the only way to circumvent this is to make a serial connection and follow these instructions very carefully. This process will allow you to run tweaks from USB.
+<strong>These instructions include support for <a href onclick="shell.openExternal('http://mazdatweaks.com/id7')">FW v70.00.335</a> and higher.  NOTE: For v70.00.335+ Serial connection will need to be made before updating or reinstalling FW, run code steps <em>after update is complete before rebooting</em>.</strong></p>
+
+<h3><strong><em>A huge Thank You to <a href onclick="shell.openExternal('http://www.albuyeh.com/')">Albuyeh</a> for writing these detailed instructions.</em></strong></h3>
+
+<h2>Parts/Equipment Needed:</h2>
+
+<ul><li><a href onclick="shell.openExternal('https://www.amazon.com/Qunqi-CP2102-Module-Download-Converter/dp/B014PBYER4')">USB to TTL Serial Adapter</a> - $6 (Any other CP2102 module should work. Other USB-TTL Adapters might work too.) Driver can be found <a href onclick="shell.openExternal('https://www.silabs.com/products/development-tools/software/usb-to-uart-bridge-vcp-drivers')">Here</a>. I like this module because it has LEDs when you are receiving or transmitting data</li><li>Single-Stranded/Solid-core insulated wire. I personally like <a href onclick="shell.openExternal('https://www.amazon.com/Elegoo-EL-CP-004-Multicolored-Breadboard-arduino/dp/B01EV70C78')">this</a> because you can daisy-chain them together without needing to do any soldering.</li>
+  <li>USB Flash Drive</li><li>10mm socket wrench with extender/ratchet</li><li><a href onclick="shell.openExternal('https://www.putty.org/')">Putty</a> or <a href onclick="shell.openExternal('https://www.vandyke.com/products/securecrt/')">SecureCRT</a></li>
+  <li><a href onclick="shell.openExternal('http://mazdatweaks.com')">Mazda AIO Tweaks</a></li></ul>
+
+<h2>Preparation:</h2>
+
+<h3>USB Flash Drive:</h3>
+
+<ol><li>Format drive to FAT32</li><li>Run "Autorun & Recovery" with "Recovery Via Serial Connection" & "Install ID_7 Recovery Scripts Pack" options checked</li><li>AIO will create the 'XX' Folder and neccessary files in "_copy_to_usb" folder</li></ol>
+
+<h2>Process:</h2>
+
+<h3>Accessing the CMU: <a href onclick="shell.openExternal('https://youtu.be/zFKr4L414dM')">Watch this video</a> to see how its done</h3>
+<h4><a href onclick="shell.openExternal('https://youtu.be/DhbI25T3w3Q')">Another Great Video</a></h4>
+
+<ol><li>Open glove box</li><li>Pull the trim. You will need to use more force than you expect. The front fan area is attached to the trim and will come off as well.</li><li>Disconnect the hazard light connector cable</li><li>Use the 10mm socket wrench to remove the bolt<ul><li><img class="serial-img" alt="The Bolt" src="files/img/thebolt.jpg"/></li></ul></li><li>The headunit will slide out towards you</li></ol>
+
+<h3>Wiring the CMU:</h3>
+
+<p><strong>Do not modify any of the below commands</strong> If the commands do not work, then you have done something wrong (i.e. you're not logged in, or RX/TX wires are not properly wired)</p>
+
+<ol><li>You will need to have 3 wires connected to the CMU: Transmit (TX), Receive (RX), and Ground (GND)</li><li>Here is a picture of the back of the CMU. We are going to be adding our cables to the ‘power&more’ connector. Here is a more detailed picture of where the RX and TX cables go. Note: The smaller 2x4logic.com diagram looks like it's the opposite of the other picture but that's because the CMU is using 2S to transmit (so the serial adapter will be receiving). For the sake of simplicity, connect the RX port of your Serial Adapter to 2S (top) and TX port to 2T (bottom).<ul><li><img class="serial-img" alt="Back of the CMU" src="files/img/cmu-back.jpg"/> <img class="serial-img" alt="Back of the CMU" src="files/img/cmu-rx-tx.jpg"/></li></ul></li><li>Be sure that the cable is going into the port. It must go in about an inch. The GND cable can go anywhere so long as it is touching the CMU. I recommend slightly unscrewing one of the Philips head screws and wedging the cable in there.</li><li>Connect the other end of the wires to the CP2102 module in its corresponding port.</li></ol>
+
+<h3>Serial Console App:</h3>
+
+<ul><li><p>Make sure you know what the paste command is for your Serial Console application. In Putty, you right click inside the terminal window and it will paste whatever command you had copied. For SecureCRT, you push Ctrl+Shift+V to paste. Remember that these shortcuts will only paste, you will have to push enter after to actually send the command.</p></li><li><p>Windows will auto-assign a COM Port to the CP2102 module once its plugged in. Go to Device Manager > Ports (COM & LPT) to see what the COM Port # is</p><ul><li>For SecureCRT, under Options &gt; Connection &gt; Serial, set Port = COM#, Baud = 115200, Data Bits = 8, Parity = None, Stop Bits = 1</li><li>For Putty, you just need to select ‘Serial’ and then enter the COM Port # and set Baud to 115200</li></ul></li><li>You should start see text scroll by even if the car is off</li><li>Plug in flash drive</li><li>Turn the car to ACC mode by just pressing the On button without putting your foot on brake to fully turn car on (<b>For v70.00.335+ you need to install an update or reinstall the same version with the serial converter connected.  When the update is finished the text will stop completely, run the following commands BEFORE REBOOTING</b>)</li><li>for the next several steps make sure you do not make any spelling mistakes. It is probably <strong>best to copy and paste the commands</strong> (to paste you just need to right click in the terminal window).</strong> </li><li><b>(THESE STEPS APPLY TO FW BEFORE v70.00.334 ONLY, FOR v70.00.335+ SKIP TO "Run")</b> Now you are really going to be seeing text fly by, <strong>remember that the commands are working even though you cannot see what you are typing because of the text flying by. </li><ul><li>Press Enter in terminal and CMU will respond with ‘login’. </strong><li><strong>If text is flying by so fast it seems like you can't type you are doing everything correctly, copy and paste each command and press enter!  It will seem like your commands are not being sent to the Mazda but don’t worry they are</strong> (<em>provided your wiring is right. If you got a module with LEDs you can check <strong>TX is Transmit/RX is Receive</strong></em>)</li><li>Reboot Mazda CMU by holding the Nav + Mute button for 10+ seconds.</li><li>Input <span class="copy-msg"></span><span class="one-liner"><code><input type="text" id="usercopy" value="user" onclick="copyCode('#usercopy')" title="Click to Copy" readonly></code></span> and push Enter <span class="w3-btn" onclick="$('#usercopy').click()" style="font-size:8px">Copy</span></li><li><p>Input <span class="copy-msg"></span><span class="one-liner"><code><input type="text" id="jcicopy" value="jci" onclick="copyCode('#jcicopy')" title="Click to Copy" readonly></code></span> and push Enter <span class="w3-btn" onclick="$('#jcicopy').click()" style="font-size:8px">Copy</span>
+</p></li></ul><blockquote> <em>NOTE:</em> After installing the autorun scripts you will be able to login as the root user with username: <strong>cmu</strong> pass: <strong>jci</strong></blockquote>
+<li><p>Run <span class="copy-msg"></span></p><ul><li><pre><code><input type="text" id="code2copy" value="cp -r /mnt/sd*/XX/* /mnt/data_persist/dev/bin/; chmod +x /mnt/data_persist/dev/bin/autorun; /mnt/data_persist/dev/bin/autorun" readonly>
+</code> <button class="w3-btn" onclick="copyCode('#code2copy')">Copy</button> </pre></li></ul></li><li><p>(Optional) To test if the files have been moved to the folder, run <span class="copy-msg"></span></p><ul><li><pre><code><input type="text" id="code2copy2" value="ls -l /mnt/data_persist/dev/bin" readonly> </code> <button class="w3-btn" onclick="copyCode('#code2copy2')">Copy</button> </pre></li><li>The files/folders should be colored in green/blue since they are folders/executable. You may have to run this a few times to see the Serial Console output.</li><li><p><img class="serial-img" alt="Output" title="This is what the output should look like" src="files/img/ls-l_output.png"/></p></li></ul></li><li><p>Remove flash drive, turn off car, insert flash drive that has AIO tweaks installed, turn car on back in ACC mode</p></li><li>After a few minutes, you should see a message that indicates the mods are being installed. This process may take approximately 2 - 20 minutes.</li></ul>
+
+<h3>Finishing Up</h3>
+
+<ol><li>Now that everything is installed you can put everything back together</li><li>Remove the TX, RX, GND wires</li><li>Slide CMU back in</li><li>Attach bolt using 10mm socket wrench</li><li>Connect hazard light connector cable to trim</li><li>Push trim back in</li><li>From here on out, you can just use a flashdrive to install tweaks</li></ol>
+
+<h2>You're Done!</h2>
+
+<h5>If you have questions or need help visit <a href onclick="shell.openExternal('https://www.mazda3revolution.com/threads/id7-recovery-v2.234619/')">this thread</a> for more information.</h5>
+
+<p>If you love us so much you need to donate you can <a href onclick="shell.openExternal('https://www.paypal.me/Albuyeh')">Buy Albuyeh a Hot Chocolate</a> and/or you can <a href onclick="shell.openExternal('https://www.paypal.me/Trevelopment')">Buy Trez Some Weed :D</a>.  Good Luck!</p>
+</div>
+</div>

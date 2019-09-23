@@ -10,21 +10,21 @@
       </button>
       <button type="button" id="compileAutorun" class="btn btn-theme03 w3-shadow w3-pale-blue w3-small w3-ripple w3-hover-indigo" ng-show="user.autorun.installer" style="letter-spacing:1.4px;" data-toggle="tooltip" data-placement="bottom" title="Install CMU-autorun"
         ng-click="startAutorunCompile()">
-        <span class="icon-genius"></span> Autorun
+        <span class="icon-genius"></span> Compile Autorun
         <span class="icon-lab2"></span>
       </button>
       <button type="button" class="btn btn-theme03 dropdown-toggle w3-shadow w3-green w3-small w3-ripple w3-hover-light-blue" ng-class="{'w3-hover-indigo w3-pale-blue': user.autorun.installer}" data-toggle="dropdown">
         <span class="caret"></span>
       </button>
       <ul class="dropdown-menu" role="menu">
-        <li class="autorun-link"><a href ng-click="user.restore.full = false;user.autorun.installer = true">Autorun & Recovery</a></li>
-        <li class="fullrestore-link"><a href ng-click="user.autorun.installer = false;user.restore.full = true">Full System Restore</a></li>
+        <li class="autorun-link"><a href ng-click="autorestore('autorun')">Autorun & Recovery</a></li>
+        <li class="fullrestore-link"><a href ng-click="autorestore('restore')">Full System Restore</a></li>
         <li class="divider"></li>
-        <li class="casdk-link"><a href="#/casdk" ng-click="user.restore.full = user.autorun.installer = false">CASDK</a></li>
-        <li class="home-tweaks"><a href ng-click="user.restore.full = user.autorun.installer = false">Tweaks</a></li>
+        <li class="casdk-link"><a href="#/casdk" ng-click="autorestore('CASDK')">CASDK</a></li>
+        <li class="home-tweaks"><a href ng-click="autorestore('home')">Tweaks</a></li>
       </ul>
     </div>
-    <a class="w3-hover-blue w3-ripple w3-btn w3-large" title="CASDK" href="#/casdk" ng-click="user.restore.full = user.autorun.installer = false" onclick="w3_close();" id="casdkBtn" ng-show="user.twkfltr.toLowerCase() === 'casdk'"><span class="icon-trophy"></span>
+    <a class="w3-hover-blue w3-ripple w3-btn w3-large" title="CASDK" href="#/casdk" ng-click="autorestore('CASDK')" onclick="w3_close();" id="casdkBtn" ng-show="user.twkfltr.toLowerCase() === 'casdk'"><span class="icon-trophy"></span>
       CASDK</a>
     <label class="layoutSwitch switch w3-ripple" data-toggle="tooltip" data-placement="bottom" title="<h5>Toggle Alternate Layout</h5>">
       <input id="altlyt" type="checkbox" ng-model="user.altLayout" ng-value="user.altLayout" onclick="settings.set('altLayout',$(this).prop('checked'))">
@@ -112,10 +112,6 @@
         <span class="sshLabel" style=""><span class="icon-podcast"></span> {{mainOps.sshbringback.label}}
         </span>
       </div>
-      <!--a href="speedometer_readme.md" data-featherlight="ajax" class="w3-btn w3-black w3-ripple">Docs</a>
-</section>
-<div id="step4" class="w3-container w3-center">
-<div id="result"></div-->
       <span class="twkfltr"><input id="twkfltr" type="text" ng-model="user.twkfltr" class="w3-input" placeholder="Tweak Filter" /></span>
     </section>
     <div class="w3-container w3-row w3-section">

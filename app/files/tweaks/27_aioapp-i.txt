@@ -17,6 +17,7 @@ pkill websocketd
 # Remove previous files
 rm -fr /jci/gui/apps/_aiotweaks
 rm -fr /tmp/mnt/resources/aio/apps/_aiotweaks
+rm -fr ${AIO_APP_DIR}/_aiotweaks
 rm -fr /tmp/mnt/data_persist/dev/system_restore
 # Remove old aio-startup
 rm -f /jci/opera/opera_dir/userjs/aio-startup.js
@@ -68,7 +69,7 @@ cp -a ${MYDIR}/config/aio-app/data_persist/* /tmp/mnt/data_persist/
 # symlink to resources
 if [ $APPS2RESOURCES -eq 1 ]
 then
-  ln -sf /tmp/mnt/resources/aio/apps/_aiotweaks /jci/gui/apps/_aiotweaks
+  ln -sf ${AIO_APP_DIR}/_aiotweaks /jci/gui/apps/_aiotweaks
   log_message "===                Created Symlink To Resources Partition             ==="
 fi
 
