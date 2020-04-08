@@ -2,7 +2,7 @@
   "name": "MZD-AIO-TI",
   "productName": "MZD All In One Tweaks Installer",
   "description": "An Installer/Uninstaller for Over 50 System Tweaks for the Mazda MZD Infotainment System.",
-  "version": "2.8.5",
+  "version": "2.8.6",
   "homepage": "http://mazdatweaks.com",
   "license": "GPL-3.0",
   "main": "main.js",
@@ -14,10 +14,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://gitlab.com/Trezdog44/MZD-AIO-TI"
+    "url": "https://github.com/Trevelopment/MZD-AIO"
   },
   "bugs": {
-    "url": "https://gitlab.com/Trezdog44/MZD-AIO-TI/issues"
+    "url": "https://github.com/Trevelopment/MZD-AIO/issues"
   },
   "engines": {
     "node": "^13"
@@ -42,24 +42,23 @@
     "clean:osx": "rimraf releases/mac",
     "clean:win": "rimraf releases/win*",
     "clean": "npm run clean:linux && npm run clean:win && npm run clean:osx",
-    "pack:osx": "build --dir --mac",
-    "pack:win": "build --dir --win --x64",
-    "pack:linux": "build --dir --linux --x64",
-    "pack": "build --dir",
+    "pack:osx": "electron-builder --dir --mac",
+    "pack:win": "electron-builder --dir --win --x64",
+    "pack:linux": "electron-builder --dir --linux --x64",
+    "pack": "electron-builder --dir",
     "prebuild": "node build/target.js",
-    "build:osx": "npm run prebuild && build --mac && npm run postbuild",
+    "build:osx": "npm run prebuild && electron-builder --mac && npm run postbuild",
     "build:win": "npm run build:win32 && npm run build:win64",
-    "build:win64": "npm run prebuild && build --win --x64 && npm run postbuild",
-    "build:win32": "npm run prebuild && build --win --ia32 && npm run postbuild && npm run win32copy",
-    "build:linux:x64": "npm run prebuild && build --linux deb AppImage --x64 && npm run postbuild",
+    "build:win64": "npm run prebuild && electron-builder --win --x64 && npm run postbuild",
+    "build:win32": "npm run prebuild && electron-builder --win --ia32 && npm run postbuild && npm run win32copy",
+    "build:linux:x64": "npm run prebuild && electron-builder --linux deb AppImage --x64 && npm run postbuild",
     "build:linux:deb": "./scripts/build_linux_deb.sh",
-    "win32copy": " mv ./releases/MZD-AIO-TI_Setup_2.8.5.exe ./releases/MZD-AIO-TI_Setup_2.8.5_Win32.exe && mv ./releases/MZD-AIO-TI_Setup_2.8.5.exe.blockmap ./releases/MZD-AIO-TI_Setup_2.8.5_Win32.exe.blockmap",
-    "build": "build",
-    "release": "build",
+    "win32copy": " mv ./releases/MZD-AIO-TI_Setup_2.8.6.exe ./releases/MZD-AIO-TI_Setup_2.8.6_Win32.exe && mv ./releases/MZD-AIO-TI_Setup_2.8.6.exe.blockmap ./releases/MZD-AIO-TI_Setup_2.8.6_Win32.exe.blockmap",
+    "build": "electron-builder",
+    "release": "electron-builder",
     "postbuild": "node build/target.js --clean",
     "xinstall": "cd app && ncu -u --packageFile package.json && ncu -a --packageFile package.json && npm i && cd .. && ncu -u --packageFile package.json && ncu -a --packageFile package.json && npm i",
-    "postinstall": "install-app-deps && cd app && sh ../node_modules/.bin/electron-rebuild && cd .. && sh ./node_modules/.bin/electron-rebuild",
-  "dist": "electron-builder"
+    "postinstall": "electron-builder install-app-deps && cd app && sh ../node_modules/.bin/electron-rebuild && cd .. && sh ./node_modules/.bin/electron-rebuild"
   },
   "standard": {
     "globals": [
@@ -98,7 +97,7 @@
   "build": {
     "appId": "com.trevelopment.mzd-aio-ti",
     "productName": "MZD-AIO-TI",
-    "copyright": "© 2019 Trevelopment By Trevor G Martin",
+    "copyright": "©2020 Trevelopment By Trevor G Martin",
     "artifactName": "${productName}-${os}_${version}.${ext}",
     "extraResources": [
       "background-images/**/*"
@@ -165,39 +164,39 @@
     "nsis": {
       "artifactName": "${productName}_Setup_${version}.${ext}"
     },
-	"forceCodeSigning": false
+    "forceCodeSigning": false
   },
   "devDependencies": {
-    "async": "^3.1.0",
+    "async": "^3.2.0",
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
     "dependency-check": "^4.1.0",
     "devtron": "^1",
-    "electron": "^6.1.7",
+    "electron": "^6.1.9",
     "electron-builder": "^21.2.0",
     "electron-debug": "^3.0.1",
-    "electron-is-dev": "^1.1.0",
-    "electron-rebuild": "^1.8.8",
-    "mocha": "^6.2.2",
-    "rimraf": "^3.0.0",
+    "electron-is-dev": "^1.2.0",
+    "electron-rebuild": "^1.10.1",
+    "mocha": "^6.2.3",
+    "rimraf": "^3.0.2",
     "shelljs": "^0.8.3",
     "spectron": "^8.0.0",
     "standard": "^13.1.0"
   },
   "dependencies": {
-    "appender": "^0.0.2",
+    "appender": "0.0.2",
     "bluebird-lst": "^1.0.9",
     "copy-dir": "^1.2.0",
     "crlf": "^1.1.1",
-    "drivelist": "^8.0.9",
+    "drivelist": "^8.0.10",
     "electron-context-menu": "^0.14.0",
     "electron-image-resize": "^1.2.4",
     "electron-store": "^4.0.0",
-    "extract-zip": "^1.6.7",
+    "extract-zip": "^1.7.0",
     "global": "^4.3.2",
     "jquery": "^3.4.1",
-    "mkdirp": "^0.5.1",
-    "node-abi": "^2.13.0",
+    "mkdirp": "^0.5.5",
+    "node-abi": "^2.15.0",
     "xml2js": "^0.4.23"
   }
 }

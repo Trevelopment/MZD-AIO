@@ -3,7 +3,7 @@
 ** MZD-AIO-TI                                                                 **
 ** By: Trezdog44 - Trevor Martin                                              **
 ** http://mazdatweaks.com                                                    **
-** ©2019 Trevelopment                                                         **
+** ©2020 Trevelopment                                                         **
 **                                                                            **
 ** index.js - Helper javascript functions for the main view using electron    **
 ** renderer process modules.                                                  **
@@ -51,7 +51,7 @@ var dataURL = ''
 var aioURL = ''
 process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = true
 var helpClick = false
-var updateVer = 285
+var updateVer = 286
 // require('./lib/log')('MZD-AIO-LOG')
 // var output = process.stdout
 // var errorOutput = process.stderr
@@ -63,7 +63,7 @@ console.debug("speedcamfiles: "+hasSpeedCamFiles) */
 // Manage unhandled exceptions as early as possible
 process.on('uncaughtException', (e) => {
   console.error(`Caught unhandled exception: ${e}`)
-  dialog.showErrorBox('Caught unhandled exception: ' + (e.message || 'Unknown error message'), 'You can report this error to aio@mazdatweaks.com\nor open in issue in the repo https://github.com/Trevelopment/MZD-AIO')
+  dialog.showErrorBox('Caught unhandled exception: ' + (`${e}` || 'Unknown error message'), 'You can report this error to aio@mazdatweaks.com\nor open in issue in the repo https://github.com/Trevelopment/MZD-AIO')
   app.quit()
 })
 lang = persistantData.get('lang', 'english')
@@ -103,7 +103,7 @@ function saveMenuLock () {
 }
 /* Create Temporary Folder To Hold Images Before Compiling */
 if (!fs.existsSync(varDir)) {
-  fs.mkdirSync(varDir)
+  mkdirp.sync(varDir)
 }
 
 function helpMessageFreeze (item) {

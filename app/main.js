@@ -3,7 +3,7 @@
 ** MZD-AIO-TI                                                                 **
 ** By: Trezdog44 - Trevor Martin                                              **
 ** http://mazdatweaks.com                                                     **
-** ©2019 Trevelopment                                                         **
+** ©2020 Trevelopment                                                         **
 **                                                                            **
 ** main.js - The main process to run in electron.                             **
 **                                                                            **

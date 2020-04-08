@@ -2,10 +2,9 @@ LOOP_LOGO="/jci/resources/LoopLogo.ivf"
 if [ -e /jci/resources/newLoopLogo.ivf ]
 then
   LOOP_LOGO="/jci/resources/newLoopLogo.ivf"
-else
-  backup_org /jci/resources/TranLogo.ivf
-  backup_org /jci/resources/TranLogoEnd.ivf
 fi
+[ -e /jci/resources/TranLogo.ivf ] && backup_org /jci/resources/TranLogo.ivf
+[ -e /jci/resources/TranLogoEnd.ivf ] && backup_org /jci/resources/TranLogoEnd.ivf
 backup_org "$LOOP_LOGO"
 # backup_org /jci/resources/ExitLogo.ivf
 # Disable Boot Animation
@@ -47,10 +46,8 @@ then
 else
   log_message "===                   LoopLogo.ivf was not changed                    ==="
 fi
-if [ -e /jci/resources/newLoopLogo.ivf ]
+if [ -e /jci/resources/TranLogo.ivf ]
 then
-  log_message "===   Found newLoopLogo.ivf, other boot animations will be skipped   ==="
-else
   if [ $BOOTLOGO2 -eq 0 ]
   then
     cp -a "${MYDIR}/config/bootanimation/jci/resources/LoopLogo.ivf" /jci/resources/TranLogo.ivf
@@ -90,7 +87,9 @@ else
   else
     log_message "===                  TranLogo.ivf was not changed                     ==="
   fi
-
+fi
+if [ -e /jci/resources/TranLogoEnd.ivf ]
+then
   if [ $BOOTLOGO3 -eq 0 ]
   then
     cp -a "${MYDIR}/config/bootanimation/jci/resources/LoopLogo.ivf" /jci/resources/TranLogoEnd.ivf

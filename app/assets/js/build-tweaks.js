@@ -3,7 +3,7 @@
 |** MZD-AIO-TI                                                               **|
 |** By: Trezdog44 - Trevor Martin                                            **|
 |** http://mazdatweaks.com                                                   **|
-|** ©2019 Trevelopment                                                       **|
+|** ©2020 Trevelopment                                                       **|
 |**                                                                          **|
 |** build-tweaks.js - The main 'builder' component copys neccesary files to  **|
 |** a temporary folder for copying to a usb additionaly                      **|
@@ -11,7 +11,7 @@
 |**                                                                          **|
 |** ************************************************************************ **|
 \* ************************************************************************** */
-/* jshint esversion:6, -W033, -W117, -W097 */
+/* jshint esversion:8, -W033, -W117, -W097 */
 // First line of AIO log
 var AIO_LOG = `# __MZD-AIO-TI__ ${app.getVersion()}| MZD All In One Tweaks Installer\n#### AIO COMPILATION LOG - ${Date()}\r\n___\n- *START!*\n`
 var AIO_LOG_HTML = `<button class="w3-btn w3-hover-teal w3-display-bottomright w3-margin" onclick="saveAIOLogHTML()">Save Log (HTML)</button><div id="aio-comp-log" class="aio-comp-log"><h1><b>MZD-AIO-TI ${app.getVersion()}</b> | MZD All In One Tweaks Installer</h1><br><h4> AIO COMPILATION LOG - ${Date()}</h4><hr><div><ul><li><b><i>START!</i></b></li>`
@@ -801,7 +801,7 @@ function tweakVariables (user) {
       case 8: themeColor = 'SmoothRed'; break
       case 9: themeColor = 'SmoothAzure'; break
       case 10: themeColor = 'SmoothViolet'; break
-      case 11: themeColor = 'CarOS'; break
+      case 11: themeColor = 'carOS'; break
       case 12: themeColor = 'StormTroopers'; break
       case 13: themeColor = 'Poker'; break
       case 14: themeColor = 'Mazda'; break
@@ -1379,6 +1379,7 @@ function casdkAppOptions (apps, inst) {
   casdkapps += `CASDK_SD=`
   casdkapps += (apps.sdcard) ? `1\n` : `0\n`
   if (inst) {
+    mkdirp.sync(`${tmpdir}/casdk/apps`)
     addCASDKapp(apps.simpledashboard, 'simpledashboard')
     addCASDKapp(apps.gpsspeed, 'gpsspeed')
     addCASDKapp(apps.multidash, 'multidash')
@@ -1400,10 +1401,10 @@ function addCASDKapp (add, app) {
   if (add) {
     copydir(`${builddir}casdk/apps/app.${app}`, `${tmpdir}/casdk/apps/app.${app}`, (err) => {
       if (err) {
-        aioLog(`File Copy Error: ${err}`, err.message)
+        aioLog(`File Copy Error: ${app}: ${err}`, err.message)
         return
       }
-      aioLog(`Files for CASDK copied successfully!`)
+      aioLog(`Files for ${app} copied successfully!`)
     })
   }
 }

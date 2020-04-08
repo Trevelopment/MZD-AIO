@@ -3,7 +3,7 @@
 ** MZD-AIO-TI                                                                 **
 ** By: Trezdog44 - Trevor Martin                                              **
 ** http://mazdatweaks.com                                                     **
-** ©2019 Trevelopment                                                         **
+** ©2020 Trevelopment                                                         **
 **                                                                            **
 ** home.js - The main AngularJS module & controller used to connect the main  **
 ** process and in the build process.                                          **

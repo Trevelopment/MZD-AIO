@@ -1,5 +1,5 @@
 #!/bin/sh
-# tweaks.sh - MZD-AIO-TI Version 2.8.5
+# tweaks.sh - MZD-AIO-TI Version 2.8.6
 # Special thanks to Siutsch for collecting all the tweaks and for the original AIO
 # Big Thanks to Modfreakz, khantaena, Xep, ID7, Doog, Diginix, oz_paulb,
 # Albuyeh, VIC_BAM85, lmagder, ameridan, anderml1955 & Tristan-cx5
@@ -11,10 +11,10 @@
 hwclock --hctosys
 
 # AIO Variables
-AIO_VER=2.8.5
-AIO_DATE=2020.02.02
+AIO_VER=2.8.6
+AIO_DATE=2020.04.04
 # Android Auto Headunit App Version
-AA_VER=1.12
+AA_VER=1.13
 # Video Player Version
 VP_VER=3.7
 # Speedometer Version

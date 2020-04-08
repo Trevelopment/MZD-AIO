@@ -226,13 +226,13 @@
   transform: translate(-50%, -50%);
   position: fixed;
   color: white;
-  font-size: 35px;
+  font-size: 30px;
   text-align: center;
   white-space: nowrap;
   visibility: visible;
   opacity: 1;
   left: 560px;
-  bottom: 140px;
+  bottom: 130px;
   transition: .6s ease-in-out .3s;
 }
 #speedBarContainer #vehdataMainDiv [class*="vehDataMain"].pos0 span.idlePercent {

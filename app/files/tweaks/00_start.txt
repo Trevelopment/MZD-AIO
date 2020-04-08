@@ -720,8 +720,11 @@ log_message "====================== resources ${USED_RESOURCES}% used ==========
 
 if [ $USED -ge 80 ]
 then
-  rm -f /tmp/mnt/data_persist/log/dumps/*.bz2
-  log_message "================== Over 80% Used Delete Dump Files  ====================="
+  find /tmp/mnt/data_persist/log/dumps/ -name '*.bz2' | xargs rm -f
+  DATA_PERSIST=$(df -h | (grep 'data_persist' || echo 0) | awk '{ print $5 " " $1 }')
+  USED=$(echo $DATA_PERSIST | awk '{ print $1}' | cut -d'%' -f1  )
+  log_message "========================= Delete Dump Files ============================="
+  log_message "======================= data_persist ${USED}% used ==========================="
 fi
 if [ $APPS2RESOURCES -eq 1 ]
 then

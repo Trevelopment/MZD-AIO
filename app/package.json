@@ -1,6 +1,6 @@
 {
   "name": "MZD-AIO-TI",
-  "version": "2.8.5",
+  "version": "2.8.6",
   "productName": "MZD-AIO-TI",
   "description": "MZD All In One Tweaks Installer",
   "homepage": "http://mazdatweaks.com",
@@ -53,5 +53,5 @@
   "engines": {
     "node": "^13"
   },
-  "electronVersion": "^4"
+  "electronVersion": "^6"
 }
