@@ -194,7 +194,7 @@
     "electron-store": "^4.0.0",
     "extract-zip": "^1.7.0",
     "global": "^4.3.2",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "mkdirp": "^0.5.5",
     "node-abi": "^2.15.0",
     "xml2js": "^0.4.23"
