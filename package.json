@@ -179,7 +179,7 @@
     "electron-rebuild": "^1.10.1",
     "mocha": "^6.2.3",
     "rimraf": "^3.0.2",
-    "shelljs": "^0.8.3",
+    "shelljs": "^0.8.5",
     "spectron": "^8.0.0",
     "standard": "^13.1.0"
   },
