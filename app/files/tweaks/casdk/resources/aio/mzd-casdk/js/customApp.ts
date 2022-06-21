@@ -36,8 +36,7 @@ log.addSrcFile('customApp.js', 'customApp');
  * (Surface)
  */
 
-function customApp(uiaId)
-{
+function customApp(uiaId) {
   log.debug('Constructor called.');
 
   baseApp.init(this, uiaId);

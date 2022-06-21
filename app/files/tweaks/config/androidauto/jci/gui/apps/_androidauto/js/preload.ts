@@ -1,6 +1,7 @@
 function AAInstallHook() {
-  if (this.hookInstalled == true)
-  {return;}
+  if (this.hookInstalled == true) {
+    return;
+  }
 
   const showOperaSurface_orig = framework.showOperaSurface.bind(framework);
   const showTemplateSurfaces_orig = framework._showTemplateSurfaces.bind(framework);

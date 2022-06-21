@@ -512,7 +512,9 @@ $(document).ready(function() {
   function updateAlarmLayout() {
     if (showAlarmLayer == 1 || egtAlarmFg == 1) {
       $('#mzdwheelSetBGDiv').removeClass('hidden');
-      setTimeout(function() {$('#mzdwheelSetBGDiv').removeClass('visuallyhidden');}, 10);
+      setTimeout(function() {
+        $('#mzdwheelSetBGDiv').removeClass('visuallyhidden');
+      }, 10);
     } else {
       $('#mzdwheelSetBGDiv').addClass('visuallyhidden');
       $('#mzdwheelSetBGDiv').one('transitionend', function(e) {
@@ -538,8 +540,12 @@ $(document).ready(function() {
       let seconds = totalTripSeconds - (days * 86400) - (hours * 3600) - (minutes * 60);
       showTripTime = '';
 
-      if (hours > 0 && minutes < 10) {minutes = '0'+minutes;}
-      if (seconds < 10) {seconds = '0'+seconds;}
+      if (hours > 0 && minutes < 10) {
+        minutes = '0'+minutes;
+      }
+      if (seconds < 10) {
+        seconds = '0'+seconds;
+      }
       if (days > 0) {
         showTripTime = days + 'd ';
         if (hours > 0) {
@@ -563,8 +569,12 @@ $(document).ready(function() {
     seconds = totalTripBSeconds - (days * 86400) - (hours * 3600) - (minutes * 60);
     showTripTimeB = '';
 
-    if (hours > 0 && minutes < 10) {minutes = '0'+minutes;}
-    if (seconds < 10) {seconds = '0'+seconds;}
+    if (hours > 0 && minutes < 10) {
+      minutes = '0'+minutes;
+    }
+    if (seconds < 10) {
+      seconds = '0'+seconds;
+    }
     if (days > 0) {
       showTripTimeB = days + 'd ';
     }
@@ -587,8 +597,12 @@ $(document).ready(function() {
       let seconds = totalIdleSeconds - (days * 86400) - (hours * 3600) - (minutes * 60);
       showIdleTime = '';
 
-      if (hours > 0 && minutes < 10) {minutes = '0'+minutes;}
-      if (seconds < 10) {seconds = '0'+seconds;}
+      if (hours > 0 && minutes < 10) {
+        minutes = '0'+minutes;
+      }
+      if (seconds < 10) {
+        seconds = '0'+seconds;
+      }
       if (days > 0) {
         showIdleTime = days + 'd ';
         if (hours > 0) {
@@ -611,8 +625,12 @@ $(document).ready(function() {
     seconds = totalIdleBSeconds - (days * 86400) - (hours * 3600) - (minutes * 60);
     showIdleTimeB = '';
 
-    if (hours > 0 && minutes < 10) {minutes = '0'+minutes;}
-    if (seconds < 10) {seconds = '0'+seconds;}
+    if (hours > 0 && minutes < 10) {
+      minutes = '0'+minutes;
+    }
+    if (seconds < 10) {
+      seconds = '0'+seconds;
+    }
     if (days > 0) {
       showIdleTimeB = days + 'd ';
       if (hours > 0) {

@@ -237,15 +237,25 @@ CustomApplicationsHandler.register('app.speedometer', new CustomApplication({
 
     this.speedoDialText = $('<div/>').attr('id', 'speedodialtext').appendTo(this.canvas);
     this.button1 = $('<button/>').attr('id', 'Star1').text('Star 1').appendTo(this.canvas);
-    this.button1.on('click', function() {$('body').toggleClass('star1');});
+    this.button1.on('click', function() {
+      $('body').toggleClass('star1');
+    });
     this.button2 = $('<button/>').attr('id', 'Star2').text('Star 2').appendTo(this.canvas);
-    this.button2.on('click', function() {$('body').toggleClass('star3');});
+    this.button2.on('click', function() {
+      $('body').toggleClass('star3');
+    });
     this.button3 = $('<button/>').attr('id', 'ellipse').text('Ellipse').appendTo(this.canvas);
-    this.button3.on('click', function() {$('body').toggleClass('ellipse');});
+    this.button3.on('click', function() {
+      $('body').toggleClass('ellipse');
+    });
     this.button4 = $('<button/>').attr('id', 'minicoins').text('Mini Coins').appendTo(this.canvas);
-    this.button4.on('click', function() {$('body').toggleClass('minicoins'); framework.sendEventToMmui('common', 'Global.Yes');});
+    this.button4.on('click', function() {
+      $('body').toggleClass('minicoins'); framework.sendEventToMmui('common', 'Global.Yes');
+    });
     this.button4 = $('<button/>').attr('id', 'label3d').text('3D Label').appendTo(this.canvas);
-    this.button4.on('click', function() {$('body').toggleClass('3dlabel');});
+    this.button4.on('click', function() {
+      $('body').toggleClass('3dlabel');
+    });
     /*
         this.button3 =  $("<button onclick='$('body').toggleClass('star2');>Invert<button/>").appendTo(this.canvas);
         this.button4 =  $("<button onclick='$('body').toggleClass('ellipse');>Ellipes<button/>").appendTo(this.canvas);
@@ -649,7 +659,9 @@ CustomApplicationsHandler.register('app.speedometer', new CustomApplication({
     if (this.statistics.speeds.length >= 5) {
       // calculate average
       let t = 0;
-      this.statistics.speeds.forEach(function(v) {t += v;});
+      this.statistics.speeds.forEach(function(v) {
+        t += v;
+      });
 
       const avg = Math.round(t / this.statistics.speeds.length);
 

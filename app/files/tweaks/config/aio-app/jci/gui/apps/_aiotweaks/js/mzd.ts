@@ -29,7 +29,9 @@ export const StartAIOApp = () => {
     $('button').removeClass('selectedItem');
     $(this).addClass('selectedItem');
   });
-  $('#aioInfo').on('click', function() {showAioInfo('<div class=\'infoMessage\'><h1>AIO Tweaks App v' + aioTweaksVer + ' </h1>This is an experimental app by Trezdog44 made to test the capabilities, functionalities, and limitations of apps in the MZD Infotainment System.<br>This app has some useful and fun functions although it is not guaranteed that everything works.  There may be non-functioning or experimental features.</div>');});
+  $('#aioInfo').on('click', function() {
+    showAioInfo('<div class=\'infoMessage\'><h1>AIO Tweaks App v' + aioTweaksVer + ' </h1>This is an experimental app by Trezdog44 made to test the capabilities, functionalities, and limitations of apps in the MZD Infotainment System.<br>This app has some useful and fun functions although it is not guaranteed that everything works.  There may be non-functioning or experimental features.</div>');
+  });
   $('#aioReboot').on('click', myRebootSystem);
   // $("#mainMenuLoop").on("click",setMainMenuLoop);
   $('#test').on('click', aioSBNtest);
@@ -79,17 +81,35 @@ export const StartAIOApp = () => {
   $('#showLocalStorage').on('click', showLocalStorage);
   $('#wifiToggle').on('click', turnOnWifi);
   $('#verBtn').on('click', showVersion);
-  $('#showWinkBtn').on('click', function() {aioWink('Wink Test... It works!! :-)');});
-  $('#showBgBtn').on('click', function() {$('html').addClass('showBg');});
-  $('#twkOut').on('click', function() {framework.sendEventToMmui('common', 'Global.IntentHome');});
-  $('#usba').on('click', function() {framework.sendEventToMmui('system', 'SelectUSBA');});
-  $('#usbb').on('click', function() {framework.sendEventToMmui('system', 'SelectUSBB');});
-  $('#pauseBtn').on('click', function() {localStorage.clear();});
+  $('#showWinkBtn').on('click', function() {
+    aioWink('Wink Test... It works!! :-)');
+  });
+  $('#showBgBtn').on('click', function() {
+    $('html').addClass('showBg');
+  });
+  $('#twkOut').on('click', function() {
+    framework.sendEventToMmui('common', 'Global.IntentHome');
+  });
+  $('#usba').on('click', function() {
+    framework.sendEventToMmui('system', 'SelectUSBA');
+  });
+  $('#usbb').on('click', function() {
+    framework.sendEventToMmui('system', 'SelectUSBB');
+  });
+  $('#pauseBtn').on('click', function() {
+    localStorage.clear();
+  });
   // $("#previousTrackBtn").on("click",function(){framework.sendEventToMmui("common", "Global.PreviousHoldStop")});
   // $("#nextTrackBtn").on("click",function(){framework.sendEventToMmui("common", "Global.NextHoldStop")});
-  $('#BluetoothAudio').on('click', function() {framework.sendEventToMmui('system', 'SelectBTAudio');});
-  $('#previousTrackBtn').on('click', function() {framework.sendEventToMmui('Common', 'Global.Previous');});
-  $('#nextTrackBtn').on('click', function() {framework.sendEventToMmui('Common', 'Global.Next');});
+  $('#BluetoothAudio').on('click', function() {
+    framework.sendEventToMmui('system', 'SelectBTAudio');
+  });
+  $('#previousTrackBtn').on('click', function() {
+    framework.sendEventToMmui('Common', 'Global.Previous');
+  });
+  $('#nextTrackBtn').on('click', function() {
+    framework.sendEventToMmui('Common', 'Global.Next');
+  });
   $('.mmLayout').on('click', function() {
     changeLayout($(this).attr('id'));
     $('#MainMenuMsg').html($(this).text());
@@ -340,7 +360,9 @@ function aioWink(msg) {
     'text1': msg,
     'winkTimeout': 5000,
     'alertId': '',
-    'completeCallback': function() {aioRemoveWink(wink);},
+    'completeCallback': function() {
+      aioRemoveWink(wink);
+    },
   };
   const wink = framework.instantiateControl('common', document.body, 'WinkCtrl', properties);
 }

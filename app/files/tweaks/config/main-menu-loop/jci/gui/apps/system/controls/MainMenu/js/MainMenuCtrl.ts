@@ -26,8 +26,7 @@
 
 log.addSrcFile('MainMenuCtrl.js', 'system');
 
-function MainMenuCtrl(uiaId, parentDiv, controlId, properties)
-{
+function MainMenuCtrl(uiaId, parentDiv, controlId, properties) {
   this.uiaId = uiaId;
   this.divElt = null;
   this.controlId = controlId;
@@ -47,8 +46,7 @@ function MainMenuCtrl(uiaId, parentDiv, controlId, properties)
       'tiltStepTime': 500,
     };
 
-  for (const i in properties)
-  {
+  for (const i in properties) {
     this.properties[i] = properties[i];
   }
 
@@ -77,8 +75,7 @@ function MainMenuCtrl(uiaId, parentDiv, controlId, properties)
 }
 
 // This function creates the div classes of the Main Menu
-MainMenuCtrl.prototype.createStructure = function()
-{
+MainMenuCtrl.prototype.createStructure = function() {
   this.divElt = document.createElement('div');
   this.divElt.id = this.controlId;
   this.divElt.className = 'MainMenuCtrl';
@@ -87,8 +84,7 @@ MainMenuCtrl.prototype.createStructure = function()
   ellipse.className = 'MainMenuCtrlEllipse';
   this.divElt.appendChild(ellipse);
 
-  for (let i = 0; i < this._coins.length; i++)
-  {
+  for (let i = 0; i < this._coins.length; i++) {
     const key = this._coins[i].key;
 
     this._coins[i].div = document.createElement('div');
@@ -132,11 +128,9 @@ MainMenuCtrl.prototype.createStructure = function()
 };
 
 // This function will be used to set the default main menu icon (maybe not always com)
-MainMenuCtrl.prototype.init = function()
-{
+MainMenuCtrl.prototype.init = function() {
   // Record the hit test area for each normal and focus coin (can only be done after the divs are added to the DOM)
-  for (let i = 0; i < this._coins.length; i++)
-  {
+  for (let i = 0; i < this._coins.length; i++) {
     this._computeHitAreas(this._coins[i]);
 
     // Draw hit test circles for visual testing.
@@ -157,8 +151,7 @@ MainMenuCtrl.prototype.init = function()
 };
 
 // Debug helper function to draw a border around each hit area.
-MainMenuCtrl.prototype._drawCoinBorder = function(hitArea, color)
-{
+MainMenuCtrl.prototype._drawCoinBorder = function(hitArea, color) {
   // Add a circle to the document to show the hit area.
   const r = Math.sqrt(hitArea.r2);
   const d = r * 2;
@@ -172,8 +165,7 @@ MainMenuCtrl.prototype._drawCoinBorder = function(hitArea, color)
   this.divElt.appendChild(div);
 };
 
-MainMenuCtrl.prototype._computeHitAreas = function(coin)
-{
+MainMenuCtrl.prototype._computeHitAreas = function(coin) {
   const div = coin.div;
   let w = coin.div.offsetWidth;
   let h = coin.div.offsetHeight;
@@ -197,15 +189,11 @@ MainMenuCtrl.prototype._computeHitAreas = function(coin)
   coin.currentHitArea = coin.normalHitArea;
 };
 
-MainMenuCtrl.prototype._mouseDown = function(evt)
-{
-  if (this._allowInput)
-  {
+MainMenuCtrl.prototype._mouseDown = function(evt) {
+  if (this._allowInput) {
     const index = this._hitTestEvent(evt);
-    if (index !== -1)
-    {
-      if (this._getFocus() == -1)
-      {
+    if (index !== -1) {
+      if (this._getFocus() == -1) {
         framework.common.stealFocus();
       }
       // Install mousemove / mouseup handlers to implement touch-move behavior.
@@ -218,40 +206,33 @@ MainMenuCtrl.prototype._mouseDown = function(evt)
   }
 };
 
-MainMenuCtrl.prototype._mouseUp = function(evt)
-{
+MainMenuCtrl.prototype._mouseUp = function(evt) {
   document.body.removeEventListener('mousemove', this._mouseMoveCallback);
   document.body.removeEventListener('mouseup', this._mouseUpCallback);
 
   let index = this._hitTestEvent(evt, true);
-  if (index === -1)
-  {
+  if (index === -1) {
     // Also test the normal hit area for the two side coins because these coins move when focussed.
     // This avoids the scenario where the user touches the coin, it gets focus and expands, but upon touch-release
     // the hit test doesn't return a hit and we don't change contexts.
     const f = this._getFocus();
-    if (f === 0 || f === 4)
-    {
+    if (f === 0 || f === 4) {
       const hitArea = this._coins[f].normalHitArea;
-      if (this._hitTestHelper(evt.x, evt.y, hitArea))
-      {
+      if (this._hitTestHelper(evt.x, evt.y, hitArea)) {
         index = f;
       }
     }
   }
 
-  if (index !== -1)
-  {
+  if (index !== -1) {
     framework.common.beep('Short', 'Touch');
     this._invokeSelectCallback(index);
   }
 };
 
-MainMenuCtrl.prototype._mouseMove = function(evt)
-{
+MainMenuCtrl.prototype._mouseMove = function(evt) {
   const index = this._hitTestEvent(evt);
-  if (index !== -1)
-  {
+  if (index !== -1) {
     // User is touching a coin so move focus and highlight
     this._setFocus(index);
     this._setHighlight(index);
@@ -259,16 +240,13 @@ MainMenuCtrl.prototype._mouseMove = function(evt)
 };
 
 // Perform a hit test of the given mouse event and return the index of the coin hit, or -1 if no hit.
-MainMenuCtrl.prototype._hitTestEvent = function(evt)
-{
+MainMenuCtrl.prototype._hitTestEvent = function(evt) {
   let hitIndex = -1;
   const order = [0, 4, 1, 2, 3]; // We test the outside coins first because they overlap the three middle coins.
-  for (let i = 0; i < order.length; ++i)
-  {
+  for (let i = 0; i < order.length; ++i) {
     const hitArea = this._coins[order[i]].currentHitArea;
 
-    if (this._hitTestHelper(evt.pageX, evt.pageY, hitArea))
-    {
+    if (this._hitTestHelper(evt.pageX, evt.pageY, hitArea)) {
       hitIndex = order[i];
       break;
     }
@@ -276,8 +254,7 @@ MainMenuCtrl.prototype._hitTestEvent = function(evt)
   return hitIndex;
 };
 
-MainMenuCtrl.prototype._hitTestHelper = function(x, y, hitArea)
-{
+MainMenuCtrl.prototype._hitTestHelper = function(x, y, hitArea) {
   const dx = x - hitArea.x;
   const dy = y - hitArea.y;
   const distance = dx * dx + dy * dy;
@@ -286,70 +263,54 @@ MainMenuCtrl.prototype._hitTestHelper = function(x, y, hitArea)
 
 // Sets the hightlight to the coin with the given index and removes it from all other coins.
 // Call this with an invalid index such as -1 to clear the visible highlight effects from the screen.
-MainMenuCtrl.prototype._setHighlight = function(index)
-{
-  if (this._fullyHighlightedIndex !== index)
-  {
+MainMenuCtrl.prototype._setHighlight = function(index) {
+  if (this._fullyHighlightedIndex !== index) {
     this._fullyHighlightedIndex = null;
 
-    if (index === -1)
-    {
+    if (index === -1) {
       this._prvFocus = this._getFocus();
-    }
-    else
-    {
+    } else {
       this._prvFocus = -1;
     }
 
     let name = '';
-    for (let i = 0; i < this._coins.length; i++)
-    {
-      if (i === index)
-      {
+    for (let i = 0; i < this._coins.length; i++) {
+      if (i === index) {
         this._coins[i].div.classList.add('MainMenuCtrlCoinFocus');
         this._coins[i].highlight.classList.add('Visible');
         this._coins[i].currentHitArea = this._coins[i].focusHitArea;
         name = framework.localize.getLocStr(this.uiaId, this._coins[i].nameId);
-      }
-      else if (this._coins[i].highlight.style.opacity !== '0')
-      {
+      } else if (this._coins[i].highlight.style.opacity !== '0') {
         this._coins[i].div.classList.remove('MainMenuCtrlCoinFocus');
         this._coins[i].highlight.classList.remove('Visible');
         this._coins[i].currentHitArea = this._coins[i].normalHitArea;
       }
     }
 
-    if ( name != '')
-    {
+    if ( name != '') {
       // TODO: workaround for remoteUI text. Do not override with blank text
       this._iconNameDiv.innerHTML = name;
     }
   }
 };
 
-MainMenuCtrl.prototype.setText = function(text)
-{
+MainMenuCtrl.prototype.setText = function(text) {
   this._iconNameDiv.innerHTML = text;
 };
 
 // TODO: Workaround: Add better logic involving common. Focus should not be gained by app iteself mutually. Can be given by common (handleControllerEvents) or stolen (stealFocus).
 // This restores the focus on the previous icon, if carPlay had focus before and was removed.
-MainMenuCtrl.prototype.getRemoteUiButtonStatus = function(enabled)
-{
-  if (!enabled && this._iconNameDiv.innerHTML != name && this._prvFocus != -1)
-  {
+MainMenuCtrl.prototype.getRemoteUiButtonStatus = function(enabled) {
+  if (!enabled && this._iconNameDiv.innerHTML != name && this._prvFocus != -1) {
     this._setHighlight(this._prvFocus);
   }
 };
 
 // Called when the focus animation on a coin ends.
-MainMenuCtrl.prototype._setHighlightEnd = function(index, evt)
-{
-  if (evt.currentTarget.classList.contains('MainMenuCtrlCoinFocus'))
-  {
+MainMenuCtrl.prototype._setHighlightEnd = function(index, evt) {
+  if (evt.currentTarget.classList.contains('MainMenuCtrlCoinFocus')) {
     this._fullyHighlightedIndex = index;
-    if (this._pendingInvokeSelectIndex !== null)
-    {
+    if (this._pendingInvokeSelectIndex !== null) {
       log.debug('_setHighlightEnd: invoking pending select callback on index ' + this._pendingInvokeSelectIndex);
       const tmp = this._pendingInvokeSelectIndex;
       this._pendingInvokeSelectIndex = null;
@@ -359,12 +320,9 @@ MainMenuCtrl.prototype._setHighlightEnd = function(index, evt)
 };
 
 // Return the index of the coin that currently has focus.
-MainMenuCtrl.prototype._getFocus = function()
-{
-  for (let i = 0; i < this._coins.length; i++)
-  {
-    if (this._coins[i].hasFocus)
-    {
+MainMenuCtrl.prototype._getFocus = function() {
+  for (let i = 0; i < this._coins.length; i++) {
+    if (this._coins[i].hasFocus) {
       return i;
     }
   }
@@ -372,23 +330,18 @@ MainMenuCtrl.prototype._getFocus = function()
 };
 
 // Set focus to the coin with the given index.
-MainMenuCtrl.prototype._setFocus = function(index)
-{
-  for (let i = 0; i < this._coins.length; i++)
-  {
+MainMenuCtrl.prototype._setFocus = function(index) {
+  for (let i = 0; i < this._coins.length; i++) {
     this._coins[i].hasFocus = (i === index);
   }
 };
 
 // Invoke the select callback to the application.
-MainMenuCtrl.prototype._invokeSelectCallback = function(index)
-{
-  if (0 <= index && index < 5)
-  {
+MainMenuCtrl.prototype._invokeSelectCallback = function(index) {
+  if (0 <= index && index < 5) {
     // Temporarily block input to allow time for a context change transition.
     // ** DO NOT **  block input indefinitely in case MMUI does not send a context change.
-    if (this._allowInput)
-    {
+    if (this._allowInput) {
       this._allowInput = false;
       this._allowInputTimerId = setTimeout(function() {
         this._allowInput = true;
@@ -396,17 +349,13 @@ MainMenuCtrl.prototype._invokeSelectCallback = function(index)
       }.bind(this), 1000);
     }
 
-    if (index === this._fullyHighlightedIndex)
-    {
+    if (index === this._fullyHighlightedIndex) {
       this._hasInvokedSelectCallback = true;
-      if (this.properties.selectCallback)
-      {
+      if (this.properties.selectCallback) {
         const icon = this._coins[index].key.toLowerCase();
         this.properties.selectCallback(this, this.properties.appData, {'icon': icon});
       }
-    }
-    else
-    {
+    } else {
       log.info('_invokeSelectCallback: Select callback delayed because coin is not fully highlighted yet.');
       this._pendingInvokeSelectIndex = index;
     }
@@ -414,43 +363,36 @@ MainMenuCtrl.prototype._invokeSelectCallback = function(index)
 };
 
 // A support function to move the focus left or right from the current focus position. Pass -1 to move left, pass +1 to move right.
-MainMenuCtrl.prototype._offsetFocus = function(direction)
-{
+MainMenuCtrl.prototype._offsetFocus = function(direction) {
   let index = this._getFocus();
   index += direction;
 
-  if (index < 0)
-  {
+  if (index < 0) {
     index = 4;
   }
-  if (index > 4)
-  {
+  if (index > 4) {
     index = 0;
   }
 
-  if (index !== this._getFocus())
-  {
+  if (index !== this._getFocus()) {
     this._setFocus(index);
     this._setHighlight(index);
   }
 };
 
 // Start a timer while the user holds tilt.
-MainMenuCtrl.prototype._startTiltHoldTimer = function()
-{
+MainMenuCtrl.prototype._startTiltHoldTimer = function() {
   this._cancelFastTilt();
 
   // Only start the fast tilt hold timer if fast-tilting would have any effect from the current focus position.
   if ((this._fastTiltDirection === -1 && this._getFocus() > 0) ||
-        (this._fastTiltDirection === 1 && this._getFocus() < 4))
-  {
+        (this._fastTiltDirection === 1 && this._getFocus() < 4)) {
     this._tiltHoldTimerId = setTimeout(this._startFastTiltInterval.bind(this), this.properties.tiltHoldTime);
   }
 };
 
 // Invoked when the user holds tilt long enough to start fast tilting.
-MainMenuCtrl.prototype._startFastTiltInterval = function()
-{
+MainMenuCtrl.prototype._startFastTiltInterval = function() {
   framework.common.beep('Long', 'Multicontroller');
   this._tiltHoldTimerId = null;
   this._fastTiltStep();
@@ -458,8 +400,7 @@ MainMenuCtrl.prototype._startFastTiltInterval = function()
 };
 
 // Cancels all fast-tilt or tilt-hold timers.
-MainMenuCtrl.prototype._cancelFastTilt = function()
-{
+MainMenuCtrl.prototype._cancelFastTilt = function() {
   clearTimeout(this._tiltHoldTimerId);
   clearInterval(this._fastTiltStepIntervalId);
 
@@ -468,17 +409,14 @@ MainMenuCtrl.prototype._cancelFastTilt = function()
 };
 
 // Periodic interval invoked during fast tilting.
-MainMenuCtrl.prototype._fastTiltStep = function()
-{
+MainMenuCtrl.prototype._fastTiltStep = function() {
   this._offsetFocus(this._fastTiltDirection);
 };
 
 // Handle multicontroller events.
-MainMenuCtrl.prototype.handleControllerEvent = function(eventId)
-{
+MainMenuCtrl.prototype.handleControllerEvent = function(eventId) {
   let response = 'consumed';
-  switch (eventId)
-  {
+  switch (eventId) {
     case 'lostFocus':
       this._setHighlight(-1);
       response = 'consumed';
@@ -486,38 +424,30 @@ MainMenuCtrl.prototype.handleControllerEvent = function(eventId)
 
     case 'acceptFocusInit': // intentional fall through
     case 'acceptFocusFromTop':
-      if (this._prvFocus != -1)
-      {
+      if (this._prvFocus != -1) {
         this._setHighlight(this._prvFocus);
-      }
-      else if (this._getFocus() != -1)
-      {
+      } else if (this._getFocus() != -1) {
         this._setHighlight(this._getFocus());
-      }
-      else
-      {
+      } else {
         // set default focus - communication // remove hardcoding later
         this._setHighlight(2);
       }
       break;
 
     case 'ccw':
-      if (this._allowInput)
-      {
+      if (this._allowInput) {
         this._offsetFocus(-1);
       }
       break;
 
     case 'cw':
-      if (this._allowInput)
-      {
+      if (this._allowInput) {
         this._offsetFocus(1);
       }
       break;
 
     case 'leftStart':
-      if (this._allowInput)
-      {
+      if (this._allowInput) {
         this._lastControllerStartEvent = eventId;
         this._fastTiltDirection = -1;
         this._offsetFocus(this._fastTiltDirection);
@@ -526,16 +456,14 @@ MainMenuCtrl.prototype.handleControllerEvent = function(eventId)
       break;
 
     case 'left':
-      if (this._allowInput && this._lastControllerStartEvent === 'leftStart')
-      {
+      if (this._allowInput && this._lastControllerStartEvent === 'leftStart') {
         this._cancelFastTilt();
       }
       this._lastControllerStartEvent = '';
       break;
 
     case 'rightStart':
-      if (this._allowInput)
-      {
+      if (this._allowInput) {
         this._lastControllerStartEvent = eventId;
         this._fastTiltDirection = 1;
         this._offsetFocus(this._fastTiltDirection);
@@ -544,31 +472,27 @@ MainMenuCtrl.prototype.handleControllerEvent = function(eventId)
       break;
 
     case 'right':
-      if (this._allowInput && this._lastControllerStartEvent === 'rightStart')
-      {
+      if (this._allowInput && this._lastControllerStartEvent === 'rightStart') {
         this._cancelFastTilt();
       }
       this._lastControllerStartEvent = '';
       break;
 
     case 'selectStart':
-      if (this._allowInput)
-      {
+      if (this._allowInput) {
         this._lastControllerStartEvent = eventId;
         this._setHighlight(this._getFocus());
       }
       break;
 
     case 'select':
-      if (this._allowInput && this._lastControllerStartEvent === 'selectStart')
-      {
+      if (this._allowInput && this._lastControllerStartEvent === 'selectStart') {
         this._invokeSelectCallback(this._getFocus());
       }
       this._lastControllerStartEvent = '';
       break;
     case 'upStart':
-      if (this._allowInput)
-      {
+      if (this._allowInput) {
         this._lastControllerStartEvent = '';
         response = 'giveFocusUp';
       }
@@ -588,13 +512,10 @@ MainMenuCtrl.prototype.handleControllerEvent = function(eventId)
   return response;
 };
 
-MainMenuCtrl.prototype.startTransitionFrom = function()
-{
-  if (this._hasInvokedSelectCallback)
-  {
+MainMenuCtrl.prototype.startTransitionFrom = function() {
+  if (this._hasInvokedSelectCallback) {
     const index = this._getFocus();
-    switch (index)
-    {
+    switch (index) {
       case 0: // fallthrough
       case 4:
         this._coins[index].div.classList.add('MainMenuCtrlCoinAExplode');
@@ -614,38 +535,32 @@ MainMenuCtrl.prototype.startTransitionFrom = function()
   }
 };
 
-MainMenuCtrl.prototype.endTransitionTo = function()
-{
+MainMenuCtrl.prototype.endTransitionTo = function() {
   this._iconNameDiv.classList.add('Visible');
 };
 
-MainMenuCtrl.prototype.getContextCapture = function()
-{
+MainMenuCtrl.prototype.getContextCapture = function() {
   const capture = {};
   capture.focusedIcon = this._getFocus();
   log.debug('MainMenuCtrl.prototype.getContextCapture ' + capture.focusedIcon);
   return capture;
 };
 
-MainMenuCtrl.prototype.restoreContext = function(capture)
-{
-  if (capture && typeof capture.focusedIcon === 'number')
-  {
+MainMenuCtrl.prototype.restoreContext = function(capture) {
+  if (capture && typeof capture.focusedIcon === 'number') {
     this._setFocus(capture.focusedIcon);
     log.debug('MainMenuCtrl.prototype.restoreContext ' + capture.focusedIcon);
   }
 };
 
-MainMenuCtrl.prototype.finishPartialActivity = function()
-{
+MainMenuCtrl.prototype.finishPartialActivity = function() {
   this._cancelFastTilt();
 
   // Null out the selectCallback to prevent any inadvertant callbacks while/after this template is destroyed.
   this.properties.selectCallback = null;
 };
 
-MainMenuCtrl.prototype.cleanUp = function()
-{
+MainMenuCtrl.prototype.cleanUp = function() {
   // delete obj reference
   delete this.properties;
 
@@ -653,13 +568,11 @@ MainMenuCtrl.prototype.cleanUp = function()
   document.body.removeEventListener('mousedown', this._mouseDownCallback);
   document.body.removeEventListener('mouseup', this._mouseUpCallback);
 
-  for (let i = 0; i < this._coins.length; i++)
-  {
+  for (let i = 0; i < this._coins.length; i++) {
     this._coins[i].div.removeEventListener('OTransitionEnd', this._coins[i].setHighlightEndBinder);
   }
 
-  if (this._allowInputTimerId)
-  {
+  if (this._allowInputTimerId) {
     clearTimeout(this._allowInputTimerId);
     this._allowInputTimerId = null;
   }

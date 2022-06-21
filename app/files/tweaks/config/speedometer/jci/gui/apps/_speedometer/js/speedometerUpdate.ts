@@ -39,7 +39,9 @@ export const updateSpeedoApp = () => {
   } else if (speedMod) {
     // touch to pop top value
     // --------------------------------------------------------------------------
-    $('#valuetable fieldset:first-child').click(function() {$('.spdBtn5').click();});
+    $('#valuetable fieldset:first-child').click(function() {
+      $('.spdBtn5').click();
+    });
     // touch to toggle Analog / Digital
     // --------------------------------------------------------------------------
     $('.spdBtn0').click(function() {
@@ -69,7 +71,9 @@ export const updateSpeedoApp = () => {
       const pop = $('#valuetable fieldset:first-child legend').text();
       $('#valuetable').append($('#valuetable fieldset:first-child'));
       $('#valuetable fieldset').off('click');
-      $('#valuetable fieldset:first-child').click(function() {$('.spdBtn5').click();});
+      $('#valuetable fieldset:first-child').click(function() {
+        $('.spdBtn5').click();
+      });
       AIO_SBN(SPDSBN_Popped + ' ' + pop, 'apps/_speedometer/templates/SpeedoMeter/images/digital.png');
       SaveSpeedoClassicLayout();
     });
@@ -304,9 +308,8 @@ export const updateSpeedoApp = () => {
     $('#AvgFuelFieldSet legend').html('Avg. <span class="fuelEffUnit"></span>');
     $('#batSOCFieldSet legend').html('Battery SOC'); // Battery State of Charge
     $('#engLoadFieldSet legend').html('Engine Load');
-  }
-  // Polskie
-  else if (language === 'PL') {
+  } else if (language === 'PL') {
+    // Polskie
     $('#gpsSpeedFieldSet legend').html('Prędkość GPS');
     $('#tripDistFieldSet legend').html('Dystans <span class="spunit">(<span class="distUnit">km</span>)</span>');
     $('#speedTopFieldSet legend').html('Prędkość maks.');
@@ -328,9 +331,8 @@ export const updateSpeedoApp = () => {
     $('#AvgFuelFieldSet legend').html('Avg. <span class="fuelEffUnit"></span>');
     $('#batSOCFieldSet legend').html('Battery SOC'); // Battery State of Charge
     $('#engLoadFieldSet legend').html('Engine Load');
-  }
-  // Slovenský
-  else if (language === 'SK') {
+  } else if (language === 'SK') {
+    // Slovenský
     $('#tripDistFieldSet legend').html('Vzdialenosť <span class="spunit">(<span class="distUnit">km</span>)</span>');
     $('#speedTopFieldSet legend').html('Najvyššia rých.');
     $('#speedAvgFieldSet legend').html('Priemerná rýchlosť');
@@ -352,9 +354,8 @@ export const updateSpeedoApp = () => {
     $('#AvgFuelFieldSet legend').html('Avg. <span class="fuelEffUnit"></span>');
     $('#batSOCFieldSet legend').html('Battery SOC'); // Battery State of Charge
     $('#engLoadFieldSet legend').html('Engine Load');
-  }
-  // Deutsch
-  else if (language === 'DE') {
+  } else if (language === 'DE') {
+    // Deutsch
     $('#gpsSpeedFieldSet legend').html('Geschw. GPS');
     $('#tripDistFieldSet legend').html('Strecke <span class="spunit">(<span class="distUnit">km</span>)</span>');
     $('#speedTopFieldSet legend').html('Geschw. max');
@@ -383,9 +384,8 @@ export const updateSpeedoApp = () => {
     $('#AvgFuelFieldSet legend').html('Avg. <span class="fuelEffUnit"></span>');
     $('#batSOCFieldSet legend').html('Battery SOC'); // Battery State of Charge
     $('#engLoadFieldSet legend').html('Engine Load');
-  }
-  // Türk
-  else if (language === 'TR') {
+  } else if (language === 'TR') {
+    // Türk
     $('#tripDistFieldSet legend').html('Gidilen Yol <span class="spunit">(<span class="distUnit">km</span>)</span>');
     $('#speedTopFieldSet legend').html('Maksimum Hız');
     $('#speedAvgFieldSet legend').html('Ortalama Hız');
@@ -417,9 +417,8 @@ export const updateSpeedoApp = () => {
     $('#batSOCFieldSet legend').html('Battery SOC'); // Battery State of Charge
     $('#engLoadFieldSet legend').html('Engine Load');
     $('.speedUnit').text('km/s');
-  }
-  // Français
-  else if (language === 'FR') {
+  } else if (language === 'FR') {
+    // Français
     $('#gpsSpeedFieldSet legend').html('Vit. GPS');
     $('#tripDistFieldSet legend').html('Trajet Dist. <span class="spunit">(<span class="distUnit">km</span>)</span>');
     $('#speedTopFieldSet legend').html('V. max');
@@ -447,9 +446,8 @@ export const updateSpeedoApp = () => {
     $('#Drv1AvlFuelEFieldSet legend').html('Drive <span class="fuelEffUnit"></span>');
     $('#TotAvgFuelFieldSet legend').html('Total <span class="fuelEffUnit"></span>');
     $('#AvgFuelFieldSet legend').html('Avg. <span class="fuelEffUnit"></span>');
-  }
-  // Italiano
-  else if (language === 'IT') {
+  } else if (language === 'IT') {
+    // Italiano
     $('#gpsSpeedFieldSet legend').html('Vel. GPS');
     $('#tripDistFieldSet legend').html('Dist. tragitto <span class="spunit">(<span class="distUnit">km</span>)</span>');
     $('#speedTopFieldSet legend').html('Vel. max');
@@ -481,9 +479,8 @@ export const updateSpeedoApp = () => {
     $('#Drv1AvlFuelEFieldSet legend').html('Drive <span class="fuelEffUnit"></span>');
     $('#TotAvgFuelFieldSet legend').html('Total <span class="fuelEffUnit"></span>');
     $('#AvgFuelFieldSet legend').html('Avg. <span class="fuelEffUnit"></span>');
-  }
-  // Nederlands
-  else if (language === 'NL') {
+  } else if (language === 'NL') {
+    // Nederlands
     $('#gpsSpeedFieldSet legend').html('GPS Snelheid');
     $('#tripDistFieldSet legend').html('Dagteller <span class="spunit">(<span class="distUnit">km</span>)</span>');
     $('#speedTopFieldSet legend').html('Max. Snelheid');

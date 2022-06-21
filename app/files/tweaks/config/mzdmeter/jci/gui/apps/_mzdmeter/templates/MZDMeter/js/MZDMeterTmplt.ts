@@ -6,8 +6,7 @@ log.addSrcFile('MZDMeterTmplt.js', 'mzdmeter');
  * Constructor
  * =========================
  */
-function MZDMeterTmplt(uiaId, parentDiv, templateID, controlProperties)
-{
+function MZDMeterTmplt(uiaId, parentDiv, templateID, controlProperties) {
   this.divElt = null;
   this.templateName = 'MZDMeterTmplt';
 
@@ -644,8 +643,7 @@ function MZDMeterTmplt(uiaId, parentDiv, templateID, controlProperties)
  * @param   eventID (string) any of the “Internal event name” values in IHU_GUI_MulticontrollerSimulation.docx (e.g. 'cw',
  * 'ccw', 'select')
  */
-MZDMeterTmplt.prototype.handleControllerEvent = function(eventID)
-{
+MZDMeterTmplt.prototype.handleControllerEvent = function(eventID) {
   log.debug('handleController() called, eventID: ' + eventID);
 
   const retValue = 'giveFocusLeft';
@@ -655,8 +653,7 @@ MZDMeterTmplt.prototype.handleControllerEvent = function(eventID)
  * Called by the app during templateNoLongerDisplayed. Used to perform garbage collection procedures on the template and
  * its controls.
  */
-MZDMeterTmplt.prototype.cleanUp = function()
-{
+MZDMeterTmplt.prototype.cleanUp = function() {
 
 };
 

@@ -160,8 +160,7 @@ CustomApplicationsHandler.register('app.android', new CustomApplication({
      * Add any content that will be static here
      */
 
-  logdata: function(s)
-  {
+  logdata: function(s) {
     const mincar = 80*40*10;
     const elem = this.logspot.get(0);
     elem.innerHTML += s;
@@ -172,8 +171,7 @@ CustomApplicationsHandler.register('app.android', new CustomApplication({
     elem.scrollTop = elem.scrollHeight;
   },
 
-  connect: function()
-  {
+  connect: function() {
     this.ws = new WebSocket('ws://localhost:9002');
 
     this.ws.onopen = function() {
@@ -217,7 +215,9 @@ CustomApplicationsHandler.register('app.android', new CustomApplication({
         this.logdata('<font color="red">'+ reason + '</font>\n');
       }
 
-      setTimeout(function() {this.connect();}.bind(this), 1000);
+      setTimeout(function() {
+        this.connect();
+      }.bind(this), 1000);
     }.bind(this);
 
     this.ws.onerror = function(error) {
@@ -242,8 +242,7 @@ CustomApplicationsHandler.register('app.android', new CustomApplication({
     }.bind(this);
   },
 
-  enablerun: function()
-  {
+  enablerun: function() {
     this.b1.prop('disabled', false);
     this.b2.prop('disabled', false);
     this.b3.prop('disabled', false);
@@ -259,8 +258,7 @@ CustomApplicationsHandler.register('app.android', new CustomApplication({
     }.bind(this), 500);
   },
 
-  disablerun: function()
-  {
+  disablerun: function() {
     this.b1.prop('disabled', true);
     this.b2.prop('disabled', true);
     this.b3.prop('disabled', true);

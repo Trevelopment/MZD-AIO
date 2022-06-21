@@ -431,7 +431,9 @@ import {buildTweakFile} from '../assets/js/build-tweaks';
             $scope.getScript('assets/vendor/featherlight.min.js');
             // Handy litle jQuery script for Inner Help Menu Togglers
             $(function() {
-              $('#IN13').click(function() {$('#bootLogoMazda').click();});
+              $('#IN13').click(function() {
+                $('#bootLogoMazda').click();
+              });
               $(`.troubleshootingToggler, .revertToggler, .warnToggler, .faqToggler, .kiToggler, .ttToggler`).click(function() {
                 $(this).siblings().not(`.troubleshootingToggler, .revertToggler, .warnToggler, .faqToggler, .kiToggler, .ttToggler`).not($(this).next()).slideUp(`fast`);
                 $(this).next().slideToggle(`fast`);
@@ -625,7 +627,11 @@ import {buildTweakFile} from '../assets/js/build-tweaks';
         $scope.uninstAll = function() {
         /* $scope.user.options.splice(0, $scope.user.options.length)
         $scope.user.options.push(1) */
-          $scope.user.options = $scope.options.map(function(item) {if (Number(item.id) !== 21) {return Number(item.id) + 100;}});
+          $scope.user.options = $scope.options.map(function(item) {
+            if (Number(item.id) !== 21) {
+              return Number(item.id) + 100;
+            }
+          });
           $scope.user.mainOps = [0, 2, 3, 5, 7, 8, 9, 106, 110];
           // $scope.user.mainOps = $scope.mainOps.map(function (item) { if (Number(item.id)==1||Number(item.id)==3) {return Number(item.id)}})
           $scope.user.colors = 0;
@@ -638,7 +644,9 @@ import {buildTweakFile} from '../assets/js/build-tweaks';
           startTour($scope.tourMsgs);
         };
         $scope.randomColorGenerator = function() {
-          return '#' + '0123456789abcdef'.split('').map(function(v, i, a) {return i > 5 ? null : a[Math.floor(Math.random() * 16)];}).join('');
+          return '#' + '0123456789abcdef'.split('').map(function(v, i, a) {
+            return i > 5 ? null : a[Math.floor(Math.random() * 16)];
+          }).join('');
         // return '#' + Math.floor(Math.random() * 16777215).toString(16)
         };
 
@@ -677,9 +685,13 @@ import {buildTweakFile} from '../assets/js/build-tweaks';
           bootbox.hideAll();
           closeHelpDrop();
           remote.BrowserWindow.fromId(1).focus();
-          if (!$scope.user.restore.full) {return;}
+          if (!$scope.user.restore.full) {
+            return;
+          }
           let msg = '<center>This script will completely remove all tweaks installed by AIO.\n';
-          if ($scope.user.restore.delBackups) {msg += `<h3 style='width:100%;text-align:center;'>*** YOU HAVE CHOSEN TO DELETE ALL BACKUP FILES. ***</h3><br><h4>BY CONTINUING, YOU ARE ACKNOWLEDGING THAT YOU UNDERSTAND THE IMPLICATIONS OF PERFORMING THIS ACTION.</h4>`;}
+          if ($scope.user.restore.delBackups) {
+            msg += `<h3 style='width:100%;text-align:center;'>*** YOU HAVE CHOSEN TO DELETE ALL BACKUP FILES. ***</h3><br><h4>BY CONTINUING, YOU ARE ACKNOWLEDGING THAT YOU UNDERSTAND THE IMPLICATIONS OF PERFORMING THIS ACTION.</h4>`;
+          }
           msg += '\nCONTINUE?</center>';
           bootbox.confirm({
             title: `AIO Full Restore Script`,
@@ -743,7 +755,9 @@ import {buildTweakFile} from '../assets/js/build-tweaks';
             },
             ],
             callback: function(results) {
-              if (results === null) {return;}
+              if (results === null) {
+                return;
+              }
               $scope.user.autorun.autoWIFI = results.includes('autow');
               $scope.user.autorun.autoADB = results.includes('autoa');
               $scope.user.autorun.dryrun = results.includes('dryrun');
@@ -753,7 +767,9 @@ import {buildTweakFile} from '../assets/js/build-tweaks';
               $scope.compileTweaks();
             },
           });
-          autoPrompt.on('shown.bs.modal', function() {$('.bootbox-input[value=serial]').prop('checked', $scope.user.autorun.serial);});
+          autoPrompt.on('shown.bs.modal', function() {
+            $('.bootbox-input[value=serial]').prop('checked', $scope.user.autorun.serial);
+          });
         };
         $scope.startCompile = function() {
           bootbox.hideAll();
@@ -792,20 +808,52 @@ import {buildTweakFile} from '../assets/js/build-tweaks';
         };
         $scope.ConfirmCompile = function() {
           let msg = `<div id="tweak-install-list" style='font-size:12px;text-align:center;'><ul style="list-style:none;">`;
-          if ($scope.user.mainOps.includes(4)) {msg += `<li style='width:100%'>****** ${$scope.mainOps.sshbringback.label} ******</li>`;}
-          if ($scope.user.mainOps.includes(1)) {msg += `<li>****** ${$scope.mainOps.backup.label} ******</li>`;}
-          if ($scope.user.mainOps.includes(0)) {msg += `<li>****** ${$scope.mainOps.wifi.label} ******</li>`;}
-          if ($scope.user.mainOps.includes(2)) {msg += `<li>****** ${$scope.mainOps.background.label} ******</li>`;}
-          if ($scope.user.mainOps.includes(6)) {msg += `<li>****** ${$scope.mainOps.backgroundrotator.label} ******</li>`;}
-          if ($scope.user.mainOps.includes(10)) {msg += `<li>****** ${$scope.mainOps.offscreenbg.label} ******</li>`;}
-          if ($scope.user.mainOps.includes(3)) {msg += `<li>****** ${$scope.mainOps.colors.label} ******</li>`;}
-          if ($scope.user.mainOps.includes(8)) {msg += `<li>****** ${$scope.mainOps.mainmenu.label} ******</li>`;}
-          if ($scope.user.mainOps.includes(9)) {msg += `<li>****** ${$scope.mainOps.uistyle.label} ******</li>`;}
-          if ($scope.user.mainOps.includes(5)) {msg += `<li>****** ${$scope.mainOps.sdcid.label} ******</li>`;}
-          if ($scope.user.mainOps.includes(110)) {msg += `<li>****** ${$scope.menu.uninstall.label} ${$scope.mainOps.offscreenbg.label} ******</li>`;}
-          if ($scope.user.mainOps.includes(106)) {msg += `<li>****** ${$scope.menu.uninstall.label} ${$scope.mainOps.backgroundrotator.label} ******</li>`;}
-          msg += $scope.options.map(function(item) {if ($scope.user.options.includes(Number(item.id))) {return `<li class='inst-list'>${item.INST}</li>`;}});
-          msg += $scope.options.map(function(item) {if ($scope.user.options.includes(Number(item.id) + 100)) {return `<li class='uninst-list'>${item.DEINST}</li>`;}});
+          if ($scope.user.mainOps.includes(4)) {
+            msg += `<li style='width:100%'>****** ${$scope.mainOps.sshbringback.label} ******</li>`;
+          }
+          if ($scope.user.mainOps.includes(1)) {
+            msg += `<li>****** ${$scope.mainOps.backup.label} ******</li>`;
+          }
+          if ($scope.user.mainOps.includes(0)) {
+            msg += `<li>****** ${$scope.mainOps.wifi.label} ******</li>`;
+          }
+          if ($scope.user.mainOps.includes(2)) {
+            msg += `<li>****** ${$scope.mainOps.background.label} ******</li>`;
+          }
+          if ($scope.user.mainOps.includes(6)) {
+            msg += `<li>****** ${$scope.mainOps.backgroundrotator.label} ******</li>`;
+          }
+          if ($scope.user.mainOps.includes(10)) {
+            msg += `<li>****** ${$scope.mainOps.offscreenbg.label} ******</li>`;
+          }
+          if ($scope.user.mainOps.includes(3)) {
+            msg += `<li>****** ${$scope.mainOps.colors.label} ******</li>`;
+          }
+          if ($scope.user.mainOps.includes(8)) {
+            msg += `<li>****** ${$scope.mainOps.mainmenu.label} ******</li>`;
+          }
+          if ($scope.user.mainOps.includes(9)) {
+            msg += `<li>****** ${$scope.mainOps.uistyle.label} ******</li>`;
+          }
+          if ($scope.user.mainOps.includes(5)) {
+            msg += `<li>****** ${$scope.mainOps.sdcid.label} ******</li>`;
+          }
+          if ($scope.user.mainOps.includes(110)) {
+            msg += `<li>****** ${$scope.menu.uninstall.label} ${$scope.mainOps.offscreenbg.label} ******</li>`;
+          }
+          if ($scope.user.mainOps.includes(106)) {
+            msg += `<li>****** ${$scope.menu.uninstall.label} ${$scope.mainOps.backgroundrotator.label} ******</li>`;
+          }
+          msg += $scope.options.map(function(item) {
+            if ($scope.user.options.includes(Number(item.id))) {
+              return `<li class='inst-list'>${item.INST}</li>`;
+            }
+          });
+          msg += $scope.options.map(function(item) {
+            if ($scope.user.options.includes(Number(item.id) + 100)) {
+              return `<li class='uninst-list'>${item.DEINST}</li>`;
+            }
+          });
           msg += '</ul></div>';
           msg = msg.split(`,`).join(``);
           const compileTweaksDialog = bootbox.confirm({
@@ -1044,7 +1092,9 @@ import {buildTweakFile} from '../assets/js/build-tweaks';
           casdkApps.set('multicontroller', false);
           casdkApps.set('devtools', false);
           snackbar('CASDK APPS RESET');
-          setTimeout(() => {location.reload();}, 5000);
+          setTimeout(() => {
+            location.reload();
+          }, 5000);
           break;
         default:
           snackbar('Invalid Code...');

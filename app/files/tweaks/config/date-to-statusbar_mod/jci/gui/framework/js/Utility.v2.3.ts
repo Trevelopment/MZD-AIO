@@ -22,8 +22,7 @@ log.addSrcFile('Utility.js', 'framework');
 // log.addSrcFile("Utility.js", "Utility");
 // log.setLogLevel("Utility", "debug");
 
-function Utility()
-{
+function Utility() {
   this._toTypeRegex = /\s([a-zA-Z]+)/; // regular expression for utility.toType()
 
   // List of locale month names for utility.formatDate(), indexed for compatibility
@@ -45,14 +44,12 @@ function Utility()
 
   // Create an instance of Wayland Manager plugin if available
   this._waylandManager = null;
-  if (window['WaylandManager'])
-  {
+  if (window['WaylandManager']) {
     this._waylandManager = new WaylandManager(); // (Object) Used to store instance of JCILogger plugin when logging in target hardware
   }
 }
 
-Utility.prototype.emptyHTMLContent = function(elementId)
-{
+Utility.prototype.emptyHTMLContent = function(elementId) {
   const targetElt = document.getElementById(elementId);
   targetElt.innerHTML = '';
 };
@@ -63,27 +60,22 @@ Utility.prototype.emptyHTMLContent = function(elementId)
  * @tparam  String      attributes    Optional parameter: Object containing additional attributes to add to the tag
  * @tparam  Function    callback    Optional parameter: function to call when the script finishes loading
  */
-Utility.prototype.loadScript = function(url, attributes, callback)
-{
+Utility.prototype.loadScript = function(url, attributes, callback) {
   log.debug('Utility.loadScript called for url: ' + url);
   const startTime = Date.now();
 
   const script = document.createElement('script');
   script.type = 'text/javascript';
   script.src = url;
-  if (attributes)
-  {
-    for (const key in attributes)
-    {
+  if (attributes) {
+    for (const key in attributes) {
       script[key] = attributes[key];
     }
   }
-  script.onload = function()
-  {
+  script.onload = function() {
     const time = Date.now() - startTime;
     log.debug('Finished loadScript ' + url + ' time ' + time + 'ms');
-    if (callback != null)
-    {
+    if (callback != null) {
       callback(arguments);
     }
   };
@@ -93,15 +85,12 @@ Utility.prototype.loadScript = function(url, attributes, callback)
   head.appendChild(script);
 };
 
-Utility.prototype.removeScript = function(url)
-{
+Utility.prototype.removeScript = function(url) {
   log.debug('Utility.removeScript called for url: ' + url);
   const head = document.querySelector('head');
   const scriptTags = head.querySelectorAll('script');
-  for (let i = 0; i < scriptTags.length; i++)
-  {
-    if (scriptTags[i].src.indexOf(url) !== -1)
-    {
+  for (let i = 0; i < scriptTags.length; i++) {
+    if (scriptTags[i].src.indexOf(url) !== -1) {
       scriptTags[i].parentNode.removeChild(scriptTags[i]);
     }
   }
@@ -111,8 +100,7 @@ Utility.prototype.removeScript = function(url)
  * Helper function to add a css link to the head tag of the DOM. This should be called BEFORE the corresponding .js file
  * @tparam  String  url     path from index.html to the css file to append (e.g. "common/controls/[*].css")
  */
-Utility.prototype.loadCss = function(url)
-{
+Utility.prototype.loadCss = function(url) {
   log.debug('Utility.loadCss called for url: ' + url);
   const startTime = Date.now();
 
@@ -120,8 +108,7 @@ Utility.prototype.loadCss = function(url)
   cssNode.type = 'text/css';
   cssNode.rel = 'stylesheet';
   cssNode.href = url;
-  cssNode.onload = function()
-  {
+  cssNode.onload = function() {
     const time = Date.now() - startTime;
     log.debug('Finished loadCss ' + url + ' time ' + time + 'ms');
   };
@@ -130,15 +117,12 @@ Utility.prototype.loadCss = function(url)
   head.appendChild(cssNode);
 };
 
-Utility.prototype.removeCss = function(url)
-{
+Utility.prototype.removeCss = function(url) {
   const head = document.querySelector('head');
   const linkTags = head.querySelectorAll('link');
 
-  for (let i = 0; i < linkTags.length; i++)
-  {
-    if (linkTags[i].href == url)
-    {
+  for (let i = 0; i < linkTags.length; i++) {
+    if (linkTags[i].href == url) {
       linkTags[i].parentNode.removeChild(linkTags[i]);
     }
   }
@@ -147,31 +131,24 @@ Utility.prototype.removeCss = function(url)
 /*
  * Pass in a string element ID or an actual HTMLElement object.
  */
-Utility.prototype.removeHTMLElement = function(idOrObj)
-{
-  if (idOrObj)
-  {
+Utility.prototype.removeHTMLElement = function(idOrObj) {
+  if (idOrObj) {
     let toRemove = null;
-    if (typeof idOrObj === 'string')
-    {
+    if (typeof idOrObj === 'string') {
       toRemove = document.getElementById(idOrObj);
-    }
-    else if (idOrObj.parentNode)
-    {
+    } else if (idOrObj.parentNode) {
       // Assume we have an html element object
       toRemove = idOrObj;
     }
 
-    if (toRemove != null)
-    {
+    if (toRemove != null) {
       toRemove.parentNode.removeChild(toRemove);
     }
   }
 };
 
 // Returns a string representation of the supplied object's type (e.g. string, array, date). More accurate than typeOf
-Utility.prototype.toType = function(obj)
-{
+Utility.prototype.toType = function(obj) {
   return ({}).toString.call(obj).match(this._toTypeRegex)[1].toLowerCase();
 };
 
@@ -181,11 +158,9 @@ Utility.prototype.toType = function(obj)
  * @param Boolean convertEscapeChars - if true, \n and \t C escape sequences are converted to HTML <br/> and &nbsp;&nbsp;
  * @return String - ready to be displayed string
  */
-Utility.prototype.sanitizeHtml = function(str, convertEscapeChars)
-{
+Utility.prototype.sanitizeHtml = function(str, convertEscapeChars) {
   str = str.replace(/&/g, '&amp;').replace(/>/g, '&gt;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
-  if (convertEscapeChars)
-  {
+  if (convertEscapeChars) {
     str = str.replace(/\n/g, '<br/>').replace(/\t/g, '&nbsp;&nbsp;&nbsp;&nbsp;');
   }
   return str;
@@ -197,14 +172,11 @@ Utility.prototype.sanitizeHtml = function(str, convertEscapeChars)
  * @param String data - the data string to look for
  * @return Object { itemId:Number, item:Object }
  */
-Utility.prototype.getArrayItemByPropertyValue = function(array, property, value)
-{
+Utility.prototype.getArrayItemByPropertyValue = function(array, property, value) {
   let item = null;
 
-  for (let i=0; i<array.length; i++)
-  {
-    if (value === array[i][property])
-    {
+  for (let i=0; i<array.length; i++) {
+    if (value === array[i][property]) {
       item = {
         index: i,
         item: array[i],
@@ -222,8 +194,7 @@ Utility.prototype.getArrayItemByPropertyValue = function(array, property, value)
  * @param Integer - the time for the fadeOut animation. Default is 0.
  * @return void
  */
-Utility.prototype.hideSurface = function(surfaceId, time)
-{
+Utility.prototype.hideSurface = function(surfaceId, time) {
   log.warn('utility.hideSurface() FUNCTION DEPRECATED. GUI apps should set properties.visibleSurfaces in the context table instead.');
 };
 
@@ -234,8 +205,7 @@ Utility.prototype.hideSurface = function(surfaceId, time)
  * @param Integer - the time for the fadeIn animation. Default is 0.
  * @return void
  */
-Utility.prototype.showSurface = function(surfaceId, time)
-{
+Utility.prototype.showSurface = function(surfaceId, time) {
   log.warn('utility.showSurface() FUNCTION DEPRECATED. GUI apps should set properties.visibleSurfaces in the context table instead.');
 };
 
@@ -244,14 +214,15 @@ Utility.prototype.showSurface = function(surfaceId, time)
  * @param surfaces (Array) Array of string naming surfaces.
  * @param fadeOpera (Boolean) Set to true to fade Opera.
  */
-Utility.prototype.setRequiredSurfaces = function(surfaces, fadeOpera)
-{
-  if (!this._waylandManager)
-  {return;}
+Utility.prototype.setRequiredSurfaces = function(surfaces, fadeOpera) {
+  if (!this._waylandManager) {
+    return;
+  }
 
   // surface request must be done with atleast one surface (mostly opera), else black screen will be shown on screen
-  if (!surfaces || surfaces.length <= 0)
-  {return;}
+  if (!surfaces || surfaces.length <= 0) {
+    return;
+  }
 
   const arr = surfaces.join(',');
   const fade = (fadeOpera) ? 1 : 0;
@@ -264,8 +235,7 @@ Utility.prototype.setRequiredSurfaces = function(surfaces, fadeOpera)
  * send wayland request to hide all surfaces
  * @return void
  */
-Utility.prototype.hideAllSurfaces = function()
-{
+Utility.prototype.hideAllSurfaces = function() {
   log.warn('utility.hideAllSurfaces() FUNCTION DEPRECATED. GUI apps should set properties.visibleSurfaces in the context table instead.');
 };
 
@@ -277,8 +247,7 @@ Utility.prototype.hideAllSurfaces = function()
  * @param y - Number data - the Y coordinate of the surface
  * @return void
  */
-Utility.prototype.moveSurface = function(surfaceId, x, y)
-{
+Utility.prototype.moveSurface = function(surfaceId, x, y) {
   log.warn('utility.moveSurface() FUNCTION DEPRECATED.');
 };
 
@@ -288,10 +257,10 @@ Utility.prototype.moveSurface = function(surfaceId, x, y)
  * @param String - the ID of the surface to show
  * @return void
  */
-Utility.prototype.setInputSurface = function(surfaceId)
-{
-  if (!this._waylandManager)
-  {return;}
+Utility.prototype.setInputSurface = function(surfaceId) {
+  if (!this._waylandManager) {
+    return;
+  }
 
 
   log.debug('Calling Wayland Manager to set input surface for surface ' + surfaceId);
@@ -370,17 +339,13 @@ Utility.prototype.formatTime = function(timeSeconds, showSeconds) {
  * @param  Integer Value in milliseconds (should be greater than first param)
  * @return String Time value difference in # of hours, minutes and seconds
  */
-Utility.prototype.findTimeDuration = function(date1, date2)
-{
+Utility.prototype.findTimeDuration = function(date1, date2) {
   log.debug('Utility.prototype.findTimeDuration called');
 
-  if (date1 >= date2)
-  {
+  if (date1 >= date2) {
     log.warn('First date value is passed either greater or equal to second date value, Cannot find difference ');
     return 0;
-  }
-  else
-  {
+  } else {
     const date1 = new Date(date1*1000);
     const date2 = new Date(date2*1000);
 
@@ -487,9 +452,7 @@ Utility.prototype.formatDate = function(timeSeconds) {
     // Localize the date format (with replaceable month/day parameters in submap).
     // Includes the day/sun glyph for Oriental languages.
     dateStr = framework.localize.getLocStr('common', 'DateFormat', subMap);
-  }
-  else
-  {
+  } else {
     log.warn('utility.formatDate() called with unknown timeSeconds argument');
     dateStr = 'Unknown';
   }
@@ -584,29 +547,19 @@ Utility.prototype.formatSmartDateTime = function(timeSeconds, showSeconds) {
  * @param  Boolean When True, unit label will not be localized.
  * @return String
  */
-Utility.prototype.getDistanceUnitLabel = function(dontLocalize)
-{
+Utility.prototype.getDistanceUnitLabel = function(dontLocalize) {
   let distUnit = framework.localize.getDistanceUnit();
 
-  if (distUnit == 'Miles')
-  {
-    if (dontLocalize)
-    {
+  if (distUnit == 'Miles') {
+    if (dontLocalize) {
       distUnit = 'mi';
-    }
-    else
-    {
+    } else {
       distUnit = framework.localize.getLocStr('common', 'distanceUnitsMiles');
     }
-  }
-  else if (distUnit == 'Kilometers')
-  {
-    if (dontLocalize)
-    {
+  } else if (distUnit == 'Kilometers') {
+    if (dontLocalize) {
       distUnit = 'km';
-    }
-    else
-    {
+    } else {
       distUnit = framework.localize.getLocStr('common', 'distanceUnitsKms');
     }
   }
@@ -620,29 +573,19 @@ Utility.prototype.getDistanceUnitLabel = function(dontLocalize)
  * @param  Boolean When True, unit label will not be localized.
  * @return String
  */
-Utility.prototype.getTemperatureUnitLabel = function(dontLocalize)
-{
+Utility.prototype.getTemperatureUnitLabel = function(dontLocalize) {
   let tempUnit = framework.localize.getTemperatureUnit();
 
-  if (tempUnit == 'Fahrenheit')
-  {
-    if (dontLocalize)
-    {
+  if (tempUnit == 'Fahrenheit') {
+    if (dontLocalize) {
       tempUnit = 'F';
-    }
-    else
-    {
+    } else {
       tempUnit = framework.localize.getLocStr('common', 'tempUnitsFahrenheit');
     }
-  }
-  else if (tempUnit == 'Celsius')
-  {
-    if (dontLocalize)
-    {
+  } else if (tempUnit == 'Celsius') {
+    if (dontLocalize) {
       tempUnit = 'C';
-    }
-    else
-    {
+    } else {
       tempUnit = framework.localize.getLocStr('common', 'tempUnitsCelsius');
     }
   }
@@ -656,29 +599,19 @@ Utility.prototype.getTemperatureUnitLabel = function(dontLocalize)
  * @param  Boolean When True, unit label will not be localized.
  * @return String
  */
-Utility.prototype.getVolumeUnitLabel = function(dontLocalize)
-{
+Utility.prototype.getVolumeUnitLabel = function(dontLocalize) {
   let volUnit = framework.localize.getVolumeUnit();
 
-  if (volUnit == 'Gallons')
-  {
-    if (dontLocalize)
-    {
+  if (volUnit == 'Gallons') {
+    if (dontLocalize) {
       volUnit = 'gallons';
-    }
-    else
-    {
+    } else {
       volUnit = framework.localize.getLocStr('common', 'volUnitsGallons');
     }
-  }
-  else if (volUnit == 'Liters')
-  {
-    if (dontLocalize)
-    {
+  } else if (volUnit == 'Liters') {
+    if (dontLocalize) {
       volUnit = 'liters';
-    }
-    else
-    {
+    } else {
       volUnit = framework.localize.getLocStr('common', 'volUnitsLiters');
     }
   }
@@ -692,18 +625,13 @@ Utility.prototype.getVolumeUnitLabel = function(dontLocalize)
  * @param c (Object) - optional object to copy p into
  * @return (Object) - returns the copied object.
  */
-Utility.prototype.deepCopy = function(p, c)
-{
+Utility.prototype.deepCopy = function(p, c) {
   const c = c||{};
-  for (const i in p)
-  {
-    if (typeof p[i] === 'object' && p[i] != null)
-    {
+  for (const i in p) {
+    if (typeof p[i] === 'object' && p[i] != null) {
       c[i] = (p[i].constructor === Array) ? [] : {};
       this.deepCopy(p[i], c[i]);
-    }
-    else
-    {
+    } else {
       c[i] = p[i];
     }
   }

@@ -1737,8 +1737,9 @@ const CustomApplicationHelpers = {
 
           case this.object(o):
             let s = 0;
-            for (const key in o)
-            {if (o.hasOwnProperty(key)) s++;}
+            for (const key in o) {
+              if (o.hasOwnProperty(key)) s++;
+            }
             return s === 0;
 
           case this.boolean(o):
@@ -1783,8 +1784,9 @@ const CustomApplicationHelpers = {
 
     args.shift();
 
-    for (let i = 0; i < args.length; i++)
-    {subject = subject.split('{' + i + '}').join(args[i]);}
+    for (let i = 0; i < args.length; i++) {
+      subject = subject.split('{' + i + '}').join(args[i]);
+    }
 
     return subject;
   },

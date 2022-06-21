@@ -111,14 +111,16 @@ CustomApplicationsHandler.register('app.clock', new CustomApplication({
         break;
       case this.CW:
         this.screenOpacity = this.screenOpacity - 0.1;
-        if (this.screenOpacity < 0)
-        {this.screenOpacity = 0;}
+        if (this.screenOpacity < 0) {
+          this.screenOpacity = 0;
+        }
         $('#lighting').css({opacity: this.screenOpacity});
         break;
       case this.CCW:
         this.screenOpacity = this.screenOpacity + 0.1;
-        if (this.screenOpacity > 1)
-        {this.screenOpacity = 1;}
+        if (this.screenOpacity > 1) {
+          this.screenOpacity = 1;
+        }
         $('#lighting').css({opacity: this.screenOpacity});
         break;
       case this.UP:

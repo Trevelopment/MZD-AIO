@@ -38,8 +38,7 @@ log.addSrcFile('Multicontroller.js', 'common');
  * See this._keyDownHandler for key mapping and tuiEvent names.
  * @tparam  Function    controllerEventCallback     Callback function used to tell framework about controller events
  */
-function Multicontroller(controllerEventCallback)
-{
+function Multicontroller(controllerEventCallback) {
   this.controllerEventCallback = controllerEventCallback;
   this._mode = 'controllerActive';
   this._btnHeld = false;
@@ -72,8 +71,7 @@ function Multicontroller(controllerEventCallback)
  * @tparam  Number  keycode The key code for the keyboard event that needs to be faked
  * @tparam  Boolean shift   true if the shift key should be "pressed" for the fake keyboard event
  */
-Multicontroller.prototype._simulateKeyPress = function(keycode, shift)
-{
+Multicontroller.prototype._simulateKeyPress = function(keycode, shift) {
   const fakeEvt = {};
   fakeEvt.simulation = true;
   fakeEvt.which = keycode;
@@ -90,21 +88,16 @@ Multicontroller.prototype._simulateKeyPress = function(keycode, shift)
  * @tparam  Event   evt the mouse down event passed from the event listener
  * @treturn Boolean false   returns false to prevent the default browser behavior
  */
-Multicontroller.prototype._registerTouchActive = function(evt)
-{
+Multicontroller.prototype._registerTouchActive = function(evt) {
   // don't trigger touch events when outside the screen area
-  if (evt.pageX <= 800 && evt.pageY <= 480)
-  {
+  if (evt.pageX <= 800 && evt.pageY <= 480) {
     // this._checkMode("touchActive");
   }
 
-  if (framework.getInputEnabled() === false)
-  {
+  if (framework.getInputEnabled() === false) {
     log.debug('Multicontroller._clickEventHandler: In Transition. Stopping mouse down event bubble.');
     evt.stopPropagation();
-  }
-  else
-  {
+  } else {
     // Tell common about the activity (e.g. for auto-hide status bar)
     framework.common.activityDetected(true, evt);
   }
@@ -119,15 +112,11 @@ Multicontroller.prototype._registerTouchActive = function(evt)
  * For isntance, this function prevents up events from firing during transitions.
  * @tparam  Event   evt The mouse event passed from the event listener.
  */
-Multicontroller.prototype._mouseUpEventHandler = function(evt)
-{
-  if (framework.getInputEnabled() === false)
-  {
+Multicontroller.prototype._mouseUpEventHandler = function(evt) {
+  if (framework.getInputEnabled() === false) {
     log.debug('Multicontroller._clickEventHandler: In Transition. Stopping mouse up event bubble.');
     evt.stopPropagation();
-  }
-  else
-  {
+  } else {
     // Tell common about the activity (e.g. for auto-hide status bar)
     framework.common.activityDetected(true, evt);
   }
@@ -139,10 +128,8 @@ Multicontroller.prototype._mouseUpEventHandler = function(evt)
  * For isntance, this function prevents click events from firing during transitions.
  * @tparam  Event   evt The mouse event passed from the event listener.
  */
-Multicontroller.prototype._clickEventHandler = function(evt)
-{
-  if (framework.getInputEnabled() === false)
-  {
+Multicontroller.prototype._clickEventHandler = function(evt) {
+  if (framework.getInputEnabled() === false) {
     log.debug('Multicontroller._clickEventHandler: In Transition. Stopping click event bubble.');
     evt.stopPropagation();
   }
@@ -155,15 +142,11 @@ Multicontroller.prototype._clickEventHandler = function(evt)
  * @tparam  Event   evt the event passed from the event listener.
  * @treturn Boolean     false   false is returned to prevent the default browser behavior
  */
-Multicontroller.prototype._mouseWheelHandler = function(evt)
-{
-  if (evt.pageX <= 800 && evt.pageY <= 480)
-  {
+Multicontroller.prototype._mouseWheelHandler = function(evt) {
+  if (evt.pageX <= 800 && evt.pageY <= 480) {
     // prevent page scroll if inside GUI area
     evt.preventDefault();
-  }
-  else
-  {
+  } else {
     // wheel event was outside GUI area. Ignore GUI functionality.
     return;
   }
@@ -171,28 +154,22 @@ Multicontroller.prototype._mouseWheelHandler = function(evt)
   let firstMultiEvent = false;
   let tuiEvent = '';
 
-  if (this._checkMode('controllerActive'))
-  {
+  if (this._checkMode('controllerActive')) {
     // Discard the first controller event if switching to controllerActive
     firstMultiEvent = true;
   }
 
-  if (evt.wheelDelta > 0)
-  {
+  if (evt.wheelDelta > 0) {
     // Rotate Left (CCW)
     tuiEvent = 'ccw';
-  }
-  else if (evt.wheelDelta < 0)
-  {
+  } else if (evt.wheelDelta < 0) {
     // Rotate Right (CW)
     tuiEvent = 'cw';
   }
 
-  if (tuiEvent != '')
-  {
+  if (tuiEvent != '') {
     // Notify framework of event
-    if (this.controllerEventCallback != null)
-    {
+    if (this.controllerEventCallback != null) {
       this.controllerEventCallback(tuiEvent, firstMultiEvent);
     }
 
@@ -209,19 +186,16 @@ Multicontroller.prototype._mouseWheelHandler = function(evt)
  * @tparam  String  mode    The mode to check (because an event has occurred)
  * @treturn Boolean result  true if the mode has changed. false if the mode has not changed.
  */
-Multicontroller.prototype._checkMode = function(mode)
-{
+Multicontroller.prototype._checkMode = function(mode) {
   let result = false;
-  if (this._mode != mode)
-  {
+  if (this._mode != mode) {
     // Mode changed
     result = true;
     this._mode = mode;
 
     // Note: this callback is called twice on the first multicontroller event.
     // The first call, made here, tells framework about the mode change.
-    if (this.controllerEventCallback != null)
-    {
+    if (this.controllerEventCallback != null) {
       this.controllerEventCallback(this._mode);
     }
   }
@@ -232,8 +206,7 @@ Multicontroller.prototype._checkMode = function(mode)
  * (internal)
  * Gets the Multicontroller mode ("touchActive" or "controllerActive")
  */
-Multicontroller.prototype.getMode = function()
-{
+Multicontroller.prototype.getMode = function() {
   return this._mode;
 };
 
@@ -242,15 +215,13 @@ Multicontroller.prototype.getMode = function()
  * If a tuiEvent was mapped, this function lets framework know about the event.
  * @tparam  Event   evt     The keyboard event passed from the event listener.
  */
-Multicontroller.prototype._keyDownHandler = function(evt)
-{
-  if (guiConfig.debugPanelEnabled && evt && evt.srcElement && this._isInDebugPanel(evt.srcElement)) // If typing in the debug panel, ignore all special behaviors
-  {
+Multicontroller.prototype._keyDownHandler = function(evt) {
+  // If typing in the debug panel, ignore all special behaviors
+  if (guiConfig.debugPanelEnabled && evt && evt.srcElement && this._isInDebugPanel(evt.srcElement)) {
     return;
   }
 
-  if (!this._btnHeld)
-  {
+  if (!this._btnHeld) {
     log.debug('Keycode Object passed as: ', evt, evt.which);
 
     this._btnHeld = true;
@@ -259,23 +230,18 @@ Multicontroller.prototype._keyDownHandler = function(evt)
     let keycode;
     let firstMultiEvent = false;
 
-    if (window.event && !evt.simulation)
-    {
+    if (window.event && !evt.simulation) {
       keycode = window.event.keyCode;
-    }
-    else if (evt)
-    {
+    } else if (evt) {
       keycode = evt.which;
     }
 
-    if (this._checkMode('controllerActive'))
-    {
+    if (this._checkMode('controllerActive')) {
       // Discard the first controller event if switching to controllerActive
       firstMultiEvent = true;
     }
 
-    switch (keycode)
-    {
+    switch (keycode) {
       case 16:
         // SHIFT - Ignore
         tuiEvent = '';
@@ -353,19 +319,15 @@ Multicontroller.prototype._keyDownHandler = function(evt)
 
     // Note: This does not get called if the "touchActive" or "controllerActive". That is handled in the _checkMode function
 
-    if (tuiEvent != '')
-    {
+    if (tuiEvent != '') {
       // Notify framework of event
-      if (this.controllerEventCallback != null)
-      {
+      if (this.controllerEventCallback != null) {
         this.controllerEventCallback(tuiEvent, firstMultiEvent);
       }
 
       // Tell common about the activity (e.g. for auto-hide status bar)
       framework.common.activityDetected(true, evt, tuiEvent);
-    }
-    else
-    {
+    } else {
       // Ignore
     }
   }
@@ -376,12 +338,9 @@ Multicontroller.prototype._keyDownHandler = function(evt)
  * Used to detect if key presses came from inside the HTML Div (debug buttons) area
  * @param   elt HTMLElement Div to test
  */
-Multicontroller.prototype._isInDebugPanel = function(elt)
-{
-  while (elt.parentNode)
-  {
-    if (elt.id == 'DebugHtmlDiv' || elt.parentNode.id == 'DebugHtmlDiv')
-    {
+Multicontroller.prototype._isInDebugPanel = function(elt) {
+  while (elt.parentNode) {
+    if (elt.id == 'DebugHtmlDiv' || elt.parentNode.id == 'DebugHtmlDiv') {
       // element is in debug panel
       return true;
     }
@@ -393,10 +352,9 @@ Multicontroller.prototype._isInDebugPanel = function(elt)
 /*
  * Called after a key is released. This logic prevents multiple events from occurring when a key is held.
  */
-Multicontroller.prototype._keyUpHandler = function(evt)
-{
-  if (guiConfig.debugPanelEnabled && evt && evt.srcElement && this._isInDebugPanel(evt.srcElement)) // If typing in the debug panel, ignore all special behaviors
-  {
+Multicontroller.prototype._keyUpHandler = function(evt) {
+  // If typing in the debug panel, ignore all special behaviors
+  if (guiConfig.debugPanelEnabled && evt && evt.srcElement && this._isInDebugPanel(evt.srcElement)) {
     return;
   }
 
@@ -406,23 +364,18 @@ Multicontroller.prototype._keyUpHandler = function(evt)
   let keycode;
   let firstMultiEvent = false;
 
-  if (window.event && !evt.simulation)
-  {
+  if (window.event && !evt.simulation) {
     keycode = window.event.keyCode;
-  }
-  else if (evt)
-  {
+  } else if (evt) {
     keycode = evt.which;
   }
 
-  if (this._checkMode('controllerActive'))
-  {
+  if (this._checkMode('controllerActive')) {
     // Discard the first controller event if switching to controllerActive
     firstMultiEvent = true;
   }
 
-  switch (keycode)
-  {
+  switch (keycode) {
     case 13:
       // enter - Select
       tuiEvent = 'select';
@@ -486,19 +439,15 @@ Multicontroller.prototype._keyUpHandler = function(evt)
       break;
   }
 
-  if (tuiEvent != '')
-  {
+  if (tuiEvent != '') {
     // Notify framework of event
-    if (this.controllerEventCallback != null)
-    {
+    if (this.controllerEventCallback != null) {
       this.controllerEventCallback(tuiEvent, firstMultiEvent);
     }
 
     // Tell common about the activity (e.g. for auto-hide status bar)
     framework.common.activityDetected(true, evt, tuiEvent);
-  }
-  else
-  {
+  } else {
     // Ignore
   }
 };

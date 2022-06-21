@@ -770,8 +770,8 @@ systemApp.prototype._StatusMenuMsgHandler = function(msg) {
           const dataList = this._currentContextTemplate.list2Ctrl.dataList;
           for (let i = 0; i < dataList.items.length; ++i) {
             if (dataList.items[i].appData.appName.indexOf(appName) === 0) {
-              if (this._AtSpeedDisabled) // At speed : Available status will be skipped for the speed restricted apps
-              {
+              if (this._AtSpeedDisabled) {
+                // At speed : Available status will be skipped for the speed restricted apps
                 let speedRestrictedAppName = null;
                 let isNoAppAtSpeed = true;
 
@@ -811,8 +811,8 @@ systemApp.prototype._StatusMenuMsgHandler = function(msg) {
 systemApp.prototype._enableAppListItem = function(appName, isDisabled, dataList) {
   for (let i = 0; i < dataList.items.length; ++i) {
     if (dataList.items[i].appData.appName.indexOf(appName) === 0) {
-      if (this._AtSpeedDisabled) // At speed : Available status will be skipped for the speed restricted apps
-      {
+      if (this._AtSpeedDisabled) {
+        // At speed : Available status will be skipped for the speed restricted apps
         let speedRestrictedAppName = null;
         let isNoAppAtSpeed = true;
         for (let j = 0; j < this._SpeedRestrictedApps.length; ++j) {

@@ -154,7 +154,9 @@ function SpeedoMeterTmplt(uiaId, parentDiv, templateID, controlProperties) {
  *  clickTarget can also be a function or a string of the DOM node to make the jQuery Object
  */
 SpeedoMeterTmplt.prototype.singleClick = function(clickTarget) {
-  if (typeof clickTarget === 'string') {clickTarget = $(clickTarget);}
+  if (typeof clickTarget === 'string') {
+    clickTarget = $(clickTarget);
+  }
   (speedometerLonghold) ? speedometerLonghold = false: (typeof clickTarget === 'function') ? clickTarget() : clickTarget.click();
   clearTimeout(this.longholdTimeout);
   this.longholdTimeout = null;
@@ -164,7 +166,9 @@ SpeedoMeterTmplt.prototype.singleClick = function(clickTarget) {
  *  clickFunction can also be a a string of the DOM node or jQuery Object to click
  */
 SpeedoMeterTmplt.prototype.longClick = function(clickFunction) {
-  if (typeof clickFunction === 'string') {clickFunction = $(clickFunction);}
+  if (typeof clickFunction === 'string') {
+    clickFunction = $(clickFunction);
+  }
   this.longholdTimeout = setTimeout(function() {
     speedometerLonghold = true;
     (typeof clickFunction === 'function') ? clickFunction(): clickFunction.click();

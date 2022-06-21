@@ -194,7 +194,9 @@ function AIOTweaksTmplt(uiaId, parentDiv, templateID, controlProperties) {
  *  clickTarget can also be a function or a string of the DOM node to make the jQuery Object
  */
 AIOTweaksTmplt.prototype.singleClick = function(clickTarget) {
-  if (typeof clickTarget === 'string') {clickTarget = $(clickTarget);}
+  if (typeof clickTarget === 'string') {
+    clickTarget = $(clickTarget);
+  }
   (AIOlonghold) ? AIOlonghold = false: (typeof clickTarget === 'function') ? clickTarget(arguments[1]) : clickTarget.click();
   clearTimeout(this.longholdTimeout);
   this.longholdTimeout = null;
@@ -204,7 +206,9 @@ AIOTweaksTmplt.prototype.singleClick = function(clickTarget) {
  *  clickFunction can also be a a string of the DOM node or jQuery Object to click
  */
 AIOTweaksTmplt.prototype.longClick = function(clickFunction) {
-  if (typeof clickFunction === 'string') {clickFunction = $(clickFunction);}
+  if (typeof clickFunction === 'string') {
+    clickFunction = $(clickFunction);
+  }
   const arg = arguments[1];
   this.longholdTimeout = setTimeout(function() {
     AIOlonghold = true;

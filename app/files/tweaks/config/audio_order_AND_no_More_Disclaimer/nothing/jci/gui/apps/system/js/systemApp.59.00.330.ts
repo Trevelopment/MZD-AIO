@@ -49,8 +49,7 @@ log.addSrcFile('systemApp.js', 'system');
 * Code in this section should not be modified
 * except for function names based on the appname
 *********************************************/
-function systemApp(uiaId)
-{
+function systemApp(uiaId) {
   log.debug('constructor called...');
   // Base application functionality is provided in a common location via this call to baseApp.init().
   // See framework/js/BaseApp.js for details.
@@ -61,10 +60,8 @@ function systemApp(uiaId)
 * Called just after the app is instantiated by framework.
 * App-specific variables should be declared here.
 */
-systemApp.prototype.appInit = function()
-{
-  if (framework.debugMode)
-  {
+systemApp.prototype.appInit = function() {
+  if (framework.debugMode) {
     utility.loadScript('apps/system/test/systemAppTest.js');
   }
   // @formatter:off
@@ -525,12 +522,10 @@ systemApp.prototype.appInit = function()
 /** ************************
 * Set Wink Properties *
 **************************/
-systemApp.prototype.getWinkProperties = function(alert, params)
-{
+systemApp.prototype.getWinkProperties = function(alert, params) {
   log.info('setting wink properties for: ', alert, params);
   let winkProperties = null;
-  switch (alert)
-  {
+  switch (alert) {
     case 'System_RVR_NOT_ACTIVE':
     case 'System_RVR_EFM_ERROR':
     case 'System_RVR_ACTIVATE_ERROR':
@@ -558,11 +553,9 @@ systemApp.prototype.getWinkProperties = function(alert, params)
 // /////////////////////////////////////////////////////////////////////////////
 // Initialize various menu data lists
 // /////////////////////////////////////////////////////////////////////////////
-systemApp.prototype._initEntertainmentDataList = function()
-{
+systemApp.prototype._initEntertainmentDataList = function() {
   const items = [];
-  if (framework.localize.getRegion() === framework.localize.REGIONS.Japan)
-  {
+  if (framework.localize.getRegion() === framework.localize.REGIONS.Japan) {
     // Traffic alert is Japan only. We do not get a separate StatusMenuVisible for this so we only
     // add it if the region is Japan.
     items.push({appData: {appName: 'amradio', isVisible: true, audioSourceId: 'TrafficInfo', mmuiEvent: 'SelectTrafficAlert'}, text1Id: 'TrafficAlertsItem', disabled: true, itemStyle: 'style01', hasCaret: false});
@@ -591,8 +584,7 @@ systemApp.prototype._initEntertainmentDataList = function()
     items: items,
   };
 };
-systemApp.prototype._initApplicationsDataList = function()
-{
+systemApp.prototype._initApplicationsDataList = function() {
   const items = [];
   items.push(
       {appData: {appName: 'hdtrafficimage', isVisible: false, mmuiEvent: 'SelectHDTrafficImage'}, text1Id: 'HDTrafficItem', disabled: true, itemStyle: 'style01', hasCaret: false},
@@ -622,8 +614,7 @@ systemApp.prototype._initApplicationsDataList = function()
     'VehicleStatusMonitor': ['warnguide', 'vsm', 'schedmaint'],
   };
 };
-systemApp.prototype._initCommunicationsDataList = function()
-{
+systemApp.prototype._initCommunicationsDataList = function() {
   const items = [];
   items.push(
       {appData: {appName: '', isVisible: false, mmuiEvent: 'SelectActiveCall'}, text1Id: 'ActiveCallItem', disabled: false, itemStyle: 'style01', hasCaret: false},
@@ -647,27 +638,21 @@ systemApp.prototype._initCommunicationsDataList = function()
 // /////////////////////////////////////////////////////////////////////////////
 // Message handlers, helpers
 // /////////////////////////////////////////////////////////////////////////////
-systemApp.prototype._StatusPhoneCallMsgHandler = function(msg)
-{
-  if (msg.params && msg.params.payload && msg.params.payload.phoneCallStatus)
-  {
+systemApp.prototype._StatusPhoneCallMsgHandler = function(msg) {
+  if (msg.params && msg.params.payload && msg.params.payload.phoneCallStatus) {
     // Add or remove the Active Call item in the communications menu
     const hasActiveCall = msg.params.payload.phoneCallStatus === 'ActiveCall' || msg.params.payload.phoneCallStatus === 'Connecting';
     let dirty = false;
-    if (hasActiveCall && this._communicationsDataList.items[0].appData.mmuiEvent !== 'SelectActiveCall')
-    {
+    if (hasActiveCall && this._communicationsDataList.items[0].appData.mmuiEvent !== 'SelectActiveCall') {
       this._communicationsDataList.items[0].appData.isVisible = true;
       dirty = true;
-    }
-    else if (!hasActiveCall && this._communicationsDataList.items[0].appData.mmuiEvent === 'SelectActiveCall' &&
-    this._communicationsDataList.items[0].appData.isVisible === true)
-    {
+    } else if (!hasActiveCall && this._communicationsDataList.items[0].appData.mmuiEvent === 'SelectActiveCall' &&
+    this._communicationsDataList.items[0].appData.isVisible === true) {
       this._communicationsDataList.items[0].appData.isVisible = false;
       dirty = true;
     }
     // If it changed, and we are in the Comm ctxt, update the list shown
-    if (dirty && this._currentContext && this._currentContext.ctxtId === 'Communication' && this._currentContextTemplate)
-    {
+    if (dirty && this._currentContext && this._currentContext.ctxtId === 'Communication' && this._currentContextTemplate) {
       // build list (which will exclude isVisible==false items)
       const dataList = this._buildCommunicationDataList();
       this._currentContextTemplate.list2Ctrl.setDataList(dataList);
@@ -675,8 +660,7 @@ systemApp.prototype._StatusPhoneCallMsgHandler = function(msg)
     }
   }
 };
-systemApp.prototype._StatusMenuMsgHandler = function(msg)
-{
+systemApp.prototype._StatusMenuMsgHandler = function(msg) {
   log.debug('Received StatusMenu message: ' + msg.params.payload.statusMenu.appName + ' ' + msg.params.payload.statusMenu.appStatus);
   // Update menu items associated with the given appName of the message. Menu items can appear
   // in several different contexts or appear multiple times: this function searches all those places.
@@ -689,51 +673,39 @@ systemApp.prototype._StatusMenuMsgHandler = function(msg)
   this._enableAppListItem(appName, isDisabled, this._communicationsDataList);
   this._enableAppListItem(appName, isDisabled, this._masterEntertainmentDataList);
   // Update the menu list in the current context if needed
-  if (this._currentContext)
-  {
-    switch (this._currentContext.ctxtId)
-    {
+  if (this._currentContext) {
+    switch (this._currentContext.ctxtId) {
       case 'Communication':
       case 'Entertainment':
       case 'Applications':
       case 'VehicleStatusMonitor':
-        if (this._currentContextTemplate && this._currentContextTemplate.list2Ctrl)
-        {
+        if (this._currentContextTemplate && this._currentContextTemplate.list2Ctrl) {
           const dataList = this._currentContextTemplate.list2Ctrl.dataList;
-          for (let i = 0; i < dataList.items.length; ++i)
-          {
-            if (dataList.items[i].appData.appName.indexOf(appName) === 0)
-            {
-              if (this._AtSpeedDisabled)// At speed : Available status will be skipped for the speed restricted apps
-              {
+          for (let i = 0; i < dataList.items.length; ++i) {
+            if (dataList.items[i].appData.appName.indexOf(appName) === 0) {
+              if (this._AtSpeedDisabled) {
+                // At speed : Available status will be skipped for the speed restricted apps
                 let speedRestrictedAppName = null;
                 let isNoAppAtSpeed = true;
-                for (let j = 0; j < this._SpeedRestrictedApps.length; ++j)
-                {
+                for (let j = 0; j < this._SpeedRestrictedApps.length; ++j) {
                   speedRestrictedAppName = this._SpeedRestrictedApps[j].appName;
                   log.info('speedRestrictedAppName : '+speedRestrictedAppName + ' checking for AppName : '+dataList.items[i].appData.appName);
-                  if (speedRestrictedAppName === dataList.items[i].appData.appName)
-                  {
+                  if (speedRestrictedAppName === dataList.items[i].appData.appName) {
                     isNoAppAtSpeed = false;// App found with At Speed
                     break;
                   }
                 }
-                if (isNoAppAtSpeed)
-                {
+                if (isNoAppAtSpeed) {
                   dataList.items[i].disabled = isDisabled;
-                  if (isDisabled)
-                  {
+                  if (isDisabled) {
                   // Clear nowplaying icon just in case it was still shown for this now unavailable item
                     dataList.items[i].image1 = '';
                   }
                   this._currentContextTemplate.list2Ctrl.updateItems(i, i);
                 }
-              }
-              else
-              {
+              } else {
                 dataList.items[i].disabled = isDisabled;
-                if (isDisabled)
-                {
+                if (isDisabled) {
                 // Clear nowplaying icon just in case it was still shown for this now unavailable item
                   dataList.items[i].image1 = '';
                 }
@@ -747,65 +719,50 @@ systemApp.prototype._StatusMenuMsgHandler = function(msg)
     }
   }
 };
-systemApp.prototype._enableAppListItem = function(appName, isDisabled, dataList)
-{
-  for (let i = 0; i < dataList.items.length; ++i)
-  {
-    if (dataList.items[i].appData.appName.indexOf(appName) === 0)
-    {
-      if (this._AtSpeedDisabled) // At speed : Available status will be skipped for the speed restricted apps
-      {
+systemApp.prototype._enableAppListItem = function(appName, isDisabled, dataList) {
+  for (let i = 0; i < dataList.items.length; ++i) {
+    if (dataList.items[i].appData.appName.indexOf(appName) === 0) {
+      if (this._AtSpeedDisabled) {
+        // At speed : Available status will be skipped for the speed restricted apps
         let speedRestrictedAppName = null;
         let isNoAppAtSpeed = true;
-        for (let j = 0; j < this._SpeedRestrictedApps.length; ++j)
-        {
+        for (let j = 0; j < this._SpeedRestrictedApps.length; ++j) {
           speedRestrictedAppName = this._SpeedRestrictedApps[j].appName;
           log.info('speedRestrictedAppName : '+speedRestrictedAppName + ' checking for AppName : '+dataList.items[i].appData.appName);
-          if (speedRestrictedAppName === dataList.items[i].appData.appName)
-          {
+          if (speedRestrictedAppName === dataList.items[i].appData.appName) {
             isNoAppAtSpeed = false;// App found with At Speed
             break;
           }
         }
-        if (isNoAppAtSpeed)
-        {
+        if (isNoAppAtSpeed) {
           dataList.items[i].disabled = isDisabled;
         }
-      }
-      else
-      {
+      } else {
         dataList.items[i].disabled = isDisabled;
       }
       log.debug('Updated cached list item based on StatusMenu message: ' + appName + ' ' + !isDisabled);
     }
   }
 };
-systemApp.prototype._enableSpeedRestrictedItem = function(appName, isDisabled, dataList)
-{
-  for (let i = 0; i < dataList.items.length; ++i)
-  {
-    if (dataList.items[i].appData.appName === appName)
-    {
+systemApp.prototype._enableSpeedRestrictedItem = function(appName, isDisabled, dataList) {
+  for (let i = 0; i < dataList.items.length; ++i) {
+    if (dataList.items[i].appData.appName === appName) {
       log.info('AppName : '+appName+' is found for making it disabled : '+isDisabled);
       dataList.items[i].disabled = isDisabled;
       log.debug('Updated cached list item based on StatusMenu message: ' + appName + ' ' + !isDisabled);
     }
   }
 };
-systemApp.prototype._StatusMenuVisibleMsgHandler = function(msg)
-{
-  if (msg.params && msg.params.payload)
-  {
+systemApp.prototype._StatusMenuVisibleMsgHandler = function(msg) {
+  if (msg.params && msg.params.payload) {
     log.debug('Received StatusMenuVisible message: ' + msg.params.payload.appName + ' ' + msg.params.payload.state);
     const appName = msg.params.payload.appName;
     const isVisible = msg.params.payload.state === 'Visible';
     // Search entertainment items
     let isEntertainmentDirty = false;
-    for (let i = 0; i < this._masterEntertainmentDataList.items.length; ++i)
-    {
+    for (let i = 0; i < this._masterEntertainmentDataList.items.length; ++i) {
       if (this._masterEntertainmentDataList.items[i].appData.appName === appName &&
-        this._masterEntertainmentDataList.items[i].appData.isVisible != isVisible)
-      {
+        this._masterEntertainmentDataList.items[i].appData.isVisible != isVisible) {
         isEntertainmentDirty = true;
         this._masterEntertainmentDataList.items[i].appData.isVisible = isVisible;
       }
@@ -814,38 +771,31 @@ systemApp.prototype._StatusMenuVisibleMsgHandler = function(msg)
     if (isEntertainmentDirty &&
         this._currentContext &&
         this._currentContext.ctxtId === 'Entertainment' &&
-        this._currentContextTemplate)
-    {
+        this._currentContextTemplate) {
       const dataList = this._buildEntertainmentDataList();
       this._currentContextTemplate.list2Ctrl.setDataList(dataList);
       this._currentContextTemplate.list2Ctrl.updateItems(0, dataList.items.length - 1);
     }
     // Search application items
     let isApplicationsDirty = false;
-    for (let i = 0; i < this._masterApplicationDataList.items.length; ++i)
-    {
+    for (let i = 0; i < this._masterApplicationDataList.items.length; ++i) {
       if (this._masterApplicationDataList.items[i].appData.appName === appName &&
-            this._masterApplicationDataList.items[i].appData.isVisible != isVisible)
-      {
+            this._masterApplicationDataList.items[i].appData.isVisible != isVisible) {
         isApplicationsDirty = true;
         this._masterApplicationDataList.items[i].appData.isVisible = isVisible;
       }
-      if (this._masterApplicationDataList.items[i].appData.appName === 'vehicleStatus')
-      {
+      if (this._masterApplicationDataList.items[i].appData.appName === 'vehicleStatus') {
         this._indexOfVSMApp = i;
       }
     }
     // If any app inside the VehicleStatusMonitor context is visible then VehicleStatusMonitor will also be visible in Application.
     const applicationsCtxtWiseAppNames = this._applicationsCtxtWiseAppNames['VehicleStatusMonitor'];
     let isVehicleStatusMonitorVisible = false;
-    for (let j = 0; j < applicationsCtxtWiseAppNames.length; ++j)
-    {
+    for (let j = 0; j < applicationsCtxtWiseAppNames.length; ++j) {
       const applicationsCtxtWiseAppName = applicationsCtxtWiseAppNames[j];
-      for (let k = 0; k < this._masterApplicationDataList.items.length; ++k)
-      {
+      for (let k = 0; k < this._masterApplicationDataList.items.length; ++k) {
         if ((this._masterApplicationDataList.items[k].appData.appName === applicationsCtxtWiseAppName) &&
-              this._masterApplicationDataList.items[k].appData.isVisible)
-        {
+              this._masterApplicationDataList.items[k].appData.isVisible) {
           isVehicleStatusMonitorVisible = this._masterApplicationDataList.items[k].appData.isVisible;
           break;
         }
@@ -857,8 +807,7 @@ systemApp.prototype._StatusMenuVisibleMsgHandler = function(msg)
     if (isApplicationsDirty &&
             this._currentContext &&
             (this._currentContext.ctxtId === 'Applications' || this._currentContext.ctxtId === 'VehicleStatusMonitor') &&
-            this._currentContextTemplate)
-    {
+            this._currentContextTemplate) {
       const dataList = this._buildApplicationsDataList();
       this._currentContextTemplate.list2Ctrl.setDataList(dataList);
       this._currentContextTemplate.list2Ctrl.updateItems(0, dataList.items.length - 1);
@@ -866,15 +815,12 @@ systemApp.prototype._StatusMenuVisibleMsgHandler = function(msg)
     // Now that we are listening to StatusMenuVisible for Comm items (for email only)
     // we want to ensure any messages sent by other apps that were previously ignored are still ignored
     // Shoki6 ONLY
-    if (appName === 'email')
-    {
+    if (appName === 'email') {
       // Search communication items - avalajh
       let isCommunicationDirty = false;
-      for (let i = 0; i < this._communicationsDataList.items.length; ++i)
-      {
+      for (let i = 0; i < this._communicationsDataList.items.length; ++i) {
         if (this._communicationsDataList.items[i].appData.appName === appName &&
-                  this._communicationsDataList.items[i].appData.isVisible != isVisible)
-        {
+                  this._communicationsDataList.items[i].appData.isVisible != isVisible) {
           isCommunicationDirty = true;
           this._communicationsDataList.items[i].appData.isVisible = isVisible;
         }
@@ -883,8 +829,7 @@ systemApp.prototype._StatusMenuVisibleMsgHandler = function(msg)
       if (isCommunicationDirty &&
                   this._currentContext &&
                   this._currentContext.ctxtId === 'Communication' &&
-                  this._currentContextTemplate)
-      {
+                  this._currentContextTemplate) {
         const dataList = this._buildCommunicationDataList();
         this._currentContextTemplate.list2Ctrl.setDataList(dataList);
         this._currentContextTemplate.list2Ctrl.updateItems(0, dataList.items.length - 1);
@@ -892,62 +837,48 @@ systemApp.prototype._StatusMenuVisibleMsgHandler = function(msg)
     }
   }
 };
-systemApp.prototype._StatusMenuUSBAudioMsgHandler = function(msg)
-{
-  if (msg.params && msg.params.payload && msg.params.payload.statusMenuUSBAudio)
-  {
+systemApp.prototype._StatusMenuUSBAudioMsgHandler = function(msg) {
+  if (msg.params && msg.params.payload && msg.params.payload.statusMenuUSBAudio) {
     // Update cached values for the USB device status
     const status = msg.params.payload.statusMenuUSBAudio;
     let mmuiEvent = '';
     let textIdWithDevice = '';
     let textIdWithoutDevice = '';
     let masterIndex = -1;
-    if (status.usbAB === 'USB_A')
-    {
+    if (status.usbAB === 'USB_A') {
       mmuiEvent = 'SelectUSBA';
       textIdWithDevice = 'UsbAudioAWithDevice';
       textIdWithoutDevice = 'UsbAudioA';
-    }
-    else if (status.usbAB === 'USB_B')
-    {
+    } else if (status.usbAB === 'USB_B') {
       mmuiEvent = 'SelectUSBB';
       textIdWithDevice = 'UsbAudioBWithDevice';
       textIdWithoutDevice = 'UsbAudioB';
     }
     // Update the master entertainment data list which contains all items
-    for (let i = 0; i < this._masterEntertainmentDataList.items.length; ++i)
-    {
-      if (this._masterEntertainmentDataList.items[i].appData.mmuiEvent === mmuiEvent)
-      {
+    for (let i = 0; i < this._masterEntertainmentDataList.items.length; ++i) {
+      if (this._masterEntertainmentDataList.items[i].appData.mmuiEvent === mmuiEvent) {
         masterIndex = i;
         const isAvailable = status.statusMenu.appStatus === 'Available';
         const name = status.displayName;
         this._masterEntertainmentDataList.items[i].disabled = !isAvailable;
-        if (isAvailable && typeof name === 'string' && name.length > 0)
-        {
+        if (isAvailable && typeof name === 'string' && name.length > 0) {
           this._masterEntertainmentDataList.items[i].text1Id = textIdWithDevice;
           this._masterEntertainmentDataList.items[i].text1SubMap = {deviceName: name};
-        }
-        else
-        {
+        } else {
           this._masterEntertainmentDataList.items[i].text1Id = textIdWithoutDevice;
           this._masterEntertainmentDataList.items[i].text1SubMap = null;
         }
-        if (!isAvailable)
-        {
+        if (!isAvailable) {
           // Clear nowplaying icon just in case it was still shown for this now unavailable item
           this._masterEntertainmentDataList.items[i].image1 = '';
         }
       }
     }
     // Update current context if needed
-    if (this._currentContext && this._currentContext.ctxtId === 'Entertainment' && this._currentContextTemplate)
-    {
+    if (this._currentContext && this._currentContext.ctxtId === 'Entertainment' && this._currentContextTemplate) {
       const list = this._currentContextTemplate.list2Ctrl;
-      for (let i = 0; i < list.dataList.items.length; ++i)
-      {
-        if (list.dataList.items[i].appData.mmuiEvent === mmuiEvent)
-        {
+      for (let i = 0; i < list.dataList.items.length; ++i) {
+        if (list.dataList.items[i].appData.mmuiEvent === mmuiEvent) {
           list.dataList.items[i] = this._masterEntertainmentDataList.items[masterIndex];
           list.updateItems(i, i);
         }
@@ -955,46 +886,35 @@ systemApp.prototype._StatusMenuUSBAudioMsgHandler = function(msg)
     }
   }
 };
-systemApp.prototype._StatusMenuBTAudioMsgHandler = function(msg)
-{
-  if (msg.params && msg.params.payload)
-  {
+systemApp.prototype._StatusMenuBTAudioMsgHandler = function(msg) {
+  if (msg.params && msg.params.payload) {
     let masterIndex = -1;
     // Update the master entertainment data list which contains all items
-    for (let i = 0; i < this._masterEntertainmentDataList.items.length; ++i)
-    {
-      if (this._masterEntertainmentDataList.items[i].appData.mmuiEvent === 'SelectBTAudio')
-      {
+    for (let i = 0; i < this._masterEntertainmentDataList.items.length; ++i) {
+      if (this._masterEntertainmentDataList.items[i].appData.mmuiEvent === 'SelectBTAudio') {
         masterIndex = i;
         const isAvailable = msg.params.payload.appStatus === 'Available';
         const deviceName = msg.params.payload.deviceName;
         // NOTE: This message does not enable/disable the BTAudio menu item.
         // (The StatusMenu message will enable it on startup.)
-        if (isAvailable && typeof deviceName === 'string' && deviceName.length > 0)
-        {
+        if (isAvailable && typeof deviceName === 'string' && deviceName.length > 0) {
           this._masterEntertainmentDataList.items[i].text1Id = 'BluetoothWithDevice';
           this._masterEntertainmentDataList.items[i].text1SubMap = {deviceName: deviceName};
-        }
-        else
-        {
+        } else {
           this._masterEntertainmentDataList.items[i].text1Id = 'Bluetooth';
           this._masterEntertainmentDataList.items[i].text1SubMap = null;
         }
-        if (!isAvailable)
-        {
+        if (!isAvailable) {
           // Clear nowplaying icon just in case it was still shown for this now unavailable item
           this._masterEntertainmentDataList.items[i].image1 = '';
         }
       }
     }
     // Update current context if needed
-    if (this._currentContext && this._currentContext.ctxtId === 'Entertainment' && this._currentContextTemplate)
-    {
+    if (this._currentContext && this._currentContext.ctxtId === 'Entertainment' && this._currentContextTemplate) {
       const list = this._currentContextTemplate.list2Ctrl;
-      for (let i = 0; i < list.dataList.items.length; ++i)
-      {
-        if (list.dataList.items[i].appData.mmuiEvent === 'SelectBTAudio')
-        {
+      for (let i = 0; i < list.dataList.items.length; ++i) {
+        if (list.dataList.items[i].appData.mmuiEvent === 'SelectBTAudio') {
           list.dataList.items[i] = this._masterEntertainmentDataList.items[masterIndex];
           list.updateItems(i, i);
         }
@@ -1002,16 +922,13 @@ systemApp.prototype._StatusMenuBTAudioMsgHandler = function(msg)
     }
   }
 };
-systemApp.prototype._StatusUpdateEcoEnergyMsgHandler = function(msg)
-{
-  if (msg.params && msg.params.payload)
-  {
+systemApp.prototype._StatusUpdateEcoEnergyMsgHandler = function(msg) {
+  if (msg.params && msg.params.payload) {
     log.debug('Received _StatusUpdateEcoEnergy message: ' + msg.params.payload.fuelType);
     // Determine correct text ID, based on vehicle fuel type
     const fuelType = msg.params.payload.fuelType;
     let newText1Id;
-    switch (fuelType)
-    {
+    switch (fuelType) {
       case 'HEV':
         newText1Id = 'EcoenergyAppHEV';
         break;
@@ -1022,11 +939,9 @@ systemApp.prototype._StatusUpdateEcoEnergyMsgHandler = function(msg)
     }
     // Search application items for the "ecoenergy" application
     let isApplicationsDirty = false;
-    for (let i = 0; i < this._masterApplicationDataList.items.length; ++i)
-    {
+    for (let i = 0; i < this._masterApplicationDataList.items.length; ++i) {
       if ((this._masterApplicationDataList.items[i].appData.mmuiEvent === 'SelectEcoEnergy') &&
-                  (this._masterApplicationDataList.items[i].text1Id != newText1Id))
-      {
+                  (this._masterApplicationDataList.items[i].text1Id != newText1Id)) {
         // Found the app, and it's text ID needs to change, so change it
         isApplicationsDirty = true;
         this._masterApplicationDataList.items[i].text1Id = newText1Id;
@@ -1036,8 +951,7 @@ systemApp.prototype._StatusUpdateEcoEnergyMsgHandler = function(msg)
     if (isApplicationsDirty &&
                   this._currentContext &&
                   (this._currentContext.ctxtId === 'Applications' || this._currentContext.ctxtId === 'VehicleStatusMonitor') &&
-                  this._currentContextTemplate)
-    {
+                  this._currentContextTemplate) {
       const dataList = this._buildApplicationsDataList();
       this._currentContextTemplate.list2Ctrl.setDataList(dataList);
       this._currentContextTemplate.list2Ctrl.updateItems(0, dataList.items.length - 1);
@@ -1045,20 +959,16 @@ systemApp.prototype._StatusUpdateEcoEnergyMsgHandler = function(msg)
   }
 };
 // Handle message to update the notification counts in the Communication context.
-systemApp.prototype._StatusUpdateNotificationsHandler = function(msg)
-{
-  if (msg.params && msg.params.payload && msg.params.payload.messageCounts)
-  {
+systemApp.prototype._StatusUpdateNotificationsHandler = function(msg) {
+  if (msg.params && msg.params.payload && msg.params.payload.messageCounts) {
     // Update message counts and the notifications list item displayed in the Communication menu
     const countEmail = msg.params.payload.messageCounts.countEmail;
     const countSMS = msg.params.payload.messageCounts.countSMS;
     const total = countEmail + countSMS;
     const showMessageIcon = total > 0;
     framework.common.setSbIcon('Message', showMessageIcon);
-    for (let i = 0; i < this._communicationsDataList.items.length; ++i)
-    {
-      switch (this._communicationsDataList.items[i].appData.mmuiEvent)
-      {
+    for (let i = 0; i < this._communicationsDataList.items.length; ++i) {
+      switch (this._communicationsDataList.items[i].appData.mmuiEvent) {
         case 'SelectNotifications':
           this._communicationsDataList.items[i].disabled = (total === 0);
           this._communicationsDataList.items[i].label1 = (total === 0) ? '' : total.toString();
@@ -1072,16 +982,14 @@ systemApp.prototype._StatusUpdateNotificationsHandler = function(msg)
       }
     }
     // Update current context if needed
-    if (this._currentContext && this._currentContext.ctxtId === 'Communication' && this._currentContextTemplate)
-    {
+    if (this._currentContext && this._currentContext.ctxtId === 'Communication' && this._currentContextTemplate) {
       const dataList = this._buildCommunicationDataList();
       this._currentContextTemplate.list2Ctrl.setDataList(dataList);
       this._currentContextTemplate.list2Ctrl.updateItems(0, dataList.items.length - 1);
     }
   }
 };
-systemApp.prototype._ShowStateSBN_SiriActiveMsgHandler = function()
-{
+systemApp.prototype._ShowStateSBN_SiriActiveMsgHandler = function() {
   framework.common.endStateSbn(this.uiaId, 'SiriStatusNotification', 'vrStatus'); // End the SBN if displayed
   const params = {
     sbnStyle: 'Style02',
@@ -1090,8 +998,7 @@ systemApp.prototype._ShowStateSBN_SiriActiveMsgHandler = function()
   };
   framework.common.showStateSbn(this.uiaId, 'SiriStatusNotification', 'vrStatus', params);
 };
-systemApp.prototype._TimedSBN_SiriErrorMsgHandler = function()
-{
+systemApp.prototype._TimedSBN_SiriErrorMsgHandler = function() {
   framework.common.endStateSbn(this.uiaId, 'SiriStatusNotification', 'vrStatus');// End the SBN if displayed
   const params = {
     sbnStyle: 'Style01',
@@ -1099,8 +1006,7 @@ systemApp.prototype._TimedSBN_SiriErrorMsgHandler = function()
   };
   framework.common.startTimedSbn(this.uiaId, 'SiriStatusNotification', 'vrStatus', params);
 };
-systemApp.prototype._TimedSBN_VoiceNotSupportedMsgHandler = function()
-{
+systemApp.prototype._TimedSBN_VoiceNotSupportedMsgHandler = function() {
   framework.common.endStateSbn(this.uiaId, 'SiriStatusNotification', 'vrStatus');// End the SBN if displayed
   const params = {
     sbnStyle: 'Style02',
@@ -1109,20 +1015,16 @@ systemApp.prototype._TimedSBN_VoiceNotSupportedMsgHandler = function()
   };
   framework.common.startTimedSbn(this.uiaId, 'VoiceNotificationErr', 'vrStatus', params);
 };
-systemApp.prototype._RemoveStateSBN_SiriActiveMsgHandler = function()
-{
+systemApp.prototype._RemoveStateSBN_SiriActiveMsgHandler = function() {
   framework.common.endStateSbn(this.uiaId, 'SiriStatusNotification', 'vrStatus');
 };
-systemApp.prototype._TimedSBN_SourceNotAvailableMsgHandler = function(msg)
-{
-  if (msg.params && msg.params.payload)
-  {
+systemApp.prototype._TimedSBN_SourceNotAvailableMsgHandler = function(msg) {
+  if (msg.params && msg.params.payload) {
     const params = {
       sbnStyle: 'Style02',
       imagePath1: 'common/images/icons/IcnListBtConnType_Music.png',
     };
-    switch (msg.params.payload.audioSource)
-    {
+    switch (msg.params.payload.audioSource) {
       case 'BTAudio':
       case 'Pandora':
       case 'Stitcher':
@@ -1147,121 +1049,91 @@ systemApp.prototype._TimedSBN_SourceNotAvailableMsgHandler = function(msg)
     framework.common.startTimedSbn(this.uiaId, 'AudioSourceNotAvailable', 'errorNotification', params);
   }
 };
-systemApp.prototype._updateEntertainmentNowPlayingIcon = function(audioSource, isPlaying, dataList)
-{
-  for (let i = 0; i < dataList.items.length; ++i)
-  {
-    if (isPlaying)
-    {
+systemApp.prototype._updateEntertainmentNowPlayingIcon = function(audioSource, isPlaying, dataList) {
+  for (let i = 0; i < dataList.items.length; ++i) {
+    if (isPlaying) {
       // Set the icon on the audioSource item and clearing it on all other items
       dataList.items[i].image1 = (dataList.items[i].appData.audioSourceId === audioSource) ? 'common/images/icons/IcnListEntNowPlaying_En.png' : '';
-    }
-    else
-    {
+    } else {
       // Only remove the icon from the audioSource item given. This is important because when switching audio sources the
       // "Off" and "Play" messages do not necessarily come in that order.
-      if (dataList.items[i].appData.audioSourceId === audioSource)
-      {
+      if (dataList.items[i].appData.audioSourceId === audioSource) {
         dataList.items[i].image1 = '';
       }
     }
   }
 };
-systemApp.prototype._StatusUpdateAudioSourceMsgHandler = function(msg)
-{
-  if (msg.params && msg.params.payload)
-  {
+systemApp.prototype._StatusUpdateAudioSourceMsgHandler = function(msg) {
+  if (msg.params && msg.params.payload) {
     const audioSource = msg.params.payload.statusAudio.audioSource;
     const isPlaying = msg.params.payload.statusAudio.audioActive === 'Play';
     // Set the icon in the masterEntertainment data list so it is persisted between template instances
     this._updateEntertainmentNowPlayingIcon(audioSource, isPlaying, this._masterEntertainmentDataList);
     // Update current context if needed
-    if (this._currentContext && this._currentContext.ctxtId === 'Entertainment' && this._currentContextTemplate)
-    {
+    if (this._currentContext && this._currentContext.ctxtId === 'Entertainment' && this._currentContextTemplate) {
       const list = this._currentContextTemplate.list2Ctrl;
       this._updateEntertainmentNowPlayingIcon(audioSource, isPlaying, list.dataList);
       list.updateItems(0, list.dataList.items.length - 1);
     }
   }
 };
-systemApp.prototype._StatusUpdateMissedCallCountMsgHandler = function(msg)
-{
+systemApp.prototype._StatusUpdateMissedCallCountMsgHandler = function(msg) {
   let count = '';
-  if (msg.params && msg.params.payload && msg.params.payload.missedCallCount > 0)
-  {
+  if (msg.params && msg.params.payload && msg.params.payload.missedCallCount > 0) {
     count = msg.params.payload.missedCallCount.toString();
   }
   // Update this._communicationsDataList
-  for (let i = 0; i < this._communicationsDataList.items.length; ++i)
-  {
-    if (this._communicationsDataList.items[i].appData.mmuiEvent === 'SelectCallHistory')
-    {
+  for (let i = 0; i < this._communicationsDataList.items.length; ++i) {
+    if (this._communicationsDataList.items[i].appData.mmuiEvent === 'SelectCallHistory') {
       this._communicationsDataList.items[i].label1 = count;
     }
   }
   // Update current context if needed
-  if (this._currentContext && this._currentContext.ctxtId === 'Communication' && this._currentContextTemplate)
-  {
+  if (this._currentContext && this._currentContext.ctxtId === 'Communication' && this._currentContextTemplate) {
     const list = this._currentContextTemplate.list2Ctrl;
-    for (let i = 0; i < list.dataList.items.length; ++i)
-    {
-      if (list.dataList.items[i].appData.mmuiEvent === 'SelectCallHistory')
-      {
+    for (let i = 0; i < list.dataList.items.length; ++i) {
+      if (list.dataList.items[i].appData.mmuiEvent === 'SelectCallHistory') {
         list.dataList.items[i].label1 = count;
         list.updateItems(i, i);
       }
     }
   }
 };
-systemApp.prototype._WarningStatusCountMsgHandler = function(msg)
-{
-  if (msg.params && msg.params.payload)
-  {
+systemApp.prototype._WarningStatusCountMsgHandler = function(msg) {
+  if (msg.params && msg.params.payload) {
     let count = '';
     let icon = '';
-    if (msg.params.payload.warningcount > 0)
-    {
+    if (msg.params.payload.warningcount > 0) {
       count = msg.params.payload.warningcount.toString();
       icon = 'common/images/icons/IcnListCarHealthAmber_Small.png';
     }
-    for (let i = 0; i < this._masterApplicationDataList.items.length; ++i)
-    {
-      if (this._masterApplicationDataList.items[i].appData.mmuiEvent === 'SelectWarnGuide')
-      {
+    for (let i = 0; i < this._masterApplicationDataList.items.length; ++i) {
+      if (this._masterApplicationDataList.items[i].appData.mmuiEvent === 'SelectWarnGuide') {
         this._masterApplicationDataList.items[i].label1 = count;
         this._masterApplicationDataList.items[i].image2 = icon;
       }
-      if (this._masterApplicationDataList.items[i].appData.mmuiEvent === 'SelectVehicleStatusMonitor')
-      {
+      if (this._masterApplicationDataList.items[i].appData.mmuiEvent === 'SelectVehicleStatusMonitor') {
         // Even though count is zero, if SchedMaintDueStatus is true then Amber icon should be shown on VSM item
-        if (this._SchedMaintDueStatus)
-        {
+        if (this._SchedMaintDueStatus) {
           this._masterApplicationDataList.items[i].image2 = 'common/images/icons/IcnListCarHealthAmber_Small.png';
-        }
-        else
-        {
+        } else {
           this._masterApplicationDataList.items[i].image2 = icon;
         }
       }
     }
     // Update current context if needed
     if (this._currentContext && (this._currentContext.ctxtId === 'Applications' || this._currentContext.ctxtId === 'VehicleStatusMonitor') &&
-                  this._currentContextTemplate)
-    {
+                  this._currentContextTemplate) {
       const list = this._currentContextTemplate.list2Ctrl;
-      for (let i = 0; i < list.dataList.items.length; ++i)
-      {
-        if (list.dataList.items[i].appData.mmuiEvent === 'SelectWarnGuide')
-        {
+      for (let i = 0; i < list.dataList.items.length; ++i) {
+        if (list.dataList.items[i].appData.mmuiEvent === 'SelectWarnGuide') {
           list.dataList.items[i].label1 = count;
           list.dataList.items[i].image2 = icon;
           list.updateItems(i, i);
         }
-        if (list.dataList.items[i].appData.mmuiEvent === 'SelectVehicleStatusMonitor')
-        {
+        if (list.dataList.items[i].appData.mmuiEvent === 'SelectVehicleStatusMonitor') {
           // Even though count is zero, if SchedMaintDueStatus is true then Amber icon should be shown on VSM item
-          if (this._SchedMaintDueStatus)
-          {
+          if (this._SchedMaintDueStatus) {
             icon = 'common/images/icons/IcnListCarHealthAmber_Small.png';
           }
           list.dataList.items[i].image2 = icon;
@@ -1271,84 +1143,56 @@ systemApp.prototype._WarningStatusCountMsgHandler = function(msg)
     }
   }
 };
-systemApp.prototype._StatusUpdateSchedMaintHandler = function(msg)
-{
-  if (msg.params && msg.params.payload)
-  {
+systemApp.prototype._StatusUpdateSchedMaintHandler = function(msg) {
+  if (msg.params && msg.params.payload) {
     const isDue = msg.params.payload.due;
     let warningCountValue = null;
     // Caching the Due Status to be used in _WarningStatusCountMsgHandler.
     this._SchedMaintDueStatus = isDue;
     // Update the master list
-    for (let i = 0; i < this._masterApplicationDataList.items.length; ++i)
-    {
-      if (this._masterApplicationDataList.items[i].appData.mmuiEvent === 'SelectSchedMaint')
-      {
-        if (isDue)
-        {
+    for (let i = 0; i < this._masterApplicationDataList.items.length; ++i) {
+      if (this._masterApplicationDataList.items[i].appData.mmuiEvent === 'SelectSchedMaint') {
+        if (isDue) {
           this._masterApplicationDataList.items[i].image2 = 'apps/system/images/IcnListServiceNotifications_En.png';
-        }
-        else
-        {
+        } else {
           this._masterApplicationDataList.items[i].image2 = '';
         }
-      }
-      else if (this._masterApplicationDataList.items[i].appData.mmuiEvent === 'SelectVehicleStatusMonitor')
-      {
+      } else if (this._masterApplicationDataList.items[i].appData.mmuiEvent === 'SelectVehicleStatusMonitor') {
         const WarnGuidanceAppItem = utility.getArrayItemByPropertyValue(this._masterApplicationDataList.items, 'text1Id', 'WarnGuidanceApp');
-        if (WarnGuidanceAppItem && WarnGuidanceAppItem.item && WarnGuidanceAppItem.item.label1)
-        {
+        if (WarnGuidanceAppItem && WarnGuidanceAppItem.item && WarnGuidanceAppItem.item.label1) {
           warningCountValue = WarnGuidanceAppItem.item.label1;
         }
         // IF is Due is true and not having any image in image2 then need to show Amber icon.
-        if (isDue && !this._masterApplicationDataList.items[i].image2)
-        {
+        if (isDue && !this._masterApplicationDataList.items[i].image2) {
           this._masterApplicationDataList.items[i].image2 = 'common/images/icons/IcnListCarHealthAmber_Small.png';
-        }
+        } else if (!isDue && !warningCountValue) {
         // IF is Due is false and warningCountValue is 0 then no need to show Amber icon.
-        else if (!isDue && !warningCountValue)
-        {
           this._masterApplicationDataList.items[i].image2 = '';
-        }
-        else
-        {
+        } else {
           // DO nothing
         }
       }
     }
     // Update the current context if needed
     if (this._currentContext && (this._currentContext.ctxtId === 'Applications' || this._currentContext.ctxtId === 'VehicleStatusMonitor') &&
-                  this._currentContextTemplate)
-    {
+                  this._currentContextTemplate) {
       const list = this._currentContextTemplate.list2Ctrl;
-      for (let i = 0; i < list.dataList.items.length; ++i)
-      {
-        if (list.dataList.items[i].appData.mmuiEvent === 'SelectSchedMaint')
-        {
-          if (isDue)
-          {
+      for (let i = 0; i < list.dataList.items.length; ++i) {
+        if (list.dataList.items[i].appData.mmuiEvent === 'SelectSchedMaint') {
+          if (isDue) {
             list.dataList.items[i].image2 = 'apps/system/images/IcnListServiceNotifications_En.png';
-          }
-          else
-          {
+          } else {
             list.dataList.items[i].image2 = '';
           }
           list.updateItems(i, i);
-        }
-        else if (list.dataList.items[i].appData.mmuiEvent === 'SelectVehicleStatusMonitor')
-        {
+        } else if (list.dataList.items[i].appData.mmuiEvent === 'SelectVehicleStatusMonitor') {
           // IF is Due is true and not having any image in image2 then need to show Amber icon.
-          if (isDue && !list.dataList.items[i].image2)
-          {
+          if (isDue && !list.dataList.items[i].image2) {
             list.dataList.items[i].image2 = 'common/images/icons/IcnListCarHealthAmber_Small.png';
-          }
+          } else if (!isDue && !warningCountValue) {
           // IF is Due is false and warningCountValue is 0 then no need to show Amber icon.
-          else if (!isDue && !warningCountValue)
-          {
             list.dataList.items[i].image2 = '';
-          }
-          else
-          {
+          } else {
             // Do Nothing
           }
           list.updateItems(i, i);
@@ -1357,14 +1201,12 @@ systemApp.prototype._StatusUpdateSchedMaintHandler = function(msg)
     }
   }
 };
-systemApp.prototype._AtSpeedMsgHandler = function(msg)
-{
+systemApp.prototype._AtSpeedMsgHandler = function(msg) {
   // At speed will disable the speed Restricted items
   this._AtSpeedDisabled = true;
   this._updateSpeedRestrictedApps(this._AtSpeedDisabled);
 };
-systemApp.prototype._NoSpeedMsgHandler = function(msg)
-{
+systemApp.prototype._NoSpeedMsgHandler = function(msg) {
   // At speed will Enable the speed Restricted items
   this._AtSpeedDisabled = false;
   this._updateSpeedRestrictedApps(this._AtSpeedDisabled);
@@ -1378,12 +1220,10 @@ systemApp.prototype._NoSpeedMsgHandler = function(msg)
               * @param   appData     (Object) Data passed in by the app when the control was instantiated
               * @param   params      (Object) Contains label for the selected icon
               */
-systemApp.prototype._selectCallbackHomeScreen = function(mainMenuCtrlObj, appData, params)
-{
+systemApp.prototype._selectCallbackHomeScreen = function(mainMenuCtrlObj, appData, params) {
   log.debug('_selectCallbackHomeScreen() called for icon: ' + params.icon);
   const icon = params.icon;
-  switch (icon)
-  {
+  switch (icon) {
     case 'app':
       framework.sendEventToMmui(this.uiaId, 'SelectApplications');
       break;
@@ -1405,33 +1245,27 @@ systemApp.prototype._selectCallbackHomeScreen = function(mainMenuCtrlObj, appDat
               * Select callback for Applications, Communication, and Entertainment contexts.
               * Appdata for these list items is a hash: { appName: "", mmuiEvent: ""}
               */
-systemApp.prototype._menuItemSelectCallback = function(listCtrlObj, appData, params)
-{
+systemApp.prototype._menuItemSelectCallback = function(listCtrlObj, appData, params) {
   framework.sendEventToMmui(this.uiaId, appData.mmuiEvent, {}, params.fromVui);
 };
 // /////////////////////////////////////////////////////////////////////////////
 // Communication
 // /////////////////////////////////////////////////////////////////////////////
-systemApp.prototype._CommCtxtContextIn = function()
-{
+systemApp.prototype._CommCtxtContextIn = function() {
   let scrollTo = 0;
   // We cannot use the data list in the current context here, becuase it doesn't exist yet
   // so we use _buildCommunicationDataList() just like _readyCommunications() will
   const dataList = this._buildCommunicationDataList();
   // If Settings (the last item) is the only enabled item then scroll to that. Otherwise default focus behavior.
   let any = false;
-  for (let i = 0; i < dataList.items.length - 1; ++i)
-  {
-    if (dataList.items[i].disabled === false)
-    {
+  for (let i = 0; i < dataList.items.length - 1; ++i) {
+    if (dataList.items[i].disabled === false) {
       any = true;
     }
   }
-  if (any === false)
-  {
+  if (any === false) {
     const lastIndex = dataList.items.length - 1;
-    if (dataList.items[lastIndex].disabled === false)
-    {
+    if (dataList.items[lastIndex].disabled === false) {
       scrollTo = lastIndex;
     }
   }
@@ -1441,11 +1275,9 @@ systemApp.prototype._CommCtxtContextIn = function()
 // /////////////////////////////////////////////////////////////////////////////
 // Applications
 // /////////////////////////////////////////////////////////////////////////////
-systemApp.prototype._readyApplications = function()
-{
+systemApp.prototype._readyApplications = function() {
   // This context has dynamically visible items (see StatusMenuVisible message) so the list contents is rebuilt.
-  if (this._currentContext && this._currentContextTemplate)
-  {
+  if (this._currentContext && this._currentContextTemplate) {
     this._AtSpeedDisabled = framework.common.getAtSpeedValue();
     const dataList = this._buildApplicationsDataList();
     this._currentContextTemplate.list2Ctrl.setDataList(dataList);
@@ -1455,23 +1287,18 @@ systemApp.prototype._readyApplications = function()
   }
 };
 // Build list data from this._masterApplicationDataList based on the currently visible items.
-systemApp.prototype._buildApplicationsDataList = function()
-{
+systemApp.prototype._buildApplicationsDataList = function() {
   const dataList = {
     itemCountKnown: true,
     itemCount: 0,
     items: [],
     vuiSupport: true,
   };
-  for (let i = 0; i < this._masterApplicationDataList.items.length; ++i)
-  {
-    if (this._masterApplicationDataList.items[i].appData.isVisible)
-    {
+  for (let i = 0; i < this._masterApplicationDataList.items.length; ++i) {
+    if (this._masterApplicationDataList.items[i].appData.isVisible) {
       const applicationsCtxtWiseAppNames = this._applicationsCtxtWiseAppNames[this._currentContext.ctxtId];
-      for (let j = 0; j < applicationsCtxtWiseAppNames.length; ++j)
-      {
-        if (applicationsCtxtWiseAppNames[j] === this._masterApplicationDataList.items[i].appData.appName)
-        {
+      for (let j = 0; j < applicationsCtxtWiseAppNames.length; ++j) {
+        if (applicationsCtxtWiseAppNames[j] === this._masterApplicationDataList.items[i].appData.appName) {
           dataList.items.push(this._masterApplicationDataList.items[i]);
         }
       }
@@ -1483,11 +1310,9 @@ systemApp.prototype._buildApplicationsDataList = function()
 // /////////////////////////////////////////////////////////////////////////////
 // Entertainment
 // /////////////////////////////////////////////////////////////////////////////
-systemApp.prototype._readyEntertainment = function()
-{
+systemApp.prototype._readyEntertainment = function() {
   // This context has dynamically visible items (see StatusMenuVisible message) so the list contents is rebuilt.
-  if (this._currentContext && this._currentContextTemplate)
-  {
+  if (this._currentContext && this._currentContextTemplate) {
     this._AtSpeedDisabled = framework.common.getAtSpeedValue();
     const dataList = this._buildEntertainmentDataList();
     this._currentContextTemplate.list2Ctrl.setDataList(dataList);
@@ -1497,18 +1322,15 @@ systemApp.prototype._readyEntertainment = function()
   }
 };
 // Build list data from this._masterEntertainmentDataList based on the currently visible items.
-systemApp.prototype._buildEntertainmentDataList = function()
-{
+systemApp.prototype._buildEntertainmentDataList = function() {
   const dataList = {
     itemCountKnown: true,
     itemCount: 0,
     items: [],
     vuiSupport: true,
   };
-  for (let i = 0; i < this._masterEntertainmentDataList.items.length; ++i)
-  {
-    if (this._masterEntertainmentDataList.items[i].appData.isVisible)
-    {
+  for (let i = 0; i < this._masterEntertainmentDataList.items.length; ++i) {
+    if (this._masterEntertainmentDataList.items[i].appData.isVisible) {
       dataList.items.push(this._masterEntertainmentDataList.items[i]);
     }
   }
@@ -1518,11 +1340,9 @@ systemApp.prototype._buildEntertainmentDataList = function()
 // /////////////////////////////////////////////////////////////////////////////
 // Communication - avalajh
 // /////////////////////////////////////////////////////////////////////////////
-systemApp.prototype._readyCommunication = function()
-{
+systemApp.prototype._readyCommunication = function() {
   // This context has dynamically visible items (see StatusMenuVisible message) so the list contents is rebuilt.
-  if (this._currentContext && this._currentContextTemplate)
-  {
+  if (this._currentContext && this._currentContextTemplate) {
     this._AtSpeedDisabled = framework.common.getAtSpeedValue();
     const dataList = this._buildCommunicationDataList();
     this._currentContextTemplate.list2Ctrl.setDataList(dataList);
@@ -1532,18 +1352,15 @@ systemApp.prototype._readyCommunication = function()
   }
 };
 // Build list data from this._communicationsDataList based on the currently visible items.
-systemApp.prototype._buildCommunicationDataList = function()
-{
+systemApp.prototype._buildCommunicationDataList = function() {
   const dataList = {
     itemCountKnown: true,
     itemCount: 0,
     items: [],
     vuiSupport: true,
   };
-  for (let i = 0; i < this._communicationsDataList.items.length; ++i)
-  {
-    if (this._communicationsDataList.items[i].appData.isVisible)
-    {
+  for (let i = 0; i < this._communicationsDataList.items.length; ++i) {
+    if (this._communicationsDataList.items[i].appData.isVisible) {
       dataList.items.push(this._communicationsDataList.items[i]);
     }
   }
@@ -1553,13 +1370,10 @@ systemApp.prototype._buildCommunicationDataList = function()
 // /////////////////////////////////////////////////////////////////////////////
 // NoConnectionNotify
 // /////////////////////////////////////////////////////////////////////////////
-systemApp.prototype._selectCallbackNoConnectionNotify = function(dialogBtnCtrlObj, appData, params)
-{
-  switch (this._currentContext.ctxtId)
-  {
+systemApp.prototype._selectCallbackNoConnectionNotify = function(dialogBtnCtrlObj, appData, params) {
+  switch (this._currentContext.ctxtId) {
     case 'NoConnectionNotify':
-      switch (appData)
-      {
+      switch (appData) {
         case 'SelectConnect':
           framework.sendEventToMmui('system', appData);
           break;
@@ -1573,15 +1387,12 @@ systemApp.prototype._selectCallbackNoConnectionNotify = function(dialogBtnCtrlOb
 // /////////////////////////////////////////////////////////////////////////////
 //  NotifyDialog
 // /////////////////////////////////////////////////////////////////////////////
-systemApp.prototype._NotifyDialogCtxtTmpltReadyToDisplay = function()
-{
-  if (this._currentContext.params && this._currentContext.params.payload && this._currentContext.params.payload.messageNotifyData)
-  {
+systemApp.prototype._NotifyDialogCtxtTmpltReadyToDisplay = function() {
+  if (this._currentContext.params && this._currentContext.params.payload && this._currentContext.params.payload.messageNotifyData) {
     this._currentContextTemplate.dialog3Ctrl.setText2(this._currentContext.params.payload.messageNotifyData.name);
   }
 };
-systemApp.prototype._NotifyDialogCtxtTmpltDisplayed = function()
-{
+systemApp.prototype._NotifyDialogCtxtTmpltDisplayed = function() {
   // Start timer to dismiss the notification if the user doesn't respond
   const self = this;
   this._NotifyDialogTimeoutId = setTimeout(function() {
@@ -1589,23 +1400,18 @@ systemApp.prototype._NotifyDialogCtxtTmpltDisplayed = function()
     framework.sendEventToMmui(self.uiaId, 'Timeout');
   }, 10000);
 };
-systemApp.prototype._NotifyDialogCtxtTmpltNoLongerDisplayed = function()
-{
-  if (this._NotifyDialogTimeoutId !== null)
-  {
+systemApp.prototype._NotifyDialogCtxtTmpltNoLongerDisplayed = function() {
+  if (this._NotifyDialogTimeoutId !== null) {
     clearTimeout(this._NotifyDialogTimeoutId);
     this._NotifyDialogTimeoutId = null;
   }
 };
-systemApp.prototype._selectCallbackNotifyDialog = function(controlRef, appData, params)
-{
-  if (this._NotifyDialogTimeoutId !== null)
-  {
+systemApp.prototype._selectCallbackNotifyDialog = function(controlRef, appData, params) {
+  if (this._NotifyDialogTimeoutId !== null) {
     clearTimeout(this._NotifyDialogTimeoutId);
     this._NotifyDialogTimeoutId = null;
   }
-  switch (appData)
-  {
+  switch (appData) {
     case 'Global.No':
       framework.sendEventToMmui('common', appData);
       break;
@@ -1613,8 +1419,7 @@ systemApp.prototype._selectCallbackNotifyDialog = function(controlRef, appData, 
       framework.sendEventToMmui(this.uiaId, appData);
       break;
     case 'SelectNotifyMessage':
-      if (this._currentContext.params && this._currentContext.params.payload)
-      {
+      if (this._currentContext.params && this._currentContext.params.payload) {
         const paramsData = {
           payload: {
             messageId: this._currentContext.params.payload.messageNotifyData.messageId,
@@ -1629,10 +1434,8 @@ systemApp.prototype._selectCallbackNotifyDialog = function(controlRef, appData, 
 // /////////////////////////////////////////////////////////////////////////////
 // NotificationListRetry
 // /////////////////////////////////////////////////////////////////////////////
-systemApp.prototype._selectCallbackNotificationListRetry = function(controlRef, appData, params)
-{
-  switch (appData)
-  {
+systemApp.prototype._selectCallbackNotificationListRetry = function(controlRef, appData, params) {
+  switch (appData) {
     case 'Global.Cancel':
       framework.sendEventToMmui('common', appData);
       break;
@@ -1644,11 +1447,9 @@ systemApp.prototype._selectCallbackNotificationListRetry = function(controlRef, 
 // /////////////////////////////////////////////////////////////////////////////
 // NotificationList
 // /////////////////////////////////////////////////////////////////////////////
-systemApp.prototype._readyNotificationList = function(readyParams)
-{
+systemApp.prototype._readyNotificationList = function(readyParams) {
   log.debug('_readyNotificationList called...');
-  if (readyParams)
-  {
+  if (readyParams) {
     readyParams.skipRestore = true;
   }
   const params = {
@@ -1675,14 +1476,11 @@ systemApp.prototype._readyNotificationList = function(readyParams)
   };
   framework.sendRequestToAppsdk(this.uiaId, this._msgConnectCallback.bind(this), 'msg', 'Connect', params);
 };
-systemApp.prototype._noLongerDisplayedNotificationList = function()
-{
+systemApp.prototype._noLongerDisplayedNotificationList = function() {
   this._closeMsgApiConnection();
 };
-systemApp.prototype._msgConnectCallback = function(msg)
-{
-  if (msg && msg.msgType === 'methodResponse' && msg.params && msg.params.status === 100)
-  {
+systemApp.prototype._msgConnectCallback = function(msg) {
+  if (msg && msg.msgType === 'methodResponse' && msg.params && msg.params.status === 100) {
     this._msgApiConnection = msg.params.connection;
     const params = {
       'connection_in': this._msgApiConnection,
@@ -1690,20 +1488,15 @@ systemApp.prototype._msgConnectCallback = function(msg)
       'request_type': 3, // MSG_REQUEST_NEW_DATA_STORE_AND_RETRIEVE
     };
     framework.sendRequestToAppsdk(this.uiaId, this._msgGetNewMessagesListCallback.bind(this), 'msg', 'GetNewMessagesList', params);
-  }
-  else
-  {
+  } else {
     log.error('APPSDK response ' + msg.serviceName + ' ' + msg.methodName + ' ' + msg.errorType);
     framework.sendEventToMmui(this.uiaId, 'NotificationListRetrieveFailure');
     this._closeMsgApiConnection();
   }
 };
-systemApp.prototype._msgGetNewMessagesListCallback = function(msg)
-{
-  if (msg && msg.msgType === 'methodResponse' && msg.params)
-  {
-    switch (msg.params.status)
-    {
+systemApp.prototype._msgGetNewMessagesListCallback = function(msg) {
+  if (msg && msg.msgType === 'methodResponse' && msg.params) {
+    switch (msg.params.status) {
       // Successful retrieval w/ messages
       case 100:
       {
@@ -1716,8 +1509,7 @@ systemApp.prototype._msgGetNewMessagesListCallback = function(msg)
           items: [],
           vuiSupport: true,
         };
-        for (let i = 0; i < messages.length; i++)
-        {
+        for (let i = 0; i < messages.length; i++) {
           const item = {
             appData: {messageId: messages[i].id, name: messages[i].sender},
             itemStyle: 'style07',
@@ -1730,8 +1522,7 @@ systemApp.prototype._msgGetNewMessagesListCallback = function(msg)
             labelWidth: 'wide',
           };
           // Set image1 and set appData event name.
-          switch (messages[i].clientType)
-          {
+          switch (messages[i].clientType) {
             // MSG_CLIENT_EMAIL
             case 1:
               item.appData.eventId = 'SelectMessageEmail';
@@ -1747,8 +1538,7 @@ systemApp.prototype._msgGetNewMessagesListCallback = function(msg)
           dataList.items.push(item);
         }
         dataList.itemCount = dataList.items.length;
-        if (this._currentContextTemplate && this._currentContextTemplate.list2Ctrl)
-        {
+        if (this._currentContextTemplate && this._currentContextTemplate.list2Ctrl) {
           this._currentContextTemplate.list2Ctrl.setDataList(dataList);
           this._currentContextTemplate.list2Ctrl.updateItems(0, dataList.itemCount - 1);
         }
@@ -1759,8 +1549,7 @@ systemApp.prototype._msgGetNewMessagesListCallback = function(msg)
       {
         log.info('AppSDK returned empty message.');
         this._closeMsgApiConnection();
-        if (this._currentContextTemplate && this._currentContextTemplate.list2Ctrl)
-        {
+        if (this._currentContextTemplate && this._currentContextTemplate.list2Ctrl) {
           this._currentContextTemplate.list2Ctrl.setLoading(false);
         }
         break;
@@ -1769,8 +1558,7 @@ systemApp.prototype._msgGetNewMessagesListCallback = function(msg)
       default:
       {
         log.error('APPSDK response ' + msg.serviceName + ' ' + msg.methodName + ' ' + msg.errorType);
-        if (this._currentContextTemplate && this._currentContextTemplate.list2Ctrl)
-        {
+        if (this._currentContextTemplate && this._currentContextTemplate.list2Ctrl) {
           this._currentContextTemplate.list2Ctrl.setLoading(false);
         }
         framework.sendEventToMmui(this.uiaId, 'NotificationListRetrieveFailure');
@@ -1778,22 +1566,17 @@ systemApp.prototype._msgGetNewMessagesListCallback = function(msg)
         break;
       }
     }
-  }
-  else
-  {
+  } else {
     log.error('APPSDK response ' + msg.serviceName + ' ' + msg.methodName + ' ' + msg.errorType);
-    if (this._currentContextTemplate && this._currentContextTemplate.list2Ctrl)
-    {
+    if (this._currentContextTemplate && this._currentContextTemplate.list2Ctrl) {
       this._currentContextTemplate.list2Ctrl.setLoading(false);
     }
     framework.sendEventToMmui(this.uiaId, 'NotificationListRetrieveFailure');
     this._closeMsgApiConnection();
   }
 };
-systemApp.prototype._closeMsgApiConnection = function()
-{
-  if (this._msgApiConnection)
-  {
+systemApp.prototype._closeMsgApiConnection = function() {
+  if (this._msgApiConnection) {
     const params = {
       'connection_in': this._msgApiConnection,
       'context_in': 0,
@@ -1802,12 +1585,9 @@ systemApp.prototype._closeMsgApiConnection = function()
     this._msgApiConnection = null;
   }
 };
-systemApp.prototype._selectNotificationListItem = function(controlRef, appData, params)
-{
-  if (appData && appData.eventId)
-  {
-    switch (appData.eventId)
-    {
+systemApp.prototype._selectNotificationListItem = function(controlRef, appData, params) {
+  if (appData && appData.eventId) {
+    switch (appData.eventId) {
       case 'SelectMessageEmail':
         let stuff = {
           payload: {
@@ -1838,10 +1618,8 @@ systemApp.prototype._selectNotificationListItem = function(controlRef, appData, 
 // /////////////////////////////////////////////////////////////////////////////
 // NoDevice
 // /////////////////////////////////////////////////////////////////////////////
-systemApp.prototype._selectCallbackNoDevice = function(controlRef, appData, params)
-{
-  switch (appData)
-  {
+systemApp.prototype._selectCallbackNoDevice = function(controlRef, appData, params) {
+  switch (appData) {
     case 'Global.GoBack':
       framework.sendEventToMmui('common', appData);
       break;
@@ -1853,37 +1631,29 @@ systemApp.prototype._selectCallbackNoDevice = function(controlRef, appData, para
 // /////////////////////////////////////////////////////////////////////////////
 // DisplayOff
 // /////////////////////////////////////////////////////////////////////////////
-systemApp.prototype._displayOffUserActivity = function(controlRef, appData, params)
-{
+systemApp.prototype._displayOffUserActivity = function(controlRef, appData, params) {
   framework.sendEventToMmui('system', 'DisplayOffGUIActivity');
 };
 // /////////////////////////////////////////////////////////////////////////////
 // Disclaimer
 // /////////////////////////////////////////////////////////////////////////////
-systemApp.prototype._displayedDisclaimer = function()
-{
+systemApp.prototype._displayedDisclaimer = function() {
   framework.sendEventToMmui('system', 'DisposeIntroVideo');
-  if (this._disclaimerTime.reset)
-  {
+  if (this._disclaimerTime.reset) {
     this._disclaimerTime.reset = false;
     this._disclaimerTime.remaining = 3500;
   }
-  if (this._disclaimerTime.remaining < 0)
-  {
+  if (this._disclaimerTime.remaining < 0) {
     this._disclaimerTime.reset = true;
     framework.sendEventToMmui(this.uiaId, 'Timeout');
-  }
-  else
-  {
+  } else {
     log.debug('Starting a Disclaimer timer with remaining time: ' + this._disclaimerTime.remaining);
     this._disclaimerTime.whenStarted = Date.now();
     this._disclaimerTime.timeoutId = setTimeout(this._disclaimerTimedout.bind(this), this._disclaimerTime.remaining);
   }
 };
-systemApp.prototype._selectCallbackDisclaimer = function(controlRef, appData, params)
-{
-  switch (appData)
-  {
+systemApp.prototype._selectCallbackDisclaimer = function(controlRef, appData, params) {
+  switch (appData) {
     case 'Global.Yes':
       clearTimeout(this._disclaimerTime.timeoutId);
       this._disclaimerTime.timeoutId = null;
@@ -1892,39 +1662,31 @@ systemApp.prototype._selectCallbackDisclaimer = function(controlRef, appData, pa
       break;
   }
 };
-systemApp.prototype._disclaimerTimedout = function()
-{
+systemApp.prototype._disclaimerTimedout = function() {
   this._disclaimerTime.timeoutId = null;
   this._disclaimerTime.reset = true;
-  if (this._currentContext && this._currentContext.ctxtId === 'Disclaimer')
-  {
+  if (this._currentContext && this._currentContext.ctxtId === 'Disclaimer') {
     framework.sendEventToMmui(this.uiaId, 'Timeout');
   }
   // Incase after Timeout Disclaimer screen didnt remove then sends start the timer again
-  if (this._disclaimerTime.reset)
-  {
+  if (this._disclaimerTime.reset) {
     this._disclaimerTime.reset = false;
     this._disclaimerTime.remaining = 3500;
   }
-  if (this._disclaimerTime.remaining < 0)
-  {
+  if (this._disclaimerTime.remaining < 0) {
     this._disclaimerTime.reset = true;
     framework.sendEventToMmui(this.uiaId, 'Timeout');
-  }
-  else
-  {
+  } else {
     log.debug('Starting a Disclaimer timer with remaining time: ' + this._disclaimerTime.remaining);
     this._disclaimerTime.whenStarted = Date.now();
     this._disclaimerTime.timeoutId = setTimeout(this._disclaimerTimedout.bind(this), this._disclaimerTime.remaining);
   }
 };
-systemApp.prototype._noLongerDisplayedDisclaimer = function()
-{
+systemApp.prototype._noLongerDisplayedDisclaimer = function() {
   // Note: The template is transitioning away either because of a Timeout, the user hit OK or an interrupting context change.
   const elapsed = Date.now() - this._disclaimerTime.whenStarted;
   this._disclaimerTime.remaining = this._disclaimerTime.remaining - elapsed;
-  if (this._disclaimerTime.timeoutId)
-  {
+  if (this._disclaimerTime.timeoutId) {
     clearTimeout(this._disclaimerTime.timeoutId);
     this._disclaimerTime.timeoutId = null;
   }
@@ -1932,10 +1694,8 @@ systemApp.prototype._noLongerDisplayedDisclaimer = function()
 // /////////////////////////////////////////////////////////////////////////////
 // SystemWarning
 // /////////////////////////////////////////////////////////////////////////////
-systemApp.prototype._selectCallbackSystemWarning = function(controlRef, appData, params)
-{
-  switch (appData)
-  {
+systemApp.prototype._selectCallbackSystemWarning = function(controlRef, appData, params) {
+  switch (appData) {
     case 'Global.Yes':
       framework.sendEventToMmui('common', appData);
       break;
@@ -1944,10 +1704,8 @@ systemApp.prototype._selectCallbackSystemWarning = function(controlRef, appData,
 // /////////////////////////////////////////////////////////////////////////////
 // EnableRVR
 // /////////////////////////////////////////////////////////////////////////////
-systemApp.prototype._selectCallbackEnableRVR = function(controlRef, appData, params)
-{
-  switch (appData)
-  {
+systemApp.prototype._selectCallbackEnableRVR = function(controlRef, appData, params) {
+  switch (appData) {
     case 'Global.Yes':
       framework.sendEventToMmui('common', appData);
       break;
@@ -1956,10 +1714,8 @@ systemApp.prototype._selectCallbackEnableRVR = function(controlRef, appData, par
 // /////////////////////////////////////////////////////////////////////////////
 // RVRInstructions
 // /////////////////////////////////////////////////////////////////////////////
-systemApp.prototype._selectCallbackRVRInstructions = function(controlRef, appData, params)
-{
-  switch (appData)
-  {
+systemApp.prototype._selectCallbackRVRInstructions = function(controlRef, appData, params) {
+  switch (appData) {
     case 'Global.Yes':
       framework.sendEventToMmui('common', appData);
       break;
@@ -1968,15 +1724,12 @@ systemApp.prototype._selectCallbackRVRInstructions = function(controlRef, appDat
 // /////////////////////////////////////////////////////////////////////////////
 // SourceReconnect
 // /////////////////////////////////////////////////////////////////////////////
-systemApp.prototype._readySourceReconnect = function()
-{
+systemApp.prototype._readySourceReconnect = function() {
   if (this._currentContext.params &&
                   this._currentContext.params.payload &&
                   this._currentContextTemplate &&
-                  this._currentContextTemplate.dialog3Ctrl)
-  {
-    switch (this._currentContext.params.payload.audioSource)
-    {
+                  this._currentContextTemplate.dialog3Ctrl) {
+    switch (this._currentContext.params.payload.audioSource) {
       case 'BTAudio':
         this._currentContextTemplate.dialog3Ctrl.setText1Id('ReconnectBTAudio');
         break;
@@ -2008,10 +1761,8 @@ systemApp.prototype._readySourceReconnect = function()
     }
   }
 };
-systemApp.prototype._selectSourceReconnect = function(controlRef, appData, params)
-{
-  switch (appData)
-  {
+systemApp.prototype._selectSourceReconnect = function(controlRef, appData, params) {
+  switch (appData) {
     case 'SelectEntertainmentMenu':
       framework.sendEventToMmui(this.uiaId, appData);
       break;
@@ -2020,15 +1771,12 @@ systemApp.prototype._selectSourceReconnect = function(controlRef, appData, param
 // /////////////////////////////////////////////////////////////////////////////
 // SourceReconnectFailed
 // /////////////////////////////////////////////////////////////////////////////
-systemApp.prototype._readySourceReconnectFailed = function()
-{
+systemApp.prototype._readySourceReconnectFailed = function() {
   if (this._currentContext.params &&
                     this._currentContext.params.payload &&
                     this._currentContextTemplate &&
-                    this._currentContextTemplate.dialog3Ctrl)
-  {
-    switch (this._currentContext.params.payload.audioSource)
-    {
+                    this._currentContextTemplate.dialog3Ctrl) {
+    switch (this._currentContext.params.payload.audioSource) {
       case 'BTAudio':
       case 'Pandora':
       case 'Stitcher':
@@ -2055,86 +1803,68 @@ systemApp.prototype._readySourceReconnectFailed = function()
   }
 };
 // Siri EnableRVR context ready to Display Function
-systemApp.prototype._readyEnableRVR = function()
-{
+systemApp.prototype._readyEnableRVR = function() {
   if (this._currentContext.params &&
                       this._currentContext.params.payload &&
                       this._currentContextTemplate &&
-                      this._currentContextTemplate.dialog3Ctrl)
-  {
+                      this._currentContextTemplate.dialog3Ctrl) {
     this._CachedDeviceName = this._currentContext.params.payload.deviceName;
     const subMapObj = {nameOfDevice: this._CachedDeviceName};
     this._currentContextTemplate.dialog3Ctrl.setText1Id('SiriDisabled', subMapObj);
   }
 };
 // Siri SiriLaunchingError context ready to Display Function
-systemApp.prototype._readySiriLaunchingError = function()
-{
+systemApp.prototype._readySiriLaunchingError = function() {
   if (this._currentContext.params &&
                         this._currentContext.params.payload &&
                         this._currentContextTemplate &&
-                        this._currentContextTemplate.dialog3Ctrl)
-  {
+                        this._currentContextTemplate.dialog3Ctrl) {
     this._CachedDeviceName = this._currentContext.params.payload.deviceName;
     const subMapObj = {nameOfDevice: this._CachedDeviceName};
     this._currentContextTemplate.dialog3Ctrl.setText1Id('DisconnectThenReconnect', subMapObj);
   }
 };
-systemApp.prototype._selectSourceReconnectFailed = function(controlRef, appData, params)
-{
-  switch (appData)
-  {
+systemApp.prototype._selectSourceReconnectFailed = function(controlRef, appData, params) {
+  switch (appData) {
     case 'Global.Yes':
       framework.sendEventToMmui('common', appData);
       break;
   }
 };
 // Store the Availability Status of Speed Restricted Apps
-systemApp.prototype._StatusMenuChanged = function(appName, isDisabled)
-{
-  for (let i = 0; i < this._SpeedRestrictedApps.length; ++i)
-  {
+systemApp.prototype._StatusMenuChanged = function(appName, isDisabled) {
+  for (let i = 0; i < this._SpeedRestrictedApps.length; ++i) {
     const speedRestrictedAppName = this._SpeedRestrictedApps[i].appName;
-    if (speedRestrictedAppName.indexOf(appName) === 0)
-    {
+    if (speedRestrictedAppName.indexOf(appName) === 0) {
       this._SpeedRestrictedApps[i].status = isDisabled;
     }
   }
 };
 // Update the items for Speed Restricted Message
-systemApp.prototype._updateSpeedRestrictedApps = function(isDisabled)
-{
+systemApp.prototype._updateSpeedRestrictedApps = function(isDisabled) {
   let status = null;
   let appName = null;
-  for (let i = 0; i < this._SpeedRestrictedApps.length; ++i)
-  {
+  for (let i = 0; i < this._SpeedRestrictedApps.length; ++i) {
     appName = this._SpeedRestrictedApps[i].appName;
     status = this._SpeedRestrictedApps[i].status;
     log.info('AppName : '+appName+' is available or unavailable - (true/false)' +status);
     // Checks for Status Availability for the respective AppName
-    if (!status)
-    {
+    if (!status) {
       this._enableSpeedRestrictedItem(appName, isDisabled, this._masterApplicationDataList);
     }
     // Update the menu list in the current context if needed
-    if (this._currentContext && !status)
-    {
-      switch (this._currentContext.ctxtId)
-      {
+    if (this._currentContext && !status) {
+      switch (this._currentContext.ctxtId) {
         case 'Communication':
         case 'Entertainment':
         case 'Applications':
-          if (this._currentContextTemplate && this._currentContextTemplate.list2Ctrl)
-          {
+          if (this._currentContextTemplate && this._currentContextTemplate.list2Ctrl) {
             const dataList = this._currentContextTemplate.list2Ctrl.dataList;
-            for (let j = 0; j < dataList.items.length; ++j)
-            {
-              if (dataList.items[j].appData.appName === appName)
-              {
+            for (let j = 0; j < dataList.items.length; ++j) {
+              if (dataList.items[j].appData.appName === appName) {
                 log.info('AppName : '+appName+' is found for making it disabled : '+isDisabled);
                 dataList.items[j].disabled = isDisabled;
-                if (isDisabled)
-                {
+                if (isDisabled) {
                   // Clear nowplaying icon just in case it was still shown for this now unavailable item
                   dataList.items[j].image1 = '';
                 }

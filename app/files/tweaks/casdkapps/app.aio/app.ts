@@ -214,8 +214,12 @@ CustomApplicationsHandler.register('app.aio', new CustomApplication({
         $('.StatusBarCtrlHomeBtn').css({'background': 'url("/jci/gui/common/images/icons/IcnSbHome.png") center center no-repeat'});
       });
       $('#messageTest').click(messageTest('TESTYBALLS'));
-      $('#playTest').click(function() {framework.sendEventToMmui('common', 'Global.Pause');});
-      $('#shiftTest').click(function() {$('.CommonBgImg').animate({'background-position': '-=800px'}, 'slow');});
+      $('#playTest').click(function() {
+        framework.sendEventToMmui('common', 'Global.Pause');
+      });
+      $('#shiftTest').click(function() {
+        $('.CommonBgImg').animate({'background-position': '-=800px'}, 'slow');
+      });
     });
   },
 
@@ -280,62 +284,108 @@ CustomApplicationsHandler.register('app.aio', new CustomApplication({
   makeButtons: function() {
     // Buttons
     this.button1 = $('<button/>').attr('id', 'Star1').text('Star 1').appendTo($('#MainMenu'));
-    this.button1.on('click', function() {changeLayout('star1'); $('#MainMenuMsg').text('Star 1');});
+    this.button1.on('click', function() {
+      changeLayout('star1'); $('#MainMenuMsg').text('Star 1');
+    });
     this.button2 = $('<button/>').attr('id', 'Star2').text('Star 2').appendTo($('#MainMenu'));
-    this.button2.on('click', function() {changeLayout('star3'); $('#MainMenuMsg').text('Star 2');});
+    this.button2.on('click', function() {
+      changeLayout('star3'); $('#MainMenuMsg').text('Star 2');
+    });
     this.button11 = $('<button/>').attr('id', 'inverted').text('Inverted').appendTo($('#MainMenu'));
-    this.button11.on('click', function() {changeLayout('star2'); $('#MainMenuMsg').text('Inverted');});
+    this.button11.on('click', function() {
+      changeLayout('star2'); $('#MainMenuMsg').text('Inverted');
+    });
     this.button3 = $('<button/>').attr('id', 'ellipse').text('Ellipse').appendTo($('#MainMenu'));
-    this.button3.on('click', function() {$('body').toggleClass('ellipse'); $('#MainMenuMsg').text('Ellipse');});
+    this.button3.on('click', function() {
+      $('body').toggleClass('ellipse'); $('#MainMenuMsg').text('Ellipse');
+    });
     this.button4 = $('<button/>').attr('id', 'minicoins').text('Mini Coins').appendTo($('#MainMenu'));
-    this.button4.on('click', function() {$('body').toggleClass('minicoins'); $('#MainMenuMsg').text('Mini Coins');});
+    this.button4.on('click', function() {
+      $('body').toggleClass('minicoins'); $('#MainMenuMsg').text('Mini Coins');
+    });
     this.button5 = $('<button/>').attr('id', 'label3d').text('3D Label').appendTo($('#MainMenu'));
-    this.button5.on('click', function() {$('body').toggleClass('label3d'); $('#MainMenuMsg').text('3D Label');});
+    this.button5.on('click', function() {
+      $('body').toggleClass('label3d'); $('#MainMenuMsg').text('3D Label');
+    });
     this.button6 = $('<button/>').attr('id', 'noBgBtn').text('Remove Button Background').appendTo($('#MainMenu'));
-    this.button6.on('click', function() {$('body').toggleClass('no-btn-bg'); $('#MainMenuMsg').text('Button Backgrounds');});
+    this.button6.on('click', function() {
+      $('body').toggleClass('no-btn-bg'); $('#MainMenuMsg').text('Button Backgrounds');
+    });
     this.button7= $('<button/>').attr('id', 'bgrAlbmArt').text('Bigger Albm Art').appendTo($('#MainMenu'));
-    this.button7.on('click', function() {$('body').toggleClass('bgrAlbmArt'); $('#MainMenuMsg').text('Bigger Albm Art');});
+    this.button7.on('click', function() {
+      $('body').toggleClass('bgrAlbmArt'); $('#MainMenuMsg').text('Bigger Albm Art');
+    });
     this.button8= $('<button/>').attr('id', 'txtShadow').text('Text Shadow').appendTo($('#MainMenu'));
-    this.button8.on('click', function() {$('body').toggleClass('txtShadow'); $('#MainMenuMsg').text('Text Shadow');});
+    this.button8.on('click', function() {
+      $('body').toggleClass('txtShadow'); $('#MainMenuMsg').text('Text Shadow');
+    });
     this.button8= $('<button/>').attr('id', 'hideStatus').text('Hide StatusBar').appendTo($('#MainMenu'));
-    this.button8.on('click', function() {$('body').toggleClass('hideStatus'); $('#MainMenuMsg').text('Hide StatusBar');});
+    this.button8.on('click', function() {
+      $('body').toggleClass('hideStatus'); $('#MainMenuMsg').text('Hide StatusBar');
+    });
     this.button8= $('<button/>').attr('id', 'hideSbn').text('Hide Notification Outline').appendTo($('#MainMenu'));
-    this.button8.on('click', function() {$('body').toggleClass('hideSbn'); $('#MainMenuMsg').text('Hide Notification Outline');});
+    this.button8.on('click', function() {
+      $('body').toggleClass('hideSbn'); $('#MainMenuMsg').text('Hide Notification Outline');
+    });
     this.mainMsg = $('<div/>').attr('id', 'MainMenuMsg').css({'padding': '10px'}).appendTo($('#MainMenu'));
     this.button9 = $('<button/>').attr('id', 'clear').text('Reset Main Menu Layout').insertAfter($('#MainMenuMsg'));
-    this.button9.on('click', function() {$('body').attr('class', ''); $('#MainMenuMsg').text('Main Menu Restored'); localStorage.removeItem('mainMenuLayout');});
+    this.button9.on('click', function() {
+      $('body').attr('class', ''); $('#MainMenuMsg').text('Main Menu Restored'); localStorage.removeItem('mainMenuLayout');
+    });
     this.mmLoopBtn = $('<button/>').attr('id', 'mainMenuLoop').text('Main Menu Loop').appendTo($('#MainMenu'));
 
     this.button10 = $('<button/>').attr('id', 'twkOut').text('Home').appendTo($('#Tweaks'));
-    this.button10.on('click', function() {framework.sendEventToMmui('common', 'Global.IntentHome');});
+    this.button10.on('click', function() {
+      framework.sendEventToMmui('common', 'Global.IntentHome');
+    });
     this.button11 = $('<button/>').attr('id', 'usba').text('USB A').appendTo($('#Tweaks'));
-    this.button11.on('click', function() {framework.sendEventToMmui('system', 'SelectUSBA');});
+    this.button11.on('click', function() {
+      framework.sendEventToMmui('system', 'SelectUSBA');
+    });
     this.button12 = $('<button/>').attr('id', 'usbb').text('USB B').appendTo($('#Tweaks'));
-    this.button12.on('click', function() {framework.sendEventToMmui('system', 'SelectUSBB');});
+    this.button12.on('click', function() {
+      framework.sendEventToMmui('system', 'SelectUSBB');
+    });
     this.button13 = $('<button/>').attr('id', 'BlutoothAudio').text('Blutooth').appendTo($('#Tweaks'));
-    this.button13.on('click', function() {framework.sendEventToMmui('system', 'SelectBTAudio');});
+    this.button13.on('click', function() {
+      framework.sendEventToMmui('system', 'SelectBTAudio');
+    });
     $('<br>').appendTo($('#Tweaks'));
     this.buttonplay = $('<button/>').attr('id', 'playBtn').text('Play').appendTo($('#Tweaks'));
-    this.buttonplay.on('click', function() {framework.sendEventToMmui('Common', 'Global.Play');});
+    this.buttonplay.on('click', function() {
+      framework.sendEventToMmui('Common', 'Global.Play');
+    });
     this.buttonresume = $('<button/>').attr('id', 'resumeBtn').text('Resume').appendTo($('#Tweaks'));
-    this.buttonresume.on('click', function() {framework.sendEventToMmui('Common', 'Global.Resume');});
+    this.buttonresume.on('click', function() {
+      framework.sendEventToMmui('Common', 'Global.Resume');
+    });
     this.buttonpause = $('<button/>').attr('id', 'pauseBtn').text('Pause').appendTo($('#Tweaks'));
-    this.buttonpause.on('click', function() {framework.sendEventToMmui('Common', 'Global.Pause');});
+    this.buttonpause.on('click', function() {
+      framework.sendEventToMmui('Common', 'Global.Pause');
+    });
     $('<br>').appendTo($('#Tweaks'));
     this.buttonPrevious = $('<button/>').attr('id', 'previousTrackBtn').text('Previous').appendTo($('#Tweaks'));
-    this.buttonPrevious.on('click', function() {framework.sendEventToMmui('Common', 'Global.Previous');});
+    this.buttonPrevious.on('click', function() {
+      framework.sendEventToMmui('Common', 'Global.Previous');
+    });
     this.buttonNext = $('<button/>').attr('id', 'nextTrackBtn').text('Next').appendTo($('#Tweaks'));
-    this.buttonNext.on('click', function() {framework.sendEventToMmui('Common', 'Global.Next');});
+    this.buttonNext.on('click', function() {
+      framework.sendEventToMmui('Common', 'Global.Next');
+    });
 
     $('<button/>').attr('id', 'test').text('Test').appendTo($('#Options'));
     $('<button/>').attr('id', 'touchscreenBtn').text('Touchscreen').appendTo($('#Options'));
     $('<br>').appendTo($('#Options'));
 
     this.rsetbg = $('<button/>').attr('id', 'resetBG').text('Reset Background').appendTo($('#Options'));
-    this.rsetbg.on('click', function() {localStorage.removeItem('background');});
+    this.rsetbg.on('click', function() {
+      localStorage.removeItem('background');
+    });
     $('<button/>').attr('id', 'aioReboot').text('Reboot').appendTo($('#Options'));
 
-    $('.tablinks').click(function() {$('.tablinks').removeClass('active'); $(this).addClass('active');});
+    $('.tablinks').click(function() {
+      $('.tablinks').removeClass('active'); $(this).addClass('active');
+    });
     $('#Main').click();
   },
 

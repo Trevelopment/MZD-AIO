@@ -44,8 +44,7 @@ log.addSrcFile('usbaudioApp.js', 'usbaudio');
  * except for function names based on the appname
  *********************************************/
 
-function usbaudioApp(uiaId)
-{
+function usbaudioApp(uiaId) {
   log.debug('constructor called...');
 
   // Base application functionality is provided in a common location via this call to baseApp.init().
@@ -61,12 +60,10 @@ function usbaudioApp(uiaId)
 /*
  * Called just after the app is instantiated by framework.
  */
-usbaudioApp.prototype.appInit = function()
-{
+usbaudioApp.prototype.appInit = function() {
   log.debug(' usbaudioApp appInit  called...');
 
-  if (framework.debugMode)
-  {
+  if (framework.debugMode) {
     utility.loadScript('apps/usbaudio/test/usbaudioAppTest.js');
   }
   this.AIO_gracenoteText = 'GRACENOTETEXT';
@@ -1525,236 +1522,188 @@ usbaudioApp.prototype.appInit = function()
  * Context handlers
  **************************/
 // Songs Context
-usbaudioApp.prototype._SongsCtxtContextIn = function()
-{
+usbaudioApp.prototype._SongsCtxtContextIn = function() {
   this._presetContextConfig();
 };
 
-usbaudioApp.prototype._SongsContextReady = function(captureData)
-{
+usbaudioApp.prototype._SongsContextReady = function(captureData) {
   this._contextReadyAction(captureData);
 };
 
-usbaudioApp.prototype._SongsCtxtContextOut = function()
-{
+usbaudioApp.prototype._SongsCtxtContextOut = function() {
   this._saveIndex();
 };
 
 // Albums Context
-usbaudioApp.prototype._AlbumsCtxtContextIn = function()
-{
+usbaudioApp.prototype._AlbumsCtxtContextIn = function() {
   this._presetContextConfig();
 };
 
-usbaudioApp.prototype._AlbumsContextReady = function(captureData)
-{
+usbaudioApp.prototype._AlbumsContextReady = function(captureData) {
   this._contextReadyAction(captureData);
 };
 
-usbaudioApp.prototype._AlbumsCtxtContextOut = function()
-{
+usbaudioApp.prototype._AlbumsCtxtContextOut = function() {
   this._saveIndex();
 };
 
 // Artists Context
-usbaudioApp.prototype._ArtistsCtxtContextIn = function()
-{
+usbaudioApp.prototype._ArtistsCtxtContextIn = function() {
   this._presetContextConfig();
 };
 
-usbaudioApp.prototype._ArtistsContextReady = function(captureData)
-{
+usbaudioApp.prototype._ArtistsContextReady = function(captureData) {
   this._contextReadyAction(captureData);
 };
 
-usbaudioApp.prototype._ArtistsCtxtContextOut = function()
-{
+usbaudioApp.prototype._ArtistsCtxtContextOut = function() {
   this._saveIndex();
 };
 
 // Playlists Context
-usbaudioApp.prototype._PlaylistsCtxtContextIn = function()
-{
+usbaudioApp.prototype._PlaylistsCtxtContextIn = function() {
   this._presetContextConfig();
 };
 
-usbaudioApp.prototype._PlaylistsContextReady = function(captureData)
-{
+usbaudioApp.prototype._PlaylistsContextReady = function(captureData) {
   this._contextReadyAction(captureData);
 };
 
-usbaudioApp.prototype._PlaylistsCtxtContextOut = function()
-{
+usbaudioApp.prototype._PlaylistsCtxtContextOut = function() {
   this._saveIndex();
 };
 
 // Genres Context
-usbaudioApp.prototype._GenresCtxtContextIn = function()
-{
+usbaudioApp.prototype._GenresCtxtContextIn = function() {
   this._presetContextConfig();
 };
 
-usbaudioApp.prototype._GenresContextReady = function(captureData)
-{
+usbaudioApp.prototype._GenresContextReady = function(captureData) {
   this._contextReadyAction(captureData);
 };
 
-usbaudioApp.prototype._GenresCtxtContextOut = function()
-{
+usbaudioApp.prototype._GenresCtxtContextOut = function() {
   this._saveIndex();
 };
 
 // Audiobooks Context
-usbaudioApp.prototype._AudiobooksCtxtContextIn = function()
-{
+usbaudioApp.prototype._AudiobooksCtxtContextIn = function() {
   this._presetContextConfig();
 };
 
-usbaudioApp.prototype._AudiobooksContextReady = function(captureData)
-{
+usbaudioApp.prototype._AudiobooksContextReady = function(captureData) {
   this._contextReadyAction(captureData);
 };
 
-usbaudioApp.prototype._AudiobooksCtxtContextOut = function()
-{
+usbaudioApp.prototype._AudiobooksCtxtContextOut = function() {
   this._saveIndex();
 };
 
 // Podcasts Context
-usbaudioApp.prototype._PodcastsCtxtContextIn = function()
-{
+usbaudioApp.prototype._PodcastsCtxtContextIn = function() {
   this._presetContextConfig();
 };
 
-usbaudioApp.prototype._PodcastsContextReady = function(captureData)
-{
+usbaudioApp.prototype._PodcastsContextReady = function(captureData) {
   this._contextReadyAction(captureData);
 };
 
-usbaudioApp.prototype._PodcastsCtxtContextOut = function()
-{
+usbaudioApp.prototype._PodcastsCtxtContextOut = function() {
   this._saveIndex();
 };
 
 // Episodes Context
-usbaudioApp.prototype._EpisodesCtxtContextIn = function()
-{
+usbaudioApp.prototype._EpisodesCtxtContextIn = function() {
   this._presetContextConfig();
 };
 
-usbaudioApp.prototype._EpisodesContextReady = function(captureData)
-{
+usbaudioApp.prototype._EpisodesContextReady = function(captureData) {
   this._contextReadyAction(captureData);
 };
 
-usbaudioApp.prototype._EpisodesCtxtContextOut = function()
-{
+usbaudioApp.prototype._EpisodesCtxtContextOut = function() {
   this._saveIndex();
 };
 
 // Chapters Context
-usbaudioApp.prototype._ChaptersCtxtContextIn = function()
-{
+usbaudioApp.prototype._ChaptersCtxtContextIn = function() {
   this._presetContextConfig();
 };
 
-usbaudioApp.prototype._ChaptersContextReady = function(captureData)
-{
+usbaudioApp.prototype._ChaptersContextReady = function(captureData) {
   this._contextReadyAction(captureData);
 };
 
-usbaudioApp.prototype._ChaptersCtxtContextOut = function()
-{
+usbaudioApp.prototype._ChaptersCtxtContextOut = function() {
   this._saveIndex();
 };
 // ---MZDMOD---
 // Added check if coming from the song list button
 // Folders context
-usbaudioApp.prototype._FoldersContextReady = function(captureData)
-{
-  if (this._cachedFolder.songList == true)
-  {
+usbaudioApp.prototype._FoldersContextReady = function(captureData) {
+  if (this._cachedFolder.songList == true) {
     this._cachedFolder.songList = false;
-    if ((this._cachedFolder.enabled == true) && (this._cachedFolder.id != 0))
-    {
+    if ((this._cachedFolder.enabled == true) && (this._cachedFolder.id != 0)) {
       framework.sendEventToMmui(this.uiaId, 'BrowseFolder', {payload: {folderId: this._cachedFolder.id, viewType: this._viewType.list}}, false);
       return;
     }
   }
-  if (captureData)
-  {
+  if (captureData) {
     this._topItemOptions.setTopItem = true;
     this._topItemOptions.top = captureData.templateContextCapture.controlData.topItem;
     this._topItemOptions.focus = captureData.templateContextCapture.controlData.focussedItem;
   }
-  if (this._hasContextPayload() && this._currentContext.params.payload.hasOwnProperty('folderId') && this._currentContext.params.payload.hasOwnProperty('viewType'))
-  {
+  if (this._hasContextPayload() && this._currentContext.params.payload.hasOwnProperty('folderId') && this._currentContext.params.payload.hasOwnProperty('viewType')) {
     this._appsdkGetFolderItems(this._currentContext.params.payload.folderId, this._currentContext.params.payload.viewType, 0, null, 'browse', false);
-  }
-  else
-  {
+  } else {
     log.warn('USBAUDIO: Folders has context payload:', this._hasContextPayload());
   }
 };
 
 // USBAudio contxet
-usbaudioApp.prototype._USBAudioCtxtOut = function()
-{
-  if (this._outgoingContextTemplate)
-  {
+usbaudioApp.prototype._USBAudioCtxtOut = function() {
+  if (this._outgoingContextTemplate) {
     this._contextTable['USBAudio'].controlProperties.List2Ctrl.scrollTo = this._outgoingContextTemplate.list2Ctrl.topItem;
     this._contextTable['USBAudio'].controlProperties.List2Ctrl.focussedItem = this._outgoingContextTemplate.list2Ctrl.focussedItem;
   }
 };
 
 // NowPlaying Context
-usbaudioApp.prototype._NowPlayingCtxtReadyToDisplay = function()
-{
+usbaudioApp.prototype._NowPlayingCtxtReadyToDisplay = function() {
   log.debug('_NowPlayingCtxtReadyToDisplay called...');
   // Code logic for screenTitle now moved in _NowPlayingDataMsgHandler
 
-  if (this._connectedDevs.BODReady)
-  {
+  if (this._connectedDevs.BODReady) {
     this._BODReady(this._connectedDevs.BODReady);
     this._populateNowPlayingCtrl(this._currentContextTemplate, this._cachedSongDetails);
     this._populateCoverArt(this._currentContextTemplate, this._cachedSongDetails);
-  }
-  else
-  {
+  } else {
     this._populateNowPlayingCtrl(this._currentContextTemplate, this._cachedSongDetails);
     this._BODReady(this._connectedDevs.BODReady);
   }
 
-  if (this._cacheRepeatShuffleState)
-  {
+  if (this._cacheRepeatShuffleState) {
     this._updateUmpButtons(this._currentContextTemplate, this._cacheRepeatShuffleState);
   }
 
   this._setTotalElapsedTime();
 };
 
-usbaudioApp.prototype._NowPlayingCtxtContextOut = function()
-{
+usbaudioApp.prototype._NowPlayingCtxtContextOut = function() {
   log.debug('_NowPlayingCtxtContextOut called...');
-  if (this._gracenoteTimeout != null)
-  {
+  if (this._gracenoteTimeout != null) {
     this._removeGracenote();
   }
 };
 
-usbaudioApp.prototype._ErrorConditionCtxtIn = function()
-{
-  if (this._currentContext && this._currentContext.params.hasOwnProperty('payload') && this._currentContext.params.payload.hasOwnProperty('deviceId'))
-  {
+usbaudioApp.prototype._ErrorConditionCtxtIn = function() {
+  if (this._currentContext && this._currentContext.params.hasOwnProperty('payload') && this._currentContext.params.payload.hasOwnProperty('deviceId')) {
     let id = 0;
     let name = '';
-    if (this._connectedDevs.A.deviceId === this._currentContext.params.payload.deviceId)
-    {
+    if (this._connectedDevs.A.deviceId === this._currentContext.params.payload.deviceId) {
       id = 1;
       name = this._connectedDevs.A.name;
-    }
-    else
-    {
+    } else {
       id = 2;
       name = this._connectedDevs.B.name;
     }
@@ -1765,33 +1714,26 @@ usbaudioApp.prototype._ErrorConditionCtxtIn = function()
 };
 
 // Error Context
-usbaudioApp.prototype._ErrorConditionCtxtReadyToDisplay = function()
-{
-  if (this._hasContextPayload() && this._currentContext.params.payload.hasOwnProperty('error'))
-  {
+usbaudioApp.prototype._ErrorConditionCtxtReadyToDisplay = function() {
+  if (this._hasContextPayload() && this._currentContext.params.payload.hasOwnProperty('error')) {
     const error = this._getErrorId(this._currentContext.params.payload.error);
 
     this._currentContextTemplate.dialog3Ctrl.setText1Id(error);
-  }
-  else
-  {
+  } else {
     log.info('USBAUDIO: error context without error message.', this._currentContext);
   }
 };
 
 // Album Disambiguation context
-usbaudioApp.prototype._AlbumDisambiguationContextReady = function(captureData)
-{
-  if (captureData)
-  {
+usbaudioApp.prototype._AlbumDisambiguationContextReady = function(captureData) {
+  if (captureData) {
     this._topItemOptions.setTopItem = true;
     // captureData.templateContextCapture.controlData.hasFocus = true;
     this._topItemOptions.top = captureData.templateContextCapture.controlData.topItem;
     this._topItemOptions.focus = captureData.templateContextCapture.controlData.focussedItem;
   }
 
-  if (this._hasContextPayload() && this._currentContext.params.payload.hasOwnProperty('albumName'))
-  {
+  if (this._hasContextPayload() && this._currentContext.params.payload.hasOwnProperty('albumName')) {
     const albumName = this._currentContext.params.payload.albumName;
     this._requestList(
         [this._mdFilter.USBM_MetadataType_ArtistName], // metadata type list (array)
@@ -1801,29 +1743,23 @@ usbaudioApp.prototype._AlbumDisambiguationContextReady = function(captureData)
         null, // context data list NOTE: empty every time we enter context
         0, // where to scroll the list
         'AlbumBrowseDisambiguation'); // name of the context
-  }
-  else
-  {
+  } else {
     log.info('USBAUDIO: album disambiguation context with empty payload.', this._currentContext.ctxtId);
-    if (this._currentContextTemplate.hasOwnProperty('list2Ctrl') && this._currentContextTemplate.list2Ctrl.setLoading && this._currentContextTemplate.list2Ctrl.inLoading)
-    {
+    if (this._currentContextTemplate.hasOwnProperty('list2Ctrl') && this._currentContextTemplate.list2Ctrl.setLoading && this._currentContextTemplate.list2Ctrl.inLoading) {
       this._currentContextTemplate.list2Ctrl.setLoading(false);
     }
   }
 };
 
 // Album Play Disambiguation context
-usbaudioApp.prototype._AlbumPlayDisambiguationContextReady = function(captureData)
-{
-  if (captureData)
-  {
+usbaudioApp.prototype._AlbumPlayDisambiguationContextReady = function(captureData) {
+  if (captureData) {
     this._topItemOptions.setTopItem = true;
     this._topItemOptions.top = captureData.templateContextCapture.controlData.topItem;
     this._topItemOptions.focus = captureData.templateContextCapture.controlData.focussedItem;
   }
 
-  if (this._hasContextPayload() && this._currentContext.params.payload.hasOwnProperty('albumName'))
-  {
+  if (this._hasContextPayload() && this._currentContext.params.payload.hasOwnProperty('albumName')) {
     const albumName = this._currentContext.params.payload.albumName;
     this._requestList(
         [this._mdFilter.USBM_MetadataType_ArtistName], // metadata type list (array)
@@ -1833,12 +1769,9 @@ usbaudioApp.prototype._AlbumPlayDisambiguationContextReady = function(captureDat
         null, // context data list NOTE: empty every time we enter context
         0, // where to scroll the list
         'AlbumPlayDisambiguation'); // name of the context
-  }
-  else
-  {
+  } else {
     log.info('USBAUDIO: album play disambiguation context with empty payload.', this._currentContext.ctxtId);
-    if (this._currentContextTemplate.hasOwnProperty('list2Ctrl') && this._currentContextTemplate.list2Ctrl.setLoading && this._currentContextTemplate.list2Ctrl.inLoading)
-    {
+    if (this._currentContextTemplate.hasOwnProperty('list2Ctrl') && this._currentContextTemplate.list2Ctrl.setLoading && this._currentContextTemplate.list2Ctrl.inLoading) {
       this._currentContextTemplate.list2Ctrl.setLoading(false);
     }
   }
@@ -1847,17 +1780,13 @@ usbaudioApp.prototype._AlbumPlayDisambiguationContextReady = function(captureDat
 /** ************************
  * Control callbacks
  **************************/
-usbaudioApp.prototype._dialogDefaultSelectCallback = function(dialogBtnCtrlObj, appData, params)
-{
+usbaudioApp.prototype._dialogDefaultSelectCallback = function(dialogBtnCtrlObj, appData, params) {
   log.debug('_dialogDefaultSelectCallback  called, appData: ' + appData);
 
-  if (this._currentContext && this._currentContextTemplate)
-  {
-    switch (this._currentContext.ctxtId)
-    {
+  if (this._currentContext && this._currentContextTemplate) {
+    switch (this._currentContext.ctxtId) {
       case 'ErrorCondition':
-        switch (appData)
-        {
+        switch (appData) {
           case 'Global.OK':
             framework.sendEventToMmui('Common', 'Global.Yes');
             break;
@@ -1871,23 +1800,19 @@ usbaudioApp.prototype._dialogDefaultSelectCallback = function(dialogBtnCtrlObj, 
 // This function is based on the code for _listItemClickCallBack
 // Only available when under folders, this could probably be expanded to other USBAUDIO metadata based options (Artists, Albums, etc.)
 // I have never used the metadata options due to it being incredibly slow with my USB drive, probably from the number of songs
-usbaudioApp.prototype._listLongPressCallback = function(listCtrlObj, appData, params)
-{
+usbaudioApp.prototype._listLongPressCallback = function(listCtrlObj, appData, params) {
   // Probably don't need this debug code but including it anyways
   log.debug('_listLongPressCallback called...');
   const itemIndex = params.itemIndex;
   log.debug('   for context' + this._currentContext.ctxtId);
   log.debug('   itemIndex: '+ itemIndex + 'appData: '+ appData);
-  if (this._currentContext.ctxtId == 'Folders')
-  {
-    switch (appData.type)
-    {
+  if (this._currentContext.ctxtId == 'Folders') {
+    switch (appData.type) {
       // ALL SONGS
       case 7:
         if (this._currentContext.hasOwnProperty('params') &&
                     this._currentContext.params.hasOwnProperty('payload') &&
-                    this._currentContext.params.payload.hasOwnProperty('folderId'))
-        {
+                    this._currentContext.params.payload.hasOwnProperty('folderId')) {
           this._cachedFolder.enabled = true;
           this._cachedFolder.id = this._currentContext.params.payload.folderId;
           this._appsdkGetFolderItems(this._currentContext.params.payload.folderId, this._viewType.list, 0, null, 'play', params.fromVui);
@@ -1910,8 +1835,7 @@ usbaudioApp.prototype._listLongPressCallback = function(listCtrlObj, appData, pa
   }
 };
 
-usbaudioApp.prototype._listItemClickCallback = function(listCtrlObj, appData, params)
-{
+usbaudioApp.prototype._listItemClickCallback = function(listCtrlObj, appData, params) {
   log.debug('_listItemClickCallback called...');
   let itemIndex = params.itemIndex;
   log.debug('   for context' + this._currentContext.ctxtId);
@@ -1919,138 +1843,102 @@ usbaudioApp.prototype._listItemClickCallback = function(listCtrlObj, appData, pa
 
   switch (this._currentContext.ctxtId) {
     case 'USBAudio':
-      switch (appData)
-      {
+      switch (appData) {
         case 'BrowseSongs':
-          if (this._userIntent == 'Play')
-          {
+          if (this._userIntent == 'Play') {
             framework.sendEventToMmui(this.uiaId, 'PlaySongs', params.fromVui);
-          }
-          else
-          {
+          } else {
             framework.sendEventToMmui(this.uiaId, appData, params.fromVui);
           }
           break;
         case 'BrowseAlbums':
-          if (this._userIntent == 'Play')
-          {
+          if (this._userIntent == 'Play') {
             framework.sendEventToMmui(this.uiaId, 'PlayAlbums', params.fromVui);
-          }
-          else
-          {
+          } else {
             framework.sendEventToMmui(this.uiaId, appData, params.fromVui);
           }
           break;
         case 'BrowseArtists':
-          if (this._userIntent == 'Play')
-          {
+          if (this._userIntent == 'Play') {
             framework.sendEventToMmui(this.uiaId, 'PlayArtists', params.fromVui);
-          }
-          else
-          {
+          } else {
             framework.sendEventToMmui(this.uiaId, appData, params.fromVui);
           }
           break;
         case 'BrowseGenres':
-          if (this._userIntent == 'Play')
-          {
+          if (this._userIntent == 'Play') {
             framework.sendEventToMmui(this.uiaId, 'PlayGenres', params.fromVui);
-          }
-          else
-          {
+          } else {
             framework.sendEventToMmui(this.uiaId, appData, params.fromVui);
           }
           break;
         case 'BrowsePlaylists':
-          if (this._userIntent == 'Play')
-          {
+          if (this._userIntent == 'Play') {
             framework.sendEventToMmui(this.uiaId, 'PlayPlaylists', params.fromVui);
-          }
-          else
-          {
+          } else {
             framework.sendEventToMmui(this.uiaId, appData, params.fromVui);
           }
           break;
         case 'BrowseFolders':
-          if (this._userIntent == 'Play')
-          {
+          if (this._userIntent == 'Play') {
             framework.sendEventToMmui(this.uiaId, 'PlayFolders', params.fromVui);
-          }
-          else
-          {
+          } else {
             framework.sendEventToMmui(this.uiaId, appData, params.fromVui);
           }
           break;
         case 'BrowsePodcasts':
-          if (this._userIntent == 'Play')
-          {
+          if (this._userIntent == 'Play') {
             framework.sendEventToMmui(this.uiaId, 'PlayPodcasts', params.fromVui);
-          }
-          else
-          {
+          } else {
             framework.sendEventToMmui(this.uiaId, appData, params.fromVui);
           }
           break;
         case 'BrowseAudiobooks':
-          if (this._userIntent == 'Play')
-          {
+          if (this._userIntent == 'Play') {
             framework.sendEventToMmui(this.uiaId, 'PlayAudiobooks', params.fromVui);
-          }
-          else
-          {
+          } else {
             framework.sendEventToMmui(this.uiaId, appData, params.fromVui);
           }
           break;
       }
       break;
     case 'Playlists':
-      if (this._userIntent == 'Play')
-      {
+      if (this._userIntent == 'Play') {
         this._playLineNumber(appData.name, this._mdFilter.USBM_MetadataType_PlaylistName, appData.id, params.fromVui);
-      }
-      else
-      {
+      } else {
         framework.sendEventToMmui(this.uiaId, 'BrowsePlaylist', {payload: {playlistName: appData.name, playlistId: appData.id}}, params.fromVui);
       }
       break;
     case 'Podcasts':
-      if (this._userIntent == 'Play')
-      {
+      if (this._userIntent == 'Play') {
         this._playLineNumber(appData.name, this._mdFilter.USBM_MetadataType_Podcast, appData.id, params.fromVui);
-      }
-      else
-      {
+      } else {
         framework.sendEventToMmui(this.uiaId, 'BrowsePodcast', {payload: {podcastName: appData.name, podcastId: appData.id}}, params.fromVui);
       }
       break;
     case 'Audiobooks':
       framework.sendEventToMmui(this.uiaId, 'SetAudiobookType', {payload: {audiobookType: appData.type}}, params.fromVui);
-      if (this._userIntent == 'Play')
-      {
+      if (this._userIntent == 'Play') {
         log.debug('AUDIOBOOKS, PLAY, ITEM TYPE == ' + appData.type);
-        if (appData.type == this._mdFilter.USBM_MetadataType_AlbumName) // / ( == 4) actually, the Audiobook Name
-        {
+        if (appData.type == this._mdFilter.USBM_MetadataType_AlbumName) {
+          // / ( == 4) actually, the Audiobook Name
           log.debug('AUDIOBOOKS, PLAY AUDIOBOOK');
           this._playLineNumber(appData.name, this._mdFilter.USBM_MetadataType_Kind, appData.id, params.fromVui);
-        }
-        else if (appData.type == this._mdFilter.USBM_MetadataType_ObjectName) // / ( == 2) actually, the Chapter name
-        {
+        } else if (appData.type == this._mdFilter.USBM_MetadataType_ObjectName) {
+          // / ( == 2) actually, the Chapter name
           log.debug('AUDIOBOOKS, PLAY CHAPTER');
           this._clearMetadata();
           this._clearTotalElapsedTime();
           framework.sendEventToMmui(this.uiaId, 'PlayChapterIndex', {payload: {chapterIndex: params.itemIndex, selectionId: this._selectionId.browsing}}, params.fromVui);
         }
-      }
-      else
-      {
+      } else {
         log.debug('AUDIOBOOKS, BROWSE, ITEM TYPE == ' + appData.type);
-        if (appData.type == this._mdFilter.USBM_MetadataType_AlbumName) // / ( == 4) actually, the Audiobook name
-        {
+        if (appData.type == this._mdFilter.USBM_MetadataType_AlbumName) {
+          // / ( == 4) actually, the Audiobook name
           log.debug('AUDIOBOOKS, BROWSE AUDIOBOOK');
           framework.sendEventToMmui(this.uiaId, 'BrowseAudiobook', {payload: {audiobookName: appData.name, audiobookId: appData.id}}, params.fromVui);
-        }
-        else if (appData.type == this._mdFilter.USBM_MetadataType_ObjectName) // / ( == 2) actually, the Chapter name
-        {
+        } else if (appData.type == this._mdFilter.USBM_MetadataType_ObjectName) {
+          // / ( == 2) actually, the Chapter name
           log.debug('AUDIOBOOKS, PLAY CHAPTER');
           this._clearMetadata();
           this._clearTotalElapsedTime();
@@ -2059,14 +1947,11 @@ usbaudioApp.prototype._listItemClickCallback = function(listCtrlObj, appData, pa
       }
       break;
     case 'Episodes':
-      if (appData.name != 'allEpisodes')
-      {
+      if (appData.name != 'allEpisodes') {
         this._clearMetadata();
         this._clearTotalElapsedTime();
         framework.sendEventToMmui(this.uiaId, 'PlayEpisodeIndex', {payload: {episodeIndex: params.itemIndex - 1, selectionId: this._selectionId.browsing}}, params.fromVui);
-      }
-      else
-      {
+      } else {
         this._clearMetadata();
         this._clearTotalElapsedTime();
         framework.sendEventToMmui(this.uiaId, 'PlayEpisodeIndex', {payload: {episodeIndex: 0, selectionId: this._selectionId.browsing}}, params.fromVui);
@@ -2074,121 +1959,84 @@ usbaudioApp.prototype._listItemClickCallback = function(listCtrlObj, appData, pa
       break;
     case 'Chapters':
       log.debug('CHAPTERS, play==' + appData.name + ', ITEM TYPE = ' + appData.type);
-      if (appData.name != 'AllChapters')
-      {
+      if (appData.name != 'AllChapters') {
         this._clearMetadata();
         this._clearTotalElapsedTime();
         framework.sendEventToMmui(this.uiaId, 'PlayChapterIndex', {payload: {chapterIndex: params.itemIndex - 1, selectionId: this._selectionId.browsing}}, params.fromVui);
-      }
-      else
-      {
+      } else {
         this._clearMetadata();
         this._clearTotalElapsedTime();
         framework.sendEventToMmui(this.uiaId, 'PlayChapterIndex', {payload: {chapterIndex: 0, selectionId: this._selectionId.browsing}}, params.fromVui);
       }
       break;
     case 'Genres':
-      if (appData.name != 'allArtists')
-      {
-        if (this._userIntent == 'Play')
-        {
+      if (appData.name != 'allArtists') {
+        if (this._userIntent == 'Play') {
           this._playLineNumber(appData.name, this._mdFilter.USBM_MetadataType_GenreName, appData.id, params.fromVui);
-        }
-        else
-        {
+        } else {
           framework.sendEventToMmui(this.uiaId, 'BrowseGenre', {payload: {genreName: appData.name, genreId: appData.id}}, params.fromVui);
         }
-      }
-      else
-      {
-        if (this._userIntent == 'Play')
-        {
+      } else {
+        if (this._userIntent == 'Play') {
           this._playLineNumber(null, null, null, params.fromVui);
-        }
-        else
-        {
+        } else {
           framework.sendEventToMmui(this.uiaId, 'BrowseAll', params.fromVui);
         }
       }
       break;
     case 'Artists':
-      if (appData.name != 'allAlbums')
-      {
-        if (this._userIntent == 'Play')
-        {
+      if (appData.name != 'allAlbums') {
+        if (this._userIntent == 'Play') {
           this._playLineNumber(appData.name, this._mdFilter.USBM_MetadataType_ArtistName, appData.id, params.fromVui);
-        }
-        else
-        {
+        } else {
           // check how many albums this artist has. If only one go to Songs context
           this._countAlbums(appData.name, 'browse', appData.id, params.fromVui, this._currentContextId);
         }
-      }
-      else
-      {
-        if (this._userIntent == 'Play')
-        {
+      } else {
+        if (this._userIntent == 'Play') {
           this._playLineNumber(null, null, null, params.fromVui);
-        }
-        else
-        {
+        } else {
           framework.sendEventToMmui(this.uiaId, 'BrowseAll', params.fromVui);
         }
       }
       break;
     case 'Albums':
-      if (appData.name != 'allSongs')
-      {
-        if (this._userIntent == 'Play')
-        {
+      if (appData.name != 'allSongs') {
+        if (this._userIntent == 'Play') {
           this._playLineNumber(appData.name, this._mdFilter.USBM_MetadataType_AlbumName, appData.id, params.fromVui);
-        }
-        else
-        {
+        } else {
           framework.sendEventToMmui(this.uiaId, 'BrowseAlbumArtist', {payload: {albumName: appData.name, artistName: '', albumId: appData.id}}, params.fromVui);
         }
-      }
-      else
-      {
-        if (this._userIntent == 'Play')
-        {
+      } else {
+        if (this._userIntent == 'Play') {
           this._playLineNumber(null, null, null, params.fromVui);
-        }
-        else
-        {
+        } else {
           framework.sendEventToMmui(this.uiaId, 'BrowseAll', params.fromVui);
         }
       }
       break;
     case 'Folders':
-      switch (appData.type)
-      {
+      switch (appData.type) {
         // ---MZDMOD---
         // Set cached title enabled in case 7 (all songs) and 1 (folders)
         case 7:
           if (this._userIntent == 'Play' &&
                         this._currentContext.hasOwnProperty('params') &&
                         this._currentContext.params.hasOwnProperty('payload') &&
-                        this._currentContext.params.payload.hasOwnProperty('folderId'))
-          {
+                        this._currentContext.params.payload.hasOwnProperty('folderId')) {
             this._cachedFolder.enabled = false;
             this._cachedFolder.id = 0;
             this._appsdkGetFolderItems(this._currentContext.params.payload.folderId, this._viewType.list, 0, null, 'play', params.fromVui);
-          }
-          else
-          {
+          } else {
             framework.sendEventToMmui(this.uiaId, 'BrowseAll', params.fromVui);
           }
           break;
         case 1:
-          if (this._userIntent == 'Play')
-          {
+          if (this._userIntent == 'Play') {
             this._cachedFolder.enabled = false;
             this._cachedFolder.id = 0;
             this._appsdkGetFolderItems(appData.id, this._viewType.list, 0, null, 'play', params.fromVui);
-          }
-          else
-          {
+          } else {
             framework.sendEventToMmui(this.uiaId, 'BrowseFolder', {payload: {folderId: appData.id, viewType: this._viewType.tree}}, params.fromVui);
           }
           break;
@@ -2214,8 +2062,7 @@ usbaudioApp.prototype._listItemClickCallback = function(listCtrlObj, appData, pa
     case 'AlbumPlayDisambiguation':
       const albumName = this._currentContext.params.payload.albumName;
       let albumId = 0;
-      if (this._currentContext.params.payload.albumId)
-      {
+      if (this._currentContext.params.payload.albumId) {
         albumId = this._currentContext.params.payload.albumId;
       }
 
@@ -2230,26 +2077,19 @@ usbaudioApp.prototype._listItemClickCallback = function(listCtrlObj, appData, pa
   }
 };
 
-usbaudioApp.prototype._umpDefaultSelectCallback = function(ctrlObj, appData, params)
-{
+usbaudioApp.prototype._umpDefaultSelectCallback = function(ctrlObj, appData, params) {
   log.debug('_umpDefaultSelectCallback called...', appData);
 
-  switch (appData)
-  {
+  switch (appData) {
     case 'BrowseFolders':
       framework.sendEventToMmui(this.uiaId, 'SelectRootFolder');
       break;
     case 'playpause':
-      if (params.state == 'Play')
-      {
+      if (params.state == 'Play') {
         framework.sendEventToMmui('Common', 'Global.Pause');
-      }
-      else if (params.state == 'Pause')
-      {
+      } else if (params.state == 'Pause') {
         framework.sendEventToMmui('Common', 'Global.Resume');
-      }
-      else
-      {
+      } else {
         log.warn('usbaudio: Uknown state of ump playpause button');
         framework.sendEventToMmui('Common', 'Global.Play');
       }
@@ -2279,8 +2119,7 @@ usbaudioApp.prototype._umpDefaultSelectCallback = function(ctrlObj, appData, par
     case 'SongList':
       // Most of the browse events appear to require the list control to be active which is dumb
       // For a workaround, I am opening the folders list control and in the ready function of the control, going to the appropiate folder
-      if ((this._cachedFolder.enabled == true) && (this._cachedFolder.id != 0))
-      {
+      if ((this._cachedFolder.enabled == true) && (this._cachedFolder.id != 0)) {
         this._cachedFolder.songList = true;
       }
       framework.sendEventToMmui(this.uiaId, 'SongList');
@@ -2302,83 +2141,61 @@ usbaudioApp.prototype._umpDefaultSelectCallback = function(ctrlObj, appData, par
   }
 };
 
-usbaudioApp.prototype._umpHoldStartCallback = function(ctrlObj, appData, params)
-{
+usbaudioApp.prototype._umpHoldStartCallback = function(ctrlObj, appData, params) {
   log.debug('_umpHoldStartCallback called...', appData);
 
-  if (appData == 'next')
-  {
+  if (appData == 'next') {
     framework.sendEventToMmui(this.uiaId, 'FastForward');
-  }
-  else if (appData == 'prev')
-  {
+  } else if (appData == 'prev') {
     framework.sendEventToMmui(this.uiaId, 'Rewind');
   }
 };
 
-usbaudioApp.prototype._umpHoldStopCallback = function(ctrlObj, appData, params)
-{
+usbaudioApp.prototype._umpHoldStopCallback = function(ctrlObj, appData, params) {
   log.debug('_umpHoldStopCallback called...', appData);
   // Take no action if app has changed.
-  if (framework._currentAppUiaId === 'usbaudio')
-  {
-    if (this._umpButtonConfig['playpause'].currentState == 'Play')
-    {
+  if (framework._currentAppUiaId === 'usbaudio') {
+    if (this._umpButtonConfig['playpause'].currentState == 'Play') {
       framework.sendEventToMmui('Common', 'Global.Pause');
-    }
-    else
-    {
+    } else {
       framework.sendEventToMmui('Common', 'Global.Resume');
     }
   }
 };
 
-usbaudioApp.prototype._umpSlideCallback = function(ctrlObj, appData, params)
-{
+usbaudioApp.prototype._umpSlideCallback = function(ctrlObj, appData, params) {
   clearTimeout(this._finalAdjustmentTimeout);
   this._finalAdjustmentTimeout = null;
-  if (appData == 'scrubber' && params.finalAdjustment != true)
-  {
+  if (appData == 'scrubber' && params.finalAdjustment != true) {
     this._finalAdjustmentTimeout = setTimeout(this._jumpToPosition.bind(this), this._settleTime);
   }
 
 
   this._umpProgressValue = params.value;
-  if (params.value < 0)
-  {
+  if (params.value < 0) {
     params.value = 0;
-  }
-  else if (params.value > 1)
-  {
+  } else if (params.value > 1) {
     params.value = 1;
   }
-  if (appData == 'scrubber' && params.finalAdjustment == true)
-  {
+  if (appData == 'scrubber' && params.finalAdjustment == true) {
     this._stopElapsedUpdate = false;
   }
 
-  if (appData == 'scrubber' && params.finalAdjustment == true && (Math.abs(this._umpElapseTime - (this._umpTotalTime*params.value)) > 2))
-  {
+  if (appData == 'scrubber' && params.finalAdjustment == true && (Math.abs(this._umpElapseTime - (this._umpTotalTime*params.value)) > 2)) {
     const percent = Math.round(params.value*100);
     this._umpElapseTime = parseInt(this._umpTotalTime * this._umpProgressValue);
     framework.sendEventToMmui(this.uiaId, 'PlaybackJumpToPosition', {payload: {percent: percent}});
-  }
-  else if (params.finalAdjustment == false)
-  {
+  } else if (params.finalAdjustment == false) {
     this._stopElapsedUpdate = true;
     this._umpSecondaryElapseTime = parseInt(this._umpTotalTime * this._umpProgressValue);
     this._currentContextTemplate.nowPlaying4Ctrl.umpCtrl.setElapsedTime(this._secondsToHHMMSS(this._umpSecondaryElapseTime));
   }
 };
 
-usbaudioApp.prototype._requestMoreDataCallback = function(index)
-{
-  if (this._currentContext.ctxtId != 'Folders')
-  {
+usbaudioApp.prototype._requestMoreDataCallback = function(index) {
+  if (this._currentContext.ctxtId != 'Folders') {
     this._requestMore(index);
-  }
-  else
-  {
+  } else {
     this._appsdkGetFolderItems(this._currentContext.params.payload.folderId, this._currentContext.params.payload.viewType, index-1, this._currentContextTemplate.list2Ctrl.dataList, 'browse', false);
   }
 };
@@ -2386,28 +2203,22 @@ usbaudioApp.prototype._requestMoreDataCallback = function(index)
 /** ****************************
  * Message Handlers
  ******************************/
-usbaudioApp.prototype._TimedSbn_ErrorConditionMsgHandler = function(msg)
-{
+usbaudioApp.prototype._TimedSbn_ErrorConditionMsgHandler = function(msg) {
   const error = this._getErrorId(msg.params.payload.error);
   framework.common.startTimedSbn(this.uiaId, this._usbaudioErrorSbn, 'errorNotification', {sbnStyle: 'Style02', imagePath1: 'IcnSbnEnt.png', text1Id: error});
 };
 
-usbaudioApp.prototype._DeviceReadyMsgHandler = function(msg)
-{
+usbaudioApp.prototype._DeviceReadyMsgHandler = function(msg) {
 
 };
 
-usbaudioApp.prototype._DeviceNormalizedMsgHandler = function(msg)
-{
-  if (this._connectedDevs.deviceSelected == msg.params.payload.deviceId)
-  {
+usbaudioApp.prototype._DeviceNormalizedMsgHandler = function(msg) {
+  if (this._connectedDevs.deviceSelected == msg.params.payload.deviceId) {
     // cataloging is ready enable the other menus in USBAudio context
     this._connectedDevs.selectedDevCataloged = true;
-    if (this._currentContext && this._currentContext.ctxtId && this._currentContextTemplate && this._currentContext.ctxtId == 'NowPlaying' && this._connectedDevs.BODReady && this._cachedSongDetails.title)
-    {
+    if (this._currentContext && this._currentContext.ctxtId && this._currentContextTemplate && this._currentContext.ctxtId == 'NowPlaying' && this._connectedDevs.BODReady && this._cachedSongDetails.title) {
       // this._currentContextTemplate.nowPlaying4Ctrl.umpCtrl.setButtonDisabled("GenerateMoreLikeThis", !this._connectedDevs.selectedDevCataloged);
-      if (this._connectedDevs.showGracenote == true)
-      {
+      if (this._connectedDevs.showGracenote == true) {
         this._currentContextTemplate.nowPlaying4Ctrl.setDetailLine3({detailText: this.AIO_gracenoteText});
         this._gracenoteTimeout = setTimeout(this._removeGracenote.bind(this), this._gracenoteTimeoutTime);
       }
@@ -2416,72 +2227,55 @@ usbaudioApp.prototype._DeviceNormalizedMsgHandler = function(msg)
     this._enableUSBAudioMenus();
   }
 
-  if (msg.params.payload.deviceId == this._connectedDevs.A.deviceId)
-  {
+  if (msg.params.payload.deviceId == this._connectedDevs.A.deviceId) {
     this._connectedDevs.A.alreadyCataloged = true;
-  }
-  else if (msg.params.payload.deviceId == this._connectedDevs.B.deviceId)
-  {
+  } else if (msg.params.payload.deviceId == this._connectedDevs.B.deviceId) {
     this._connectedDevs.B.alreadyCataloged = true;
   }
 };
 
-usbaudioApp.prototype._BODReadyMsgHandler = function(msg)
-{
-  if (this._connectedDevs.deviceSelected == msg.params.payload.deviceId)
-  {
+usbaudioApp.prototype._BODReadyMsgHandler = function(msg) {
+  if (this._connectedDevs.deviceSelected == msg.params.payload.deviceId) {
     // cataloging is ready enable the other menus in USBAudio context
     this._connectedDevs.BODReady = true;
-    if (this._currentContext && this._currentContext.ctxtId && this._currentContextTemplate && this._currentContext.ctxtId == 'NowPlaying')
-    {
+    if (this._currentContext && this._currentContext.ctxtId && this._currentContextTemplate && this._currentContext.ctxtId == 'NowPlaying') {
       this._BODReady(true);
-      if (this._connectedDevs.selectedDevCataloged == true && this._cachedSongDetails.title)
-      {
+      if (this._connectedDevs.selectedDevCataloged == true && this._cachedSongDetails.title) {
         // this._currentContextTemplate.nowPlaying4Ctrl.umpCtrl.setButtonDisabled("GenerateMoreLikeThis", !this._connectedDevs.selectedDevCataloged);
       }
 
-      if (this._connectedDevs.showGracenote == true && this._cachedSongDetails.title)
-      {
+      if (this._connectedDevs.showGracenote == true && this._cachedSongDetails.title) {
         this._currentContextTemplate.nowPlaying4Ctrl.setDetailLine3({detailText: this.AIO_gracenoteText});
         this._gracenoteTimeout = setTimeout(this._removeGracenote.bind(this), this._gracenoteTimeoutTime);
       }
     }
   }
 
-  if (msg.params.payload.deviceId == this._connectedDevs.A.deviceId)
-  {
+  if (msg.params.payload.deviceId == this._connectedDevs.A.deviceId) {
     this._connectedDevs.A.BODReady = true;
-  }
-  else if (msg.params.payload.deviceId == this._connectedDevs.B.deviceId)
-  {
+  } else if (msg.params.payload.deviceId == this._connectedDevs.B.deviceId) {
     this._connectedDevs.B.BODReady = true;
   }
 };
 
-usbaudioApp.prototype._DeviceDisabledMsgHandler = function(msg)
-{
-  if (this._connectedDevs.deviceSelected == msg.params.payload.deviceId)
-  {
+usbaudioApp.prototype._DeviceDisabledMsgHandler = function(msg) {
+  if (this._connectedDevs.deviceSelected == msg.params.payload.deviceId) {
     this._clearSelectionId();
     this._clearMetadata();
     this._clearTotalElapsedTime();
   }
-  if (this._connectedDevs.A.deviceId == msg.params.payload.deviceId)
-  {
+  if (this._connectedDevs.A.deviceId == msg.params.payload.deviceId) {
     this._connectedDevs.A.alreadyCataloged = false;
     this._connectedDevs.A.showGracenote = true;
   }
-  if (this._connectedDevs.B.deviceId == msg.params.payload.deviceId)
-  {
+  if (this._connectedDevs.B.deviceId == msg.params.payload.deviceId) {
     this._connectedDevs.B.alreadyCataloged = false;
     this._connectedDevs.B.showGracenote = true;
   }
 };
 
-usbaudioApp.prototype._DeviceSelectedMsgHandler = function(msg)
-{
-  if (this._connectedDevs.deviceSelected != msg.params.payload.deviceId)
-  {
+usbaudioApp.prototype._DeviceSelectedMsgHandler = function(msg) {
+  if (this._connectedDevs.deviceSelected != msg.params.payload.deviceId) {
     this._clearMetadata();
     this._clearUSBData();
     this._clearSelectionId();
@@ -2496,17 +2290,14 @@ usbaudioApp.prototype._DeviceSelectedMsgHandler = function(msg)
   let cataloged = '';
   let showGracenote = true;
   let BODReady = false;
-  if (this._connectedDevs.A.deviceId == msg.params.payload.deviceId)
-  {
+  if (this._connectedDevs.A.deviceId == msg.params.payload.deviceId) {
     id = 1;
     name = this._connectedDevs.A.name;
     type = this._connectedDevs.A.type;
     cataloged = this._connectedDevs.A.alreadyCataloged;
     showGracenote = this._connectedDevs.A.showGracenote;
     BODReady = this._connectedDevs.A.BODReady;
-  }
-  else
-  {
+  } else {
     id = 2;
     name = this._connectedDevs.B.name;
     type = this._connectedDevs.B.type;
@@ -2520,59 +2311,46 @@ usbaudioApp.prototype._DeviceSelectedMsgHandler = function(msg)
   this._connectedDevs.showGracenote = showGracenote;
   this._connectedDevs.BODReady = BODReady;
 
-  for (const i in this._contextTable)
-  {
-    if ('ErrorCondition' !== i)
-    {
+  for (const i in this._contextTable) {
+    if ('ErrorCondition' !== i) {
       this._contextTable[i].sbNameSubMap = {deviceId: id, deviceName: name};
       this._contextTable[i].sbNameIcon = 'IcnSbnEnt.png';
     }
   }
 
-  if (this._currentContext && this._currentContext.uiaId == 'usbaudio' && this._currentContextTemplate)
-  {
+  if (this._currentContext && this._currentContext.uiaId == 'usbaudio' && this._currentContextTemplate) {
     framework.common.setSbNameId(this.uiaId, this.uiaId, {deviceId: id, deviceName: name});
   }
 
   if ((msg.params.payload.deviceId == this._connectedDevs.A.deviceId && this._connectedDevs.A.alreadyCataloged == false && this._connectedDevs.A.type != 'IPOD') ||
-        (msg.params.payload.deviceId == this._connectedDevs.B.deviceId && this._connectedDevs.B.alreadyCataloged == false && this._connectedDevs.B.type != 'IPOD'))
-  {
+        (msg.params.payload.deviceId == this._connectedDevs.B.deviceId && this._connectedDevs.B.alreadyCataloged == false && this._connectedDevs.B.type != 'IPOD')) {
     this._disableUSBAudioMenus();
-  }
-  else
-  {
+  } else {
     this._enableUSBAudioMenus();
   }
 };
 
-usbaudioApp.prototype.TimedSbn_ConnectionStatusMsgHandler = function(msg)
-{
-  if (msg.params.payload.status == 'Disconnected')
-  {
-    if (msg.params.payload.usb == 'A')
-    {
+usbaudioApp.prototype.TimedSbn_ConnectionStatusMsgHandler = function(msg) {
+  if (msg.params.payload.status == 'Disconnected') {
+    if (msg.params.payload.usb == 'A') {
       this._connectedDevs.A.name = '';
       this._connectedDevs.A.deviceId = null;
       this._connectedDevs.A.type = null;
       this._connectedDevs.A.alreadyCataloged = false;
       this._connectedDevs.A.showGracenote = true;
       this._connectedDevs.A.BODReady = false;
-      if (msg.params.payload.hasOwnProperty('reason'))
-      {
+      if (msg.params.payload.hasOwnProperty('reason')) {
         this._connectedDevs.A.connectionReason = msg.params.payload.reason;
       }
 
-      if (msg.params.payload.hasOwnProperty('reason') && (msg.params.payload.reason === 'Lang'))
-      {
+      if (msg.params.payload.hasOwnProperty('reason') && (msg.params.payload.reason === 'Lang')) {
         this._connectedDevs.selId = 0;
         this._connectedDevs.deviceSelected = 0;
         this._connectedDevs.selectedDevType = '';
         this._connectedDevs.selectedDevCataloged = false;
         this._connectedDevs.showGracenote = true;
         this._connectedDevs.BODReady = false;
-      }
-      else if (this._connectedDevs.A.connectionReason !== 'System')
-      {
+      } else if (this._connectedDevs.A.connectionReason !== 'System') {
         const SbnString = 'USB1Disconnected';
         // show sbn
         framework.common.startTimedSbn(this.uiaId, 'USBA_ConnectionStatus_Sbn', 'deviceRemoved', {
@@ -2582,31 +2360,25 @@ usbaudioApp.prototype.TimedSbn_ConnectionStatusMsgHandler = function(msg)
           text1SubMap: {'usbName': msg.params.payload.name},
         });
       }
-    }
-    else
-    {
+    } else {
       this._connectedDevs.B.name = '';
       this._connectedDevs.B.deviceId = null;
       this._connectedDevs.B.type = null;
       this._connectedDevs.B.alreadyCataloged = false;
       this._connectedDevs.B.showGracenote = true;
       this._connectedDevs.B.BODReady = false;
-      if (msg.params.payload.hasOwnProperty('reason'))
-      {
+      if (msg.params.payload.hasOwnProperty('reason')) {
         this._connectedDevs.B.connectionReason = msg.params.payload.reason;
       }
 
-      if (msg.params.payload.hasOwnProperty('reason') && (msg.params.payload.reason === 'Lang'))
-      {
+      if (msg.params.payload.hasOwnProperty('reason') && (msg.params.payload.reason === 'Lang')) {
         this._connectedDevs.selId = 0;
         this._connectedDevs.deviceSelected = 0;
         this._connectedDevs.selectedDevType = '';
         this._connectedDevs.selectedDevCataloged = false;
         this._connectedDevs.showGracenote = true;
         this._connectedDevs.BODReady = false;
-      }
-      else if (this._connectedDevs.B.connectionReason !== 'System')
-      {
+      } else if (this._connectedDevs.B.connectionReason !== 'System') {
         const SbnString = 'USB2Disconnected';
         // show sbn
         framework.common.startTimedSbn(this.uiaId, 'USBB_ConnectionStatus_Sbn', 'deviceRemoved', {
@@ -2617,12 +2389,9 @@ usbaudioApp.prototype.TimedSbn_ConnectionStatusMsgHandler = function(msg)
         });
       }
     }
-  }
-  else if (msg.params.payload.status == 'Connected')
-  {
+  } else if (msg.params.payload.status == 'Connected') {
     // show sbn
-    if (msg.params.payload.usb == 'A')
-    {
+    if (msg.params.payload.usb == 'A') {
       this._connectedDevs.A.name = msg.params.payload.name;
       this._connectedDevs.A.deviceId = msg.params.payload.deviceId;
       this._connectedDevs.A.type = msg.params.payload.type;
@@ -2631,8 +2400,7 @@ usbaudioApp.prototype.TimedSbn_ConnectionStatusMsgHandler = function(msg)
       // {
       // this._connectedDevs.A.alreadyCataloged = true;
       // }
-      if (this._connectedDevs.A.connectionReason === 'User')
-      {
+      if (this._connectedDevs.A.connectionReason === 'User') {
         const SbnString = 'USB1Connected';
         // show sbn
         framework.common.startTimedSbn(this.uiaId, 'USBA_ConnectionStatus_Sbn', 'deviceConnected', {
@@ -2642,9 +2410,7 @@ usbaudioApp.prototype.TimedSbn_ConnectionStatusMsgHandler = function(msg)
           text1SubMap: {'usbName': msg.params.payload.name},
         });
       }
-    }
-    else
-    {
+    } else {
       this._connectedDevs.B.name = msg.params.payload.name;
       this._connectedDevs.B.deviceId = msg.params.payload.deviceId;
       this._connectedDevs.B.type = msg.params.payload.type;
@@ -2653,8 +2419,7 @@ usbaudioApp.prototype.TimedSbn_ConnectionStatusMsgHandler = function(msg)
       // {
       // this._connectedDevs.B.alreadyCataloged = true;
       // }
-      if (this._connectedDevs.B.connectionReason === 'User')
-      {
+      if (this._connectedDevs.B.connectionReason === 'User') {
         const SbnString = 'USB2Connected';
         // show sbn
         framework.common.startTimedSbn(this.uiaId, 'USBB_ConnectionStatus_Sbn', 'deviceConnected', {
@@ -2668,8 +2433,7 @@ usbaudioApp.prototype.TimedSbn_ConnectionStatusMsgHandler = function(msg)
   }
 };
 
-usbaudioApp.prototype._PlaybackStatusMsgHandler = function(msg)
-{
+usbaudioApp.prototype._PlaybackStatusMsgHandler = function(msg) {
   /*
     if (this._scrubberConfig.duration != (msg.params.payload.playbackStatus.length*1000))
     {
@@ -2681,8 +2445,7 @@ usbaudioApp.prototype._PlaybackStatusMsgHandler = function(msg)
     }
     */
 
-  if (this._currentContext && this._currentContextTemplate && this._currentContext.ctxtId == 'NowPlaying' && this._umpTotalTime != parseInt(msg.params.payload.playbackStatus.length))
-  {
+  if (this._currentContext && this._currentContextTemplate && this._currentContext.ctxtId == 'NowPlaying' && this._umpTotalTime != parseInt(msg.params.payload.playbackStatus.length)) {
     this._umpSecondaryElapseTime = parseInt(parseInt(msg.params.payload.playbackStatus.length) * this._umpProgressValue);
     this._currentContextTemplate.nowPlaying4Ctrl.umpCtrl.setElapsedTime(this._secondsToHHMMSS(this._umpSecondaryElapseTime));
   }
@@ -2705,82 +2468,61 @@ usbaudioApp.prototype._PlaybackStatusMsgHandler = function(msg)
   const progress = this._umpElapseTime / this._umpTotalTime;
   log.debug('Updating progress', this._umpTotalTime, this._umpElapseTime, progress);
   // Update control if context is bound to a template
-  if (this._currentContext && this._currentContextTemplate && this._currentContext.ctxtId == 'NowPlaying' && this._stopElapsedUpdate == false)
-  {
+  if (this._currentContext && this._currentContextTemplate && this._currentContext.ctxtId == 'NowPlaying' && this._stopElapsedUpdate == false) {
     this._currentContextTemplate.nowPlaying4Ctrl.umpCtrl.setElapsedTime(this._secondsToHHMMSS(this._umpElapseTime));
     this._currentContextTemplate.nowPlaying4Ctrl.umpCtrl.setTotalTime(this._secondsToHHMMSS(this._umpTotalTime));
     this._currentContextTemplate.nowPlaying4Ctrl.umpCtrl.updateScrubber(progress);
-  }
-  else if (this._currentContext && this._currentContextTemplate && this._currentContext.ctxtId == 'NowPlaying' && this._stopElapsedUpdate == true)
-  {
+  } else if (this._currentContext && this._currentContextTemplate && this._currentContext.ctxtId == 'NowPlaying' && this._stopElapsedUpdate == true) {
     this._currentContextTemplate.nowPlaying4Ctrl.umpCtrl.setTotalTime(this._secondsToHHMMSS(this._umpTotalTime));
   }
 
-  if (msg.params.payload.playbackStatus.hasOwnProperty('selectionId'))
-  {
-    if (this._selectionId.playing != msg.params.payload.playbackStatus.selectionId && this._selectionId.playing != null)
-    {
+  if (msg.params.payload.playbackStatus.hasOwnProperty('selectionId')) {
+    if (this._selectionId.playing != msg.params.payload.playbackStatus.selectionId && this._selectionId.playing != null) {
       // release selection
       this._releaseSelection(this._selectionId.playing);
       this._selectionId.playing = msg.params.payload.playbackStatus.selectionId;
-    }
-    else if (this._selectionId.playing != msg.params.payload.playbackStatus.selectionId && this._selectionId.playing == null)
-    {
+    } else if (this._selectionId.playing != msg.params.payload.playbackStatus.selectionId && this._selectionId.playing == null) {
       this._selectionId.playing = msg.params.payload.playbackStatus.selectionId;
     }
   }
 };
 
-usbaudioApp.prototype._NowPlayingDataMsgHandler = function(msg)
-{
+usbaudioApp.prototype._NowPlayingDataMsgHandler = function(msg) {
   log.debug('Inside _NowPlayingDataMsgHandler with msg : ', msg );
   if (!this._currentContext) {
     log.debug('No this._currentContext !!!');
-  }
-  else
-  {
+  } else {
     log.debug('this._currentContext.ctxtId', this._currentContext.ctxtId);
   }
 
-  if (this._currentContext && this._currentContext.ctxtId == 'NowPlaying')
-  {
-    if (msg && msg.params && msg.params.payload && msg.params.payload.folderId != 0)
-    {
+  if (this._currentContext && this._currentContext.ctxtId == 'NowPlaying') {
+    if (msg && msg.params && msg.params.payload && msg.params.payload.folderId != 0) {
       // ---MZDMOD---
-      if ((this._cachedFolder.enabled == true) && (this._cachedFolder.id != 0))
-      {
+      if ((this._cachedFolder.enabled == true) && (this._cachedFolder.id != 0)) {
         this._appsdkGetFolderItems(this._cachedFolder.id, this._viewType.tree, 0, null, 'getFolderName', false);
-      }
-      else
-      {
+      } else {
         const folderId = parseInt(msg.params.payload.folderId);
         this._appsdkGetFolderItems(folderId, this._viewType.tree, 0, null, 'getFolderName', false);
       }
-    }
-    else if (msg && msg.params && msg.params.payload && msg.params.payload.playlistName)
-    {
+    } else if (msg && msg.params && msg.params.payload && msg.params.payload.playlistName) {
       let playList = msg.params.payload.playlistName;
 
-      if (playList.toLowerCase() == 'more like this')
-      {
+      if (playList.toLowerCase() == 'more like this') {
         playList = framework.localize.getLocStr('usbaudio', 'common.Tooltip_IcnUmpMore');
         // test
-        if (this._selectionId.browsing != 0)
-        {
+        if (this._selectionId.browsing != 0) {
           this._releaseSelection(this._selectionId.browsing);
           this._selectionId.browsing = 0;
         }
       }
 
-      if (playList == '')
-      {
+      if (playList == '') {
         log.debug('Playlist is empty string!!!');
         playList = '';
       }
 
       this._cachedSongDetails.screenTitle = playList;
-      if (this._currentContextTemplate)
-      {
+      if (this._currentContextTemplate) {
         // ---MZDMOD---
         // Add image for playlist objects
         // this._currentContextTemplate.nowPlaying4Ctrl.setCtrlTitle({ctrlTitleText: playList});
@@ -2790,8 +2532,7 @@ usbaudioApp.prototype._NowPlayingDataMsgHandler = function(msg)
   }
 };
 
-usbaudioApp.prototype._ObjectInfoMsgHandler = function(msg)
-{
+usbaudioApp.prototype._ObjectInfoMsgHandler = function(msg) {
   this._cachedSongDetails.genre = msg.params.payload.genre;
   this._cachedSongDetails.artist = msg.params.payload.artist;
   this._cachedSongDetails.title = msg.params.payload.title;
@@ -2807,34 +2548,27 @@ usbaudioApp.prototype._ObjectInfoMsgHandler = function(msg)
   });
 
   // Update control if context is bound to a template
-  if (this._currentContext && this._currentContextTemplate && this._currentContext.ctxtId && this._currentContext.ctxtId == 'NowPlaying')
-  {
+  if (this._currentContext && this._currentContextTemplate && this._currentContext.ctxtId && this._currentContext.ctxtId == 'NowPlaying') {
     clearTimeout(this._finalAdjustmentTimeout);
     this._finalAdjustmentTimeout = null;
     this._currentContextTemplate.nowPlaying4Ctrl.umpCtrl.releaseScrubber(0);
     this._currentContextTemplate.nowPlaying4Ctrl.umpCtrl.setElapsedTime(this._secondsToHHMMSS(0));
     this._populateNowPlayingCtrl(this._currentContextTemplate, this._cachedSongDetails);
-    if (this._connectedDevs.selectedDevCataloged == true)
-    {
+    if (this._connectedDevs.selectedDevCataloged == true) {
       // this._currentContextTemplate.nowPlaying4Ctrl.umpCtrl.setButtonDisabled("GenerateMoreLikeThis", !this._connectedDevs.selectedDevCataloged);
-      if (this._connectedDevs.showGracenote == true)
-      {
+      if (this._connectedDevs.showGracenote == true) {
         this._currentContextTemplate.nowPlaying4Ctrl.setDetailLine3({detailText: this.AIO_gracenoteText});
         this._gracenoteTimeout = setTimeout(this._removeGracenote.bind(this), this._gracenoteTimeoutTime);
-      }
-      else // ---MZDMOD--- setDetailLine3 to genre about 10 seconds
-      {
-        if (this._cachedSongDetails.genre)
-        {
+      } else {
+        // ---MZDMOD--- setDetailLine3 to genre about 10 seconds
+        if (this._cachedSongDetails.genre) {
           this._currentContextTemplate.nowPlaying4Ctrl.setDetailLine3({detailText: this._cachedSongDetails.genre});
           this._genreTimeout = setTimeout(this._removeGenre.bind(this), 10000);
         }
       }
-    }
-    else // ---MZDMOD--- setDetailLine3 to genre about 10 seconds
-    {
-      if (this._cachedSongDetails.genre)
-      {
+    } else {
+      // ---MZDMOD--- setDetailLine3 to genre about 10 seconds
+      if (this._cachedSongDetails.genre) {
         this._currentContextTemplate.nowPlaying4Ctrl.setDetailLine3({detailText: this._cachedSongDetails.genre});
         this._genreTimeout = setTimeout(this._removeGenre.bind(this), 10000);
       }
@@ -2842,8 +2576,7 @@ usbaudioApp.prototype._ObjectInfoMsgHandler = function(msg)
   }
 };
 
-usbaudioApp.prototype._TimedSbn_CurrentSongMsgHandler = function(msg)
-{
+usbaudioApp.prototype._TimedSbn_CurrentSongMsgHandler = function(msg) {
   framework.common.startTimedSbn(this.uiaId, 'TimedSbn_UsbAudio_CurrentSong', 'typeE', {
     sbnStyle: 'Style02',
     imagePath1: 'IcnSbnEnt.png',
@@ -2852,8 +2585,7 @@ usbaudioApp.prototype._TimedSbn_CurrentSongMsgHandler = function(msg)
   });
 };
 
-usbaudioApp.prototype._PlayerStateMsgHandler = function(msg)
-{
+usbaudioApp.prototype._PlayerStateMsgHandler = function(msg) {
   /*
     if ((msg.params.payload.playerState == "Paused" || msg.params.payload.playerState == "Stopped") && this._umpButtonConfig["playpause"].currentState != "Play")
     {
@@ -2879,8 +2611,7 @@ usbaudioApp.prototype._PlayerStateMsgHandler = function(msg)
         }
     }
     */
-  if (msg && msg.params && msg.params.payload && msg.params.payload.playerState)
-  {
+  if (msg && msg.params && msg.params.payload && msg.params.payload.playerState) {
     switch (msg.params.payload.playerState) {
       case 'Paused':
       case 'Stopped':
@@ -2894,60 +2625,49 @@ usbaudioApp.prototype._PlayerStateMsgHandler = function(msg)
     }
   }
 };
-usbaudioApp.prototype._changePlayButton = function(nextButtonStatus)
-{
+usbaudioApp.prototype._changePlayButton = function(nextButtonStatus) {
   log.debug('ENTER _changePlayButton, value:[' +nextButtonStatus+ ']');
-  if (this._currentContext && this._currentContextTemplate && this._currentContext.ctxtId == 'NowPlaying')
-  {
+  if (this._currentContext && this._currentContextTemplate && this._currentContext.ctxtId == 'NowPlaying') {
     this._currentContextTemplate.nowPlaying4Ctrl.umpCtrl.setButtonState('playpause', nextButtonStatus);
   }
   this._umpButtonConfig['playpause'].currentState = nextButtonStatus;
 };
 
-usbaudioApp.prototype._CoverArtMsgHandler = function(msg)
-{
-  if (this._cachedSongDetails.coverArt != 'None' && this._cachedSongDetails.coverArt != msg.params.payload.path && this._cachedSongDetails.coverArt != './common/images/no_artwork_icon.png')
-  {
+usbaudioApp.prototype._CoverArtMsgHandler = function(msg) {
+  if (this._cachedSongDetails.coverArt != 'None' && this._cachedSongDetails.coverArt != msg.params.payload.path && this._cachedSongDetails.coverArt != './common/images/no_artwork_icon.png') {
     // Send msg to mmui to remove the old cover art image
     framework.sendEventToMmui(this.uiaId, 'ReleaseCoverArt', {payload: {path: this._cachedSongDetails.coverArt}});
   }
 
   this._cachedSongDetails.coverArt = msg.params.payload.path;
-  if (this._currentContext && this._currentContextTemplate && this._currentContext.ctxtId == 'NowPlaying')
-  {
+  if (this._currentContext && this._currentContextTemplate && this._currentContext.ctxtId == 'NowPlaying') {
     this._populateCoverArt(this._currentContextTemplate, this._cachedSongDetails);
   }
 };
 
-usbaudioApp.prototype._RepeatShuffleStatusMsgHandler = function(msg)
-{
+usbaudioApp.prototype._RepeatShuffleStatusMsgHandler = function(msg) {
   this._cacheRepeatShuffleState = msg.params.payload;
-  if (this._currentContext && this._currentContextTemplate && this._currentContext.ctxtId && this._currentContext.ctxtId == 'NowPlaying')
-  {
+  if (this._currentContext && this._currentContextTemplate && this._currentContext.ctxtId && this._currentContext.ctxtId == 'NowPlaying') {
     this._updateUmpButtons(this._currentContextTemplate, this._cacheRepeatShuffleState);
   }
 };
 
-usbaudioApp.prototype._PlayRequest = function(msg)
-{
+usbaudioApp.prototype._PlayRequest = function(msg) {
   // count using path and metadata
   this._selectData(msg, true);
 };
 // ---MZDMOD---
-usbaudioApp.prototype._BrowsePlayRequestMsgHandler = function(msg)
-{
+usbaudioApp.prototype._BrowsePlayRequestMsgHandler = function(msg) {
   this._cachedFolder.enabled = true;
   this._cachedFolder.id = msg.params.payload.folderId;
   this._appsdkGetFolderItems(msg.params.payload.folderId, this._viewType.list, 0, null, 'play', true);
 };
 
-usbaudioApp.prototype._BrowseArtistDisambiguate = function(msg)
-{
+usbaudioApp.prototype._BrowseArtistDisambiguate = function(msg) {
   this._countAlbums(msg.params.payload.artistName, 'browse', null, true, 'BrowseArtistDisambiguate');
 };
 
-usbaudioApp.prototype._BrowseAlbumDisambiguate = function(msg)
-{
+usbaudioApp.prototype._BrowseAlbumDisambiguate = function(msg) {
   if ((this._currentContext &&
         this._currentContext.hasOwnProperty('params') &&
         this._currentContext.params.hasOwnProperty('payload') &&
@@ -2956,34 +2676,25 @@ usbaudioApp.prototype._BrowseAlbumDisambiguate = function(msg)
         this._currentContext.params.payload.path != 'GenresAllArtists_ArtistAlbums' &&
         this._currentContext.params.payload.path != 'ArtistAlbums') ||
         (!this._currentContext) ||
-        (this._currentContext.ctxtId == 'USBAudio') || (this._currentContext.ctxtId == 'NowPlaying') || (this._currentContext.ctxtId == 'Folders'))
-  {
+        (this._currentContext.ctxtId == 'USBAudio') || (this._currentContext.ctxtId == 'NowPlaying') || (this._currentContext.ctxtId == 'Folders')) {
     this._countArtists(msg.params.payload.albumName, 'browse', true, 'BrowseAlbumDisambiguate');
-  }
-  else
-  {
+  } else {
     framework.sendEventToMmui(this.uiaId, 'BrowseAlbumArtist', {payload: {albumName: msg.params.payload.albumName}}, true);
   }
 };
 
-usbaudioApp.prototype._PlayAlbumDisambiguate = function(msg)
-{
+usbaudioApp.prototype._PlayAlbumDisambiguate = function(msg) {
   if ((this._currentContext &&
         this._currentContext.hasOwnProperty('params') &&
         this._currentContext.params.hasOwnProperty('payload') &&
         this._currentContext.params.payload.hasOwnProperty('path') &&
         this._currentContext.params.payload.path != 'Genre_ArtistAlbums' &&
         this._currentContext.params.payload.path != 'GenresAllArtists_ArtistAlbums' &&
-        this._currentContext.params.payload.path != 'ArtistAlbums') || (!this._currentContext))
-  {
+        this._currentContext.params.payload.path != 'ArtistAlbums') || (!this._currentContext)) {
     this._countArtists(msg.params.payload.albumName, 'play', true, 'PlayAlbumDisambiguate');
-  }
-  else if (this._currentContext && (!this._currentContext.params.hasOwnProperty('payload') || !this._currentContext.params.payload.hasOwnProperty('path')))
-  {
+  } else if (this._currentContext && (!this._currentContext.params.hasOwnProperty('payload') || !this._currentContext.params.payload.hasOwnProperty('path'))) {
     this._countArtists(msg.params.payload.albumName, 'play', true, 'PlayAlbumDisambiguate');
-  }
-  else
-  {
+  } else {
     const artistName = this._currentContext.params.payload.metadata.artistName;
     const artistId = this._currentContext.params.payload.metadata.artistId;
     // make selection and play songs
@@ -2994,14 +2705,10 @@ usbaudioApp.prototype._PlayAlbumDisambiguate = function(msg)
   }
 };
 
-usbaudioApp.prototype._UserIntentMsgHandler = function(msg)
-{
-  if (msg.params.payload.intent == 'Invalid')
-  {
+usbaudioApp.prototype._UserIntentMsgHandler = function(msg) {
+  if (msg.params.payload.intent == 'Invalid') {
     this._userIntent = 'Browse';
-  }
-  else
-  {
+  } else {
     this._userIntent = msg.params.payload.intent;
   }
 };
@@ -3009,13 +2716,11 @@ usbaudioApp.prototype._UserIntentMsgHandler = function(msg)
 /** ****************************
  * APPSDK Requests
  ******************************/
-usbaudioApp.prototype._requestList = function(mdTypeList, mdInfo, sortSettings, offset, dataList, scrollIndex, contextName, fromVui)
-{
+usbaudioApp.prototype._requestList = function(mdTypeList, mdInfo, sortSettings, offset, dataList, scrollIndex, contextName, fromVui) {
   // TODO: Make sure the input is valid
   // appsdk request
   let isiPod = false;
-  if (this._connectedDevs.selectedDevType == 'IPOD')
-  {
+  if (this._connectedDevs.selectedDevType == 'IPOD') {
     isiPod = true;
   }
 
@@ -3048,8 +2753,7 @@ usbaudioApp.prototype._requestList = function(mdTypeList, mdInfo, sortSettings, 
   framework.sendRequestToAppsdk(this.uiaId, this._appsdkCallback.bind(this, dataList, scrollIndex, contextName, fromVui), 'usbm', 'GetPropertyInfoListAsync', params);
 };
 
-usbaudioApp.prototype._appsdkGetFolderItems = function(folderId, viewType, index, dataList, action, fromVui)
-{
+usbaudioApp.prototype._appsdkGetFolderItems = function(folderId, viewType, index, dataList, action, fromVui) {
   const params = {
     view_t: 1, // tree view type by default
     folder_id: 1, // browse root folder by default
@@ -3057,22 +2761,16 @@ usbaudioApp.prototype._appsdkGetFolderItems = function(folderId, viewType, index
     get_num_items: this._listStatus.requestSize,
     dev_id: this._connectedDevs.deviceSelected,
   };
-  if (folderId != undefined && viewType != undefined)
-  {
+  if (folderId != undefined && viewType != undefined) {
     params.view_t = viewType;
     params.folder_id = folderId;
-  }
-  else
-  {
+  } else {
     log.warn('Missing folderId or viewType');
   }
   // temporary request all items. Until BLM fix total_count issue
-  if (action != 'play' && action != 'getFolderName')
-  {
+  if (action != 'play' && action != 'getFolderName') {
     params.get_num_items = 20;
-  }
-  else
-  {
+  } else {
     params.get_num_items = 1;
   }
 
@@ -3080,15 +2778,13 @@ usbaudioApp.prototype._appsdkGetFolderItems = function(folderId, viewType, index
 };
 
 // release selection by its ID
-usbaudioApp.prototype._releaseSelection = function(selId)
-{
+usbaudioApp.prototype._releaseSelection = function(selId) {
   const params = {sel_id: selId};
   framework.sendRequestToAppsdk(this.uiaId, this._selectionReleased.bind(this), 'usbm', 'GetPropertyInfoListReleaseQueryHandle', params);
 };
 
 // request alphabet and its letters indexes
-usbaudioApp.prototype._requestLetterIndexing = function(sel_id, md_type, contextRequested)
-{
+usbaudioApp.prototype._requestLetterIndexing = function(sel_id, md_type, contextRequested) {
   const params = {sel_id: sel_id, md_type: md_type};
   framework.sendRequestToAppsdk(this.uiaId, this._letterIndexingCallback.bind(this, contextRequested), 'usbm', 'GetAlphabet', params);
 };
@@ -3096,146 +2792,103 @@ usbaudioApp.prototype._requestLetterIndexing = function(sel_id, md_type, context
 /** ****************************
  * APPSDK Callbacks
  ******************************/
-usbaudioApp.prototype._appsdkCallback = function(dataList, scrollIndex, context, fromVui, params)
-{
-  if (params.msgType == 'methodResponse')
-  {
-    if (params.hasOwnProperty('params') && params.params.hasOwnProperty('sel_id_out'))
-    {
-      if (this._selectionId.browsing != params.params.sel_id_out && this._selectionId.browsing != 0)
-      {
+usbaudioApp.prototype._appsdkCallback = function(dataList, scrollIndex, context, fromVui, params) {
+  if (params.msgType == 'methodResponse') {
+    if (params.hasOwnProperty('params') && params.params.hasOwnProperty('sel_id_out')) {
+      if (this._selectionId.browsing != params.params.sel_id_out && this._selectionId.browsing != 0) {
         // release selection that is not used
         this._releaseSelection(this._selectionId.browsing);
         this._selectionId.browsing = params.params.sel_id_out;
-      }
-      else if (this._selectionId.browsing == 0 && this._selectionId.browsing != params.params.sel_id_out)
-      {
+      } else if (this._selectionId.browsing == 0 && this._selectionId.browsing != params.params.sel_id_out) {
         this._selectionId.browsing = params.params.sel_id_out;
       }
     }
 
     if ((this._currentContext && this._currentContextTemplate && this._currentContext.hasOwnProperty('params') &&
             this._currentContext.params.hasOwnProperty('payload') && this._currentContext.params.payload.hasOwnProperty('path') &&
-            this._currentContext.params.payload.path == context) || (context == 'AlbumBrowseDisambiguation') || (context == 'AlbumPlayDisambiguation'))
-    {
+            this._currentContext.params.payload.path == context) || (context == 'AlbumBrowseDisambiguation') || (context == 'AlbumPlayDisambiguation')) {
       this._populateList(this._currentContextTemplate, params, this._currentContext.ctxtId, dataList, scrollIndex);
       if (context == 'AlbumBrowseDisambiguation' || context == 'AlbumPlayDisambiguation' ||
                     (this._payloadTable[this._currentContext.params.payload.path].hasLetterIndexing == true &&
                     this._currentContextTemplate.list2Ctrl.letterIndex &&
-                    !this._currentContextTemplate.list2Ctrl.letterIndex.getElementsByTagName('li').length))
-      {
+                    !this._currentContextTemplate.list2Ctrl.letterIndex.getElementsByTagName('li').length)) {
         // ask BLM for alphabet and indexes of the letters
         this._requestLetterIndexing(this._selectionId.browsing, this._payloadTable[this._currentContext.params.payload.path].md_types[0], context);
       }
-    }
-    else
-    {
+    } else {
       log.debug('USBUADIO: received appsdk response is not for this context', context);
     }
-  }
-  else if (params.msgType == 'methodErrorResponse')
-  {
+  } else if (params.msgType == 'methodErrorResponse') {
     log.error('USBAUDIO: GetPropertyInfoListAsync request failed!');
-    if (this._currentContextTemplate.hasOwnProperty('list2Ctrl') && this._currentContextTemplate.list2Ctrl.setLoading && this._currentContextTemplate.list2Ctrl.inLoading)
-    {
+    if (this._currentContextTemplate.hasOwnProperty('list2Ctrl') && this._currentContextTemplate.list2Ctrl.setLoading && this._currentContextTemplate.list2Ctrl.inLoading) {
       this._currentContextTemplate.list2Ctrl.setLoading(false);
     }
   }
 };
 
-usbaudioApp.prototype._letterIndexingCallback = function(context, params)
-{
-  if (params.msgType == 'methodResponse')
-  {
+usbaudioApp.prototype._letterIndexingCallback = function(context, params) {
+  if (params.msgType == 'methodResponse') {
     if (this._currentContext && this._currentContext.ctxtId &&
             this._contextTable[this._currentContext.ctxtId].controlProperties['List2Ctrl']['hasLetterIndex'] == true &&
             (this._currentContext.hasOwnProperty('params') && this._currentContext.params.hasOwnProperty('payload') &&
             this._currentContext.params.payload.hasOwnProperty('path') && this._currentContext.params.payload.path == context) ||
-            (context == 'AlbumBrowseDisambiguation') || (context == 'AlbumPlayDisambiguation'))
-    {
+            (context == 'AlbumBrowseDisambiguation') || (context == 'AlbumPlayDisambiguation')) {
       this._setContextLetterIndexing(params.params.alphabet_list.item);
-    }
-    else
-    {
+    } else {
       log.debug('USBAUDIO: alphabet response is not for this context', context);
     }
-  }
-  else if (params.msgType == 'methodErrorResponse')
-  {
+  } else if (params.msgType == 'methodErrorResponse') {
     log.error('USBAUDIO: GetAlphabet appsdk request failed');
     if (this._currentContext && this._currentContext.ctxtId &&
-            this._contextTable[this._currentContext.ctxtId].controlProperties['List2Ctrl']['hasLetterIndex'] == true)
-    {
+            this._contextTable[this._currentContext.ctxtId].controlProperties['List2Ctrl']['hasLetterIndex'] == true) {
       log.debug('USBAUDIO: GetAlphabet request failed!');
     }
   }
 };
 
-usbaudioApp.prototype._getItemsCallback = function(index, dataList, action, fromVui, viewType, params)
-{
-  if (params.msgType == 'methodResponse')
-  {
-    if (action != 'play' && action != 'getFolderName')
-    {
+usbaudioApp.prototype._getItemsCallback = function(index, dataList, action, fromVui, viewType, params) {
+  if (params.msgType == 'methodResponse') {
+    if (action != 'play' && action != 'getFolderName') {
       this._populateFolders(this._currentContextTemplate, params, dataList, index, viewType);
-      if (params.params.folder_inf.id != params.params.parent_id)
-      {
+      if (params.params.folder_inf.id != params.params.parent_id) {
         framework.sendEventToMmui(this.uiaId, 'BrowseParentId', {payload: {parentId: params.params.parent_id}}, fromVui);
       }
-    }
-    else if (action != 'getFolderName')
-    {
+    } else if (action != 'getFolderName') {
       this._clearMetadata(false);
       this._clearTotalElapsedTime();
       framework.sendEventToMmui(this.uiaId, 'BrowsePlayFileId', {payload: {fileId: params.params.itms.item[0].id, folderId: params.params.folder_inf.id, viewType: this._viewType.list}}, fromVui);
-    }
-    else
-    {
+    } else {
       // ---MZDMOD---
       // Remove the '/' character off the folder string by cutting last char
       let renamedItem = params.params.folder_inf.name;
-      if (renamedItem.slice(-1) === '/')
-      {
-        if (renamedItem.length > 1)
-        {
+      if (renamedItem.slice(-1) === '/') {
+        if (renamedItem.length > 1) {
           renamedItem = renamedItem.slice(0, -1);
-        }
-        else if (renamedItem.length === 1)
-        {
+        } else if (renamedItem.length === 1) {
           renamedItem = '';
         }
       }
-      if (this._currentContext && this._currentContext.ctxtId == 'NowPlaying' && this._currentContextTemplate)
-      {
+      if (this._currentContext && this._currentContext.ctxtId == 'NowPlaying' && this._currentContextTemplate) {
         // Add the image for the folder title
         // this._currentContextTemplate.nowPlaying4Ctrl.setCtrlTitle({ctrlTitleText: params.params.folder_inf.name});
         this._currentContextTemplate.nowPlaying4Ctrl.setCtrlTitle({ctrlTitleText: renamedItem, ctrlTitleIcon: 'common/images/icons/IcnListFolder.png'});
-      }
-      else
-      {
+      } else {
         // this._cachedSongDetails.screenTitle = params.params.folder_inf.name;
         this._cachedSongDetails.screenTitle = renamedItem;
       }
     }
-  }
-  else if (params.msgType == 'methodErrorResponse')
-  {
+  } else if (params.msgType == 'methodErrorResponse') {
     log.error('USBAUDIO: BOD_GetFolderItems request failed!');
-    if (this._currentContextTemplate.hasOwnProperty('list2Ctrl') && this._currentContextTemplate.list2Ctrl.setLoading && this._currentContextTemplate.list2Ctrl.inLoading)
-    {
+    if (this._currentContextTemplate.hasOwnProperty('list2Ctrl') && this._currentContextTemplate.list2Ctrl.setLoading && this._currentContextTemplate.list2Ctrl.inLoading) {
       this._currentContextTemplate.list2Ctrl.setLoading(false);
     }
   }
 };
 
-usbaudioApp.prototype._selectionReleased = function(params)
-{
-  if (params.msgType == 'methodResponse')
-  {
+usbaudioApp.prototype._selectionReleased = function(params) {
+  if (params.msgType == 'methodResponse') {
     log.debug('USBAudio: APPSDK callback - result of selection release', params.params.result);
-  }
-  else if (params.msgType == 'methodErrorResponse')
-  {
+  } else if (params.msgType == 'methodErrorResponse') {
     log.error('USBAudio: APPSDK GetPropertyInfoListReleaseQueryHandle failed');
   }
 };
@@ -3243,8 +2896,7 @@ usbaudioApp.prototype._selectionReleased = function(params)
 /** ****************************
  * Helper Functions
  ******************************/
-usbaudioApp.prototype._BODReady = function(isReady)
-{
+usbaudioApp.prototype._BODReady = function(isReady) {
   this._currentContextTemplate.nowPlaying4Ctrl.umpCtrl.setBuffering(!isReady);
   this._currentContextTemplate.nowPlaying4Ctrl.umpCtrl.setButtonDisabled('SongList', !isReady);
   this._currentContextTemplate.nowPlaying4Ctrl.umpCtrl.setButtonDisabled('BrowseUSBFolders', !isReady);
@@ -3255,14 +2907,11 @@ usbaudioApp.prototype._BODReady = function(isReady)
   this._currentContextTemplate.nowPlaying4Ctrl.umpCtrl.setButtonDisabled('playpause', !isReady);
   this._currentContextTemplate.nowPlaying4Ctrl.umpCtrl.setButtonDisabled('next', !isReady);
 
-  if (isReady)
-  {
+  if (isReady) {
     this._currentContextTemplate.nowPlaying4Ctrl.setAudioTitle({audioTitleText: '', audioTitleIcon: '', audioTitleId: ''});
     this._populateNowPlayingCtrl(this._currentContextTemplate, this._cachedSongDetails);
     this._populateCoverArt(this._currentContextTemplate, this._cachedSongDetails);
-  }
-  else
-  {
+  } else {
     this._currentContextTemplate.nowPlaying4Ctrl.setAudioTitle({audioTitleText: '', audioTitleIcon: 'none', audioTitleId: 'common.Loading'});
     this._currentContextTemplate.nowPlaying4Ctrl.setDetailLine1({detailText: '', detailIcon: 'none'});
     this._currentContextTemplate.nowPlaying4Ctrl.setDetailLine2({detailText: '', detailIcon: 'none'});
@@ -3271,114 +2920,88 @@ usbaudioApp.prototype._BODReady = function(isReady)
   }
 };
 
-usbaudioApp.prototype._jumpToPosition = function()
-{
+usbaudioApp.prototype._jumpToPosition = function() {
   this._stopElapsedUpdate = false;
   this._umpElapseTime = parseInt(this._umpTotalTime * this._umpProgressValue);
   const percent = Math.round(this._umpProgressValue*100);
   framework.sendEventToMmui(this.uiaId, 'PlaybackJumpToPosition', {payload: {percent: percent}});
 };
 
-usbaudioApp.prototype._contextReadyAction = function(captureData)
-{
+usbaudioApp.prototype._contextReadyAction = function(captureData) {
   if (this._hasContextPayload() &&
         this._currentContext.params.payload.hasOwnProperty('path') &&
         this._currentContext.params.payload.hasOwnProperty('metadata') &&
-        this._currentContext.params.payload.path != 'Invalid')
-  {
-    if (captureData)
-    {
+        this._currentContext.params.payload.path != 'Invalid') {
+    if (captureData) {
       this._topItemOptions.setTopItem = true;
       this._topItemOptions.top = captureData.templateContextCapture.controlData.topItem;
       this._topItemOptions.focus = captureData.templateContextCapture.controlData.focussedItem;
     }
 
     this._createRequest();
-  }
-  else if (this._currentContextTemplate.hasOwnProperty('list2Ctrl') && this._currentContextTemplate.list2Ctrl.setLoading && this._currentContextTemplate.list2Ctrl.inLoading)
-  {
+  } else if (this._currentContextTemplate.hasOwnProperty('list2Ctrl') && this._currentContextTemplate.list2Ctrl.setLoading && this._currentContextTemplate.list2Ctrl.inLoading) {
     this._currentContextTemplate.list2Ctrl.setLoading(false);
   }
 };
 
-usbaudioApp.prototype._presetContextConfig = function()
-{
+usbaudioApp.prototype._presetContextConfig = function() {
   if (this._hasContextPayload() &&
         this._currentContext.params.payload.hasOwnProperty('path') &&
         this._currentContext.params.payload.hasOwnProperty('metadata') &&
-        this._currentContext.params.payload.path != 'Invalid')
-  {
+        this._currentContext.params.payload.path != 'Invalid') {
     this._setTopItem();
     this._setLetterIndexing();
     this._setTitle();
-  }
-  else if (this._hasContextPayload() &&
+  } else if (this._hasContextPayload() &&
         this._currentContext.params.payload.hasOwnProperty('path') &&
         this._currentContext.params.payload.hasOwnProperty('metadata') &&
-        this._currentContext.params.payload.path == 'Invalid')
-  {
+        this._currentContext.params.payload.path == 'Invalid') {
     log.warn('USBAUDIO: context change with invalid path!', this._currentContext.ctxtId);
-  }
-  else
-  {
+  } else {
     log.warn('USBAUDIO: invalid context payload!');
   }
 };
 
-usbaudioApp.prototype._setTopItem = function()
-{
+usbaudioApp.prototype._setTopItem = function() {
   const ctxtId = this._currentContext.ctxtId;
   this._currentContextId = this._currentContext.params.payload.path;
   if (this._payloadTable[this._currentContextId].checkValues == true &&
-        !this._equalValues(this._payloadTable[this._currentContextId].md_info, this._currentContext.params.payload.metadata))
-  {
+        !this._equalValues(this._payloadTable[this._currentContextId].md_info, this._currentContext.params.payload.metadata)) {
     this._contextTable[ctxtId].controlProperties.List2Ctrl.scrollTo = 0;
     this._payloadTable[this._currentContextId].index = 0;
     this._contextTable[ctxtId].controlProperties.List2Ctrl.focussedItem = 0;
     this._payloadTable[this._currentContextId].focused = 0;
-  }
-  else
-  {
+  } else {
     this._contextTable[ctxtId].controlProperties.List2Ctrl.scrollTo = this._payloadTable[this._currentContextId].index;
     this._contextTable[ctxtId].controlProperties.List2Ctrl.focussedItem = this._payloadTable[this._currentContextId].focused;
   }
 };
 
-usbaudioApp.prototype._setNumberedList = function()
-{
-  if (this._currentContext && this._hasContextPayload())
-  {
+usbaudioApp.prototype._setNumberedList = function() {
+  if (this._currentContext && this._hasContextPayload()) {
     this._contextTable[this._currentContext.ctxtId].controlProperties.List2Ctrl.numberedList = this._payloadTable[this._currentContext.params.payload.path].hasLineNumbers;
   }
 };
 
-usbaudioApp.prototype._setLetterIndexing = function()
-{
-  if (this._currentContext && this._hasContextPayload())
-  {
+usbaudioApp.prototype._setLetterIndexing = function() {
+  if (this._currentContext && this._hasContextPayload()) {
     this._contextTable[this._currentContext.ctxtId].controlProperties.List2Ctrl.hasLetterIndex = this._payloadTable[this._currentContext.params.payload.path].hasLetterIndexing;
   }
 };
 
-usbaudioApp.prototype._setContextLetterIndexing = function(items)
-{
+usbaudioApp.prototype._setContextLetterIndexing = function(items) {
   let additionalItems = 0;
-  if (this._hasAdditionalItem(this._currentContext.ctxtId))
-  {
+  if (this._hasAdditionalItem(this._currentContext.ctxtId)) {
     additionalItems = 1;
   }
 
   const letterIndexing = [];
-  for (let i = 0; i < items.length; i++)
-  {
+  for (let i = 0; i < items.length; i++) {
     let index;
 
-    if (parseInt(items[i].index) != -1)
-    {
+    if (parseInt(items[i].index) != -1) {
       index = parseInt(items[i].index) + additionalItems;
-    }
-    else
-    {
+    } else {
       index = parseInt(items[i].index);
     }
     log.debug('usbaudio: adding alphabet and indexes', items[i].letter, index);
@@ -3391,10 +3014,8 @@ usbaudioApp.prototype._setContextLetterIndexing = function(items)
   this._currentContextTemplate.list2Ctrl.setLetterIndexData(letterIndexing);
 };
 
-usbaudioApp.prototype._populateFolders = function(tmplt, data, dataList, index, viewType)
-{
-  if (data == null || data == undefined)
-  {
+usbaudioApp.prototype._populateFolders = function(tmplt, data, dataList, index, viewType) {
+  if (data == null || data == undefined) {
     return;
   }
   const context = this._currentContext.ctxtId;
@@ -3418,8 +3039,7 @@ usbaudioApp.prototype._populateFolders = function(tmplt, data, dataList, index, 
   const items = data.params.itms.item;
   let currentView = viewType;
 
-  if ((items != null) && (items.length > 0) && (items[0].type != 1))
-  {
+  if ((items != null) && (items.length > 0) && (items[0].type != 1)) {
     currentView = 0;
   }
 
@@ -3428,35 +3048,28 @@ usbaudioApp.prototype._populateFolders = function(tmplt, data, dataList, index, 
   let incrementValue;
   // ---MZDMOD---
   // Make sure we are using the correct view from above
-  if (this._hasAdditionalItem(context, currentView))
-  {
+  if (this._hasAdditionalItem(context, currentView)) {
     incrementValue = 1;
-  }
-  else
-  {
+  } else {
     incrementValue = 0;
   }
 
   // Fill with empty items above the offset. Better use other function for doing this
-  if (listConfig.setAgain)
-  {
+  if (listConfig.setAgain) {
     listConfig.dataList = this._setEmptyItems(listConfig.dataList, incrementValue, index);
     listConfig.dataList.vuiSupport = true;
   }
 
   let j = 0;
-  for (let i = index + incrementValue; i < items.length + index + incrementValue; i++)
-  {
+  for (let i = index + incrementValue; i < items.length + index + incrementValue; i++) {
     // ---MZDMOD---
     // Remove the leading '/' character off the folder string by cutting last char
     // Only do it to items with type 1, folders are type 1, files are type 3
     // Setup item press behavior, either shortAndLong or shortPressOnly
     let renamedItem = items[j].name;
     let itemPress = 'shortPressOnly';
-    if (items[j].type == 1 && renamedItem.length > 1)
-    {
-      if (renamedItem.slice(-1) === '/')
-      {
+    if (items[j].type == 1 && renamedItem.length > 1) {
+      if (renamedItem.slice(-1) === '/') {
         renamedItem = renamedItem.slice(0, -1);
       }
       itemPress = 'shortAndLong';
@@ -3481,28 +3094,21 @@ usbaudioApp.prototype._populateFolders = function(tmplt, data, dataList, index, 
   }
   // ---MZDMOD---
   // Note that this viewType stays as 1 because this is the title, not the content of the list
-  if (viewType == 1)
-  {
+  if (viewType == 1) {
     // Remove the leading / off the folder string by cutting last char
     let renamedItem2 = data.params.folder_inf.name;
-    if (renamedItem2.length > 1)
-    {
+    if (renamedItem2.length > 1) {
       renamedItem2 = renamedItem2.slice(0, -1);
-    }
-    else if (renamedItem2.length === 1)
-    {
+    } else if (renamedItem2.length === 1) {
       renamedItem2 = '';
     }
     tmplt.list2Ctrl.setTitle({titleStyle: 'style02', text1: renamedItem2});
     // tmplt.list2Ctrl.setTitle({titleStyle : 'style02', text1: data.params.folder_inf.name});
-  }
-  else
-  {
+  } else {
     tmplt.list2Ctrl.setTitle({titleStyle: 'style02', text1Id: 'AllSongs'});
   }
 
-  if (this._topItemOptions.setTopItem == true)
-  {
+  if (this._topItemOptions.setTopItem == true) {
     tmplt.list2Ctrl.topItem = this._topItemOptions.top;
     tmplt.list2Ctrl.focussedItem = this._topItemOptions.focus;
     this._topItemOptions.setTopItem = false;
@@ -3514,10 +3120,8 @@ usbaudioApp.prototype._populateFolders = function(tmplt, data, dataList, index, 
   this._updateItems(tmplt, context, index, items.length, listConfig, currentView);
 };
 
-usbaudioApp.prototype._populateList = function(tmplt, data, context, dataList, scrollIndex)
-{
-  if (data == null || data == undefined)
-  {
+usbaudioApp.prototype._populateList = function(tmplt, data, context, dataList, scrollIndex) {
+  if (data == null || data == undefined) {
     return;
   }
 
@@ -3527,34 +3131,25 @@ usbaudioApp.prototype._populateList = function(tmplt, data, context, dataList, s
   const items = data.params.prop_info_list.prop_info_list;
 
   let incrementValue;
-  if (this._hasAdditionalItem(context))
-  {
+  if (this._hasAdditionalItem(context)) {
     incrementValue = 1;
-  }
-  else
-  {
+  } else {
     incrementValue = 0;
   }
 
   // Fill with empty items above the offset. Better use other function for doing this
-  if (listConfig.setAgain)
-  {
+  if (listConfig.setAgain) {
     listConfig.dataList = this._setEmptyItems(listConfig.dataList, incrementValue, data.params.offset_out);
     listConfig.dataList.vuiSupport = true;
   }
 
   let j = 0;
-  if (this._currentContext && this._currentContext.ctxtId == 'Playlists')
-  {
-    for (let i = data.params.offset_out + incrementValue; i < data.params.result_count + data.params.offset_out + incrementValue; i++)
-    {
+  if (this._currentContext && this._currentContext.ctxtId == 'Playlists') {
+    for (let i = data.params.offset_out + incrementValue; i < data.params.result_count + data.params.offset_out + incrementValue; i++) {
       let localizedName;
-      if (items[j].metadata_info[0].value.toLowerCase() == 'more like this')
-      {
+      if (items[j].metadata_info[0].value.toLowerCase() == 'more like this') {
         localizedName = framework.localize.getLocStr('usbaudio', 'common.Tooltip_IcnUmpMore');
-      }
-      else
-      {
+      } else {
         localizedName = items[j].metadata_info[0].value;
       }
 
@@ -3570,11 +3165,8 @@ usbaudioApp.prototype._populateList = function(tmplt, data, context, dataList, s
       };
       j++;
     }
-  }
-  else
-  {
-    for (let i = data.params.offset_out + incrementValue; i < data.params.result_count + data.params.offset_out + incrementValue; i++)
-    {
+  } else {
+    for (let i = data.params.offset_out + incrementValue; i < data.params.result_count + data.params.offset_out + incrementValue; i++) {
       listConfig.dataList.items[i] = {
         appData: {
           name: items[j].metadata_info[0].value,
@@ -3589,8 +3181,7 @@ usbaudioApp.prototype._populateList = function(tmplt, data, context, dataList, s
     }
   }
 
-  if (this._topItemOptions.setTopItem == true)
-  {
+  if (this._topItemOptions.setTopItem == true) {
     tmplt.list2Ctrl.properties.scrollTo = this._topItemOptions.top;
     tmplt.list2Ctrl.properties.focussedItem = this._topItemOptions.focus;
     this._topItemOptions.setTopItem = false;
@@ -3602,41 +3193,29 @@ usbaudioApp.prototype._populateList = function(tmplt, data, context, dataList, s
 };
 
 // update items depending on if there is additional item and where is th list position
-usbaudioApp.prototype._updateItems = function(tmplt, context, offset, resultCount, listConfig, viewType)
-{
-  if (listConfig.setAgain)
-  {
+usbaudioApp.prototype._updateItems = function(tmplt, context, offset, resultCount, listConfig, viewType) {
+  if (listConfig.setAgain) {
     tmplt.list2Ctrl.setDataList(listConfig.dataList);
     tmplt.list2Ctrl.updateItems(0, tmplt.list2Ctrl.dataList.itemCount - 1);
-  }
-  else if (this._hasAdditionalItem(context, viewType))
-  {
-    if (offset == 0)
-    {
+  } else if (this._hasAdditionalItem(context, viewType)) {
+    if (offset == 0) {
       tmplt.list2Ctrl.updateItems(offset, resultCount);
-    }
-    else
-    {
+    } else {
       tmplt.list2Ctrl.updateItems(offset + 1, resultCount + offset);
     }
-  }
-  else
-  {
+  } else {
     tmplt.list2Ctrl.updateItems(offset, resultCount + offset - 1);
   }
 
   // Force leaving loading state upon items update.
-  if (tmplt.list2Ctrl.setLoading && tmplt.list2Ctrl.inLoading)
-  {
+  if (tmplt.list2Ctrl.setLoading && tmplt.list2Ctrl.inLoading) {
     tmplt.list2Ctrl.setLoading(false);
   }
 };
 
-usbaudioApp.prototype._hasAdditionalItem = function(context, viewType)
-{
+usbaudioApp.prototype._hasAdditionalItem = function(context, viewType) {
   let hasAdditionalItem = false;
-  switch (context)
-  {
+  switch (context) {
     case 'Artists':
     case 'Albums':
     case 'Genres':
@@ -3647,29 +3226,23 @@ usbaudioApp.prototype._hasAdditionalItem = function(context, viewType)
       break;
   }
 
-  if (viewType == 1 && context == 'Folders')
-  {
+  if (viewType == 1 && context == 'Folders') {
     hasAdditionalItem = true;
-  }
-  else if (viewType != 1 && context == 'Folders')
-  {
+  } else if (viewType != 1 && context == 'Folders') {
     hasAdditionalItem = false;
   }
   return hasAdditionalItem;
 };
 
 // Configure dataList. If dataList already configured return the same dataList
-usbaudioApp.prototype._initDataList = function(dataList, context, tmplt, data, viewType)
-{
+usbaudioApp.prototype._initDataList = function(dataList, context, tmplt, data, viewType) {
   // let incrementValue = 0;
   let dataList = dataList;
   let setAgain = false;
-  if ((dataList == null || dataList == undefined) && data.params.total_count != 0)
-  {
+  if ((dataList == null || dataList == undefined) && data.params.total_count != 0) {
     setAgain = true;
     // Some contexts have additional item which is not received from BLM
-    switch (context)
-    {
+    switch (context) {
       case 'Artists':
         dataList = {
           itemCountKnown: true,
@@ -3746,8 +3319,7 @@ usbaudioApp.prototype._initDataList = function(dataList, context, tmplt, data, v
         // incrementValue = 1;
         break;
       case 'Folders':
-        if (viewType == 1)
-        {
+        if (viewType == 1) {
           dataList = {
             itemCountKnown: true,
             itemCount: data.params.total_items + 1,
@@ -3766,9 +3338,7 @@ usbaudioApp.prototype._initDataList = function(dataList, context, tmplt, data, v
             }],
           };
           // incrementValue = 1;
-        }
-        else
-        {
+        } else {
           dataList = {
             itemCountKnown: true,
             itemCount: data.params.total_items,
@@ -3784,9 +3354,7 @@ usbaudioApp.prototype._initDataList = function(dataList, context, tmplt, data, v
           items: [],
         };
     }
-  }
-  else if (data.params.total_count == 0)
-  {
+  } else if (data.params.total_count == 0) {
     setAgain = true;
     dataList = {
       itemCountKnown: true,
@@ -3798,10 +3366,8 @@ usbaudioApp.prototype._initDataList = function(dataList, context, tmplt, data, v
   return {dataList: dataList, setAgain: setAgain};
 };
 
-usbaudioApp.prototype._setEmptyItems = function(dataList, start, count)
-{
-  for (let i = start; i < count + start; i++)
-  {
+usbaudioApp.prototype._setEmptyItems = function(dataList, start, count) {
+  for (let i = start; i < count + start; i++) {
     dataList.items[i] = {
       appData: '',
       text1: '',
@@ -3813,130 +3379,91 @@ usbaudioApp.prototype._setEmptyItems = function(dataList, start, count)
 };
 
 // Callculate offset
-usbaudioApp.prototype._calculateOffset = function(offset, context)
-{
+usbaudioApp.prototype._calculateOffset = function(offset, context) {
   let newOffset = offset - 10;
-  if (this._hasAdditionalItem(context))
-  {
-    if (newOffset < 2)
-    {
+  if (this._hasAdditionalItem(context)) {
+    if (newOffset < 2) {
       newOffset = 0;
-    }
-    else
-    {
+    } else {
       newOffset = newOffset - 1;
     }
-  }
-  else
-  {
-    if (newOffset < 0)
-    {
+  } else {
+    if (newOffset < 0) {
       newOffset = 0;
     }
   }
   return newOffset;
 };
 
-usbaudioApp.prototype._equalValues = function(oldValues, newValues)
-{
+usbaudioApp.prototype._equalValues = function(oldValues, newValues) {
   let equalValues = true;
-  if (oldValues.hasOwnProperty('artist'))
-  {
-    if (oldValues.artist.value != newValues.artistName)
-    {
+  if (oldValues.hasOwnProperty('artist')) {
+    if (oldValues.artist.value != newValues.artistName) {
       equalValues = false;
       oldValues.artist.value = newValues.artistName;
-      if (newValues.hasOwnProperty('artistId'))
-      {
+      if (newValues.hasOwnProperty('artistId')) {
         oldValues.artist.id = newValues.artistId;
-      }
-      else
-      {
+      } else {
         oldValues.artist.id = 0;
       }
     }
   }
 
-  if (oldValues.hasOwnProperty('album'))
-  {
-    if (oldValues.album.value != newValues.albumName)
-    {
+  if (oldValues.hasOwnProperty('album')) {
+    if (oldValues.album.value != newValues.albumName) {
       equalValues = false;
       oldValues.album.value = newValues.albumName;
-      if (newValues.hasOwnProperty('albumId'))
-      {
+      if (newValues.hasOwnProperty('albumId')) {
         oldValues.album.id = newValues.albumId;
-      }
-      else
-      {
+      } else {
         oldValues.album.id = 0;
       }
     }
   }
 
-  if (oldValues.hasOwnProperty('genre'))
-  {
-    if (oldValues.genre.value != newValues.genreName)
-    {
+  if (oldValues.hasOwnProperty('genre')) {
+    if (oldValues.genre.value != newValues.genreName) {
       equalValues = false;
       oldValues.genre.value = newValues.genreName;
-      if (newValues.hasOwnProperty('genreId'))
-      {
+      if (newValues.hasOwnProperty('genreId')) {
         oldValues.genre.id = newValues.genreId;
-      }
-      else
-      {
+      } else {
         oldValues.genre.id = 0;
       }
     }
   }
 
-  if (oldValues.hasOwnProperty('audiobook'))
-  {
-    if (oldValues.audiobook.value != newValues.audiobookName)
-    {
+  if (oldValues.hasOwnProperty('audiobook')) {
+    if (oldValues.audiobook.value != newValues.audiobookName) {
       equalValues = false;
       oldValues.audiobook.value = newValues.audiobookName;
-      if (newValues.hasOwnProperty('audiobookId'))
-      {
+      if (newValues.hasOwnProperty('audiobookId')) {
         oldValues.audiobook.id = newValues.audiobookId;
-      }
-      else
-      {
+      } else {
         oldValues.audiobook.id = 0;
       }
     }
   }
 
-  if (oldValues.hasOwnProperty('podcast'))
-  {
-    if (oldValues.podcast.value != newValues.podcastName)
-    {
+  if (oldValues.hasOwnProperty('podcast')) {
+    if (oldValues.podcast.value != newValues.podcastName) {
       equalValues = false;
       oldValues.podcast.value = newValues.podcastName;
-      if (newValues.hasOwnProperty('podcastId'))
-      {
+      if (newValues.hasOwnProperty('podcastId')) {
         oldValues.podcast.id = newValues.podcastId;
-      }
-      else
-      {
+      } else {
         oldValues.podcast.id = 0;
       }
     }
   }
 
-  if (oldValues.hasOwnProperty('playlist'))
-  {
-    if (oldValues.playlist.value != newValues.playlistName)
-    {
+  if (oldValues.hasOwnProperty('playlist')) {
+    if (oldValues.playlist.value != newValues.playlistName) {
       equalValues = false;
       oldValues.playlist.value = newValues.playlistName;
-      if (newValues.hasOwnProperty('playlistId'))
-      {
+      if (newValues.hasOwnProperty('playlistId')) {
         oldValues.playlist.id = newValues.playlistId;
-      }
-      else
-      {
+      } else {
         oldValues.playlist.id = 0;
       }
     }
@@ -3945,174 +3472,130 @@ usbaudioApp.prototype._equalValues = function(oldValues, newValues)
   return equalValues;
 };
 
-usbaudioApp.prototype._composeId = function(newValues, oldValues)
-{
-  if (newValues.hasOwnProperty('artist'))
-  {
-    if (oldValues.hasOwnProperty('artistId'))
-    {
+usbaudioApp.prototype._composeId = function(newValues, oldValues) {
+  if (newValues.hasOwnProperty('artist')) {
+    if (oldValues.hasOwnProperty('artistId')) {
       newValues.artist.id = oldValues.artistId;
-    }
-    else
-    {
+    } else {
       newValues.artist.id = 0;
     }
   }
 
-  if (newValues.hasOwnProperty('album'))
-  {
-    if (oldValues.hasOwnProperty('albumId'))
-    {
+  if (newValues.hasOwnProperty('album')) {
+    if (oldValues.hasOwnProperty('albumId')) {
       newValues.album.id = oldValues.albumId;
-    }
-    else
-    {
+    } else {
       newValues.album.id = 0;
     }
   }
 
-  if (newValues.hasOwnProperty('genre'))
-  {
-    if (oldValues.hasOwnProperty('genreId'))
-    {
+  if (newValues.hasOwnProperty('genre')) {
+    if (oldValues.hasOwnProperty('genreId')) {
       newValues.genre.id = oldValues.genreId;
-    }
-    else
-    {
+    } else {
       newValues.genre.id = 0;
     }
   }
 
-  if (newValues.hasOwnProperty('audiobook'))
-  {
-    if (oldValues.hasOwnProperty('audiobookId'))
-    {
+  if (newValues.hasOwnProperty('audiobook')) {
+    if (oldValues.hasOwnProperty('audiobookId')) {
       newValues.audiobook.id = oldValues.audiobookId;
-    }
-    else
-    {
+    } else {
       newValues.audiobook.id = 0;
     }
   }
 
-  if (newValues.hasOwnProperty('podcast'))
-  {
-    if (oldValues.hasOwnProperty('podcastId'))
-    {
+  if (newValues.hasOwnProperty('podcast')) {
+    if (oldValues.hasOwnProperty('podcastId')) {
       newValues.podcast.id = oldValues.podcastId;
-    }
-    else
-    {
+    } else {
       newValues.podcast.id = 0;
     }
   }
 
-  if (newValues.hasOwnProperty('playlist'))
-  {
-    if (oldValues.hasOwnProperty('playlistId'))
-    {
+  if (newValues.hasOwnProperty('playlist')) {
+    if (oldValues.hasOwnProperty('playlistId')) {
       newValues.playlist.id = oldValues.playlistId;
-    }
-    else
-    {
+    } else {
       newValues.playlist.id = 0;
     }
   }
 };
 
-usbaudioApp.prototype._createMdInfo = function(mdInfo)
-{
+usbaudioApp.prototype._createMdInfo = function(mdInfo) {
   const mdInfoList = [];
-  if (mdInfo.hasOwnProperty('genre'))
-  {
+  if (mdInfo.hasOwnProperty('genre')) {
     mdInfoList.push({value: mdInfo.genre.value, type: mdInfo.genre.type, item_id: mdInfo.genre.id});
   }
 
-  if (mdInfo.hasOwnProperty('artist'))
-  {
+  if (mdInfo.hasOwnProperty('artist')) {
     mdInfoList.push({value: mdInfo.artist.value, type: mdInfo.artist.type, item_id: mdInfo.artist.id});
   }
 
-  if (mdInfo.hasOwnProperty('album'))
-  {
+  if (mdInfo.hasOwnProperty('album')) {
     mdInfoList.push({value: mdInfo.album.value, type: mdInfo.album.type, item_id: mdInfo.album.id});
   }
 
-  if (mdInfo.hasOwnProperty('playlist'))
-  {
+  if (mdInfo.hasOwnProperty('playlist')) {
     mdInfoList.push({value: mdInfo.playlist.value, type: mdInfo.playlist.type, item_id: mdInfo.playlist.id});
   }
 
-  if (mdInfo.hasOwnProperty('audiobook'))
-  {
+  if (mdInfo.hasOwnProperty('audiobook')) {
     mdInfoList.push({value: mdInfo.audiobook.value, type: mdInfo.audiobook.type, item_id: mdInfo.audiobook.id});
   }
 
-  if (mdInfo.hasOwnProperty('podcast'))
-  {
+  if (mdInfo.hasOwnProperty('podcast')) {
     mdInfoList.push({value: mdInfo.podcast.value, type: mdInfo.podcast.type, item_id: mdInfo.podcast.id});
   }
 
-  if (mdInfo.hasOwnProperty('song'))
-  {
+  if (mdInfo.hasOwnProperty('song')) {
     mdInfoList.push({value: mdInfo.song.value, type: mdInfo.song.type, item_id: mdInfo.song.id});
   }
 
   return mdInfoList;
 };
 
-usbaudioApp.prototype._createMdInfoFromMsg = function(msg)
-{
+usbaudioApp.prototype._createMdInfoFromMsg = function(msg) {
   const mdInfoList = [];
   const mdInfo = this._payloadTable[msg.params.payload.path].md_info;
-  if (mdInfo.hasOwnProperty('genre') && msg.params.payload.metadata.hasOwnProperty('genreName'))
-  {
+  if (mdInfo.hasOwnProperty('genre') && msg.params.payload.metadata.hasOwnProperty('genreName')) {
     mdInfoList.push({value: msg.params.payload.metadata.genreName, type: mdInfo.genre.type, item_id: 0});
   }
 
-  if (mdInfo.hasOwnProperty('artist') && msg.params.payload.metadata.hasOwnProperty('artistName'))
-  {
+  if (mdInfo.hasOwnProperty('artist') && msg.params.payload.metadata.hasOwnProperty('artistName')) {
     mdInfoList.push({value: msg.params.payload.metadata.artistName, type: mdInfo.artist.type, item_id: 0});
   }
 
-  if (mdInfo.hasOwnProperty('album') && msg.params.payload.metadata.hasOwnProperty('albumName'))
-  {
+  if (mdInfo.hasOwnProperty('album') && msg.params.payload.metadata.hasOwnProperty('albumName')) {
     mdInfoList.push({value: msg.params.payload.metadata.albumName, type: mdInfo.album.type, item_id: 0});
   }
 
-  if (mdInfo.hasOwnProperty('audiobook') && msg.params.payload.metadata.hasOwnProperty('audiobookName'))
-  {
+  if (mdInfo.hasOwnProperty('audiobook') && msg.params.payload.metadata.hasOwnProperty('audiobookName')) {
     mdInfoList.push({value: msg.params.payload.metadata.audiobookName, type: mdInfo.audiobook.type, item_id: 0});
   }
 
-  if (mdInfo.hasOwnProperty('podcast') && msg.params.payload.metadata.hasOwnProperty('podcastName'))
-  {
+  if (mdInfo.hasOwnProperty('podcast') && msg.params.payload.metadata.hasOwnProperty('podcastName')) {
     mdInfoList.push({value: msg.params.payload.metadata.podcastName, type: this._mdFilter.USBM_MetadataType_Podcast, item_id: 0});
   }
 
-  if (msg.params.payload.metadata.hasOwnProperty('episodeName') && this._currentContext && this._currentContext.ctxtId == 'Episodes')
-  {
+  if (msg.params.payload.metadata.hasOwnProperty('episodeName') && this._currentContext && this._currentContext.ctxtId == 'Episodes') {
     mdInfoList.push({value: msg.params.payload.metadata.episodeName, type: this._mdFilter.USBM_MetadataType_ObjectName, item_id: 0});
   }
 
-  if (mdInfo.hasOwnProperty('playlist') && msg.params.payload.metadata.hasOwnProperty('playlistName'))
-  {
+  if (mdInfo.hasOwnProperty('playlist') && msg.params.payload.metadata.hasOwnProperty('playlistName')) {
     mdInfoList.push({value: msg.params.payload.metadata.playlistName, type: mdInfo.playlist.type, item_id: 0});
   }
 
-  if (mdInfo.hasOwnProperty('song'))
-  {
+  if (mdInfo.hasOwnProperty('song')) {
     mdInfoList.push({value: mdInfo.song.value, type: mdInfo.song.type, item_id: 0});
   }
 
   return mdInfoList;
 };
 
-usbaudioApp.prototype._createRequest = function()
-{
+usbaudioApp.prototype._createRequest = function() {
   // const ctxtId = this._currentContext.ctxtId;
-  if (this._hasContextPayload())
-  {
+  if (this._hasContextPayload()) {
     const mdTypeList = this._payloadTable[this._currentContextId].md_types;
     const mdInfo = this._payloadTable[this._currentContextId].md_info;
 
@@ -4129,36 +3612,28 @@ usbaudioApp.prototype._createRequest = function()
         null, // context data list NOTE: empty every time we enter context
         this._payloadTable[this._currentContextId].index, // where to scroll the list
         this._currentContext.params.payload.path); // name of the context
-  }
-  else
-  {
+  } else {
     log.warn('usbaudio: Context with empty payload!');
   }
 };
 
-usbaudioApp.prototype._setTitle = function()
-{
+usbaudioApp.prototype._setTitle = function() {
   if (this._currentContext &&
         this._currentContext.params.hasOwnProperty('payload') &&
-        this._currentContext.params.payload.hasOwnProperty('path'))
-  {
+        this._currentContext.params.payload.hasOwnProperty('path')) {
     this._contextTable[this._currentContext.ctxtId].controlProperties.List2Ctrl.title.text1Id = '';
     this._contextTable[this._currentContext.ctxtId].controlProperties.List2Ctrl.title.text1SubMap = '';
     this._contextTable[this._currentContext.ctxtId].controlProperties.List2Ctrl.title.text1 = '';
 
     const title = this._payloadTable[this._currentContext.params.payload.path].titleConfig;
-    switch (title)
-    {
+    switch (title) {
       case 'Playlists':
         this._contextTable[this._currentContext.ctxtId].controlProperties.List2Ctrl.title.text1Id = 'Playlists';
         break;
       case 'playlistName':
-        if (this._currentContext.params.payload.metadata.playlistName.toLowerCase() == 'more like this')
-        {
+        if (this._currentContext.params.payload.metadata.playlistName.toLowerCase() == 'more like this') {
           this._contextTable[this._currentContext.ctxtId].controlProperties.List2Ctrl.title.text1 = framework.localize.getLocStr('usbaudio', 'common.Tooltip_IcnUmpMore');
-        }
-        else
-        {
+        } else {
           this._contextTable[this._currentContext.ctxtId].controlProperties.List2Ctrl.title.text1 = this._currentContext.params.payload.metadata.playlistName;
         }
         break;
@@ -4207,40 +3682,30 @@ usbaudioApp.prototype._setTitle = function()
       default:
         log.debug('Unknown title config:', title);
     }
-  }
-  else
-  {
+  } else {
     log.debug('No context payload or path');
   }
 };
 
-usbaudioApp.prototype._playLineNumber = function(itemName, itemType, itemId, fromVui)
-{
+usbaudioApp.prototype._playLineNumber = function(itemName, itemType, itemId, fromVui) {
   this._clearMetadata();
   this._clearTotalElapsedTime();
   const mdTypeList = [this._mdFilter.USBM_MetadataType_ObjectName];
   const mdInfoList = this._createMdInfo(this._payloadTable[this._currentContextId].md_info);
   let sortSettings;
-  if (itemType != this._payloadTable['Podcasts'].md_info[0])
-  {
+  if (itemType != this._payloadTable['Podcasts'].md_info[0]) {
     sortSettings = this._payloadTable[this._currentContextId].sort_settings;
-  }
-  else
-  {
+  } else {
     sortSettings = this._payloadTable['PodcastEpisodes'].sort_settings;
   }
 
   if (itemName != undefined && itemType != undefined && itemId != undefined &&
-        itemName != null && itemType != null && itemId != null)
-  {
+        itemName != null && itemType != null && itemId != null) {
     mdInfoList.push({value: itemName, type: itemType, item_id: itemId});
   }
-  if (mdInfoList.length > 1)
-  {
-    for (let i=0; i < mdInfoList.length; i++)
-    {
-      if (mdInfoList[i].type == 0)
-      {
+  if (mdInfoList.length > 1) {
+    for (let i=0; i < mdInfoList.length; i++) {
+      if (mdInfoList[i].type == 0) {
         mdInfoList.splice(i, 1);
         i--;
       }
@@ -4251,28 +3716,22 @@ usbaudioApp.prototype._playLineNumber = function(itemName, itemType, itemId, fro
 };
 
 // Fill NowPlaying with data
-usbaudioApp.prototype._populateNowPlayingCtrl = function(tmplt, songDetails)
-{
+usbaudioApp.prototype._populateNowPlayingCtrl = function(tmplt, songDetails) {
   log.debug('_populateNowPlayingCtrl called... songDetails.screenTitle: ', songDetails.screenTitle);
-  if (this._connectedDevs.BODReady)
-  {
+  if (this._connectedDevs.BODReady) {
     log.debug('_populateNowPlayingCtrl called...');
     tmplt.nowPlaying4Ctrl.setAudioTitle({audioTitleText: songDetails.title, audioTitleIcon: 'common/images/icons/IcnListSong.png'});
     tmplt.nowPlaying4Ctrl.setDetailLine1({detailText: songDetails.artist, detailIcon: 'common/images/icons/IcnListContact_Placeholder.png'});
     tmplt.nowPlaying4Ctrl.setDetailLine2({detailText: songDetails.album, detailIcon: 'common/images/icons/IcnListCdPlayer_En.png'});
 
-    if (songDetails.screenTitle)
-    {
+    if (songDetails.screenTitle) {
       tmplt.nowPlaying4Ctrl.setCtrlTitle({ctrlTitleText: songDetails.screenTitle});
       // songDetails.screenTitle = null;
-    }
-    else
-    {
+    } else {
       log.debug('Playlist appears to be null, so assuming EMPTY!!!');
       tmplt.nowPlaying4Ctrl.setCtrlTitle({ctrlTitleText: ''});
     }
-    if (this._connectedDevs.showGracenote == true && songDetails.title && songDetails.artist && songDetails.album && this._connectedDevs.selectedDevCataloged)
-    {
+    if (this._connectedDevs.showGracenote == true && songDetails.title && songDetails.artist && songDetails.album && this._connectedDevs.selectedDevCataloged) {
       tmplt.nowPlaying4Ctrl.setDetailLine3({detailText: this.AIO_gracenoteText});
       this._gracenoteTimeout = setTimeout(this._removeGracenote.bind(this), this._gracenoteTimeoutTime);
     }
@@ -4280,91 +3739,68 @@ usbaudioApp.prototype._populateNowPlayingCtrl = function(tmplt, songDetails)
   // tmplt.nowPlaying4Ctrl.umpCtrl.setButtonDisabled("GenerateMoreLikeThis", !this._connectedDevs.selectedDevCataloged);
 };
 
-usbaudioApp.prototype._setTotalElapsedTime = function()
-{
+usbaudioApp.prototype._setTotalElapsedTime = function() {
   this._currentContextTemplate.nowPlaying4Ctrl.umpCtrl.setElapsedTime(this._secondsToHHMMSS(this._umpElapseTime));
   this._currentContextTemplate.nowPlaying4Ctrl.umpCtrl.setTotalTime(this._secondsToHHMMSS(this._umpTotalTime));
 
   const progress = this._umpElapseTime / this._umpTotalTime;
-  if (this._umpElapseTime != 0 && this._umpTotalTime != 0)
-  {
+  if (this._umpElapseTime != 0 && this._umpTotalTime != 0) {
     this._currentContextTemplate.nowPlaying4Ctrl.umpCtrl.updateScrubber(progress);
   }
 };
 
-usbaudioApp.prototype._removeGracenote = function()
-{
+usbaudioApp.prototype._removeGracenote = function() {
   clearTimeout(this._gracenoteTimeout);
   this._gracenoteTimeout = null;
   this._connectedDevs.showGracenote = false;
 
-  if (this._connectedDevs.deviceSelected == this._connectedDevs.A.deviceId)
-  {
+  if (this._connectedDevs.deviceSelected == this._connectedDevs.A.deviceId) {
     this._connectedDevs.A.showGracenote = false;
-  }
-  else
-  {
+  } else {
     this._connectedDevs.B.showGracenote = false;
   }
 
-  if (this._currentContext.ctxtId == 'NowPlaying' && this._currentContextTemplate)
-  {
+  if (this._currentContext.ctxtId == 'NowPlaying' && this._currentContextTemplate) {
     this._currentContextTemplate.nowPlaying4Ctrl.setDetailLine3({detailText: ''});
   }
 };
-usbaudioApp.prototype._removeGenre = function()
-{
+usbaudioApp.prototype._removeGenre = function() {
   clearTimeout(this._genreTimeout);
   this._genreTimeout = null;
 
-  if (this._currentContext.ctxtId == 'NowPlaying' && this._currentContextTemplate)
-  {
+  if (this._currentContext.ctxtId == 'NowPlaying' && this._currentContextTemplate) {
     this._currentContextTemplate.nowPlaying4Ctrl.setDetailLine3({detailText: ''});
   }
 };
 
-usbaudioApp.prototype._updateUmpButtons = function(tmplt, buttons)
-{
-  if (buttons.repeat == 'USBM_REPEAT_MODE_ALL' && this._umpButtonConfig['repeat'].currentState !== 'List')
-  {
+usbaudioApp.prototype._updateUmpButtons = function(tmplt, buttons) {
+  if (buttons.repeat == 'USBM_REPEAT_MODE_ALL' && this._umpButtonConfig['repeat'].currentState !== 'List') {
     tmplt.nowPlaying4Ctrl.umpCtrl.setButtonState('repeat', 'List');
-  }
-  else if (buttons.repeat == 'USBM_REPEAT_MODE_ONE' && this._umpButtonConfig['repeat'].currentState !== 'Song')
-  {
+  } else if (buttons.repeat == 'USBM_REPEAT_MODE_ONE' && this._umpButtonConfig['repeat'].currentState !== 'Song') {
     tmplt.nowPlaying4Ctrl.umpCtrl.setButtonState('repeat', 'Song');
-  }
-  else if (buttons.repeat == 'USBM_REPEAT_MODE_NONE' && this._umpButtonConfig['repeat'].currentState !== 'None')
-  {
+  } else if (buttons.repeat == 'USBM_REPEAT_MODE_NONE' && this._umpButtonConfig['repeat'].currentState !== 'None') {
     tmplt.nowPlaying4Ctrl.umpCtrl.setButtonState('repeat', 'None');
   }
 
-  if (buttons.shuffle == 'USBM_SHUFFLE_MODE_NONE' && this._umpButtonConfig['shuffle'].currentState != 'Off')
-  {
+  if (buttons.shuffle == 'USBM_SHUFFLE_MODE_NONE' && this._umpButtonConfig['shuffle'].currentState != 'Off') {
     tmplt.nowPlaying4Ctrl.umpCtrl.setButtonState('shuffle', 'Off');
-  }
-  else if (buttons.shuffle == 'USBM_SHUFFLE_MODE_TRACKS' && this._umpButtonConfig['shuffle'].currentState != 'On')
-  {
+  } else if (buttons.shuffle == 'USBM_SHUFFLE_MODE_TRACKS' && this._umpButtonConfig['shuffle'].currentState != 'On') {
     tmplt.nowPlaying4Ctrl.umpCtrl.setButtonState('shuffle', 'On');
   }
 };
 
-usbaudioApp.prototype._populateCoverArt = function(tmplt, songDetails)
-{
-  if (this._connectedDevs.BODReady)
-  {
+usbaudioApp.prototype._populateCoverArt = function(tmplt, songDetails) {
+  if (this._connectedDevs.BODReady) {
     log.debug('usbaudioApp _populateCoverArt called...', songDetails);
 
     // let ctrlData = {
     //   imagePath: null,
     // };
 
-    if (songDetails.coverArt != 'None')
-    {
+    if (songDetails.coverArt != 'None') {
       // ctrlData = {ctrlTitle: songDetails.genre, audioTitle: songDetails.title, detailLine1: songDetails.artist, detailLine2: songDetails.album, imagePath: songDetails.coverArt};
       tmplt.nowPlaying4Ctrl.setArtworkImagePath(songDetails.coverArt+'?' + new Date().getTime());
-    }
-    else
-    {
+    } else {
       // ctrlData = {'ctrlTitle': songDetails.genre, 'audioTitle': songDetails.title, 'detailLine1': songDetails.artist, 'detailLine2': songDetails.album, 'imagePath': './common/images/no_artwork_icon.png'};
       songDetails.coverArt = './common/images/no_artwork_icon.png';
       tmplt.nowPlaying4Ctrl.setArtworkImagePath();
@@ -4372,13 +3808,11 @@ usbaudioApp.prototype._populateCoverArt = function(tmplt, songDetails)
   }
 };
 
-usbaudioApp.prototype._requestMore = function(index)
-{
+usbaudioApp.prototype._requestMore = function(index) {
   const scrollIndex = this._currentContextTemplate.list2Ctrl.topItem;
 
   // if the list has additional item set by the application decrease the offset with one
-  if (this._hasAdditionalItem(this._currentContext.ctxtId) && index > 0)
-  {
+  if (this._hasAdditionalItem(this._currentContext.ctxtId) && index > 0) {
     index = index - 1;
   }
 
@@ -4395,45 +3829,35 @@ usbaudioApp.prototype._requestMore = function(index)
       this._currentContext.params.payload.path); // name of the context
 };
 
-usbaudioApp.prototype._saveIndex = function()
-{
+usbaudioApp.prototype._saveIndex = function() {
   if (this._outgoingContext &&
         this._outgoingContext.hasOwnProperty('params') &&
         this._outgoingContext.params.hasOwnProperty('payload') &&
         this._outgoingContext.params.payload.hasOwnProperty('path') &&
-        this._outgoingContext.params.payload.path != 'Invalid' )
-  {
-    if (this._outgoingContextTemplate) // check added for SCR SW00157864
-    {
+        this._outgoingContext.params.payload.path != 'Invalid' ) {
+    if (this._outgoingContextTemplate) {
+      // check added for SCR SW00157864
       this._payloadTable[this._outgoingContext.params.payload.path].index = this._outgoingContextTemplate.list2Ctrl.topItem;
       this._payloadTable[this._outgoingContext.params.payload.path].focused = this._outgoingContextTemplate.list2Ctrl.focussedItem;
-    }
-    else
-    {
+    } else {
       log.warn('USBAUDIO: outgoing context template is null!');
     }
-  }
-  else if (this._outgoingContext &&
+  } else if (this._outgoingContext &&
         this._outgoingContext.hasOwnProperty('params') &&
         this._outgoingContext.params.hasOwnProperty('payload') &&
         this._outgoingContext.params.payload.hasOwnProperty('path') &&
-        this._outgoingContext.params.payload.path == 'Invalid')
-  {
+        this._outgoingContext.params.payload.path == 'Invalid') {
     log.warn('USBAUDIO: outgoing context with invalid path!');
-  }
-  else
-  {
+  } else {
     log.warn('USBAUDIO: outgoing context with invalid payload');
   }
 };
 
-usbaudioApp.prototype._hasContextPayload = function()
-{
+usbaudioApp.prototype._hasContextPayload = function() {
   let returnValue = false;
   if (this._currentContext &&
         this._currentContext.hasOwnProperty('params') &&
-        this._currentContext.params.hasOwnProperty('payload'))
-  {
+        this._currentContext.params.hasOwnProperty('payload')) {
     returnValue = true;
   }
   return returnValue;
@@ -4441,10 +3865,8 @@ usbaudioApp.prototype._hasContextPayload = function()
 // ---MZDMOD---
 // Add "optional" parameter that defaults to true when not supplied
 // This is a check for the _getItemsCallBack, otherwise it clears the cachedTitle variables
-usbaudioApp.prototype._clearMetadata = function(noCallBack)
-{
-  if (noCallBack === undefined)
-  {
+usbaudioApp.prototype._clearMetadata = function(noCallBack) {
+  if (noCallBack === undefined) {
     noCallBack = true;
   }
   framework.sendEventToMmui(this.uiaId, 'ReleaseCoverArt', {payload: {path: this._cachedSongDetails.coverArt}});
@@ -4456,23 +3878,20 @@ usbaudioApp.prototype._clearMetadata = function(noCallBack)
     album: null,
     coverArt: 'None',
   };
-  if (noCallBack)
-  {
+  if (noCallBack) {
     this._cachedFolder.songList = false;
     this._cachedFolder.enabled = false;
     this._cachedFolder.id = 0;
   }
 };
 
-usbaudioApp.prototype._clearTotalElapsedTime = function()
-{
+usbaudioApp.prototype._clearTotalElapsedTime = function() {
   this._umpElapseTime = 0;
   this._umpTotalTime = 0;
   this._stopElapsedUpdate = false;
 };
 
-usbaudioApp.prototype._clearUSBData = function()
-{
+usbaudioApp.prototype._clearUSBData = function() {
   const epmtyMD = {
     artistName: '',
     albumName: '',
@@ -4488,104 +3907,82 @@ usbaudioApp.prototype._clearUSBData = function()
     playlistId: '',
   };
 
-  for (const i in this._payloadTable)
-  {
+  for (const i in this._payloadTable) {
     this._payloadTable[i].index = 0;
     this._payloadTable[i].focused = 0;
 
-    if (this._payloadTable[i].hasOwnProperty('md_info') && this._payloadTable[i].checkValues)
-    {
+    if (this._payloadTable[i].hasOwnProperty('md_info') && this._payloadTable[i].checkValues) {
       this._equalValues(this._payloadTable[i].md_info, epmtyMD);
     }
   }
 };
 
-usbaudioApp.prototype._clearSelectionId = function()
-{
-  if (this._selectionId.playing != null)
-  {
+usbaudioApp.prototype._clearSelectionId = function() {
+  if (this._selectionId.playing != null) {
     this._releaseSelection(this._selectionId.playing);
     this._selectionId.playing = null;
   }
 
-  if (this._selectionId.browsing != 0)
-  {
+  if (this._selectionId.browsing != 0) {
     this._releaseSelection(this._selectionId.browsing);
     this._selectionId.browsing = 0;
   }
 };
 
-usbaudioApp.prototype._disableUSBAudioMenus = function()
-{
+usbaudioApp.prototype._disableUSBAudioMenus = function() {
   if ((this._connectedDevs.deviceSelected == this._connectedDevs.A.deviceId && this._connectedDevs.A.type == 'UMASS') ||
-        (this._connectedDevs.deviceSelected == this._connectedDevs.B.deviceId && this._connectedDevs.B.type == 'UMASS'))
-  {
+        (this._connectedDevs.deviceSelected == this._connectedDevs.B.deviceId && this._connectedDevs.B.type == 'UMASS')) {
     // if the selected device type is UMASS "Podcasts" and "Audiobooks" should remain disabled
     this._disableUMASSMenu();
-  }
-  else
-  {
+  } else {
     this._disableiPodMenu();
   }
 
-  if (this._currentContext && this._currentContext.ctxtId == 'USBAudio' && this._currentContextTemplate)
-  {
+  if (this._currentContext && this._currentContext.ctxtId == 'USBAudio' && this._currentContextTemplate) {
     this._currentContextTemplate.list2Ctrl.updateItems(0, this._usbaudioCtxtDataList.itemCount);
   }
 };
 
-usbaudioApp.prototype._disableUMASSMenu = function()
-{
-  for (let i = 0; i < this._usbaudioCtxtDataList.itemCount - 1; i++)
-  {
+usbaudioApp.prototype._disableUMASSMenu = function() {
+  for (let i = 0; i < this._usbaudioCtxtDataList.itemCount - 1; i++) {
     this._usbaudioCtxtDataList.items[i].disabled = true;
   }
   this._usbaudioCtxtDataList.items[this._usbaudioCtxtDataList.itemCount - 1].disabled = false;
 };
 
-usbaudioApp.prototype._disableiPodMenu = function()
-{
-  for (let i = 0; i < this._usbaudioCtxtDataList.itemCount; i++)
-  {
+usbaudioApp.prototype._disableiPodMenu = function() {
+  for (let i = 0; i < this._usbaudioCtxtDataList.itemCount; i++) {
     this._usbaudioCtxtDataList.items[i].disabled = true;
   }
 };
 
-usbaudioApp.prototype._enableUSBAudioMenus = function()
-{
+usbaudioApp.prototype._enableUSBAudioMenus = function() {
   // already enabled is 1 because "Folders" item is always enabled
   let doNotEnable = 1;
   // check which device is selected and its type
   if ((this._connectedDevs.deviceSelected == this._connectedDevs.A.deviceId && this._connectedDevs.A.type == 'UMASS') ||
-        (this._connectedDevs.deviceSelected == this._connectedDevs.B.deviceId && this._connectedDevs.B.type == 'UMASS'))
-  {
+        (this._connectedDevs.deviceSelected == this._connectedDevs.B.deviceId && this._connectedDevs.B.type == 'UMASS')) {
     // if the selected device type is UMASS "Podcasts" and "Audiobooks" should remain disabled
     doNotEnable = 3;
     this._usbaudioCtxtDataList.items[this._usbaudioCtxtDataList.itemCount - 2].disabled = true;
     this._usbaudioCtxtDataList.items[this._usbaudioCtxtDataList.itemCount - 3].disabled = true;
     this._usbaudioCtxtDataList.items[this._usbaudioCtxtDataList.itemCount - 1].disabled = false;
-  }
-  else
-  {
+  } else {
     this._usbaudioCtxtDataList.items[this._usbaudioCtxtDataList.itemCount - 1].disabled = true;
   }
 
-  for (let i = 0; i < this._usbaudioCtxtDataList.itemCount - doNotEnable; i++)
-  {
+  for (let i = 0; i < this._usbaudioCtxtDataList.itemCount - doNotEnable; i++) {
     this._usbaudioCtxtDataList.items[i].disabled = false;
   }
 
-  if (this._currentContext && this._currentContext.ctxtId == 'USBAudio' && this._currentContextTemplate)
-  {
+  if (this._currentContext && this._currentContext.ctxtId == 'USBAudio' && this._currentContextTemplate) {
     this._currentContextTemplate.list2Ctrl.updateItems(0, this._usbaudioCtxtDataList.itemCount);
   }
 };
 
-usbaudioApp.prototype._getErrorId = function(error)
-{
+usbaudioApp.prototype._getErrorId = function(error) {
   let text1Id = null;
-  switch (error)
-  {
+  switch (error) {
     case 'USBM_DEVICE_ERR_UNKNOWN_DEV':
       text1Id = 'UnknownType';
       break;
@@ -4605,25 +4002,26 @@ usbaudioApp.prototype._getErrorId = function(error)
   return text1Id;
 };
 
-usbaudioApp.prototype._secondsToHHMMSS = function(seconds)
-{
+usbaudioApp.prototype._secondsToHHMMSS = function(seconds) {
   // let hr = Math.floor(seconds / 3600);
   let min = Math.floor(seconds /60);
   let sec = seconds - (min * 60);
 
   // if (hr < 10) {hr = "0" + hr; }
-  if (min < 10) {min = '0' + min;}
-  if (sec < 10) {sec = '0' + sec;}
+  if (min < 10) {
+    min = '0' + min;
+  }
+  if (sec < 10) {
+    sec = '0' + sec;
+  }
   return min + ':' + sec;
 };
 
-usbaudioApp.prototype._addAlbumsAdditionalFilters = function(mdInfo)
-{
+usbaudioApp.prototype._addAlbumsAdditionalFilters = function(mdInfo) {
   if (this._currentContext &&
         this._currentContext.params.hasOwnProperty('payload') &&
         this._currentContext.params.payload.hasOwnProperty('path') &&
-        this._payloadTable[this._currentContext.params.payload.path].md_info.hasOwnProperty('genre'))
-  {
+        this._payloadTable[this._currentContext.params.payload.path].md_info.hasOwnProperty('genre')) {
     mdInfo.unshift({
       value: this._payloadTable[this._currentContext.params.payload.path].md_info.genre.value,
       type: this._payloadTable[this._currentContext.params.payload.path].md_info.genre.type,
@@ -4634,15 +4032,12 @@ usbaudioApp.prototype._addAlbumsAdditionalFilters = function(mdInfo)
 };
 
 // Check how many albums an artist have
-usbaudioApp.prototype._countAlbums = function(artistName, action, artistId, fromVui, contextPath)
-{
+usbaudioApp.prototype._countAlbums = function(artistName, action, artistId, fromVui, contextPath) {
   let isiPod = false;
-  if (this._connectedDevs.selectedDevType == 'IPOD')
-  {
+  if (this._connectedDevs.selectedDevType == 'IPOD') {
     isiPod = true;
   }
-  if (!artistId)
-  {
+  if (!artistId) {
     artistId = 0;
   }
 
@@ -4679,11 +4074,9 @@ usbaudioApp.prototype._countAlbums = function(artistName, action, artistId, from
 };
 
 // check how many artists have albums with that name
-usbaudioApp.prototype._countArtists = function(albumName, action, fromVui, contextPath)
-{
+usbaudioApp.prototype._countArtists = function(albumName, action, fromVui, contextPath) {
   let isiPod = false;
-  if (this._connectedDevs.selectedDevType == 'IPOD')
-  {
+  if (this._connectedDevs.selectedDevType == 'IPOD') {
     isiPod = true;
   }
 
@@ -4717,131 +4110,90 @@ usbaudioApp.prototype._countArtists = function(albumName, action, fromVui, conte
   framework.sendRequestToAppsdk(this.uiaId, this._countArtistsCallback.bind(this, albumName, action, fromVui, contextPath), 'usbm', 'GetPropertyInfoListAsync', params);
 };
 
-usbaudioApp.prototype._countArtistsCallback = function(albumName, action, fromVui, contextPath, params)
-{
-  if (params.msgType == 'methodResponse')
-  {
-    if (params.hasOwnProperty('params') && params.params.hasOwnProperty('sel_id_out'))
-    {
-      if (this._selectionId.browsing != params.params.sel_id_out && this._selectionId.browsing != 0)
-      {
+usbaudioApp.prototype._countArtistsCallback = function(albumName, action, fromVui, contextPath, params) {
+  if (params.msgType == 'methodResponse') {
+    if (params.hasOwnProperty('params') && params.params.hasOwnProperty('sel_id_out')) {
+      if (this._selectionId.browsing != params.params.sel_id_out && this._selectionId.browsing != 0) {
         // release selection that is not used
         this._releaseSelection(this._selectionId.browsing);
         this._selectionId.browsing = params.params.sel_id_out;
-      }
-      else if (this._selectionId.browsing == 0 && this._selectionId.browsing != params.params.sel_id_out)
-      {
+      } else if (this._selectionId.browsing == 0 && this._selectionId.browsing != params.params.sel_id_out) {
         this._selectionId.browsing = params.params.sel_id_out;
       }
     }
 
-    if (params.params.total_count > 1)
-    {
+    if (params.params.total_count > 1) {
       const lastItem = params.params.result_count - 1;
       if ((this._connectedDevs.selectedDevType == 'UMASS') ||
-                (params.params.prop_info_list.prop_info_list[lastItem].metadata_info[0].type == this._mdFilter.USBM_MetadataType_ArtistName))
-      {
+                (params.params.prop_info_list.prop_info_list[lastItem].metadata_info[0].type == this._mdFilter.USBM_MetadataType_ArtistName)) {
         // send event to go to all albums
-        if (action == 'browse')
-        {
+        if (action == 'browse') {
           framework.sendEventToMmui(this.uiaId, 'BrowseAlbumDisambiguate', {payload: {albumName: albumName}}, fromVui);
-        }
-        else
-        {
+        } else {
           framework.sendEventToMmui(this.uiaId, 'PlayAlbumDisambiguate', {payload: {albumName: albumName}}, fromVui);
         }
-      }
-      else
-      {
-        if (action == 'browse')
-        {
+      } else {
+        if (action == 'browse') {
           // framework.sendEventToMmui(this.uiaId, "ChooseAlbumArtist", {payload:{artistName: "", artistId: 0}}, fromVui);
           framework.sendEventToMmui(this.uiaId, 'BrowseAlbumArtist', {payload: {albumName: albumName}}, fromVui);
-        }
-        else
-        {
+        } else {
           framework.sendEventToMmui(this.uiaId, 'PlaySongIndex', {payload: {songIndex: 0, selectionId: this._selectionId.browsing}}, fromVui);
         }
       }
-    }
-    else
-    {
+    } else {
       const artistName = params.params.prop_info_list.prop_info_list[0].metadata_info[0].value;
       const artistId = params.params.prop_info_list.prop_info_list[0].metadata_info[0].item_id;
       const lastItem = params.params.result_count - 1;
       if ((this._connectedDevs.selectedDevType == 'UMASS') ||
-                (params.params.prop_info_list.prop_info_list[lastItem].metadata_info[0].type == this._mdFilter.USBM_MetadataType_ArtistName))
-      {
-        if (action == 'browse')
-        {
+                (params.params.prop_info_list.prop_info_list[lastItem].metadata_info[0].type == this._mdFilter.USBM_MetadataType_ArtistName)) {
+        if (action == 'browse') {
           // send event to go songs of the current albums
           framework.sendEventToMmui(this.uiaId, 'BrowseAlbumArtist', {payload: {albumName: albumName}}, fromVui);
-        }
-        else
-        {
+        } else {
           // select songs of this artist with this album
           const mdType = [this._mdFilter.USBM_MetadataType_ObjectName];
           const mdInfo = [{value: albumName, type: this._mdFilter.USBM_MetadataType_AlbumName, item_id: 0}, {value: artistName, type: this._mdFilter.USBM_MetadataType_ArtistName, item_id: artistId}];
           const sortSettings = [{metadata_type: this._mdFilter.USBM_MetadataType_ObjectName, sort_order: this._soFilter.USBM_SortOrder_AlphaAscending}];
           this._SelectSongsAndPlay(mdType, mdInfo, sortSettings, fromVui, contextPath);
         }
-      }
-      else
-      {
-        if (action == 'browse')
-        {
+      } else {
+        if (action == 'browse') {
           // send event to go songs of the current albums
           framework.sendEventToMmui(this.uiaId, 'BrowseAlbumArtist', {payload: {albumName: albumName}}, fromVui);
-        }
-        else
-        {
+        } else {
           // select songs of this artist with this album
           framework.sendEventToMmui(this.uiaId, 'PlaySongIndex', {payload: {songIndex: 0, selectionId: this._selectionId.browsing}}, fromVui);
         }
       }
     }
-  }
-  else if (params.msgType == 'methodErrorResponse')
-  {
+  } else if (params.msgType == 'methodErrorResponse') {
     log.error('USBAUDIO: GetPropertyInfoListAsync request failed!');
-    if (this._currentContextTemplate.hasOwnProperty('list2Ctrl') && this._currentContextTemplate.list2Ctrl.setLoading && this._currentContextTemplate.list2Ctrl.inLoading)
-    {
+    if (this._currentContextTemplate.hasOwnProperty('list2Ctrl') && this._currentContextTemplate.list2Ctrl.setLoading && this._currentContextTemplate.list2Ctrl.inLoading) {
       this._currentContextTemplate.list2Ctrl.setLoading(false);
     }
   }
 };
 
-usbaudioApp.prototype._countAlbumsCallback= function(artistName, action, fromVui, contextPath, params)
-{
-  if (params.msgType == 'methodResponse')
-  {
-    if (params.hasOwnProperty('params') && params.params.hasOwnProperty('sel_id_out'))
-    {
-      if (this._selectionId.browsing != params.params.sel_id_out && this._selectionId.browsing != 0)
-      {
+usbaudioApp.prototype._countAlbumsCallback= function(artistName, action, fromVui, contextPath, params) {
+  if (params.msgType == 'methodResponse') {
+    if (params.hasOwnProperty('params') && params.params.hasOwnProperty('sel_id_out')) {
+      if (this._selectionId.browsing != params.params.sel_id_out && this._selectionId.browsing != 0) {
         // release selection that is not used
         this._releaseSelection(this._selectionId.browsing);
         this._selectionId.browsing = params.params.sel_id_out;
-      }
-      else if (this._selectionId.browsing == 0 && this._selectionId.browsing != params.params.sel_id_out)
-      {
+      } else if (this._selectionId.browsing == 0 && this._selectionId.browsing != params.params.sel_id_out) {
         this._selectionId.browsing = params.params.sel_id_out;
       }
     }
 
-    if (params.params.total_count > 1)
-    {
+    if (params.params.total_count > 1) {
       const lastItem = params.params.result_count - 1;
       if ((this._connectedDevs.selectedDevType == 'UMASS') ||
-                (params.params.prop_info_list.prop_info_list[lastItem].metadata_info[0].type == this._mdFilter.USBM_MetadataType_AlbumName))
-      {
+                (params.params.prop_info_list.prop_info_list[lastItem].metadata_info[0].type == this._mdFilter.USBM_MetadataType_AlbumName)) {
         // send event to go to all albums
-        if (action == 'browse')
-        {
+        if (action == 'browse') {
           framework.sendEventToMmui(this.uiaId, 'BrowseArtistGUI', {payload: {artistName: artistName}}, fromVui);
-        }
-        else
-        {
+        } else {
           // TODO: check if first have to show the albums?
           // select songs of this artist
           const mdType = [this._mdFilter.USBM_MetadataType_ObjectName];
@@ -4849,72 +4201,51 @@ usbaudioApp.prototype._countAlbumsCallback= function(artistName, action, fromVui
           const sortSettings = [{metadata_type: this._mdFilter.USBM_MetadataType_ObjectName, sort_order: this._soFilter.USBM_SortOrder_AlphaAscending}];
           this._SelectSongsAndPlay(mdType, mdInfo, sortSettings, fromVui);
         }
-      }
-      else
-      {
-        if (action == 'browse')
-        {
+      } else {
+        if (action == 'browse') {
           framework.sendEventToMmui(this.uiaId, 'BrowseArtistAlbum', {payload: {artistName: artistName, albumName: ''}}, fromVui);
-        }
-        else
-        {
+        } else {
           // play songs of this artist
           framework.sendEventToMmui(this.uiaId, 'PlaySongIndex', {payload: {songIndex: 0, selectionId: this._selectionId.browsing}}, fromVui);
         }
       }
-    }
-    else
-    {
+    } else {
       const albumName = params.params.prop_info_list.prop_info_list[0].metadata_info[0].value;
       const albumId = params.params.prop_info_list.prop_info_list[0].metadata_info[0].item_id;
       const lastItem = params.params.result_count - 1;
       if ((this._connectedDevs.selectedDevType == 'UMASS') ||
-                (params.params.prop_info_list.prop_info_list[lastItem].metadata_info[0].type == this._mdFilter.USBM_MetadataType_AlbumName))
-      {
-        if (action == 'browse')
-        {
+                (params.params.prop_info_list.prop_info_list[lastItem].metadata_info[0].type == this._mdFilter.USBM_MetadataType_AlbumName)) {
+        if (action == 'browse') {
           // send event to go songs of the current albums
           framework.sendEventToMmui(this.uiaId, 'BrowseArtistAlbum', {payload: {artistName: artistName, albumName: albumName}}, fromVui);
-        }
-        else
-        {
+        } else {
           // select songs of this artist with this album
           const mdType = [this._mdFilter.USBM_MetadataType_ObjectName];
           const mdInfo = [{value: albumName, type: this._mdFilter.USBM_MetadataType_AlbumName, item_id: albumId}, {value: artistName, type: this._mdFilter.USBM_MetadataType_ArtistName, item_id: 0}];
           const sortSettings = [{metadata_type: this._mdFilter.USBM_MetadataType_ObjectName, sort_order: this._soFilter.USBM_SortOrder_AlphaAscending}];
           this._SelectSongsAndPlay(mdType, mdInfo, sortSettings, fromVui, contextPath);
         }
-      }
-      else
-      {
-        if (action == 'browse')
-        {
+      } else {
+        if (action == 'browse') {
           // send event to go songs of the current albums
           framework.sendEventToMmui(this.uiaId, 'BrowseArtistAlbum', {payload: {artistName: artistName, albumName: ''}}, fromVui);
-        }
-        else
-        {
+        } else {
           // play songs of this artist with this album
           framework.sendEventToMmui(this.uiaId, 'PlaySongIndex', {payload: {songIndex: 0, selectionId: this._selectionId.browsing}}, fromVui);
         }
       }
     }
-  }
-  else if (params.msgType == 'methodErrorResponse')
-  {
+  } else if (params.msgType == 'methodErrorResponse') {
     log.error('USBAUDIO: GetPropertyInfoListAsync request failed!');
-    if (this._currentContextTemplate.hasOwnProperty('list2Ctrl') && this._currentContextTemplate.list2Ctrl.setLoading && this._currentContextTemplate.list2Ctrl.inLoading)
-    {
+    if (this._currentContextTemplate.hasOwnProperty('list2Ctrl') && this._currentContextTemplate.list2Ctrl.setLoading && this._currentContextTemplate.list2Ctrl.inLoading) {
       this._currentContextTemplate.list2Ctrl.setLoading(false);
     }
   }
 };
 
-usbaudioApp.prototype._SelectSongsAndPlay = function(md_types, md_info, sort_settings, fromVui, contextPath)
-{
+usbaudioApp.prototype._SelectSongsAndPlay = function(md_types, md_info, sort_settings, fromVui, contextPath) {
   let isiPod = false;
-  if (this._connectedDevs.selectedDevType == 'IPOD')
-  {
+  if (this._connectedDevs.selectedDevType == 'IPOD') {
     isiPod = true;
   }
 
@@ -4947,34 +4278,25 @@ usbaudioApp.prototype._SelectSongsAndPlay = function(md_types, md_info, sort_set
   // / why limit to 2??? 2015.03.05 AN
   params.max_list_size = 20;
 
-  if (contextPath == 'Audiobooks')
-  {
+  if (contextPath == 'Audiobooks') {
     params.max_list_size = 20;
   }
   framework.sendRequestToAppsdk(this.uiaId, this._PlaySongs.bind(this, fromVui, contextPath), 'usbm', 'GetPropertyInfoListAsync', params);
 };
 
-usbaudioApp.prototype._selectData = function(msg, fromVui)
-{
+usbaudioApp.prototype._selectData = function(msg, fromVui) {
   const contextPath = msg.params.payload.path;
   const mdTypeList = this._payloadTable[contextPath].md_types;
   const mdInfoList = this._createMdInfoFromMsg(msg);
   const sortSettings = this._payloadTable[msg.params.payload.path].sort_settings;
-  if (mdInfoList.length < 2)
-  {
-    switch (mdTypeList[0])
-    {
+  if (mdInfoList.length < 2) {
+    switch (mdTypeList[0]) {
       case 2:
-        if (msg.params.payload.path == 'PodcastEpisodes' && msg.params.payload.metadata.episodeName == '')
-        {
+        if (msg.params.payload.path == 'PodcastEpisodes' && msg.params.payload.metadata.episodeName == '') {
           this._SelectSongsAndPlay(mdTypeList, [{value: msg.params.payload.metadata.podcastName, type: this._mdFilter.USBM_MetadataType_Podcast, item_id: 0}], sortSettings, fromVui, contextPath);
-        }
-        else if (msg.params.payload.path == 'PodcastEpisodes' && msg.params.payload.metadata.episodeName != '')
-        {
+        } else if (msg.params.payload.path == 'PodcastEpisodes' && msg.params.payload.metadata.episodeName != '') {
           this._SelectSongsAndPlay(mdTypeList, [{value: msg.params.payload.metadata.podcastName, type: this._mdFilter.USBM_MetadataType_Podcast, item_id: 0}, {value: msg.params.payload.metadata.episodeName, type: this._mdFilter.USBM_MetadataType_ObjectName, item_id: 0}], sortSettings, fromVui, contextPath);
-        }
-        else
-        {
+        } else {
           this._SelectSongsAndPlay(mdTypeList, mdInfoList, sortSettings, fromVui, contextPath);
         }
         break;
@@ -4985,12 +4307,9 @@ usbaudioApp.prototype._selectData = function(msg, fromVui)
         this._countAlbums(msg.params.payload.artistName, 'play', null, fromVui, contextPath);
         break;
       case 24:
-        if (msg.params.payload.path == 'Audiobooks' && msg.params.payload.metadata.audiobookName == '')
-        {
+        if (msg.params.payload.path == 'Audiobooks' && msg.params.payload.metadata.audiobookName == '') {
           this._SelectSongsAndPlay(mdTypeList, mdInfoList, sortSettings, fromVui, contextPath);
-        }
-        else if (msg.params.payload.path == 'Audiobooks' && msg.params.payload.metadata.audiobookName != '')
-        {
+        } else if (msg.params.payload.path == 'Audiobooks' && msg.params.payload.metadata.audiobookName != '') {
           this._SelectSongsAndPlay(mdTypeList, [{value: msg.params.payload.metadata.audiobookName, type: this._mdFilter.USBM_MetadataType_Kind, item_id: 0}], sortSettings, fromVui, contextPath);
         }
         break;
@@ -4998,53 +4317,37 @@ usbaudioApp.prototype._selectData = function(msg, fromVui)
         this._SelectSongsAndPlay(this._payloadTable['PodcastEpisodes'].md_types, mdInfoList, this._payloadTable['PodcastEpisodes'].sort_settings, fromVui, contextPath);
         break;
     }
-  }
-  else
-  {
+  } else {
     this._SelectSongsAndPlay(mdTypeList, mdInfoList, sortSettings, fromVui, contextPath);
   }
 };
 
-usbaudioApp.prototype._PlaySongs = function(fromVui, contextPath, params)
-{
+usbaudioApp.prototype._PlaySongs = function(fromVui, contextPath, params) {
   this._clearMetadata();
   this._clearTotalElapsedTime();
 
-  if (params.msgType == 'methodResponse')
-  {
-    if (params.hasOwnProperty('params') && params.params.hasOwnProperty('sel_id_out'))
-    {
-      if (this._selectionId.browsing != params.params.sel_id_out && this._selectionId.browsing != 0)
-      {
+  if (params.msgType == 'methodResponse') {
+    if (params.hasOwnProperty('params') && params.params.hasOwnProperty('sel_id_out')) {
+      if (this._selectionId.browsing != params.params.sel_id_out && this._selectionId.browsing != 0) {
         // release selection that is not used
         this._releaseSelection(this._selectionId.browsing);
         this._selectionId.browsing = params.params.sel_id_out;
-      }
-      else if (this._selectionId.browsing == 0 && this._selectionId.browsing != params.params.sel_id_out)
-      {
+      } else if (this._selectionId.browsing == 0 && this._selectionId.browsing != params.params.sel_id_out) {
         this._selectionId.browsing = params.params.sel_id_out;
       }
     }
-    if (contextPath != 'PodcastEpisodes' && contextPath != 'Chapters')
-    {
+    if (contextPath != 'PodcastEpisodes' && contextPath != 'Chapters') {
       framework.sendEventToMmui(this.uiaId, 'PlaySongIndex', {payload: {songIndex: 0, selectionId: this._selectionId.browsing}}, fromVui);
-    }
-    else if (contextPath == 'PodcastEpisodes')
-    {
+    } else if (contextPath == 'PodcastEpisodes') {
       framework.sendEventToMmui(this.uiaId, 'PlayEpisodeIndex', {payload: {episodeIndex: 0, selectionId: this._selectionId.browsing}}, fromVui);
-    }
-    else
-    {
+    } else {
       framework.sendEventToMmui(this.uiaId, 'PlayChapterIndex', {payload: {chapterIndex: 0, selectionId: this._selectionId.browsing}}, fromVui);
     }
 
     this._selectionId.browsing = 0;
-  }
-  else if (params.msgType == 'methodErrorResponse')
-  {
+  } else if (params.msgType == 'methodErrorResponse') {
     log.error('USBAUDIO: GetPropertyInfoListAsync request failed!');
-    if (this._currentContextTemplate.hasOwnProperty('list2Ctrl') && this._currentContextTemplate.list2Ctrl.setLoading && this._currentContextTemplate.list2Ctrl.inLoading)
-    {
+    if (this._currentContextTemplate.hasOwnProperty('list2Ctrl') && this._currentContextTemplate.list2Ctrl.setLoading && this._currentContextTemplate.list2Ctrl.inLoading) {
       this._currentContextTemplate.list2Ctrl.setLoading(false);
     }
   }

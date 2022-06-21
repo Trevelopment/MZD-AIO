@@ -148,8 +148,12 @@ $(document).ready(function() {
     const hours = Math.floor(totalTripSeconds / 3600);
     let minutes = Math.floor((totalTripSeconds - (hours * 3600)) / 60);
     let seconds = totalTripSeconds - (hours * 3600) - (minutes * 60);
-    if (hours > 0 && minutes < 10) {minutes = '0' + minutes;}
-    if (seconds < 10) {seconds = '0' + seconds;}
+    if (hours > 0 && minutes < 10) {
+      minutes = '0' + minutes;
+    }
+    if (seconds < 10) {
+      seconds = '0' + seconds;
+    }
     if (hours > 0) {
       $('.tripTimeValue').html(hours + ':' + minutes + ':' + seconds);
     } else {
@@ -175,8 +179,12 @@ $(document).ready(function() {
       const hours = Math.floor(totalIdleSeconds / 3600);
       let minutes = Math.floor((totalIdleSeconds - (hours * 3600)) / 60);
       let seconds = totalIdleSeconds - (hours * 3600) - (minutes * 60);
-      if (hours > 0 && minutes < 10) {minutes = '0' + minutes;}
-      if (seconds < 10) {seconds = '0' + seconds;}
+      if (hours > 0 && minutes < 10) {
+        minutes = '0' + minutes;
+      }
+      if (seconds < 10) {
+        seconds = '0' + seconds;
+      }
       if (hours > 0) {
         idleTimeValue = ('<span class="idleHours">' + hours + ':' + minutes + ':' + seconds + '</span>');
       } else {
@@ -190,8 +198,12 @@ $(document).ready(function() {
       const hoursE = Math.floor(totalEngineOnSeconds / 3600);
       let minutesE = Math.floor((totalEngineOnSeconds - (hoursE * 3600)) / 60);
       let secondsE = totalEngineOnSeconds - (hoursE * 3600) - (minutesE * 60);
-      if (hoursE > 0 && minutesE < 10) {minutesE = '0' + minutesE;}
-      if (secondsE < 10) {secondsE = '0' + secondsE;}
+      if (hoursE > 0 && minutesE < 10) {
+        minutesE = '0' + minutesE;
+      }
+      if (secondsE < 10) {
+        secondsE = '0' + secondsE;
+      }
       if (hoursE > 0) {
         engONidleTimeValue = ('<span class="idleHours">' + hoursE + ':' + minutesE + ':' + secondsE + '</span>');
       } else {

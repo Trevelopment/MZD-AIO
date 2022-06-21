@@ -15,7 +15,6 @@
         "@typescript-eslint"
     ],
     "rules": {
-        "brace-style": "off",
         "require-jsdoc": "off",
         "valid-jsdoc": "off",
         "max-len": "off",

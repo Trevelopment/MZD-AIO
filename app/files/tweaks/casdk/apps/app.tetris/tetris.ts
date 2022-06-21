@@ -123,8 +123,9 @@
           .end()
           .filter(function() {
             const index = $(this).data('index');
-            if (index - (index % cols) < rowStart)
-            {return index - (index % cols) < rowStart;}
+            if (index - (index % cols) < rowStart) {
+              return index - (index % cols) < rowStart;
+            }
           })
           .css('top', function() {
             return parseInt($(this).css('top')) + tileSize;
@@ -158,8 +159,9 @@
 
         for (j = 0; j < i; j++) {
           if (((location[i] % cols == 0) && (location[j] % cols == cols - 1)) ||
-            ((location[i] % cols == cols - 1) && (location[j] % cols == 0)))
-          {return false;}
+            ((location[i] % cols == cols - 1) && (location[j] % cols == 0))) {
+            return false;
+          }
         }
       }
 
@@ -196,7 +198,9 @@
       if (currentTile.shapeStates) {
         rotation = currentTile.shapeStates[currentTile.shapeStateIndex];
 
-        newLocation = $.map(newLocation, function(x, index) {return x + rotation[index];});
+        newLocation = $.map(newLocation, function(x, index) {
+          return x + rotation[index];
+        });
       } else if (currentTile.shapeRotation) {
         newLocation = currentTile.shapeRotation(newLocation);
       }
@@ -215,7 +219,9 @@
       const cols = that.cols;
       // const maxStageIndex = cols * that.rows;
       const shape = that.currentTile.shape;
-      const newLocation = $.map(shape, function(x) {return x + cols;});
+      const newLocation = $.map(shape, function(x) {
+        return x + cols;
+      });
 
       if (that.isValidLocation(newLocation)) {
         that.currentTile.shape = newLocation;
@@ -351,8 +357,9 @@
         let broken = false;
 
         for (let i = rowStart; i < rowStart + cols; i++) {
-          if (!this.frozen[i])
-          {broken = true;}
+          if (!this.frozen[i]) {
+            broken = true;
+          }
         }
 
         if (!broken) {

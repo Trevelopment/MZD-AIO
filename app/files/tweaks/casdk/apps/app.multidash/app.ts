@@ -304,7 +304,9 @@ CustomApplicationsHandler.register('app.multidash', new CustomApplication({
     this.createSections();
 
     this.updateTripTime();
-    this.updateTripTimer = setInterval(function() {this.updateTripTime();}.bind(this), this.updateTripTimerInterval);
+    this.updateTripTimer = setInterval(function() {
+      this.updateTripTime();
+    }.bind(this), this.updateTripTimerInterval);
   },
 
   /**
@@ -322,7 +324,9 @@ CustomApplicationsHandler.register('app.multidash', new CustomApplication({
   focused: function() {
     this.updateTripTime();
     clearInterval(this.updateTripTimer);
-    this.updateTripTimer = setInterval(function() {this.updateTripTime();}.bind(this), this.updateTripTimerInterval);
+    this.updateTripTimer = setInterval(function() {
+      this.updateTripTime();
+    }.bind(this), this.updateTripTimerInterval);
     // this.mainContainer.addClass('shown');
   },
 
@@ -584,7 +588,9 @@ CustomApplicationsHandler.register('app.multidash', new CustomApplication({
         // after done displaying seconds, set the trip timer to only run every minute
         clearInterval(this.updateTripTimer);
         this.updateTripTimerInterval = 60000;
-        this.updateTripTimer = setInterval(function() {this.updateTripTime();}.bind(this), this.updateTripTimerInterval);
+        this.updateTripTimer = setInterval(function() {
+          this.updateTripTime();
+        }.bind(this), this.updateTripTimerInterval);
       }
 
       if (diffH > 0) {
@@ -686,7 +692,9 @@ CustomApplicationsHandler.register('app.multidash', new CustomApplication({
       }
 
       // give additional weight to the result value by essentially adding it 2 times as many
-      sum = store.reduce(function(a, b) {return a + b;}) + (result * max * weight);
+      sum = store.reduce(function(a, b) {
+        return a + b;
+      }) + (result * max * weight);
 
       retval = sum / (store.length + (max * weight));
     }

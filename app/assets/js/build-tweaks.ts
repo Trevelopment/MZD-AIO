@@ -197,7 +197,11 @@ function customTheme(color: any, user: any) {
         }
         return true;
       }, (err: any) => {
-        if (err) {aioLog(err, err);} else {aioLog(`Custom Theme Copied Successfully.`);}
+        if (err) {
+          aioLog(err, err);
+        } else {
+          aioLog(`Custom Theme Copied Successfully.`);
+        }
         buildTweak(user);
       });
     } else {
@@ -213,7 +217,9 @@ function customTheme(color: any, user: any) {
 function setTheme(color: any, user: any) {
   aioLog(`Unzipping ${color} Theme Folder`);
   extract(`${builddir}/config/themes/${color}.zip`, {dir: `${tmpdir}/config/color-schemes/theme/`, onEntry: (err) => {
-    if (err) {aioLog(err, err);}
+    if (err) {
+      aioLog(err, err);
+    }
     aioLog(`${color} Theme Folder Unzipped & Added.`);
     if (!user.useColorBG) {
       if (fs.existsSync(`${tmpdir}/config/color-schemes/theme/jci/gui/common/images/background.png`)) {
@@ -237,7 +243,9 @@ function setColor(color: any, user: any) {
   }
   aioLog(`Unzipping ${color} color theme folder`);
   extract(`${colordir}/${color}/jci.zip`, {dir: `${tmpdir}/config/color-schemes/${color}`, onEntry: (err) => {
-    if (err) {aioLog(err, err);}
+    if (err) {
+      aioLog(err, err);
+    }
     aioLog(`${color} Color Scheme Folder Unzipped... Continue Build.`);
     buildTweak(user);
     if (user.colors === 1) {
@@ -657,7 +665,9 @@ function buildTweak(user: any) {
       }
     }
   }
-  if (user.options.some((x: number) => {return x > 100;})) {
+  if (user.options.some((x: number) => {
+    return x > 100;
+  })) {
     const twkdir = '/config_org/';
     mkdirp.sync(`${tmpdir}${twkdir}`);
     if (!fs.existsSync(`${tmpdir}${twkdir}/v70`)) {
@@ -1037,7 +1047,9 @@ function addRootFiles(dataDump?: any) {
       } else {
         if (dataDump) {
           copydir(`${tmpdir}/data`, `${tmpdir}`, (err) => {
-            if (err) {errFlag = true;} else {
+            if (err) {
+              errFlag = true;
+            } else {
               rimraf.sync(`${tmpdir}/data`);
               aioLog('Root files copied successfully!');
             }
@@ -1077,9 +1089,17 @@ function printAIOlog() {
     opsComplete = false;
     if (keeplog) {
       fs.writeFile(`${tmpdir}/${logFileName}.md`, AIO_LOG, {flag: 'w'}, (err) => {
-        if (err) {console.log('AIO Could Not Be Saved');} else {console.log('AIO log saved!');}
+        if (err) {
+          console.log('AIO Could Not Be Saved');
+        } else {
+          console.log('AIO log saved!');
+        }
         fs.writeFile(path.resolve(path.join(`${approot}`, `../../${logFileName}.htm`)), AIO_LOG_HTML, {flag: 'w'}, (err) => {
-          if (err) {console.log('HTML Log Cannot Be Saved');} else {console.log('AIO log saved! (HTML version)');}
+          if (err) {
+            console.log('HTML Log Cannot Be Saved');
+          } else {
+            console.log('AIO log saved! (HTML version)');
+          }
           bootbox.hideAll();
           if (!errFlag) {
             usbDrives();
@@ -1215,7 +1235,9 @@ function noUsbDrive() {
     title: `<h2>Compilation Finished!</h2>`,
     className: `compFinishBox`,
     message: `${langObj.popupMsgs[9].msg} <pre>${tmpdir.replace(/\\/g, '/')}</pre> ${langObj.popupMsgs[10].msg}. <br><button href='' class='w3-large w3-center w3-black w3-btn w3-ripple nousbbutton' title='Copy These Files To A Blank USB Drive' onclick='openCopyFolder()'>${langObj.menu.copytousb.toolTip}</button>`,
-    callback: () => {finishedMessage();},
+    callback: () => {
+      finishedMessage();
+    },
   });
   appendAIOlog(`<li style='color:#4a0dab'>To Install Tweak Files: Copy Entire Contents of "_copy_to_usb" Onto USB Drive.</li><li style='color:#1a0dab'>Location:<a href='' onclick='openCopyFolder()'><u> ${tmpdir.replace(/\\/g, '/')}</u></a></li>`);
 }
@@ -1362,7 +1384,9 @@ function saveInstallerOps(user: any) {
 }
 
 function cleanCopyDir() {
-  rimraf(`${tmpdir}`, () => {appendAIOlog(`<li style='color:#ff3366'>Deleted '_copy_to_usb' Folder</li>`);});
+  rimraf(`${tmpdir}`, () => {
+    appendAIOlog(`<li style='color:#ff3366'>Deleted '_copy_to_usb' Folder</li>`);
+  });
 }
 
 function casdkAppOptions(apps: any, inst: any) {
@@ -1548,7 +1572,9 @@ function addWifiAP(user: any) {
   }
   if (user.autorun.dryrun && !user.autorun.serial) {
     copydir(`${approot}/files/tweaks/cmu-autorun/sdcard/dryrun`, `${tmpdir}`, (err: any) => {
-      if (err) {errFlag = true;}
+      if (err) {
+        errFlag = true;
+      }
     });
   }
   if (user.autorun.autoWIFI) {

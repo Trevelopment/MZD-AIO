@@ -43,8 +43,7 @@ log.addSrcFile('StatusBarCtrl.js', 'common');
  * The StatusBarCtrl is a unique control instantiated by SystemApp to display general information to the user.
  *
  */
-function StatusBarCtrl(uiaId, parentDiv, controlId, properties)
-{
+function StatusBarCtrl(uiaId, parentDiv, controlId, properties) {
   // public variables
   this.controlId = controlId;
   this.divElt = null;
@@ -86,8 +85,7 @@ function StatusBarCtrl(uiaId, parentDiv, controlId, properties)
   };
   // @formatter:on
 
-  for (const i in properties)
-  {
+  for (const i in properties) {
     this.properties[i] = properties[i];
   }
 
@@ -110,8 +108,7 @@ function StatusBarCtrl(uiaId, parentDiv, controlId, properties)
 /*
  * Helper function to create all necessary DIVs for Status Bar
  */
-StatusBarCtrl.prototype._createStructure = function()
-{
+StatusBarCtrl.prototype._createStructure = function() {
   // Create the home button
   const homeBtnSelectCallback = this._homeBtnSelected.bind(this); // bind once
   // @formatter:off
@@ -165,12 +162,10 @@ StatusBarCtrl.prototype._createStructure = function()
 
   const iconsMatrix = [iconsR0, iconsR1];
 
-  for (const row in iconsMatrix)
-  {
+  for (const row in iconsMatrix) {
     this['_iconContainer' + row] = document.createElement('div');
     this['_iconContainer' + row].className = 'StatusBarCtrlIconContainer';
-    for (const col in iconsMatrix[row])
-    {
+    for (const col in iconsMatrix[row]) {
       const iconDiv = document.createElement('div');
       iconDiv.className = 'StatusBarCtrlIcon';
 
@@ -190,49 +185,37 @@ StatusBarCtrl.prototype._createStructure = function()
   this.divElt.appendChild(this.clock);
 };
 
-StatusBarCtrl.prototype.setupCPAAMode = function(enable)
-{
+StatusBarCtrl.prototype.setupCPAAMode = function(enable) {
   log.info(framework.getCurrentApp() + ' : ENTER StatusBarCtrl.setupCPAAMode');
-  if (enable)
-  {
+  if (enable) {
     if (((this._lastApp != 'androidauto') && (framework.getCurrCtxtId() == 'AndroidAutoUI')) ||
         ((this._lastApp != 'carplay') && (framework.getCurrCtxtId() == 'CarPlayUI'))
-    )
-    {
+    ) {
       this._CPAAParameter._left = this.divElt.style.left;
       this._CPAAParameter._width = this.divElt.style.width;
       this.divElt.style.left = this._CPAAParameter.left;
       this.divElt.style.width = this._CPAAParameter.width;
-      for (const name in this._ICON_CONT_MAP)
-      {
+      for (const name in this._ICON_CONT_MAP) {
         const contName = this._ICON_CONT_MAP[name]; // get the container name based on icon name
         const icon = this._iconDivs[contName]; // get the contianer
         icon.style.display = 'none';
       }
-    }
-    else
-    {
-      if ((framework.getCurrCtxtId() == 'ErrorCondition_DNR') || (framework.getCurrCtxtId() == 'ErrorCondition'))
-      {
+    } else {
+      if ((framework.getCurrCtxtId() == 'ErrorCondition_DNR') || (framework.getCurrCtxtId() == 'ErrorCondition')) {
         this.divElt.style.left = this._CPAAParameter._left;
         this.divElt.style.width = this._CPAAParameter._width;
-        for (const name in this._ICON_CONT_MAP)
-        {
+        for (const name in this._ICON_CONT_MAP) {
           const contName = this._ICON_CONT_MAP[name]; // get the container name based on icon name
           const icon = this._iconDivs[contName]; // get the contianer
           icon.style.display = icon._display;
         }
       }
     }
-  }
-  else
-  {
-    if ((this._lastApp == 'androidauto') || (this._lastApp == 'carplay'))
-    {
+  } else {
+    if ((this._lastApp == 'androidauto') || (this._lastApp == 'carplay')) {
       this.divElt.style.left = this._CPAAParameter._left;
       this.divElt.style.width = this._CPAAParameter._width;
-      for (const name in this._ICON_CONT_MAP)
-      {
+      for (const name in this._ICON_CONT_MAP) {
         const contName = this._ICON_CONT_MAP[name]; // get the container name based on icon name
         const icon = this._iconDivs[contName]; // get the contianer
         icon.style.display = icon._display;
@@ -248,16 +231,12 @@ StatusBarCtrl.prototype.setupCPAAMode = function(enable)
  * Updates the display clock to match the system clock.
  *  TODO: this function's behavior might need to be removed after BLM clock is implemented
  */
-StatusBarCtrl.prototype._updateClock = function()
-{
+StatusBarCtrl.prototype._updateClock = function() {
   let currentTime = new Date();
 
-  if (utility.toType(currentTime) == 'number')
-  {
+  if (utility.toType(currentTime) == 'number') {
     currentTime = new Date(currentTime);
-  }
-  else if (utility.toType(currentTime) != 'date')
-  {
+  } else if (utility.toType(currentTime) != 'date') {
     log.warn('Current time must be given in either Date Object or milliseconds since the Unix epoch.');
   }
 
@@ -266,44 +245,30 @@ StatusBarCtrl.prototype._updateClock = function()
   let timeStr = '00:00';
   let dateStr = '';
 
-  if (isNaN(hours) || isNaN(mins) || currentTime.getTime() <= 0)
-  {
+  if (isNaN(hours) || isNaN(mins) || currentTime.getTime() <= 0) {
     log.warn('Time value is unreadable: the result was NaN, negative, or set to the Unix epoch.');
-  }
-  else
-  {
+  } else {
     // Set the correct clock value
-    if (framework.localize.getTimeFormat() == '12hrs')
-    {
-      if (hours > 12)
-      {
+    if (framework.localize.getTimeFormat() == '12hrs') {
+      if (hours > 12) {
         hours -= 12;
-      }
-      else if (hours == 0)
-      {
+      } else if (hours == 0) {
         hours = 12;
       }
 
       timeStr = hours + ':' + (mins > 9 ? mins : '0' + mins);
-    }
-    else if (framework.localize.getTimeFormat() == '24hrs')
-    {
+    } else if (framework.localize.getTimeFormat() == '24hrs') {
       timeStr = (hours > 9 ? hours : '0' + hours) + ':' + (mins > 9 ? mins : '0' + mins);
-    }
-    else
-    {
+    } else {
       log.debug('Cannot read current time format:', framework.localize.getTimeFormat(), 'Defaulting to 24hr time.');
       // Default to 24hr
       timeStr = (hours > 9 ? hours : '0' + hours) + ':' + (mins > 9 ? mins : '0' + mins);
     }
   }
 
-  if ((framework.getCurrCtxtId() == 'AndroidAutoUI') || (framework.getCurrCtxtId() == 'CarPlayUI'))
-  {
+  if ((framework.getCurrCtxtId() == 'AndroidAutoUI') || (framework.getCurrCtxtId() == 'CarPlayUI')) {
     timeStr = '';
-  }
-  else if (typeof utility.formatDateCustom === 'function')
-  {
+  } else if (typeof utility.formatDateCustom === 'function') {
     dateStr = utility.formatDateCustom(currentTime);
   }
   this.date.innerText = dateStr;
@@ -314,15 +279,11 @@ StatusBarCtrl.prototype._updateClock = function()
  * Tells the status bar to show/hide the Home button
  * @param   show    Boolean     true if the home button should be displayed. false if it should be hidden
  */
-StatusBarCtrl.prototype.showHomeBtn = function(show)
-{
-  if (show == false)
-  {
+StatusBarCtrl.prototype.showHomeBtn = function(show) {
+  if (show == false) {
     this.homeBtn.divElt.style.display = 'none';
     this._dividerDiv.style.display = 'none';
-  }
-  else
-  {
+  } else {
     this.setupCPAAMode(false);
     this.homeBtn.divElt.style.display = 'block';
     this._dividerDiv.style.display = 'block';
@@ -333,12 +294,9 @@ StatusBarCtrl.prototype.showHomeBtn = function(show)
  * Adds/removes the button over the clock that is used to access the Diagnostic App
  * @param   flag    Boolean     true to display the invisible button. false to remove it.
  */
-StatusBarCtrl.prototype.enableClockBtn = function(flag)
-{
-  if (flag)
-  {
-    if (this._clockBtn)
-    {
+StatusBarCtrl.prototype.enableClockBtn = function(flag) {
+  if (flag) {
+    if (this._clockBtn) {
       // Safety check. There should never be 2 of these
       framework.destroyControl(this._clockBtn);
       this._clockBtn = null;
@@ -351,11 +309,8 @@ StatusBarCtrl.prototype.enableClockBtn = function(flag)
       'enabledClass': 'StatusBarCtrlClockBtn',
     };
     this._clockBtn = framework.instantiateControl(this.uiaId, this.divElt, 'ButtonCtrl', clockBtnProperties, 'StatusBar_');
-  }
-  else
-  {
-    if (this._clockBtn)
-    {
+  } else {
+    if (this._clockBtn) {
       framework.destroyControl(this._clockBtn);
       this._clockBtn = null; // be sure to null out variable for next check
     }
@@ -366,33 +321,25 @@ StatusBarCtrl.prototype.enableClockBtn = function(flag)
  * (internal) Called by common. Sets the App name text in the status bar
  * @param label String  Literal text Name to display in the status bar
  */
-StatusBarCtrl.prototype.setAppName = function(text)
-{
+StatusBarCtrl.prototype.setAppName = function(text) {
   if (text &&
-        (utility.toType(text) == 'string'))
-  {
-    if (text.indexOf('.png') != -1)
-    {
+        (utility.toType(text) == 'string')) {
+    if (text.indexOf('.png') != -1) {
       // if there's no backslashes, assume image is in common
       const isFullPath = (/\/|\\/).test(text);
       let prefix = '';
 
-      if (isFullPath == false)
-      {
+      if (isFullPath == false) {
         prefix = 'common/images/icons/';
       }
 
       this._appNameDiv.style.backgroundImage = 'url(' + prefix + text + ')';
       this._appNameDiv.innerText = '';
-    }
-    else
-    {
+    } else {
       this._appNameDiv.innerText = text;
       this._appNameDiv.style.backgroundImage = 'none';
     }
-  }
-  else
-  {
+  } else {
     // null or undefined
     this._appNameDiv.innerText = '';
     this._appNameDiv.style.backgroundImage = 'none';
@@ -408,8 +355,7 @@ StatusBarCtrl.prototype.setAppName = function(text)
  * @param labelId   String  StringID to be translated
  * @param subMap    Object  Optional subMap to be placed in the text
  */
-StatusBarCtrl.prototype.setAppNameId = function(uiaId, stringId, subMap)
-{
+StatusBarCtrl.prototype.setAppNameId = function(uiaId, stringId, subMap) {
   this._appNameUiaId = uiaId;
   this._appNameStringId = stringId;
   this._appNameSubMap = subMap;
@@ -421,25 +367,20 @@ StatusBarCtrl.prototype.setAppNameId = function(uiaId, stringId, subMap)
  * Sets an icon in the Status Bar to display between the Home Button and App Name/Image
  * @param   path    String  Path to the icon relative to index.html. Pass null to remove the current icon
  */
-StatusBarCtrl.prototype.setDomainIcon = function(path)
-{
+StatusBarCtrl.prototype.setDomainIcon = function(path) {
   log.debug('setDomainIcon("' + path + '")');
   if ((utility.toType(path) == 'string') &&
-        (path != ''))
-  {
+        (path != '')) {
     // if there's no backslashes, assume icon is in common
     const isFullPath = (/\/|\\/).test(path);
     let prefix = '';
 
-    if (isFullPath == false)
-    {
+    if (isFullPath == false) {
       prefix = 'common/images/icons/';
     }
 
     this._domainIconDiv.style.backgroundImage = 'url(' + prefix + path + ')';
-  }
-  else
-  {
+  } else {
     this._domainIconDiv.style.backgroundImage = 'none';
   }
 
@@ -452,45 +393,33 @@ StatusBarCtrl.prototype.setDomainIcon = function(path)
  * @param   visible Boolean True if the icon should be shown. False if it should be hidden
  * @param   state   String  (Optional) String corrsponding to the state of the icon ("00", "01", "02", "03", "04", "05")
  */
-StatusBarCtrl.prototype.setIcon = function(name, visible, state)
-{
+StatusBarCtrl.prototype.setIcon = function(name, visible, state) {
   const contName = this._ICON_CONT_MAP[name]; // get the container name based on icon name
   const icon = this._iconDivs[contName]; // get the contianer
 
-  if (!icon)
-  {
+  if (!icon) {
     log.info('There is no support for the requested icon name: ' + name);
     return;
   }
 
-  if (visible == true)
-  {
+  if (visible == true) {
     let bg = null;
-    if (state)
-    {
-      if (utility.toType(state) == 'string')
-      {
+    if (state) {
+      if (utility.toType(state) == 'string') {
         bg = 'url(common/images/icons/IcnSb' + name + '_' + state + '.png)';
-      }
-      else
-      {
+      } else {
         log.warn('Status Bar Icon State must be given in string format');
       }
-    }
-    else
-    {
+    } else {
       bg = 'url(common/images/icons/IcnSb' + name + '.png)';
     }
 
     icon.style.backgroundImage = bg;
     icon._display = 'inline-block';
-  }
-  else
-  {
+  } else {
     icon._display = 'none';
   }
-  if ((framework.getCurrentApp() != 'androidauto') && (framework.getCurrentApp() != 'carplay'))
-  {
+  if ((framework.getCurrentApp() != 'androidauto') && (framework.getCurrentApp() != 'carplay')) {
     icon.style.display = icon._display;
   }
 };
@@ -499,21 +428,17 @@ StatusBarCtrl.prototype.setIcon = function(name, visible, state)
  * Sets whether a Status Bar Notification is currently displayed.
  * Called by Common so that the Status Bar Control can update its currently displayed items
  */
-StatusBarCtrl.prototype.setSbnDisplayed = function(flag)
-{
+StatusBarCtrl.prototype.setSbnDisplayed = function(flag) {
   log.debug('StatusBarCtrl.setSbnDisplayed(' + flag + ')');
 
-  if (flag === true)
-  {
+  if (flag === true) {
     // Hide app name and icons
     this._domainIconDiv.style.opacity = 0;
     this._appNameDiv.style.opacity = 0;
 
     // this._iconContainer0.style.opacity = 0;
     // this._iconContainer1.style.opacity = 0;
-  }
-  else
-  {
+  } else {
     // Restore app name and icons
     this._domainIconDiv.style.opacity = 1;
     this._appNameDiv.style.opacity = 1;
@@ -529,8 +454,7 @@ StatusBarCtrl.prototype.setSbnDisplayed = function(flag)
  * for display format and application title.
  * MPP 08/29/2013  SW00127573
  */
-StatusBarCtrl.prototype._refresh = function()
-{
+StatusBarCtrl.prototype._refresh = function() {
   log.debug('_refresh() called...');
 
   // Get the current time (cached in common)
@@ -538,8 +462,7 @@ StatusBarCtrl.prototype._refresh = function()
   this.updateClock(framework.common.getCurrentTime());
 
   // If we have a translatable application title...
-  if (this._appNameUiaId && this._appNameStringId)
-  {
+  if (this._appNameUiaId && this._appNameStringId) {
     // ... re-translate it with the now-current language
     const text = framework.localize.getLocStr(this._appNameUiaId, this._appNameStringId, this._appNameSubMap);
     this.setAppName(text);
@@ -550,18 +473,14 @@ StatusBarCtrl.prototype._refresh = function()
  * Updates the clock to display the value given. Value should be given in Unix format
  * @param    currentTime       Number||Date    the current time in number of milliseconds in a date string since midnight of January 1, 1970
  */
-StatusBarCtrl.prototype.updateClock = function(currentTime)
-{
+StatusBarCtrl.prototype.updateClock = function(currentTime) {
   // Immediately stop updating the clock internally (TODO: remove internal GUI clock behavior after BLM clock is implemented)
 
   clearInterval(this.clockIntId);
 
-  if (utility.toType(currentTime) == 'number')
-  {
+  if (utility.toType(currentTime) == 'number') {
     currentTime = new Date(currentTime);
-  }
-  else if (utility.toType(currentTime) != 'date')
-  {
+  } else if (utility.toType(currentTime) != 'date') {
     log.warn('Current time must be given in either Date Object or milliseconds since the Unix epoch.');
   }
 
@@ -570,44 +489,30 @@ StatusBarCtrl.prototype.updateClock = function(currentTime)
   let timeStr = '00:00';
   let dateStr = '';
 
-  if (isNaN(hours) || isNaN(mins) || currentTime.getTime() <= 0)
-  {
+  if (isNaN(hours) || isNaN(mins) || currentTime.getTime() <= 0) {
     log.warn('Time value is unreadable: the result was NaN, negative, or set to the Unix epoch.');
-  }
-  else
-  {
+  } else {
     // Set the correct clock value
-    if (framework.localize.getTimeFormat() == '12hrs')
-    {
-      if (hours > 12)
-      {
+    if (framework.localize.getTimeFormat() == '12hrs') {
+      if (hours > 12) {
         hours -= 12;
-      }
-      else if (hours == 0)
-      {
+      } else if (hours == 0) {
         hours = 12;
       }
 
       timeStr = hours + ':' + (mins > 9 ? mins : '0' + mins);
-    }
-    else if (framework.localize.getTimeFormat() == '24hrs')
-    {
+    } else if (framework.localize.getTimeFormat() == '24hrs') {
       timeStr = (hours > 9 ? hours : '0' + hours) + ':' + (mins > 9 ? mins : '0' + mins);
-    }
-    else
-    {
+    } else {
       log.info('Cannot read current time format:', framework.localize.getTimeFormat());
       // Default to 24hr
       timeStr = (hours > 9 ? hours : '0' + hours) + ':' + (mins > 9 ? mins : '0' + mins);
     }
   }
 
-  if ((framework.getCurrCtxtId() == 'AndroidAutoUI') || (framework.getCurrCtxtId() == 'CarPlayUI'))
-  {
+  if ((framework.getCurrCtxtId() == 'AndroidAutoUI') || (framework.getCurrCtxtId() == 'CarPlayUI')) {
     timeStr = '';
-  }
-  else if (typeof utility.formatDateCustom === 'function')
-  {
+  } else if (typeof utility.formatDateCustom === 'function') {
     dateStr = utility.formatDateCustom(currentTime);
   }
   this.date.innerText = dateStr;
@@ -620,14 +525,12 @@ StatusBarCtrl.prototype.updateClock = function(currentTime)
  * @param btnData   (Object) The data passed in by the app when the button was instantiated
  * @param params    (Object) Optional parameters passed by the control
  */
-StatusBarCtrl.prototype._homeBtnSelected = function(btnObj, btnData, params)
-{
+StatusBarCtrl.prototype._homeBtnSelected = function(btnObj, btnData, params) {
   const params = {
     'statusBtn': 'home',
   };
 
-  if (typeof this.properties.selectCallback == 'function')
-  {
+  if (typeof this.properties.selectCallback == 'function') {
     this.properties.selectCallback(this, this.properties.appData, params);
   }
 };
@@ -638,13 +541,11 @@ StatusBarCtrl.prototype._homeBtnSelected = function(btnObj, btnData, params)
  * @param btnData   (Object) The data passed in by the app when the button was instantiated
  * @param params    (Object) Optional parameters passed by the control
  */
-StatusBarCtrl.prototype._homeBtnLongPress = function(btnObj, btnData, params)
-{
+StatusBarCtrl.prototype._homeBtnLongPress = function(btnObj, btnData, params) {
   const params = {
     'statusBtn': 'home',
   };
-  if (typeof this.properties.longPressCallback == 'function')
-  {
+  if (typeof this.properties.longPressCallback == 'function') {
     this.properties.longPressCallback(this, this.properties.appData, params);
   }
 };
@@ -655,13 +556,11 @@ StatusBarCtrl.prototype._homeBtnLongPress = function(btnObj, btnData, params)
  * @param btnData   (Object) The data passed in by the app when the button was instantiated
  * @param params    (Object) Optional parameters passed by the control
  */
-StatusBarCtrl.prototype._clockBtnLongPress = function(btnObj, btnData, params)
-{
+StatusBarCtrl.prototype._clockBtnLongPress = function(btnObj, btnData, params) {
   const params = {
     'statusBtn': 'clock',
   };
-  if (typeof this.properties.longPressCallback == 'function')
-  {
+  if (typeof this.properties.longPressCallback == 'function') {
     this.properties.longPressCallback(this, this.properties.appData, params);
   }
 };
@@ -671,8 +570,7 @@ StatusBarCtrl.prototype._clockBtnLongPress = function(btnObj, btnData, params)
  * from a transition method (e.g. "fade") to a CSS class name component (e.g. "Fade")
  * @param str (String) The string whose first character needs to be capitalized.
  */
-StatusBarCtrl.prototype._capitalizeFirstLetter = function(str)
-{
+StatusBarCtrl.prototype._capitalizeFirstLetter = function(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 };
 
@@ -684,46 +582,36 @@ StatusBarCtrl.prototype._capitalizeFirstLetter = function(str)
  * @param sbVisible (Boolean) true if the status bar should slide/fade into view, false otherwise
  * @param cbComplete (Function) A callback function to call when the animation completes (optional)
  */
-StatusBarCtrl.prototype.transitionVisible = function(delay, duration, mthd, sbVisible, cbComplete)
-{
+StatusBarCtrl.prototype.transitionVisible = function(delay, duration, mthd, sbVisible, cbComplete) {
   log.debug('transitionVisible ' + delay + ' ' + duration + ' ' + mthd + ' ' + sbVisible);
   log.debug('status bar is currently ' + (this._sbVisible ? 'visible' : 'hidden'));
 
-  if ((framework.getCurrentApp() == 'androidauto') || (framework.getCurrentApp() == 'carplay'))
-  {
-    if (framework.getCurrentApp() == 'carplay')
-    {
-      if ((sbVisible == true) && (mthd == 'fade'))
-      {
+  if ((framework.getCurrentApp() == 'androidauto') || (framework.getCurrentApp() == 'carplay')) {
+    if (framework.getCurrentApp() == 'carplay') {
+      if ((sbVisible == true) && (mthd == 'fade')) {
         log.debug('transitionVisible return');
         return;
       }
     }
-    if ((framework.getCurrentApp() == 'androidauto'))
-    {
+    if ((framework.getCurrentApp() == 'androidauto')) {
       duration = 0;
     }
 
     this.setupCPAAMode(true);
-  }
-  else
-  {
+  } else {
     this.setupCPAAMode(false);
   }
 
   if ((typeof delay === 'number') &&
         (typeof duration === 'number') &&
         (typeof mthd === 'string') &&
-        (typeof sbVisible === 'boolean'))
-  {
-    if (this._sbVisible !== sbVisible)
-    {
+        (typeof sbVisible === 'boolean')) {
+    if (this._sbVisible !== sbVisible) {
       // If we're already in the middle of an animation, ...
       if (this.divElt.classList.contains('StatusBarCtrl_Fade_In') ||
                 this.divElt.classList.contains('StatusBarCtrl_Fade_Out') ||
                 this.divElt.classList.contains('StatusBarCtrl_Slide_In') ||
-                this.divElt.classList.contains('StatusBarCtrl_Slide_Out'))
-      {
+                this.divElt.classList.contains('StatusBarCtrl_Slide_Out')) {
         // ... interrupt the current animation in favor of the new one
         log.debug('ending slide animation early');
         this._onAnimationEnd();
@@ -735,18 +623,14 @@ StatusBarCtrl.prototype.transitionVisible = function(delay, duration, mthd, sbVi
       this._sbVisible = sbVisible;
       log.debug('Status bar visible? ' + this._sbVisible);
 
-      if (delay === 0 && duration === 0)
-      {
+      if (delay === 0 && duration === 0) {
         log.debug('Snapping visibility', this._sbVisible);
         this._setVisible(this._sbVisible);
-      }
-      else
-      {
+      } else {
         // Convert method specifier into a CSS class name component
         mthd = this._capitalizeFirstLetter(mthd);
 
-        if (this._sbVisible)
-        {
+        if (this._sbVisible) {
           log.debug('Showing status bar:');
 
           // Configure the transition
@@ -761,9 +645,7 @@ StatusBarCtrl.prototype.transitionVisible = function(delay, duration, mthd, sbVi
 
           // Make sure it's visible
           this.divElt.classList.remove('StatusBarCtrl_Hidden');
-        }
-        else
-        {
+        } else {
           log.debug('Hiding status bar:');
 
           // Configure the transition
@@ -777,29 +659,22 @@ StatusBarCtrl.prototype.transitionVisible = function(delay, duration, mthd, sbVi
           this.divElt.parentNode.appendChild(this.divElt);
         }
       }
-    } // end if (this._sbVisible !== sbVisible)
-    else
-    {
+    } else {
+      // end if (this._sbVisible !== sbVisible)
       log.debug('Status bar already in requested state');
     }
-  }
-  else
-  {
+  } else {
     log.error('Invalid parameters passed to StatusBarCtrl.transitionVisible.');
   }
 };
 
-StatusBarCtrl.prototype._onAnimationEnd = function()
-{
+StatusBarCtrl.prototype._onAnimationEnd = function() {
   log.debug('_onAnimationEnd()');
   if (this.divElt.classList.contains('StatusBarCtrl_Slide_In') ||
-        this.divElt.classList.contains('StatusBarCtrl_Fade_In'))
-  {
+        this.divElt.classList.contains('StatusBarCtrl_Fade_In')) {
     this._setVisible(true);
-  }
-  else if (this.divElt.classList.contains('StatusBarCtrl_Slide_Out') ||
-             this.divElt.classList.contains('StatusBarCtrl_Fade_Out'))
-  {
+  } else if (this.divElt.classList.contains('StatusBarCtrl_Slide_Out') ||
+             this.divElt.classList.contains('StatusBarCtrl_Fade_Out')) {
     this._setVisible(false);
   }
 
@@ -814,77 +689,60 @@ StatusBarCtrl.prototype._onAnimationEnd = function()
   this.divElt.classList.remove('StatusBarCtrl_Fade_Out');
 };
 
-StatusBarCtrl.prototype._setVisible = function(sbVisible)
-{
-  if (sbVisible)
-  {
+StatusBarCtrl.prototype._setVisible = function(sbVisible) {
+  if (sbVisible) {
     this.divElt.classList.remove('StatusBarCtrl_Hidden');
-  }
-  else
-  {
+  } else {
     this.divElt.classList.add('StatusBarCtrl_Hidden');
   }
 };
 
-StatusBarCtrl.prototype.setVisible = function(mthd, sbVisible)
-{
+StatusBarCtrl.prototype.setVisible = function(mthd, sbVisible) {
   log.debug('setVisible() ', mthd, sbVisible);
   this.transitionVisible(0, 500, mthd, sbVisible);
 };
 
-StatusBarCtrl.prototype.isVisible = function()
-{
+StatusBarCtrl.prototype.isVisible = function() {
   return this._sbVisible;
 };
 
-StatusBarCtrl.prototype._remoteUiBtnSelected = function(btnObj, btnData, params)
-{
+StatusBarCtrl.prototype._remoteUiBtnSelected = function(btnObj, btnData, params) {
   const params = {
     'statusBtn': this.remoteUiBtnProperties.appName,
   };
 
-  if (typeof this.properties.selectCallback == 'function')
-  {
+  if (typeof this.properties.selectCallback == 'function') {
     this.properties.selectCallback(this, btnData, params);
   }
 };
 
-StatusBarCtrl.prototype._remoteUiBtnFocused = function(btnObj, btnData, params)
-{
+StatusBarCtrl.prototype._remoteUiBtnFocused = function(btnObj, btnData, params) {
   const params = {
     'statusBtn': this.remoteUiBtnProperties.appName,
   };
 
-  if (typeof this.properties.onFocusCallback == 'function')
-  {
+  if (typeof this.properties.onFocusCallback == 'function') {
     this.properties.onFocusCallback(this, btnData, params);
   }
 };
 
 
 /* Called when carPlay or AndroidAuto is enabled  */
-StatusBarCtrl.prototype.showRemoteUiButton = function(config)
-{
-  if (config)
-  {
+StatusBarCtrl.prototype.showRemoteUiButton = function(config) {
+  if (config) {
     this.setupCPAAMode(false);
 
-    if (this.homeBtn.divElt.style.display === 'none') // checks if the Home button is not shown.
-    {
+    if (this.homeBtn.divElt.style.display === 'none') {
+      // checks if the Home button is not shown.
       const remoteUIBtnClassPrefix = 'StatusBarCtrlRemoteUIBtn';
 
       // checks if app is CarPlay or AndroidAuto
       let classType = '';
-      if (config.appName === 'carplay')
-      {
+      if (config.appName === 'carplay') {
         classType = '_CP';
-      }
-      else if (config.appName === 'androidauto')
-      {
+      } else if (config.appName === 'androidauto') {
         classType = '_AA';
-      }
-      else
-      {
+      } else {
         log.info('_setRemoteUIButton: Use default remoteUI focusedClass. appName=' + config.appName);
       }
 
@@ -901,8 +759,7 @@ StatusBarCtrl.prototype.showRemoteUiButton = function(config)
         'downClass': remoteUIBtnClassPrefix + classType + '_down',
         'iconClass': 'ButtonCtrlIcon' + classType,
       };
-      if (this.remoteUiBtn == null)
-      {
+      if (this.remoteUiBtn == null) {
         this.remoteUiBtn = framework.instantiateControl(this.uiaId, this.divElt, 'ButtonCtrl', remoteUiBtnProperties, 'StatusBar_');
       }
     }
@@ -910,10 +767,8 @@ StatusBarCtrl.prototype.showRemoteUiButton = function(config)
 };
 
 /* Called when carPlay or AndroidAuto is disabled  */
-StatusBarCtrl.prototype.hideRemoteUiButton = function()
-{
-  if (this.remoteUiBtn)
-  {
+StatusBarCtrl.prototype.hideRemoteUiButton = function() {
+  if (this.remoteUiBtn) {
     framework.destroyControl(this.remoteUiBtn);
     this.remoteUiBtn = null;
   }
@@ -922,12 +777,10 @@ StatusBarCtrl.prototype.hideRemoteUiButton = function()
 /* controllerActive event is stored for remoteUiBtn as it is sent
  * before remoteUiBtn gets created. And passing other events to ButtonCtrl
  */
-StatusBarCtrl.prototype.handleControllerEvent = function(eventId)
-{
+StatusBarCtrl.prototype.handleControllerEvent = function(eventId) {
   log.debug('handleControllerEvent called', eventId);
   let response = 'ignored';
-  if (this.remoteUiBtn)
-  {
+  if (this.remoteUiBtn) {
     this.remoteUiBtn.handleControllerEvent('controllerActive');
     response = this.remoteUiBtn.handleControllerEvent(eventId);
   }
@@ -937,13 +790,11 @@ StatusBarCtrl.prototype.handleControllerEvent = function(eventId)
 /*
  * Clean Up function called by template
  */
-StatusBarCtrl.prototype.cleanUp = function()
-{
+StatusBarCtrl.prototype.cleanUp = function() {
   clearInterval(this.clockIntId);
   this.homeBtn.cleanUp();
 
-  if (this._clockBtn)
-  {
+  if (this._clockBtn) {
     this._clockBtn.cleanUp();
   }
 

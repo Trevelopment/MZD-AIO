@@ -243,7 +243,9 @@ function SpeedBarTmplt(uiaId, parentDiv, templateID, controlProperties) {
  *  string is converted to the jQuery Object to click
  */
 SpeedBarTmplt.prototype.singleClick = function(clickTarget) {
-  if (utility.toType(clickTarget) === 'string') {clickTarget = $(clickTarget);}
+  if (utility.toType(clickTarget) === 'string') {
+    clickTarget = $(clickTarget);
+  }
   (speedometerLonghold) ? speedometerLonghold = false: (utility.toType(clickTarget) === 'function') ? clickTarget() : clickTarget.click();
   clearTimeout(this.longholdTimeout);
   this.longholdTimeout = null;
@@ -254,7 +256,9 @@ SpeedBarTmplt.prototype.singleClick = function(clickTarget) {
  *  string is converted to the jQuery Object to click
  */
 SpeedBarTmplt.prototype.longClick = function(clickFunction) {
-  if (utility.toType(clickFunction) === 'string') {clickFunction = $(clickFunction);}
+  if (utility.toType(clickFunction) === 'string') {
+    clickFunction = $(clickFunction);
+  }
   this.longholdTimeout = setTimeout(function() {
     speedometerLonghold = true;
     (utility.toType(clickFunction) === 'function') ? clickFunction(): clickFunction.click();

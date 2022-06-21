@@ -1050,8 +1050,12 @@ CustomApplicationsHandler.register('app.gpsspeed', new CustomApplication({
 
   setGPSHeading: function(heading) {
     heading = heading + 180; // Peter-dk: Input is 180 deg off for some reason...
-    while (heading > 360) {heading = heading - 360;}
-    while (heading < 0) {heading = heading + 360;}
+    while (heading > 360) {
+      heading = heading - 360;
+    }
+    while (heading < 0) {
+      heading = heading + 360;
+    }
 
     // 0 = North, 180 = South
     const corrHeading = 360 - heading;
@@ -1205,7 +1209,9 @@ CustomApplicationsHandler.register('app.gpsspeed', new CustomApplication({
     if (this.statistics.speeds.length >= 5) {
       // calculate average
       let t = 0;
-      this.statistics.speeds.forEach(function(v) {t += v;});
+      this.statistics.speeds.forEach(function(v) {
+        t += v;
+      });
 
       const avg = Math.round(t / this.statistics.speeds.length);
 

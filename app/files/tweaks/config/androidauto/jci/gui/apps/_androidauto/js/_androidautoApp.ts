@@ -112,8 +112,9 @@ export const AAlogPoll = () => {
                   psconsole.focus();
                   const atBottom = (psconsole.scrollTop == psconsole.scrollHeight);
 
-                  if (psconsole.length && !atBottom)
-                  {psconsole.scrollTop = psconsole.scrollHeight;}
+                  if (psconsole.length && !atBottom) {
+                    psconsole.scrollTop = psconsole.scrollHeight;
+                  }
                 }
               } catch (err) {
                 AAdisplayError('onreadystatechange', err);

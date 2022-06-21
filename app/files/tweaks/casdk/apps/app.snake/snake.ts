@@ -46,8 +46,9 @@ export const snakeboard = (_canvas, _scorechange) => {
     // This function will check if the provided x/y coordinates exist
     // in an array of cells or not
     for (let i = 0; i < array.length; i++) {
-      if (array[i].x == x && array[i].y == y)
-      {return true;}
+      if (array[i].x == x && array[i].y == y) {
+        return true;
+      }
     }
     return false;
   };

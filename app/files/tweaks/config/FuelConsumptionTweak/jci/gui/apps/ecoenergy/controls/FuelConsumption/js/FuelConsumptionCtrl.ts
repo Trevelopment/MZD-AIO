@@ -28,8 +28,7 @@ log.addSrcFile('FuelConsumptionCtrl.js', 'common');
 // log.addSrcFile("FuelConsumptionCtrl.js", "FuelConsumptionCtrl");
 // log.setLogLevel("FuelConsumptionCtrl", "debug");
 
-function FuelConsumptionCtrl(uiaId, parentDiv, controlId, properties)
-{
+function FuelConsumptionCtrl(uiaId, parentDiv, controlId, properties) {
 //    log.debug("FuelConsumptionCtrl constructor called...");
 
   this.uiaId = uiaId;
@@ -223,8 +222,7 @@ function FuelConsumptionCtrl(uiaId, parentDiv, controlId, properties)
   // @formatter:on
 
   // Copy properties from the app
-  for (const key in properties)
-  {
+  for (const key in properties) {
     this.properties[key] = properties[key];
   }
 
@@ -240,8 +238,7 @@ function FuelConsumptionCtrl(uiaId, parentDiv, controlId, properties)
 /* Private Methods */
 /** *****************/
 
-FuelConsumptionCtrl.prototype._init = function()
-{
+FuelConsumptionCtrl.prototype._init = function() {
 //    log.debug("FuelConsumptionCtrl: _init() called...");
 
   // Historical data displayed by CDFE graph
@@ -325,29 +322,24 @@ FuelConsumptionCtrl.prototype._init = function()
   this.setFuelEfficiency(this.properties.fuelEfficiencyData);
 };
 
-FuelConsumptionCtrl.prototype._next = function(count)
-{
+FuelConsumptionCtrl.prototype._next = function(count) {
   this.imagesCount++;
-  if (this.imagesCount >= count)
-  {
+  if (this.imagesCount >= count) {
     this.divElt.className = 'FuelConsumptionCtrl';
   }
 };
 
-FuelConsumptionCtrl.prototype._preload = function()
-{
+FuelConsumptionCtrl.prototype._preload = function() {
   const images = [];
   const prefix = './apps/ecoenergy/controls/FuelConsumption/images/';
-  for (let i = 0; i < this._preload.arguments.length; i++)
-  {
+  for (let i = 0; i < this._preload.arguments.length; i++) {
     images[i] = new Image();
     images[i].src = prefix + this._preload.arguments[i];
     images[i].onload = this._next.bind(this, this._preload.arguments.length);
   }
 };
 
-FuelConsumptionCtrl.prototype._createStructure = function()
-{
+FuelConsumptionCtrl.prototype._createStructure = function() {
 //    log.debug("FuelConsumptionCtrl: _createStructure() called...");
 
   // Create the div for control
@@ -421,16 +413,14 @@ FuelConsumptionCtrl.prototype._createStructure = function()
 
   /** *************************************End of Active Graphing Area for CDFE graph right***************/
   // Create CDFE graph bars
-  for (let i = 1; i <= this._totalCDFEBars; i++)
-  {
+  for (let i = 1; i <= this._totalCDFEBars; i++) {
     const curCDFEBar = document.createElement('div');
     curCDFEBar.id = 'CDFEBar' + i;
 
     const CDFEBarCap = document.createElement('div');
     CDFEBarCap.className = 'FuelConsumptionCtrlCDFEBarGraphCap';
 
-    switch (i)
-    {
+    switch (i) {
       case this._newCDFEDataIdx:
         curCDFEBar.className = 'FuelConsumptionCtrlCDFEBarGraphCoreCurrent';
         this.CDFECurrentBar = curCDFEBar;
@@ -452,8 +442,7 @@ FuelConsumptionCtrl.prototype._createStructure = function()
   /** ***********************************New CDFE Graph Bars**********************************/
 
   // Create CDFE graph Right bars
-  for (let i = 1; i <= this._totalCDFEBarsRight; i++)
-  {
+  for (let i = 1; i <= this._totalCDFEBarsRight; i++) {
     const curCDFEBarRight = document.createElement('div');
     curCDFEBarRight.id = 'CDFEBarRight' + i;
     curCDFEBarRight.className = 'FuelConsumptionCtrlCDFEBarGraphCoreRight';
@@ -496,8 +485,7 @@ FuelConsumptionCtrl.prototype._createStructure = function()
   /** ************************New CDFE graph to its parent*******************************************/
 
   // Start stand alone graph for the hev disc graph
-  if (this.properties.ctrlStyle === 'hevstyle')
-  {
+  if (this.properties.ctrlStyle === 'hevstyle') {
     // CDFE Disc graph top-level DIV
     this.CDFEDiscGraph = document.createElement('div');
     this.CDFEDiscGraph.className = 'FuelConsumptionCtrlCDFEDiscGraph';
@@ -511,13 +499,11 @@ FuelConsumptionCtrl.prototype._createStructure = function()
     this.CDFEDiscGraphArea.className = 'FuelConsumptionCtrlCDFEDiscGraphArea';
 
     // Create Disc CDFE graph bars
-    for (let i = 1; i <= this._totalCDFEBars; i++)
-    {
+    for (let i = 1; i <= this._totalCDFEBars; i++) {
       const curCDFEDiscBar = document.createElement('div');
       curCDFEDiscBar.id = 'CDFEDiscBar' + i;
 
-      switch (i)
-      {
+      switch (i) {
         case this._newCDFEDataIdx:
           curCDFEDiscBar.className = 'FuelConsumptionCtrlHevCDFEBarGraphCoreCurrent';
           this.CDFECurrentDiscBar = curCDFEDiscBar;
@@ -560,8 +546,7 @@ FuelConsumptionCtrl.prototype._createStructure = function()
     this.CDFEDiscGraphAreaRight.className = 'FuelConsumptionCtrlCDFEDiscGraphAreaRight';
 
     // Create Disc CDFE graph bars
-    for (let k = 1; k <= this._totalCDFEBarsRight; k++)
-    {
+    for (let k = 1; k <= this._totalCDFEBarsRight; k++) {
       const curCDFEDiscBarRight = document.createElement('div');
       curCDFEDiscBarRight.id = 'CDFEDiscBarRight' + k;
       curCDFEDiscBarRight.className = 'FuelConsumptionCtrlHevCDFEDiscGraphCoreRight';
@@ -625,8 +610,7 @@ FuelConsumptionCtrl.prototype._createStructure = function()
     // currentValue.className = 'FuelConsumptionCtrlCFERBarValueCurrent';
     const CFERBarCap = document.createElement('div');
     CFERBarCap.className = 'FuelConsumptionCtrlCFERBarGraphCap';
-    switch (j)
-    {
+    switch (j) {
       case this._newCFERDataIdx:
         curCFERBar.className = 'FuelConsumptionCtrlCFERBarGraphCore';
         break;
@@ -751,8 +735,7 @@ FuelConsumptionCtrl.prototype._createStructure = function()
 
     this.divElt.appendChild(this.halfKmLabel1);
     this.divElt.appendChild(this.halfKmLabel2);
-  }
-  else {
+  } else {
     this.fuelEfficiencyTitle.className = 'FuelConsumptionCtrlFuelEfficiencyTitle';
     this.fuelEfficiencyThisDrive.className = 'FuelConsumptionCtrlFuelEfficiencyThisDrive';
     this.fuelEfficiencyValue.className = 'FuelConsumptionCtrlFuelEfficiencyValue';
@@ -764,8 +747,7 @@ FuelConsumptionCtrl.prototype._createStructure = function()
   this.fuelEfficiencyArea.appendChild(this.fuelEfficiencyValue);
 
   // create container for disc value indicator
-  if (this.properties.ctrlStyle === 'hevstyle')
-  {
+  if (this.properties.ctrlStyle === 'hevstyle') {
     this.oneDiscValue = document.createElement('div');
     this.oneDiscValue.className = 'FuelConsumptionCtrlOneDiscValue';
 
@@ -826,8 +808,7 @@ FuelConsumptionCtrl.prototype._createStructure = function()
       'subMap': this.properties.subMap,
     };
     // @formatter:on
-  if (this.properties.mode !== 'ending' )
-  {
+  if (this.properties.mode !== 'ending' ) {
     this._switchViewButtonCtrl = framework.instantiateControl(this.uiaId,
         this.fuelEfficiencyArea,
         'ButtonCtrl',
@@ -846,18 +827,14 @@ FuelConsumptionCtrl.prototype._createStructure = function()
 /*
  * Utility function to look up a translatable string ID and/or accept a default text string.
  */
-FuelConsumptionCtrl.prototype._translateString = function(strId, strText, subMap)
-{
+FuelConsumptionCtrl.prototype._translateString = function(strId, strText, subMap) {
 //    log.debug("_translateString called: strId = " + strId + ", strText = " + strText);
 
   let translatedText = null;
 
-  if (strId)
-  {
+  if (strId) {
     translatedText = framework.localize.getLocStr(this.uiaId, strId, subMap);
-  }
-  else if (strText)
-  {
+  } else if (strText) {
     translatedText = strText;
   }
 
@@ -867,18 +844,14 @@ FuelConsumptionCtrl.prototype._translateString = function(strId, strText, subMap
 /*
  * Utility function to make a text string suitable for HTML block-rendering
  */
-FuelConsumptionCtrl.prototype._stringToHTML = function(textStr)
-{
+FuelConsumptionCtrl.prototype._stringToHTML = function(textStr) {
 //    log.debug("_stringToHTML called: textStr = " + textStr);
 
   let htmlText;
 
-  if (textStr)
-  {
+  if (textStr) {
     htmlText = textStr + '<br/>';
-  }
-  else
-  {
+  } else {
     htmlText = '';
   }
 
@@ -893,15 +866,13 @@ FuelConsumptionCtrl.prototype._stringToHTML = function(textStr)
 /*
  * Utility function to add axis labels to the CDFE graph
  */
-FuelConsumptionCtrl.prototype._addCDFEGraphAxisLabels = function(xDiv, yDiv)
-{
+FuelConsumptionCtrl.prototype._addCDFEGraphAxisLabels = function(xDiv, yDiv) {
 //    log.debug("FuelConsumptionCtrl: _addCDFEGraphAxisLabels() called...");
 
   // NOTE:  We're assuming 15 labels.  Should this change,
   //        we'd need to revisit this
   let barVal = 60;
-  for (let i = 0; i < 6; i++)
-  {
+  for (let i = 0; i < 6; i++) {
     const barLabel = document.createElement('span');
     barLabel.innerHTML = barVal;
     barLabel.style.position = 'absolute';
@@ -954,29 +925,24 @@ FuelConsumptionCtrl.prototype._addCDFEGraphAxisLabels = function(xDiv, yDiv)
 /*
  * Utility function to set the horizontal positions of the CDFE graph bars
  */
-FuelConsumptionCtrl.prototype._setCDFEGraphBarPositions = function()
-{
+FuelConsumptionCtrl.prototype._setCDFEGraphBarPositions = function() {
 //    log.debug("FuelConsumptionCtrl: _setCDFEGraphBarPositions() called...");
 
   const leftInc = this._CSSConstants['CDFEGraphBarWidth'] +
                     this._CSSConstants['CDFEGraphBarSpacing'];
   let currentLeft = this._CSSConstants['CDFEGraphBarMargin'];
 
-  for (let i = 1; i <= this._totalCDFEBars; i++)
-  {
+  for (let i = 1; i <= this._totalCDFEBars; i++) {
     const bar = document.getElementById('CDFEBar' + i);
-    if (bar)
-    {
+    if (bar) {
       bar.style.left = currentLeft + 'px';
     }
 
 
     // Adding new disc logic for hevstyle
-    if (this.properties.ctrlStyle === 'hevstyle')
-    {
+    if (this.properties.ctrlStyle === 'hevstyle') {
       const disc = document.getElementById('CDFEDiscBar' + i);
-      if (disc)
-      {
+      if (disc) {
         disc.style.left = currentLeft + 'px';
       }
     }
@@ -986,28 +952,23 @@ FuelConsumptionCtrl.prototype._setCDFEGraphBarPositions = function()
 };
 /** ********************************New Defination of function**********************************/
 
-FuelConsumptionCtrl.prototype._setCDFEGraphBarPositionsRight = function()
-{
+FuelConsumptionCtrl.prototype._setCDFEGraphBarPositionsRight = function() {
 //    log.debug("FuelConsumptionCtrl: _setCDFEGraphBarPositions() called...");
 
   const leftIncRight = this._CSSConstants['CDFEGraphBarWidthRight'] +
                     this._CSSConstants['CDFEGraphBarSpacingRight'];
   let currentLeftMarginRight = this._CSSConstants['CDFEGraphBarMarginRight'];
 
-  for (let i = 1; i <= this._totalCDFEBarsRight; i++)
-  {
+  for (let i = 1; i <= this._totalCDFEBarsRight; i++) {
     const barRight = document.getElementById('CDFEBarRight' + i);
-    if (barRight)
-    {
+    if (barRight) {
       barRight.style.left = currentLeftMarginRight + 'px';
     }
 
     // Adding new disc logic for hevstyle
-    if (this.properties.ctrlStyle === 'hevstyle')
-    {
+    if (this.properties.ctrlStyle === 'hevstyle') {
       const disc = document.getElementById('CDFEDiscBarRight' + i);
-      if (disc)
-      {
+      if (disc) {
         disc.style.left = currentLeftMarginRight + 'px';
       }
     }
@@ -1020,22 +981,17 @@ FuelConsumptionCtrl.prototype._setCDFEGraphBarPositionsRight = function()
 /*
  * Utility function to enable/disable fade transitions for the CDFE line graph
  */
-FuelConsumptionCtrl.prototype._setCDFELineGraphFadeTransitions = function(isEnabled)
-{
+FuelConsumptionCtrl.prototype._setCDFELineGraphFadeTransitions = function(isEnabled) {
 //    log.debug("FuelConsumptionCtrl: _setCDFELineGraphFadeTransitions() called: isEnabled = " + isEnabled);
 
   const lineGraphCanvas = document.getElementById('FuelConsumptionCtrlCDFELineGraphCanvas');
-  if (lineGraphCanvas)
-  {
+  if (lineGraphCanvas) {
     let transitionStr;
 
-    if (isEnabled)
-    {
+    if (isEnabled) {
       log.debug('  enabling canvas opacity transition');
       transitionStr = 'opacity 0.6s linear 0s';
-    }
-    else
-    {
+    } else {
       log.debug('  disabling canvas opacity transition');
       transitionStr = 'none';
     }
@@ -1048,69 +1004,53 @@ FuelConsumptionCtrl.prototype._setCDFELineGraphFadeTransitions = function(isEnab
  * Utility function to enable/disable height transitions for the CDFE graph bars
  * (except the "hidden" new value bar)
  */
-FuelConsumptionCtrl.prototype._setCDFEGraphBarHeightTransitions = function(isEnabled)
-{
+FuelConsumptionCtrl.prototype._setCDFEGraphBarHeightTransitions = function(isEnabled) {
 //    log.debug("FuelConsumptionCtrl: _setCDFEGraphBarHeightTransitions() called: isEnabled = " + isEnabled);
 
   let transitionStr;
 
   // TODO: Figure out why this needs to be backwards to work!
-  if (!isEnabled)
-  {
+  if (!isEnabled) {
     transitionStr = 'height 0.6s ease 0s';
-  }
-  else
-  {
+  } else {
     transitionStr = 'none';
   }
 
-  for (let i = 0; i <= this._youngestCDFEDataIdx; i++)
-  {
+  for (let i = 0; i <= this._youngestCDFEDataIdx; i++) {
     const bar = document.getElementById('CDFEBar' + (i + 1));
-    if (bar)
-    {
+    if (bar) {
       bar.style.OTransition = transitionStr;
     }
-    if (this.properties.ctrlStyle === 'hevstyle')
-    {
+    if (this.properties.ctrlStyle === 'hevstyle') {
       const disc = document.getElementById('CDFEDiscBar' + (i + 1));
-      if (disc)
-      {
+      if (disc) {
         disc.style.OTransition = transitionStr;
       }
     }
   }
 };
 
-FuelConsumptionCtrl.prototype._setCDFEGraphBarHeightTransitionsRight = function(isEnabled)
-{
+FuelConsumptionCtrl.prototype._setCDFEGraphBarHeightTransitionsRight = function(isEnabled) {
 //    log.debug("FuelConsumptionCtrl: _setCDFEGraphBarHeightTransitions() called: isEnabled = " + isEnabled);
 
   let transitionStr;
 
   // TODO: Figure out why this needs to be backwards to work!
-  if (!isEnabled)
-  {
+  if (!isEnabled) {
     transitionStr = 'height 0.6s ease 0s';
-  }
-  else
-  {
+  } else {
     transitionStr = 'none';
   }
 
-  for (let i = 0; i <= this._youngestCDFEDataIdxRight; i++)
-  {
+  for (let i = 0; i <= this._youngestCDFEDataIdxRight; i++) {
     const bar = document.getElementById('CDFEBarRight' + (i + 1));
-    if (bar)
-    {
+    if (bar) {
       bar.style.OTransition = transitionStr;
     }
 
-    if (this.properties.ctrlStyle === 'hevstyle')
-    {
+    if (this.properties.ctrlStyle === 'hevstyle') {
       const disc = document.getElementById('CDFEDiscBarRight' + (i + 1));
-      if (disc)
-      {
+      if (disc) {
         disc.style.OTransition = transitionStr;
       }
     }
@@ -1121,35 +1061,28 @@ FuelConsumptionCtrl.prototype._setCDFEGraphBarHeightTransitionsRight = function(
 /*
  * Utility function to set the height of a single CDFE graph bar (e.g. the just-inserted one)
  */
-FuelConsumptionCtrl.prototype._setCDFEGraphBarHeight = function(barIdx, HEVMode)
-{
+FuelConsumptionCtrl.prototype._setCDFEGraphBarHeight = function(barIdx, HEVMode) {
 //    log.debug("FuelConsumptionCtrl: _setCDFEGraphBarHeight() called: barIdx = " + barIdx);
 
   const bar = document.getElementById('CDFEBar' + (barIdx + 1));
-  if (bar)
-  {
+  if (bar) {
     bar.style.height = this._scaleDataToGraphY(this._CSSConstants['CDFEGraphVisibleHeight'],
         this._CDFEGraphBarValues[barIdx],
         this.properties.currentFuelConfig.yAxisLimitValue,
         false) + 'px';
   }
 
-  if (this.properties.ctrlStyle === 'hevstyle')
-  {
+  if (this.properties.ctrlStyle === 'hevstyle') {
     const disc = document.getElementById('CDFEDiscBar' + (barIdx + 1));
-    if (disc)
-    {
+    if (disc) {
       /* disc.style.height = this._scaleDataToGraphY(this._CSSConstants["CDFEGraphVisibleHeight"],
                                                            this._CDFEDiscValues[barIdx],
                                                            this.properties.currentFuelConfig.yAxisLimitValue,
                                                            false) + 'px';*/
-      if (HEVMode)
-      {
+      if (HEVMode) {
         bar.className = 'FuelConsumptionCtrlCDFEBarGraphCoreCurrentGreenHighLighted';
         disc.className = 'FuelConsumptionCtrlHevCDFEBarGraphCoreCurrentGreenHighLighted';
-      }
-      else
-      {
+      } else {
         bar.className = 'FuelConsumptionCtrlCDFEBarGraphCoreCurrent';
         disc.className = 'FuelConsumptionCtrlHevCDFEBarGraphCoreCurrent';
       }
@@ -1159,13 +1092,11 @@ FuelConsumptionCtrl.prototype._setCDFEGraphBarHeight = function(barIdx, HEVMode)
 };
 
 
-FuelConsumptionCtrl.prototype._setCDFEGraphBarHeightRight = function(barIdx)
-{
+FuelConsumptionCtrl.prototype._setCDFEGraphBarHeightRight = function(barIdx) {
 //    log.debug("FuelConsumptionCtrl: _setCDFEGraphBarHeight() called: barIdx = " + barIdx);
 
   const bar = document.getElementById('CDFEBarRight' + (barIdx + 1));
-  if (bar)
-  {
+  if (bar) {
     bar.style.height = this._scaleDataToGraphY(this._CSSConstants['CDFEGraphVisibleHeightRight'],
         this._CDFEGraphBarValuesRight[barIdx],
         this.properties.currentFuelConfig.yAxisLimitValue,
@@ -1176,30 +1107,25 @@ FuelConsumptionCtrl.prototype._setCDFEGraphBarHeightRight = function(barIdx)
 /*
  * Utility function to set the heights of all of the CDFE graph bars
  */
-FuelConsumptionCtrl.prototype._setCDFEGraphBarHeights = function()
-{
+FuelConsumptionCtrl.prototype._setCDFEGraphBarHeights = function() {
 //    log.debug("FuelConsumptionCtrl: _setCDFEGraphBarHeights() called...");
 
   // Cache reused values
   const graphHeight = this._CSSConstants['CDFEGraphVisibleHeight'];
   const yLimit = this.properties.currentFuelConfig.yAxisLimitValue;
 
-  for (let i = 0; i < this._totalCDFEBars; i++)
-  {
+  for (let i = 0; i < this._totalCDFEBars; i++) {
     const bar = document.getElementById('CDFEBar' + (i + 1));
-    if (bar)
-    {
+    if (bar) {
       bar.style.height = this._scaleDataToGraphY(graphHeight,
           this._CDFEGraphBarValues[i],
           yLimit,
           false) + 'px';
     }
 
-    if (this.properties.ctrlStyle === 'hevstyle')
-    {
+    if (this.properties.ctrlStyle === 'hevstyle') {
       const disc = document.getElementById('CDFEDiscBar' + (i + 1));
-      if (disc)
-      {
+      if (disc) {
         /* disc.style.height = this._scaleDataToGraphY(graphHeight,
                                                            this._CDFEDiscValues[i],
                                                            yLimit,
@@ -1210,30 +1136,25 @@ FuelConsumptionCtrl.prototype._setCDFEGraphBarHeights = function()
   }
 };
 
-FuelConsumptionCtrl.prototype._setCDFEGraphBarHeightsRight = function()
-{
+FuelConsumptionCtrl.prototype._setCDFEGraphBarHeightsRight = function() {
 //    log.debug("FuelConsumptionCtrl: _setCDFEGraphBarHeights() called...");
 
   // Cache reused values
   const graphHeight = this._CSSConstants['CDFEGraphVisibleHeightRight'];
   const yLimit = this.properties.currentFuelConfig.yAxisLimitValue;
 
-  for (let i = 0; i < this._totalCDFEBarsRight; i++)
-  {
+  for (let i = 0; i < this._totalCDFEBarsRight; i++) {
     const bar = document.getElementById('CDFEBarRight' + (i + 1));
 
-    if (bar)
-    {
+    if (bar) {
       bar.style.height = this._scaleDataToGraphY(graphHeight,
           this._CDFEGraphBarValuesRight[i],
           yLimit,
           false) + 'px';
     }
-    if (this.properties.ctrlStyle === 'hevstyle')
-    {
+    if (this.properties.ctrlStyle === 'hevstyle') {
       const disc = document.getElementById('CDFEDiscBarRight' + (i + 1));
-      if (disc)
-      {
+      if (disc) {
         disc.style.height = this._CDFEDiscBarValuesRight[i]+ 'px';
       }
     }
@@ -1243,16 +1164,14 @@ FuelConsumptionCtrl.prototype._setCDFEGraphBarHeightsRight = function()
 /*
  * Utility function to render an interval of the CDFE line graph, using a canvas overlay
  */
-FuelConsumptionCtrl.prototype._drawCDFELineGraphInterval = function(startIdx, endIdx, clearCanvas)
-{
+FuelConsumptionCtrl.prototype._drawCDFELineGraphInterval = function(startIdx, endIdx, clearCanvas) {
 //    log.debug("FuelConsumptionCtrl: _drawCDFELineGraphInterval() called...");
 
   if ((typeof(startIdx) === 'number') &&
         (typeof(endIdx) === 'number') &&
         (startIdx < endIdx) &&
         (startIdx >= 0) &&
-        (endIdx < this._totalCDFEBars))
-  {
+        (endIdx < this._totalCDFEBars)) {
     // Horizontal distance between bar centers
     const barInterval = this._CSSConstants['CDFEGraphBarWidth'] +
                           this._CSSConstants['CDFEGraphBarSpacing'];
@@ -1272,8 +1191,7 @@ FuelConsumptionCtrl.prototype._drawCDFELineGraphInterval = function(startIdx, en
     const yLimit = this.properties.currentFuelConfig.yAxisLimitValue;
 
     // Reset the canvas (if needed)
-    if (clearCanvas)
-    {
+    if (clearCanvas) {
       this.CDFELineGraphCanvas.width = this.CDFELineGraphCanvas.width;
     }
 
@@ -1283,36 +1201,28 @@ FuelConsumptionCtrl.prototype._drawCDFELineGraphInterval = function(startIdx, en
     this._CDFELineGraphCanvasDC.strokeStyle = '#00CC00';
 
     // Initialize leftY & rightY
-    if (this._CDFEGraphLineValues[startIdx])
-    {
+    if (this._CDFEGraphLineValues[startIdx]) {
       leftY = this._scaleDataToGraphY(graphHeight,
           this._CDFEGraphLineValues[startIdx],
           yLimit,
           true);
-    }
-    else
-    {
+    } else {
       leftY = null;
     }
 
-    for (let i = startIdx + 1; i <= endIdx; i++)
-    {
+    for (let i = startIdx + 1; i <= endIdx; i++) {
       // Scale value as rightY
-      if (this._CDFEGraphLineValues[i])
-      {
+      if (this._CDFEGraphLineValues[i]) {
         rightY = this._scaleDataToGraphY(graphHeight,
             this._CDFEGraphLineValues[i],
             yLimit,
             true);
-      }
-      else
-      {
+      } else {
         rightY = null;
       }
 
       // If we have both endpoints, ...
-      if (leftY && rightY)
-      {
+      if (leftY && rightY) {
         // ... draw the line segment between them
         this._CDFELineGraphCanvasDC.moveTo(leftX, leftY);
         this._CDFELineGraphCanvasDC.lineTo(rightX, rightY);
@@ -1332,8 +1242,7 @@ FuelConsumptionCtrl.prototype._drawCDFELineGraphInterval = function(startIdx, en
 /*
  * Shortcut utility function to render the entire CDFE line graph
  */
-FuelConsumptionCtrl.prototype._drawCDFELineGraph = function()
-{
+FuelConsumptionCtrl.prototype._drawCDFELineGraph = function() {
 //    log.debug("FuelConsumptionCtrl: _drawCDFELineGraph() called...");
 
   this._drawCDFELineGraphInterval(0, this._newCDFEDataIdx, true);
@@ -1344,62 +1253,48 @@ FuelConsumptionCtrl.prototype._drawCDFELineGraph = function()
  * (redraw it with the "new" bar hidden on the right-hand side)
  */
 //
-FuelConsumptionCtrl.prototype._resetCDFEGraph = function(animateBars)
-{
+FuelConsumptionCtrl.prototype._resetCDFEGraph = function(animateBars) {
 //    log.debug("FuelConsumptionCtrl: _resetCDFEGraph() called: animateBars = " + animateBars);
 
   // Make sure left transitions are OFF for the CDFE graph active area while we redraw it
   this.CDFEGraphArea.style.OTransition = 'none';
-  if (this.properties.ctrlStyle === 'hevstyle')
-  {
+  if (this.properties.ctrlStyle === 'hevstyle') {
     this.CDFEDiscGraphArea.style.OTransition = 'none';
   }
 
   // Enable/disable height transitions for the CDFE graph bars
   this._setCDFEGraphBarHeightTransitions(animateBars);
-  if (this.properties.ctrlStyle === 'hevstyle')
-  {
-    for (let i = 0; i <= 10; i++)
-    {
+  if (this.properties.ctrlStyle === 'hevstyle') {
+    for (let i = 0; i <= 10; i++) {
       const bar = document.getElementById('CDFEBar'+(i+1));
       const disc = document.getElementById('CDFEDiscBar' +(i+1));
-      if (this._initialEVMode[i] && bar)
-      {
+      if (this._initialEVMode[i] && bar) {
         bar.className = 'FuelConsumptionCtrlCDFEBarGraphCoreCurrentGreen';
         disc.className = 'FuelConsumptionCtrlHevCDFEDiscBg_Green';
-        if (i == 9)
-        {
+        if (i == 9) {
           this.CDFECurrentDiscBar.className = 'FuelConsumptionCtrlHevCDFEBarGraphCoreCurrentGreenHighLighted';
           this.CDFECurrentBar.className = 'FuelConsumptionCtrlCDFEBarGraphCoreCurrentGreenHighLighted';
           break;
         }
-      }
-      else
-      {
-        if (i == 9 || i == 10)
-        {
+      } else {
+        if (i == 9 || i == 10) {
           this.CDFECurrentDiscBar.className = 'FuelConsumptionCtrlHevCDFEBarGraphCoreCurrent';
           this.CDFECurrentBar.className = 'FuelConsumptionCtrlCDFEBarGraphCoreCurrent';
           bar.className = 'FuelConsumptionCtrlCDFEBarGraphCoreCurrent';
           disc.className = 'FuelConsumptionCtrlHevCDFEBarGraphCoreCurrent';
-        }
-        else
-        {
+        } else {
           bar.className = 'FuelConsumptionCtrlCDFEBarGraphCore';
           disc.className = 'FuelConsumptionCtrlHevCDFEBarGraphCore';
         }
       }
     }
-  }
-  else
-  {
+  } else {
     this.CDFECurrentBar.className = 'FuelConsumptionCtrlCDFEBarGraphCoreCurrent';
   }
   // Reposition the CDFE graph active area & reconstruct the bar/line graph
   // (should be no visible difference afterwards)
   this.CDFEGraphArea.style.left = '0px';
-  if (this.properties.ctrlStyle === 'hevstyle')
-  {
+  if (this.properties.ctrlStyle === 'hevstyle') {
     this.CDFEDiscGraphArea.style.left = '0px';
   }
   this._setCDFEGraphBarHeights();
@@ -1409,34 +1304,27 @@ FuelConsumptionCtrl.prototype._resetCDFEGraph = function(animateBars)
   this._setCDFEGraphBarHeightTransitions(!animateBars);
 };
 
-FuelConsumptionCtrl.prototype._resetCDFEGraphRight = function(animateBars)
-{
+FuelConsumptionCtrl.prototype._resetCDFEGraphRight = function(animateBars) {
 //    log.debug("FuelConsumptionCtrl: _resetCDFEGraph() called: animateBars = " + animateBars);
 
   // Make sure left transitions are OFF for the CDFE graph active area while we redraw it
   this.CDFEGraphAreaRight.style.OTransition = 'none';
 
-  if (this.properties.ctrlStyle === 'hevstyle')
-  {
+  if (this.properties.ctrlStyle === 'hevstyle') {
     this.CDFEDiscGraphAreaRight.style.OTransition = 'none';
   }
 
   // Enable/disable height transitions for the CDFE graph bars
   this._setCDFEGraphBarHeightTransitionsRight(animateBars);
 
-  if (this.properties.ctrlStyle === 'hevstyle')
-  {
-    for (let i = 0; i < 5; i++)
-    {
+  if (this.properties.ctrlStyle === 'hevstyle') {
+    for (let i = 0; i < 5; i++) {
       const bar = document.getElementById('CDFEBarRight'+(i+1));
       const disc = document.getElementById('CDFEDiscBarRight' +(i+1));
-      if (this._CDFEEvModeRight[i] && bar)
-      {
+      if (this._CDFEEvModeRight[i] && bar) {
         bar.className = 'FuelConsumptionCtrlCDFEBarGraphCoreGreenRight';
         disc.className = 'FuelConsumptionCtrlHevCDFEDiscGraphCoreGreenRight';
-      }
-      else
-      {
+      } else {
         bar.className = 'FuelConsumptionCtrlCDFEBarGraphCoreRight';
         disc.className = 'FuelConsumptionCtrlHevCDFEDiscGraphCoreRight';
       }
@@ -1447,8 +1335,7 @@ FuelConsumptionCtrl.prototype._resetCDFEGraphRight = function(animateBars)
   // Reposition the CDFE graph active area & reconstruct the bar/line graph
   // (should be no visible difference afterwards)
   this.CDFEGraphAreaRight.style.left = '0px';
-  if (this.properties.ctrlStyle === 'hevstyle')
-  {
+  if (this.properties.ctrlStyle === 'hevstyle') {
     this.CDFEDiscGraphAreaRight.style.left = '0px';
   }
   this._setCDFEGraphBarHeightsRight();
@@ -1460,8 +1347,7 @@ FuelConsumptionCtrl.prototype._resetCDFEGraphRight = function(animateBars)
 /*
  * Callback function for removing the animation on the CDFE line graph at the end of its fade-in
  */
-FuelConsumptionCtrl.prototype._onCDFELineFadeAnimationEnd = function(e)
-{
+FuelConsumptionCtrl.prototype._onCDFELineFadeAnimationEnd = function(e) {
 //    log.debug("FuelConsumptionCtrl: _onCDFELineFadeAnimationEnd() called");
 
   // Remove the event listener that got us here
@@ -1477,8 +1363,7 @@ FuelConsumptionCtrl.prototype._onCDFELineFadeAnimationEnd = function(e)
 /*
  * Callback function for resetting the CDFE graph at the end of a slide-left (insertion) animation
  */
-FuelConsumptionCtrl.prototype._onCDFELeftAnimationEnd = function(e)
-{
+FuelConsumptionCtrl.prototype._onCDFELeftAnimationEnd = function(e) {
 //    log.debug("FuelConsumptionCtrl: _onCDFELeftAnimationEnd() called...");
 
   // Remove the event listener that got us here
@@ -1496,8 +1381,7 @@ FuelConsumptionCtrl.prototype._onCDFELeftAnimationEnd = function(e)
 
 
 /** ********************************** New Function Added************************************************/
-FuelConsumptionCtrl.prototype._onCDFELeftAnimationEndRight = function(e)
-{
+FuelConsumptionCtrl.prototype._onCDFELeftAnimationEndRight = function(e) {
 //    log.debug("FuelConsumptionCtrl: _onCDFELeftAnimationEndRight() called...");
 
   // Remove the event listener that got us here
@@ -1522,16 +1406,14 @@ FuelConsumptionCtrl.prototype._onCDFELeftAnimationEndRight = function(e)
 /*
  * Utility function to add axis labels to the CFER graphadd
  */
-FuelConsumptionCtrl.prototype._addCFERGraphAxisLabels = function(xDiv, yDiv)
-{
+FuelConsumptionCtrl.prototype._addCFERGraphAxisLabels = function(xDiv, yDiv) {
 //    log.debug("FuelConsumptionCtrl: _addCFERGraphAxisLabels() called...");
 
   const leftInc = this._CSSConstants['CFERGraphBarWidth'] +
                     this._CSSConstants['CFERGraphBarSpacing'];
   let currentLeft = this._CSSConstants['CFERGraphBarMargin'];
 
-  for (let i = 0; i <= this._currentCFERDataIdx; i++)
-  {
+  for (let i = 0; i <= this._currentCFERDataIdx; i++) {
     const span = document.createElement('span');
 
     span.style.position = 'absolute';
@@ -1539,8 +1421,7 @@ FuelConsumptionCtrl.prototype._addCFERGraphAxisLabels = function(xDiv, yDiv)
     span.style.width = this._CSSConstants['CFERGraphBarWidth'] + 'px';
     span.style.textAlign = 'center';
 
-    if (i === (this._currentCFERDataIdx - 1))
-    {
+    if (i === (this._currentCFERDataIdx - 1)) {
       this.properties.cumulativeFuelConfig.xAxisLabelText =
                 this._translateString(this.properties.cumulativeFuelConfig.xAxisLabelId,
                     this.properties.cumulativeFuelConfig.xAxisLabelText,
@@ -1548,11 +1429,8 @@ FuelConsumptionCtrl.prototype._addCFERGraphAxisLabels = function(xDiv, yDiv)
       span.innerHTML = this._stringToHTML(this.properties.cumulativeFuelConfig.xAxisLabelText);
       span.style.marginLeft = '-8px';
       span.style.width = '71px';
-    }
-    else
-    {
-      if (i != this._currentCFERDataIdx)
-      {
+    } else {
+      if (i != this._currentCFERDataIdx) {
         span.innerHTML = (this._currentCFERDataIdx - i) + '';
       }
     }
@@ -1575,12 +1453,9 @@ FuelConsumptionCtrl.prototype._addCFERGraphAxisLabels = function(xDiv, yDiv)
   yZeroLabel.innerHTML = this._stringToHTML(this.properties.cumulativeFuelConfig.yAxisLabelText);
   yZeroLabel.style.position = 'absolute';
   yZeroLabel.style.width = '60px';
-  if (this.properties.ctrlStyle === 'hevstyle')
-  {
+  if (this.properties.ctrlStyle === 'hevstyle') {
     yZeroLabel.style.top = '90px';
-  }
-  else
-  {
+  } else {
     yZeroLabel.style.top = (this._CSSConstants['CFERGraphVisibleHeight'] - 47) + 'px';
   }
   this.yZeroLabelCFER = yZeroLabel;
@@ -1590,19 +1465,16 @@ FuelConsumptionCtrl.prototype._addCFERGraphAxisLabels = function(xDiv, yDiv)
 /*
  * Utility function to set the horizontal positions of the CFER graph bars
  */
-FuelConsumptionCtrl.prototype._setCFERGraphBarPositions = function()
-{
+FuelConsumptionCtrl.prototype._setCFERGraphBarPositions = function() {
 //    log.debug("FuelConsumptionCtrl: _setCFERGraphBarPositions() called...");
 
   const leftInc = this._CSSConstants['CFERGraphBarWidth'] +
                     this._CSSConstants['CFERGraphBarSpacing'];
   let currentLeft = this._CSSConstants['CFERGraphBarMargin'];
 
-  for (let i = 1; i <= this._totalCFERBars; i++)
-  {
+  for (let i = 1; i <= this._totalCFERBars; i++) {
     const bar = document.getElementById('CFERBar' + i);
-    if (bar)
-    {
+    if (bar) {
       bar.style.left = currentLeft + 'px';
     }
 
@@ -1614,30 +1486,23 @@ FuelConsumptionCtrl.prototype._setCFERGraphBarPositions = function()
  * Utility function to enable/disable height transitions for the CFER graph bars
  * (except the "hidden" new value bar)
  */
-FuelConsumptionCtrl.prototype._setCFERGraphBarHeightTransitions = function(isEnabled)
-{
+FuelConsumptionCtrl.prototype._setCFERGraphBarHeightTransitions = function(isEnabled) {
 //    log.debug("FuelConsumptionCtrl: _setCFERGraphBarHeightTransitions() called: isEnabled = " + isEnabled);
 
   let transitionStr;
 
   // TODO: Figure out why this needs to be backwards to work!
-  if (!isEnabled)
-  {
+  if (!isEnabled) {
     transitionStr = 'height 0.6s ease 0s';
-  }
-  else
-  {
+  } else {
     transitionStr = 'none';
   }
 
-  for (let i = 0; i <= this._currentCFERDataIdx; i++)
-  {
+  for (let i = 0; i <= this._currentCFERDataIdx; i++) {
     const bar = document.getElementById('CFERBar' + (i + 1));
-    if (bar)
-    {
+    if (bar) {
       bar.style.OTransition = transitionStr;
-      if (i==5)
-      {
+      if (i==5) {
         bar.style.OTransition = 'none';
       }
     }
@@ -1647,13 +1512,11 @@ FuelConsumptionCtrl.prototype._setCFERGraphBarHeightTransitions = function(isEna
 /*
  * Utility function to set the height of single CFER graph bar (e.g. the just-inserted one)
  */
-FuelConsumptionCtrl.prototype._setCFERGraphBarHeight = function(barIdx)
-{
+FuelConsumptionCtrl.prototype._setCFERGraphBarHeight = function(barIdx) {
 //    log.debug("FuelConsumptionCtrl: _setCFERGraphBarHeight() called: barIdx = " + barIdx);
 
   const bar = document.getElementById('CFERBar' + (barIdx + 1));
-  if (bar)
-  {
+  if (bar) {
     bar.style.height = this._scaleDataToGraphY(this._CSSConstants['CFERGraphVisibleHeight'],
         this._CFERGraphBarValues[barIdx],
         this.properties.cumulativeFuelConfig.yAxisLimitValue,
@@ -1661,13 +1524,11 @@ FuelConsumptionCtrl.prototype._setCFERGraphBarHeight = function(barIdx)
   }
 };
 
-FuelConsumptionCtrl.prototype._setCFERGraphBarHeightNew = function(barIdx)
-{
+FuelConsumptionCtrl.prototype._setCFERGraphBarHeightNew = function(barIdx) {
 //    log.debug("FuelConsumptionCtrl: _setCFERGraphBarHeight() called: barIdx = " + barIdx);
 
   const bar = document.getElementById('CFERBar' + (barIdx + 1));
-  if (bar)
-  {
+  if (bar) {
     bar.style.height = this._scaleDataToGraphY(this._CSSConstants['CFERGraphVisibleHeight'],
         this._CFERGraphBarValues[barIdx + 1],
         this.properties.cumulativeFuelConfig.yAxisLimitValue,
@@ -1685,19 +1546,16 @@ FuelConsumptionCtrl.prototype._setCFERGraphBarHeightNew = function(barIdx)
 /*
  * Utility function to set the heights of all of the CFER graph bars
  */
-FuelConsumptionCtrl.prototype._setCFERGraphBarHeights = function()
-{
+FuelConsumptionCtrl.prototype._setCFERGraphBarHeights = function() {
 //    log.debug("FuelConsumptionCtrl: _setCFERGraphBarHeights() called...");
 
   // Cache reused values
   const graphHeight = this._CSSConstants['CFERGraphVisibleHeight'];
   const yLimit = this.properties.cumulativeFuelConfig.yAxisLimitValue;
 
-  for (let i = 0; i < this._totalCFERBars; i++)
-  {
+  for (let i = 0; i < this._totalCFERBars; i++) {
     const bar = document.getElementById('CFERBar' + (i + 1));
-    if (bar)
-    {
+    if (bar) {
       bar.style.height = this._scaleDataToGraphY(graphHeight,
           this._CFERGraphBarValues[i],
           yLimit,
@@ -1710,8 +1568,7 @@ FuelConsumptionCtrl.prototype._setCFERGraphBarHeights = function()
  * Utility function for resetting the CFER graph
  * (redraw it with the "new" bar hidden on the right-hand side)
  */
-FuelConsumptionCtrl.prototype._resetCFERGraph = function(animateBars)
-{
+FuelConsumptionCtrl.prototype._resetCFERGraph = function(animateBars) {
 //    log.debug("FuelConsumptionCtrl: _resetCFERGraph() called: animateBars = " + animateBars);
 
   // Make sure left transitions are OFF for the CFER graph active area while we redraw it
@@ -1732,8 +1589,7 @@ FuelConsumptionCtrl.prototype._resetCFERGraph = function(animateBars)
 /*
  * Callback function for resetting the CFER graph at the end of a slide-left (insertion) animation
  */
-FuelConsumptionCtrl.prototype._onCFERLeftAnimationEnd = function(e)
-{
+FuelConsumptionCtrl.prototype._onCFERLeftAnimationEnd = function(e) {
 //    log.debug("FuelConsumptionCtrl: _onCFERLeftAnimationEnd() called...");
 
   // Remove the event listener that got us here
@@ -1754,16 +1610,14 @@ FuelConsumptionCtrl.prototype._onCFERLeftAnimationEnd = function(e)
 /*
  * Utility function to convert a graph's data point to a Y-coordinate
  */
-FuelConsumptionCtrl.prototype._scaleDataToGraphY = function(maxY, dataValue, maxDataValue, invertY)
-{
+FuelConsumptionCtrl.prototype._scaleDataToGraphY = function(maxY, dataValue, maxDataValue, invertY) {
 //    log.debug("FuelConsumptionCtrl: _scaleDataToGraphY() called: maxY = " + maxY +
 //                "dataValue = " + dataValue + ", maxDataValue = " + maxDataValue +
 //                "invertY = " + invertY);
 
   let yVal = Math.floor(dataValue / maxDataValue * maxY);
 
-  if (invertY)
-  {
+  if (invertY) {
     yVal = maxY - yVal;
   }
 
@@ -1774,17 +1628,13 @@ FuelConsumptionCtrl.prototype._scaleDataToGraphY = function(maxY, dataValue, max
  * Callback for "Switch View" button selections -- when called, trigger the
  * configured application callback.
  */
-FuelConsumptionCtrl.prototype._switchViewButtonHandler = function(buttonObj, appData, params)
-{
+FuelConsumptionCtrl.prototype._switchViewButtonHandler = function(buttonObj, appData, params) {
 //    log.debug("FuelConsumptionCtrl: _onCFERLeftAnimationEnd() called: buttonObj = " + buttonObj +
 //              ", appData = " + appData + ", params = " + params);
 
-  if (typeof(this.properties.switchViewButtonCallback) === 'function')
-  {
+  if (typeof(this.properties.switchViewButtonCallback) === 'function') {
     this.properties.switchViewButtonCallback(this, appData, null);
-  }
-  else
-  {
+  } else {
     log.warn('FuelConsumptionCtrl: no valid switchViewButtonCallback configured');
   }
 };
@@ -1793,24 +1643,18 @@ FuelConsumptionCtrl.prototype._switchViewButtonHandler = function(buttonObj, app
 /* Public Methods */
 /** ****************/
 
-FuelConsumptionCtrl.prototype.initializeCurrentDriveFuelGraph = function(initialBarValues)
-{
+FuelConsumptionCtrl.prototype.initializeCurrentDriveFuelGraph = function(initialBarValues) {
   log.debug('FuelConsumptionCtrl: initializeCurrentDriveFuelGraph() called: initialBarValues = ' +
                 initialBarValues);
-  if (initialBarValues)
-  {
+  if (initialBarValues) {
     // Initial bar values are in youngest-first order, while displayed values are
     // in left-to-right order (oldest first).  Copy the initialBarValues array to
     // this._CDFEGraphBarValues, reversing the order & initializing any omitted
     // data to zero.
-    for (let ibvIdx = 0; ibvIdx <= this._youngestCDFEDataIdx; ibvIdx++)
-    {
-      if (initialBarValues[ibvIdx])
-      {
+    for (let ibvIdx = 0; ibvIdx <= this._youngestCDFEDataIdx; ibvIdx++) {
+      if (initialBarValues[ibvIdx]) {
         this._CDFEGraphBarValues[this._youngestCDFEDataIdx - ibvIdx] = initialBarValues[ibvIdx];
-      }
-      else
-      {
+      } else {
         this._CDFEGraphBarValues[this._youngestCDFEDataIdx - ibvIdx] = 0;
       }
     }
@@ -1824,41 +1668,29 @@ FuelConsumptionCtrl.prototype.initializeCurrentDriveFuelGraph = function(initial
 };
 
 // to initialise the HEV fuel eco bar graph with the disc
-FuelConsumptionCtrl.prototype.initialiseHEVFuelGraph = function(initialBarValues, intialDiscValues, initialEVModes, initialHalfDiscs)
-{
-  if (initialBarValues)
-  {
+FuelConsumptionCtrl.prototype.initialiseHEVFuelGraph = function(initialBarValues, intialDiscValues, initialEVModes, initialHalfDiscs) {
+  if (initialBarValues) {
     // Initial bar values are in youngest-first order, while displayed values are
     // in left-to-right order (oldest first).  Copy the initialBarValues array to
     // this._CDFEGraphBarValues, reversing the order & initializing any omitted
     // data to zero.
-    for (let ibvIdx = 0; ibvIdx <= this._youngestCDFEDataIdx; ibvIdx++)
-    {
-      if ((initialBarValues[ibvIdx] !== null) && (initialBarValues[ibvIdx] !== undefined))
-      {
+    for (let ibvIdx = 0; ibvIdx <= this._youngestCDFEDataIdx; ibvIdx++) {
+      if ((initialBarValues[ibvIdx] !== null) && (initialBarValues[ibvIdx] !== undefined)) {
         this._CDFEGraphBarValues[this._youngestCDFEDataIdx - ibvIdx] = initialBarValues[ibvIdx];
         // this._initialHalfDisc[this._youngestCDFEDataIdx - ibvIdx] = initialHalfDiscs[ibvIdx];
         this._initialEVMode[this._youngestCDFEDataIdx - ibvIdx] = initialEVModes[ibvIdx];
-      }
-      else
-      {
+      } else {
         this._CDFEGraphBarValues[this._youngestCDFEDataIdx - ibvIdx] = 0;
         // this._initialHalfDisc[this._youngestCDFEDataIdx - ibvIdx] = 0;
         this._initialEVMode[this._youngestCDFEDataIdx - ibvIdx] = false;
       }
-      if (intialDiscValues)
-      {
-        if (initialHalfDiscs[ibvIdx])
-        {
+      if (intialDiscValues) {
+        if (initialHalfDiscs[ibvIdx]) {
           this._CDFEDiscValues[this._youngestCDFEDataIdx - ibvIdx] = intialDiscValues[ibvIdx] * 13 + 7;
-        }
-        else
-        {
+        } else {
           this._CDFEDiscValues[this._youngestCDFEDataIdx - ibvIdx] = intialDiscValues[ibvIdx] * 13;
         }
-      }
-      else
-      {
+      } else {
         this._CDFEDiscValues[this._youngestCDFEDataIdx - ibvIdx] = 0;
       }
     }
@@ -1873,22 +1705,16 @@ FuelConsumptionCtrl.prototype.initialiseHEVFuelGraph = function(initialBarValues
 };
 
 
-FuelConsumptionCtrl.prototype.initializeCurrentDriveFuelGraphRight = function(initialBarValues)
-{
-  if (initialBarValues)
-  {
+FuelConsumptionCtrl.prototype.initializeCurrentDriveFuelGraphRight = function(initialBarValues) {
+  if (initialBarValues) {
     // Initial bar values are in youngest-first order, while displayed values are
     // in left-to-right order (oldest first).  Copy the initialBarValues array to
     // this._CDFEGraphBarValues, reversing the order & initializing any omitted
     // data to zero.
-    for (let ibvIdx = 0; ibvIdx <= this._youngestCDFEDataIdxRight; ibvIdx++)
-    {
-      if (initialBarValues[ibvIdx])
-      {
+    for (let ibvIdx = 0; ibvIdx <= this._youngestCDFEDataIdxRight; ibvIdx++) {
+      if (initialBarValues[ibvIdx]) {
         this._CDFEGraphBarValuesRight[this._youngestCDFEDataIdxRight - ibvIdx] = initialBarValues[ibvIdx];
-      }
-      else
-      {
+      } else {
         this._CDFEGraphBarValuesRight[this._youngestCDFEDataIdxRight - ibvIdx] = 0;
       }
     }
@@ -1901,33 +1727,24 @@ FuelConsumptionCtrl.prototype.initializeCurrentDriveFuelGraphRight = function(in
   this._resetCDFEGraphRight(true);
 };
 
-FuelConsumptionCtrl.prototype.initializeHEVCurrentDriveFuelGraphRight = function(initialBarValues, initialLDiscValues, initialHalfDiscs, evModes)
-{
-  if (initialBarValues)
-  {
+FuelConsumptionCtrl.prototype.initializeHEVCurrentDriveFuelGraphRight = function(initialBarValues, initialLDiscValues, initialHalfDiscs, evModes) {
+  if (initialBarValues) {
     // Initial bar values are in youngest-first order, while displayed values are
     // in left-to-right order (oldest first).  Copy the initialBarValues array to
     // this._CDFEGraphBarValues, reversing the order & initializing any omitted
     // data to zero.
-    for (let ibvIdx = 0; ibvIdx <= this._youngestCDFEDataIdxRight; ibvIdx++)
-    {
+    for (let ibvIdx = 0; ibvIdx <= this._youngestCDFEDataIdxRight; ibvIdx++) {
       // if (initialBarValues[ibvIdx])
-      if (typeof(initialBarValues[ibvIdx]) === 'number')
-      {
+      if (typeof(initialBarValues[ibvIdx]) === 'number') {
         this._CDFEGraphBarValuesRight[this._youngestCDFEDataIdxRight - ibvIdx] = initialBarValues[ibvIdx];
         // if(initialHalfDiscs[ibvIdx])
-        if (initialHalfDiscs[ibvIdx]=== true)
-        {
+        if (initialHalfDiscs[ibvIdx]=== true) {
           this._CDFEDiscBarValuesRight[this._youngestCDFEDataIdxRight - ibvIdx] = initialLDiscValues[ibvIdx] * 13 + 7;
-        }
-        else if (initialHalfDiscs[ibvIdx]=== false)
-        {
+        } else if (initialHalfDiscs[ibvIdx]=== false) {
           this._CDFEDiscBarValuesRight[this._youngestCDFEDataIdxRight - ibvIdx] = initialLDiscValues[ibvIdx] * 13;
         }
         this._CDFEEvModeRight[this._youngestCDFEDataIdxRight - ibvIdx] = evModes[ibvIdx];
-      }
-      else
-      {
+      } else {
         this._CDFEGraphBarValuesRight[this._youngestCDFEDataIdxRight - ibvIdx] = 0;
         this._CDFEDiscBarValuesRight[this._youngestCDFEDataIdxRight - ibvIdx] = 0;
       }
@@ -1943,18 +1760,14 @@ FuelConsumptionCtrl.prototype.initializeHEVCurrentDriveFuelGraphRight = function
 };
 
 
-FuelConsumptionCtrl.prototype.insertCurrentDriveFuelGraph = function(currentBarValue)
-{
+FuelConsumptionCtrl.prototype.insertCurrentDriveFuelGraph = function(currentBarValue) {
   log.debug('FuelConsumptionCtrl: insertCurrentDriveFuelGraph() called: currentBarValue = ' +
                 currentBarValue);
 
   // Add the new bar value to the data set
-  if (typeof(currentBarValue) === 'number')
-  {
+  if (typeof(currentBarValue) === 'number') {
     this._CDFEGraphBarValues[this._newCDFEDataIdx] = currentBarValue;
-  }
-  else
-  {
+  } else {
     this._CDFEGraphBarValues[this._newCDFEDataIdx] = 0;
   }
 
@@ -1980,8 +1793,7 @@ FuelConsumptionCtrl.prototype.insertCurrentDriveFuelGraph = function(currentBarV
   this._CDFELineGraphInTransition = true;
 
   // Update the data sets to discard the oldest historical data
-  for (let i = 0; i <= this._youngestCDFEDataIdx; i++)
-  {
+  for (let i = 0; i <= this._youngestCDFEDataIdx; i++) {
     this._CDFEGraphBarValues[i] = this._CDFEGraphBarValues[i + 1];
   }
 
@@ -1990,37 +1802,27 @@ FuelConsumptionCtrl.prototype.insertCurrentDriveFuelGraph = function(currentBarV
 };
 
 // inser new bar graph for HEV disc bars
-FuelConsumptionCtrl.prototype.insertHEVFuelGraph = function(currentBarValue, currentDiscs, currentHEVMode, currentHalfDisc)
-{
+FuelConsumptionCtrl.prototype.insertHEVFuelGraph = function(currentBarValue, currentDiscs, currentHEVMode, currentHalfDisc) {
   // Add the new bar value to the data set
-  if (typeof(currentBarValue) === 'number')
-  {
+  if (typeof(currentBarValue) === 'number') {
     this._CDFEGraphBarValues[this._newCDFEDataIdx] = currentBarValue;
     // if(currentHalfDisc)
-    if (currentHalfDisc===true)
-    {
+    if (currentHalfDisc===true) {
       this._CDFEDiscValues[this._newCDFEDataIdx] = currentDiscs * 13 + 7;
-    }
-    else if (currentHalfDisc===false)
-    {
+    } else if (currentHalfDisc===false) {
       this._CDFEDiscValues[this._newCDFEDataIdx] = currentDiscs * 13;
     }
     this._initialEVMode[this._newCDFEDataIdx] = currentHEVMode;
-  }
-  else
-  {
+  } else {
     this._CDFEGraphBarValues[this._newCDFEDataIdx] = 0;
     this._CDFEDiscValues[this._newCDFEDataIdx] = 0;
     this._initialEVMode[this._newCDFEDataIdx] = false;
   }
 
-  if (currentHEVMode)
-  {
+  if (currentHEVMode) {
     this.CDFECurrentBar.className = 'FuelConsumptionCtrlCDFEBarGraphCoreCurrentGreen';
     this.CDFECurrentDiscBar.className = 'FuelConsumptionCtrlHevCDFEDiscBg_Green';
-  }
-  else
-  {
+  } else {
     //    this.CDFECurrentBar.className = 'FuelConsumptionCtrlCDFEBarGraphCore';
     //    this.CDFECurrentDiscBar.className = 'FuelConsumptionCtrlHevCDFEBarGraphCore';
   }
@@ -2045,21 +1847,17 @@ FuelConsumptionCtrl.prototype.insertHEVFuelGraph = function(currentBarValue, cur
 
   this._CDFELineGraphInTransition = true;
   // Update the data sets to discard the oldest historical data
-  for (let i = 0; i <= this._youngestCDFEDataIdx; i++)
-  {
+  for (let i = 0; i <= this._youngestCDFEDataIdx; i++) {
     this._CDFEGraphBarValues[i] = this._CDFEGraphBarValues[i + 1];
     this._CDFEDiscValues[i] = this._CDFEDiscValues[i + 1];
     this._initialEVMode[i] = this._initialEVMode[i+1];
   }
 
   // if(currentHEVMode)
-  if (this._initialEVMode[8])
-  {
+  if (this._initialEVMode[8]) {
     this.CDFECurrentBar.className = 'FuelConsumptionCtrlCDFEBarGraphCoreCurrentGreen';
     this.CDFECurrentDiscBar.className = 'FuelConsumptionCtrlHevCDFEDiscBg_Green';
-  }
-  else
-  {
+  } else {
     this.CDFECurrentBar.className = 'FuelConsumptionCtrlCDFEBarGraphCore';
     this.CDFECurrentDiscBar.className = 'FuelConsumptionCtrlHevCDFEBarGraphCore';
   }
@@ -2069,18 +1867,14 @@ FuelConsumptionCtrl.prototype.insertHEVFuelGraph = function(currentBarValue, cur
 };
 
 
-FuelConsumptionCtrl.prototype.insertCurrentDriveFuelGraphRight = function(currentBarValue)
-{
+FuelConsumptionCtrl.prototype.insertCurrentDriveFuelGraphRight = function(currentBarValue) {
   log.debug('FuelConsumptionCtrl: insertCurrentDriveFuelGraph() called: currentBarValue = ' +
                 currentBarValue + ', currentLineValue = ');
 
   // Add the new bar value to the data set
-  if (typeof(currentBarValue) === 'number')
-  {
+  if (typeof(currentBarValue) === 'number') {
     this._CDFEGraphBarValuesRight[this._newCDFEDataIdxRight] = currentBarValue;
-  }
-  else
-  {
+  } else {
     this._CDFEGraphBarValuesRight[this._newCDFEDataIdxRight] = 0;
   }
 
@@ -2100,8 +1894,7 @@ FuelConsumptionCtrl.prototype.insertCurrentDriveFuelGraphRight = function(curren
                                             this._CSSConstants['CDFEGraphBarSpacingRight']) + 'px';
 
   // Update the data sets to discard the oldest historical data
-  for (let i = 0; i <= this._youngestCDFEDataIdxRight; i++)
-  {
+  for (let i = 0; i <= this._youngestCDFEDataIdxRight; i++) {
     this._CDFEGraphBarValuesRight[i] = this._CDFEGraphBarValuesRight[i + 1];
   }
 
@@ -2109,25 +1902,19 @@ FuelConsumptionCtrl.prototype.insertCurrentDriveFuelGraphRight = function(curren
   this._CDFEGraphBarValuesRight[this._newCDFEDataIdx] = 0;
 };
 
-FuelConsumptionCtrl.prototype.initializeCumulativeFuelGraph = function(initialBarValues)
-{
+FuelConsumptionCtrl.prototype.initializeCumulativeFuelGraph = function(initialBarValues) {
   log.debug('FuelConsumptionCtrl: initializeCumulativeFuelGraph() called: initialBarValues = ' +
                 initialBarValues);
 
-  if (initialBarValues)
-  {
+  if (initialBarValues) {
     // Initial bar values are in youngest-first order, while displayed values are
     // in left-to-right order (oldest first).  Copy the initialBarValues array to
     // this._CFERGraphBarValues, reversing the order & initializing any omitted
     // data to zero.
-    for (let ibvIdx = 0; ibvIdx <= this._youngestCFERDataIdx; ibvIdx++)
-    {
-      if (initialBarValues[ibvIdx])
-      {
+    for (let ibvIdx = 0; ibvIdx <= this._youngestCFERDataIdx; ibvIdx++) {
+      if (initialBarValues[ibvIdx]) {
         this._CFERGraphBarValues[this._youngestCFERDataIdx - ibvIdx] = initialBarValues[ibvIdx];
-      }
-      else
-      {
+      } else {
         this._CFERGraphBarValues[this._youngestCFERDataIdx - ibvIdx] = 0;
       }
     }
@@ -2140,18 +1927,14 @@ FuelConsumptionCtrl.prototype.initializeCumulativeFuelGraph = function(initialBa
   this._resetCFERGraph(true);
 };
 
-FuelConsumptionCtrl.prototype.insertCurrentCumulativeFuelGraph = function(newResetValue)
-{
+FuelConsumptionCtrl.prototype.insertCurrentCumulativeFuelGraph = function(newResetValue) {
   const currentBarValue = 0.0;
   this._cumulativeBarValue = '0.0';
   this.updateCurrentCumulativeFuelGraph(currentBarValue);
   // Add the new bar value to the data set
-  if (typeof(currentBarValue) === 'number')
-  {
+  if (typeof(currentBarValue) === 'number') {
     this._CFERGraphBarValues[this._newCFERDataIdx] = newResetValue;
-  }
-  else
-  {
+  } else {
     this._CFERGraphBarValues[this._newCFERDataIdx] = 0.0;
   }
 
@@ -2171,8 +1954,7 @@ FuelConsumptionCtrl.prototype.insertCurrentCumulativeFuelGraph = function(newRes
                                             this._CSSConstants['CFERGraphBarSpacing']) + 'px';
 
   // Update the data set to discard the oldest historical data
-  for (let i = 0; i <= this._currentCFERDataIdx; i++)
-  {
+  for (let i = 0; i <= this._currentCFERDataIdx; i++) {
     this._CFERGraphBarValues[i] = this._CFERGraphBarValues[i + 1];
   }
 
@@ -2180,21 +1962,17 @@ FuelConsumptionCtrl.prototype.insertCurrentCumulativeFuelGraph = function(newRes
   this._CFERGraphBarValues[this._newCFERDataIdx] = 0;
 };
 
-FuelConsumptionCtrl.prototype.updateCurrentCumulativeFuelGraph = function(currentBarValue, unitRange)
-{
+FuelConsumptionCtrl.prototype.updateCurrentCumulativeFuelGraph = function(currentBarValue, unitRange) {
   log.debug('FuelConsumptionCtrl: updateCurrentCumulativeFuelGraph() called: currentBarValue = ' +
                 currentBarValue);
 
   // Save the current bar value
   let tempNumber = currentBarValue;
 
-  if (currentBarValue == null)
-  {
+  if (currentBarValue == null) {
     currentBarValue = 0;
     tempNumber = '--.-';
-  }
-  else if ( currentBarValue == 0)
-  {
+  } else if ( currentBarValue == 0) {
     tempNumber = '0.0';
   }
 
@@ -2202,17 +1980,13 @@ FuelConsumptionCtrl.prototype.updateCurrentCumulativeFuelGraph = function(curren
   this._cumulativeBarValue = tempNumber;
 
   // Check if current bar value exceeds the unit range
-  if (currentBarValue > unitRange)
-  {
+  if (currentBarValue > unitRange) {
     currentBarValue = unitRange;
   }
 
-  if (typeof(currentBarValue) === 'number')
-  {
+  if (typeof(currentBarValue) === 'number') {
     this._CFERGraphBarValues[10] = currentBarValue;
-  }
-  else
-  {
+  } else {
     this._CFERGraphBarValues[10] = 0.0;
     tempNumber = '0.0';
   }
@@ -2224,8 +1998,7 @@ FuelConsumptionCtrl.prototype.updateCurrentCumulativeFuelGraph = function(curren
   currentValueDiv.innerHTML = this._stringToHTML(tempNumber);
   // Update the current bar
   const bar = document.getElementById('CFERBar' + 10);
-  if (bar)
-  {
+  if (bar) {
     // Make sure transitions are enabled for the current bar
     bar.style.OTransition = 'height 0.6s ease 0s';
     this.CFERCurrentBarValue.style.OTransition = 'height 0.6s ease 0s';
@@ -2234,8 +2007,7 @@ FuelConsumptionCtrl.prototype.updateCurrentCumulativeFuelGraph = function(curren
   }
 };
 
-FuelConsumptionCtrl.prototype.setFuelEfficiency = function(fuelEfficiencyData)
-{
+FuelConsumptionCtrl.prototype.setFuelEfficiency = function(fuelEfficiencyData) {
   log.debug('FuelConsumptionCtrl: setFuelEfficiency() called: fuelEfficiency = ' +
                 fuelEfficiencyData.fuelEfficiency + ' ' +
                 fuelEfficiencyData.fuelEfficiencyUnit);
@@ -2245,8 +2017,7 @@ FuelConsumptionCtrl.prototype.setFuelEfficiency = function(fuelEfficiencyData)
 
   if (fuelEfficiencyData &&
       (fuelEfficiencyData.fuelEfficiency || fuelEfficiencyData.fuelEfficiency === 0) &&
-      fuelEfficiencyData.fuelEfficiencyUnit)
-  {
+      fuelEfficiencyData.fuelEfficiencyUnit) {
     // Set the displayed data/unit string
     const newFuelEfficiencyUnitText = 'km/L';
     // Remember the passed-in data
@@ -2260,10 +2031,9 @@ FuelConsumptionCtrl.prototype.setFuelEfficiency = function(fuelEfficiencyData)
 
     let newEfficiency = this.properties.fuelEfficiencyData.fuelEfficiency + '</br></br></br>';
     // Prevent Divide-By-Zero Error
-    if (parseFloat(this.properties.fuelEfficiencyData.fuelEfficiency) > 0 && newFuelEfficiencyUnitText)
-    {
-      if (fuelEfficiencyUnitText === 'L/100km') // calculate if the vehicle fuel efficiency unit is "L/100km"
-      {
+    if (parseFloat(this.properties.fuelEfficiencyData.fuelEfficiency) > 0 && newFuelEfficiencyUnitText) {
+      if (fuelEfficiencyUnitText === 'L/100km') {
+        // calculate if the vehicle fuel efficiency unit is "L/100km"
         if (newFuelEfficiencyUnitText === 'mpg') {
           newEfficiency += ((235.215/parseFloat(this.properties.fuelEfficiencyData.fuelEfficiency)).toFixed(1)).toString();
         } else if (newFuelEfficiencyUnitText === 'km/L') {
@@ -2271,9 +2041,8 @@ FuelConsumptionCtrl.prototype.setFuelEfficiency = function(fuelEfficiencyData)
         } else {
           newEfficiency += (parseFloat(this.properties.fuelEfficiencyData.fuelEfficiency).toFixed(1)).toString();
         }
-      }
-      else if (fuelEfficiencyUnitText === 'km/L') // calculate if the vehicle fuel efficiency unit is "km/L"
-      {
+      } else if (fuelEfficiencyUnitText === 'km/L') {
+        // calculate if the vehicle fuel efficiency unit is "km/L"
         if (newFuelEfficiencyUnitText === 'mpg') {
           newEfficiency += ((parseFloat(this.properties.fuelEfficiencyData.fuelEfficiency)*2.352).toFixed(1)).toString();
         } else if (newFuelEfficiencyUnitText === 'L/100km') {
@@ -2281,9 +2050,8 @@ FuelConsumptionCtrl.prototype.setFuelEfficiency = function(fuelEfficiencyData)
         } else {
           newEfficiency += (parseFloat(this.properties.fuelEfficiencyData.fuelEfficiency).toFixed(1)).toString();
         }
-      }
-      else // calculate if the vehicle fuel efficiency unit is "mpg"
-      {
+      } else {
+        // calculate if the vehicle fuel efficiency unit is "mpg"
         if (newFuelEfficiencyUnitText === 'L/100km') {
           newEfficiency += ((235.215/parseFloat(this.properties.fuelEfficiencyData.fuelEfficiency)).toFixed(1)).toString();
         } else if (newFuelEfficiencyUnitText === 'km/L') {
@@ -2293,16 +2061,12 @@ FuelConsumptionCtrl.prototype.setFuelEfficiency = function(fuelEfficiencyData)
         }
       }
       this.fuelEfficiencyValue.innerHTML = newEfficiency;
-    }
-    else
-    {
+    } else {
       this.fuelEfficiencyValue.innerHTML = this.properties.fuelEfficiencyData.fuelEfficienc + '</br></br></br>0.0';
     }
     this.fuelEfficiencyUnit.innerHTML = fuelEfficiencyUnitText + '</br></br></br>' + newFuelEfficiencyUnitText;
     // **** End of the fuel efficiency tweak
-  }
-  else
-  {
+  } else {
     log.warn('Invalid fuel efficiency data received -- blanking display');
 
     this.fuelEfficiencyValue.innerHTML = '--.-';
@@ -2310,32 +2074,24 @@ FuelConsumptionCtrl.prototype.setFuelEfficiency = function(fuelEfficiencyData)
   }
 };
 
-FuelConsumptionCtrl.prototype.setEvDrvDistance = function(evObj)
-{
+FuelConsumptionCtrl.prototype.setEvDrvDistance = function(evObj) {
   const driveDisUnit = this._translateString(evObj.unitId, evObj.unitId, this.properties.subMap);
   this.fuelEfficiencyHevDistanceUnit.innerHTML = this._stringToHTML(driveDisUnit);
 
-  if (evObj.driveDistance !== null)
-  {
+  if (evObj.driveDistance !== null) {
     this.fuelEfficiencyHevDistanceValue.innerHTML = evObj.driveDistance;
-  }
-  else
-  {
+  } else {
     this.fuelEfficiencyHevDistanceValue.innerHTML = '--.-';
   }
 
-  if (evObj.percentValue !== null)
-  {
+  if (evObj.percentValue !== null) {
     this.fuelEfficiencyHevPercentValue.innerHTML = '('+evObj.percentValue+'%)';
-  }
-  else
-  {
+  } else {
     this.fuelEfficiencyHevPercentValue.innerHTML = '(--)';
   }
 };
 
-FuelConsumptionCtrl.prototype.setUnitInformation = function(obj)
-{
+FuelConsumptionCtrl.prototype.setUnitInformation = function(obj) {
   this.properties.cumulativeFuelConfig.yAxisLimitValue = obj.yAxisLimitValue;
   this.properties.currentFuelConfig.yAxisLimitValue = obj.yAxisLimitValue;
   this.properties.cumulativeFuelConfig.yAxisLabelId = obj.yAxisLabelId;
@@ -2359,22 +2115,16 @@ FuelConsumptionCtrl.prototype.setUnitInformation = function(obj)
 /*
   * toggle Ump panel | status == "hidePanel" OR status == "showPanel"
   */
-FuelConsumptionCtrl.prototype.toggleUmpPanel = function(status)
-{
-  if (status == 'hidePanel')
-  {
+FuelConsumptionCtrl.prototype.toggleUmpPanel = function(status) {
+  if (status == 'hidePanel') {
     this.umpPanelDiv.className = 'UmpPanelDivDisable';
     this.umpCtrl.setRetracted(true);
     this._umpPanelStatus = false;
-  }
-  else if (status == 'showPanel')
-  {
+  } else if (status == 'showPanel') {
     this.umpPanelDiv.className = 'UmpPanelDivEnable';
     this.umpCtrl.setRetracted(false);
     this._umpPanelStatus = true;
-  }
-  else
-  {
+  } else {
     log.warn('_triggerUmpPanel called with an unxpected argument: '+status);
   }
 };
@@ -2386,16 +2136,14 @@ FuelConsumptionCtrl.prototype.toggleUmpPanel = function(status)
  * @return {object} - capture data
  */
 
-FuelConsumptionCtrl.prototype.getContextCapture = function()
-{
+FuelConsumptionCtrl.prototype.getContextCapture = function() {
   log.debug('FuelConsumptionCtrl: getContextCapture() called...');
   const controlContextCapture = this.umpCtrl.getContextCapture();
   return controlContextCapture;
 };
 
 
-FuelConsumptionCtrl.prototype.finishPartialActivity = function()
-{
+FuelConsumptionCtrl.prototype.finishPartialActivity = function() {
   log.debug('FuelConsumptionCtrl: finishPartialActivity() called...');
   this.umpCtrl.finishPartialActivity();
 };
@@ -2408,8 +2156,7 @@ FuelConsumptionCtrl.prototype.finishPartialActivity = function()
  * @return {object} - capture data
  */
 
-FuelConsumptionCtrl.prototype.restoreContext = function(controlContextCapture)
-{
+FuelConsumptionCtrl.prototype.restoreContext = function(controlContextCapture) {
   log.debug('EcoEffectCtrl: restoreContext() '+ controlContextCapture);
   this.umpCtrl.restoreContext(controlContextCapture);
 };
@@ -2418,32 +2165,25 @@ FuelConsumptionCtrl.prototype.restoreContext = function(controlContextCapture)
 /*
  * Forward all multicontroller events to our only child control, the "SwitchView" button
  */
-FuelConsumptionCtrl.prototype.handleControllerEvent = function(eventId)
-{
+FuelConsumptionCtrl.prototype.handleControllerEvent = function(eventId) {
   log.debug('FuelConsumptionCtrl: handleControllerEvent() called: ' + eventId);
 
   // Pass-through
-  if (this._umpPanelStatus && this.umpCtrl)
-  {
+  if (this._umpPanelStatus && this.umpCtrl) {
     response = this.umpCtrl.handleControllerEvent(eventId);
     return response;
-  }
-  else if (!this._umpPanelStatus && this._switchViewButtonCtrl)
-  {
+  } else if (!this._umpPanelStatus && this._switchViewButtonCtrl) {
     response = this._switchViewButtonCtrl.handleControllerEvent(eventId);
     return response;
   }
 };
 
-FuelConsumptionCtrl.prototype.cleanUp = function()
-{
+FuelConsumptionCtrl.prototype.cleanUp = function() {
   // Clean up the "Switch View" child button control
-  if (this._switchViewButtonCtrl)
-  {
+  if (this._switchViewButtonCtrl) {
     this._switchViewButtonCtrl.cleanUp();
   }
-  if (this.umpCtrl)
-  {
+  if (this.umpCtrl) {
     this.umpCtrl.cleanUp();
   }
 };

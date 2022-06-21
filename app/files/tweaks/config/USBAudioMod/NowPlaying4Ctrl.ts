@@ -1613,9 +1613,8 @@ NowPlaying4Ctrl.prototype.clearBrandImage = function() {
     // If no HD configuration is in place, or HD isn't available (Style5), ...
     if ((this.properties.hdConfigObj == null) ||
       (this.properties.ctrlStyle === 'Style5')) {
-      if ((this.properties.ctrlStyle === 'Style7') && (this.properties.loadingIcon == false))
-      // ... make sure the control title is full-width
-      {
+      if ((this.properties.ctrlStyle === 'Style7') && (this.properties.loadingIcon == false)) {
+        // ... make sure the control title is full-width
         this._ctrlTitle.className = 'NowPlaying4CtrlTitleFull';
       }
     }

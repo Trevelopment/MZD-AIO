@@ -3,7 +3,9 @@ const fs = require('fs');
 let apps = '';
 
 fs.readdir(testFolder, (err, files) => {
-  if (err) {console.error(err);}
+  if (err) {
+    console.error(err);
+  }
   files.forEach(file => {
     apps += file + ' ';
   });

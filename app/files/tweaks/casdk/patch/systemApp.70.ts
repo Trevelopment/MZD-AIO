@@ -747,8 +747,8 @@ systemApp.prototype._StatusMenuMsgHandler = function(msg) {
               }
             }
             if (dataList.items[i].appData.appName.indexOf(appName) === 0 || updateListForCarPlay) {
-              if (this._AtSpeedDisabled) // At speed : Available status will be skipped for the speed restricted apps
-              {
+              // At speed : Available status will be skipped for the speed restricted apps
+              if (this._AtSpeedDisabled) {
                 let speedRestrictedAppName = null;
                 let isNoAppAtSpeed = true;
                 for (let j = 0; j < this._SpeedRestrictedApps.length; ++j) {
@@ -786,8 +786,8 @@ systemApp.prototype._StatusMenuMsgHandler = function(msg) {
 systemApp.prototype._enableAppListItem = function(appName, isDisabled, dataList) {
   for (let i = 0; i < dataList.items.length; ++i) {
     if (dataList.items[i].appData.appName.indexOf(appName) === 0) {
-      if (this._AtSpeedDisabled) // At speed : Available status will be skipped for the speed restricted apps
-      {
+      // At speed : Available status will be skipped for the speed restricted apps
+      if (this._AtSpeedDisabled) {
         let speedRestrictedAppName = null;
         let isNoAppAtSpeed = true;
         for (let j = 0; j < this._SpeedRestrictedApps.length; ++j) {
@@ -998,9 +998,8 @@ systemApp.prototype._setRemoteUIButton = function(appName, enabled) {
     config.iconPath = 'apps/system/images/AppleCP_Active.png';
     config.appData = 'SelectCarPlay';
     config.appName = 'carplay';
-  }
+  } else if (appName === 'androidauto') {
   // set AndroidAuto image path, event and name.
-  else if (appName === 'androidauto') {
     config.iconPath = 'apps/system/images/Android_Auto_Active.png';
     config.appData = 'SelectAndroidAuto';
     config.appName = 'androidauto';
@@ -1050,9 +1049,8 @@ systemApp.prototype._remoteUIButtonFocused = function(ctrlObj, appData, params) 
     //        if(params.statusBtn == "carplay")
     if (appData == 'SelectCarPlay') {
       text = framework.localize.getLocStr('common', 'AppleCarPlay');
-    }
+    } else if (appData == 'SelectAndroidAuto') {
     //        else if(params.statusBtn == "androidauto")
-    else if (appData == 'SelectAndroidAuto') {
       text = framework.localize.getLocStr('common', 'AndroidAuto');
     }
     this._currentContextTemplate.mainMenuControl.setText(text);
@@ -1371,9 +1369,8 @@ systemApp.prototype._StatusUpdateSchedMaintHandler = function(msg) {
         } else {
           this._masterApplicationDataList.items[i].image2 = '';
         }
-      }
+      } else if (this._masterApplicationDataList.items[i].appData.mmuiEvent === 'SelectVehicleStatusMonitor' && this._vehicleConfigurationType === 'New') {
       // Amber icon should be display in VehicleStatusMonitor only with New VehicleConfigData type
-      else if (this._masterApplicationDataList.items[i].appData.mmuiEvent === 'SelectVehicleStatusMonitor' && this._vehicleConfigurationType === 'New') {
         const WarnGuidanceAppItem = utility.getArrayItemByPropertyValue(this._masterApplicationDataList.items, 'text1Id', 'WarnGuidanceApp');
         if (WarnGuidanceAppItem && WarnGuidanceAppItem.item && WarnGuidanceAppItem.item.label1) {
           warningCountValue = WarnGuidanceAppItem.item.label1;
@@ -1381,9 +1378,8 @@ systemApp.prototype._StatusUpdateSchedMaintHandler = function(msg) {
         // IF is Due is true and not having any image in image2 then need to show Amber icon.
         if (isDue && !this._masterApplicationDataList.items[i].image2) {
           this._masterApplicationDataList.items[i].image2 = 'common/images/icons/IcnListCarHealthAmber_Small.png';
-        }
+        } else if (!isDue && !warningCountValue) {
         // IF is Due is false and warningCountValue is 0 then no need to show Amber icon.
-        else if (!isDue && !warningCountValue) {
           this._masterApplicationDataList.items[i].image2 = '';
         } else {
           // DO nothing
@@ -1402,15 +1398,13 @@ systemApp.prototype._StatusUpdateSchedMaintHandler = function(msg) {
             list.dataList.items[i].image2 = '';
           }
           list.updateItems(i, i);
-        }
+        } else if (list.dataList.items[i].appData.mmuiEvent === 'SelectVehicleStatusMonitor' && this._vehicleConfigurationType === 'New') {
         // Amber icon should be display in VehicleStatusMonitor only with New VehicleConfigData type
-        else if (list.dataList.items[i].appData.mmuiEvent === 'SelectVehicleStatusMonitor' && this._vehicleConfigurationType === 'New') {
           // IF is Due is true and not having any image in image2 then need to show Amber icon.
           if (isDue && !list.dataList.items[i].image2) {
             list.dataList.items[i].image2 = 'common/images/icons/IcnListCarHealthAmber_Small.png';
-          }
+          } else if (!isDue && !warningCountValue) {
           // IF is Due is false and warningCountValue is 0 then no need to show Amber icon.
-          else if (!isDue && !warningCountValue) {
             list.dataList.items[i].image2 = '';
           } else {
             // Do Nothing
@@ -2131,11 +2125,9 @@ systemApp.prototype._updateApplicationStructure = function(vehicleConfiguration)
 };
 
 // FQIR-4475 add start
-systemApp.prototype._HealthCheckCounterMsgHandler = function(msg)
-{
+systemApp.prototype._HealthCheckCounterMsgHandler = function(msg) {
   let count = 0;
-  if (msg && msg.params && msg.params.payload && msg.params.payload.counter )
-  {
+  if (msg && msg.params && msg.params.payload && msg.params.payload.counter ) {
     log.info(' Receive health check counter from MMUI. Counter is : '+msg.params.payload.counter);
     count = msg.params.payload.counter;
     framework.sendEventToMmui(this.uiaId, 'HealthCheckResponse', {'payload': {'healthCheckResponseCounter': count}});

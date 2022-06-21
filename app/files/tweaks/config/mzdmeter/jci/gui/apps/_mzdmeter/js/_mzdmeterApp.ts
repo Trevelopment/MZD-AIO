@@ -1,8 +1,7 @@
 
 log.addSrcFile('_mzdmeterApp.js', '_mzdmeter');
 
-function _mzdmeterApp(uiaId)
-{
+function _mzdmeterApp(uiaId) {
   log.debug('Constructor called.');
 
   // Base application functionality is provided in a common location via this call to baseApp.init().
@@ -20,8 +19,7 @@ function _mzdmeterApp(uiaId)
  * Called just after the app is instantiated by framework.
  * All variables local to this app should be declared in this function
  */
-_mzdmeterApp.prototype.appInit = function()
-{
+_mzdmeterApp.prototype.appInit = function() {
   log.debug('_mzdmeterApp appInit  called...');
 
   // Context table
@@ -48,8 +46,7 @@ _mzdmeterApp.prototype.appInit = function()
  * CONTEXT CALLBACKS
  * =========================
  */
-_mzdmeterApp.prototype._StartContextReady = function()
-{
+_mzdmeterApp.prototype._StartContextReady = function() {
   // do anything you want here
 };
 

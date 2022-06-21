@@ -126,15 +126,23 @@ const template = [{
     label: 'Reload',
     accelerator: 'CmdOrCtrl+R',
     click: function(item, focusedWindow) {
-      if (focusedWindow) {focusedWindow.reload();}
+      if (focusedWindow) {
+        focusedWindow.reload();
+      }
     },
   }, {
     label: 'Full Screen',
     accelerator: (function() {
-      if (process.platform === 'darwin') {return 'Ctrl+Command+F';} else {return 'F11';}
+      if (process.platform === 'darwin') {
+        return 'Ctrl+Command+F';
+      } else {
+        return 'F11';
+      }
     })(),
     click: function(item, focusedWindow) {
-      if (focusedWindow) {focusedWindow.setFullScreen(!focusedWindow.isFullScreen());}
+      if (focusedWindow) {
+        focusedWindow.setFullScreen(!focusedWindow.isFullScreen());
+      }
     },
   }, {
     label: 'Minimize',
@@ -174,11 +182,15 @@ const template = [{
   }, */
     {
       label: 'Learn More: MazdaTweaks.com',
-      click: function() {shell.openExternal('http://aio.trevelopment.win/mazdatweaks');},
+      click: function() {
+        shell.openExternal('http://aio.trevelopment.win/mazdatweaks');
+      },
     },
     {
       label: 'Forum: Mazda3Revolution.com',
-      click: function() {shell.openExternal('http://aio.trevelopment.win/mazda3revolution');},
+      click: function() {
+        shell.openExternal('http://aio.trevelopment.win/mazda3revolution');
+      },
     },
   ],
 },

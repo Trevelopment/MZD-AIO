@@ -376,7 +376,9 @@ export const StartVideoPlayerApp = () => {
     $('#optionBlackOut').css({'background-image': (BlackOut ? boxChecked : boxUncheck)});
     AIO_SBN('Black Out Background: ' + (BlackOut ? 'ON' : 'OFF'), videoPlayerIcon);
     localStorage.setItem('videoplayer.blackout', JSON.stringify(BlackOut));
-    if (currentVideoTrack !== null) {toggleBlackOut(BlackOut);}
+    if (currentVideoTrack !== null) {
+      toggleBlackOut(BlackOut);
+    }
   });
 
   /* Resume Last Playing Video Option
@@ -537,13 +539,19 @@ function myVideoListResponse(data) {
 
     currentVideoTrack = null;
 
-    $('.playbackOption').css('background-image', function(i, val) {return val.substring(0, val.indexOf(')') + 1);});
+    $('.playbackOption').css('background-image', function(i, val) {
+      return val.substring(0, val.indexOf(')') + 1);
+    });
 
     selectedOptionItem = 8;
 
-    $('.playbackOption').eq(selectedOptionItem).css('background-image', function(i, val) {return val + ', -o-linear-gradient(top,' + vphColor + ', rgba(0,0,0,0))';});
+    $('.playbackOption').eq(selectedOptionItem).css('background-image', function(i, val) {
+      return val + ', -o-linear-gradient(top,' + vphColor + ', rgba(0,0,0,0))';
+    });
   } else {
-    $('.playbackOption').css('background-image', function(i, val) {return val.substring(0, val.indexOf(')') + 1);});
+    $('.playbackOption').css('background-image', function(i, val) {
+      return val.substring(0, val.indexOf(')') + 1);
+    });
     $('#myVideoList').append($('<ul id="ul' + totalVideoListContainer + '"></ul>')
         .addClass('videoListContainer'));
     let videoListUl = $('#ul' + totalVideoListContainer);
@@ -559,8 +567,12 @@ function myVideoListResponse(data) {
       videoString = '';
       const videoPath = item.replace(/[a-z0-9\/]*\/(movies|music)\//i, '').split('/');
       let videoName = videoPath.pop();
-      if (PlayMusic) {videoName = videoName.replace(/^[0-9]{2} /, '');} // Music track file names often start with the track number
-      if (videoPath.length > 0) {videoString = '<div class=\'videoPath\'>/' + videoPath.join('/') + '</div>';} // File is in a subdirectory
+      if (PlayMusic) {
+        videoName = videoName.replace(/^[0-9]{2} /, '');
+      } // Music track file names often start with the track number
+      if (videoPath.length > 0) {
+        videoString = '<div class=\'videoPath\'>/' + videoPath.join('/') + '</div>';
+      } // File is in a subdirectory
       videoString += '<div class=\'videoLine\'>' + (++index) + '. ' + videoName.replace(/  /g, ' &nbsp;') + '</div>';
 
       videoListUl.append($('<li></li>')
@@ -918,7 +930,9 @@ function myVideoFFRequest() {
     waitingWS = false;
   }
   if (BlackOut && !statusbarTitleVideo) {
-    setTimeout(function() {$('#blackOutVideoStatus').addClass('out');}, 1000);
+    setTimeout(function() {
+      $('#blackOutVideoStatus').addClass('out');
+    }, 1000);
   }
 }
 
@@ -943,7 +957,9 @@ function myVideoRWRequest() {
     waitingWS = false;
   }
   if (BlackOut && !statusbarTitleVideo) {
-    setTimeout(function() {$('#blackOutVideoStatus').addClass('out');}, 1000);
+    setTimeout(function() {
+      $('#blackOutVideoStatus').addClass('out');
+    }, 1000);
   }
 }
 
@@ -984,7 +1000,9 @@ function fullScreenRequest() {
       }
     } else {
       wsVideo.send('z 0 0 800 480');
-      setTimeout(function() {$('#myVideoControlDiv ul').css({'background-color': ''});}, 1000);
+      setTimeout(function() {
+        $('#myVideoControlDiv ul').css({'background-color': ''});
+      }, 1000);
     }
   }
 
@@ -1246,7 +1264,9 @@ function handleCommander(eventID) {
       } else if (currentVideoTrack === null) {
         if ((currentVideoListContainer + 1) < totalVideoListContainer) {
           $('#myVideoScrollDown').click();
-          $('.playbackOption').css('background-image', function(i, val) {return val.substring(0, val.indexOf(')') + 1);});
+          $('.playbackOption').css('background-image', function(i, val) {
+            return val.substring(0, val.indexOf(')') + 1);
+          });
           $('.videoTrack').removeClass(vpColorClass);
           selectedItem += 8;
           if (selectedItem >= totalVideos) {
@@ -1270,7 +1290,9 @@ function handleCommander(eventID) {
       } else if (currentVideoTrack === null) {
         if (currentVideoListContainer > 0) {
           $('#myVideoScrollUp').click();
-          $('.playbackOption').css('background-image', function(i, val) {return val.substring(0, val.indexOf(')') + 1);});
+          $('.playbackOption').css('background-image', function(i, val) {
+            return val.substring(0, val.indexOf(')') + 1);
+          });
           $('.videoTrack').removeClass(vpColorClass);
           selectedItem -= 8;
           $('.videoTrack').eq(selectedItem).addClass(vpColorClass);
@@ -1293,7 +1315,9 @@ function handleCommander(eventID) {
       } else if (currentVideoTrack !== null) {
         $('#myVideoRW').click();
       } else {
-        $('.playbackOption').css('background-image', function(i, val) {return val.substring(0, val.indexOf(')') + 1);});
+        $('.playbackOption').css('background-image', function(i, val) {
+          return val.substring(0, val.indexOf(')') + 1);
+        });
         if (selectedItem > 0) {
           $('.videoTrack').removeClass(vpColorClass);
           if ((selectedItem % 8) === 0) {
@@ -1319,7 +1343,9 @@ function handleCommander(eventID) {
       } else if (currentVideoTrack !== null) {
         $('#myVideoFF').click();
       } else {
-        $('.playbackOption').css('background-image', function(i, val) {return val.substring(0, val.indexOf(')') + 1);});
+        $('.playbackOption').css('background-image', function(i, val) {
+          return val.substring(0, val.indexOf(')') + 1);
+        });
         if (selectedItem < totalVideos - 1) {
           $('.videoTrack').removeClass(vpColorClass);
           selectedItem++;
@@ -1343,12 +1369,16 @@ function handleCommander(eventID) {
         $('#popInfoTab').click();
       } else {
         $('.videoTrack').removeClass(vpColorClass);
-        $('.playbackOption').css('background-image', function(i, val) {return val.substring(0, val.indexOf(')') + 1);});
+        $('.playbackOption').css('background-image', function(i, val) {
+          return val.substring(0, val.indexOf(')') + 1);
+        });
         selectedOptionItem++;
         if (selectedOptionItem >= $('.playbackOption').length) {
           selectedOptionItem = 0;
         }
-        $('.playbackOption').eq(selectedOptionItem).css('background-image', function(i, val) {return val + ', -o-linear-gradient(top,' + vphColor + ', rgba(0,0,0,0))';});
+        $('.playbackOption').eq(selectedOptionItem).css('background-image', function(i, val) {
+          return val + ', -o-linear-gradient(top,' + vphColor + ', rgba(0,0,0,0))';
+        });
       }
       break;
 
@@ -1363,7 +1393,9 @@ function handleCommander(eventID) {
           myVideoStartRequest($('.videoTrack').eq(selectedItem));
         } else {
           $('.playbackOption').eq(selectedOptionItem).click();
-          $('.playbackOption').eq(selectedOptionItem).css('background-image', function(i, val) {return val + ', -o-linear-gradient(top, rgba(0,0,0,0),' + vphColor + ')';});
+          $('.playbackOption').eq(selectedOptionItem).css('background-image', function(i, val) {
+            return val + ', -o-linear-gradient(top, rgba(0,0,0,0),' + vphColor + ')';
+          });
         }
       }
       break;
@@ -1375,12 +1407,16 @@ function handleCommander(eventID) {
         $('#popOptionsTab').click();
       } else {
         $('.videoTrack').removeClass(vpColorClass);
-        $('.playbackOption').css('background-image', function(i, val) {return val.substring(0, val.indexOf(')') + 1);});
+        $('.playbackOption').css('background-image', function(i, val) {
+          return val.substring(0, val.indexOf(')') + 1);
+        });
         selectedOptionItem--;
         if (selectedOptionItem < 0) {
           selectedOptionItem = $('.playbackOption').length - 1;
         }
-        $('.playbackOption').eq(selectedOptionItem).css('background-image', function(i, val) {return val + ', -o-linear-gradient(top,' + vphColor + ', rgba(0,0,0,0))';});
+        $('.playbackOption').eq(selectedOptionItem).css('background-image', function(i, val) {
+          return val + ', -o-linear-gradient(top,' + vphColor + ', rgba(0,0,0,0))';
+        });
       }
       break;
 

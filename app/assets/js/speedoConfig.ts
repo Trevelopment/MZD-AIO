@@ -270,7 +270,9 @@ $(function() {
   });
 
   // Prevents all links with no href from reloading the page
-  $('a[href=\'\']').click(function(e) {e.preventDefault();});
+  $('a[href=\'\']').click(function(e) {
+    e.preventDefault();
+  });
   // Disables all the ID fields because they need to stay consistant
   $('[name*="[id]"], [name*="[menuId]"], [name*="[imgId]"], [name*="[spOp]"], [name*="[code]"]').attr('disabled', 'true');
   $('[type*="checkbox"]').addClass('w3-check');
