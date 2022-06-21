@@ -1,8 +1,8 @@
 {
-  "name": "MZD-AIO-TI",
+  "name": "MZD-AIO-TI-REMIX",
   "productName": "MZD All In One Tweaks Installer",
   "description": "An Installer/Uninstaller for Over 50 System Tweaks for the Mazda MZD Infotainment System.",
-  "version": "2.8.6",
+  "version": "0.0.1",
   "homepage": "http://mazdatweaks.com",
   "license": "GPL-3.0",
   "main": "main.js",
@@ -14,13 +14,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Trevelopment/MZD-AIO"
+    "url": ""
   },
   "bugs": {
-    "url": "https://github.com/Trevelopment/MZD-AIO/issues"
+    "url": ""
   },
   "engines": {
-    "node": "^13"
+    "node": "^16"
   },
   "keywords": [
     "Mazda",
@@ -167,36 +167,38 @@
     "forceCodeSigning": false
   },
   "devDependencies": {
-    "async": "^3.2.0",
-    "chai": "^4.2.0",
+    "@types/jquery": "^3.5.14",
+    "@typescript-eslint/eslint-plugin": "^5.29.0",
+    "@typescript-eslint/parser": "^5.29.0",
+    "async": "^3.2.4",
+    "chai": "^4.3.6",
     "chai-as-promised": "^7.1.1",
     "dependency-check": "^4.1.0",
-    "devtron": "^1",
-    "electron": "^6.1.9",
-    "electron-builder": "^21.2.0",
-    "electron-debug": "^3.0.1",
-    "electron-is-dev": "^1.2.0",
-    "electron-rebuild": "^1.10.1",
-    "mocha": "^6.2.3",
+    "electron": "^19.0.4",
+    "electron-builder": "^23.0.3",
+    "electron-debug": "^3.2.0",
+    "electron-is-dev": "^2.0.0",
+    "electron-rebuild": "^3.2.7",
+    "mocha": "^10.0.0",
     "rimraf": "^3.0.2",
-    "shelljs": "^0.8.3",
-    "spectron": "^8.0.0",
-    "standard": "^13.1.0"
+    "shelljs": "^0.8.5",
+    "spectron": "^19.0.0",
+    "standard": "^17.0.0"
   },
   "dependencies": {
     "appender": "0.0.2",
-    "bluebird-lst": "^1.0.9",
     "copy-dir": "^1.2.0",
     "crlf": "^1.1.1",
-    "drivelist": "^8.0.10",
-    "electron-context-menu": "^0.14.0",
-    "electron-image-resize": "^1.2.4",
-    "electron-store": "^4.0.0",
-    "extract-zip": "^1.7.0",
+    "drivelist": "^10.0.0",
+    "electron-context-menu": "^3.2.0",
+    "electron-store": "^8.0.2",
+    "eslint": "^8.18.0",
+    "extract-zip": "^2.0.1",
     "global": "^4.3.2",
     "jquery": "^3.4.1",
-    "mkdirp": "^0.5.5",
-    "node-abi": "^2.15.0",
+    "mkdirp": "^1.0.4",
+    "node-abi": "^3.22.0",
+    "typescript": "^4.7.4",
     "xml2js": "^0.4.23"
   }
 }

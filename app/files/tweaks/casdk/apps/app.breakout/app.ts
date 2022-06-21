@@ -25,14 +25,14 @@
  */
 
 /**
- * Tetris
+ * breakout
  *
- * First game ever written for the Mazda Infotainment System
+ * ?? game ever written for the Mazda Infotainment System
  *
  */
 
 
-CustomApplicationsHandler.register("app.tetris", new CustomApplication({
+CustomApplicationsHandler.register("app.breakout", new CustomApplication({
 
   /**
    * (require)
@@ -48,7 +48,7 @@ CustomApplicationsHandler.register("app.tetris", new CustomApplication({
      * (js) defines javascript includes
      */
 
-    js: ['tetris.js'],
+    js: ['breakout.ts'],
 
     /**
      * (css) defines css includes
@@ -78,7 +78,7 @@ CustomApplicationsHandler.register("app.tetris", new CustomApplication({
      * (title) The title of the application in the Application menu
      */
 
-    title: 'Tetris',
+    title: 'Breakout',
 
     /**
      * (statusbar) Defines if the statusbar should be shown
@@ -142,10 +142,9 @@ CustomApplicationsHandler.register("app.tetris", new CustomApplication({
     this.speedRestrict = true;
 
     // score for this drive
-    this.__score = 0;
-    this.__highscore = this.get("highscore");
+    this.__highscore = 0; //this.get("highscore");
 
-    // init tetris
+    // init breakout
     this.initializeGameBoard();
 
     // vehicle speed
@@ -153,12 +152,16 @@ CustomApplicationsHandler.register("app.tetris", new CustomApplication({
 
       if (this.speedRestrict && value > 15) {
         this.gamelabel.html("Driving").fadeIn();
-        this.gameBoard.data('tetris').pause();
+        this.breakout.pause();
       } else {
         this.gamelabel.fadeOut();
-        this.gameBoard.data('tetris').start();
+        this.breakout.start();
       }
     }.bind(this));
+
+
+
+
   },
 
   /**
@@ -167,7 +170,7 @@ CustomApplicationsHandler.register("app.tetris", new CustomApplication({
 
   focused: function() {
 
-    this.gameBoard.data('tetris').start();
+    this.breakout.start();
   },
 
   /**
@@ -176,7 +179,7 @@ CustomApplicationsHandler.register("app.tetris", new CustomApplication({
 
   lost: function() {
 
-    this.gameBoard.data('tetris').pause();
+    this.breakout.pause();
 
   },
 
@@ -192,7 +195,7 @@ CustomApplicationsHandler.register("app.tetris", new CustomApplication({
 
   onControllerEvent: function(eventId) {
 
-    this.gameBoard.data('tetris').handle(eventId);
+    this.breakout.handle(eventId);
 
   },
 
@@ -203,7 +206,7 @@ CustomApplicationsHandler.register("app.tetris", new CustomApplication({
 
   initializeGameBoard: function() {
 
-    this.gameBoard = $("<div/>").addClass("gameBoard").appendTo(this.canvas);
+    this.gameBoard = $("<canvas/>").addClass("gameBoard").appendTo(this.canvas);
 
     $("<label/>").addClass("score").append("This Drive").appendTo(this.canvas);
     this.score = $("<span/>").addClass("score").append("0").appendTo(this.canvas);
@@ -211,50 +214,31 @@ CustomApplicationsHandler.register("app.tetris", new CustomApplication({
     $("<label/>").addClass("highScore").append("High Score").appendTo(this.canvas);
     this.highScore = $("<span/>").addClass("highScore").append(this.__highscore || '0').appendTo(this.canvas);
 
+    $("<label/>").addClass("lives").append("Lives").appendTo(this.canvas);
+    this.lives = $("<span/>").addClass("lives").append("0").appendTo(this.canvas);
+
     this.gamelabel = $("<label/>").addClass("gamelabel").append("GAME OVER").appendTo(this.canvas);
 
-    this.gameBoard.tetris({
-      tileSize: 20,
-    }).on({
+    this.highScore.html(this.__highscore);
+    this.breakout = new breakoutboard(this.gameBoard.get(0), function(_score, _lives) {
+      this.score.html(_score);
+      this.lives.html(_lives)
 
-      rowCompleted: function() {
-        this.__score++;
+      if (_score > this.__highscore) {
 
-        this.score.html(this.__score);
+        this.__highscore = _score;
 
-        if (!this.__highscore) this.__highscore = 0;
+        this.highScore.html(_score);
 
-        if (this.__score > this.__highscore) {
+        //this.set("highscore", _score);
+      }
+    }.bind(this));
 
-          this.__highscore = this.__score;
-
-          this.highScore.html(this.__highscore);
-
-          this.set("highscore", this.__highscore);
-        }
-
-      }.bind(this),
-
-      gameOver: function() {
-
-        this.gameBoard.data('tetris').pause();
-
-        this.gamelabel.html("Game Over").fadeIn();
-
-
-      }.bind(this),
-
-      restartGame: function() {
-        this.__score = 0;
-        this.score.html(this.__score);
-        this.gamelabel.fadeOut();
-
-      }.bind(this)
-    });
     this.score.on('click', function() {
       this.gamelabel.html("Speed Restriction " + (this.speedRestrict ? "Disabled": "Enabled")).fadeIn(100).delay(1000).fadeOut(1000);
       return this.speedRestrict = !this.speedRestrict;
     }.bind(this));
+
   },
 
 

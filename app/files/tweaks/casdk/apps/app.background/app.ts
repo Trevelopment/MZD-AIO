@@ -22,7 +22,7 @@ CustomApplicationsHandler.register("app.background", new CustomApplication({
     /**
      * (js) defines javascript includes
      */
-    js: ["background/list.js"],
+    js: ["background/list.ts"],
     /**
      * (css) defines css includes
      */

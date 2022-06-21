@@ -5,12 +5,12 @@
 ** http://mazdatweaks.com                                                     **
 ** ©2020 Trevelopment                                                         **
 **                                                                            **
-** home.js - The main AngularJS module & controller used to connect the main  **
+** home.ts - The main AngularJS module & controller used to connect the main  **
 ** process and in the build process.                                          **
 **                                                                            **
 ** ************************************************************************** **
 \* ************************************************************************** */
-/* jshint -W117 */
+const angular = require('@angular/core');
 (function () {
   'use strict'
   angular.module('AIO', ['checklist-model', 'ngSanitize', 'ngRoute']) // 'angular-electron'

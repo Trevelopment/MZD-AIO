@@ -48,7 +48,7 @@ CustomApplicationsHandler.register("app.snake", new CustomApplication({
      * (js) defines javascript includes
      */
 
-    js: ['snake.js'],
+    js: ['snake.ts'],
 
     /**
      * (css) defines css includes

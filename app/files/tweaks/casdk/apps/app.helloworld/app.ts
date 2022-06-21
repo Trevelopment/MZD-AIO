@@ -52,7 +52,7 @@ CustomApplicationsHandler.register("app.helloworld", new CustomApplication({
      * (js) defines javascript includes
      */
 
-    js: ['api.js'],
+    js: ['api.ts'],
 
     /**
      * (css) defines css includes
