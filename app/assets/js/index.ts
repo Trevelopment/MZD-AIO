@@ -17,7 +17,7 @@ const _ = require('lodash');
 const fs = require('fs');
 const ipc = require('electron').ipcRenderer;
 const Config = require('electron-store');
-const settings = new Config({'name': 'aio-data'});
+export const settings = new Config({'name': 'aio-data'});
 export const persistantData = new Config({'name': 'aio-persist'});
 export const dataObj = new Config({'name': 'aio-data-obj'});
 const lastView = new Config({'name': 'aio-last'});
@@ -39,13 +39,13 @@ const copyFolderLocation = persistantData.get('copyFolderLocation', app.getPath(
 const visits = persistantData.get('visits', 0);
 export const hasSpeedCamFiles = false; // fs.existsSync(`${app.getPath('userData')}/speedcam-patch/`)
 let translateSchemas; let langPath; let langDefault;
-const colordir = `${app.getPath('userData')}/color-schemes/`; // Location of downloaded color theme files (userData)
+export const colordir = `${app.getPath('userData')}/color-schemes/`; // Location of downloaded color theme files (userData)
 export const hasColorFiles = fs.existsSync(`${colordir}`);
-const approot = (isDev ? './app/' : app.getAppPath());
+export const approot = (isDev ? './app/' : app.getAppPath());
 export const builddir = `${approot}/files/tweaks/`; // Location of tweak files (as .txt files)
 export const logFileName = 'MZD_LOG'; // Name of log file (without extension)
-const varDir = `${app.getPath('userData')}/background/`; // Location of files with saved variables
-const getBackground = `${varDir}/background.png`;
+export const varDir = `${app.getPath('userData')}/background/`; // Location of files with saved variables
+export const getBackground = `${varDir}/background.png`;
 export const date = function() {return new Date();};
 export const dataURL = '';
 const aioURL = '';
@@ -510,7 +510,7 @@ function numberReplacer(key, value) {
   return value;
 }
 
-function replaceInFile(someFile, toReplace, replacement, callback) {
+export const replaceInFile = (someFile: any, toReplace: any, replacement: any, callback?: any) => {
   fs.readFile(someFile, 'utf8', function(err, data) {
     if (err) {
       err = err.toString();
@@ -528,7 +528,7 @@ function replaceInFile(someFile, toReplace, replacement, callback) {
       if (typeof callback === 'function') callback();
     });
   });
-}
+};
 
 function updateBgModal() {
   $('#infotnmtBG,#modalimg').attr('src', `${getBackground}`);

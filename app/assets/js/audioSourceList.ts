@@ -1,9 +1,11 @@
-const mkdirp = require('mkdirp');
-const path = require('path');
-const fs = require('fs');
-const {remote} = require('electron');
-const {app} = remote;
+import mkdirp from 'mkdirp';
+import path from 'path';
+import fs from 'fs';
+import remote from 'electron';
 import {persistantData} from './index';
+
+const {app} = remote;
+
 export const entertainmentItems = [
   {label: 'USB A', menuItem: 'UsbAudioAPos', pos: 1},
   {label: 'USB B', menuItem: 'UsbAudioBPos', pos: 2},
@@ -24,7 +26,7 @@ export const entertainmentItems = [
   {label: 'TV', menuItem: 'TVItemPos', pos: 13},
 ];
 
-export const buildEntList = (user) => {
+export const buildEntList = (user: {entertainmentItems: any[]}) => {
   const tmpdir = path.normalize(path.join(persistantData.get('copyFolderLocation', app.getPath('desktop')), '_copy_to_usb')); // Place to hold USB drive files before copying
   let listOrder = '';
   mkdirp.sync(`${tmpdir}/config/audio_order_AND_no_More_Disclaimer/both/jci/gui/apps/system/js/`);

@@ -1,18 +1,19 @@
 'use strict';
 
-const path = require('path');
-const cp = require('child_process');
-const remote = require('electron').remote;
+import path from 'path';
+import cp from 'child_process';
+import remote from 'electron';
+import isDev from 'electron-is-dev';
+import snackbar from 'snackbar';
+
 const app = remote.app;
 const dialog = remote.dialog;
-const isDev = require('electron-is-dev');
-const snackbar = require('snackbar');
 const aaPatchPath = path.resolve((isDev ? path.resolve(`${__dirname}`, '../../') : path.dirname(process.execPath)), 'resources/adb/');
 const aaPatcher = path.join(aaPatchPath, 'adb.exe');
-let apk2Patch = null;
+let apk2Patch: any;
 
 // Run AA+Patcher
-module.exports = function AAPatcher(apk, done) {
+export const AAPatcher = (apk, done) => {
   apk2Patch = (apk) ? path.join(aaPatchPath, 'apk/', apk) : path.join(app.getPath('desktop'), 'my.apk');
   let deviceConnected = false;
   const adb = cp.spawn(aaPatcher, ['devices', '-l'], {detached: true});
@@ -39,11 +40,11 @@ module.exports = function AAPatcher(apk, done) {
     }
   });
   adb.on('error', (err) => {
-    // dialog.showErrorBox('Failed to start subprocess.', err)
+    dialog.showErrorBox('Failed to start subprocess.', `${err}`);
   });
 };
 
-function copyAPK(apk) {
+const copyAPK = (apk) => {
   snackbar(`Device Found, Copying APK...`);
   const adb = cp.spawn(aaPatcher, ['push', apk, 'mnt/sdcard/AIO-IN.apk'], {detached: true});
   adb.stdout.on('data', (data) => {
@@ -68,7 +69,7 @@ function copyAPK(apk) {
   adb.on('error', (err) => {
     console.log('Failed to start subprocess.');
   });
-}
+};
 
 function applyPatch() {
   // patch to run:
@@ -86,7 +87,7 @@ function applyPatch() {
     cleanApkFile();
   });
   adb.on('error', (err) => {
-    dialog.showErrorBox('Error Patching APK.', err);
+    dialog.showErrorBox('Error Patching APK.', `${err}`);
   });
 }
 
@@ -108,7 +109,7 @@ function cleanApkFile() {
   });
 }
 /*
-module.exports = function AAPatcher() {
+export const AAPatcher = () => {
   adb({
     cmd: ['devices']
   }, function(result) {

@@ -6,7 +6,6 @@
       "dom.iterable",
       "esnext"
     ],
-    "baseUrl": "app",
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -19,8 +18,5 @@
     "isolatedModules": true,
     "noEmit": true,
     "noFallthroughCasesInSwitch": true
-  },
-  "include": [
-    "app"
-  ]
+  }
 }
