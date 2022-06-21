@@ -84,7 +84,7 @@
 /*
  *  Video Player App preload file
  */
-const enableLog = false;
+export const enableLog = false;
 let vpColor = 'Red';
 let vphColor = 'darkred';
 let vpColorClass = 'selectedItem' + vpColor;
@@ -107,14 +107,14 @@ let VideoPaused = false;
 let CurrentVideoPlayTime = null;
 let TotalVideoTime = null;
 let intervalPlaytime = null;
-let waitingNext = false;
+// let waitingNext = false;
 const useisink = true;
 let selectedItem = 0;
 let recentlyPlayed = JSON.parse(localStorage.getItem('videoplayer.recentlyplayed')) || [];
 let statusbarTitleVideo = JSON.parse(localStorage.getItem('videoplayer.statusbartitle')) || false;
 let BlackOut = JSON.parse(localStorage.getItem('videoplayer.blackout')) || false;
 let selectedOptionItem = -1; // 6 ??
-const vpWaitingForShutdown = null;
+// const vpWaitingForShutdown = null;
 let retryCountdown = null;
 let retryAttempts = 0;
 // hold function while video is playing can be customized
@@ -129,7 +129,7 @@ const clickFnPlyUp = 'myVideoFullScrBtn';
 const clickFnPlyDn = 'myVideoStopBtn';
 
 // let logFile = "/tmp/mnt/sd_nav/video-log.txt";
-const logFile = '/jci/gui/apps/_videoplayer/videoplayer_log.txt';
+// const logFile = '/jci/gui/apps/_videoplayer/videoplayer_log.txt';
 const boxChecked = 'url(apps/_videoplayer/templates/VideoPlayer/images/myVideoCheckedBox.png)';
 const boxUncheck = 'url(apps/_videoplayer/templates/VideoPlayer/images/myVideoUncheckBox.png)';
 const videoPlayerIcon = 'apps/_videoplayer/templates/VideoPlayer/images/icon.png';
@@ -160,7 +160,7 @@ if (!window.jQuery) {
   utility.loadScript('addon-common/jquery.min.js');
 }
 
-function StartVideoPlayerApp() {
+export const StartVideoPlayerApp = () => {
   player = framework.getAppInstance('_videoplayer');
   currentVideoTrack = player.currentVideoTrack || currentVideoTrack;
   ResumePlay = player.resumeVideo || ResumePlay;
@@ -457,7 +457,7 @@ function StartVideoPlayerApp() {
   setTimeout(function() {
     myVideoWs('[ -e ' + folderPath + '/sd*/swapfile ] && echo VP_SWAP || echo VP_NOSWAP', true);
   }, 1000);
-}
+};
 
 // try not to make changes to the lines below
 
@@ -657,7 +657,7 @@ function myVideoStartRequest(obj) {
   player.currentVideoTrack = currentVideoTrack;
 
   TotalVideoTime = null;
-  waitingNext = false;
+  // waitingNext = false;
 
   if (recentlyPlayed.indexOf(currentVideoTrack) === -1) {
     recentlyPlayed.push(currentVideoTrack);
@@ -1393,7 +1393,7 @@ function handleCommander(eventID) {
 
 /* Multicontroller 'Long Hold' actions
 ============================================================================================= */
-function handleHoldCommander(eventID) {
+export const handleHoldCommander = (eventID) => {
   // by default all long holds will do the same as the short click
   eventID = eventID.replace('Start', '');
   // Video is Playing
@@ -1443,7 +1443,7 @@ function handleHoldCommander(eventID) {
     }
     return 'consumed';
   }
-}
+};
 
 /* websocket
 ============================================================================================= */

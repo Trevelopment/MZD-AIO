@@ -8,7 +8,7 @@ let aioContextCount = 1;
 // Example: Switching to speedometer from main menu automatically on boot
 // Will flash the speedometer for only a second then switch back.
 // ** Needs further investigation **
-function aioMagicRoute(uiaId, ctxtId, params, contextSeq) {
+export const aioMagicRoute = (uiaId, ctxtId, params, contextSeq) => {
   const currAppId = framework.getCurrentApp();
   const transitionTrue = JSON.stringify({'msgType': 'transition', 'enabled': true});
   const transitionFalse = JSON.stringify({'msgType': 'transition', 'enabled': false});
@@ -22,7 +22,8 @@ function aioMagicRoute(uiaId, ctxtId, params, contextSeq) {
   const focusStackMsg = JSON.stringify({'msgType': 'focusStack', 'appIdList': [{'id': uiaId}, {'id': currAppId}]});
 
   aioMagicMsg(transitionTrue, ctxtChgMsg, focusStackMsg, transitionFalse);
-}
+};
+
 // Change from any context to any other context
 // NOTE: this does not always work in the car system
 function aioMagicMsg(data) {
@@ -46,15 +47,15 @@ function aioMagicMsg(data) {
   framework.routeMmuiMsg(JSON.parse(data));
 }
 // StatusBar Notifications
-function AIO_SBN(message, pathToIcon) {
+export const AIO_SBN = (message, pathToIcon) => {
   framework.common.startTimedSbn(framework.getCurrentApp(), 'MzdAioSbn', 'typeE', {
     sbnStyle: 'Style02',
     imagePath1: pathToIcon,
     text1: message,
   });
-}
+};
 // Turns a DOM element into JSON for saving
-function DOMtoJSON(node) {
+export const DOMtoJSON = (node) => {
   node = node || this;
   const obj = {
     nodeType: node.nodeType,
@@ -86,9 +87,9 @@ function DOMtoJSON(node) {
     }
   }
   return obj;
-}
+};
 // Creates DOM out of JSON created by DOMtoJSON
-function JSONtoDOM(obj) {
+export const JSONtoDOM = (obj) => {
   if (typeof obj === 'string') {
     obj = JSON.parse(obj);
   }
@@ -127,12 +128,12 @@ function JSONtoDOM(obj) {
     }
   }
   return node;
-}
+};
 
 /* Attempt to unmount swapfile on shutdown */
-let UMswap = null;
+let UMswap: any;
 
-function swapfileShutdownUnmount() {
+export const swapfileShutdownUnmount = () => {
   console.log('swapfileShutdownUnmount');
   UMswap = setInterval(function() {
     if (typeof unmounmtSwap !== 'undefined' && (framework.getCurrCtxtId() === 'WaitForEnding' || framework.getCurrCtxtId() === 'PowerDownAnimation')) {
@@ -141,4 +142,4 @@ function swapfileShutdownUnmount() {
       unmountSwap();
     }
   }, 1000);
-}
+};

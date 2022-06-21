@@ -1,4 +1,4 @@
-function updateMZDApp() {
+export const updateMZDApp = () => {
   // speedTop = 0;
   $('.StatusBarCtrlDomainIcon').css('background-image', 'url(\'/jci/gui/apps/_mzdmeter/mazda_logo.png\')');
   $('.topSpeedNeedle').css('transform', 'rotate('+(-120+speedTop)+'deg)');
@@ -24,4 +24,4 @@ function updateMZDApp() {
   updateGearPosition();
   updateSteering();
   updateParking();
-}
+};

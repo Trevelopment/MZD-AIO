@@ -1463,7 +1463,7 @@ TestCtrl.prototype._getNextTestId = function()
   {
     // log.info("NextTestId , set input "+next.value);
     this.setInput(next.value);
-    const status = this._testNameArray[next.index];
+    // const status = this._testNameArray[next.index];
     this._checkedValidTestId(next.value);
   }
   if (this.properties.value)
@@ -1488,7 +1488,7 @@ TestCtrl.prototype._getPreviousTestId = function()
   {
     // log.info("PreviousTestId , set input "+pre.value);
     this.setInput(pre.value);
-    const status = this._testNameArray[pre.index];
+    // const status = this._testNameArray[pre.index];
     this._checkedValidTestId(pre.value);
   }
   if (this.properties.value)

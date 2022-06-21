@@ -534,7 +534,7 @@ StatusBarCtrl.prototype._refresh = function()
   log.debug('_refresh() called...');
 
   // Get the current time (cached in common)
-  const currentTime = framework.common.getCurrentTime();
+  // const currentTime = framework.common.getCurrentTime();
   this.updateClock(framework.common.getCurrentTime());
 
   // If we have a translatable application title...

@@ -478,6 +478,7 @@ KeyboardInputManager.prototype.emit = function(event, data) {
 };
 
 KeyboardInputManager.prototype.listen = function() {
+  /*
   const self = this;
 
   const map = {
@@ -490,8 +491,6 @@ KeyboardInputManager.prototype.listen = function() {
     74: 2,
     72: 3,
   };
-
-  /*
   document.addEventListener("keydown", function (event) {
     let modifiers = event.altKey || event.ctrlKey || event.metaKey ||
                     event.shiftKey;

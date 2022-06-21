@@ -9,10 +9,10 @@
 /* jshint -W117 */
 let turnScreenOff = false;
 const turnWifiOn = false; // this is experimental and may not work yet
-const AIOlonghold = false;
+export const AIOlonghold = false;
 
 function applyTweaks() {
-  const head = document.querySelector('head');
+  // const head = document.querySelector('head');
   const body = document.getElementsByTagName('body')[0];
   if (!window.jQuery) {
     utility.loadScript('addon-common/jquery.min.js');

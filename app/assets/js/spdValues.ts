@@ -4,9 +4,9 @@ const spdSbOptions = [];
 const spdCtrlOptions = [];
 const spdBarCtrlOptions = [];
 let barColorFile = '';
-const spdColorOptions = [];
-const spdExtraOptions = [];
-const speedoOps = {
+// const spdColorOptions = [];
+// const spdExtraOptions = [];
+export const speedoOps = {
   lang: {id: null},
   xph: {id: 11},
   sml: {id: 22},
@@ -90,11 +90,11 @@ const spdCtrlValues = [
   {id: '9', default: 'hold.left', bar: 'Change Color Theme', classic: 'Change Color Theme'},
   {id: '10', default: null, bar: 'Toggle StatusBar Speedometer & Fuel Gauge', classic: 'Toggle StatusBar Speedometer & Fuel Gauge'},
 ];
-const multictrl = {
+export const multictrl = {
   bar: {select: '0', up: '1', down: '2', right: '3', left: '4', hold: {select: '5', up: '6', down: '7', right: '8', left: '9'}},
   classic: {select: '0', up: '1', down: '2', right: '3', left: '4', hold: {select: '5', up: '6', down: '7', right: '8', left: '9'}},
 };
-const barThemeColors = [
+export const barThemeColors = [
   {num: '1', main: '#7fffd4', secondary: '#64bfff', border: '#0000ff'},
   {num: '2', main: '#3fff17', secondary: '#ff8181', border: '#ffca00'},
   {num: '3', main: '#ed4bff', secondary: '#52ff5a', border: '#e4c300'},
@@ -102,7 +102,7 @@ const barThemeColors = [
   {num: '5', main: '#FF0000', secondary: '#00ff00', border: '#0000ff'},
 ];
 
-const fuelBarColors = [
+export const fuelBarColors = [
   {label: '< 20', bashVar: 'FBC20', colorVal: '#ff0096'},
   {label: '< 40', bashVar: 'FBC40', colorVal: '#ff9600'},
   {label: '< 60', bashVar: 'FBC60', colorVal: '#9600ff'},
@@ -110,7 +110,7 @@ const fuelBarColors = [
   {label: '< 100', bashVar: 'FBC100', colorVal: '#00ff96'},
 ];
 
-const spdExtraValues = {
+export const spdExtraValues = {
   barThemeStart: '0',
   speedoctrls: 'Bar',
   barSpeedoRows: '4',
@@ -190,3 +190,5 @@ barColorFile += '/* barThemes.css - Customize Bar Speedometer Color Themes\n* An
 classicSpeedoTmplt.sort(function(a, b) {
   return a.pos - b.pos;
 });
+
+export {SbOpsHTML, spdCtrlHTML, barColorFile};

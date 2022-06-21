@@ -7,12 +7,12 @@
 (function($) {
   const extend = $.extend;
   const proxy = $.proxy;
-  const keys = {
-    left: 37,
-    up: 38,
-    right: 39,
-    down: 40,
-  };
+  // const keys = {
+  //   left: 37,
+  //   up: 38,
+  //   right: 39,
+  //   down: 40,
+  // };
 
   // jQuery plug-in
   const tetris = $.fn.tetris = function(options) {
@@ -213,7 +213,7 @@
     down: function() {
       const that = this;
       const cols = that.cols;
-      const maxStageIndex = cols * that.rows;
+      // const maxStageIndex = cols * that.rows;
       const shape = that.currentTile.shape;
       const newLocation = $.map(shape, function(x) {return x + cols;});
 

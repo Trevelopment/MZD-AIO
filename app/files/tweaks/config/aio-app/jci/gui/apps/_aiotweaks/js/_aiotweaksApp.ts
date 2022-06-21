@@ -98,7 +98,6 @@ _aiotweaksApp.prototype._TimedSbn_CurrentSongMsgHandler = function(msg) {
     text1: "USB",
     text2: msg.params.payload.title,
   });*/
-  let aioWink;
   const properties = {
     'style': 'style03',
     'text1': msg.params.payload.title,
@@ -106,11 +105,11 @@ _aiotweaksApp.prototype._TimedSbn_CurrentSongMsgHandler = function(msg) {
     'alertId': '',
   };
 
-  aioWink = framework.instantiateControl('common', document.body, 'WinkCtrl', properties);
+  // aioWink = framework.instantiateControl('common', document.body, 'WinkCtrl', properties);
+  framework.instantiateControl('common', document.body, 'WinkCtrl', properties);
 };
 
 _aiotweaksApp.prototype._NowPlayingDataMsgHandler = function(msg) {
-  let aioWink;
   const properties = {
     'style': 'style03',
     'text1': msg.params.payload,
@@ -118,7 +117,8 @@ _aiotweaksApp.prototype._NowPlayingDataMsgHandler = function(msg) {
     'alertId': '',
   };
 
-  aioWink = framework.instantiateControl('common', document.body, 'WinkCtrl', properties);
+  // aioWink = framework.instantiateControl('common', document.body, 'WinkCtrl', properties);
+  framework.instantiateControl('common', document.body, 'WinkCtrl', properties);
 };
 
 _aiotweaksApp.prototype._StartContextReady = function() {

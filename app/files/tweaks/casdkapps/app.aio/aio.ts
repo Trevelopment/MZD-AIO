@@ -1,29 +1,27 @@
-function openSideNav() {
+export const openSideNav = () => {
   document.getElementById('mainSidenav').style.width = '250px';
   document.getElementById('CommonBgImg1').style.marginLeft = '250px';
   $('#StatusBar_ButtonCtrl1').addClass('hidden');
   $('#StatusBar_ButtonCtrl1').hide();
   $('#mainOpenNav').css({'opacity': '.5'});
-}
-function closeSideNav() {
+};
+export const closeSideNav = () => {
   document.getElementById('mainSidenav').style.width = '0';
   document.getElementById('CommonBgImg1').style.marginLeft= '0';
   $('#mainOpenNav').css({'opacity': '1'});
-}
-function navReboot() {
+};
+export const navReboot = () =>{
   mzdWs('reboot', false); // reboot
-}
-function messageTest(msg) {
+};
+export const messageTest = (msg) => {
   mzdWs('sh /tmp/mnt/sd_nav/msg/message.sh "'+msg+'"', false);
-}
-function mzdWs(action, waitMessage) {
-  let ws = new WebSocket('ws://127.0.0.1:9969/');
+};
+export const mzdWs = (action, waitMessage) => {
+  const ws = new WebSocket('ws://127.0.0.1:9969/');
 
   ws.onmessage = function(event) {
-    const res = event.data.split('#');
-
+    // const res = event.data.split('#');
     ws.close();
-    ws=null;
   };
 
   ws.onopen = function() {
@@ -31,10 +29,9 @@ function mzdWs(action, waitMessage) {
     if (!waitMessage)
     {
       ws.close();
-      ws=null;
     }
   };
-}
+};
 /*
 // create the div for template
 this.divElt = document.createElement('div');

@@ -1,12 +1,6 @@
 let speedCurrent = 0;
-const speedSumTotal = 0;
 let speedTop = 0;
-const speedAvg = 0;
 let GPSAltitudeCur = 0;
-const FuelEfficiency = 0;
-const AvgFuelEfficiency = 0;
-const TotFuelEfficiency = 0;
-const idleTimeValue = '0:00';
 let lastGPSheadingValue = 999;
 let GPSlatCurrent = 0;
 let GPSlonCurrent = 0;
@@ -14,7 +8,6 @@ let totalTripSeconds = 0;
 let totalIdleSeconds = 0;
 let totalTripBSeconds = 0;
 let totalIdleBSeconds = 0;
-const totalMoveCount = 0;
 let bRefreshFuel = false;
 let bRefreshFuelManual = false;
 let bResetDistance = false;
@@ -22,6 +15,13 @@ let sResetDistance = false;
 let bRefreshRPMManual = false;
 let bRefreshSpeedRestrict120 = false;
 const speedRestrictValue = 120; // set the Speed restrict value here!! (should be set as 120 for thailand legal Mostly is 120 km/h, somewhere is less than)
+export const speedSumTotal = 0;
+export const speedAvg = 0;
+export const FuelEfficiency = 0;
+export const AvgFuelEfficiency = 0;
+export const TotFuelEfficiency = 0;
+export const idleTimeValue = '0:00';
+export const totalMoveCount = 0;
 
 
 let gearPos = 0;
@@ -35,36 +35,34 @@ const egt_temp_lvl2 = 70; // default = 75 , high-sense = 65, dangerous-zone = 75
 
 
 let engineTempC = 0;
-let engineTempGauge = 0;
 let IntakeAirTempC = 0;
 let vehicleSpeedLock = true;
 let showSpeed = true;
 const gasType='g95';
-const refreshFuelDone=false;
-const pageInfo=1;
-const showInfo=0;
+// let engineTempGauge = 0;
+export const refreshFuelDone=false;
+export const pageInfo=1;
+export const showInfo=0;
 
 let wheelPos = 0;
 let wheelPosPrev = 0;
-let disableIAT = 0;
 const compassCalibrate = 0;
 let showAlarmLayer = 0;
 let egtAlarmFg = 0;
 let steeringDetect = 0;
-const fuelDialogShow = 0;
-const fuelDialogPage = 0;
-let bathPerLiteActual = '00.00';
 const bathPerLiteManual = '00.00';
-const bathPerLiteB1 = 0;
-const bathPerLiteB10 = 0;
-const bathPerLiteS1 = 0;
-const bathPerLiteS10 = 0;
+// let disableIAT = 0;
+// let bathPerLiteActual = '00.00';
+export const fuelDialogShow = 0;
+export const fuelDialogPage = 0;
+export const bathPerLiteB1 = 0;
+export const bathPerLiteB10 = 0;
+export const bathPerLiteS1 = 0;
+export const bathPerLiteS10 = 0;
 
 const loggingTime = 30; // unit is second : Time value to send data(seconds) to keep in backend, Default is 15 second loop time per updating.
 let loggingCount = 0;
 let alreadyGetTimeFg = false;
-const startTripTime = 0;
-const startIdleTime = 0;
 let individualLogoDetected = 0;
 let newLogoChanged = false;
 let defaultLogoChanged = false;
@@ -72,17 +70,19 @@ let showTripTimeB = '0:00';
 let showIdleTimeB = '0:00';
 let showTripTime = '0:00';
 let showIdleTime = '0:00';
-const warning_type = 0;
 let rpmAlarmLimitValue = 9999;
 let rpmLimitFg = false;
+export const startTripTime = 0;
+export const startIdleTime = 0;
+export const warning_type = 0;
 
-const rpmDigit1000 = 0;
-const rpmDigit100 = 0;
-const rpmDigit10 = 0;
-const rpmDigit1 = 0;
+export const rpmDigit1000 = 0;
+export const rpmDigit100 = 0;
+export const rpmDigit10 = 0;
+export const rpmDigit1 = 0;
 const rpmValue = '9999'; // default is 8000
 
-let speedRestrict120 = null;
+let speedRestrict120: any;
 
 
 const speedRestrict120Manual = true;
@@ -289,7 +289,7 @@ $(document).ready(function() {
 
   function updateFuelMny(valueIn) {
     valueIn = $.trim(valueIn);
-    bathPerLiteActual = valueIn;
+    // bathPerLiteActual = valueIn;
     $('.bathPerLite').html(parseFloat(valueIn).toFixed(2));
   }
 
@@ -426,7 +426,7 @@ $(document).ready(function() {
     IntakeAirTemp = parseInt(IntakeAirTemp);
     if (IntakeAirTemp == 0) {
       $('#IATCover').css('visibility', 'visible');
-      disableIAT = 1;
+      // disableIAT = 1;
     } else {
       IntakeAirTempC = Math.round((IntakeAirTemp - 32) * 0.556).toFixed(0); // convert to degree C
       // **** Unit is Farenhi
@@ -460,7 +460,7 @@ $(document).ready(function() {
     let engineTemp = $.trim(engineTempIn);
     engineTemp = parseInt(engineTemp);
     engineTempC = Math.round((engineTemp - 32) * 0.556).toFixed(0); // c0nvert to degree C
-    engineTempGauge = engineTempC;
+    // engineTempGauge = engineTempC;
 
     // **** Unit is Farenhi
     // (F  -  32)  x  5/9 = C

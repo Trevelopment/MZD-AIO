@@ -1,4 +1,4 @@
-const CustomApplications = [
+export const CustomApplications = [
   'app.terminal',
   'app.multidash',
   'app.gpsspeed',

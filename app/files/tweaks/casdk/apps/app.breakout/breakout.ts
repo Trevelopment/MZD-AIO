@@ -4,7 +4,7 @@
 
 // Modified for use with Mazda Infotainment System
 
-function breakoutboard(_canvas, _scorechange) {
+export const breakoutboard = (_canvas, _scorechange) => {
   this.canvas = _canvas;
   this.scorechange = _scorechange;
   this.game_loop;

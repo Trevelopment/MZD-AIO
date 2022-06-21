@@ -4859,7 +4859,7 @@ List2Ctrl.prototype._moveIndex = function(e)
 
   // get relative mouse position
   const relativeY = e.pageY - this._maskPositionY;
-  const relativeX = e.pageX - this._maskPositionX;
+  // const relativeX = e.pageX - this._maskPositionX;
 
   if (relativeY < -this._maskPositionY)
   {
@@ -4871,7 +4871,7 @@ List2Ctrl.prototype._moveIndex = function(e)
 
   // calculate travelled distance
   const deltaY = relativeY - this._startIndexY;
-  const deltaX = relativeX - this._startIndexX;
+  // const deltaX = relativeX - this._startIndexX;
 
   // calculate the letter index's new position and constrain it into bounds
   const newPos = this.m.max(this._maxScrollYIndex, this.m.min(this._yIndex + deltaY, this._minScrollYIndex));
@@ -4978,13 +4978,12 @@ List2Ctrl.prototype._touchSelectItem = function(e)
     return;
   }
 
-  let itemIndex;
   let fireSelect = true;
   let additionalModifier = null;
   let params = {};
 
   // determine target item
-  itemIndex = this._getTargetItem(e);
+  const itemIndex = this._getTargetItem(e);
 
   // only valid list items can fire the select callback
   if (itemIndex == -1)
@@ -5519,7 +5518,7 @@ List2Ctrl.prototype._itemLongPress = function(e)
   if (typeof e == 'object')
   {
     // determine target item
-    itemIndex = this._getTargetItem(e); let itemIndex = this._getTargetItem(e);
+    itemIndex = this._getTargetItem(e);
     eventCause = 'Touch';
   }
   // the parameter is an index
@@ -6696,7 +6695,7 @@ List2Ctrl.prototype._handleMCCW = function()
   {
     // define threshold that will serve as a scroll trigger
     const bottomFocusThreshold = this.properties.visibleItems - 2;
-
+    let rfi;
     // if we are in list reorder mode - push the draggable item down and set focus on it
     if (this._inListReorder)
     {
@@ -6705,13 +6704,13 @@ List2Ctrl.prototype._handleMCCW = function()
       // set focus
       this._showFocus(this._reorderCurrentIndex);
 
-      const rfi = this._getRelativeFocussedIndex();
+      rfi = this._getRelativeFocussedIndex();
     }
     // we are not in list reorder mode -> do regular focus scroll
     else
     {
       // get relative focussed index before moving the focus
-      let rfi = this._getRelativeFocussedIndex();
+      rfi = this._getRelativeFocussedIndex();
 
       const currentFocussedIndex = this._getFocussedIndex();
 
@@ -6803,6 +6802,7 @@ List2Ctrl.prototype._handleMCCCW = function()
   }
   else
   {
+    let rfi;
     // if we are in list reorder mode - push the draggable item down and set focus on it
     if (this._inListReorder)
     {
@@ -6811,13 +6811,13 @@ List2Ctrl.prototype._handleMCCCW = function()
       // set focus
       this._showFocus(this._reorderCurrentIndex);
 
-      const rfi = this._getRelativeFocussedIndex();
+      rfi = this._getRelativeFocussedIndex();
     }
     // we are not in list reorder mode -> do regular focus scroll
     else
     {
       // get relative focussed index before moving the focus
-      let rfi = this._getRelativeFocussedIndex();
+      rfi = this._getRelativeFocussedIndex();
 
       const currentFocussedIndex = this._getFocussedIndex();
 
@@ -6906,6 +6906,7 @@ List2Ctrl.prototype._handleMCDown = function()
   }
   else
   {
+    let rfi;
     if (this._inListReorder)
     {
       this._reorderItemDown();
@@ -6913,14 +6914,14 @@ List2Ctrl.prototype._handleMCDown = function()
       // set focus
       this._showFocus(this._reorderCurrentIndex);
 
-      const rfi = this._getRelativeFocussedIndex();
+      rfi = this._getRelativeFocussedIndex();
     }
     else
     {
       const bottomFocusThreshold = this.properties.visibleItems - 2;
 
       // get relative focussed index before moving the focus
-      let rfi = this._getRelativeFocussedIndex();
+      rfi = this._getRelativeFocussedIndex();
 
       const currentFocussedIndex = this._getFocussedIndex();
 
@@ -7006,6 +7007,7 @@ List2Ctrl.prototype._handleMCUp = function()
   }
   else
   {
+    let rfi;
     if (this._inListReorder)
     {
       // if we are in list reorder mode - push the draggable item up and set focus on it
@@ -7013,12 +7015,12 @@ List2Ctrl.prototype._handleMCUp = function()
 
       // set focus
       this._showFocus(this._reorderCurrentIndex);
-      const rfi = this._getRelativeFocussedIndex();
+      rfi = this._getRelativeFocussedIndex();
     }
     else
     {
       // get relative focussed index before moving the focus
-      let rfi = this._getRelativeFocussedIndex();
+      rfi = this._getRelativeFocussedIndex();
 
       const currentFocussedIndex = this._getFocussedIndex();
 
@@ -7295,7 +7297,7 @@ List2Ctrl.prototype._setSecondaryMulticontroller = function(state, focussedIndex
   // get focussed index
   if (isNaN(focussedIndex))
   {
-    const focussedIndex = this._getFocussedIndex();
+    focussedIndex = this._getFocussedIndex();
   }
 
   // do not set secondary multicontroller to true if the item is disabled
@@ -7431,9 +7433,9 @@ List2Ctrl.prototype._manageFocus = function(item)
  * @param {boolean} - simulation mode: use to perform check on where the focus will end
  * @return {integer} - the new focussed index
  */
-List2Ctrl.prototype._showFocus = function(item, allowOffscreen, simulationMode, abortMode)
+List2Ctrl.prototype._showFocus = function(item, allowOffscreen, simMode, abMode)
 {
-  log.debug('List2: _showFocus item, allowOffscreen, simulationMode, abortMode ', item, allowOffscreen, simulationMode, abortMode);
+  log.debug('List2: _showFocus item, allowOffscreen, simulationMode, abortMode ', item, allowOffscreen, simMode, abMode);
   if (!this._hasFocus)
   {
     return;
@@ -7457,7 +7459,7 @@ List2Ctrl.prototype._showFocus = function(item, allowOffscreen, simulationMode, 
     return;
   }
 
-  let abortMode = (true === abortMode);
+  const abortMode = (true === abMode);
 
   // do not change focussed index when we are in loading and no scrolling is allowed during that time
   if (!this.properties.scrollingDuringLoading && this._inLoading && !abortMode)
@@ -7465,7 +7467,7 @@ List2Ctrl.prototype._showFocus = function(item, allowOffscreen, simulationMode, 
     return;
   }
 
-  let simulationMode = (true === simulationMode);
+  const simulationMode = (true === simMode);
 
   // get the last focussed index (real and relative)
   let lastFocussedIndex = this._getFocussedIndex();
@@ -7485,7 +7487,7 @@ List2Ctrl.prototype._showFocus = function(item, allowOffscreen, simulationMode, 
 
 
   let nextFocussedIndex = -1;
-  let useTransition = true;
+  // let useTransition = true;
   let useRelativeIndeces = true;
 
   // find the next focussed element index
@@ -7544,8 +7546,9 @@ List2Ctrl.prototype._showFocus = function(item, allowOffscreen, simulationMode, 
       break;
 
     default:
-      // move highlight instantly when jumping to an item
-      useTransition = false;
+      // // move highlight instantly when jumping to an item
+      // useTransition = false;
+
       // absolute indeces use real positioning
       useRelativeIndeces = false;
 
@@ -7569,7 +7572,7 @@ List2Ctrl.prototype._showFocus = function(item, allowOffscreen, simulationMode, 
 
   // From here on, perform actual focus change
   // -----------------------------------------
-  let pos = 0;
+  // let pos = 0;
   if (useRelativeIndeces)
   {
     // convert relative nextFocussedIndex to position
@@ -7596,7 +7599,7 @@ List2Ctrl.prototype._showFocus = function(item, allowOffscreen, simulationMode, 
     }
 
     // convert absolute nextFocussedIndex to position
-    pos = (nextFocussedIndex - this._topItem) * this.properties.itemHeight;
+    // pos = (nextFocussedIndex - this._topItem) * this.properties.itemHeight;
   }
 
 
@@ -8435,7 +8438,7 @@ List2Ctrl.prototype._performScroll = function(pos, duration)
     const newPos = this._getSnapPosition(pos);
 
     // start animation
-    this._animateScroll(pos, duration);
+    this._animateScroll(newPos, duration);
   }
 };
 
@@ -9474,23 +9477,23 @@ List2Ctrl.prototype._scrollerAnimationEnd = function()
 
   // Focus adjust after animation ends
 
-  // get list position
-  let listPosition = null;
-  if (0 === this._topItem)
-  {listPosition = 'top';}
-  else if (this._topItem === this.dataList.itemCount - this.properties.visibleItems)
-  {listPosition = 'bottom';}
-  else
-  {listPosition = 'middle';}
+  // // get list position
+  // let listPosition = null;
+  // if (0 === this._topItem)
+  // {listPosition = 'top';}
+  // else if (this._topItem === this.dataList.itemCount - this.properties.visibleItems)
+  // {listPosition = 'bottom';}
+  // else
+  // {listPosition = 'middle';}
 
-  // get scroll direction
-  let scrollDirection = null;
-  if (this._prevTopItem > this._topItem)
-  {scrollDirection = 'up';}
-  else if (this._prevTopItem < this._topItem)
-  {scrollDirection = 'down';}
-  else
-  {scrollDirection = 'none';}
+  // // get scroll direction
+  // let scrollDirection = null;
+  // if (this._prevTopItem > this._topItem)
+  // {scrollDirection = 'up';}
+  // else if (this._prevTopItem < this._topItem)
+  // {scrollDirection = 'down';}
+  // else
+  // {scrollDirection = 'none';}
 
   // get scroll size
   const scrollSize = this.m.abs(this._prevTopItem - this._topItem);
@@ -9733,26 +9736,30 @@ List2Ctrl.prototype._slideStart = function(e, skipActiveSlider)
     return;
   }
 
+  let relativeX;
+  let inHittable;
+  let rightBoundary;
+  let leftBoundary;
   // check if we are in the hittable area
   if (!this._hasRightHittableArea(this.dataList.items[itemIndex]))
   {
-    const relativeX = e.pageX - this._maskPositionX;
-    const inHittable = false;
-    const rightBoundary = this.properties.sliderReferencePointRight;
-    const leftBoundary = this.properties.sliderReferencePointRight - this.properties.sliderWidth;
+    relativeX = e.pageX - this._maskPositionX;
+    inHittable = false;
+    rightBoundary = this.properties.sliderReferencePointRight;
+    leftBoundary = this.properties.sliderReferencePointRight - this.properties.sliderWidth;
   }
   else if (this.dataList.items[itemIndex].indented)
   {
-    const relativeX = e.pageX - (Math.ceil(this._maskPositionX / 1.5));
-    const inHittable = false;
-    const rightBoundary = this.properties.sliderReferencePointRight - (Math.ceil(this.properties.sliderWidth / 1.5)) + (this.properties.indentOffset * 2);
-    const leftBoundary = this.properties.sliderReferencePointLeft;
+    relativeX = e.pageX - (Math.ceil(this._maskPositionX / 1.5));
+    inHittable = false;
+    rightBoundary = this.properties.sliderReferencePointRight - (Math.ceil(this.properties.sliderWidth / 1.5)) + (this.properties.indentOffset * 2);
+    leftBoundary = this.properties.sliderReferencePointLeft;
   } else
   {
-    const relativeX = e.pageX - (Math.ceil(this._maskPositionX / 1.5));
-    const inHittable = false;
-    const rightBoundary = this.properties.sliderReferencePointRight - (Math.ceil(this.properties.sliderWidth / 1.5));
-    const leftBoundary = this.properties.sliderReferencePointLeft;
+    relativeX = e.pageX - (Math.ceil(this._maskPositionX / 1.5));
+    inHittable = false;
+    rightBoundary = this.properties.sliderReferencePointRight - (Math.ceil(this.properties.sliderWidth / 1.5));
+    leftBoundary = this.properties.sliderReferencePointLeft;
   }
   if (relativeX >= leftBoundary && relativeX <= rightBoundary)
   {
@@ -10198,9 +10205,10 @@ List2Ctrl.prototype._buttonSelectRight = function(itemIndex)
 List2Ctrl.prototype._buttonActivate = function(itemIndex, buttonId)
 {
   // Ensure that buttonId is valid and wraps in a loop
+  let buttonId;
   if ('style10' === this.dataList.items[itemIndex].itemStyle)
   {
-    let buttonId = (!isNaN(buttonId)) ? buttonId : 1;
+    buttonId = (!isNaN(buttonId)) ? buttonId : 1;
     if (buttonId > 2)
     {buttonId = 1;}
     else if (buttonId < 1)
@@ -10208,7 +10216,7 @@ List2Ctrl.prototype._buttonActivate = function(itemIndex, buttonId)
   }
   else if ('style11' === this.dataList.items[itemIndex].itemStyle)
   {
-    let buttonId = (!isNaN(buttonId)) ? buttonId : 1;
+    buttonId = (!isNaN(buttonId)) ? buttonId : 1;
     if (buttonId > 3)
     {buttonId = 1;}
     else if (buttonId < 1)
@@ -10216,12 +10224,12 @@ List2Ctrl.prototype._buttonActivate = function(itemIndex, buttonId)
   }
   else if ('draggable' === this.dataList.items[itemIndex].itemStyle)
   {
-    const buttonId = 1;
+    buttonId = 1;
   }
   else
   {
     log.debug('Unknown item style for itemIndex ' + itemIndex);
-    return null;
+    return undefined;
   }
 
   if ('draggable' != this.dataList.items[itemIndex].itemStyle)
@@ -12075,7 +12083,7 @@ List2Ctrl.prototype.setLetterIndexData = function(data)
   this.letterIndex.innerText = '';
 
   let letterIndexItem;
-  let label;
+  // let label;
   for (let i=0, l=data.length; i<l; i++)
   {
     // skip improper items
@@ -13312,7 +13320,7 @@ List2Ctrl.prototype.setTitle = function(titleStructure)
       line1.appendChild(document.createTextNode(titleStructure.text1));
       this.title.appendChild(line1);
 
-      countlabel = document.createElement('span');
+      const countlabel = document.createElement('span');
       countlabel.className = 'count';
       countlabel.appendChild(document.createTextNode(titleStructure.countlabel));
       this.title.appendChild(countlabel);

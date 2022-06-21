@@ -15,7 +15,7 @@ let globalAIOerror = null;
 // let wsAIO = null;
 // let aioWsVideo = null;
 // let AIOvideo = false;
-function StartAIOApp() {
+export const StartAIOApp = () => {
   try {
     $('#SbSpeedo, #Sbfuel-bar-wrapper').fadeOut();
     // framework.sendEventToMmui("common", "SelectBTAudio");
@@ -124,7 +124,7 @@ function StartAIOApp() {
   } else {
     console.log("localStorage Not Supported!!");
   }*/
-}
+};
 // *****************************
 // ** Button Functions GO!
 // *****************************
@@ -179,12 +179,12 @@ const __MainMenuLoop = function(direction) {
   }
 };
 
-function setMainMenuLoop() {
+export const setMainMenuLoop = () => {
   MainMenuCtrl.prototype._offsetFocus = __MainMenuLoop;
   $('#MainMenuMsg').text('Main Menu Loop');
-}
+};
 
-function turnOnWifi() {
+const turnOnWifi = () => {
   let net; const wifiOn = 1; // 0 for off
   if (framework.getAppInstance('netmgmt') === undefined || framework.getAppInstance('syssettings') === undefined) { // only jump if needed
     framework.sendEventToMmui('common', 'Global.IntentHome');
@@ -199,7 +199,7 @@ function turnOnWifi() {
       showAioInfo('WIFI ON??');
     }
   }, 1000); // give it a second to load
-}
+};
 
 function shiftEntertainmentList() {
   const entList = framework.getAppInstance('system')._masterEntertainmentDataList.items;
@@ -207,16 +207,16 @@ function shiftEntertainmentList() {
   entList.push(shiftItem);
 }
 
-function shiftApplicationList() {
+export const shiftApplicationList = () => {
   const appList = framework.getAppInstance('system')._masterApplicationDataList.items;
   const shiftItem = appList.shift();
   appList.push(shiftItem);
-}
+};
 
-function reverseEntertainmentList() {
+export const reverseEntertainmentList = () => {
   framework.getAppInstance('system')._masterEntertainmentDataList.items.reverse();
   showAioInfo('Reversed Entertainment List');
-}
+};
 
 function reverseApplicationList() {
   framework.getAppInstance('system')._masterApplicationDataList.items.reverse();
@@ -233,20 +233,20 @@ function showEnvVar() {
   exeCmd('env');
 }
 
-function takeScreenshot() {
+export const takeScreenshot = () => {
   showAioInfo('Screenshot in 10 Seconds');
   setTimeout(function() {
     closeAioInfo(true);
     showSaveScreenshotBtn();
   }, 10000);
-}
+};
 
-function showSaveScreenshotBtn() {
+export const showSaveScreenshotBtn = () => {
   aioWs('/bin/sh /jci/gui/apps/_aiotweaks/sh/screenshot.sh && echo "DONE"', 1);
   $('#saveScreenshotBtn').show();
-}
+};
 
-function saveScreenshot() {
+export const saveScreenshot = () => {
   $('#AioInfoPanel').show();
   let msg = '/jci/tools/jci-dialog --info --title="SCREENSHOT SAVED TO SD CARD" --text="NOT REALLY\\n I WILL DO THAT LATER" & ';
   msg += 'sleep 2; ';
@@ -255,7 +255,7 @@ function saveScreenshot() {
   msg += '\n';
   $('#AioInformation').css({'background': 'url(/tmp/root/wayland-screenshot.png?' + Date.now() + ')', 'background-size': '100% 100%', 'background-position': 'center'});
   aioWs(msg, 0);
-}
+};
 
 function showAioInfo(message, append) {
   $('#aaTitle, #csTitle').css({'outline': 'none'});
@@ -287,9 +287,9 @@ function closeAioInfo(erase) {
   $('#AioInfoPanel').removeClass('opened scrollers');
 }
 
-function toggleTSPanel() {
+export const toggleTSPanel = () => {
   $('#touchscreenPanel').toggle();
-}
+};
 
 function closeTSPanel() {
   $('#Opt').click();
@@ -314,9 +314,9 @@ function TerminalConfirm() {
   showAioInfo('<div class="infoMessage"><div style="font-weight:bold;font-size:40px;">FOR ADVANCED USERS ONLY</div>TO USE THE TERMINAL CONNECT A USB KEYBOARD<br>RUNNING THE TERMINAL DISABLES THE MULTICONTROLLER REBOOT TO RE-ENABLE MULTICONTROLLER FUNCTION<br><br>MAKE SURE YOUR USB KEYBOARD IS CONNECTED!!!<br><button class="confirmKeyboardBtn" onclick="$(this).fadeOut(\'1500\');$(\'.confirmTerminalBtn\').fadeIn(\'1500\')">MY USB KEYBOARD IS CONNECTED</button><button class="confirmTerminalBtn" style="display:none" onclick="$(this).hide();RunTerminal();">START TERMINAL</button><br>THIS TERMINAL HAS FULL ROOT ACCESS, DO NOT TYPE A COMMAND UNLESS YOU KNOW WHAT IT DOES!!!</div>');
 }
 
-function RunTerminal() {
+export const RunTerminal = () => {
   aioWs('/jci/scripts/run-terminal.sh', 0);
-}
+};
 
 function RunCheckIP() {
   globalAIOerror = 'No Ip Address';
@@ -335,7 +335,6 @@ function aioSBNtest() {
 }
 
 function aioWink(msg) {
-  let wink;
   const properties = {
     'style': 'style03',
     'text1': msg,
@@ -343,7 +342,7 @@ function aioWink(msg) {
     'alertId': '',
     'completeCallback': function() {aioRemoveWink(wink);},
   };
-  wink = framework.instantiateControl('common', document.body, 'WinkCtrl', properties);
+  const wink = framework.instantiateControl('common', document.body, 'WinkCtrl', properties);
 }
 
 function aioRemoveWink(_wink) {
@@ -353,10 +352,10 @@ function aioRemoveWink(_wink) {
   }
 }
 
-function chooseBackground() {
+export const chooseBackground = () => {
   // aioWs('node -e "let fs = require("fs"); let contents = fs.readFileSync("apps/_aiotweaks/test.txt").toString(); console.log(contents);"', 0);
   // aioWs('node -v', 3);
-}
+};
 
 function myRebootSystem() {
   showAioInfo('$ reboot');
@@ -367,9 +366,9 @@ function fullSystemRestoreConfirm() {
   showAioInfo('<div class="infoMessage"><div style="font-weight:bold;font-size:40px;">ARE YOU SURE?</div><br>THIS WILL REMOVE ALL AIO TWEAKS AND APPS *INCLUDING THIS ONE*<br>But it will not restore default color theme files<br><br><button class="fullRestoreBtn" onclick="$(this).hide();fullSystemRestore();">RUN SYSTEM RESTORE</button></div>');
 }
 
-function fullSystemRestore() {
+export const fullSystemRestore = () => {
   aioWs('/bin/sh /tmp/mnt/data_persist/dev/system_restore/restore.sh', 2); // Run Full Restore Script
-}
+};
 
 function runRemount() {
   showAioInfo('Remounted RW /');
@@ -609,12 +608,12 @@ function showFile(filepath, command) {
   }, command ? 1000 : 1);
 }
 
-function bodyClass() {
+export const bodyClass = () => {
   // showAioInfo("Body className: <br> " + document.getElementsByTagName("body")[0].className + "<br><br>localStorage.getItem(\"aiotweaks\"): <br> " + JSON.parse(localStorage.getItem("aiotweaks")));
   str = JSON.stringify(localStorage);
   str = str.replace(/,/g, '<br>');
   showAioInfo('<div class=\'infoMessage\'>' + str + '</div>');
-}
+};
 
 function showDFH() {
   // showAioInfo("$ df -h");

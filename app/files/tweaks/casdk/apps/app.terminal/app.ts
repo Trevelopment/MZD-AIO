@@ -593,15 +593,16 @@ CustomApplicationsHandler.register('app.terminal', new CustomApplication({
 
     this.buttonlist = this.keyboard.get(0).getElementsByClassName('keyboardbutton');
     // Add listener for mouse
-    let c; let c2;
+    let c;
+    // let c2;
 
     for (c = 0; c < this.buttonlist.length; c++) {
       this.LowLevelKeyboard(c);
     }
     this.SetKeyboardButtonValue();
 
-    const originalsize = [];
     /*
+      const originalsize = [];
       let maxrow = 0;
       for (c2 = 0; c2 < 5; c2++) {
         let row = this.keyboard.get(0).getElementsByClassName('row' + (c2+1));

@@ -4,7 +4,7 @@
 
 // Modified for use with Mazda Infotainment System
 
-function snakeboard(_canvas, _scorechange) {
+export const snakeboard = (_canvas, _scorechange) => {
   // Canvas stuff
 
   this.canvas = _canvas;
@@ -99,7 +99,7 @@ function snakeboard(_canvas, _scorechange) {
       // If the new head position matches with that of the food,
       // Create a new head instead of moving the tail
       if (nx == this.food.x && ny == this.food.y) {
-        const tail = {x: nx, y: ny};
+        // const tail = {x: nx, y: ny};
         this.score++;
         this.scorechange(this.score);
         // Create new food

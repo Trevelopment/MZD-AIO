@@ -660,7 +660,8 @@ CustomApplicationsHandler.register('app.multidash', new CustomApplication({
     const use_mode = false;
     const trim_range = 15;
     const weight = 2;
-    let sum; let avg; let i; let retval;
+    // let avg;
+    let sum; let i; let retval;
 
     // for easy testing
     // store = [186, 186, 173, 161, 173, 186, 180, 186, 186, 173, 161, 173, 186, 180, 186, 186, 173, 161, 173, 186, 180, 186, 186, 173, 161, 173, 186, 180, 186, 186, 173, 161, 173, 186, 180];
@@ -784,7 +785,7 @@ CustomApplicationsHandler.register('app.multidash', new CustomApplication({
     if (sectionIndex < 0 || sectionIndex >= this.sections.length) return false;
 
     const section = this.sections[sectionIndex];
-    const name = section.name;
+    // const name = section.name;
     const curRegion = this.regions[this.getRegion()];
     const refreshOnly = (value === undefined);
     let displayVal;

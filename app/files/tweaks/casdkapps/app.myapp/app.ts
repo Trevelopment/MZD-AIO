@@ -1,3 +1,4 @@
+import {CustomApplication, CustomApplicationsHandler} from '../../casdk/resources/aio';
 /**
  * Trez's First CASDK App
  *

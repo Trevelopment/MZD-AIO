@@ -15,8 +15,8 @@
 |* Note: Only numbers inside [] brackets determine position, order in this list DOES NOT *|
 |* ******* DELETE THIS CONFIG FILE TO REUSE YOUR CURRENT CONFIG-SPEEDOMETER.JS ********* *|
 \* ************************************************************************************* */
-const spdBottomRows = 4; // Number of Bottom Rows
-const spdTbl = {
+export const spdBottomRows = 4; // Number of Bottom Rows
+export const spdTbl = {
   vehSpeed: [0, 0, 0], // Vehicle Speed
   topSpeed: [0, 1, 1], // Top Speed
   avgSpeed: [0, 1, 2], // Average Speed
@@ -48,10 +48,10 @@ const spdTbl = {
 /* ************************************************** */
 /* Set this to true to use your values below ******** */
 /* If this is false the following values are not used */
-const overRideSpeed = false;
+export const overRideSpeed = false;
 /* ************************************************** */
 /* ****************** Start OverRide Variables ****** */
-const SORV = {
+export const SORV = {
   // Set the language for the speedometer
   // Available EN, ES, DE, PL, SK, TR, FR, IT
   language: 'EN',

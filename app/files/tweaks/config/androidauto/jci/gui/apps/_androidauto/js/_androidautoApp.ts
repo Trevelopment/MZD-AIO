@@ -84,7 +84,7 @@ function AAdisplayError(location, err) {
   }
 }
 
-function AAlogPoll() {
+export const AAlogPoll = () => {
   try {
     AAcallCommandServer('GET', 'status', function(currentStatus) {
       if (currentStatus == null) {
@@ -131,7 +131,7 @@ function AAlogPoll() {
   } catch (err) {
     AAdisplayError('AAlogPoll', err);
   }
-}
+};
 
 _androidautoApp.prototype._StartContextReady = function() {
   framework.common.setSbDomainIcon('apps/_androidauto/aa.png');

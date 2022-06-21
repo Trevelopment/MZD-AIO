@@ -1,5 +1,11 @@
-if (!window['YT']) {const YT = {loading: 0, loaded: 0};}
-if (!window['YTConfig']) {const YTConfig = {'host': 'http://www.youtube.com'};}
+let YT: any;
+let YTConfig: any;
+if (!window['YT']) {
+  YT = {loading: 0, loaded: 0};
+}
+if (!window['YTConfig']) {
+  YTConfig = {'host': 'http://www.youtube.com'};
+}
 if (!YT.loading) {
   YT.loading = 1;
   (function() {

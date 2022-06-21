@@ -30,9 +30,6 @@ let engineSpeedTop = 0;
 let outsideTemp = 0;
 let intakeTemp = 0;
 let coolantTemp = 0;
-const gearPos = '---';
-const lastGPSspeedValue = 0;
-const lastEnginespeedValue = 0;
 let lastGearPositionValue = '---';
 let lastGearLeverPositionValue = '---';
 let fuelGaugeMax = 184;
@@ -41,14 +38,17 @@ let lastFuelGaugePercent = 0;
 let BatSOC = 0;
 const BatSOCmax = 200;
 let lastEngineLoadValue = 0;
-let swapOut = null;
-const currDataBar = 1;
+let swapOut: any;
 let backgroundColor = '';
 let automaticTrans = false;
-const speedometerLonghold = false;
-const hideSpeedFuel = false;
-let speedometerLayout = null;
-let speedoClassicLayout = null;
+export const gearPos = '---';
+export const lastGPSspeedValue = 0;
+export const lastEnginespeedValue = 0;
+export const currDataBar = 1;
+export const speedometerLonghold = false;
+export const hideSpeedFuel = false;
+let speedometerLayout: any;
+let speedoClassicLayout: any;
 const speedometerIcon = 'apps/_speedometer/IcnSbnSpeedometer.png';
 let vehicleDataConnected = false;
 let gpsDataConnected = false;
@@ -888,7 +888,7 @@ function SpeedometerOverRide(over) {
 }
 // Swap FieldSets ~ by Trezdog44
 // Tap 2 values in the Bar Speedometer to switch their positions
-function SpeedoSwapFieldSets() {
+export const SpeedoSwapFieldSets = () => {
   $('[id*=FieldSet]').click(function(evt) {
     if (swapOut) {
       swapOut.removeClass('swapOut');
@@ -909,9 +909,9 @@ function SpeedoSwapFieldSets() {
       swapOut.hasClass('pos0') ? swapOut.children('div').addClass('swapOut') : swapOut.addClass('swapOut');
     }
   });
-}
+};
 
-function LoadSpeedoTemplate() {
+export const LoadSpeedoTemplate = () => {
   // load configuable controls
   if (typeof spdBtn === 'undefined') {
     $.getScript('apps/_speedometer/js/speedometer-controls.js', function(data) {
@@ -931,35 +931,35 @@ function LoadSpeedoTemplate() {
       });
     });
   }
-}
+};
 
-function SaveSpeedoClassicLayout() {
+export const SaveSpeedoClassicLayout = () => {
   speedoClassicLayout = DOMtoJSON(document.getElementById('valuetable'));
-}
+};
 
-function SaveSpeedBarLayout() {
+export const SaveSpeedBarLayout = () => {
   speedometerLayout = DOMtoJSON(document.getElementById('barlayout'));
-}
+};
 
-function LoadSpeedoClassicLayout() {
+export const LoadSpeedoClassicLayout = () => {
   if (speedoClassicLayout !== null) {
     $('#table_bg').html(JSONtoDOM(speedoClassicLayout));
   }
-}
+};
 
-function LoadSpeedBarLayout() {
+export const LoadSpeedBarLayout = () => {
   if (speedometerLayout !== null) {
     $('#vehdataMainDiv').html(JSONtoDOM(speedometerLayout));
   }
-}
+};
 
-function ClearSpeedBarLayout() {
+export const ClearSpeedBarLayout = () => {
   if (speedometerLayout !== null) {
     speedometerLayout = null;
     $('.activeDataBar').removeClass('activeDataBar');
     AIO_SBN('Layout Reset', speedometerIcon);
     aioMagicRoute('_speedometer', 'Start');
   }
-}
+};
 
 utility.loadScript('apps/_speedometer/js/speedometerUpdate.js');

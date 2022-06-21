@@ -25,7 +25,7 @@
  */
 
 /* ***********************    Native apps     *********************** */
-const nativeApps = [];
+export const nativeApps = [];
 const nativeAppsLoc = 'apps/';
 
 const _addAppFilesOverwrite = function(uiaId, mmuiMsgObj) {
@@ -285,7 +285,7 @@ window.CustomApplicationsProxy = {
     if (typeof(CustomApplicationsHandler) === 'object') {
       try {
         const proxy = CustomApplicationsProxy;
-        console.log(JSON.stringify(msg));
+        console.log(JSON.stringify(msg) + JSON.stringify(proxy));
       } catch (e) {
         // do nothing
       }

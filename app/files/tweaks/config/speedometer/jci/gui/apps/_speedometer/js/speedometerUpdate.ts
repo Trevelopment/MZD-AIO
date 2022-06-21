@@ -1,5 +1,4 @@
-/* jshint -W117 */
-function updateSpeedoApp() {
+export const updateSpeedoApp = () => {
   // remove all disabled/unused values from the DOM
   $('[class*="vehDataBar"].pos0').remove();
   for (let i = 5; i > spdBottomRows; i--) {
@@ -149,14 +148,14 @@ function updateSpeedoApp() {
       // $('.outsideTempValue').html(F_2_C(outsideTemp)+'&deg;');
     }
   }
-  /** Fahrenheit to Celsius ** T(°C) = (T(°F) - 32) / 1.8 **/
-  function F_2_C(temp) {
-    return parseFloat(((temp - 32) / 1.8).toFixed(2));
-  }
-  /** Celsius to Fahrenheit ** T(°F) = T(°C) × 1.8 + 32  **/
-  function C_2_F(temp) {
-    return parseFloat((temp * 1.8 + 32).toFixed(2));
-  }
+  // /** Fahrenheit to Celsius ** T(°C) = (T(°F) - 32) / 1.8 **/
+  // function F_2_C(temp) {
+  //   return parseFloat(((temp - 32) / 1.8).toFixed(2));
+  // }
+  // /** Celsius to Fahrenheit ** T(°F) = T(°C) × 1.8 + 32  **/
+  // function C_2_F(temp) {
+  //   return parseFloat((temp * 1.8 + 32).toFixed(2));
+  // }
   // -------------------------------------------------------------------------
   // Toggle kmh / MPH
   function ToggleSpeedoType() {
@@ -620,7 +619,7 @@ function updateSpeedoApp() {
       $('.spdBtn7').click(toggleBasicSpeedo);
     }
   }
-}
+};
 
 const SPDSBN_Show_Speedometer_Background = 'Show Speedometer Background';
 const SPDSBN_Hide_Speedometer_Background = 'Hide Speedometer Background';

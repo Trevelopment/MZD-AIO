@@ -3661,7 +3661,7 @@ usbaudioApp.prototype._hasAdditionalItem = function(context, viewType)
 // Configure dataList. If dataList already configured return the same dataList
 usbaudioApp.prototype._initDataList = function(dataList, context, tmplt, data, viewType)
 {
-  let incrementValue = 0;
+  // let incrementValue = 0;
   let dataList = dataList;
   let setAgain = false;
   if ((dataList == null || dataList == undefined) && data.params.total_count != 0)
@@ -3683,7 +3683,7 @@ usbaudioApp.prototype._initDataList = function(dataList, context, tmplt, data, v
             hasCaret: false,
           }],
         };
-        incrementValue = 1;
+        // incrementValue = 1;
         break;
       case 'Albums':
         dataList = {
@@ -3698,7 +3698,7 @@ usbaudioApp.prototype._initDataList = function(dataList, context, tmplt, data, v
             hasCaret: false,
           }],
         };
-        incrementValue = 1;
+        // incrementValue = 1;
         break;
       case 'Genres':
         dataList = {
@@ -3713,7 +3713,7 @@ usbaudioApp.prototype._initDataList = function(dataList, context, tmplt, data, v
             hasCaret: false,
           }],
         };
-        incrementValue = 1;
+        // incrementValue = 1;
         break;
       case 'Episodes':
         dataList = {
@@ -3728,7 +3728,7 @@ usbaudioApp.prototype._initDataList = function(dataList, context, tmplt, data, v
             hasCaret: false,
           }],
         };
-        incrementValue = 1;
+        // incrementValue = 1;
         break;
       case 'Chapters':
         dataList = {
@@ -3743,7 +3743,7 @@ usbaudioApp.prototype._initDataList = function(dataList, context, tmplt, data, v
             hasCaret: false,
           }],
         };
-        incrementValue = 1;
+        // incrementValue = 1;
         break;
       case 'Folders':
         if (viewType == 1)
@@ -3765,7 +3765,7 @@ usbaudioApp.prototype._initDataList = function(dataList, context, tmplt, data, v
               itemBehavior: 'shortAndLong',
             }],
           };
-          incrementValue = 1;
+          // incrementValue = 1;
         }
         else
         {
@@ -4110,7 +4110,7 @@ usbaudioApp.prototype._createMdInfoFromMsg = function(msg)
 
 usbaudioApp.prototype._createRequest = function()
 {
-  const ctxtId = this._currentContext.ctxtId;
+  // const ctxtId = this._currentContext.ctxtId;
   if (this._hasContextPayload())
   {
     const mdTypeList = this._payloadTable[this._currentContextId].md_types;
@@ -4354,18 +4354,18 @@ usbaudioApp.prototype._populateCoverArt = function(tmplt, songDetails)
   {
     log.debug('usbaudioApp _populateCoverArt called...', songDetails);
 
-    let ctrlData = {
-      imagePath: null,
-    };
+    // let ctrlData = {
+    //   imagePath: null,
+    // };
 
     if (songDetails.coverArt != 'None')
     {
-      ctrlData = {ctrlTitle: songDetails.genre, audioTitle: songDetails.title, detailLine1: songDetails.artist, detailLine2: songDetails.album, imagePath: songDetails.coverArt};
+      // ctrlData = {ctrlTitle: songDetails.genre, audioTitle: songDetails.title, detailLine1: songDetails.artist, detailLine2: songDetails.album, imagePath: songDetails.coverArt};
       tmplt.nowPlaying4Ctrl.setArtworkImagePath(songDetails.coverArt+'?' + new Date().getTime());
     }
     else
     {
-      ctrlData = {'ctrlTitle': songDetails.genre, 'audioTitle': songDetails.title, 'detailLine1': songDetails.artist, 'detailLine2': songDetails.album, 'imagePath': './common/images/no_artwork_icon.png'};
+      // ctrlData = {'ctrlTitle': songDetails.genre, 'audioTitle': songDetails.title, 'detailLine1': songDetails.artist, 'detailLine2': songDetails.album, 'imagePath': './common/images/no_artwork_icon.png'};
       songDetails.coverArt = './common/images/no_artwork_icon.png';
       tmplt.nowPlaying4Ctrl.setArtworkImagePath();
     }

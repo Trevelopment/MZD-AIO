@@ -1,10 +1,10 @@
 /* ************************************************** */
 /* Set this to true to use your values below ******** */
 /* If this is false the following values are not used */
-const overRideSpeed = false;
+export const overRideSpeed = false;
 /* ************************************************** */
 /* ****************** Start OverRide Variables ****** */
-const SORV = {
+export const SORV = {
   // Set the language for the speedometer
   // Available EN, ES, DE, PL, SK, TR, FR, IT, NL
   language: 'EN',

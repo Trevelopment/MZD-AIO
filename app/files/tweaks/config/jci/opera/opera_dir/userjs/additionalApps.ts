@@ -153,7 +153,7 @@ function getJSON(url, successHandler, errorHandler) {
     }
   };
   xhr.onerror = function() {
-    const status = xhr.status;
+    // const status = xhr.status;
   };
   xhr.send();
 }
