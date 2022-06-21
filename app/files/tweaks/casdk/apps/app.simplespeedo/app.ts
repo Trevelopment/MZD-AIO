@@ -30,7 +30,7 @@
  * A Simple Speedometer with minimal, basic functionality built on CASDK by @flyandi
  *
  */
-CustomApplicationsHandler.register("app.simplespeedo", new CustomApplication({
+CustomApplicationsHandler.register('app.simplespeedo', new CustomApplication({
   /**
    * (require)
    *
@@ -156,7 +156,7 @@ CustomApplicationsHandler.register("app.simplespeedo", new CustomApplication({
     speeds: [],
     averageSpeeds: [],
   },
-  /***
+  /** *
    *** User Interface Life Cycles
    ***/
   /**
@@ -168,19 +168,19 @@ CustomApplicationsHandler.register("app.simplespeedo", new CustomApplication({
    */
   created: function() {
     // create speedometer panel
-    this.speedoMeter = $("<div/>").attr("id", "speedometer").appendTo(this.canvas);
-    this.speedoUnit = $("<div/>").attr("id", "speedounit").appendTo(this.speedoMeter);
-    this.speedoDial = $("<div/>").attr("id", "speedodial").appendTo(this.speedoMeter);
-    this.speedoRPM = $("<div/>").attr("id", "speedorpm").appendTo(this.speedoMeter);
-    this.speedoRPMIndicator = $("<div/>").addClass("circle").appendTo(this.speedoRPM);
-    this.speedoRPMLabel = $("<label/>").css({
+    this.speedoMeter = $('<div/>').attr('id', 'speedometer').appendTo(this.canvas);
+    this.speedoUnit = $('<div/>').attr('id', 'speedounit').appendTo(this.speedoMeter);
+    this.speedoDial = $('<div/>').attr('id', 'speedodial').appendTo(this.speedoMeter);
+    this.speedoRPM = $('<div/>').attr('id', 'speedorpm').appendTo(this.speedoMeter);
+    this.speedoRPMIndicator = $('<div/>').addClass('circle').appendTo(this.speedoRPM);
+    this.speedoRPMLabel = $('<label/>').css({
       position: 'absolute',
       right: 0,
       top: 0,
     }).hide().appendTo(this.speedoMeter);
-    this.speedoIndicator = $("<div/>").attr("id", "speedoindicator").appendTo(this.speedoMeter);
-    this.speedoCurrent = $("<div/>").append("0").attr("id", "speedocurrent").appendTo(this.speedoMeter);
-    this.speedoDialText = $("<div/>").attr("id", "speedodialtext").appendTo(this.speedoMeter);
+    this.speedoIndicator = $('<div/>').attr('id', 'speedoindicator').appendTo(this.speedoMeter);
+    this.speedoCurrent = $('<div/>').append('0').attr('id', 'speedocurrent').appendTo(this.speedoMeter);
+    this.speedoDialText = $('<div/>').attr('id', 'speedodialtext').appendTo(this.speedoMeter);
     this.showSB = true;
     // create gps
     this.createGPSPanel();
@@ -217,7 +217,7 @@ CustomApplicationsHandler.register("app.simplespeedo", new CustomApplication({
     // stop collection
     clearInterval(this.collectorTimer);
   },
-  /***
+  /** *
    *** Events
    ***/
   /**
@@ -227,16 +227,16 @@ CustomApplicationsHandler.register("app.simplespeedo", new CustomApplication({
    */
   onControllerEvent: function(eventId) {
     switch (eventId) {
-      case "selectStart":
-        var region = this.getRegion() == "na" ? "eu" : "na";
+      case 'selectStart':
+        const region = this.getRegion() == 'na' ? 'eu' : 'na';
         this.setRegion(region);
         break;
-      case "downStart":
+      case 'downStart':
         $('[app="app.simplespeedo"]').toggleClass('noBG');
         break;
-      case "upStart":
+      case 'upStart':
         this.showSB = !this.showSB;
-        framework.common.statusBar.setVisible("slide", this.showSB);
+        framework.common.statusBar.setVisible('slide', this.showSB);
         break;
     }
   },
@@ -252,12 +252,12 @@ CustomApplicationsHandler.register("app.simplespeedo", new CustomApplication({
    * (createGPSPanel)
    */
   createGPSPanel: function() {
-    this.gpsPanel = $("<div/>").attr("id", "gps").appendTo(this.speedoMeter)
-    this.gpsCompass = $("<div/>").attr("id", "gpscompass").appendTo(this.speedoMeter);
-    var rose = [];
+    this.gpsPanel = $('<div/>').attr('id', 'gps').appendTo(this.speedoMeter);
+    this.gpsCompass = $('<div/>').attr('id', 'gpscompass').appendTo(this.speedoMeter);
+    const rose = [];
     // create rose
     ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'].forEach(function(direction) {
-      rose.push($("<div/>").addClass(direction.length == 2 ? "small" : "").append(direction).appendTo(this.gpsCompass));
+      rose.push($('<div/>').addClass(direction.length == 2 ? 'small' : '').append(direction).appendTo(this.gpsCompass));
     }.bind(this));
     // apply radial transformation
     this.createScaleRadial(rose, {
@@ -273,9 +273,9 @@ CustomApplicationsHandler.register("app.simplespeedo", new CustomApplication({
       scaleHeight: 179,
       scaleHalfAngle: function(angle, radian, field) {
         if (angle % 2) {
-          return angle < 0 || angle == 135 ? 45 : -45
+          return angle < 0 || angle == 135 ? 45 : -45;
         }
-      }
+      },
     });
   },
   /**
@@ -293,16 +293,16 @@ CustomApplicationsHandler.register("app.simplespeedo", new CustomApplication({
     // clear main container
     this.speedoDialText.empty().hide();
     // prepare
-    var region = this.getRegion(),
-      scale = this.scales[region] || this.scales.na,
-      container = $("<div/>").addClass("container").appendTo(this.speedoDialText),
-      fields = [];
+    const region = this.getRegion();
+    const scale = this.scales[region] || this.scales.na;
+    const container = $('<div/>').addClass('container').appendTo(this.speedoDialText);
+    const fields = [];
     // set scale
     this.scale = scale;
     // create scale
-    for (var s = scale.scaleMin; s < scale.scaleMax; s++) {
+    for (let s = scale.scaleMin; s < scale.scaleMax; s++) {
       // create scale label
-      fields.push($("<div/>").addClass("speedotext").append(s * scale.scaleStep).appendTo(container));
+      fields.push($('<div/>').addClass('speedotext').append(s * scale.scaleStep).appendTo(container));
     }
     // apply radial transformation
     this.createScaleRadial(fields, scale);
@@ -319,27 +319,27 @@ CustomApplicationsHandler.register("app.simplespeedo", new CustomApplication({
    * (createScaleRadial) creates a radial container
    */
   createScaleRadial: function(fields, scale) {
-    var radius = scale.scaleRadius,
-      width = scale.scaleWidth,
-      height = scale.scaleHeight,
-      ox = scale.scaleOffsetX,
-      oy = scale.scaleOffsetY,
-      angle = scale.scaleAngle,
-      radian = scale.scaleAngle * (Math.PI / 180),
-      step = (2 * Math.PI) / (scale.scaleMax - scale.scaleMin + scale.scaleOffsetStep);
+    const radius = scale.scaleRadius;
+    const width = scale.scaleWidth;
+    const height = scale.scaleHeight;
+    const ox = scale.scaleOffsetX;
+    const oy = scale.scaleOffsetY;
+    let angle = scale.scaleAngle;
+    let radian = scale.scaleAngle * (Math.PI / 180);
+    const step = (2 * Math.PI) / (scale.scaleMax - scale.scaleMin + scale.scaleOffsetStep);
     fields.forEach(function(field) {
       // calculate positon
-      var x = Math.round(width / 2 + radius * Math.cos(radian) - field.width() / 2),
-        y = Math.round(height / 2 + radius * Math.sin(radian) - field.height() / 2);
+      const x = Math.round(width / 2 + radius * Math.cos(radian) - field.width() / 2);
+      const y = Math.round(height / 2 + radius * Math.sin(radian) - field.height() / 2);
       field.css({
         top: oy + y,
-        left: ox + x
+        left: ox + x,
       });
       if (this.is.fn(scale.scaleHalfAngle)) {
-        var value = scale.scaleHalfAngle(angle, radian, field);
+        const value = scale.scaleHalfAngle(angle, radian, field);
         if (value !== false) {
           field.css({
-            transform: 'rotate(' + value + 'deg)'
+            transform: 'rotate(' + value + 'deg)',
           });
         }
       }
@@ -359,8 +359,8 @@ CustomApplicationsHandler.register("app.simplespeedo", new CustomApplication({
       this.statistics.topSpeed = speed;
     }
     // get localized reference speed
-    var refSpeed = this.transformValue(this.__speed, this.scale.transformSpeed);
-    if (refSpeed < this.scale.scaleMinSpeed) refSpeed = this.scale.scaleMinSpeed
+    let refSpeed = this.transformValue(this.__speed, this.scale.transformSpeed);
+    if (refSpeed < this.scale.scaleMinSpeed) refSpeed = this.scale.scaleMinSpeed;
     if (refSpeed > this.scale.scaleMaxSpeed) refSpeed = this.scale.scaleMaxSpeed;
     // calculate speed on scale
     speed = DataTransform.scaleValue(refSpeed, [this.scale.scaleMinSpeed, this.scale.scaleMaxSpeed], [0, 240]);
@@ -374,13 +374,13 @@ CustomApplicationsHandler.register("app.simplespeedo", new CustomApplication({
     if (this.speedoIndicatorAnimation) {
       this.speedoIndicatorAnimation.stop();
     }
-    this.speedoIndicatorAnimation = $({ deg: this.__oldspeed || 0 }).stop().animate({ deg: speed }, {
+    this.speedoIndicatorAnimation = $({deg: this.__oldspeed || 0}).stop().animate({deg: speed}, {
       duration: 1000,
       step: function(d) {
         this.speedoIndicator.css({
-          transform: 'rotate(' + d + 'deg)'
+          transform: 'rotate(' + d + 'deg)',
         });
-      }.bind(this)
+      }.bind(this),
     });
     this.__oldspeed = speed;
   },
@@ -390,7 +390,7 @@ CustomApplicationsHandler.register("app.simplespeedo", new CustomApplication({
   setGPSHeading: function(heading) {
     // 0 = North, 180 = Souths
     this.gpsPanel.css({
-      transform: 'rotate(' + heading + 'deg)'
+      transform: 'rotate(' + heading + 'deg)',
     });
   },
   /**
@@ -410,14 +410,14 @@ CustomApplicationsHandler.register("app.simplespeedo", new CustomApplication({
     if (this.speedoRPMIndicatorAnimation) {
       this.speedoRPMIndicatorAnimation.stop();
     }
-    this.speedoRPMIndicatorAnimation = $({ deg: this.__oldrpm || 0 }).stop().animate({ deg: rpm }, {
+    this.speedoRPMIndicatorAnimation = $({deg: this.__oldrpm || 0}).stop().animate({deg: rpm}, {
       duration: 1000,
       step: function(d) {
         this.speedoRPMIndicator.css({
           transform: 'rotate(' + d + 'deg)',
-          opacity: DataTransform.scaleValue(d, [0, 180], [0.5, 1])
+          opacity: DataTransform.scaleValue(d, [0, 180], [0.5, 1]),
         });
-      }.bind(this)
+      }.bind(this),
     });
     this.__oldrpm = rpm;
   },

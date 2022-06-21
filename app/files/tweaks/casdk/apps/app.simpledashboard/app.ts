@@ -34,9 +34,9 @@ ase do not attempt to install this. You might
  */
 
 
-CustomApplicationsHandler.register("app.simpledashboard", new CustomApplication({
+CustomApplicationsHandler.register('app.simpledashboard', new CustomApplication({
 
-    /**
+  /**
      * (require)
      *
      * An object array that defines resources to be loaded such as javascript's, css's, images, etc
@@ -44,39 +44,39 @@ CustomApplicationsHandler.register("app.simpledashboard", new CustomApplication(
      * All resources are relative to the applications root path
      */
 
-    require: {
+  require: {
 
-        /**
+    /**
          * (js) defines javascript includes
          */
 
-        js: [],
+    js: [],
 
-        /**
+    /**
          * (css) defines css includes
          */
 
-        css: ['app.css'],
+    css: ['app.css'],
 
-        /**
+    /**
          * (images) defines images that are being preloaded
          *
          * Images are assigned to an id
          */
 
-        images: {},
+    images: {},
 
-    },
+  },
 
-    /**
+  /**
      * (settings)
      *
      * An object that defines application settings
      */
 
-    settings: {
+  settings: {
 
-        /**
+    /**
          * (terminateOnLost)
          *
          * If set to 'true' this will remove the stateless life cycle and always
@@ -92,15 +92,15 @@ CustomApplicationsHandler.register("app.simpledashboard", new CustomApplication(
          * (title) The title of the application in the Application menu
          */
 
-        title: 'Simple Dashboard',
+    title: 'Simple Dashboard',
 
-        /**
+    /**
          * (statusbar) Defines if the statusbar should be shown
          */
 
-        statusbar: true,
+    statusbar: true,
 
-        /**
+    /**
          * (statusbarIcon) defines the status bar icon
          *
          * Set to true to display the default icon app.png or set a string to display
@@ -109,68 +109,68 @@ CustomApplicationsHandler.register("app.simpledashboard", new CustomApplication(
          * Icons need to be 37x37
          */
 
-        statusbarIcon: true,
+    statusbarIcon: true,
 
-        /**
+    /**
          * (statusbarTitle) overrides the statusbar title, otherwise title is used
          */
 
-        statusbarTitle: false,
-
-
-        /**
-         * (hasLeftButton) indicates if the UI left button / return button should be shown
-         */
-
-        hasLeftButton: false,
-
-        /**
-         * (hasMenuCaret) indicates if the menu item should be displayed with an caret
-         */
-
-        hasMenuCaret: false,
-
-        /**
-         * (hasRightArc) indicates if the standard right car should be displayed
-         */
-
-        hasRightArc: false,
-    },
+    statusbarTitle: false,
 
 
     /**
+         * (hasLeftButton) indicates if the UI left button / return button should be shown
+         */
+
+    hasLeftButton: false,
+
+    /**
+         * (hasMenuCaret) indicates if the menu item should be displayed with an caret
+         */
+
+    hasMenuCaret: false,
+
+    /**
+         * (hasRightArc) indicates if the standard right car should be displayed
+         */
+
+    hasRightArc: false,
+  },
+
+
+  /**
      * (regions)
      *
      * A object that allows us to manage the different regions
      */
 
-    regions: {
+  regions: {
 
-        /**
+    /**
          * North America (na)
          */
 
-        na: {
-        	unit: 'MPH',
-        	transform: DataTransform.toMPH,
-        },
+    na: {
+      unit: 'MPH',
+      transform: DataTransform.toMPH,
+    },
 
-        /**
+    /**
          * Europe (eu)
          */
 
-        eu: {
-        	unit: 'KM/H',
-        	transform: false
-        },
+    eu: {
+      unit: 'KM/H',
+      transform: false,
     },
+  },
 
 
-    /***
+  /** *
      *** User Interface Life Cycles
      ***/
 
-    /**
+  /**
      * (created)
      *
      * Executed when the application gets initialized
@@ -178,251 +178,233 @@ CustomApplicationsHandler.register("app.simpledashboard", new CustomApplication(
      * Add any content that will be static here
      */
 
-    created: function() {
+  created: function() {
+    // let's build our interface
 
-        // let's build our interface
+    // 1) create a value label that shows the current value of the selected section
 
-        // 1) create a value label that shows the current value of the selected section
+    this.valueLabel = $('<div/>').appendTo(this.canvas);
 
-        this.valueLabel = $("<div/>").appendTo(this.canvas);
+    // 2) create a name label that shows the name of the selected section
 
-        // 2) create a name label that shows the name of the selected section
-
-        this.nameLabel = $("<span/>").appendTo(this.canvas);
-
-
-        // now let's get our data in place
-
-        // 1) create our sections by calling our application specific method
-        this.createSections();
-
-        // 2) Finally show the first section
-        this.showSection(0);
-
-    },
+    this.nameLabel = $('<span/>').appendTo(this.canvas);
 
 
-    /***
+    // now let's get our data in place
+
+    // 1) create our sections by calling our application specific method
+    this.createSections();
+
+    // 2) Finally show the first section
+    this.showSection(0);
+  },
+
+
+  /** *
      *** Events
      ***/
 
-    /**
+  /**
      * (event) onControllerEvent
      *
      * Called when a new (multi)controller event is available
      */
 
-    onControllerEvent: function(eventId) {
-
-        // For this application we are looking at the wheel
-        // and the buttons left and right
-        switch(eventId) {
-
-            /**
+  onControllerEvent: function(eventId) {
+    // For this application we are looking at the wheel
+    // and the buttons left and right
+    switch (eventId) {
+      /**
              * Go forward in displaying our sections
              */
 
-            case "cw":
-            case "rightStart":
+      case 'cw':
+      case 'rightStart':
 
-                // we just cyle the sections here
+        // we just cyle the sections here
 
-                this.currentSectionIndex++;
-                if(this.currentSectionIndex >= this.sections.length) this.currentSectionIndex = 0;
+        this.currentSectionIndex++;
+        if (this.currentSectionIndex >= this.sections.length) this.currentSectionIndex = 0;
 
-                this.showSection(this.currentSectionIndex);
+        this.showSection(this.currentSectionIndex);
 
-                break;
+        break;
 
-            /**
+        /**
              * Go backwards in displaying our sections
              */
 
-            case "ccw":
-            case "leftStart":
+      case 'ccw':
+      case 'leftStart':
 
-                // we just cyle the sections here
+        // we just cyle the sections here
 
-                this.currentSectionIndex--;
-                if(this.currentSectionIndex < 0) this.currentSectionIndex = this.sections.length -1;
+        this.currentSectionIndex--;
+        if (this.currentSectionIndex < 0) this.currentSectionIndex = this.sections.length -1;
 
-                 this.showSection(this.currentSectionIndex);
+        this.showSection(this.currentSectionIndex);
 
-                break;
+        break;
 
-            /**
+        /**
              * When the middle button is pressed, we will change the region
              * just for this application
              */
 
-            case "selectStart":
+      case 'selectStart':
 
-                this.setRegion(this.getRegion() == "na" ? "eu" : "na");
+        this.setRegion(this.getRegion() == 'na' ? 'eu' : 'na');
 
-                break;
-        }
+        break;
+    }
+  },
 
-    },
-
-    /**
+  /**
      * (event) onRegionChange
      *
      * Called when the region is changed
      */
 
-     onRegionChange: function(region) {
-
-        // let's just refresh our current section
-        this.showSection(this.currentSectionIndex);
-
-     },
+  onRegionChange: function(region) {
+    // let's just refresh our current section
+    this.showSection(this.currentSectionIndex);
+  },
 
 
-    /***
+  /** *
      *** Applicaton specific methods
      ***/
 
-    /**
+  /**
      * (createSections)
      *
      * This method registers all the sections we want to display
      */
 
-    createSections: function() {
+  createSections: function() {
+    // Here we define our sections
 
-        // Here we define our sections
+    this.sections = [
 
-        this.sections = [
+      // Vehicle speed
+      {field: VehicleData.vehicle.speed, transform: function(speed, index) {
+        // For speed we need to transform it to the local region
+        if (this.regions[this.getRegion()].transform) {
+          speed = this.regions[this.getRegion()].transform(speed);
+        }
 
-            // Vehicle speed
-            {field: VehicleData.vehicle.speed, transform: function(speed, index) {
+        // return the new value and name
+        return {
+          value: speed,
+          name: this.regions[this.getRegion()].unit,
+        };
+      }.bind(this)},
 
-                // For speed we need to transform it to the local region
-                if(this.regions[this.getRegion()].transform) {
-                    speed = this.regions[this.getRegion()].transform(speed);
-                }
+      // Vehicle RPM
+      {field: VehicleData.vehicle.rpm, name: 'RPM'},
 
-                // return the new value and name
-                return {
-                    value: speed,
-                    name: this.regions[this.getRegion()].unit
-                };
+      // GPS Altitude
+      {field: VehicleData.gps.altitude, name: 'Altitude'},
 
-            }.bind(this)},
+      // GPS Heading
+      {field: VehicleData.gps.heading, name: 'Heading'},
 
-            // Vehicle RPM
-            {field: VehicleData.vehicle.rpm, name: 'RPM'},
+      // GPS Velocity
+      {field: VehicleData.gps.velocity, name: 'Velocity'},
 
-            // GPS Altitude
-            {field: VehicleData.gps.altitude, name: 'Altitude'},
+      // Odo meter
+      {field: VehicleData.vehicle.odometer, name: 'Odometer'},
 
-            // GPS Heading
-            {field: VehicleData.gps.heading, name: 'Heading'},
+      // Battery Level
+      {field: VehicleData.vehicle.batterylevel, name: 'Battery Level'},
 
-            // GPS Velocity
-            {field: VehicleData.gps.velocity, name: 'Velocity'},
+      // Fuel Level
+      {field: VehicleData.fuel.position, name: 'Fuel Level'},
 
-            // Odo meter
-            {field: VehicleData.vehicle.odometer, name: 'Odometer'},
+      // Average Consumption
+      {field: VehicleData.fuel.averageconsumption, name: 'Average Fuel Consumption'},
 
-            // Battery Level
-            {field: VehicleData.vehicle.batterylevel, name: 'Battery Level'},
+      // Temperature: Outside
+      {field: VehicleData.temperature.outside, name: 'Temperature Outside'},
 
-            // Fuel Level
-            {field: VehicleData.fuel.position, name: 'Fuel Level'},
+      // Temperature Intake
+      {field: VehicleData.temperature.intake, name: 'Temperature Intake'},
 
-            // Average Consumption
-            {field: VehicleData.fuel.averageconsumption, name: 'Average Fuel Consumption'},
+      // Temperature Coolant
+      {field: VehicleData.temperature.coolant, name: 'Temperature Coolant'},
 
-            // Temperature: Outside
-            {field: VehicleData.temperature.outside, name: 'Temperature Outside'},
+    ];
 
-            // Temperature Intake
-            {field: VehicleData.temperature.intake, name: 'Temperature Intake'},
+    // let's actually execute the subscriptions
 
-            // Temperature Coolant
-            {field: VehicleData.temperature.coolant, name: 'Temperature Coolant'},
+    this.sections.forEach(function(section, sectionIndex) {
+      this.subscribe(section.field, function(value) {
+        // we got a new value for this subscription, let's update it
+        this.updateSection(sectionIndex, value);
+      }.bind(this));
+    }.bind(this));
+  },
 
-        ];
-
-        // let's actually execute the subscriptions
-
-        this.sections.forEach(function(section, sectionIndex) {
-
-            this.subscribe(section.field, function(value) {
-
-                // we got a new value for this subscription, let's update it
-                this.updateSection(sectionIndex, value);
-
-            }.bind(this));
-
-        }.bind(this));
-
-    },
-
-    /**
+  /**
      * (showSection)
      *
      * This method shows a section specific value / name
      */
 
-    showSection: function(sectionIndex) {
+  showSection: function(sectionIndex) {
+    // just in case, let's do some sanity check
+    if (!this.sections || sectionIndex < 0 || sectionIndex >= this.sections.length) return false;
 
-        // just in case, let's do some sanity check
-        if(!this.sections || sectionIndex < 0 || sectionIndex >= this.sections.length) return false;
+    // let's store the current section in a local variable
+    const section = this.sections[sectionIndex];
 
-        // let's store the current section in a local variable
-        var section = this.sections[sectionIndex],
-
-            // Let's get also the value and name
-            value = section.value || 0,
-            name = section.name;
+    // Let's get also the value and name
+    let value = section.value || 0;
+    let name = section.name;
 
 
-        // Let's check if this value requires some transformation.
-        // We are using the internal is handler to determinate
+    // Let's check if this value requires some transformation.
+    // We are using the internal is handler to determinate
 
-        if(this.is.fn(section.transform)) {
+    if (this.is.fn(section.transform)) {
+      // execute the transform
+      const result = section.transform(section.value, sectionIndex);
 
-            // execute the transform
-            var result = section.transform(section.value, sectionIndex);
+      // set the updated value
+      value = result.value || 0;
 
-            // set the updated value
-            value = result.value || 0;
+      // also set the name if necessary
+      name = result.name || name;
+    }
 
-            // also set the name if necessary
-            name = result.name || name;
-        }
+    // now let's set the sections value
+    this.valueLabel.html(value);
 
-        // now let's set the sections value
-        this.valueLabel.html(value);
+    // and the name
+    this.nameLabel.html(name);
 
-        // and the name
-        this.nameLabel.html(name);
+    // finally let's update the current section index
+    this.currentSectionIndex = sectionIndex;
+  },
 
-        // finally let's update the current section index
-        this.currentSectionIndex = sectionIndex;
-    },
-
-    /**
+  /**
      * (updateSection)
      *
      * This method updates a value and also updates the display if necessary
      */
 
-    updateSection: function(sectionIndex, value) {
+  updateSection: function(sectionIndex, value) {
+    // just in case, let's do some sanity check
+    if (sectionIndex < 0 || sectionIndex >= this.sections.length) return false;
 
-        // just in case, let's do some sanity check
-        if(sectionIndex < 0 || sectionIndex >= this.sections.length) return false;
+    // let's update the sections value
+    this.sections[sectionIndex].value = value;
 
-        // let's update the sections value
-        this.sections[sectionIndex].value = value;
-
-        // and finally, update the display if required
-        if(sectionIndex == this.currentSectionIndex) {
-            this.showSection(this.currentSectionIndex);
-        }
-    },
+    // and finally, update the display if required
+    if (sectionIndex == this.currentSectionIndex) {
+      this.showSection(this.currentSectionIndex);
+    }
+  },
 
 
 }));

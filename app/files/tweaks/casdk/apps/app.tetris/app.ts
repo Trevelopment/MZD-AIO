@@ -32,7 +32,7 @@
  */
 
 
-CustomApplicationsHandler.register("app.tetris", new CustomApplication({
+CustomApplicationsHandler.register('app.tetris', new CustomApplication({
 
   /**
    * (require)
@@ -125,7 +125,7 @@ CustomApplicationsHandler.register("app.tetris", new CustomApplication({
   },
 
 
-  /***
+  /** *
    *** User Interface Life Cycles
    ***/
 
@@ -143,16 +143,15 @@ CustomApplicationsHandler.register("app.tetris", new CustomApplication({
 
     // score for this drive
     this.__score = 0;
-    this.__highscore = this.get("highscore");
+    this.__highscore = this.get('highscore');
 
     // init tetris
     this.initializeGameBoard();
 
     // vehicle speed
     this.subscribe(VehicleData.vehicle.speed, function(value) {
-
       if (this.speedRestrict && value > 15) {
-        this.gamelabel.html("Driving").fadeIn();
+        this.gamelabel.html('Driving').fadeIn();
         this.gameBoard.data('tetris').pause();
       } else {
         this.gamelabel.fadeOut();
@@ -166,7 +165,6 @@ CustomApplicationsHandler.register("app.tetris", new CustomApplication({
    */
 
   focused: function() {
-
     this.gameBoard.data('tetris').start();
   },
 
@@ -175,12 +173,10 @@ CustomApplicationsHandler.register("app.tetris", new CustomApplication({
    */
 
   lost: function() {
-
     this.gameBoard.data('tetris').pause();
-
   },
 
-  /***
+  /** *
    *** Events
    ***/
 
@@ -191,27 +187,24 @@ CustomApplicationsHandler.register("app.tetris", new CustomApplication({
    */
 
   onControllerEvent: function(eventId) {
-
     this.gameBoard.data('tetris').handle(eventId);
-
   },
 
 
-  /***
+  /** *
    *** Applicaton specific methods
    ***/
 
   initializeGameBoard: function() {
+    this.gameBoard = $('<div/>').addClass('gameBoard').appendTo(this.canvas);
 
-    this.gameBoard = $("<div/>").addClass("gameBoard").appendTo(this.canvas);
+    $('<label/>').addClass('score').append('This Drive').appendTo(this.canvas);
+    this.score = $('<span/>').addClass('score').append('0').appendTo(this.canvas);
 
-    $("<label/>").addClass("score").append("This Drive").appendTo(this.canvas);
-    this.score = $("<span/>").addClass("score").append("0").appendTo(this.canvas);
+    $('<label/>').addClass('highScore').append('High Score').appendTo(this.canvas);
+    this.highScore = $('<span/>').addClass('highScore').append(this.__highscore || '0').appendTo(this.canvas);
 
-    $("<label/>").addClass("highScore").append("High Score").appendTo(this.canvas);
-    this.highScore = $("<span/>").addClass("highScore").append(this.__highscore || '0').appendTo(this.canvas);
-
-    this.gamelabel = $("<label/>").addClass("gamelabel").append("GAME OVER").appendTo(this.canvas);
+    this.gamelabel = $('<label/>').addClass('gamelabel').append('GAME OVER').appendTo(this.canvas);
 
     this.gameBoard.tetris({
       tileSize: 20,
@@ -225,38 +218,31 @@ CustomApplicationsHandler.register("app.tetris", new CustomApplication({
         if (!this.__highscore) this.__highscore = 0;
 
         if (this.__score > this.__highscore) {
-
           this.__highscore = this.__score;
 
           this.highScore.html(this.__highscore);
 
-          this.set("highscore", this.__highscore);
+          this.set('highscore', this.__highscore);
         }
-
       }.bind(this),
 
       gameOver: function() {
-
         this.gameBoard.data('tetris').pause();
 
-        this.gamelabel.html("Game Over").fadeIn();
-
-
+        this.gamelabel.html('Game Over').fadeIn();
       }.bind(this),
 
       restartGame: function() {
         this.__score = 0;
         this.score.html(this.__score);
         this.gamelabel.fadeOut();
-
-      }.bind(this)
+      }.bind(this),
     });
     this.score.on('click', function() {
-      this.gamelabel.html("Speed Restriction " + (this.speedRestrict ? "Disabled": "Enabled")).fadeIn(100).delay(1000).fadeOut(1000);
+      this.gamelabel.html('Speed Restriction ' + (this.speedRestrict ? 'Disabled': 'Enabled')).fadeIn(100).delay(1000).fadeOut(1000);
       return this.speedRestrict = !this.speedRestrict;
     }.bind(this));
   },
-
 
 
 }));

@@ -29,7 +29,7 @@ export const buildEntList = (user) => {
   let listOrder = '';
   mkdirp.sync(`${tmpdir}/config/audio_order_AND_no_More_Disclaimer/both/jci/gui/apps/system/js/`);
   for (const item in user.entertainmentItems) {
-    listOrder += 'var ' + user.entertainmentItems[item].menuItem + ' = ' + user.entertainmentItems[item].pos + ';\n';
+    listOrder += 'let ' + user.entertainmentItems[item].menuItem + ' = ' + user.entertainmentItems[item].pos + ';\n';
   }
   fs.writeFileSync(`${tmpdir}/config/audio_order_AND_no_More_Disclaimer/systemApp.js.audio`, listOrder);
 };

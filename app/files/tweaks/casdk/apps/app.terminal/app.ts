@@ -34,7 +34,7 @@
  * The filename needs to be app.js in order to be recognized by the loader.
  */
 
-CustomApplicationsHandler.register("app.terminal", new CustomApplication({
+CustomApplicationsHandler.register('app.terminal', new CustomApplication({
 
 
   /**
@@ -66,7 +66,6 @@ CustomApplicationsHandler.register("app.terminal", new CustomApplication({
      */
 
     images: {
-
 
 
     },
@@ -149,7 +148,7 @@ CustomApplicationsHandler.register("app.terminal", new CustomApplication({
   },
 
 
-  /***
+  /** *
    *** User Interface Life Cycles
    ***/
 
@@ -162,8 +161,7 @@ CustomApplicationsHandler.register("app.terminal", new CustomApplication({
    */
 
 
-
-  /***
+  /** *
    *** User Interface Life Cycles
    ***/
 
@@ -177,10 +175,10 @@ CustomApplicationsHandler.register("app.terminal", new CustomApplication({
 
   ws: null,
   fileslist: [],
-  path: "",
+  path: '',
 
-  command: "",
-  buffer: "",
+  command: '',
+  buffer: '',
   linecount: 0,
   commandstack: [],
   commandstackcounter: -1,
@@ -189,7 +187,7 @@ CustomApplicationsHandler.register("app.terminal", new CustomApplication({
   // Update the screen
   //
   update: function() {
-    this.screen.get(0).innerHTML = this.buffer + ">" + this.command;
+    this.screen.get(0).innerHTML = this.buffer + '>' + this.command;
     this.screen.get(0).scrollTop = this.screen.get(0).scrollHeight;
   },
 
@@ -199,12 +197,12 @@ CustomApplicationsHandler.register("app.terminal", new CustomApplication({
 
   AddText: function(text) {
     this.linecount = this.linecount + 1;
-    this.buffer += text + "\n";
+    this.buffer += text + '\n';
 
     // At 160 lines, go back to 80 then buffer will always have between 80 to 160 lines
     /*
           if ( this.linecount > 160) {
-              var lines = buffer.split('\n');
+              let lines = buffer.split('\n');
               lines.splice(0,80);
               this.buffer = lines.join('\n');
           }
@@ -216,7 +214,7 @@ CustomApplicationsHandler.register("app.terminal", new CustomApplication({
   // Folder has maybe changed
   //
   folderchange: function() {
-    /*var c;
+    /* let c;
     debug.innerHTML = path + "\n"
     for (c=0; c< fileslist.length; c++) {
       debug.innerHTML += fileslist[c] + "\n";
@@ -224,40 +222,40 @@ CustomApplicationsHandler.register("app.terminal", new CustomApplication({
   },
 
   help: function() {
-    var command = 'echo "Example commands : "'
+    let command = 'echo "Example commands : "';
     this.ws.send(command);
     command = 'echo "df -h<br><br>Shortcuts:<br>m/ : mount -o rw,remount /<br>tweaks : sh /tmp/mnt/sd*/tweaks.sh"';
     this.ws.send(command);
   },
 
-  asklistnumber: "TERMINAL84723423940147",
-  askpwdnumber: "TERMINAL2472323489823",
+  asklistnumber: 'TERMINAL84723423940147',
+  askpwdnumber: 'TERMINAL2472323489823',
 
   askiffolderchanged: function() {
-    var command = 'ls | awk \' BEGIN { ORS = \"\"; print \"' + this.asklistnumber + '[\"; } { print \"\\\/\\@\"$0\"\\\/\\@\"; } END { print \"]\"; }\' | sed \"s^\\\"^\\\\\\\\\\\"^g;s^\\\/\\@\\\/\\@^\\\", \\\"^g;s^\\\/\\@^\\\"^g\"'
+    let command = 'ls | awk \' BEGIN { ORS = \"\"; print \"' + this.asklistnumber + '[\"; } { print \"\\\/\\@\"$0\"\\\/\\@\"; } END { print \"]\"; }\' | sed \"s^\\\"^\\\\\\\\\\\"^g;s^\\\/\\@\\\/\\@^\\\", \\\"^g;s^\\\/\\@^\\\"^g\"';
     this.ws.send(command);
-    var command = 'echo ' + this.askpwdnumber + '$(pwd)'
+    let command = 'echo ' + this.askpwdnumber + '$(pwd)';
     this.ws.send(command);
   },
 
   SetKeyboardButtonValue: function() {
-    var c;
+    let c;
     for (c = 0; c < this.buttonlist.length; c++) {
       if (!this.buttonlist[c].hasAttribute('function')) {
         if (this.shift) {
           if (this.buttonlist[c].hasAttribute('shiftkey')) {
-            this.buttonlist[c].innerHTML = this.buttonlist[c].getAttribute("shiftkey");
+            this.buttonlist[c].innerHTML = this.buttonlist[c].getAttribute('shiftkey');
           } else {
-            this.buttonlist[c].innerHTML = this.buttonlist[c].getAttribute("key").toUpperCase();;
+            this.buttonlist[c].innerHTML = this.buttonlist[c].getAttribute('key').toUpperCase(); ;
           }
         } else {
-          this.buttonlist[c].innerHTML = this.buttonlist[c].getAttribute("key").toLowerCase();
+          this.buttonlist[c].innerHTML = this.buttonlist[c].getAttribute('key').toLowerCase();
         }
       }
       this.buttonlist[c].color = 'white';
     }
 
-    var capslist = this.keyboard.get(0).getElementsByClassName('caps');
+    const capslist = this.keyboard.get(0).getElementsByClassName('caps');
     for (c = 0; c < capslist.length; c++) {
       if (this.caps) {
         $(capslist[c]).addClass('stateon');
@@ -265,7 +263,7 @@ CustomApplicationsHandler.register("app.terminal", new CustomApplication({
         $(capslist[c]).removeClass('stateon');
       }
     }
-    var shiftlist = this.keyboard.get(0).getElementsByClassName('shift');
+    const shiftlist = this.keyboard.get(0).getElementsByClassName('shift');
     for (c = 0; c < shiftlist.length; c++) {
       if (this.shift) {
         $(shiftlist[c]).addClass('stateon');
@@ -273,11 +271,11 @@ CustomApplicationsHandler.register("app.terminal", new CustomApplication({
         $(shiftlist[c]).removeClass('stateon');
       }
     }
-    var alternatelist = this.keyboard.get(0).getElementsByClassName('alternate');
+    const alternatelist = this.keyboard.get(0).getElementsByClassName('alternate');
     for (c = 0; c < alternatelist.length; c++) {
       alternatelist[c].style.color = this.alternate ? '#FF0000' : 'white';
     }
-    var ctrllist = this.keyboard.get(0).getElementsByClassName('ctrl');
+    const ctrllist = this.keyboard.get(0).getElementsByClassName('ctrl');
     for (c = 0; c < ctrllist.length; c++) {
       ctrllist[c].style.color = this.ctrl ? '#FF0000' : 'white';
     }
@@ -285,132 +283,131 @@ CustomApplicationsHandler.register("app.terminal", new CustomApplication({
 
   HighLevelKeyboard: function(char) {
     switch (char) {
-      case "return":
+      case 'return':
 
         switch (this.command) {
-          case "clear":
-            this.buffer = "";
+          case 'clear':
+            this.buffer = '';
             this.linecount = 0;
-            this.command = "";
+            this.command = '';
             this.update();
             break;
 
-          case "help":
+          case 'help':
             this.help();
-            this.command = "";
+            this.command = '';
             this.update();
             break;
 
-          case "m/":
-            this.command = "mount -o rw,remount /";
-            this.AddText(">" + this.command);
+          case 'm/':
+            this.command = 'mount -o rw,remount /';
+            this.AddText('>' + this.command);
             this.ws.send(this.command);
-            this.command = "";
+            this.command = '';
             this.update();
             break;
 
-          case "m/r":
-            this.command = "mount -o rw,remount /tmp/mnt/resources";
-            this.AddText(">" + this.command);
+          case 'm/r':
+            this.command = 'mount -o rw,remount /tmp/mnt/resources';
+            this.AddText('>' + this.command);
             this.ws.send(this.command);
-            this.command = "";
+            this.command = '';
             this.update();
             break;
-          case "m/a":
-            this.command = "mount -o rw,remount /tmp/mnt/sda1";
-            this.AddText(">" + this.command);
+          case 'm/a':
+            this.command = 'mount -o rw,remount /tmp/mnt/sda1';
+            this.AddText('>' + this.command);
             this.ws.send(this.command);
-            this.command = "";
+            this.command = '';
             this.update();
             break;
-          case "m/b":
-            this.command = "mount -o rw,remount /tmp/mnt/sdb1";
-            this.AddText(">" + this.command);
+          case 'm/b':
+            this.command = 'mount -o rw,remount /tmp/mnt/sdb1';
+            this.AddText('>' + this.command);
             this.ws.send(this.command);
-            this.command = "";
-            this.update();
-            break;
-
-          case "tweaks":
-            this.command = "/tmp/mnt/sd*/tweaks.sh &";
-            this.AddText(">" + this.command);
-            this.ws.send(this.command);
-            this.command = "";
+            this.command = '';
             this.update();
             break;
 
-          case "apps":
-            this.command = "cd /jci/gui/apps";
-            this.AddText(">" + this.command);
+          case 'tweaks':
+            this.command = '/tmp/mnt/sd*/tweaks.sh &';
+            this.AddText('>' + this.command);
             this.ws.send(this.command);
-            this.command = "";
+            this.command = '';
             this.update();
             break;
 
-          case "r2":
-            this.command = "opkg remove casdk-multidash";
-            this.AddText(">" + this.command);
+          case 'apps':
+            this.command = 'cd /jci/gui/apps';
+            this.AddText('>' + this.command);
             this.ws.send(this.command);
-            this.command = "";
+            this.command = '';
             this.update();
             break;
 
-          case "i3":
-            this.command = "opkg install casdk-horloge";
-            this.AddText(">" + this.command);
+          case 'r2':
+            this.command = 'opkg remove casdk-multidash';
+            this.AddText('>' + this.command);
             this.ws.send(this.command);
-            this.command = "";
-            this.update();
-            break;
-          case "r3":
-            this.command = "opkg remove casdk-horloge";
-            this.AddText(">" + this.command);
-            this.ws.send(this.command);
-            this.command = "";
+            this.command = '';
             this.update();
             break;
 
-          case "i4":
-            this.command = "opkg install casdk-speedthai";
-            this.AddText(">" + this.command);
+          case 'i3':
+            this.command = 'opkg install casdk-horloge';
+            this.AddText('>' + this.command);
             this.ws.send(this.command);
-            this.command = "";
+            this.command = '';
             this.update();
             break;
-          case "r4":
-            this.command = "opkg remove casdk-speedthai";
-            this.AddText(">" + this.command);
+          case 'r3':
+            this.command = 'opkg remove casdk-horloge';
+            this.AddText('>' + this.command);
             this.ws.send(this.command);
-            this.command = "";
+            this.command = '';
+            this.update();
+            break;
+
+          case 'i4':
+            this.command = 'opkg install casdk-speedthai';
+            this.AddText('>' + this.command);
+            this.ws.send(this.command);
+            this.command = '';
+            this.update();
+            break;
+          case 'r4':
+            this.command = 'opkg remove casdk-speedthai';
+            this.AddText('>' + this.command);
+            this.ws.send(this.command);
+            this.command = '';
             this.update();
             break;
 
           default:
-            this.AddText(">" + this.command);
+            this.AddText('>' + this.command);
             this.ws.send(this.command);
             if (this.command.length) this.commandstack.push(this.command);
             this.commandstackcounter = this.commandstack.length;
-            this.command = "";
+            this.command = '';
             this.update();
             this.askiffolderchanged();
             break;
-
         }
         break;
 
-      case "space":
+      case 'space':
         this.command += ' ';
         this.update();
         break;
 
-      case "delete":
+      case 'delete':
         if (this.command.length > 0) {
           this.command = this.command.slice(0, -1);
           this.update();
         }
         break;
 
-      case "up":
+      case 'up':
         if (this.commandstack.length != 0) {
           this.commandstackcounter--;
           if (this.commandstackcounter < 0) {
@@ -421,7 +418,7 @@ CustomApplicationsHandler.register("app.terminal", new CustomApplication({
         }
         break;
 
-      case "down":
+      case 'down':
         if (this.commandstack.length != 0) {
           this.commandstackcounter++;
           if (this.commandstackcounter >= this.commandstack.length) {
@@ -433,14 +430,14 @@ CustomApplicationsHandler.register("app.terminal", new CustomApplication({
         break;
 
 
-      case "left":
+      case 'left':
 
         break;
 
-      case "right":
+      case 'right':
         break;
 
-      case "tab":
+      case 'tab':
         this.asklistfunction();
 
         break;
@@ -448,11 +445,10 @@ CustomApplicationsHandler.register("app.terminal", new CustomApplication({
       default:
         if (this.ctrl) {
           if (this.char == 'k' || this.char == 'l') {
-            this.buffer = "";
+            this.buffer = '';
             this.linecount = 0;
-            this.command = "";
+            this.command = '';
           }
-
         } else if (this.alternate) {
 
         } else {
@@ -460,38 +456,34 @@ CustomApplicationsHandler.register("app.terminal", new CustomApplication({
         }
         this.update();
     }
-
   },
 
   LowLevelKeyboard: function(c) {
-
     this.buttonlist[c].onmousedown = function() {
-
       if (this.buttonlist[c].hasAttribute('function')) {
-        var f = this.buttonlist[c].getAttribute("function");
+        const f = this.buttonlist[c].getAttribute('function');
         switch (f) {
-
-          case "alt":
+          case 'alt':
             this.alternate = !this.alternate;
             this.SetKeyboardButtonValue();
             break;
 
-          case "ctrl":
+          case 'ctrl':
             this.ctrl = !this.ctrl;
             this.SetKeyboardButtonValue();
             break;
 
-          case "caps":
+          case 'caps':
             this.caps = !this.caps;
             this.shift = this.caps;
             this.SetKeyboardButtonValue();
             break;
 
-          case "shift":
+          case 'shift':
             this.shift = !this.shift;
             this.SetKeyboardButtonValue();
             break;
-          case "caps":
+          case 'caps':
             this.shift = !this.shift;
             this.SetKeyboardButtonValue();
             break;
@@ -500,9 +492,7 @@ CustomApplicationsHandler.register("app.terminal", new CustomApplication({
             this.HighLevelKeyboard(f);
             break;
         }
-
       } else {
-
         this.HighLevelKeyboard(this.buttonlist[c].innerHTML);
 
         if (!this.caps && this.shift || this.ctrl || this.alternate) {
@@ -510,12 +500,10 @@ CustomApplicationsHandler.register("app.terminal", new CustomApplication({
           this.alternate = false;
           this.shift = false;
           this.SetKeyboardButtonValue();
-
         }
       }
     }.bind(this);
   },
-
 
 
   /**
@@ -527,10 +515,8 @@ CustomApplicationsHandler.register("app.terminal", new CustomApplication({
    */
 
   created: function() {
-
-
-    this.screen = this.element("pre", false, 'screen', false, '');
-    this.keyboard = this.element("div", false, false, false, '' +
+    this.screen = this.element('pre', false, 'screen', false, '');
+    this.keyboard = this.element('div', false, false, false, '' +
       '<div>' +
       '<button class="keyboardbutton row1" type="button" key="`"></button>' +
       '<button class="keyboardbutton row1" type="button" key="1" shiftkey="!"></button>' +
@@ -601,24 +587,24 @@ CustomApplicationsHandler.register("app.terminal", new CustomApplication({
       '<button class="keyboardbutton row5" type="button" function="up">&uarr;</button>' +
       '<button class="keyboardbutton row5" type="button" function="down">&darr;</button>' +
       '<button class="keyboardbutton row5" type="button" function="right">&rarr;</button>' +
-      '</div>'
+      '</div>',
     );
 
     this.buttonlist = this.keyboard.get(0).getElementsByClassName('keyboardbutton');
     // Add listener for mouse
-    var c, c2;
+    let c; let c2;
 
     for (c = 0; c < this.buttonlist.length; c++) {
       this.LowLevelKeyboard(c);
     }
     this.SetKeyboardButtonValue();
 
-    var originalsize = [];
+    const originalsize = [];
     /*
-      var maxrow = 0;
+      let maxrow = 0;
       for (c2 = 0; c2 < 5; c2++) {
-        var row = this.keyboard.get(0).getElementsByClassName('row' + (c2+1));
-        var rowsize = 0;
+        let row = this.keyboard.get(0).getElementsByClassName('row' + (c2+1));
+        let rowsize = 0;
         for (c=0;c < row.length; c++)
         {
           rowsize += row[c].offsetWidth;
@@ -628,8 +614,8 @@ CustomApplicationsHandler.register("app.terminal", new CustomApplication({
         originalsize.push(rowsize);
         if ( rowsize > maxrow) maxrow = rowsize;
       }   for (c2 = 0; c2 < 5; c2++) {
-        var rowadd = this.keyboard.get(0).getElementsByClassName('row' +(c2+1) + 'add');
-        var rowaddsize = (maxrow - originalsize[c2]) / rowadd.length;
+        let rowadd = this.keyboard.get(0).getElementsByClassName('row' +(c2+1) + 'add');
+        let rowaddsize = (maxrow - originalsize[c2]) / rowadd.length;
         for (c = 0;c < rowadd.length; c ++) {
           rowadd[c].style.width = rowadd[c].offsetWidth + rowaddsize + "px";
         }
@@ -637,27 +623,24 @@ CustomApplicationsHandler.register("app.terminal", new CustomApplication({
 */
 
 
-
     this.wsonopen = function() {
-      this.AddText("[connect]\nhelp=Help");
+      this.AddText('[connect]\nhelp=Help');
       this.askiffolderchanged();
-      this.ws.send("cd /tmp/root\n");
+      this.ws.send('cd /tmp/root\n');
     }.bind(this);
     this.wsonclose = function() {
-      this.AddText("[unconnect]");
+      this.AddText('[unconnect]');
       window.setTimeout(function() {
-
         this.ws = new WebSocket('ws://localhost:9996');
         this.ws.onopen = this.wsonopen;
         this.ws.onclose = this.wsonclose;
         this.ws.onmessage = this.wsonmessage;
-
       }.bind(this), 5000);
     }.bind(this);
     this.wsonmessage = function(event) {
       if (event.data.substr(0, this.asklistnumber.length) == this.asklistnumber) {
         this.fileslist = event.data.substr(this.asklistnumber.length);
-        //fileslist = event.data.substr(asklistnumber.length).split("\n");
+        // fileslist = event.data.substr(asklistnumber.length).split("\n");
         this.folderchange();
       } else if (event.data.substr(0, this.askpwdnumber.length) == this.askpwdnumber) {
         this.path = event.data.substr(this.askpwdnumber.length);
@@ -673,7 +656,6 @@ CustomApplicationsHandler.register("app.terminal", new CustomApplication({
     this.ws.onmessage = this.wsonmessage;
 
     this.update();
-
   },
 
   /**
@@ -703,7 +685,7 @@ CustomApplicationsHandler.register("app.terminal", new CustomApplication({
 
   },
 
-  /***
+  /** *
    *** Events
    ***/
 
@@ -714,13 +696,11 @@ CustomApplicationsHandler.register("app.terminal", new CustomApplication({
    */
 
   onControllerEvent: function(eventId) {
-
     // Look above where we create this.label
     // Here is where we assign the value!
 
-    //this.label.html(eventId);
+    // this.label.html(eventId);
     switch (eventId) {
-
       /*
        * MultiController was moved to the left
        */
@@ -737,14 +717,14 @@ CustomApplicationsHandler.register("app.terminal", new CustomApplication({
          * MultiController was moved up
          */
       case this.UP:
-      this.screen.get(0).scrollTop -= 100;
+        this.screen.get(0).scrollTop -= 100;
         break;
 
         /*
          * MultiController was moved down
          */
       case this.DOWN:
-      this.screen.get(0).scrollTop += 100;
+        this.screen.get(0).scrollTop += 100;
         break;
 
         /*
@@ -777,7 +757,6 @@ CustomApplicationsHandler.register("app.terminal", new CustomApplication({
         this.screen.get(0).scrollTop -= 100;
         break;
     }
-
   },
 
 

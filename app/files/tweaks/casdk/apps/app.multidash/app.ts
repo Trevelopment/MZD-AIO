@@ -12,7 +12,7 @@
  * DataTransformation
  */
 
-var MyDataTransform = {
+const MyDataTransform = {
 
   /**
    * (toFeet) returns the Meters coverted to Feet
@@ -32,7 +32,7 @@ var MyDataTransform = {
  * Custom Application
  */
 
-CustomApplicationsHandler.register("app.multidash", new CustomApplication({
+CustomApplicationsHandler.register('app.multidash', new CustomApplication({
 
   /**
    * (require)
@@ -151,7 +151,7 @@ CustomApplicationsHandler.register("app.multidash", new CustomApplication({
       temperatureUnit: 'f',
       temperatureTransform: false, // DataTransform.toFahrenheit,
       altitudeUnit: 'ft',
-      altitudeTransform: MyDataTransform.toFeet
+      altitudeTransform: MyDataTransform.toFeet,
     },
 
     /**
@@ -166,7 +166,7 @@ CustomApplicationsHandler.register("app.multidash", new CustomApplication({
       temperatureUnit: 'c',
       temperatureTransform: MyDataTransform.toCelsius,
       altitudeUnit: 'm',
-      altitudeTransform: false
+      altitudeTransform: false,
     },
   },
 
@@ -177,16 +177,15 @@ CustomApplicationsHandler.register("app.multidash", new CustomApplication({
    * An object that holds tweakable config values
    */
   config: {
-    "theme": 0,
-    "fuelLevelMaxValue": 186,
-    "timezoneOffset": -5,
-    "brightness": 100,
-    "digifont": false
+    'theme': 0,
+    'fuelLevelMaxValue': 186,
+    'timezoneOffset': -5,
+    'brightness': 100,
+    'digifont': false,
   },
 
 
-
-  /***
+  /** *
    *** Application Life Cycles
    ***/
 
@@ -204,7 +203,6 @@ CustomApplicationsHandler.register("app.multidash", new CustomApplication({
    */
 
   created: function() {
-
     // load config and update where necessary
 
     // this.getDefaultConfig();
@@ -233,7 +231,7 @@ CustomApplicationsHandler.register("app.multidash", new CustomApplication({
     this.fuelLevelTicks = 0;
     this.fuelLevelMod = 10; // when to recalculate the fuel level avg
 
-    this.tripStartTime = new Date(framework.common.getCurrentTime())
+    this.tripStartTime = new Date(framework.common.getCurrentTime());
     this.updateTripTimerInterval = 1000;
 
 
@@ -243,49 +241,49 @@ CustomApplicationsHandler.register("app.multidash", new CustomApplication({
     // html elements
 
     this.mainContainer = $('<div/>').attr('id', 'main-container');
-    this.topLeftCon = $("<div/>").attr('id', 'top-left-con');
-    this.topRightCon = $("<div/>").attr('id', 'top-right-con');
-    this.bottomCon = $("<div/>").attr('id', 'bottom-con');
+    this.topLeftCon = $('<div/>').attr('id', 'top-left-con');
+    this.topRightCon = $('<div/>').attr('id', 'top-right-con');
+    this.bottomCon = $('<div/>').attr('id', 'bottom-con');
 
 
-    this.statusMessage = $("<div/>").attr('id', 'status-message');
+    this.statusMessage = $('<div/>').attr('id', 'status-message');
 
-    this.speedometer = $("<div/>").attr('id', 'speedometer').appendTo(this.topLeftCon);
-    this.speedometerValue = $("<div/>").addClass('value').html('0').appendTo(this.speedometer);
-    this.speedometerLabel = $("<label/>").addClass('label').html(this.region.speedUnit).appendTo(this.speedometer);
+    this.speedometer = $('<div/>').attr('id', 'speedometer').appendTo(this.topLeftCon);
+    this.speedometerValue = $('<div/>').addClass('value').html('0').appendTo(this.speedometer);
+    this.speedometerLabel = $('<label/>').addClass('label').html(this.region.speedUnit).appendTo(this.speedometer);
 
-    this.topSpeedCon = $("<div/>").attr('id', 'top-speed').appendTo(this.topLeftCon);
-    this.topSpeedConLabel = $("<label/>").addClass('label').html('Top Speed').appendTo(this.topSpeedCon);
-    this.topSpeedConValue = $("<div/>").addClass('value').html('0').appendTo(this.topSpeedCon);
+    this.topSpeedCon = $('<div/>').attr('id', 'top-speed').appendTo(this.topLeftCon);
+    this.topSpeedConLabel = $('<label/>').addClass('label').html('Top Speed').appendTo(this.topSpeedCon);
+    this.topSpeedConValue = $('<div/>').addClass('value').html('0').appendTo(this.topSpeedCon);
 
-    this.avgSpeedCon = $("<div/>").attr('id', 'avg-speed').appendTo(this.topLeftCon);
-    this.avgSpeedConLabel = $("<label/>").addClass('label').html('Avg Speed').appendTo(this.avgSpeedCon);
-    this.avgSpeedConValue = $("<div/>").addClass('value').html('&nbsp;').appendTo(this.avgSpeedCon);
+    this.avgSpeedCon = $('<div/>').attr('id', 'avg-speed').appendTo(this.topLeftCon);
+    this.avgSpeedConLabel = $('<label/>').addClass('label').html('Avg Speed').appendTo(this.avgSpeedCon);
+    this.avgSpeedConValue = $('<div/>').addClass('value').html('&nbsp;').appendTo(this.avgSpeedCon);
 
-    this.timeCon = $("<div/>").attr('id', 'time-con').html($('.StatusBarCtrlClock').text()).appendTo(this.topRightCon);
-    this.dateCon = $("<div/>").attr('id', 'date-con').html($('.StatusBarCtrlDate').text()).appendTo(this.topRightCon);
+    this.timeCon = $('<div/>').attr('id', 'time-con').html($('.StatusBarCtrlClock').text()).appendTo(this.topRightCon);
+    this.dateCon = $('<div/>').attr('id', 'date-con').html($('.StatusBarCtrlDate').text()).appendTo(this.topRightCon);
 
-    this.temperature = $("<div/>").attr('id', 'temperature').appendTo(this.topRightCon);
-    this.temperatureValue = $("<div/>").addClass('value').html('&nbsp;').appendTo(this.temperature);
-    this.temperatureLabel = $("<label/>").addClass('label').html(this.region.temperatureUnit).appendTo(this.temperature);
+    this.temperature = $('<div/>').attr('id', 'temperature').appendTo(this.topRightCon);
+    this.temperatureValue = $('<div/>').addClass('value').html('&nbsp;').appendTo(this.temperature);
+    this.temperatureLabel = $('<label/>').addClass('label').html(this.region.temperatureUnit).appendTo(this.temperature);
 
     this.additionalStats = $('<div/>').attr('id', 'additional-stats').appendTo(this.topRightCon);
 
     this.heading = $('<div/>').attr('id', 'heading').appendTo(this.additionalStats);
-    this.headingValue = $("<div/>").addClass('value').html('N').appendTo(this.heading);
-    this.headingLabel = $("<label/>").addClass('label').html('Heading').appendTo(this.heading);
+    this.headingValue = $('<div/>').addClass('value').html('N').appendTo(this.heading);
+    this.headingLabel = $('<label/>').addClass('label').html('Heading').appendTo(this.heading);
 
     this.avgFuelCons = $('<div/>').attr('id', 'avg-fuel-cons').appendTo(this.additionalStats);
-    this.avgFuelConsValue = $("<div/>").addClass('value').html('&nbsp;').appendTo(this.avgFuelCons);
-    this.avgFuelConsLabel = $("<label/>").addClass('label').html(this.region.fuelConsUnit).appendTo(this.avgFuelCons);
+    this.avgFuelConsValue = $('<div/>').addClass('value').html('&nbsp;').appendTo(this.avgFuelCons);
+    this.avgFuelConsLabel = $('<label/>').addClass('label').html(this.region.fuelConsUnit).appendTo(this.avgFuelCons);
 
-    this.altitude = $("<div/>").attr('id', 'altitude').appendTo(this.additionalStats);
-    this.altitudeValue = $("<div/>").addClass('value').html('&nbsp;').appendTo(this.altitude);
-    this.altitudeLabel = $("<label/>").addClass('label').html('Altitude').appendTo(this.altitude);
+    this.altitude = $('<div/>').attr('id', 'altitude').appendTo(this.additionalStats);
+    this.altitudeValue = $('<div/>').addClass('value').html('&nbsp;').appendTo(this.altitude);
+    this.altitudeLabel = $('<label/>').addClass('label').html('Altitude').appendTo(this.altitude);
 
-    this.tripTime = $("<div/>").attr('id', 'altitude').appendTo(this.additionalStats);
-    this.tripTimeValue = $("<div/>").addClass('value').html('0s').appendTo(this.tripTime);
-    this.tripTimeLabel = $("<label/>").addClass('label').html('Trip Time').appendTo(this.tripTime);
+    this.tripTime = $('<div/>').attr('id', 'altitude').appendTo(this.additionalStats);
+    this.tripTimeValue = $('<div/>').addClass('value').html('0s').appendTo(this.tripTime);
+    this.tripTimeLabel = $('<label/>').addClass('label').html('Trip Time').appendTo(this.tripTime);
 
 
     this.fuelLevel = $('<div/>').addClass('fuel-level').appendTo(this.bottomCon);
@@ -300,12 +298,12 @@ CustomApplicationsHandler.register("app.multidash", new CustomApplication({
 
     this.adjustBrightness(0);
     this.mainContainer.addClass('theme-' + this.themes[this.config.theme]);
-    if(this.config.digifont) this.mainContainer.addClass('digital');
+    if (this.config.digifont) this.mainContainer.addClass('digital');
 
     this.createSections();
 
     this.updateTripTime();
-    this.updateTripTimer = setInterval(function() { this.updateTripTime(); }.bind(this), this.updateTripTimerInterval);
+    this.updateTripTimer = setInterval(function() {this.updateTripTime();}.bind(this), this.updateTripTimerInterval);
   },
 
   /**
@@ -323,7 +321,7 @@ CustomApplicationsHandler.register("app.multidash", new CustomApplication({
   focused: function() {
     this.updateTripTime();
     clearInterval(this.updateTripTimer);
-    this.updateTripTimer = setInterval(function() { this.updateTripTime(); }.bind(this), this.updateTripTimerInterval);
+    this.updateTripTimer = setInterval(function() {this.updateTripTime();}.bind(this), this.updateTripTimerInterval);
     // this.mainContainer.addClass('shown');
   },
 
@@ -369,7 +367,7 @@ CustomApplicationsHandler.register("app.multidash", new CustomApplication({
   },
 
 
-  /***
+  /** *
    *** Application Events
    ***/
 
@@ -390,9 +388,7 @@ CustomApplicationsHandler.register("app.multidash", new CustomApplication({
    */
 
   onContextEvent: function(eventId, context, element) {
-
     switch (eventId) {
-
       /**
        * The element received the focus of the current context
        */
@@ -409,7 +405,6 @@ CustomApplicationsHandler.register("app.multidash", new CustomApplication({
 
         break;
     }
-
   },
 
 
@@ -420,7 +415,7 @@ CustomApplicationsHandler.register("app.multidash", new CustomApplication({
    */
 
   onRegionChange: function(region) {
-    var curRegion = this.regions[region];
+    const curRegion = this.regions[region];
 
     this.speedometerLabel[0].innerHTML = curRegion.speedUnit;
     this.avgFuelConsLabel[0].innerHTML = curRegion.fuelConsUnit;
@@ -431,7 +426,6 @@ CustomApplicationsHandler.register("app.multidash", new CustomApplication({
     this.updateSection(5);
     this.updateSection(7);
   },
-
 
 
   /**
@@ -445,10 +439,9 @@ CustomApplicationsHandler.register("app.multidash", new CustomApplication({
    */
 
   onControllerEvent: function(eventId) {
-    var tempVar;
+    let tempVar;
 
     switch (eventId) {
-
       /*
        * MultiController was moved to the left
        */
@@ -482,7 +475,7 @@ CustomApplicationsHandler.register("app.multidash", new CustomApplication({
          * MultiController Wheel was turned clockwise
          */
       case this.CW:
-        tempVar = this.themes[this.config.theme];
+        templet = this.themes[this.config.theme];
         this.config.theme++;
         if (this.config.theme >= this.themes.length) {
           this.config.theme = 0;
@@ -496,7 +489,7 @@ CustomApplicationsHandler.register("app.multidash", new CustomApplication({
          * MultiController Wheel was turned counter-clockwise
          */
       case this.CCW:
-        tempVar = this.themes[this.config.theme];
+        templet = this.themes[this.config.theme];
         this.config.theme--;
         if (this.config.theme < 0) {
           this.config.theme = this.themes.length - 1;
@@ -510,7 +503,7 @@ CustomApplicationsHandler.register("app.multidash", new CustomApplication({
          * MultiController's center was pushed down
          */
       case this.SELECT:
-        tempVar = (this.getRegion() == 'na') ? 'eu' : 'na';
+        templet = (this.getRegion() == 'na') ? 'eu' : 'na';
         this.setRegion(tempVar);
         break;
 
@@ -520,12 +513,11 @@ CustomApplicationsHandler.register("app.multidash", new CustomApplication({
       case this.BACK:
         break;
     }
-
   },
 
 
   adjustBrightness: function(adjust) {
-    var newVal = this.config.brightness + adjust;
+    const newVal = this.config.brightness + adjust;
 
     if (newVal >= 20 && newVal <= 100) {
       this.config.brightness = newVal;
@@ -534,15 +526,15 @@ CustomApplicationsHandler.register("app.multidash", new CustomApplication({
   },
 
   transformHeading: function(heading) {
-    var val = parseInt((heading / 22.5) + 0.5);
+    const val = parseInt((heading / 22.5) + 0.5);
 
     return this.headingsArray[(val % 16)];
   },
 
 
   getDefaultConfig: function() {
-    var fs = require('fs'),
-      string;
+    const fs = require('fs');
+    let string;
 
     try {
       string = fs.readFileSync(this.location + 'config.json', 'utf8');
@@ -561,7 +553,7 @@ CustomApplicationsHandler.register("app.multidash", new CustomApplication({
 
 
   getConfig: function() {
-    var string = this.get('AppMultiDashConfig');
+    const string = this.get('AppMultiDashConfig');
 
     if (string !== undefined) {
       $.extend(this.config, string);
@@ -575,12 +567,12 @@ CustomApplicationsHandler.register("app.multidash", new CustomApplication({
 
 
   updateTripTime: function() {
-    var now = new Date(framework.common.getCurrentTime()),
-      diff = now - this.tripStartTime,
-      diffH = Math.floor((diff % 86400000) / 3600000),
-      diffM = Math.floor(((diff % 86400000) % 3600000) / 60000),
-      diffS = Math.floor((((diff % 86400000) % 3600000) % 60000) / 1000),
-      text;
+    const now = new Date(framework.common.getCurrentTime());
+    const diff = now - this.tripStartTime;
+    const diffH = Math.floor((diff % 86400000) / 3600000);
+    const diffM = Math.floor(((diff % 86400000) % 3600000) / 60000);
+    const diffS = Math.floor((((diff % 86400000) % 3600000) % 60000) / 1000);
+    let text;
 
     if (diffM === 0 && diffH === 0) {
       text = diffS + 's';
@@ -591,7 +583,7 @@ CustomApplicationsHandler.register("app.multidash", new CustomApplication({
         // after done displaying seconds, set the trip timer to only run every minute
         clearInterval(this.updateTripTimer);
         this.updateTripTimerInterval = 60000;
-        this.updateTripTimer = setInterval(function() { this.updateTripTime(); }.bind(this), this.updateTripTimerInterval);
+        this.updateTripTimer = setInterval(function() {this.updateTripTime();}.bind(this), this.updateTripTimerInterval);
       }
 
       if (diffH > 0) {
@@ -605,11 +597,11 @@ CustomApplicationsHandler.register("app.multidash", new CustomApplication({
 
   updateDateTime: function(timestamp) {
     // use framework.common.getCurrentTime() to get correct time
-    var objDate = new Date(framework.common.getCurrentTime()),
-      dotw, month, d, h, m, ap;
+    const objDate = new Date(framework.common.getCurrentTime());
+    let dotw; let month; let d; let h; let m; let ap;
 
     // hack for my timezone atm
-    //objDate.setHours(objDate.getHours());//+ this.config.timezoneOffset);
+    // objDate.setHours(objDate.getHours());//+ this.config.timezoneOffset);
 
     if (objDate.getFullYear() >= 2016) {
       if (this.timeTicks++ % 15 === 0 || !this.timeUpdated) {
@@ -629,11 +621,11 @@ CustomApplicationsHandler.register("app.multidash", new CustomApplication({
         if (m < 10) {
           m = '0' + m;
         }
-        //if ($('.StatusBarCtrlDate')) {
+        // if ($('.StatusBarCtrlDate')) {
         //  this.dateCon[0].innerHTML = $('.StatusBarCtrlDate').text();
-        //} else {
+        // } else {
         this.dateCon[0].innerHTML = dotw + ', ' + month + ' ' + this.ordinal_suffix_of(d);
-        //}
+        // }
 
         this.timeCon[0].innerHTML = h + ':' + m + '<span class="ampm">' + ap + '</span>';
         // this.timeCon[0].innerHTML = $('.StatusBarCtrlClock').text();
@@ -649,10 +641,10 @@ CustomApplicationsHandler.register("app.multidash", new CustomApplication({
 
   /*
   getFuelLevel: function() {
-  	var sum = this.fuelLevelQueue.reduce(function(a, b) { return a + b; }),
-  		avg = sum / this.fuelLevelQueue.length;
+      let sum = this.fuelLevelQueue.reduce(function(a, b) { return a + b; }),
+          avg = sum / this.fuelLevelQueue.length;
 
-  	return Math.round(DataTransform.scaleValue(avg, [0,this.config.fuelLevelMaxValue], [0,100]));
+      return Math.round(DataTransform.scaleValue(avg, [0,this.config.fuelLevelMaxValue], [0,100]));
   },
   */
 
@@ -660,19 +652,19 @@ CustomApplicationsHandler.register("app.multidash", new CustomApplication({
    * http://stackoverflow.com/a/3783970/867676
    */
   getFuelLevel: function() {
-    var store = this.fuelLevelQueue.slice(), // clone the array
-      frequency = {}, // array of frequency.
-      max = 0, // holds the max frequency.
-      result, // holds the max frequency element.
-      use_mode = false,
-      trim_range = 15,
-      weight = 2,
-      sum, avg, i, retval;
+    const store = this.fuelLevelQueue.slice(); // clone the array
+    const frequency = {}; // array of frequency.
+    let max = 0; // holds the max frequency.
+    let result; // holds the max frequency element.
+    const use_mode = false;
+    const trim_range = 15;
+    const weight = 2;
+    let sum; let avg; let i; let retval;
 
     // for easy testing
     // store = [186, 186, 173, 161, 173, 186, 180, 186, 186, 173, 161, 173, 186, 180, 186, 186, 173, 161, 173, 186, 180, 186, 186, 173, 161, 173, 186, 180, 186, 186, 173, 161, 173, 186, 180];
 
-    for (var v in store) {
+    for (const v in store) {
       frequency[store[v]] = (frequency[store[v]] || 0) + 1; // increment frequency.
       if (frequency[store[v]] > max) { // is this frequency > max so far ?
         max = frequency[store[v]]; // update max.
@@ -692,7 +684,7 @@ CustomApplicationsHandler.register("app.multidash", new CustomApplication({
       }
 
       // give additional weight to the result value by essentially adding it 2 times as many
-      sum = store.reduce(function(a, b) { return a + b; }) + (result * max * weight);
+      sum = store.reduce(function(a, b) {return a + b;}) + (result * max * weight);
 
       retval = sum / (store.length + (max * weight));
     }
@@ -712,18 +704,18 @@ CustomApplicationsHandler.register("app.multidash", new CustomApplication({
    * http://stackoverflow.com/a/13627586/867676
    */
   ordinal_suffix_of: function(i) {
-    var j = i % 10,
-      k = i % 100;
+    const j = i % 10;
+    const k = i % 100;
     if (j == 1 && k != 11) {
-      return i + "st";
+      return i + 'st';
     }
     if (j == 2 && k != 12) {
-      return i + "nd";
+      return i + 'nd';
     }
     if (j == 3 && k != 13) {
-      return i + "rd";
+      return i + 'rd';
     }
-    return i + "th";
+    return i + 'th';
   },
 
 
@@ -734,57 +726,49 @@ CustomApplicationsHandler.register("app.multidash", new CustomApplication({
    */
 
   createSections: function() {
-
     // Here we define our sections
 
     this.sections = [
 
       // Vehicle speed
-      { field: VehicleData.vehicle.speed, name: 'Speed' },
+      {field: VehicleData.vehicle.speed, name: 'Speed'},
 
       // Vehicle RPM
-      { field: VehicleData.vehicle.rpm, name: 'RPM' },
+      {field: VehicleData.vehicle.rpm, name: 'RPM'},
 
       // GPS Heading
-      { field: VehicleData.gps.heading, name: 'Heading' },
+      {field: VehicleData.gps.heading, name: 'Heading'},
 
       // Fuel Level
-      { field: VehicleData.fuel.position, name: 'Fuel Level' },
+      {field: VehicleData.fuel.position, name: 'Fuel Level'},
 
       // Average Consumption
-      { field: VehicleData.fuel.averageconsumption, name: 'Average Consumption' },
+      {field: VehicleData.fuel.averageconsumption, name: 'Average Consumption'},
 
       // Temperature: Outside
-      { field: VehicleData.temperature.outside, name: 'Temperature Outside' },
+      {field: VehicleData.temperature.outside, name: 'Temperature Outside'},
 
       // GPS Timestamp
-      { field: VehicleData.gps.timestamp, name: 'GPS Timezone' },
+      {field: VehicleData.gps.timestamp, name: 'GPS Timezone'},
 
       // GPS Altitude
-      { field: VehicleData.gps.altitude, name: 'GPS Altitude' },
+      {field: VehicleData.gps.altitude, name: 'GPS Altitude'},
 
     ];
-
-
 
 
     // let's actually execute the subscriptions
 
     this.sections.forEach(function(section, sectionIndex) {
-
       this.subscribe(section.field, function(value) {
-
         // we got a new value for this subscription, let's update it
         this.updateSection(sectionIndex, value);
-
       }.bind(this));
-
     }.bind(this));
 
     // update speedometer label for region
     // this.log.debug('region '+this.regions[this.getRegion()].unit);
     // this.speedometerLabel.html(this.regions[this.getRegion()].unit);
-
   },
 
 
@@ -795,15 +779,14 @@ CustomApplicationsHandler.register("app.multidash", new CustomApplication({
    */
 
   updateSection: function(sectionIndex, value) {
-
     // just in case, let's do some sanity check
     if (sectionIndex < 0 || sectionIndex >= this.sections.length) return false;
 
-    var section = this.sections[sectionIndex],
-      name = section.name,
-      curRegion = this.regions[this.getRegion()],
-      refreshOnly = (value === undefined),
-      displayVal;
+    const section = this.sections[sectionIndex];
+    const name = section.name;
+    const curRegion = this.regions[this.getRegion()];
+    const refreshOnly = (value === undefined);
+    let displayVal;
 
 
     if (value === undefined) {
@@ -935,7 +918,6 @@ CustomApplicationsHandler.register("app.multidash", new CustomApplication({
         break;
     }
   },
-
 
 
 })); /** EOF **/

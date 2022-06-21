@@ -1,6 +1,6 @@
 /* jshint esversion:6, -W117, -W116 */
 const xml2js = require('xml2js');
-// var settingsData = new Config({ 'name': 'msgSettings' })
+// let settingsData = new Config({ 'name': 'msgSettings' })
 let data2edit; const msgLangs = [];
 let currLangMsgs = [];
 let currMsgLang;

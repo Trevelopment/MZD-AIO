@@ -22,7 +22,8 @@
         "new-cap": "off",
         "arrow-parens": "off",
         "camelcase": "off",
-        "guard-for-in": "off"
+        "guard-for-in": "off",
+        "prefer-rest-params": "off"
         // "max-len": [2, 140, 2]
     }
 }

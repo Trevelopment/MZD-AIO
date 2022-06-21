@@ -61,7 +61,7 @@ ipc.on('printer-list', (event, printers) => {
 
   // Add buttons handlers
   const printTXTTestButtons = printerList.getElementsByClassName('printTXTTest');
-  for (var i = 0; i < printTXTTestButtons.length; i++) {
+  for (let i = 0; i < printTXTTestButtons.length; i++) {
     printTXTTestButtons[i].addEventListener('click', (event) => {
       const device = event.target.getAttribute('data-printer') || null;
       if (device) {

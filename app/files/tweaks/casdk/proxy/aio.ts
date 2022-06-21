@@ -1,6 +1,6 @@
 // aio.js - global helper functions for aio apps (for use with CASDK)
-//console.log("initialize aioMagicRoute - aio.js");
-var aioContextCount = 1;
+// console.log("initialize aioMagicRoute - aio.js");
+let aioContextCount = 1;
 
 // The magic router from Debug.js - Fakes a context change message
 // Switch to any context from any other context
@@ -9,17 +9,17 @@ var aioContextCount = 1;
 // Will flash the speedometer for only a second then switch back.
 // ** Needs further investigation **
 function aioMagicRoute(uiaId, ctxtId, params, contextSeq) {
-  var currAppId = framework.getCurrentApp();
-  var transitionTrue = JSON.stringify({ 'msgType': 'transition', 'enabled': true });
-  var transitionFalse = JSON.stringify({ 'msgType': 'transition', 'enabled': false });
+  const currAppId = framework.getCurrentApp();
+  const transitionTrue = JSON.stringify({'msgType': 'transition', 'enabled': true});
+  const transitionFalse = JSON.stringify({'msgType': 'transition', 'enabled': false});
 
   if (!contextSeq) {
     contextSeq = aioContextCount;
     aioContextCount++;
   }
 
-  var ctxtChgMsg = JSON.stringify({ "msgType": "ctxtChg", "ctxtId": ctxtId, "uiaId": uiaId, "params": params, "contextSeq": contextSeq });
-  var focusStackMsg = JSON.stringify({ "msgType": "focusStack", "appIdList": [{ "id": uiaId }, { "id": currAppId }] });
+  const ctxtChgMsg = JSON.stringify({'msgType': 'ctxtChg', 'ctxtId': ctxtId, 'uiaId': uiaId, 'params': params, 'contextSeq': contextSeq});
+  const focusStackMsg = JSON.stringify({'msgType': 'focusStack', 'appIdList': [{'id': uiaId}, {'id': currAppId}]});
 
   aioMagicMsg(transitionTrue, ctxtChgMsg, focusStackMsg, transitionFalse);
 }
@@ -27,37 +27,37 @@ function aioMagicRoute(uiaId, ctxtId, params, contextSeq) {
 // NOTE: this does not always work in the car system
 function aioMagicMsg(data) {
   if (arguments.length > 1) {
-    //is the data a list of objects?
-    for (var i = 0; i < arguments.length; i++) {
-      log.debug("aioMagicMsg arguments passed as: ", arguments[i]);
+    // is the data a list of objects?
+    for (let i = 0; i < arguments.length; i++) {
+      log.debug('aioMagicMsg arguments passed as: ', arguments[i]);
       framework.routeMmuiMsg(JSON.parse(arguments[i]));
     }
     return;
   }
 
   if (Object.prototype.toString.call(data) == '[object Array]') {
-    //is the data an array?
-    for (var j = 0; j < data.length; j++) {
+    // is the data an array?
+    for (let j = 0; j < data.length; j++) {
       framework.routeMmuiMsg(JSON.parse(data[j]));
     }
     return;
   }
-  //otherwise we have 1 object to send
+  // otherwise we have 1 object to send
   framework.routeMmuiMsg(JSON.parse(data));
 }
 // StatusBar Notifications
 function AIO_SBN(message, pathToIcon) {
-  framework.common.startTimedSbn(framework.getCurrentApp(), "MzdAioSbn", "typeE", {
-    sbnStyle: "Style02",
+  framework.common.startTimedSbn(framework.getCurrentApp(), 'MzdAioSbn', 'typeE', {
+    sbnStyle: 'Style02',
     imagePath1: pathToIcon,
-    text1: message
+    text1: message,
   });
 }
 // Turns a DOM element into JSON for saving
 function DOMtoJSON(node) {
   node = node || this;
-  var obj = {
-    nodeType: node.nodeType
+  const obj = {
+    nodeType: node.nodeType,
   };
   if (node.tagName) {
     obj.tagName = node.tagName.toLowerCase();
@@ -68,20 +68,20 @@ function DOMtoJSON(node) {
   if (node.nodeValue) {
     obj.nodeValue = node.nodeValue;
   }
-  var attrs = node.attributes;
+  const attrs = node.attributes;
   if (attrs) {
-    var length = attrs.length;
-    var arr = obj.attributes = new Array(length);
-    for (var i = 0; i < length; i++) {
-      var attr = attrs[i];
+    const length = attrs.length;
+    const arr = obj.attributes = new Array(length);
+    for (let i = 0; i < length; i++) {
+      const attr = attrs[i];
       arr[i] = [attr.nodeName, attr.nodeValue];
     }
   }
-  var childNodes = node.childNodes;
+  const childNodes = node.childNodes;
   if (childNodes) {
-    var lengthc = childNodes.length;
-    var arrc = obj.childNodes = new Array(lengthc);
-    for (var j = 0; j < lengthc; j++) {
+    const lengthc = childNodes.length;
+    const arrc = obj.childNodes = new Array(lengthc);
+    for (let j = 0; j < lengthc; j++) {
       arrc[j] = DOMtoJSON(childNodes[j]);
     }
   }
@@ -92,36 +92,36 @@ function JSONtoDOM(obj) {
   if (typeof obj === 'string') {
     obj = JSON.parse(obj);
   }
-  var node, nodeType = obj.nodeType;
+  let node; const nodeType = obj.nodeType;
   switch (nodeType) {
-    case 1: //ELEMENT_NODE
+    case 1: // ELEMENT_NODE
       node = document.createElement(obj.tagName);
-      var attributes = obj.attributes || [];
-      for (var i = 0, len = attributes.length; i < len; i++) {
-        var attr = attributes[i];
+      const attributes = obj.attributes || [];
+      for (let i = 0, len = attributes.length; i < len; i++) {
+        const attr = attributes[i];
         node.setAttribute(attr[0], attr[1]);
       }
       break;
-    case 3: //TEXT_NODE
+    case 3: // TEXT_NODE
       node = document.createTextNode(obj.nodeValue);
       break;
-    case 8: //COMMENT_NODE
+    case 8: // COMMENT_NODE
       node = document.createComment(obj.nodeValue);
       break;
-    case 9: //DOCUMENT_NODE
+    case 9: // DOCUMENT_NODE
       node = document.implementation.createDocument();
       break;
-    case 10: //DOCUMENT_TYPE_NODE
+    case 10: // DOCUMENT_TYPE_NODE
       node = document.implementation.createDocumentType(obj.nodeName);
       break;
-    case 11: //DOCUMENT_FRAGMENT_NODE
+    case 11: // DOCUMENT_FRAGMENT_NODE
       node = document.createDocumentFragment();
       break;
     default:
       return node;
   }
   if (nodeType === 1 || nodeType === 11) {
-    var childNodes = obj.childNodes || [];
+    const childNodes = obj.childNodes || [];
     for (i = 0, len = childNodes.length; i < len; i++) {
       node.appendChild(JSONtoDOM(childNodes[i]));
     }
@@ -130,7 +130,7 @@ function JSONtoDOM(obj) {
 }
 
 /* Attempt to unmount swapfile on shutdown */
-var UMswap = null;
+let UMswap = null;
 
 function swapfileShutdownUnmount() {
   console.log('swapfileShutdownUnmount');
@@ -140,5 +140,5 @@ function swapfileShutdownUnmount() {
       UMswap = null;
       unmountSwap();
     }
-  }, 1000)
+  }, 1000);
 }

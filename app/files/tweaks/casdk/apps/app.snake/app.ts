@@ -32,7 +32,7 @@
  */
 
 
-CustomApplicationsHandler.register("app.snake", new CustomApplication({
+CustomApplicationsHandler.register('app.snake', new CustomApplication({
 
   /**
    * (require)
@@ -125,7 +125,7 @@ CustomApplicationsHandler.register("app.snake", new CustomApplication({
   },
 
 
-  /***
+  /** *
    *** User Interface Life Cycles
    ***/
 
@@ -142,16 +142,15 @@ CustomApplicationsHandler.register("app.snake", new CustomApplication({
     this.speedRestrict = true;
 
     // score for this drive
-    this.__highscore = 0; //this.get("highscore");
+    this.__highscore = 0; // this.get("highscore");
 
     // init Snake
     this.initializeGameBoard();
 
     // vehicle speed
     this.subscribe(VehicleData.vehicle.speed, function(value) {
-
       if (this.speedRestrict && value > 15) {
-        this.gamelabel.html("Driving").fadeIn();
+        this.gamelabel.html('Driving').fadeIn();
         this.snake.pause();
       } else {
         this.gamelabel.fadeOut();
@@ -165,7 +164,6 @@ CustomApplicationsHandler.register("app.snake", new CustomApplication({
    */
 
   focused: function() {
-
     this.snake.start();
   },
 
@@ -174,12 +172,10 @@ CustomApplicationsHandler.register("app.snake", new CustomApplication({
    */
 
   lost: function() {
-
     this.snake.pause();
-
   },
 
-  /***
+  /** *
    *** Events
    ***/
 
@@ -190,38 +186,35 @@ CustomApplicationsHandler.register("app.snake", new CustomApplication({
    */
 
   onControllerEvent: function(eventId) {
-
     this.snake.handle(eventId);
-
   },
 
 
-  /***
+  /** *
    *** Applicaton specific methods
    ***/
 
   initializeGameBoard: function() {
-    this.gameBoard = $("<canvas/>").addClass("gameBoard").appendTo(this.canvas);
-    $("<label/>").addClass("score").append("This Drive").appendTo(this.canvas);
-    this.score = $("<span/>").addClass("score").append("0").appendTo(this.canvas);
-    $("<label/>").addClass("highScore").append("High Score").appendTo(this.canvas);
-    this.highScore = $("<span/>").addClass("highScore").append(this.__highscore || '0').appendTo(this.canvas);
-    this.gamelabel = $("<label/>").addClass("gamelabel").append("GAME OVER").appendTo(this.canvas);
+    this.gameBoard = $('<canvas/>').addClass('gameBoard').appendTo(this.canvas);
+    $('<label/>').addClass('score').append('This Drive').appendTo(this.canvas);
+    this.score = $('<span/>').addClass('score').append('0').appendTo(this.canvas);
+    $('<label/>').addClass('highScore').append('High Score').appendTo(this.canvas);
+    this.highScore = $('<span/>').addClass('highScore').append(this.__highscore || '0').appendTo(this.canvas);
+    this.gamelabel = $('<label/>').addClass('gamelabel').append('GAME OVER').appendTo(this.canvas);
     this.highScore.html(this.__highscore);
     this.snake = new snakeboard(this.gameBoard.get(0), function(_score) {
       this.score.html(_score);
 
       if (_score > this.__highscore) {
-
         this.__highscore = _score;
 
         this.highScore.html(_score);
 
-        //this.set("highscore", _score);
+        // this.set("highscore", _score);
       }
     }.bind(this));
     this.score.on('click', function() {
-      this.gamelabel.html("Speed Restriction " + (this.speedRestrict ? "Disabled" : "Enabled")).fadeIn(100).delay(1000).fadeOut(1000);
+      this.gamelabel.html('Speed Restriction ' + (this.speedRestrict ? 'Disabled' : 'Enabled')).fadeIn(100).delay(1000).fadeOut(1000);
       return this.speedRestrict = !this.speedRestrict;
     }.bind(this));
   },

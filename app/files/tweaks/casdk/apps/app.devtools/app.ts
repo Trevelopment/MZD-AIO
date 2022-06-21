@@ -32,7 +32,7 @@
  */
 
 
-CustomApplicationsHandler.register("app.devtools", new CustomApplication({
+CustomApplicationsHandler.register('app.devtools', new CustomApplication({
 
   /**
    * (require)
@@ -125,7 +125,7 @@ CustomApplicationsHandler.register("app.devtools", new CustomApplication({
   },
 
 
-  /***
+  /** *
    *** User Interface Life Cycles
    ***/
 
@@ -138,16 +138,15 @@ CustomApplicationsHandler.register("app.devtools", new CustomApplication({
    */
 
   created: function() {
-
     // create log buffer
     this.localLogBuffer = {
       INFO: [],
       DEBUG: [],
-      ERROR: []
+      ERROR: [],
     };
 
     // set local ref
-    var that = this;
+    const that = this;
 
     // create global logger
     window.DevLogger = {
@@ -168,14 +167,14 @@ CustomApplicationsHandler.register("app.devtools", new CustomApplication({
 
       log: function(level, id, message, color) {
         that.receiveLog(level, id, message, color);
-      }
+      },
     };
 
     /**
      * Global Error
      */
     window.error = function(message, url, line) {
-      DevLogger.log("ERROR", DevLogger.defaultId + ":" + url.replace(/^.*[\\\/]/, '') + ":" + line, message);
+      DevLogger.log('ERROR', DevLogger.defaultId + ':' + url.replace(/^.*[\\\/]/, '') + ':' + line, message);
     };
 
     // create interface
@@ -183,12 +182,11 @@ CustomApplicationsHandler.register("app.devtools", new CustomApplication({
   },
 
   focused: function() {
-
     console.log(JSON.stringify(framework._sharedDataAttributes));
   },
 
 
-  /***
+  /** *
    *** Events
    ***/
 
@@ -199,18 +197,16 @@ CustomApplicationsHandler.register("app.devtools", new CustomApplication({
    */
 
   onControllerEvent: function(eventId) {
-
-    var itemHeight = this.canvas.find(".panel.active div").outerHeight(true) * 2;
+    const itemHeight = this.canvas.find('.panel.active div').outerHeight(true) * 2;
 
     switch (eventId) {
-
       /**
        * Scroll Down
        */
 
-      case "cw":
+      case 'cw':
 
-        this.scrollElement(this.canvas.find(".panel.active"), itemHeight);
+        this.scrollElement(this.canvas.find('.panel.active'), itemHeight);
 
         break;
 
@@ -218,14 +214,12 @@ CustomApplicationsHandler.register("app.devtools", new CustomApplication({
          * Scroll Up
          */
 
-      case "ccw":
+      case 'ccw':
 
-        this.scrollElement(this.canvas.find(".panel.active"), -1 * itemHeight);
+        this.scrollElement(this.canvas.find('.panel.active'), -1 * itemHeight);
 
         break;
-
     }
-
   },
 
   /**
@@ -235,27 +229,25 @@ CustomApplicationsHandler.register("app.devtools", new CustomApplication({
    */
 
   onContextEvent: function(eventId, context, element) {
-
     // remember the scrolling position
-    var active = this.canvas.find(".panel.active");
+    let active = this.canvas.find('.panel.active');
     if (active.length) {
-      this.panelScrollPositions[active.attr("index")] = active.scrollTop();
+      this.panelScrollPositions[active.attr('index')] = active.scrollTop();
     }
 
     // show new panel
-    var active = this.showPanel(element.attr("index"));
+    let active = this.showPanel(element.attr('index'));
 
     // set position
-    var scrollTop = active.get(0).scrollHeight;
-    if (this.panelScrollPositions[element.attr("index")]) {
-      scrollTop = this.panelScrollPositions[element.attr("index")];
+    let scrollTop = active.get(0).scrollHeight;
+    if (this.panelScrollPositions[element.attr('index')]) {
+      scrollTop = this.panelScrollPositions[element.attr('index')];
     }
     active.scrollTop(scrollTop);
   },
 
 
-
-  /***
+  /** *
    *** Applicaton specific methods
    ***/
 
@@ -266,46 +258,42 @@ CustomApplicationsHandler.register("app.devtools", new CustomApplication({
    */
 
   createInterface: function() {
-
-    this.menu = $("<div/>").addClass("tabs").appendTo(this.canvas);
+    this.menu = $('<div/>').addClass('tabs').appendTo(this.canvas);
 
     // create tabs
     this.panelScrollPositions = [];
     this.panelData = [
-        { name: 'Info', target: 'output', level: 'INFO' },
-        { name: 'Error', target: 'output', level: 'ERROR' },
-        { name: 'Debug', target: 'output', level: 'DEBUG' },
-        { name: 'Storages', storage: true },
-      ],
-      this.panels = [];
+      {name: 'Info', target: 'output', level: 'INFO'},
+      {name: 'Error', target: 'output', level: 'ERROR'},
+      {name: 'Debug', target: 'output', level: 'DEBUG'},
+      {name: 'Storages', storage: true},
+    ],
+    this.panels = [];
 
     this.panelData.forEach(function(panel, index) {
-
       // add to menu
-      this.menu.append(this.addContext($("<span/>").attr({ index: index }).addClass("tab").append(panel.name)));
+      this.menu.append(this.addContext($('<span/>').attr({index: index}).addClass('tab').append(panel.name)));
 
       // add divider
-      this.menu.append($("<span/>").addClass("divider"));
+      this.menu.append($('<span/>').addClass('divider'));
 
       // add positions
       this.panelScrollPositions.push(0);
 
       // create panel
-      this.panels.push($("<div/>").addClass("panel").addClass(panel.target).attr({
+      this.panels.push($('<div/>').addClass('panel').addClass(panel.target).attr({
         index: index,
         level: panel.level,
       }).appendTo(this.canvas));
-
-
     }.bind(this));
 
     // calculate size
-    var tabWidth = Math.round((800 - this.panelData.length) / this.panelData.length);
+    const tabWidth = Math.round((800 - this.panelData.length) / this.panelData.length);
 
-    this.menu.find("span.tab").css("width", tabWidth);
+    this.menu.find('span.tab').css('width', tabWidth);
 
     // remove last divider
-    this.menu.find("span.divider:last-of-type").remove();
+    this.menu.find('span.divider:last-of-type').remove();
   },
 
   /**
@@ -313,10 +301,9 @@ CustomApplicationsHandler.register("app.devtools", new CustomApplication({
    */
 
   showPanel: function(index) {
+    this.canvas.find('.panel').removeClass('active').hide();
 
-    this.canvas.find(".panel").removeClass("active").hide();
-
-    return this.canvas.find(".panel[index=" + index + "]").addClass("active").show();
+    return this.canvas.find('.panel[index=' + index + ']').addClass('active').show();
   },
 
 
@@ -327,28 +314,27 @@ CustomApplicationsHandler.register("app.devtools", new CustomApplication({
    */
 
   receiveLog: function(level, id, message, color) {
-
     // prevent own app
     if (id == this.getId()) return false;
 
     // go ahead
-    var item = $("<div/>").attr("level", level);
+    const item = $('<div/>').attr('level', level);
 
-    var d = new Date(),
-      h = Math.abs(d.getHours()),
-      m = Math.abs(d.getMinutes()),
-      s = Math.abs(d.getSeconds());
+    const d = new Date();
+    const h = Math.abs(d.getHours());
+    const m = Math.abs(d.getMinutes());
+    const s = Math.abs(d.getSeconds());
 
-    item.append($("<span/>").append(
-      (h > 9 ? "" : "0") + h,
-      ':',
-      (m > 9 ? "" : "0") + m,
-      ':',
-      (s > 9 ? "" : "0") + s
+    item.append($('<span/>').append(
+        (h > 9 ? '' : '0') + h,
+        ':',
+        (m > 9 ? '' : '0') + m,
+        ':',
+        (s > 9 ? '' : '0') + s,
     ));
-    item.append($("<span/>").addClass(level).append(level));
-    item.append($("<span/>").append(id));
-    item.append($("<span/>").append(message));
+    item.append($('<span/>').addClass(level).append(level));
+    item.append($('<span/>').append(id));
+    item.append($('<span/>').append(message));
 
     // add to output
     this.localLogBuffer[level].push(item);
@@ -358,10 +344,8 @@ CustomApplicationsHandler.register("app.devtools", new CustomApplication({
     }
 
     // update
-    this.canvas.find(".panel[level=" + level + "]").empty().append(this.localLogBuffer[level]);
-
+    this.canvas.find('.panel[level=' + level + ']').empty().append(this.localLogBuffer[level]);
   },
-
 
 
 }));

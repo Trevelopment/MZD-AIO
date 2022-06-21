@@ -98,7 +98,7 @@ ipc.on('snackbar-msg', (event, message) => {
 
 function snackbar(message, mtime) {
   /* $('#snackbar').append('body')
-  var x = document.getElementById('snackbar')
+  let x = document.getElementById('snackbar')
   x.innerHTML = message
   x.className = 'show w3-card-12'
   setTimeout(function () { x.className = x.className.replace('show', '') }, 1500) */
@@ -111,7 +111,7 @@ function snackbar(message, mtime) {
 
 function snackbarstay(message) {
   // $('#snackbar').append('body')
-  // var x = document.getElementById('snackbar')
+  // let x = document.getElementById('snackbar')
   // x.innerHTML = message + '<div onclick="$(this).parent().removeClass(\'stay\')" class="w3-xxlarge w3-display-topright w3-close-btn w3-hover-text-red" style="margin-top:-15px;cursor:pointer;">&times;</div>'
   // x.className = 'stay w3-card-12'
   $.gritter.add({

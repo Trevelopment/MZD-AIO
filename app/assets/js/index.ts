@@ -53,8 +53,8 @@ process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = 'true';
 let helpClick = false;
 const updateVer = 286;
 // require('./lib/log')('MZD-AIO-LOG')
-// var output = process.stdout
-// var errorOutput = process.stderr
+// let output = process.stdout
+// let errorOutput = process.stderr
 /* TODO: REMOVE LOGS */
 /* console.debug("colorfiles: "+hasColorFiles)
 console.debug("speedcamfiles: "+hasSpeedCamFiles) */
@@ -81,7 +81,7 @@ const langObjs = require(langPath);
 const langDef = require(langDefault);
 export const langObj = _.merge(langDef, langObjs);
 /* IDEA FOR AIO BG PICKER
-var bg-images = []
+let bg-images = []
 fs.readdir('./background-images/', (err, files) => {
 files.forEach(file => {
 console.debug(file)
@@ -89,7 +89,7 @@ bg-images.push('<img src="file">')
 })
 })
 const testFolder = './background-images/'
-var bgpics = []
+let bgpics = []
 fs.readdir(testFolder, (err, files) => {
   files.forEach(file => {
     bgpics.push('<img src="'+file+'" alt="" >')
@@ -123,7 +123,7 @@ function startTime() {
   const today = new Date();
   const h = today.getHours();
   let m = today.getMinutes();
-  // var s = today.getSeconds()
+  // let s = today.getSeconds()
   m = checkTime(m);
   // s = checkTime(s)
   $('#clock').html(`${h}:${m}`);
@@ -174,7 +174,7 @@ function myStance() {
 
 function announcement() {
   if (persistantData.get('visits', 0) % 20 === 0) {
-	  showAnnouncement();
+    showAnnouncement();
   }
 }
 

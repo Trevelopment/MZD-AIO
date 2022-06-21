@@ -10,7 +10,7 @@
 /**
  * Custom Application
  */
-CustomApplicationsHandler.register("app.background", new CustomApplication({
+CustomApplicationsHandler.register('app.background', new CustomApplication({
   /**
    * (require)
    *
@@ -22,7 +22,7 @@ CustomApplicationsHandler.register("app.background", new CustomApplication({
     /**
      * (js) defines javascript includes
      */
-    js: ["background/list.ts"],
+    js: ['background/list.ts'],
     /**
      * (css) defines css includes
      */
@@ -78,7 +78,7 @@ CustomApplicationsHandler.register("app.background", new CustomApplication({
      */
     hasRightArc: false,
   },
-  /***
+  /** *
    *** Application Life Cycles
    ***/
   /**
@@ -98,25 +98,25 @@ CustomApplicationsHandler.register("app.background", new CustomApplication({
     this.max = 0;
     this.position = 0;
     this.oldselect = 0;
-    this.image_slider = this.element("dv", false, "panel", {
+    this.image_slider = this.element('dv', false, 'panel', {
       position: 'absolute',
       left: '0px',
-      top: '0px'
-    }, "");
+      top: '0px',
+    }, '');
     this.table = [];
-    for (var i = 0; i <= backgroundlist.length; i++) {
-      var elem = $("<image src='" + (i ? this.location + "icons/" + backgroundlist[i - 1] : framework.common._defaultBgPath) + "' width='225' height='135' onerror='$(this).hide()' />");
+    for (let i = 0; i <= backgroundlist.length; i++) {
+      const elem = $('<image src=\'' + (i ? this.location + 'icons/' + backgroundlist[i - 1] : framework.common._defaultBgPath) + '\' width=\'225\' height=\'135\' onerror=\'$(this).hide()\' />');
       this.image_slider.append(elem);
-      this.table.push({ elem: elem, link: i ? this.location + "background/" + backgroundlist[i - 1] : framework.common._defaultBgPath });
+      this.table.push({elem: elem, link: i ? this.location + 'background/' + backgroundlist[i - 1] : framework.common._defaultBgPath});
     }
     this.max = backgroundlist.length;
     this.updatepos();
     if (localStorage.background !== undefined) {
-      // var bg = $('#CommonBgImg1').css('background-image').replace('url("', '').replace('")', '');
-      var bg = localStorage.background;
+      // let bg = $('#CommonBgImg1').css('background-image').replace('url("', '').replace('")', '');
+      const bg = localStorage.background;
       if (bg.slice(-framework.common._defaultBgPath.length) !== framework.common._defaultBgPath) {
-        $('#CommonBgImg1').css('background-image', "url('" + localStorage.background + "')");
-        $("body").addClass("stopSlider");
+        $('#CommonBgImg1').css('background-image', 'url(\'' + localStorage.background + '\')');
+        $('body').addClass('stopSlider');
         framework.common._defaultBgPath = localStorage.background;
       }
     }
@@ -125,19 +125,19 @@ CustomApplicationsHandler.register("app.background", new CustomApplication({
     this.table[this.oldselect].elem.removeClass('selectimage');
     this.oldselect = this.select;
     this.table[this.select].elem.addClass('selectimage');
-    var min = this.table[this.select].elem.offset().top - this.image_slider.offset().top;
-    var max = min + this.table[this.select].elem.height();
-    var minvisible = this.position;
-    var maxvisible = minvisible + 410;
+    const min = this.table[this.select].elem.offset().top - this.image_slider.offset().top;
+    const max = min + this.table[this.select].elem.height();
+    const minvisible = this.position;
+    const maxvisible = minvisible + 410;
     if (min < minvisible) {
       this.position = min;
-      console.log("lower");
+      console.log('lower');
     }
     if (max > maxvisible) {
       this.position = max - 410;
-      console.log("high");
+      console.log('high');
     }
-    this.image_slider.get(0).style.top = -this.position + "px";
+    this.image_slider.get(0).style.top = -this.position + 'px';
   },
   /**
    * (focused)
@@ -184,7 +184,7 @@ CustomApplicationsHandler.register("app.background", new CustomApplication({
    */
   terminated: function() {
   },
-  /***
+  /** *
    *** Application Events
    ***/
   /**
@@ -272,13 +272,13 @@ CustomApplicationsHandler.register("app.background", new CustomApplication({
          * MultiController's center was pushed down
          */
       case this.SELECT:
-        // var newbg = (this.select ? this.table[this.select].link : "common/images/background.png");
-        var newbg = this.table[this.select].link;
-        $('#CommonBgImg1').css('background', "url('" + newbg + "')");
+        // let newbg = (this.select ? this.table[this.select].link : "common/images/background.png");
+        const newbg = this.table[this.select].link;
+        $('#CommonBgImg1').css('background', 'url(\'' + newbg + '\')');
         framework.common._defaultBgPath = newbg;
-        localStorage.setItem("background", newbg);
+        localStorage.setItem('background', newbg);
         this.select ? $('body').addClass('stopSlider') : $('body').removeClass('stopSlider');
-        framework.sendEventToMmui("common", "Global.GoBack");
+        framework.sendEventToMmui('common', 'Global.GoBack');
         break;
         /*
          * MultiController hot key "back" was pushed

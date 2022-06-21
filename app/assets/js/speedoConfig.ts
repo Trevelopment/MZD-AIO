@@ -195,7 +195,7 @@ document.getElementById('submit').addEventListener('click', function() {
   });
 });
 document.getElementById('import').addEventListener('click', function() {
-  // var jsonData
+  // let jsonData
   dialog.showOpenDialog({
     title: `MZD-AIO-TI | ${langObj.translatorWindow[11].label}.`,
     properties: ['openFile'],

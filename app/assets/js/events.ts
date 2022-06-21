@@ -157,7 +157,7 @@ $(function(){
 /* Drag & Drop Functionality * /
 const holder = document.getElementById('dropimg')
 //const qholder = $('#dropimg > .w3-center')
-var backgrounds = []
+let backgrounds = []
 holder.ondragover = (e) => {
 holder.innerHTML = '<h1 style="color:red">DROP!</h1>' + e.dataTransfer.files.path
 return false

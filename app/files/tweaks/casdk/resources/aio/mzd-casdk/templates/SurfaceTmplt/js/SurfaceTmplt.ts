@@ -32,7 +32,7 @@
  */
 
 
-log.addSrcFile("SurfaceTmplt.js", "SurfaceTmpl");
+log.addSrcFile('SurfaceTmplt.js', 'SurfaceTmpl');
 
 /**
  * (Constructor)
@@ -45,18 +45,18 @@ function SurfaceTmplt(uiaId, parentDiv, templateID, controlProperties) {
   this.divElt = document.createElement('div');
   this.divElt.id = templateID;
 
-  this.templateName = "SurfaceTmplt";
+  this.templateName = 'SurfaceTmplt';
 
-  this.onScreenClass = "TestTemplateWithStatusLeft";
-  this.offScreenLeftClass = "TestTemplateWithStatusLeft-OffscreenLeft";
-  this.offScreenRightClass = "TestTemplateWithStatusLeft-OffscreenRight";
+  this.onScreenClass = 'TestTemplateWithStatusLeft';
+  this.offScreenLeftClass = 'TestTemplateWithStatusLeft-OffscreenLeft';
+  this.offScreenRightClass = 'TestTemplateWithStatusLeft-OffscreenRight';
 
-  this.slideOutLeftClass = "TemplateWithStatusLeft-SlideOutLeftClass";
-  this.slideInRightClass = "TemplateWithStatusLeft-SlideInRightClass";
-  this.slideInLeftClass = "TemplateWithStatusLeft-SlideInLeftClass";
-  this.slideOutRightClass = "TemplateWithStatusLeft-SlideOutRightClass";
+  this.slideOutLeftClass = 'TemplateWithStatusLeft-SlideOutLeftClass';
+  this.slideInRightClass = 'TemplateWithStatusLeft-SlideInRightClass';
+  this.slideInLeftClass = 'TemplateWithStatusLeft-SlideInLeftClass';
+  this.slideOutRightClass = 'TemplateWithStatusLeft-SlideOutRightClass';
 
-  log.debug("templateID in SurfaceTmplt constructor: " + templateID);
+  log.debug('templateID in SurfaceTmplt constructor: ' + templateID);
 
   // reset
   this.properties = {};
@@ -68,34 +68,32 @@ function SurfaceTmplt(uiaId, parentDiv, templateID, controlProperties) {
   this.application = CustomApplicationsHandler.getCurrentApplication(true);
 
   if (!this.application) {
-
     // todo: show a error message here that no active application launch was launched
 
     return false;
   }
 
-  //set the template properties
+  // set the template properties
   this.properties = {
-    "statusBarVisible": this.application.getStatusbar(),
-    "leftButtonVisible": this.application.getHasLeftButton(),
-    "rightChromeVisible": this.application.getHasRightArc(),
-    "hasActivePanel": false,
-    "isDialog": false
+    'statusBarVisible': this.application.getStatusbar(),
+    'leftButtonVisible': this.application.getHasLeftButton(),
+    'rightChromeVisible': this.application.getHasRightArc(),
+    'hasActivePanel': false,
+    'isDialog': false,
   };
 
   // set the correct template class
   switch (true) {
-
     case this.properties.leftButtonVisible:
-      this.divElt.className = "TemplateWithStatusLeft";
+      this.divElt.className = 'TemplateWithStatusLeft';
       break;
 
     case this.properties.statusBarVisible:
-      this.divElt.className = "TemplateWithStatus";
+      this.divElt.className = 'TemplateWithStatus';
       break;
 
     default:
-      this.divElt.className = "TemplateFull";
+      this.divElt.className = 'TemplateFull';
       break;
   }
 
@@ -107,20 +105,17 @@ function SurfaceTmplt(uiaId, parentDiv, templateID, controlProperties) {
 
   // set framework specifics
   setTimeout(function() {
-
     if (this.properties.statusBarVisible) {
-
       // execute statusbar handler
       framework.common.statusBar.setAppName(this.application.getStatusbarTitle());
 
       // execute custom icon
-      var icon = this.application.getStatusbarIcon();
+      const icon = this.application.getStatusbarIcon();
 
       if (icon) framework.common.statusBar.setDomainIcon(icon);
 
       // adjust home button
       framework.common.statusBar.showHomeBtn(this.application.getStatusbarHomeButton());
-
     }
   }.bind(this), 85);
 }
@@ -140,7 +135,7 @@ SurfaceTmplt.prototype.cleanUp = function() {
   this.application = null;
   $('#SbSpeedo').removeClass('stayHidden');
   $('#SbSpeedo, #Sbfuel-bar-wrapper').fadeIn();
-}
+};
 
 /**
  * MultiController
@@ -150,8 +145,8 @@ SurfaceTmplt.prototype.handleControllerEvent = function(eventID) {
   if (this.application) {
     this.application.__handleControllerEvent(eventID);
   }
-}
+};
 
 
 // Finalize
-framework.registerTmpltLoaded("SurfaceTmplt");
+framework.registerTmpltLoaded('SurfaceTmplt');

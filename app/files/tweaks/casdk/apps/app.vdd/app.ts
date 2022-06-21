@@ -32,7 +32,7 @@
  */
 
 
-CustomApplicationsHandler.register("app.vdd", new CustomApplication({
+CustomApplicationsHandler.register('app.vdd', new CustomApplication({
 
   /**
    * (require)
@@ -129,29 +129,29 @@ CustomApplicationsHandler.register("app.vdd", new CustomApplication({
    */
 
   dataGroups: [{
-      name: 'Main',
-      items: [
-        { name: 'General', mapping: VehicleData.general },
-        { name: 'Vehicle Data', mapping: VehicleData.vehicle },
-        { name: 'Vehicle Fuel', mapping: VehicleData.fuel },
-        { name: 'Vehicle Temperatures', mapping: VehicleData.temperature },
-        { name: 'GPS', mapping: VehicleData.gps },
-      ]
-    },
-    { prefix: 'VDT', title: 'Vehicle Driving Data' },
-    { prefix: 'GPS', title: 'Global Positioning System' },
-    { prefix: 'PID', title: 'Vehicle Data PID' },
-    { prefix: 'VDTC', title: 'Vehicle Data Current' },
-    { prefix: 'VDM', title: 'ECO and Energy Management' },
-    { prefix: 'VDMH', title: 'ECO and Energy History' },
-    { prefix: 'VDS', title: 'Vehicle Settings' },
-    { prefix: 'IDM', title: 'Ignition Diagnostic Monitor' },
-    { prefix: 'IDMH', title: 'Ignition Diagnostic History' },
-    { prefix: 'VDTH', title: 'Vehicle Data Transfer History' }
+    name: 'Main',
+    items: [
+      {name: 'General', mapping: VehicleData.general},
+      {name: 'Vehicle Data', mapping: VehicleData.vehicle},
+      {name: 'Vehicle Fuel', mapping: VehicleData.fuel},
+      {name: 'Vehicle Temperatures', mapping: VehicleData.temperature},
+      {name: 'GPS', mapping: VehicleData.gps},
+    ],
+  },
+  {prefix: 'VDT', title: 'Vehicle Driving Data'},
+  {prefix: 'GPS', title: 'Global Positioning System'},
+  {prefix: 'PID', title: 'Vehicle Data PID'},
+  {prefix: 'VDTC', title: 'Vehicle Data Current'},
+  {prefix: 'VDM', title: 'ECO and Energy Management'},
+  {prefix: 'VDMH', title: 'ECO and Energy History'},
+  {prefix: 'VDS', title: 'Vehicle Settings'},
+  {prefix: 'IDM', title: 'Ignition Diagnostic Monitor'},
+  {prefix: 'IDMH', title: 'Ignition Diagnostic History'},
+  {prefix: 'VDTH', title: 'Vehicle Data Transfer History'},
   ],
 
 
-  /***
+  /** *
    *** User Interface Life Cycles
    ***/
 
@@ -164,9 +164,7 @@ CustomApplicationsHandler.register("app.vdd", new CustomApplication({
    */
 
   created: function() {
-
     this.createInterface();
-
   },
 
   /**
@@ -175,10 +173,10 @@ CustomApplicationsHandler.register("app.vdd", new CustomApplication({
 
   focused: function() {
 
-    //this.update();
+    // this.update();
   },
 
-  /***
+  /** *
    *** Events
    ***/
 
@@ -189,18 +187,16 @@ CustomApplicationsHandler.register("app.vdd", new CustomApplication({
    */
 
   onControllerEvent: function(eventId) {
-
-    var itemHeight = this.canvas.find(".panel div.item").outerHeight(true) * 2;
+    const itemHeight = this.canvas.find('.panel div.item').outerHeight(true) * 2;
 
     switch (eventId) {
-
       /**
        * Scroll Down
        */
 
-      case "cw":
+      case 'cw':
 
-        this.scrollElement(this.canvas.find(".panel"), itemHeight);
+        this.scrollElement(this.canvas.find('.panel'), itemHeight);
 
         break;
 
@@ -208,25 +204,23 @@ CustomApplicationsHandler.register("app.vdd", new CustomApplication({
          * Scroll Up
          */
 
-      case "ccw":
+      case 'ccw':
 
-        this.scrollElement(this.canvas.find(".panel"), -1 * itemHeight);
-
-        break;
-
-      case "up":
-
-        this.scrollElement(this.canvas.find(".panel"), -1 * $('.panel').height());
-
-        break;
-      case "down":
-
-        this.scrollElement(this.canvas.find(".panel"), $('.panel').height());
+        this.scrollElement(this.canvas.find('.panel'), -1 * itemHeight);
 
         break;
 
+      case 'up':
+
+        this.scrollElement(this.canvas.find('.panel'), -1 * $('.panel').height());
+
+        break;
+      case 'down':
+
+        this.scrollElement(this.canvas.find('.panel'), $('.panel').height());
+
+        break;
     }
-
   },
 
   /**
@@ -236,29 +230,28 @@ CustomApplicationsHandler.register("app.vdd", new CustomApplication({
    */
 
   onContextEvent: function(eventId, context, element) {
-
     // remember the scrolling position
-    var active = this.canvas.find(".panel.active");
+    let active = this.canvas.find('.panel.active');
     if (active.length) {
-      this.panelScrollPositions[active.attr("index")] = active.scrollTop();
+      this.panelScrollPositions[active.attr('index')] = active.scrollTop();
     }
 
     // continue
-    this.canvas.find(".panel").removeClass("active").hide();
+    this.canvas.find('.panel').removeClass('active').hide();
 
-    var active = this.canvas.find(".panel[name=" + element.attr("name") + "]").addClass("active").show();
+    let active = this.canvas.find('.panel[name=' + element.attr('name') + ']').addClass('active').show();
 
     // create items
-    this.createPanel(element.attr("index"));
+    this.createPanel(element.attr('index'));
 
     // set position
-    if (this.panelScrollPositions[active.attr("index")]) {
-      active.scrollTop(this.panelScrollPositions[active.attr("index")]);
+    if (this.panelScrollPositions[active.attr('index')]) {
+      active.scrollTop(this.panelScrollPositions[active.attr('index')]);
     }
   },
 
 
-  /***
+  /** *
    *** Applicaton specific methods
    ***/
 
@@ -270,52 +263,47 @@ CustomApplicationsHandler.register("app.vdd", new CustomApplication({
 
   createInterface: function() {
     // create tabbed menu
-    this.menu = $("<div/>").addClass("tabs").appendTo(this.canvas);
+    this.menu = $('<div/>').addClass('tabs').appendTo(this.canvas);
 
     // create tabs
     this.panelData = [];
     this.panelScrollPositions = [];
     $.each(this.dataGroups, function(index, group) {
-
       // set enabled
-      var enabled = true;
+      let enabled = true;
 
       // get data table
       if (!group.items) {
-
-        var table = CustomApplicationDataHandler.getTableByPrefix(group.prefix);
+        const table = CustomApplicationDataHandler.getTableByPrefix(group.prefix);
 
         enabled = table && table.enabled || false;
       }
 
       // set group id
-      group.id = group.name || group.prefix
+      group.id = group.name || group.prefix;
 
       // add to menu if enabled
       if (enabled) {
         // add to menu
-        this.menu.append(this.addContext($("<span/>").attr({ name: group.id, index: this.panelData.length }).addClass("tab").append(group.name || group.prefix)));
+        this.menu.append(this.addContext($('<span/>').attr({name: group.id, index: this.panelData.length}).addClass('tab').append(group.name || group.prefix)));
 
         // add divider
-        this.menu.append($("<span/>").addClass("divider"));
+        this.menu.append($('<span/>').addClass('divider'));
 
         // add to panel
         this.panelData.push(group);
 
         this.panelScrollPositions.push(0);
-
       }
-
     }.bind(this));
 
     // calculate size
-    var tabWidth = Math.round((795 - this.panelData.length) / this.panelData.length);
+    const tabWidth = Math.round((795 - this.panelData.length) / this.panelData.length);
 
-    this.menu.find("span.tab").css("width", tabWidth);
+    this.menu.find('span.tab').css('width', tabWidth);
 
     // remove last divider
-    this.menu.find("span.divider:last-of-type").remove();
-
+    this.menu.find('span.divider:last-of-type').remove();
   },
 
 
@@ -324,50 +312,42 @@ CustomApplicationsHandler.register("app.vdd", new CustomApplication({
    */
 
   createPanel: function(index) {
-
-
     // create panels
     if (!this.panelData[index]) return;
 
     // flush
     this.removeSubscriptions();
 
-    this.canvas.find(".panel").remove();
+    this.canvas.find('.panel').remove();
 
     // create panel
-    var panelDom = $("<div/>").addClass("panel").appendTo(this.canvas),
-      panel = this.panelData[index];
+    const panelDom = $('<div/>').addClass('panel').appendTo(this.canvas);
+    const panel = this.panelData[index];
 
     // create items in panel
     switch (true) {
-
       case this.is.array(panel.items):
 
         // create sectionalized view
         panel.items.forEach(function(section) {
-
           // add header
-          panelDom.append($("<div/>").addClass("section").append(section.name));
+          panelDom.append($('<div/>').addClass('section').append(section.name));
 
           // add items
           this.createItems(panelDom, section);
-
         }.bind(this));
 
         break;
 
       default:
         // create description
-        panelDom.append($("<div/>").addClass("section").append(panel.title));
+        panelDom.append($('<div/>').addClass('section').append(panel.title));
 
         // create items
 
         this.createItems(panelDom, panel);
         break;
-
-
     }
-
   },
 
   /**
@@ -377,27 +357,22 @@ CustomApplicationsHandler.register("app.vdd", new CustomApplication({
    */
 
   createItems: function(panelDom, group) {
-
     // initialize
-    var values = [];
+    let values = [];
 
     // prepare mapping to value table
     if (group.mapping) {
-
       // get actual values
       $.each(group.mapping, function(id, params) {
-
         if (params.id) {
-          var tmp = CustomApplicationDataHandler.get(params.id);
+          const tmp = CustomApplicationDataHandler.get(params.id);
           if (tmp) {
             params.value = tmp.value;
             values.push($.extend(params, tmp));
           }
         }
       });
-
     } else {
-
       // build data array
       values = $.map(CustomApplicationDataHandler.data, function(value) {
         if (value.prefix == group.prefix) {
@@ -413,34 +388,31 @@ CustomApplicationsHandler.register("app.vdd", new CustomApplication({
 
     // get data handler
     values.forEach(function(value) {
-
       // check prefix
-      var item = $("<div/>").addClass("item").appendTo(panelDom);
+      const item = $('<div/>').addClass('item').appendTo(panelDom);
 
-      var typeLabel = value.type;
+      let typeLabel = value.type;
       switch (typeLabel) {
-        case "string":
-          typeLabel = "str";
+        case 'string':
+          typeLabel = 'str';
           break;
-        case "double":
-          typeLabel = "dbl";
+        case 'double':
+          typeLabel = 'dbl';
           break;
         default:
-          typeLabel = "int";
+          typeLabel = 'int';
           break;
       }
 
       // add fields
-      $("<span/>").append(value.prefix ? value.prefix : "DATA").addClass(value.prefix).appendTo(item);
-      $("<span/>").append(typeLabel).addClass(value.type).appendTo(item);
-      $("<span/>").append(value.friendlyName ? value.friendlyName : value.name).appendTo(item);
-      $("<span/>").attr("data", value.id).append(value.value).appendTo(item);
+      $('<span/>').append(value.prefix ? value.prefix : 'DATA').addClass(value.prefix).appendTo(item);
+      $('<span/>').append(typeLabel).addClass(value.type).appendTo(item);
+      $('<span/>').append(value.friendlyName ? value.friendlyName : value.name).appendTo(item);
+      $('<span/>').attr('data', value.id).append(value.value).appendTo(item);
 
       // create subscription
       this.subscribe(value.id, this.valueCallback.bind(this));
-
     }.bind(this));
-
   },
 
   /**
@@ -448,9 +420,7 @@ CustomApplicationsHandler.register("app.vdd", new CustomApplication({
    */
 
   valueCallback: function(value, payload) {
-
-    this.canvas.find("span[data=" + payload.id + "]").html(value);
-
+    this.canvas.find('span[data=' + payload.id + ']').html(value);
   },
 
 

@@ -128,14 +128,14 @@ spdCtrlOptions.push(`<option value="null">Disable</option>`);
 spdBarCtrlOptions.push(`<option value="null">Disable</option>`);
 
 // Build Option Lists
-for (var i in spdValues) {
+for (const i in spdValues) {
   spdSbOptions.push(`<option value="${spdValues[i].class}">${spdValues[i].label}</option>`);
 }
-for (var i in spdCtrlValues) {
+for (const i in spdCtrlValues) {
   spdCtrlOptions.push(`<option value="${spdCtrlValues[i].id}">${spdCtrlValues[i].classic}</option>`);
   spdBarCtrlOptions.push(`<option value="${spdCtrlValues[i].id}">${spdCtrlValues[i].bar}</option>`);
 }
-/* for (var key in spdExtraValues) {
+/* for (let key in spdExtraValues) {
   key = key.toString()
   if (!key.includes('bar') && !key.includes('ctrls')) {
     if (key.includes('fuelGauge')) {

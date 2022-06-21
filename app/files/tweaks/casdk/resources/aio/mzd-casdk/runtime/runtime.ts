@@ -28,11 +28,10 @@
  * This is the main mini framework file that contains everything to run the custom application environment
  */
 
-var CUSTOM_APPLICATION_VERSION = '0.0.5';
+const CUSTOM_APPLICATION_VERSION = '0.0.5';
 
 
-var CustomApplication = (function() {
-
+const CustomApplication = (function() {
   /**
    * The CustomApplication class is used as base class for all applications and defines the
    * life cycle events and handles all inbound and outbound communication between the custom
@@ -51,13 +50,11 @@ var CustomApplication = (function() {
    */
 
   function CustomApplication(application) {
-
     Object.keys(application).map(function(key) {
       if (!this[key]) {
         this[key] = application[key];
       }
     }.bind(this));
-
   }
 
   CustomApplication.prototype = /** @lends CustomApplication.prototype */ {
@@ -157,13 +154,12 @@ var CustomApplication = (function() {
      */
 
     __log: function() {
-
       this.log = {
 
         __logId: this.getId(),
 
         __toArray: function(args) {
-          var result = Array.apply(null, args);
+          const result = Array.apply(null, args);
 
           result.unshift(this.__logId);
 
@@ -184,7 +180,6 @@ var CustomApplication = (function() {
           CustomApplicationLog.error.apply(CustomApplicationLog, this.__toArray(arguments));
         },
       };
-
     },
 
     /**
@@ -197,8 +192,7 @@ var CustomApplication = (function() {
      */
 
     __initialize: function(next) {
-
-      var that = this;
+      const that = this;
 
       // assign version
       this.__version = CUSTOM_APPLICATION_VERSION;
@@ -224,9 +218,7 @@ var CustomApplication = (function() {
 
       // register application subscriptions
       this.subscribe(VehicleData.general.region, function(value, payload) {
-
         this.setRegion(value);
-
       }.bind(this), this.CHANGED);
 
       this.__region = CustomApplicationDataHandler.get(VehicleData.general.region, 'na').value;
@@ -236,7 +228,6 @@ var CustomApplication = (function() {
 
       // execute loader
       this.__load(function() {
-
         // finalize
         this.__loaded = true;
 
@@ -244,20 +235,18 @@ var CustomApplication = (function() {
         this.__getstorage();
 
         // create surface and set some basic properties
-        this.canvas = $("<div/>").addClass("CustomApplicationCanvas").attr("app", this.id);
+        this.canvas = $('<div/>').addClass('CustomApplicationCanvas').attr('app', this.id);
 
         // assign default event for context fields
-        this.canvas.on("click touchend", "[contextIndex]", function() {
-
-          that.__setCurrentContext($(this).attr("contextIndex"));
-
+        this.canvas.on('click touchend', '[contextIndex]', function() {
+          that.__setCurrentContext($(this).attr('contextIndex'));
         });
 
         // finalize and bootup
         this.__created = true;
 
         // execute life cycle
-        this.__lifecycle("created");
+        this.__lifecycle('created');
 
         // all done
         this.__initialized = true;
@@ -266,7 +255,6 @@ var CustomApplication = (function() {
         if (this.is.fn(next)) {
           next();
         }
-
       }.bind(this));
     },
 
@@ -281,24 +269,20 @@ var CustomApplication = (function() {
      */
 
     __load: function(next) {
+      let loaded = 0;
+      let toload = 0;
+      const isFinished = function(o) {
+        this.log.debug('Status update for loading resources', {loaded: loaded, toload: toload});
 
-      var loaded = 0,
-        toload = 0,
-        isFinished = function(o) {
+        const o = o === true || loaded == toload;
 
-          this.log.debug("Status update for loading resources", { loaded: loaded, toload: toload });
-
-          var o = o === true || loaded == toload;
-
-          if (o && this.is.fn(next)) {
-            next();
-          }
-
-        }.bind(this);
+        if (o && this.is.fn(next)) {
+          next();
+        }
+      }.bind(this);
 
       // loader
       if (this.is.object(this.require) && !this.__loaded) {
-
         // load javascripts
         if (this.require.js && !this.is.empty(this.require.js)) {
           toload++;
@@ -321,7 +305,6 @@ var CustomApplication = (function() {
         if (this.require.images && !this.is.empty(this.require.images)) {
           toload++;
           CustomApplicationResourceLoader.loadImages(this.require.images, this.location, function(loadedImages) {
-
             // assign images
             this.images = loadedImages;
 
@@ -334,7 +317,6 @@ var CustomApplication = (function() {
       }
 
       isFinished(true);
-
     },
 
 
@@ -348,13 +330,9 @@ var CustomApplication = (function() {
      */
 
     __wakeup: function(parent) {
-
       if (!this.__initialized) {
-
         return this.__initialize(function() {
-
           this.__wakeup(parent);
-
         }.bind(this));
       }
 
@@ -362,7 +340,7 @@ var CustomApplication = (function() {
       this.__getstorage();
 
       // execute life cycle
-      this.__lifecycle("focused");
+      this.__lifecycle('focused');
 
       // add to canvas
       this.canvas.appendTo(parent);
@@ -383,7 +361,6 @@ var CustomApplication = (function() {
      */
 
     __sleep: function() {
-
       // clear canvas
       if (this.canvas) {
         this.canvas.detach();
@@ -393,15 +370,13 @@ var CustomApplication = (function() {
       this.__setstorage();
 
       // execute life cycle
-      this.__lifecycle("lost");
+      this.__lifecycle('lost');
 
       // end life cycle if requested
-      if (this.getSetting("terminateOnLost") === true) {
-
+      if (this.getSetting('terminateOnLost') === true) {
         // that's it!
         this.__terminate();
       }
-
     },
 
     /**
@@ -413,8 +388,7 @@ var CustomApplication = (function() {
      */
 
     __terminate: function() {
-
-      this.__lifecycle("terminated");
+      this.__lifecycle('terminated');
 
       this.canvas.remove();
 
@@ -434,22 +408,18 @@ var CustomApplication = (function() {
      */
 
     __handleControllerEvent: function(eventId) {
-
       // log
-      this.log.info("Received Multicontroller Event", { eventId: eventId });
+      this.log.info('Received Multicontroller Event', {eventId: eventId});
 
       // process to context
       if (this.__processContext(eventId)) return true;
 
       // pass to application
       if (this.is.fn(this.onControllerEvent)) {
-
         try {
-
           this.onControllerEvent(eventId);
 
           return true;
-
         } catch (e) {
 
         }
@@ -468,37 +438,28 @@ var CustomApplication = (function() {
      */
 
     __lifecycle: function(cycle) {
-
       try {
-
-        this.log.info("Executing lifecycle", { lifecycle: cycle });
+        this.log.info('Executing lifecycle', {lifecycle: cycle});
 
         // process internals for this life cycle
         switch (cycle) {
-
           case this.FOCUSED:
 
             // feed initial value before focus
             $.each(this.__subscriptions, function(id, params) {
-
               // call with current value
               this.__notify(id, CustomApplicationDataHandler.get(id), true);
-
             }.bind(this));
 
             break;
-
         }
 
         // hand over
         if (this.is.fn(this[cycle])) {
           this[cycle]();
         }
-
-
       } catch (e) {
-        this.log.error("Error while executing lifecycle event", { lifecycle: cycle, error: e.message });
-
+        this.log.error('Error while executing lifecycle event', {lifecycle: cycle, error: e.message});
       }
     },
 
@@ -514,17 +475,14 @@ var CustomApplication = (function() {
      */
 
     __notify: function(id, payload, always) {
-
       id = id.toLowerCase();
 
       if (this.__subscriptions[id] && payload) {
-
-        var subscription = this.__subscriptions[id],
-          notify = false;
+        const subscription = this.__subscriptions[id];
+        let notify = false;
 
         // parse type
         switch (subscription.type) {
-
           case this.CHANGED:
             notify = payload.changed;
             break;
@@ -548,7 +506,6 @@ var CustomApplication = (function() {
 
             notify = true;
             break;
-
         }
 
         // always
@@ -557,8 +514,8 @@ var CustomApplication = (function() {
         // execute
         if (notify) {
           subscription.callback(payload.value, $.extend({},
-            this.__subscriptions[id],
-            payload
+              this.__subscriptions[id],
+              payload,
           ));
         }
       }
@@ -596,16 +553,14 @@ var CustomApplication = (function() {
     },
 
     getStatusbarIcon: function() {
+      let icon = this.getSetting('statusbarIcon');
 
-      var icon = this.getSetting('statusbarIcon');
-
-      if (icon === true) icon = this.location + "app.png";
+      if (icon === true) icon = this.location + 'app.png';
 
       return icon;
     },
 
     getStatusbarHomeButton: function() {
-
       return this.getSetting('statusbarHideHomeButton') === true ? false : true;
     },
 
@@ -634,7 +589,6 @@ var CustomApplication = (function() {
      */
 
     setRegion: function(region) {
-
       if (this.__region != region) {
         this.__region = region;
 
@@ -655,13 +609,11 @@ var CustomApplication = (function() {
     },
 
     __getstorage: function() {
-
       try {
         this.__storage = JSON.parse(localStorage.getItem(this.getId()));
       } catch (e) {
-        this.log.error("Could not get storage", { message: e.message });
+        this.log.error('Could not get storage', {message: e.message});
       }
-
     },
 
     set: function(name, value) {
@@ -671,7 +623,6 @@ var CustomApplication = (function() {
     },
 
     __setstorage: function() {
-
       try {
         // get default
         if (!this.__storage) this.__storage = {};
@@ -679,7 +630,7 @@ var CustomApplication = (function() {
         // local storage should work on all mazda systems
         localStorage.setItem(this.getId(), JSON.stringify(this.__storage));
       } catch (e) {
-        this.log.error("Could not set storage", { message: e.message });
+        this.log.error('Could not set storage', {message: e.message});
       }
     },
 
@@ -690,10 +641,8 @@ var CustomApplication = (function() {
      */
 
     subscribe: function(id, callback, type) {
-
       if (this.is.fn(callback)) {
-
-        var o = {};
+        let o = {};
         if (this.is.object(id)) {
           o = id;
           id = o.id || false;
@@ -707,7 +656,7 @@ var CustomApplication = (function() {
           this.__subscriptions[id] = $.extend({}, o, {
             id: id,
             type: type || this.CHANGED,
-            callback: callback
+            callback: callback,
           });
 
           // all set
@@ -725,7 +674,6 @@ var CustomApplication = (function() {
      */
 
     unsubscribe: function(id) {
-
       id = id.toLowerCase();
 
       if (this.__subscriptions[id]) {
@@ -740,8 +688,7 @@ var CustomApplication = (function() {
      */
 
     removeSubscriptions: function() {
-
-      this.__subscriptions = {} // clear all
+      this.__subscriptions = {}; // clear all
     },
 
     /**
@@ -751,11 +698,8 @@ var CustomApplication = (function() {
      */
 
     transformValue: function(value, transformer) {
-
       return this.is.fn(transformer) ? transformer(value) : value;
-
     },
-
 
 
     /*
@@ -765,8 +709,7 @@ var CustomApplication = (function() {
      */
 
     element: function(tag, id, classNames, styles, content, preventAutoAppend) {
-
-      var el = $(document.createElement(tag)).attr(id ? { id: id } : {}).addClass(classNames).css(styles ? styles : {}).append(content);
+      const el = $(document.createElement(tag)).attr(id ? {id: id} : {}).addClass(classNames).css(styles ? styles : {}).append(content);
 
       if (!preventAutoAppend) this.canvas.append(el);
 
@@ -780,10 +723,8 @@ var CustomApplication = (function() {
      */
 
     addContext: function(context, callback) {
-
       // format context
       switch (true) {
-
         case context.nodeName:
 
           context = $(content);
@@ -800,12 +741,12 @@ var CustomApplication = (function() {
       }
 
       // add element
-      context.attr("contextIndex", this.__contextCounter || 0);
+      context.attr('contextIndex', this.__contextCounter || 0);
 
       // register into context
       this.__contexts.push({
         index: this.__contextCounter,
-        callback: callback
+        callback: callback,
       });
 
       // update counter
@@ -822,11 +763,9 @@ var CustomApplication = (function() {
      */
 
     __measureContext: function() {
-
       $.each(this.__contexts, function(index, context) {
-
         // get target
-        var target = this.canvas.find(this.sprintr("[contextIndex={0}]", context.index));
+        const target = this.canvas.find(this.sprintr('[contextIndex={0}]', context.index));
 
         // sanity check
         if (!target.length) return false;
@@ -837,36 +776,30 @@ var CustomApplication = (function() {
             width: target.outerWidth(),
             height: target.outerHeight(),
             bottom: target.offset().top + target.outerHeight(),
-            right: target.offset().left + target.outerWidth()
+            right: target.offset().left + target.outerWidth(),
           }),
           enabled: true,
         });
 
-        var bb = this.__contexts[index].boundingBox;
+        const bb = this.__contexts[index].boundingBox;
 
         $.each(this.__contexts, function(intersectIndex, intersectContext) {
-
           if (intersectIndex != index && intersectContext.boundingBox) {
-
-            var ib = intersectContext.boundingBox;
+            const ib = intersectContext.boundingBox;
 
             if (bb.left <= ib.right && ib.left <= bb.right && bb.top <= ib.bottom && ib.top <= bb.bottom) {
-
               this.__contexts[index].enabled = false;
 
               return false;
             }
           }
-
         }.bind(this));
-
       }.bind(this));
 
       // set initial index
       if (this.__currentContextIndex === false && this.__contexts.length) {
         this.__setCurrentContext(this.__contexts[0].index); // first item
       }
-
     },
 
     /**
@@ -876,38 +809,33 @@ var CustomApplication = (function() {
      */
 
     __processContext: function(eventId, rms) {
-
       // sanity check
       if (!this.__contexts.length || this.__currentContextIndex === false) return false;
 
       // log
-      this.log.debug("Context received new event", { eventId: eventId, index: this.__currentContextIndex });
+      this.log.debug('Context received new event', {eventId: eventId, index: this.__currentContextIndex});
 
       // process direction
-      var nextIndex = false,
-        lastDistance = false,
-        current = this.__contexts[this.__currentContextIndex],
-        ba = current.boundingBox,
-        calc = function(i, o, index, r) {
-          var d = r ? i - o : o - i;
-          if (d >= 0 && (lastDistance === false || d < lastDistance)) {
-            lastDistance = d;
-            nextIndex = index;
-          }
-        };
+      let nextIndex = false;
+      let lastDistance = false;
+      const current = this.__contexts[this.__currentContextIndex];
+      const ba = current.boundingBox;
+      const calc = function(i, o, index, r) {
+        const d = r ? i - o : o - i;
+        if (d >= 0 && (lastDistance === false || d < lastDistance)) {
+          lastDistance = d;
+          nextIndex = index;
+        }
+      };
 
       $.each(this.__contexts, function(index, context) {
-
         // make sure we don't process ourselves
         if (index != this.__currentContextIndex) {
-
-          var bb = context.boundingBox;
+          const bb = context.boundingBox;
 
           if (ba && bb) {
-
             // process by eventId and find next item
             switch (eventId) {
-
               case this.RIGHT:
                 calc(ba.right, bb.left, index);
                 break;
@@ -923,11 +851,9 @@ var CustomApplication = (function() {
               case this.DOWN:
                 calc(ba.bottom, bb.top, index);
                 break;
-
             }
           }
         }
-
       }.bind(this));
 
 
@@ -949,19 +875,16 @@ var CustomApplication = (function() {
      */
 
     __setCurrentContext: function(index) {
-
       // get generic
-      var hasEventHandler = this.is.fn(this.onContextEvent);
+      const hasEventHandler = this.is.fn(this.onContextEvent);
 
       // execute application event
       if (this.__currentContextIndex !== false) {
-
-        var last = this.__contexts[this.__currentContextIndex],
-          target = this.canvas.find(this.sprintr("[contextIndex={0}]", this.__currentContextIndex));
+        const last = this.__contexts[this.__currentContextIndex];
+        const target = this.canvas.find(this.sprintr('[contextIndex={0}]', this.__currentContextIndex));
 
         if (last && target.length) {
-
-          var result = false;
+          let result = false;
 
           // send callback
           if (this.is.fn(last.callback)) {
@@ -975,30 +898,28 @@ var CustomApplication = (function() {
           }
 
           // log
-          this.log.info("Context lost focus", { contextIndex: last.index });
+          this.log.info('Context lost focus', {contextIndex: last.index});
         }
       }
 
       // process new context
-      this.canvas.find("[context]").attr("context", "lost");
+      this.canvas.find('[context]').attr('context', 'lost');
 
       // get new target
-      var target = this.canvas.find(this.sprintr("[contextIndex={0}]", index)),
-        current = this.__contexts[index];
+      const target = this.canvas.find(this.sprintr('[contextIndex={0}]', index));
+      const current = this.__contexts[index];
 
       // notify callback
       if (current && target.length) {
-
         // set target focus
-        target.attr("context", "focused");
+        target.attr('context', 'focused');
 
-        var result = false;
+        let result = false;
 
         // send callback
         if (this.is.fn(current.callback)) {
           // lost focus
           result = current.callback.call(this, this.FOCUSED, current, target);
-
         }
 
         // notify
@@ -1007,7 +928,7 @@ var CustomApplication = (function() {
         }
 
         // log
-        this.log.info("Context gained focus", { contextIndex: current.index });
+        this.log.info('Context gained focus', {contextIndex: current.index});
       }
 
       // set current context
@@ -1020,13 +941,11 @@ var CustomApplication = (function() {
      */
 
     scrollElement: function(element, distance, animated, callback) {
-
-      var distance = element.scrollTop() + distance;
+      const distance = element.scrollTop() + distance;
 
       element.scrollTop(distance);
 
       callback(element.scrollTop());
-
     },
 
     /**
@@ -1037,19 +956,17 @@ var CustomApplication = (function() {
      */
 
     requireInternet: function() {
-
       /* from netmgmtApp.js
        *  SelectNetworkManagement
        */
-      var offOn = 0;
-      var params = { payload: { offOn: offOn } };
+      const offOn = 0;
+      const params = {payload: {offOn: offOn}};
       framework.sendEventToMmui(this.uiaId, 'SetWifiConnection', params);
-    }
+    },
 
   };
 
   return CustomApplication;
-
 })();
 /**
  * Custom Applications SDK for Mazda Connect Infotainment System
@@ -1082,11 +999,11 @@ var CustomApplication = (function() {
  * (Predeterminate data)
  */
 
-var VehicleDataBrand = {
-  7: 'Mazda'
+const VehicleDataBrand = {
+  7: 'Mazda',
 };
 
-var VehicleDataVehicleType = {
+const VehicleDataVehicleType = {
   3: 'CX-3',
   18: 'MX-5',
   109: '3 Sport',
@@ -1097,7 +1014,7 @@ var VehicleDataVehicleType = {
   114: '6 Grand Touring',
 };
 
-var VehicleDataRegion = {
+const VehicleDataRegion = {
   na: 'North America',
   eu: 'Europe',
   jp: 'Japan',
@@ -1108,16 +1025,16 @@ var VehicleDataRegion = {
  * (VehicleData) a collection of useful mappings
  */
 
-var VehicleData = {
+const VehicleData = {
 
   /*
    * General
    */
 
   general: {
-    brand: { id: 'VDSBrand', friendlyName: 'Vehicle Brand', input: 'list', values: VehicleDataBrand },
-    type: { id: 'VDSVehicle_Type', friendlyName: 'Vehicle Type', input: 'list', values: VehicleDataVehicleType },
-    region: { id: 'SYSRegion', friendlyName: 'Region', input: 'list', values: VehicleDataRegion },
+    brand: {id: 'VDSBrand', friendlyName: 'Vehicle Brand', input: 'list', values: VehicleDataBrand},
+    type: {id: 'VDSVehicle_Type', friendlyName: 'Vehicle Type', input: 'list', values: VehicleDataVehicleType},
+    region: {id: 'SYSRegion', friendlyName: 'Region', input: 'list', values: VehicleDataRegion},
   },
 
   /**
@@ -1125,17 +1042,17 @@ var VehicleData = {
    */
 
   vehicle: {
-    speed: { id: 'VDTVehicleSpeed', friendlyName: 'Vehicle Speed', input: 'range', min: 0, max: 240, factor: 0.01 },
-    rpm: { id: 'VDTEngineSpeed', friendlyName: 'Engine RPM', input: 'range', min: 0, max: 8000, factor: 2.25 },
-    odometer: { id: 'VDTCOdocount', friendlyName: 'Odocount' },
-    batterylevel: { id: 'VDTCBattery_StateOfCharge', friendlyName: 'Battery Level' },
+    speed: {id: 'VDTVehicleSpeed', friendlyName: 'Vehicle Speed', input: 'range', min: 0, max: 240, factor: 0.01},
+    rpm: {id: 'VDTEngineSpeed', friendlyName: 'Engine RPM', input: 'range', min: 0, max: 8000, factor: 2.25},
+    odometer: {id: 'VDTCOdocount', friendlyName: 'Odocount'},
+    batterylevel: {id: 'VDTCBattery_StateOfCharge', friendlyName: 'Battery Level'},
 
-    //Peter-dk added
-    //	latAcc: {id: 'VDTCLateralAcceleration', friendlyName: 'Lateral acceleration', input: 'range', min: 3000, max: 5000, factor: 1},
-    //	lonAcc: {id: 'VDTCLongitudinalAccelerometer', friendlyName: 'Longitudinal acceleration', input: 'range', min: 3000, max: 5000, factor: 1},
-    startTime: { id: 'PIDGlobalRealTime_Start', friendlyName: 'Start time' },
-    curTime: { id: 'PIDCrntReadTm', friendlyName: 'Current time' },
-    drv1dstnc: { id: 'VDTPID_Drv1Dstnc_curr', friendlyName: 'Drive Distance' },
+    // Peter-dk added
+    //    latAcc: {id: 'VDTCLateralAcceleration', friendlyName: 'Lateral acceleration', input: 'range', min: 3000, max: 5000, factor: 1},
+    //    lonAcc: {id: 'VDTCLongitudinalAccelerometer', friendlyName: 'Longitudinal acceleration', input: 'range', min: 3000, max: 5000, factor: 1},
+    startTime: {id: 'PIDGlobalRealTime_Start', friendlyName: 'Start time'},
+    curTime: {id: 'PIDCrntReadTm', friendlyName: 'Current time'},
+    drv1dstnc: {id: 'VDTPID_Drv1Dstnc_curr', friendlyName: 'Drive Distance'},
   },
 
   /**
@@ -1143,9 +1060,9 @@ var VehicleData = {
    */
 
   fuel: {
-    position: { id: 'VDTFuelGaugePosition', friendlyName: 'Fuel Gauge Position' },
+    position: {id: 'VDTFuelGaugePosition', friendlyName: 'Fuel Gauge Position'},
     // fuelconsumption: { id: 'Drv1AvlFuelE', friendlyName: 'Current Fuel Consumption' },
-    averageconsumption: { id: 'VDTDrv1AvlFuelE', friendlyName: 'Average Fuel Consumption' },
+    averageconsumption: {id: 'VDTDrv1AvlFuelE', friendlyName: 'Average Fuel Consumption'},
     // totalconsumption: { id: 'TotAvlFuelE', friendlyName: 'Total Fuel Consumption' },
   },
 
@@ -1154,7 +1071,7 @@ var VehicleData = {
    */
 
   engine: {
-    brakefluidpressure: { id: 'PIDBrakeFluidLineHydraulicPressure', friendlyName: 'Brake Fluid Pressure' },
+    brakefluidpressure: {id: 'PIDBrakeFluidLineHydraulicPressure', friendlyName: 'Brake Fluid Pressure'},
   },
 
   /**
@@ -1162,9 +1079,9 @@ var VehicleData = {
    */
 
   temperature: {
-    outside: { id: 'VDTOut-CarTemperature', friendlyName: 'Outside Temperature' },
-    intake: { id: 'VDTDR_IntakeAirTemp', friendlyName: 'Intake Air Temperature' },
-    coolant: { id: 'VDTEngClnt_Te_Actl', friendlyName: 'Engine Coolant Temperature' },
+    outside: {id: 'VDTOut-CarTemperature', friendlyName: 'Outside Temperature'},
+    intake: {id: 'VDTDR_IntakeAirTemp', friendlyName: 'Intake Air Temperature'},
+    coolant: {id: 'VDTEngClnt_Te_Actl', friendlyName: 'Engine Coolant Temperature'},
   },
 
 
@@ -1173,12 +1090,12 @@ var VehicleData = {
    */
 
   gps: {
-    latitude: { id: 'GPSLatitude', friendlyName: 'Latitude' },
-    longitude: { id: 'GPSLongitude', friendlyName: 'Longitude' },
-    altitude: { id: 'GPSAltitude', friendlyName: 'Altitude' },
-    heading: { id: 'GPSHeading', friendlyName: 'Heading', input: 'range', min: 0, max: 360, step: 5 }, // step:45
-    velocity: { id: 'GPSVelocity', friendlyName: 'Velocity' },
-    timestamp: { id: 'GPSTimestamp', friendlyName: 'Timestamp' },
+    latitude: {id: 'GPSLatitude', friendlyName: 'Latitude'},
+    longitude: {id: 'GPSLongitude', friendlyName: 'Longitude'},
+    altitude: {id: 'GPSAltitude', friendlyName: 'Altitude'},
+    heading: {id: 'GPSHeading', friendlyName: 'Heading', input: 'range', min: 0, max: 360, step: 5}, // step:45
+    velocity: {id: 'GPSVelocity', friendlyName: 'Velocity'},
+    timestamp: {id: 'GPSTimestamp', friendlyName: 'Timestamp'},
 
   },
 
@@ -1189,26 +1106,24 @@ var VehicleData = {
  * (PreProcessors) Data processers
  */
 
-var CustomApplicationDataProcessors = {
+const CustomApplicationDataProcessors = {
 
   vdtvehiclespeed: function(value) {
-
     return Math.round(value * 0.01);
   },
 
   vdtenginespeed: function(value) {
-
     return Math.round(value * 2.25);
   },
 
-  /*Peter-dk added
-  	LateralAcceleration: function(value) {
-  		return Math.round(value * 0.1);
-  	},
+  /* Peter-dk added
+      LateralAcceleration: function(value) {
+          return Math.round(value * 0.1);
+      },
 
-  	LongitudinalAccelerometer: function(value) {
-  		return Math.round(value * 0.1);
-  	},
+      LongitudinalAccelerometer: function(value) {
+          return Math.round(value * 0.1);
+      },
   */
 };
 
@@ -1219,7 +1134,7 @@ var CustomApplicationDataProcessors = {
  * This is the data controller that reads the current vehicle data
  */
 
-var CustomApplicationDataHandler = {
+const CustomApplicationDataHandler = {
 
   __name: 'DataHandler',
 
@@ -1256,10 +1171,10 @@ var CustomApplicationDataHandler = {
       enabled: true,
       data: {
 
-        region: { type: 'string', value: 'na' },
+        region: {type: 'string', value: 'na'},
 
       },
-      update: false
+      update: false,
     },
 
 
@@ -1274,10 +1189,10 @@ var CustomApplicationDataHandler = {
      */
 
     // VDT - This table contains the most time sensitive values likes speed, rpm, etc
-    { table: 'vdt', prefix: 'VDT', enabled: true, file: true, always: true },
+    {table: 'vdt', prefix: 'VDT', enabled: true, file: true, always: true},
 
     // GPS
-    { table: 'gps', prefix: 'GPS', enabled: true, file: true, filter: 'gps', update: 1 },
+    {table: 'gps', prefix: 'GPS', enabled: true, file: true, filter: 'gps', update: 1},
 
 
     /**
@@ -1285,20 +1200,20 @@ var CustomApplicationDataHandler = {
      */
 
     // Vehicle Data Transfer data
-    { table: 'vdtpid', prefix: 'PID', enabled: true, file: true, update: 60 },
+    {table: 'vdtpid', prefix: 'PID', enabled: true, file: true, update: 60},
 
     // Vehicle Data Transfer data Current
-    { table: 'vdtcurrent', prefix: 'VDTC', enabled: true, file: true, update: 60 },
+    {table: 'vdtcurrent', prefix: 'VDTC', enabled: true, file: true, update: 60},
 
     /**
      * More less frequent updated tables (5min refresh rate)
      */
 
     // VDM - ECO and Energy Management data
-    { table: 'vdm', prefix: 'VDM', enabled: true, file: true, update: 300 },
+    {table: 'vdm', prefix: 'VDM', enabled: true, file: true, update: 300},
 
     // VDM History - ECO and Energy Management data
-    { table: 'vdmhistory', prefix: 'VDMH', enabled: true, file: true, update: 300 },
+    {table: 'vdmhistory', prefix: 'VDMH', enabled: true, file: true, update: 300},
 
 
     /**
@@ -1306,16 +1221,16 @@ var CustomApplicationDataHandler = {
      */
 
     // Vehicle Setting
-    { table: 'vdtsettings', prefix: 'VDS', enabled: true, file: true, update: false },
+    {table: 'vdtsettings', prefix: 'VDS', enabled: true, file: true, update: false},
 
     // Ignition Diagnostic Monitor (disabled)
-    { table: 'idm', prefix: 'IDM', enabled: true, file: true, update: false },
+    {table: 'idm', prefix: 'IDM', enabled: true, file: true, update: false},
 
     // Ignition Diagnostic Monitor History (disabled)
-    { table: 'idmhistory', prefix: 'IDMH', enabled: true, file: true, update: false },
+    {table: 'idmhistory', prefix: 'IDMH', enabled: true, file: true, update: false},
 
     // Vehicle Data Transfer data (disabled)
-    { table: 'vdthistory', prefix: 'VDTH', enabled: true, file: true, update: false },
+    {table: 'vdthistory', prefix: 'VDTH', enabled: true, file: true, update: false},
 
   ],
 
@@ -1330,7 +1245,6 @@ var CustomApplicationDataHandler = {
    */
 
   initialize: function() {
-
     this.initialized = true;
 
     this.next();
@@ -1342,14 +1256,13 @@ var CustomApplicationDataHandler = {
    */
 
   get: function(id, _default) {
-
     if (CustomApplicationHelpers.is().object(id)) {
-      id = id.id
+      id = id.id;
     }
 
-    var id = id.toLowerCase();
+    let id = id.toLowerCase();
 
-    return this.data[id] ? this.data[id] : { value: (_default ? _default : null) };
+    return this.data[id] ? this.data[id] : {value: (_default ? _default : null)};
   },
 
   /**
@@ -1357,15 +1270,12 @@ var CustomApplicationDataHandler = {
    */
 
   getTableByPrefix: function(prefix) {
-
-    var result = false;
+    let result = false;
 
     this.tables.map(function(table) {
-
       if (!result && table.prefix == prefix) {
         result = table;
       }
-
     });
 
     return result;
@@ -1377,16 +1287,14 @@ var CustomApplicationDataHandler = {
    */
 
   registerValue: function(table, params) {
-
     // check preq
     if (!params.name) return;
 
     // create id
-    var id = ((table.prefix ? table.prefix : "") + params.name).toLowerCase();
+    const id = ((table.prefix ? table.prefix : '') + params.name).toLowerCase();
 
     // check id
     if (!this.data[id]) {
-
       this.data[id] = $.extend({}, params, {
         id: id,
         prefix: table.prefix,
@@ -1404,20 +1312,16 @@ var CustomApplicationDataHandler = {
    */
 
   setValue: function(id, value) {
-
-    //CustomApplicationLog.debug(this.__name, "Setting new value", {id: id, available: this.data[id] ? true : false, value: value});
+    // CustomApplicationLog.debug(this.__name, "Setting new value", {id: id, available: this.data[id] ? true : false, value: value});
 
     if (this.data[id]) {
-
       // automatic converter
       if ($.isNumeric(value)) {
-
         if (parseInt(value) == value) {
           value = parseInt(value);
         } else {
           value = parseFloat(value);
         }
-
       } else {
         value = $.trim(value);
       }
@@ -1435,7 +1339,6 @@ var CustomApplicationDataHandler = {
       // notify
       CustomApplicationsHandler.notifyDataChange(id, this.data[id]);
     }
-
   },
 
   /**
@@ -1443,12 +1346,10 @@ var CustomApplicationDataHandler = {
    */
 
   pause: function() {
-
     this.paused = true;
   },
 
   unpause: function() {
-
     this.paused = false;
 
     this.next();
@@ -1459,26 +1360,18 @@ var CustomApplicationDataHandler = {
    */
 
   next: function() {
-
     clearTimeout(this.currentTimer);
 
     this.currentTimer = setTimeout(function() {
-
       if (!this.paused) {
-
         if (CustomApplicationsHandler.currentApplicationId) {
-
           this.retrieve();
-
         } else {
-
           this.next();
         }
       }
-
-    }.bind(this), this.refreshRate)
+    }.bind(this), this.refreshRate);
   },
-
 
 
   /**
@@ -1486,56 +1379,45 @@ var CustomApplicationDataHandler = {
    */
 
   retrieve: function(callback) {
-
-    //CustomApplicationLog.debug(this.__name, "Retrieving data tables");
+    // CustomApplicationLog.debug(this.__name, "Retrieving data tables");
 
     // prepare
-    var loaded = 0,
-      toload = 0,
-      finish = function() {
-
-        if (loaded >= toload) {
-
-          // notify the callback
-          if (CustomApplicationHelpers.is().fn(callback)) {
-            callback(this.data);
-          }
-
-          // continue
-          this.next();
+    let loaded = 0;
+    let toload = 0;
+    const finish = function() {
+      if (loaded >= toload) {
+        // notify the callback
+        if (CustomApplicationHelpers.is().fn(callback)) {
+          callback(this.data);
         }
 
-      }.bind(this);
+        // continue
+        this.next();
+      }
+    }.bind(this);
 
     // build to load list
     this.tables.map(function(table, tableIndex) {
-
       // conditional loading
-      var enabled = table.enabled && ((table.always) || (table.update) || (!table.update && !table.__last));
+      let enabled = table.enabled && ((table.always) || (table.update) || (!table.update && !table.__last));
 
       // check time
       if (enabled) {
-
         if (table.update && table.__last && table.update > 1) {
-
           enabled = (((new Date(framework.common.getCurrentTime())) - table.__last) / 1000) > table.update;
-
         }
-
       }
 
       // load
       if (enabled) {
-
         // update counter
         toload++;
 
         // loading
-        //CustomApplicationLog.debug(this.__name, "Preparing table for parsing", {table: table.table});
+        // CustomApplicationLog.debug(this.__name, "Preparing table for parsing", {table: table.table});
 
         // process table by type
         switch (true) {
-
           /**
            * From preparsed
            */
@@ -1543,13 +1425,11 @@ var CustomApplicationDataHandler = {
           case CustomApplicationHelpers.is().object(table.data):
 
             $.each(table.data, function(name, params) {
-
               params.name = name;
 
-              var id = this.registerValue(table, params);
+              const id = this.registerValue(table, params);
 
               if (params.value) this.setValue(id, params.value);
-
             }.bind(this));
 
             // update counter
@@ -1569,9 +1449,9 @@ var CustomApplicationDataHandler = {
           case table.file:
 
             // prepare variables
-            var location = this.paths.data + table.table;
+            const location = this.paths.data + table.table;
 
-            //CustomApplicationLog.debug(this.__name, "Loading table data from file", {table: table.table, location: location});
+            // CustomApplicationLog.debug(this.__name, "Loading table data from file", {table: table.table, location: location});
 
             // load
             $.ajax(location, {
@@ -1579,25 +1459,21 @@ var CustomApplicationDataHandler = {
 
               // success handler
               success: function(data) {
-
-                //CustomApplicationLog.debug(this.__name, "Table data loaded", {table: table.table, loaded: loaded, toload: toload});
+                // CustomApplicationLog.debug(this.__name, "Table data loaded", {table: table.table, loaded: loaded, toload: toload});
 
                 // execute parser
                 this.__parseFileData(table, data);
 
                 // completed
                 this.tables[tableIndex].__last = new Date(framework.common.getCurrentTime());
-
               }.bind(this),
 
               // all done handler - timeouts will be handled here as well
               complete: function() {
-
                 // just continue
                 loaded++;
                 finish();
-
-              }.bind(this),
+              },
 
             });
 
@@ -1606,7 +1482,7 @@ var CustomApplicationDataHandler = {
 
           default:
 
-            CustomApplicationLog.error(this.__name, "Unsupported table type", { table: table.table });
+            CustomApplicationLog.error(this.__name, 'Unsupported table type', {table: table.table});
 
             // just finish
             loaded++;
@@ -1625,33 +1501,29 @@ var CustomApplicationDataHandler = {
    */
 
   __parseFileData: function(table, data) {
-
     // split data
-    data = data.split("\n");
+    data = data.split('\n');
 
     // filter
     if (table.filter) data = this.__filterFileData(data, table.filter);
 
     // quick process
     data.forEach(function(line, index) {
-
-      var parts = line.split(/[\((,)\).*(:)]/);
+      const parts = line.split(/[\((,)\).*(:)]/);
 
       if (parts.length >= 5 && parts[1]) {
-
         switch (parts[1].toLowerCase()) {
-
-          case "binary":
+          case 'binary':
             break;
 
-          case "double":
+          case 'double':
 
-            parts[4] = parts[4] + (parts[5] ? "." + parts[5] : "");
+            parts[4] = parts[4] + (parts[5] ? '.' + parts[5] : '');
 
           default:
 
             // register value
-            var id = this.registerValue(table, {
+            const id = this.registerValue(table, {
               name: $.trim(parts[0]),
               type: $.trim(parts[1]),
             });
@@ -1661,9 +1533,7 @@ var CustomApplicationDataHandler = {
 
             break;
         }
-
       }
-
     }.bind(this));
   },
 
@@ -1672,39 +1542,34 @@ var CustomApplicationDataHandler = {
    */
 
   __filterFileData: function(data, filter) {
-
     switch (filter) {
+      case 'gps':
 
-      case "gps":
-
-        var result = [],
-          parser = {
-            Timestamp: 2,
-            Latitude: 3,
-            Longitude: 4,
-            Altitude: 5,
-            Heading: 6,
-            Velocity: 7,
-          }
+        const result = [];
+        const parser = {
+          Timestamp: 2,
+          Latitude: 3,
+          Longitude: 4,
+          Altitude: 5,
+          Heading: 6,
+          Velocity: 7,
+        };
 
         // assign
         $.each(parser, function(name, index) {
-
           if (data[index]) {
             // parse data
-            var line = $.trim(data[index]).split(" ");
+            const line = $.trim(data[index]).split(' ');
             if (line[1]) {
-              var type = line[0] != "double" ? "int" : "double";
-              result.push(name + " (" + type + ", 4): " + $.trim(line[1]));
+              const type = line[0] != 'double' ? 'int' : 'double';
+              result.push(name + ' (' + type + ', 4): ' + $.trim(line[1]));
             }
           }
-
         });
 
         return result;
         break;
     }
-
   },
 };
 
@@ -1712,16 +1577,14 @@ var CustomApplicationDataHandler = {
  * DataTransformation
  */
 
-var DataTransform = {
+const DataTransform = {
 
   /**
    * (toMPH) returns the MPH of the KM/h value
    */
 
   toMPH: function(value) {
-
     return Math.round(value * 0.621371);
-
   },
 
   /**
@@ -1729,9 +1592,7 @@ var DataTransform = {
    */
 
   toFeet: function(value) {
-
     return Math.round(value * 3.28084);
-
   },
 
   /**
@@ -1739,9 +1600,7 @@ var DataTransform = {
    */
 
   toMPG: function(value) {
-
     return Math.round(value * 2.3521458);
-
   },
 
   /**
@@ -1749,9 +1608,7 @@ var DataTransform = {
    */
 
   toLP100K: function(value) {
-
     return Math.round(10000 / value);
-
   },
 
   /**
@@ -1759,9 +1616,7 @@ var DataTransform = {
    */
 
   toDegC: function(value) {
-
     return Math.round((value - 32) * 5 / 9);
-
   },
 
   /**
@@ -1769,9 +1624,7 @@ var DataTransform = {
    */
 
   toDegF: function(value) {
-
     return Math.round(value * 1.8 + 32);
-
   },
 
   /**
@@ -1818,14 +1671,13 @@ var DataTransform = {
  * A abstract collection of helpers for the framework
  */
 
-var CustomApplicationHelpers = {
+const CustomApplicationHelpers = {
 
   /**
    * (is) a implemention of the flyandi:is library
    */
 
   is: function() {
-
     return {
 
       undefined: 'undefined',
@@ -1841,12 +1693,12 @@ var CustomApplicationHelpers = {
 
       /** (fn) */
       fn: function() {
-        return typeof(arguments[0]) == "function";
+        return typeof(arguments[0]) == 'function';
       },
 
       /** (object) */
       object: function() {
-        return typeof(arguments[0]) == "object";
+        return typeof(arguments[0]) == 'object';
       },
 
       /** (array) */
@@ -1861,17 +1713,17 @@ var CustomApplicationHelpers = {
 
       /** (string) */
       string: function() {
-        return typeof(arguments[0]) == "string";
+        return typeof(arguments[0]) == 'string';
       },
 
       /** (number) */
       number: function() {
-        return typeof(arguments[0]) == "number";
+        return typeof(arguments[0]) == 'number';
       },
 
       /** (boolean) */
       boolean: function() {
-        return typeof(arguments[0]) == "boolean";
+        return typeof(arguments[0]) == 'boolean';
       },
 
       /** (defined) */
@@ -1891,9 +1743,9 @@ var CustomApplicationHelpers = {
             return o.length === 0;
 
           case this.object(o):
-            var s = 0;
-            for (var key in o)
-              if (o.hasOwnProperty(key)) s++;
+            let s = 0;
+            for (const key in o)
+            {if (o.hasOwnProperty(key)) s++;}
             return s === 0;
 
           case this.boolean(o):
@@ -1916,7 +1768,6 @@ var CustomApplicationHelpers = {
    */
 
   iterate: function(o, item) {
-
     if (this.is().object(o)) {
       return Object.keys(o).map(function(key) {
         return item(key, o[key], true);
@@ -1933,14 +1784,14 @@ var CustomApplicationHelpers = {
    */
 
   sprintr: function() {
-    var
-      args = Array.prototype.slice.call(arguments),
-      subject = arguments[0];
+    const
+      args = Array.prototype.slice.call(arguments);
+    let subject = arguments[0];
 
     args.shift();
 
-    for (var i = 0; i < args.length; i++)
-      subject = subject.split("{" + i + "}").join(args[i]);
+    for (let i = 0; i < args.length; i++)
+    {subject = subject.split('{' + i + '}').join(args[i]);}
 
     return subject;
   },
@@ -1979,7 +1830,7 @@ var CustomApplicationHelpers = {
  * A logger
  */
 
-var CustomApplicationLog = {
+const CustomApplicationLog = {
 
   levels: {
     debug: 'DEBUG',
@@ -1995,7 +1846,6 @@ var CustomApplicationLog = {
    */
 
   enableLogger: function(value) {
-
     this.enabledLogger = value;
   },
 
@@ -2004,7 +1854,6 @@ var CustomApplicationLog = {
    */
 
   enableConsole: function(value) {
-
     this.enabledConsole = value;
   },
 
@@ -2013,7 +1862,7 @@ var CustomApplicationLog = {
    */
 
   debug: function() {
-    this.__message(this.levels.debug, "#006600", Array.apply(null, arguments));
+    this.__message(this.levels.debug, '#006600', Array.apply(null, arguments));
   },
 
   /**
@@ -2021,7 +1870,7 @@ var CustomApplicationLog = {
    */
 
   error: function() {
-    this.__message(this.levels.error, "#FF0000", Array.apply(null, arguments));
+    this.__message(this.levels.error, '#FF0000', Array.apply(null, arguments));
   },
 
   /**
@@ -2029,7 +1878,7 @@ var CustomApplicationLog = {
    */
 
   info: function() {
-    this.__message(this.levels.info, "#0000FF", Array.apply(null, arguments));
+    this.__message(this.levels.info, '#0000FF', Array.apply(null, arguments));
   },
 
   /**
@@ -2037,23 +1886,16 @@ var CustomApplicationLog = {
    */
 
   __message: function(level, color, values) {
-
-    if (this.enabledLogger || this.enabledConsole || typeof(DevLogger) != "undefined") {
-
-      var msg = [];
+    if (this.enabledLogger || this.enabledConsole || typeof(DevLogger) != 'undefined') {
+      const msg = [];
       if (values.length > 1) {
         values.forEach(function(value, index) {
-
           if (index > 0) {
-
             switch (true) {
-
               case CustomApplicationHelpers.is().iterable(value):
 
                 CustomApplicationHelpers.iterate(value, function(key, value, obj) {
-
-                  msg.push(obj ? CustomApplicationHelpers.sprintr("[{0}={1}]", key, value) : CustomApplicationHelpers.sprintr("[{0}]", value));
-
+                  msg.push(obj ? CustomApplicationHelpers.sprintr('[{0}={1}]', key, value) : CustomApplicationHelpers.sprintr('[{0}]', value));
                 });
                 break;
 
@@ -2062,17 +1904,16 @@ var CustomApplicationLog = {
                 break;
             }
           }
-
         });
       }
 
       try {
-        if (this.enabledLogger && typeof(Logger) != "undefined") {
-          Logger.log(level, values[0], msg.join(" "), color);
+        if (this.enabledLogger && typeof(Logger) != 'undefined') {
+          Logger.log(level, values[0], msg.join(' '), color);
         }
 
-        if (typeof(DevLogger) != "undefined") {
-          DevLogger.log(level, values[0], msg.join(" "), color);
+        if (typeof(DevLogger) != 'undefined') {
+          DevLogger.log(level, values[0], msg.join(' '), color);
         }
       } catch (e) {
         // do nothing
@@ -2081,17 +1922,17 @@ var CustomApplicationLog = {
       try {
         if (this, enabledConsole) {
           console.log(
-            CustomApplicationHelpers.sprintr("%c[{0}] [{1}] ", (new Date(framework.common.getCurrentTime())).toDateString(), values[0]) +
-            CustomApplicationHelpers.sprintr("%c{0}", msg.join(" ")),
-            "color:black",
-            CustomApplicationHelpers.sprintr("color:{0}", color)
+              CustomApplicationHelpers.sprintr('%c[{0}] [{1}] ', (new Date(framework.common.getCurrentTime())).toDateString(), values[0]) +
+            CustomApplicationHelpers.sprintr('%c{0}', msg.join(' ')),
+              'color:black',
+              CustomApplicationHelpers.sprintr('color:{0}', color),
           );
         }
       } catch (e) {
         // do nothing
       }
     }
-  }
+  },
 };
 /**
  * Custom Applications SDK for Mazda Connect Infotainment System
@@ -2125,7 +1966,7 @@ var CustomApplicationLog = {
  * The resource loader for applications
  */
 
-var CustomApplicationResourceLoader = {
+const CustomApplicationResourceLoader = {
 
   __name: 'ResourceLoader',
 
@@ -2134,9 +1975,8 @@ var CustomApplicationResourceLoader = {
    */
 
   loadJavascript: function(scripts, path, callback, options, async) {
-
     this.__loadInvoker(scripts, path, function(filename, next) {
-      var script = document.createElement('script');
+      const script = document.createElement('script');
       script.type = 'text/javascript';
       script.src = filename;
       script.onload = next;
@@ -2149,12 +1989,11 @@ var CustomApplicationResourceLoader = {
    */
 
   loadCSS: function(css, path, callback, options, async) {
-
     this.__loadInvoker(css, path, function(filename, next) {
-      var css = document.createElement('link');
-      css.rel = "stylesheet";
-      css.type = "text/css";
-      css.href = filename
+      const css = document.createElement('link');
+      css.rel = 'stylesheet';
+      css.type = 'text/css';
+      css.href = filename;
       css.onload = async ? callback : next;
       document.body.appendChild(css);
     }, callback, options, async);
@@ -2165,13 +2004,11 @@ var CustomApplicationResourceLoader = {
    */
 
   loadImages: function(images, path, callback, options, async) {
-
     this.__loadInvoker(images, path, function(filename, next, id) {
-      var img = document.createElement('img');
+      const img = document.createElement('img');
       img.onload = function() {
-
         if (async) {
-          var result = false;
+          let result = false;
           if (id) {
             result = {};
             result[id] = this;
@@ -2180,7 +2017,7 @@ var CustomApplicationResourceLoader = {
         } else {
           next(this);
         }
-      }
+      };
       img.src = filename;
     }, callback, options, async);
   },
@@ -2190,13 +2027,11 @@ var CustomApplicationResourceLoader = {
    */
 
   fromFormatted: function(format, items) {
-
     items.forEach(function(value, index) {
       items[index] = CustomApplicationHelpers.sprintr(format, value);
     });
 
     return items;
-
   },
 
 
@@ -2205,21 +2040,19 @@ var CustomApplicationResourceLoader = {
    */
 
   __loadInvoker: function(items, path, build, callback, options, async) {
-
-    var ids = false,
-      result = false,
-      options = options ? options : {},
-      timeout = false;
+    const ids = false;
+    let result = false;
+    const options = options ? options : {};
+    let timeout = false;
 
     // assign default object
     this.logger = CustomApplicationLog;
 
     // support for arrays and objects
     if (CustomApplicationHelpers.is().object(items)) {
-
-      var idsObject = items,
-        ids = [],
-        items = [];
+      const idsObject = items;
+      const ids = [];
+      const items = [];
 
       Object.keys(idsObject).map(function(key) {
         ids.push(key);
@@ -2228,52 +2061,43 @@ var CustomApplicationResourceLoader = {
 
       // return as object
       result = {};
-
     } else {
-
       if (!CustomApplicationHelpers.is().array(items)) items = [items];
     }
 
     // loaded handler
-    var loaded = 0,
-      next = function(failure) {
-        loaded++;
-        if (loaded >= items.length) {
-          if (CustomApplicationHelpers.is().fn(callback)) {
-            callback(result);
-          }
+    let loaded = 0;
+    const next = function(failure) {
+      loaded++;
+      if (loaded >= items.length) {
+        if (CustomApplicationHelpers.is().fn(callback)) {
+          callback(result);
         }
-      };
+      }
+    };
 
     // process items
     items.forEach(function(filename, index) {
-
       try {
-
         filename = path + filename;
 
-        this.logger.debug(this.__name, "Attempting to load resource from", filename);
+        this.logger.debug(this.__name, 'Attempting to load resource from', filename);
 
         if (!async && options.timeout) {
-
           clearTimeout(timeout);
           timeout = setTimeout(function() {
-
-            this.logger.error(this.__name, "Timeout occured while loading resource", filename);
+            this.logger.error(this.__name, 'Timeout occured while loading resource', filename);
 
             // just do the next one
             next(true);
-
           }.bind(this), options.timeout);
-
         }
 
         build(filename, function(resource) {
-
-          this.logger.info(this.__name, "Successfully loaded resource", filename);
+          this.logger.info(this.__name, 'Successfully loaded resource', filename);
 
           if (resource && ids != false) {
-            this.logger.debug(this.__name, "Loaded resource assigned to id", { id: ids[index], filename: filename });
+            this.logger.debug(this.__name, 'Loaded resource assigned to id', {id: ids[index], filename: filename});
 
             result[ids[index]] = resource;
           }
@@ -2283,17 +2107,14 @@ var CustomApplicationResourceLoader = {
           } else {
             next();
           }
-
         }.bind(this), ids ? ids[index] : false);
-
       } catch (e) {
-        this.logger.error(this.__name, "Failed to load resource", { filename: filename, error: e.message });
+        this.logger.error(this.__name, 'Failed to load resource', {filename: filename, error: e.message});
       }
-
     }.bind(this));
-  }
+  },
 
-}
+};
 
 /**
  * Custom Applications SDK for Mazda Connect Infotainment System
@@ -2327,7 +2148,7 @@ var CustomApplicationResourceLoader = {
  * This is the custom handler that manages the application between the JCI system and the mini framework
  */
 
-var CustomApplicationsHandler = {
+const CustomApplicationsHandler = {
 
   __name: 'ApplicationsHandler',
 
@@ -2362,13 +2183,11 @@ var CustomApplicationsHandler = {
    */
 
   initialize: function() {
-
     this.initialized = true;
 
     this.loader = CustomApplicationResourceLoader;
 
     this.log = CustomApplicationLog;
-
   },
 
 
@@ -2377,45 +2196,35 @@ var CustomApplicationsHandler = {
    */
 
   retrieve: function(callback) {
-
     try {
       // initialize
       if (!this.initialized) this.initialize();
 
       // load libraries
-      this.loader.loadJavascript("jquery.js", this.paths.vendor, function() {
-
-        this.loader.loadCSS("runtime.css", this.paths.framework, function() {
-
-          this.loader.loadJavascript("apps.js", this.paths.applications, function() {
-
+      this.loader.loadJavascript('jquery.js', this.paths.vendor, function() {
+        this.loader.loadCSS('runtime.css', this.paths.framework, function() {
+          this.loader.loadJavascript('apps.js', this.paths.applications, function() {
             // this has been completed
-            if (typeof(CustomApplications) != "undefined") {
-
+            if (typeof(CustomApplications) != 'undefined') {
               // load applications
               this.loader.loadJavascript(
-                this.loader.fromFormatted("{0}/app.js", CustomApplications),
-                this.paths.applications,
-                function() {
+                  this.loader.fromFormatted('{0}/app.js', CustomApplications),
+                  this.paths.applications,
+                  function() {
                   // all applications are loaded, run data
-                  CustomApplicationDataHandler.initialize();
+                    CustomApplicationDataHandler.initialize();
 
-                  // create menu items
-                  callback(this.getMenuItems());
-                }.bind(this)
+                    // create menu items
+                    callback(this.getMenuItems());
+                  }.bind(this),
               );
             }
-
           }.bind(this)); // apps.js
-
         }.bind(this)); // bootstrap css
-
       }.bind(this)); // jquery library
-
     } catch (e) {
-
       // error message
-      this.log.error(this.__name, "Error while retrieving applications", e);
+      this.log.error(this.__name, 'Error while retrieving applications', e);
 
       // make sure that we notify otherwise we don't get any applications
       callback(this.getMenuItems());
@@ -2427,7 +2236,6 @@ var CustomApplicationsHandler = {
    */
 
   get: function(id) {
-
     return this.applications[id] ? this.applications[id] : false;
   },
 
@@ -2437,7 +2245,6 @@ var CustomApplicationsHandler = {
    */
 
   register: function(id, application) {
-
     // unregister previous instance
     if (this.applications[id]) {
       this.applications[id].__terminate();
@@ -2445,11 +2252,11 @@ var CustomApplicationsHandler = {
     }
 
     // registering
-    this.log.info(this.__name, { id: id }, "Registering application");
+    this.log.info(this.__name, {id: id}, 'Registering application');
 
     application.id = id;
 
-    application.location = this.paths.applications + id + "/";
+    application.location = this.paths.applications + id + '/';
 
     application.__initialize();
 
@@ -2463,24 +2270,21 @@ var CustomApplicationsHandler = {
    */
 
   launch: function(id) {
-
-    this.log.info(this.__name, { id: id }, "Launch request for application");
+    this.log.info(this.__name, {id: id}, 'Launch request for application');
 
     if (CustomApplicationHelpers.is().object(id)) {
-
       id = id.appId ? id.appId : false;
     }
 
     if (this.applications[id]) {
-
       this.currentApplicationId = id;
 
-      this.log.info(this.__name, { id: id }, "Launching application");
+      this.log.info(this.__name, {id: id}, 'Launching application');
 
       return true;
     }
 
-    this.log.error(this.__name, { id: id }, "Launch failed because application was not registered");
+    this.log.error(this.__name, {id: id}, 'Launch failed because application was not registered');
 
     return false;
   },
@@ -2490,7 +2294,6 @@ var CustomApplicationsHandler = {
    */
 
   sleep: function(application) {
-
     if (application.id == this.currentApplicationId) {
       // remember last state
       this.lastApplicationId = this.currentApplicationId;
@@ -2508,26 +2311,23 @@ var CustomApplicationsHandler = {
    */
 
   getCurrentApplication: function(allowLast) {
-
-    var applicationId = this.currentApplicationId || (allowLast ? this.lastApplicationId : false);
+    const applicationId = this.currentApplicationId || (allowLast ? this.lastApplicationId : false);
 
     if (applicationId) {
-
-      this.log.debug(this.__name, "Invoking current set application", { id: applicationId });
+      this.log.debug(this.__name, 'Invoking current set application', {id: applicationId});
 
       if (this.applications[applicationId]) {
-
         this.currentApplicationId = applicationId;
 
         return this.applications[applicationId];
       }
 
-      this.log.error(this.__name, "Application was not registered", { id: applicationId });
+      this.log.error(this.__name, 'Application was not registered', {id: applicationId});
 
       return false;
     }
 
-    this.log.error(this.__name, "Missing currentApplicationId");
+    this.log.error(this.__name, 'Missing currentApplicationId');
 
     return false;
   },
@@ -2537,13 +2337,9 @@ var CustomApplicationsHandler = {
    */
 
   notifyDataChange: function(id, payload) {
-
     if (this.currentApplicationId && this.applications[this.currentApplicationId]) {
-
       this.applications[this.currentApplicationId].__notify(id, payload);
-
     }
-
   },
 
 
@@ -2552,10 +2348,8 @@ var CustomApplicationsHandler = {
    */
 
   getMenuItems: function(callback) {
-
     return CustomApplicationHelpers.iterate(this.applications, function(id, application) {
-
-      this.log.info(this.__name, { id: id }, "Adding application to menu", {
+      this.log.info(this.__name, {id: id}, 'Adding application to menu', {
         title: application.getTitle(),
       });
 
@@ -2568,12 +2362,11 @@ var CustomApplicationsHandler = {
           mmuiEvent: 'SelectCustomApplication',
         },
         title: application.getTitle(),
-        text1Id: application.getId().replace(".", "_"),
+        text1Id: application.getId().replace('.', '_'),
         disabled: false,
         itemStyle: 'style02',
         hasCaret: application.getHasMenuCaret(),
       };
-
     }.bind(this));
   },
 

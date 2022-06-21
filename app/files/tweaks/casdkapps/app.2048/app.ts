@@ -32,9 +32,9 @@
  */
 
 
-CustomApplicationsHandler.register("app.2048", new CustomApplication({
+CustomApplicationsHandler.register('app.2048', new CustomApplication({
 
-    /**
+  /**
      * (require)
      *
      * An object array that defines resources to be loaded such as javascript's, css's, images, etc
@@ -42,51 +42,51 @@ CustomApplicationsHandler.register("app.2048", new CustomApplication({
      * All resources are relative to the applications root path
      */
 
-    require: {
+  require: {
 
-        /**
+    /**
          * (js) defines javascript includes
          */
 
-        js: ['2048.js'],
+    js: ['2048.js'],
 
-        /**
+    /**
          * (css) defines css includes
          */
 
-        css: ['app.css'],
+    css: ['app.css'],
 
-        /**
+    /**
          * (images) defines images that are being preloaded
          *
          * Images are assigned to an id
          */
 
-        images: {},
+    images: {},
 
-    },
+  },
 
-    /**
+  /**
      * (settings)
      *
      * An object that defines application settings
      */
 
-    settings: {
+  settings: {
 
-        /**
+    /**
          * (title) The title of the application in the Application menu
          */
 
-        title: '2048',
+    title: '2048',
 
-        /**
+    /**
          * (statusbar) Defines if the statusbar should be shown
          */
 
-        statusbar: false,
+    statusbar: false,
 
-        /**
+    /**
          * (statusbarIcon) defines the status bar icon
          *
          * Set to true to display the default icon app.png or set a string to display
@@ -95,41 +95,41 @@ CustomApplicationsHandler.register("app.2048", new CustomApplication({
          * Icons need to be 37x37
          */
 
-        statusbarIcon: false,
+    statusbarIcon: false,
 
-        /**
+    /**
          * (statusbarTitle) overrides the statusbar title, otherwise title is used
          */
 
-        statusbarTitle: false,
+    statusbarTitle: false,
 
 
-        /**
+    /**
          * (hasLeftButton) indicates if the UI left button / return button should be shown
          */
 
-        hasLeftButton: false,
+    hasLeftButton: false,
 
-        /**
+    /**
          * (hasMenuCaret) indicates if the menu item should be displayed with an caret
          */
 
-        hasMenuCaret: false,
+    hasMenuCaret: false,
 
-        /**
+    /**
          * (hasRightArc) indicates if the standard right car should be displayed
          */
 
-        hasRightArc: false,
+    hasRightArc: false,
 
-    },
+  },
 
 
-    /***
+  /** *
      *** User Interface Life Cycles
      ***/
 
-    /**
+  /**
      * (created)
      *
      * Executed when the application gets initialized
@@ -137,74 +137,64 @@ CustomApplicationsHandler.register("app.2048", new CustomApplication({
      * Add any content that will be static here
      */
 
-    created: function() {
+  created: function() {
+    // init 2048
+    this.initializeGameBoard();
+  },
 
- 
-        // init 2048
-        this.initializeGameBoard();
-
-
-
-
-    },
-
-    /**
+  /**
      * (focused)
      */
 
-    focused: function() {
+  focused: function() {
 
-        
-    },
 
-    /**
+  },
+
+  /**
      * (lost)
      */
 
-    lost: function() {
+  lost: function() {
 
-        
 
-    },
+  },
 
-    /***
+  /** *
      *** Events
      ***/
 
-    /**
+  /**
      * (event) onControllerEvent
      *
      * Called when a new (multi)controller event is available
      */
 
-    onControllerEvent: function(eventId) {
-
-        this.manager.handle(eventId);
-
-    },
+  onControllerEvent: function(eventId) {
+    this.manager.handle(eventId);
+  },
 
 
-    /***
+  /** *
      *** Applicaton specific methods
      ***/
 
-    initializeGameBoard: function() {
+  initializeGameBoard: function() {
+    this.g2048 = $('<div/>').addClass('gameBoard').appendTo(this.canvas);
 
-        this.g2048 = $("<div/>").addClass("gameBoard").appendTo(this.canvas);
-
-        this.g2048.html(
-       // '<div class="container">' +
-       // '    <div class="heading">' +
-       // '    <h1 class="title">2048</h1>' +
+    this.g2048.html(
+        // '<div class="container">' +
+        // '    <div class="heading">' +
+        // '    <h1 class="title">2048</h1>' +
         '    <div class="score-container">0</div>' +
-       // '  </div>' +
-       // '  <div class="game-container">' +
-     //   '    <div class="game-message">' +
-     //   '      <p></p>' +
-     //   '      <div class ="lower">' +
-     //   '        <a class="retry-button">Try again</a>' +
-     //   '      </div>' +
-     //   '    </div>' +
+        // '  </div>' +
+        // '  <div class="game-container">' +
+        //   '    <div class="game-message">' +
+        //   '      <p></p>' +
+        //   '      <div class ="lower">' +
+        //   '        <a class="retry-button">Try again</a>' +
+        //   '      </div>' +
+        //   '    </div>' +
         '    <div class="grid-container">' +
         '      <div class="grid-row">' +
         '        <div class="grid-cell"></div>' +
@@ -234,19 +224,15 @@ CustomApplicationsHandler.register("app.2048", new CustomApplication({
         '    <div class="tile-container">' +
         '    </div>' +
         '  </div>' +
-    
+
         '  <hr>' +
-        '</div>'
+        '</div>',
 
 
-            );
+    );
 
-        this.manager = new GameManager(4, KeyboardInputManager, HTMLActuator,this.g2048.get(0));
-
-
-
-
-    }
+    this.manager = new GameManager(4, KeyboardInputManager, HTMLActuator, this.g2048.get(0));
+  },
 
 }));
 

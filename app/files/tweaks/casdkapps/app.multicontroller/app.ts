@@ -33,9 +33,9 @@
  */
 
 
-CustomApplicationsHandler.register("app.uitweaks", new CustomApplication({
+CustomApplicationsHandler.register('app.uitweaks', new CustomApplication({
 
-    /**
+  /**
      * (require)
      *
      * An object array that defines resources to be loaded such as javascript's, css's, images, etc
@@ -43,39 +43,39 @@ CustomApplicationsHandler.register("app.uitweaks", new CustomApplication({
      * All resources are relative to the applications root path
      */
 
-    require: {
+  require: {
 
-        /**
+    /**
          * (js) defines javascript includes
          */
 
-        js: [],
+    js: [],
 
-        /**
+    /**
          * (css) defines css includes
          */
 
-        css: ['app.css'],
+    css: ['app.css'],
 
-        /**
+    /**
          * (images) defines images that are being preloaded
          *
          * Images are assigned to an id
          */
 
-        images: {},
+    images: {},
 
-    },
+  },
 
-    /**
+  /**
      * (settings)
      *
      * An object that defines application settings
      */
 
-    settings: {
+  settings: {
 
-        /**
+    /**
          * (terminateOnLost)
          *
          * If set to 'true' this will remove the stateless life cycle and always
@@ -91,15 +91,15 @@ CustomApplicationsHandler.register("app.uitweaks", new CustomApplication({
          * (title) The title of the application in the Application menu
          */
 
-        title: 'UI Tweaks',
+    title: 'UI Tweaks',
 
-        /**
+    /**
          * (statusbar) Defines if the statusbar should be shown
          */
 
-        statusbar: true,
+    statusbar: true,
 
-        /**
+    /**
          * (statusbarIcon) defines the status bar icon
          *
          * Set to true to display the default icon app.png or set a string to display
@@ -108,42 +108,41 @@ CustomApplicationsHandler.register("app.uitweaks", new CustomApplication({
          * Icons need to be 37x37
          */
 
-        statusbarIcon: true,
+    statusbarIcon: true,
 
-        /**
+    /**
          * (statusbarTitle) overrides the statusbar title, otherwise title is used
          */
 
-        statusbarTitle: false,
+    statusbarTitle: false,
 
 
-        /**
+    /**
          * (hasLeftButton) indicates if the UI left button / return button should be shown
          */
 
-        hasLeftButton: false,
+    hasLeftButton: false,
 
-        /**
+    /**
          * (hasMenuCaret) indicates if the menu item should be displayed with an caret
          */
 
-        hasMenuCaret: false,
+    hasMenuCaret: false,
 
-        /**
+    /**
          * (hasRightArc) indicates if the standard right car should be displayed
          */
 
-        hasRightArc: true,
+    hasRightArc: true,
 
-    },
+  },
 
 
-
-    /***
+  /** *
      *** User Interface Life Cycles
      ***/
 
-    /**
+  /**
      * (created)
      *
      * Executed when the application gets initialized
@@ -151,82 +150,75 @@ CustomApplicationsHandler.register("app.uitweaks", new CustomApplication({
      * Add any content that will be static here
      */
 
-    created: function() {
+  created: function() {
+    // let's build our interface
 
-        // let's build our interface
+    // 1) create our context aware sections
+    this.createSections();
 
-        // 1) create our context aware sections
-        this.createSections();
+    // 2) create our statusbar
+    this.statusBar = $('<div/>').addClass('status').appendTo(this.canvas);
+  },
 
-        // 2) create our statusbar
-        this.statusBar = $("<div/>").addClass("status").appendTo(this.canvas);
-
-    },
-
-    /***
+  /** *
      *** Events
      ***/
 
-    /**
+  /**
      * (event) onControllerEvent
      *
      * Called when a new (multi)controller event is available
      */
 
-    onControllerEvent: function(eventId) {
+  onControllerEvent: function(eventId) {
 
-        // We only get not processed values from the multicontroller here
+    // We only get not processed values from the multicontroller here
 
-    },
+  },
 
 
-    /**
+  /**
      * (event) onContextEvent
      *
      * Called when the context of an element was changed
      */
 
-    onContextEvent: function(eventId, context, element) {
+  onContextEvent: function(eventId, context, element) {
 
-        // We only get not processed values from the multicontroller here
+    // We only get not processed values from the multicontroller here
 
-    },
+  },
 
 
-    /***
+  /** *
      *** Applicaton specific methods
      ***/
 
-    /**
+  /**
      * (createSections)
      *
      * This method registers all the sections we want to display
      */
 
-    createSections: function() {
+  createSections: function() {
+    [
 
-        [
+      {top: 20, left: 20, title: 'DefaultLayout'},
+      {top: 20, left: 50, title: 'Star Layout'},
+      {top: 20, left: 70, title: 'Inverted Layout'},
 
-            {top: 20, left: 20, title: "DefaultLayout"},
-            {top: 20, left: 50, title: "Star Layout"},
-            {top: 20, left: 70, title: "Inverted Layout"}
-
-        ].forEach(function(item) {
-
-            /**
+    ].forEach(function(item) {
+      /**
              * addContext is our main method to make anything a context aware item and expects either
              * a JQUERY or DOM element.
              *
              */
 
-            this.addContext($("<div/>").addClass("section").css(item).append(item.title).appendTo(this.canvas), function(event, element) {
+      this.addContext($('<div/>').addClass('section').css(item).append(item.title).appendTo(this.canvas), function(event, element) {
 
-            });
-
-        }.bind(this));
-
-
-    },
+      });
+    }.bind(this));
+  },
 
 
 }));

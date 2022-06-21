@@ -32,5 +32,5 @@
  * The name corresponds to to the folder name of the application
  */
 
-var CustomApplications = [
+const CustomApplications = [
 ];

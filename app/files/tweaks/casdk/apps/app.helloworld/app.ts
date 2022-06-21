@@ -35,8 +35,7 @@
  */
 
 
-
-CustomApplicationsHandler.register("app.helloworld", new CustomApplication({
+CustomApplicationsHandler.register('app.helloworld', new CustomApplication({
 
   /**
    * (require)
@@ -68,7 +67,7 @@ CustomApplicationsHandler.register("app.helloworld", new CustomApplication({
 
     images: {
 
-      world: 'images/world.png'
+      world: 'images/world.png',
 
     },
   },
@@ -149,7 +148,7 @@ CustomApplicationsHandler.register("app.helloworld", new CustomApplication({
   },
 
 
-  /***
+  /** *
    *** User Interface Life Cycles
    ***/
 
@@ -162,24 +161,23 @@ CustomApplicationsHandler.register("app.helloworld", new CustomApplication({
    */
 
   created: function() {
-    var iframe = document.createElement("iframe");
-    iframe.setAttribute("src", "http://www.youtube.com/embed/M7lc1UVf-VE?enablejsapi=1");
-    iframe.setAttribute("frameborder", "0");
-    iframe.setAttribute("height", "100%");
-    iframe.setAttribute("width", "100%");
-    iframe.setAttribute("id", "player");
+    const iframe = document.createElement('iframe');
+    iframe.setAttribute('src', 'http://www.youtube.com/embed/M7lc1UVf-VE?enablejsapi=1');
+    iframe.setAttribute('frameborder', '0');
+    iframe.setAttribute('height', '100%');
+    iframe.setAttribute('width', '100%');
+    iframe.setAttribute('id', 'player');
     this.canvas.get(0).appendChild(iframe);
 
 
-
-    /*var tag = document.createElement('script');
-  		tag.src = 'https://www.youtube.com/iframe_api';
-  		var firstScriptTag = document.getElementsByTagName('script')[0];
-  		firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);*/
+    /* let tag = document.createElement('script');
+          tag.src = 'https://www.youtube.com/iframe_api';
+          let firstScriptTag = document.getElementsByTagName('script')[0];
+          firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);*/
 
     window.onPlayerReady = function(event) {
-      console.log("Player Ready")
-    }
+      console.log('Player Ready');
+    };
 
     this.playerStarted = false;
     window.onPlayerStateChange = function(event) {
@@ -189,7 +187,7 @@ CustomApplicationsHandler.register("app.helloworld", new CustomApplication({
       // YT.PlayerState.BUFFERING
       // YT.PlayerState.CUED
 
-      console.log("Player state changed")
+      console.log('Player state changed');
       console.log(event);
 
       switch (event.data) {
@@ -205,9 +203,8 @@ CustomApplicationsHandler.register("app.helloworld", new CustomApplication({
         case YT.PlayerState.CUED:
           window.playerStarted = false;
           break;
-
       }
-    }
+    };
   },
 
   /**
@@ -223,8 +220,8 @@ CustomApplicationsHandler.register("app.helloworld", new CustomApplication({
       window.player = new YT.Player('player', {
         events: {
           'onReady': onPlayerReady,
-          'onStateChange': onPlayerStateChange
-        }
+          'onStateChange': onPlayerStateChange,
+        },
       });
       console.log(window.player);
     }, 3000);
@@ -244,7 +241,7 @@ CustomApplicationsHandler.register("app.helloworld", new CustomApplication({
 
   },
 
-  /***
+  /** *
    *** Events
    ***/
 
@@ -260,16 +257,15 @@ CustomApplicationsHandler.register("app.helloworld", new CustomApplication({
 
     switch (eventId) {
       case this.SELECT:
-        {
-          if (window.playerStarted) {
-            window.player.pauseVideo();
-          } else {
-            window.player.playVideo();
-          }
-          break;
+      {
+        if (window.playerStarted) {
+          window.player.pauseVideo();
+        } else {
+          window.player.playVideo();
         }
+        break;
+      }
     }
-
   },
 
 

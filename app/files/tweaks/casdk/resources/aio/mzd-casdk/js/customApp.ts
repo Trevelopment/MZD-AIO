@@ -30,7 +30,7 @@
  * The control application for Custom Applications
  */
 
-log.addSrcFile("customApp.js", "customApp");
+log.addSrcFile('customApp.js', 'customApp');
 
 /**
  * (Surface)
@@ -38,9 +38,9 @@ log.addSrcFile("customApp.js", "customApp");
 
 function customApp(uiaId)
 {
-    log.debug("Constructor called.");
+  log.debug('Constructor called.');
 
-    baseApp.init(this, uiaId);
+  baseApp.init(this, uiaId);
 }
 
 
@@ -49,24 +49,23 @@ function customApp(uiaId)
  */
 
 customApp.prototype.appInit = function() {
+  log.debug('customApp appInit called');
 
-    log.debug("customApp appInit called");
-
-    this._contextTable = {
-        "Surface": {
-            "leftBtnStyle" : "goBack",
-            "template" : "SurfaceTmplt",
-            "templatePath": "apps/custom/templates/SurfaceTmplt",
-            "sbNameId" : null,
-            "readyFunction": false,
-        }
-    };
+  this._contextTable = {
+    'Surface': {
+      'leftBtnStyle': 'goBack',
+      'template': 'SurfaceTmplt',
+      'templatePath': 'apps/custom/templates/SurfaceTmplt',
+      'sbNameId': null,
+      'readyFunction': false,
+    },
+  };
 };
 
 /**
  * Register with framework
  */
 
-framework.registerAppLoaded("custom", null, false);
+framework.registerAppLoaded('custom', null, false);
 
 /** EOF **/

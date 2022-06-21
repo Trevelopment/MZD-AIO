@@ -1,34 +1,32 @@
-function openSideNav () {
-	document.getElementById("mainSidenav").style.width = "250px";
-	document.getElementById("CommonBgImg1").style.marginLeft = "250px";
-	$('#StatusBar_ButtonCtrl1').addClass('hidden');
-	$('#StatusBar_ButtonCtrl1').hide();
-	$('#mainOpenNav').css({'opacity':'.5'});
+function openSideNav() {
+  document.getElementById('mainSidenav').style.width = '250px';
+  document.getElementById('CommonBgImg1').style.marginLeft = '250px';
+  $('#StatusBar_ButtonCtrl1').addClass('hidden');
+  $('#StatusBar_ButtonCtrl1').hide();
+  $('#mainOpenNav').css({'opacity': '.5'});
 }
-function closeSideNav () {
-	document.getElementById("mainSidenav").style.width = "0";
-	document.getElementById("CommonBgImg1").style.marginLeft= "0";
-	$('#mainOpenNav').css({'opacity':'1'});
+function closeSideNav() {
+  document.getElementById('mainSidenav').style.width = '0';
+  document.getElementById('CommonBgImg1').style.marginLeft= '0';
+  $('#mainOpenNav').css({'opacity': '1'});
 }
-function navReboot(){
-  mzdWs('reboot', false); //reboot
+function navReboot() {
+  mzdWs('reboot', false); // reboot
 }
-function messageTest(msg){
-  mzdWs('sh /tmp/mnt/sd_nav/msg/message.sh "'+msg+'"', false); 
+function messageTest(msg) {
+  mzdWs('sh /tmp/mnt/sd_nav/msg/message.sh "'+msg+'"', false);
 }
-function mzdWs(action, waitMessage){
+function mzdWs(action, waitMessage) {
+  let ws = new WebSocket('ws://127.0.0.1:9969/');
 
-  var ws = new WebSocket('ws://127.0.0.1:9969/');
-
-  ws.onmessage = function(event){
-    var res = event.data.split('#');
+  ws.onmessage = function(event) {
+    const res = event.data.split('#');
 
     ws.close();
     ws=null;
-
   };
 
-  ws.onopen = function(){
+  ws.onopen = function() {
     ws.send(action);
     if (!waitMessage)
     {
@@ -108,7 +106,7 @@ $('#Main').click();
 function setMainMenuLoop() {
   _MainMenuLoop = function(direction)
   {
-    var index = this._getFocus();
+    let index = this._getFocus();
     index += direction;
 
     if (index < 0)
