@@ -67,11 +67,11 @@ $.ajax({
       success: function(data) {
         Cufon.now();
       },
-      complete: function() {},
+      complete: () => {},
     });
   },
 });
-$(document).ready(function() {
+$(document).ready(() => {
   // websocket
   // --------------------------------------------------------------------------
   function retrievedata(action) {
@@ -113,7 +113,7 @@ $(document).ready(function() {
           break;
       }
     };
-    speedometerWs.onopen = function() {
+    speedometerWs.onopen = () => {
       speedometerWs.send(action);
     };
     speedometerWs.onerror = function(e) {
@@ -131,7 +131,7 @@ $(document).ready(function() {
   // Start Data Retreval
   // --------------------------------------------------------------------------
   function startDataRetrieval(wait) {
-    setTimeout(function() {
+    setTimeout(() => {
       speedConnectAttempts++;
       if (!vehicleDataConnected) {
         retrievedata('vehicleSpeed');
@@ -260,7 +260,7 @@ $(document).ready(function() {
           $('.speedIndicator').css('transform', 'rotate(' + (-120 + speedCurrent) + 'deg)');
         }
       }
-      $('.vehicleSpeed').each(function() {
+      $('.vehicleSpeed').each(() => {
         const $this = $(this);
         $({Counter: $this.text()}).animate({Counter: speedCurrent}, {
           duration: 950,
@@ -274,7 +274,7 @@ $(document).ready(function() {
               updateSpeedBar(Math.round(isMPH ? speedCurr * 1.6 : speedCurr));
             }
           },
-          complete: function() {},
+          complete: () => {},
         });
       });
       if (!speedAnimation) {
@@ -401,7 +401,7 @@ $(document).ready(function() {
         GPSspeedCurrent = Math.floor(currentGPSSpeed);
       }
       if (speedAnimation) {
-        $('.gpsSpeedValue').each(function() {
+        $('.gpsSpeedValue').each(() => {
           const $this = $(this);
           $({Counter: $this.text()}).animate({Counter: GPSspeedCurrent}, {
             duration: 950,
@@ -409,7 +409,7 @@ $(document).ready(function() {
             step: function(now) {
               $this.text(Math.round(now));
             },
-            complete: function() {},
+            complete: () => {},
           });
         });
       } else {
@@ -606,7 +606,7 @@ $(document).ready(function() {
         if (!barSpeedometerMod) {
           $('.RPMIndicator').css('transform', 'rotate(' + (-145 - engineSpeedCurrent * 0.01) + 'deg)');
         }
-        $('.engineSpeedValue').each(function() {
+        $('.engineSpeedValue').each(() => {
           const $this = $(this);
           $({Counter: $this.text()}).animate({Counter: engineSpeedCurrent}, {
             duration: 950,
@@ -620,7 +620,7 @@ $(document).ready(function() {
                 updateSpeedBar(Math.round(engineSpeedCurr / 45));
               }
             },
-            complete: function() {
+            complete: () => {
               // do nothing
             },
           });
@@ -772,7 +772,7 @@ $(document).ready(function() {
     }
   }
   // --------------------------------------------------------------------------
-  setInterval(function() {
+  setInterval(() => {
     updateTripTime();
     if (speedCurrent === 0) {
       updateIdleTime(speedCurrent);
@@ -790,13 +790,13 @@ $(document).ready(function() {
     }
   }, 1000);
   if (SbVal1 !== 'hidden' && SbVal2 !== 'hidden') {
-    setInterval(function() {
+    setInterval(() => {
       const sbSpeedoVal1 = $('#SbSpeedo .' + SbVal1);
       const sbSpeedoVal2 = $('#SbSpeedo .' + SbVal2);
       if ((enableSmallSbSpeedo) && (!$('#SbSpeedo').hasClass('parking'))) {
         sbSpeedoVal1.fadeOut();
         sbSpeedoVal2.fadeIn();
-        setTimeout(function() {
+        setTimeout(() => {
           sbSpeedoVal2.fadeOut();
           sbSpeedoVal1.fadeIn();
         }, sbInterval);

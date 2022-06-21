@@ -167,7 +167,7 @@ CustomApplicationsHandler.register('app.simplespeedo', new CustomApplication({
    *
    * Add any content that will be static here
    */
-  created: function() {
+  created: () => {
     // create speedometer panel
     this.speedoMeter = $('<div/>').attr('id', 'speedometer').appendTo(this.canvas);
     this.speedoUnit = $('<div/>').attr('id', 'speedounit').appendTo(this.speedoMeter);
@@ -205,7 +205,7 @@ CustomApplicationsHandler.register('app.simplespeedo', new CustomApplication({
    * build the application or use the created() method to predefine the canvas and use
    * this method to run your logic.
    */
-  focused: function() {},
+  focused: () => {},
   /**
    * (lost)
    *
@@ -214,7 +214,7 @@ CustomApplicationsHandler.register('app.simplespeedo', new CustomApplication({
    *
    * If you enabled terminateOnLost you may want to save the state of your app here.
    */
-  lost: function() {
+  lost: () => {
     // stop collection
     clearInterval(this.collectorTimer);
   },
@@ -252,7 +252,7 @@ CustomApplicationsHandler.register('app.simplespeedo', new CustomApplication({
   /**
    * (createGPSPanel)
    */
-  createGPSPanel: function() {
+  createGPSPanel: () => {
     this.gpsPanel = $('<div/>').attr('id', 'gps').appendTo(this.speedoMeter);
     this.gpsCompass = $('<div/>').attr('id', 'gpscompass').appendTo(this.speedoMeter);
     const rose = [];
@@ -282,13 +282,13 @@ CustomApplicationsHandler.register('app.simplespeedo', new CustomApplication({
   /**
    * (updateSpeedoScale)
    */
-  updateSpeedoScale: function() {
+  updateSpeedoScale: () => {
     // hide old content
     if (this.hasSpeedoDialText) {
-      this.speedoDialText.fadeOut('fast', function() {
+      this.speedoDialText.fadeOut('fast', () => {
         this.hasSpeedoDialText = false;
         this.updateSpeedoScale();
-      }.bind(this));
+      });
       return;
     }
     // clear main container

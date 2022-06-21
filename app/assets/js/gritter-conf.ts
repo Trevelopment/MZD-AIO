@@ -1,5 +1,5 @@
-export const Gritter = (function() {
-  $('#add-sticky').click(function() {
+const getGritter = () => {
+  $('#add-sticky').click(() => {
     // const unique_id = $.gritter.add({
     $.gritter.add({
       // (string | mandatory) the heading of the notification
@@ -31,7 +31,7 @@ export const Gritter = (function() {
     return false;
   });
 
-  $('#add-regular').click(function() {
+  $('#add-regular').click(() => {
     $.gritter.add({
       // (string | mandatory) the heading of the notification
       title: 'This is a Regular Notice!',
@@ -48,7 +48,7 @@ export const Gritter = (function() {
     return false;
   });
 
-  $('#add-max').click(function() {
+  $('#add-max').click(() => {
     $.gritter.add({
       // (string | mandatory) the heading of the notification
       title: 'This is a notice with a max of 3 on screen at one time!',
@@ -59,7 +59,7 @@ export const Gritter = (function() {
       // (bool | optional) if you want it to fade out on its own or just sit there
       sticky: false,
       // (function) before the gritter notice is opened
-      before_open: function() {
+      before_open: () => {
         if ($('.gritter-item-wrapper').length === 3) {
           // Returning false prevents a new gritter from opening
           return false;
@@ -70,7 +70,7 @@ export const Gritter = (function() {
     return false;
   });
 
-  $('#add-without-image').click(function() {
+  $('#add-without-image').click(() => {
     $.gritter.add({
       // (string | mandatory) the heading of the notification
       title: 'This is a Notice Without an Image!',
@@ -81,7 +81,7 @@ export const Gritter = (function() {
     return false;
   });
 
-  $('#add-gritter-light').click(function() {
+  $('#add-gritter-light').click(() => {
     $.gritter.add({
       // (string | mandatory) the heading of the notification
       title: 'This is a Light Notification',
@@ -93,8 +93,10 @@ export const Gritter = (function() {
     return false;
   });
 
-  $('#remove-all').click(function() {
+  $('#remove-all').click(() => {
     $.gritter.removeAll();
     return false;
   });
-}());
+};
+
+export const Gritter = getGritter();

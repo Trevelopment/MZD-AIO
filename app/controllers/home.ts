@@ -16,7 +16,7 @@ import {lang, langObj, settings, speedoSave} from '../assets/js/index';
 import {entertainmentItems} from '../assets/js/audioSourceList';
 import {buildTweakFile} from '../assets/js/build-tweaks';
 
-(function() {
+(() => {
   'use strict';
   angular.module('AIO', ['checklist-model', 'ngSanitize', 'ngRoute']) // 'angular-electron'
       .controller('JoinerCtrl', ['$scope', '$http', JoinerCtrl])
@@ -271,14 +271,14 @@ import {buildTweakFile} from '../assets/js/build-tweaks';
           {bootLogo: 'Trans End (Default)', logo: 11},
         ];
         $scope.replyLangs = msgLangs;
-        $scope.getMsgsForLang = function() {
+        $scope.getMsgsForLang = () => {
           getMsgsForLang($scope.user.replyMsgLang);
           $scope.replyMsgs = currLangMsgs;
           if ($scope.replyMsgs.length > 0) {
             $('#presetMessageEditor').show();
           }
         };
-        $scope.savePresetMsgs = function() {
+        $scope.savePresetMsgs = () => {
           rebuildMessageXml($scope.user.replyMsgLang, $scope.replyMsgs);
         };
         $scope.checkDuplicatePos = function(inputArray) {
@@ -306,7 +306,7 @@ import {buildTweakFile} from '../assets/js/build-tweaks';
           });
           return seenDuplicate;
         };
-        $scope.colorDuplicates = function() {
+        $scope.colorDuplicates = () => {
           const duplicates = $scope.checkDuplicatePos($scope.user.spdValues);
           $('.spdOps span~select').removeClass('ng-invalid');
           for (const x in duplicates) {
@@ -341,43 +341,43 @@ import {buildTweakFile} from '../assets/js/build-tweaks';
           $scope.barAutoSortBy();
           $scope.colorDuplicates();
         };
-        $scope.toggleAutoSortBy = function() {
+        $scope.toggleAutoSortBy = () => {
           $scope.user.autosort = !$scope.user.autosort;
           $scope.autoSortBy();
         };
-        $scope.autoSortBy = function() {
+        $scope.autoSortBy = () => {
           if ($scope.user.autosort) {
             $scope.user.classicSpeed = $filter('orderBy')($scope.user.classicSpeed, 'pos');
           } else {
             $scope.user.classicSpeed = $filter('orderBy')($scope.user.classicSpeed, 'name');
           }
         };
-        $scope.toggleBarAutoSortBy = function() {
+        $scope.toggleBarAutoSortBy = () => {
           $scope.user.barautosort = !$scope.user.barautosort;
           $scope.barAutoSortBy();
         };
-        $scope.barAutoSortBy = function() {
+        $scope.barAutoSortBy = () => {
           if ($scope.user.barautosort) {
             $scope.user.spdValues = $filter('orderBy')($scope.user.spdValues, ['pos[0]', 'pos[1]', 'pos[2]']);
           } else {
             $scope.user.spdValues = $filter('orderBy')($scope.user.spdValues, 'label');
           }
         };
-        $scope.reset_speedoOps = function() {
+        $scope.reset_speedoOps = () => {
           $scope.user.speedoOps = speedoOps;
         };
-        $scope.reset_entertainmentItems = function() {
+        $scope.reset_entertainmentItems = () => {
           $scope.userentertainmentItems = entertainmentItems;
         };
-        $scope.reset_spdValues = function() {
+        $scope.reset_spdValues = () => {
           $scope.user.spdValues = spdValues;
           $scope.user.spdExtra.barSpeedoRows = '4';
         };
-        $scope.reset_classicSpeed = function() {
+        $scope.reset_classicSpeed = () => {
           $scope.user.classicSpeed = classicSpeedoTmplt;
           $scope.user.speedoOps.classicLargeText = false;
         };
-        $scope.reset_fuelBarColors = function() {
+        $scope.reset_fuelBarColors = () => {
           $scope.user.fuelBarColors = fuelBarColors;
           $scope.user.speedoOps.sbreverse = false;
           $scope.user.speedoOps.sbhideinapp = true;
@@ -388,16 +388,16 @@ import {buildTweakFile} from '../assets/js/build-tweaks';
           $scope.user.speedoOps.sbval1 = 'gpsHeading';
           $scope.user.speedoOps.sbval2 = 'gpsAltitudeValue';
         };
-        $scope.reset_multictrl = function() {
+        $scope.reset_multictrl = () => {
           $scope.user.multictrl = multictrl;
         };
-        $scope.reset_barThemeColors = function() {
+        $scope.reset_barThemeColors = () => {
           $scope.user.barThemeColors = barThemeColors;
         };
-        $scope.reset_spdExtra = function() {
+        $scope.reset_spdExtra = () => {
           $scope.user.spdExtra = spdExtraValues;
         };
-        $scope.reset_allSpd = function() {
+        $scope.reset_allSpd = () => {
           $scope.reset_multictrl();
           $scope.reset_fuelBarColors();
           $scope.reset_barThemeColors();
@@ -414,7 +414,7 @@ import {buildTweakFile} from '../assets/js/build-tweaks';
             $scope.getScript('assets/js/translator.js');
             $scope.getScript('assets/vendor/bootstrap.min.js');
           } else if ($location.path().includes('joiner')) {
-            $(function() {
+            $(() => {
               $('#thumbs').mousewheel(function(event, delta) {
                 this.scrollLeft -= (delta * 200);
                 event.preventDefault();
@@ -430,16 +430,16 @@ import {buildTweakFile} from '../assets/js/build-tweaks';
             $scope.getScript('assets/js/tour.js');
             $scope.getScript('assets/vendor/featherlight.min.js');
             // Handy litle jQuery script for Inner Help Menu Togglers
-            $(function() {
-              $('#IN13').click(function() {
+            $(() => {
+              $('#IN13').click(() => {
                 $('#bootLogoMazda').click();
               });
-              $(`.troubleshootingToggler, .revertToggler, .warnToggler, .faqToggler, .kiToggler, .ttToggler`).click(function() {
+              $(`.troubleshootingToggler, .revertToggler, .warnToggler, .faqToggler, .kiToggler, .ttToggler`).click(() => {
                 $(this).siblings().not(`.troubleshootingToggler, .revertToggler, .warnToggler, .faqToggler, .kiToggler, .ttToggler`).not($(this).next()).slideUp(`fast`);
                 $(this).next().slideToggle(`fast`);
                 $('.w3-bottombar[class*=Toggler]').css(`position`, `absolute`).addClass('w3-black');
               });
-              $('.w3-bottombar[class*="Toggler"]').click(function() {
+              $('.w3-bottombar[class*="Toggler"]').click(() => {
                 $(this).css(`position`, `static`).removeClass('w3-black');
               });
               $('.draggable').draggable({scroll: false, distance: 10});
@@ -459,12 +459,12 @@ import {buildTweakFile} from '../assets/js/build-tweaks';
                 this.scrollLeft -= (delta * 400);
                 event.preventDefault();
               });
-              $('.twkfltr input').on('focus', function() {
+              $('.twkfltr input').on('focus', () => {
                 if (window.innerWidth > 1000 && window.innerWidth < 1300) {
                   $('#compileButton').addClass('left');
                 }
               });
-              $('.twkfltr input').on('blur', function() {
+              $('.twkfltr input').on('blur', () => {
                 $('#compileButton').removeClass('left');
               });
               startTime();
@@ -480,7 +480,7 @@ import {buildTweakFile} from '../assets/js/build-tweaks';
             ipc.emit('aio-info');
           }
         });
-        $(function() {
+        $(() => {
           if ($scope.user.darkMode) {
             $('html, body, #sidePanel').addClass('w3-black');
           } else {
@@ -488,7 +488,7 @@ import {buildTweakFile} from '../assets/js/build-tweaks';
           }
           $scope.user.classicSpeed = $filter('orderBy')($scope.user.classicSpeed, 'pos');
         });
-        $scope.miniSpeedo = function() {
+        $scope.miniSpeedo = () => {
           if (!$scope.user.options.includes(20)) {
           // $scope.user.options.push(20)
           // $scope.user.statusbar.d2sbinst = true
@@ -496,7 +496,7 @@ import {buildTweakFile} from '../assets/js/build-tweaks';
           }
         };
 
-        $scope.saveSpeedoOps = function() {
+        $scope.saveSpeedoOps = () => {
           speedoSave.set('multictrl', $scope.user.multictrl);
           speedoSave.set('fuelBarColors', $scope.user.fuelBarColors);
           speedoSave.set('barColors', $scope.user.barThemeColors);
@@ -508,7 +508,7 @@ import {buildTweakFile} from '../assets/js/build-tweaks';
 
         // TODO: More saving options. Save different settings by name.
         // $scope.$storage = $localStorage
-        $scope.saveOps = function() {
+        $scope.saveOps = () => {
           if ($location.path().includes('translate')) {
             $('#submit').click();
           } else {
@@ -520,7 +520,7 @@ import {buildTweakFile} from '../assets/js/build-tweaks';
             closeHelpDrop();
           }
         };
-        $scope.miniSave = function() {
+        $scope.miniSave = () => {
           settings.set(`darkMode`, $scope.user.darkMode);
           settings.set(`flipOption`, $scope.user.flipOption);
           bootbox.alert({
@@ -529,7 +529,7 @@ import {buildTweakFile} from '../assets/js/build-tweaks';
           });
           closeHelpDrop();
         };
-        $scope.loadOps = function() {
+        $scope.loadOps = () => {
           if ($location.path().includes('translate')) {
             $('#import').click();
           } else {
@@ -539,20 +539,20 @@ import {buildTweakFile} from '../assets/js/build-tweaks';
             }
             $scope.user = settings.store;
             closeHelpDrop();
-            setTimeout(function() {
+            setTimeout(() => {
               snackbar('Options Loaded!');
               $scope.$apply();
             }, 500);
             updateBgModal();
           }
         };
-        $scope.loadLast = function() {
+        $scope.loadLast = () => {
           if (lastView.size === 0) {
             lastView.set($scope.user);
           }
           $scope.user = lastView.store;
           closeHelpDrop();
-          setTimeout(function() {
+          setTimeout(() => {
             snackbar('Loaded Last Compiled Options!');
             $scope.$apply();
           }, 500);
@@ -584,7 +584,7 @@ import {buildTweakFile} from '../assets/js/build-tweaks';
           $scope.user.autorun.installer = (win === 'autorun' || win === 'serial');
         };
 
-        $scope.instAll = function() {
+        $scope.instAll = () => {
           $scope.user.mainOps = [0, 2, 3, 4, 5, 7, 8, 9];
           $scope.user.options = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 19, 20, 22, 26];
           $scope.user.colors = 8;
@@ -603,7 +603,7 @@ import {buildTweakFile} from '../assets/js/build-tweaks';
           $scope.user.statusbar.d2sbinst = true;
           updateBgModal();
         };
-        $scope.uncheckAll = function() {
+        $scope.uncheckAll = () => {
           $scope.user.options = [];
           $scope.user.mainOps = [7];
           $scope.user.speedoOps.lang.id = 0;
@@ -624,7 +624,7 @@ import {buildTweakFile} from '../assets/js/build-tweaks';
           $scope.user.statusbar.d2sbinst = false;
           $scope.reset_allSpd();
         };
-        $scope.uninstAll = function() {
+        $scope.uninstAll = () => {
         /* $scope.user.options.splice(0, $scope.user.options.length)
         $scope.user.options.push(1) */
           $scope.user.options = $scope.options.map(function(item) {
@@ -639,25 +639,25 @@ import {buildTweakFile} from '../assets/js/build-tweaks';
           $scope.user.uistyle.uninstmain = true;
           $('#defaultBgBtn').click();
         };
-        $scope.startTour = function() {
+        $scope.startTour = () => {
           closeHelpDrop();
           startTour($scope.tourMsgs);
         };
-        $scope.randomColorGenerator = function() {
+        $scope.randomColorGenerator = () => {
           return '#' + '0123456789abcdef'.split('').map(function(v, i, a) {
             return i > 5 ? null : a[Math.floor(Math.random() * 16)];
           }).join('');
         // return '#' + Math.floor(Math.random() * 16777215).toString(16)
         };
 
-        $scope.randomColorMap = function() {
+        $scope.randomColorMap = () => {
           for (const theme in $scope.user.barThemeColors) {
             $scope.user.barThemeColors[theme].main = $scope.randomColorGenerator();
             $scope.user.barThemeColors[theme].secondary = $scope.randomColorGenerator();
             $scope.user.barThemeColors[theme].border = $scope.randomColorGenerator();
           }
         };
-        $scope.getLanguage = function() {
+        $scope.getLanguage = () => {
           let langURL = getParameterByName('lang');
           if (langURL) {
             persistantData.set('lang', langURL);
@@ -678,10 +678,10 @@ import {buildTweakFile} from '../assets/js/build-tweaks';
           // console.log( `Load was performed.` )
           });
         };
-        ipc.on('start-compile', function() {
+        ipc.on('start-compile', () => {
           $scope.startCompile();
         });
-        $scope.startRestoreCompile = function() {
+        $scope.startRestoreCompile = () => {
           bootbox.hideAll();
           closeHelpDrop();
           remote.BrowserWindow.fromId(1).focus();
@@ -709,7 +709,7 @@ import {buildTweakFile} from '../assets/js/build-tweaks';
             },
             callback: function(result) {
               if (result) {
-                setTimeout(function() {
+                setTimeout(() => {
                   $('.bootbox.modal').animate({'top': '+=20', 'opacity': '1'}, 10000);
                 }, 3000);
                 $('#compileRestore').hide();
@@ -721,7 +721,7 @@ import {buildTweakFile} from '../assets/js/build-tweaks';
         /**
        * start the autorun compile
        */
-        $scope.startAutorunCompile = function() {
+        $scope.startAutorunCompile = () => {
           bootbox.hideAll();
           closeHelpDrop();
           remote.BrowserWindow.fromId(1).focus();
@@ -767,11 +767,11 @@ import {buildTweakFile} from '../assets/js/build-tweaks';
               $scope.compileTweaks();
             },
           });
-          autoPrompt.on('shown.bs.modal', function() {
+          autoPrompt.on('shown.bs.modal', () => {
             $('.bootbox-input[value=serial]').prop('checked', $scope.user.autorun.serial);
           });
         };
-        $scope.startCompile = function() {
+        $scope.startCompile = () => {
           bootbox.hideAll();
           closeHelpDrop();
           if ($('.ng-invalid').length > 0) {
@@ -806,7 +806,7 @@ import {buildTweakFile} from '../assets/js/build-tweaks';
           }
           $scope.ConfirmCompile();
         };
-        $scope.ConfirmCompile = function() {
+        $scope.ConfirmCompile = () => {
           let msg = `<div id="tweak-install-list" style='font-size:12px;text-align:center;'><ul style="list-style:none;">`;
           if ($scope.user.mainOps.includes(4)) {
             msg += `<li style='width:100%'>****** ${$scope.mainOps.sshbringback.label} ******</li>`;
@@ -888,7 +888,7 @@ import {buildTweakFile} from '../assets/js/build-tweaks';
                   introJs().setOption('hintButtonLabel', 'COOL!');
                   introJs().addHints();
                 }, 2400);
-                setTimeout(function() {
+                setTimeout(() => {
                   introJs().hideHints();
                 }, 4000);
                 rimraf(`${tmpdir}`, (err) => {
@@ -902,12 +902,12 @@ import {buildTweakFile} from '../assets/js/build-tweaks';
               }
             },
           });
-          compileTweaksDialog.on('shown.bs.modal', function() {
+          compileTweaksDialog.on('shown.bs.modal', () => {
             $('.btn-success').focus();
           });
         };
 
-        $scope.compileTweaks = function() {
+        $scope.compileTweaks = () => {
           if ($scope.user.options.includes(19)) {
             $scope.saveSpeedoOps();
           }
@@ -962,7 +962,7 @@ import {buildTweakFile} from '../assets/js/build-tweaks';
           );
         };
       }])
-      .filter('htmlToPlaintext', function() {
+      .filter('htmlToPlaintext', () => {
         return function(text) {
           return text ? String(text).replace(/<[^>]+>/gm, '') : '';
         };

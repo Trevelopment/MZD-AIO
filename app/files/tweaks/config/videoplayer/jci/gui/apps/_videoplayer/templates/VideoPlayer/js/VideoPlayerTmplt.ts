@@ -116,7 +116,7 @@ function VideoPlayerTmplt(uiaId, parentDiv, templateID, controlProperties) {
     '<li id="videoNextBtn" class="videoTouchControls"></li>' +
     '</ul>';
   document.getElementsByClassName('VPControlOverlay')[0].innerHTML = this.playerControl;
-  setTimeout(function() {
+  setTimeout(() => {
     // We initialize the video player with this function
     StartVideoPlayerApp();
   }, 700);
@@ -146,7 +146,7 @@ VideoPlayerTmplt.prototype.singleClick = function(clickTarget, eventID) {
  * @param   eventID (string) event ID to passs to clickFunction
  */
 VideoPlayerTmplt.prototype.longClick = function(clickFunction, eventID) {
-  this.longholdTimeout = setTimeout(function() {
+  this.longholdTimeout = setTimeout(() => {
     player.hold = true;
     (typeof clickFunction === 'function') ? clickFunction(eventID): null;
   }, 1200);
@@ -193,7 +193,7 @@ VideoPlayerTmplt.prototype.handleControllerEvent = function(eventID) {
  * Called by the app during templateNoLongerDisplayed. Used to perform garbage collection procedures on the template and
  * its controls.
  */
-VideoPlayerTmplt.prototype.cleanUp = function() {
+VideoPlayerTmplt.prototype.cleanUp = () => {
   $('#SbSpeedo').removeClass('stayHidden');
   let child = document.getElementById(this.divElt.id);
   child.parentNode.removeChild(child);

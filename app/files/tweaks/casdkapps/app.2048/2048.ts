@@ -38,13 +38,13 @@ GameManager.prototype.handle = function(eventId) {
 };
 
 // Restart the game
-GameManager.prototype.restart = function() {
+GameManager.prototype.restart = () => {
   this.actuator.restart();
   this.setup();
 };
 
 // Set up the game
-GameManager.prototype.setup = function() {
+GameManager.prototype.setup = () => {
   this.grid = new Grid(this.size);
 
   this.score = 0;
@@ -59,14 +59,14 @@ GameManager.prototype.setup = function() {
 };
 
 // Set up the initial tiles to start the game with
-GameManager.prototype.addStartTiles = function() {
+GameManager.prototype.addStartTiles = () => {
   for (let i = 0; i < this.startTiles; i++) {
     this.addRandomTile();
   }
 };
 
 // Adds a tile in a random position
-GameManager.prototype.addRandomTile = function() {
+GameManager.prototype.addRandomTile = () => {
   if (this.grid.cellsAvailable()) {
     const value = Math.random() < 0.9 ? 2 : 4;
     const tile = new Tile(this.grid.randomAvailableCell(), value);
@@ -76,7 +76,7 @@ GameManager.prototype.addRandomTile = function() {
 };
 
 // Sends the updated grid to the actuator
-GameManager.prototype.actuate = function() {
+GameManager.prototype.actuate = () => {
   this.actuator.actuate(this.grid, {
     score: this.score,
     over: this.over,
@@ -85,7 +85,7 @@ GameManager.prototype.actuate = function() {
 };
 
 // Save all tile positions and remove merger info
-GameManager.prototype.prepareTiles = function() {
+GameManager.prototype.prepareTiles = () => {
   this.grid.eachCell(function(x, y, tile) {
     if (tile) {
       tile.mergedFrom = null;
@@ -210,12 +210,12 @@ GameManager.prototype.findFarthestPosition = function(cell, vector) {
   };
 };
 
-GameManager.prototype.movesAvailable = function() {
+GameManager.prototype.movesAvailable = () => {
   return this.grid.cellsAvailable() || this.tileMatchesAvailable();
 };
 
 // Check for available matches between tiles (more expensive check)
-GameManager.prototype.tileMatchesAvailable = function() {
+GameManager.prototype.tileMatchesAvailable = () => {
   const self = this;
 
   let tile;
@@ -258,7 +258,7 @@ function Grid(size) {
 }
 
 // Build a grid of the specified size
-Grid.prototype.build = function() {
+Grid.prototype.build = () => {
   for (let x = 0; x < this.size; x++) {
     const row = this.cells[x] = [];
 
@@ -269,7 +269,7 @@ Grid.prototype.build = function() {
 };
 
 // Find the first available random position
-Grid.prototype.randomAvailableCell = function() {
+Grid.prototype.randomAvailableCell = () => {
   const cells = this.availableCells();
 
   if (cells.length) {
@@ -277,7 +277,7 @@ Grid.prototype.randomAvailableCell = function() {
   }
 };
 
-Grid.prototype.availableCells = function() {
+Grid.prototype.availableCells = () => {
   const cells = [];
 
   this.eachCell(function(x, y, tile) {
@@ -299,7 +299,7 @@ Grid.prototype.eachCell = function(callback) {
 };
 
 // Check if there are any cells available
-Grid.prototype.cellsAvailable = function() {
+Grid.prototype.cellsAvailable = () => {
   return !!this.availableCells().length;
 };
 
@@ -346,7 +346,7 @@ function HTMLActuator(rootdom) {
 HTMLActuator.prototype.actuate = function(grid, metadata) {
   const self = this;
 
-  window.requestAnimationFrame(function() {
+  window.requestAnimationFrame(() => {
     self.clearContainer(self.tileContainer);
 
     grid.cells.forEach(function(column) {
@@ -364,7 +364,7 @@ HTMLActuator.prototype.actuate = function(grid, metadata) {
   });
 };
 
-HTMLActuator.prototype.restart = function() {
+HTMLActuator.prototype.restart = () => {
   this.clearMessage();
 };
 
@@ -389,7 +389,7 @@ HTMLActuator.prototype.addTile = function(tile) {
 
   if (tile.previousPosition) {
     // Make sure that the tile gets rendered in the previous position first
-    window.requestAnimationFrame(function() {
+    window.requestAnimationFrame(() => {
       classes[2] = self.positionClass({x: tile.x, y: tile.y});
       self.applyClasses(element, classes); // Update the position
     });
@@ -450,7 +450,7 @@ HTMLActuator.prototype.message = function(won) {
   this.messageContainer.getElementsByTagName('p')[0].textContent = message;
 };
 
-HTMLActuator.prototype.clearMessage = function() {
+HTMLActuator.prototype.clearMessage = () => {
   this.messageContainer.classList.remove('game-won', 'game-over');
 };
 
@@ -477,7 +477,7 @@ KeyboardInputManager.prototype.emit = function(event, data) {
   }
 };
 
-KeyboardInputManager.prototype.listen = function() {
+KeyboardInputManager.prototype.listen = () => {
   /*
   const self = this;
 
@@ -545,7 +545,7 @@ function Tile(position, value) {
   this.mergedFrom = null; // Tracks tiles that merged together
 }
 
-Tile.prototype.savePosition = function() {
+Tile.prototype.savePosition = () => {
   this.previousPosition = {x: this.x, y: this.y};
 };
 

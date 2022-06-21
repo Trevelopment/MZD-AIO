@@ -7,7 +7,7 @@ require('electron-context-menu')({
     {type: 'separator'},
     {
       label: 'Full Screen',
-      accelerator: (function() {
+      accelerator: (() => {
         if (process.platform === 'darwin') {
           return 'Ctrl+Command+F';
         } else {

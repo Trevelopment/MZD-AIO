@@ -25,7 +25,7 @@ export const snakeboard = (_canvas, _scorechange) => {
   this.snake_array; // an array of cells to make up the snake
 
 
-  this.create_snake = function() {
+  this.create_snake = () => {
     const length = 5; // Length of the snake
     this.snake_array = []; // Empty array to start with
     for (let i = length - 1; i >= 0; i--) {
@@ -35,7 +35,7 @@ export const snakeboard = (_canvas, _scorechange) => {
   };
 
   // Lets create the food now
-  this.create_food = function() {
+  this.create_food = () => {
     this.food = {
       x: Math.round(Math.random() * (this.w - this.cw) / this.cw),
       y: Math.round(Math.random() * (this.h - this.cw) / this.cw),
@@ -55,7 +55,7 @@ export const snakeboard = (_canvas, _scorechange) => {
 
 
   // Lets paint the snake now
-  this.paint = function() {
+  this.paint = () => {
     // To avoid the snake trail we need to paint the BG on every frame
     // Lets paint the canvas now
     if (this.ctx === undefined) {
@@ -133,18 +133,18 @@ export const snakeboard = (_canvas, _scorechange) => {
     this.ctx.strokeRect(x * this.cw, y * this.cw, this.cw, this.cw);
   };
 
-  this.pause = function() {
+  this.pause = () => {
     if (this.game_loop !== undefined) clearInterval(this.game_loop);
     this.game_loop = undefined;
   };
 
-  this.start = function() {
+  this.start = () => {
     // Lets move the snake now using a timer which will trigger the paint function
     // every 60ms
     if (this.game_loop === undefined) {
-      this.game_loop = setInterval(function() {
+      this.game_loop = setInterval(() => {
         this.paint();
-      }.bind(this), 120);
+      }, 120);
     }
   };
 

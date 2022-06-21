@@ -144,7 +144,7 @@ function SpeedoMeterTmplt(uiaId, parentDiv, templateID, controlProperties) {
 
   document.getElementById('valuetable').innerHTML = this.valuetable;
   // $.getScript('apps/_speedometer/js/speedometerUpdate.js',
-  setTimeout(function() {
+  setTimeout(() => {
     updateSpeedoApp();
   }, 700); // );
 }
@@ -169,7 +169,7 @@ SpeedoMeterTmplt.prototype.longClick = function(clickFunction) {
   if (typeof clickFunction === 'string') {
     clickFunction = $(clickFunction);
   }
-  this.longholdTimeout = setTimeout(function() {
+  this.longholdTimeout = setTimeout(() => {
     speedometerLonghold = true;
     (typeof clickFunction === 'function') ? clickFunction(): clickFunction.click();
   }, 1200);
@@ -244,7 +244,7 @@ SpeedoMeterTmplt.prototype.handleControllerEvent = function(eventID) {
  * Called by the app during templateNoLongerDisplayed. Used to perform garbage collection procedures on the template and
  * its controls.
  */
-SpeedoMeterTmplt.prototype.cleanUp = function() {
+SpeedoMeterTmplt.prototype.cleanUp = () => {
   if (framework.getCurrentApp() !== '_speedometer') {
     $('#SbSpeedo, #Sbfuel-bar-wrapper').fadeIn();
   }

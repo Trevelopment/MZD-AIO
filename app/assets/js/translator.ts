@@ -5,7 +5,7 @@ const translateData = new Config({'name': 'aio-translate-save'});
 document.getElementById('submit').innerHTML = langObj.translatorWindow[14].label;
 
 // Hook up the Restore to Default button
-document.getElementById('restore').addEventListener('click', function() {
+document.getElementById('restore').addEventListener('click', () => {
   editor.setValue(JSON.parse(fs.readFileSync(`${langPath}`, {encoding: 'utf8'})));
   translateData.set('data', editor.getValue());
 });
@@ -64,19 +64,19 @@ JSONEditor.plugins.sceditor.resizeMaxWidth = '800';
 
 // JSONEditor.defaults.editors..options.hidden = true
 // Hook up the submit button to log to the console
-document.getElementById('submit').addEventListener('click', function() {
+document.getElementById('submit').addEventListener('click', () => {
   const fileName = document.getElementById('newFileName').value.toLowerCase();
   // Get the value from the editor
   // console.log(JSON.stringify(editor.getValue()))
   console.log(fileName);
-  fs.writeFile(`${app.getPath('documents')}/${fileName}.aio.json`, JSON.stringify(editor.getValue()), function() {
+  fs.writeFile(`${app.getPath('documents')}/${fileName}.aio.json`, JSON.stringify(editor.getValue()), () => {
     bootbox.alert({
       title: `${fileName}.aio.json Saved`,
       message: `${fileName}.aio.json ${langObj.translatorWindow[7].label} <button class="w3-btn" onclick="shell.openItem(path.normalize(path.join('file://', app.getPath('documents'))))">${langObj.translatorWindow[8].label}</button><button class="w3-btn" onclick="shell.openItem(path.normalize(path.join('file://', app.getPath('documents'), '${fileName}.aio.json')))">Open ${fileName} JSON File</button>`,
     });
   });
 });
-document.getElementById('import').addEventListener('click', function() {
+document.getElementById('import').addEventListener('click', () => {
   let jsonData;
   dialog.showOpenDialog({
     title: `MZD-AIO-TI | ${langObj.translatorWindow[11].label}.`,
@@ -107,7 +107,7 @@ document.getElementById('import').innerHTML = langObj.translatorWindow[9].label;
 
 
 // Hook up the enable/disable button
-/* document.getElementById('enable_disable').addEventListener('click',function() {
+/* document.getElementById('enable_disable').addEventListener('click',() => {
 function gotoTranslator() {
   $(this).hide();
 }
@@ -122,7 +122,7 @@ editor.disable()
 // Hook up the validation indicator to update its
 // status whenever the editor changes
 let changes = 0; // Save on every 3 changes
-editor.on('change', function() {
+editor.on('change', () => {
   // Get an array of errors from the validator
   const errors = editor.validate();
 
@@ -144,11 +144,11 @@ editor.on('change', function() {
     // indicator.textContent = "valid"
   }
 });
-$(function() {
-  $('input, textarea').dblclick(function() {
+$(() => {
+  $('input, textarea').dblclick(() => {
     editor.getEditor($(this).parent().parent().attr('data-schemapath')).setValue(clipboard.readText());
   });
-  $('input, textarea').click(function() {
+  $('input, textarea').click(() => {
     $('#cpyBtn').insertAfter($(this)); // $(this).val()
     $('#cpyBtn').val($(this).val());
   });

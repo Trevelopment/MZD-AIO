@@ -138,7 +138,7 @@ CustomApplicationsHandler.register('app.tetris', new CustomApplication({
    * Add any content that will be static here
    */
 
-  created: function() {
+  created: () => {
     // speed restriction
     this.speedRestrict = true;
 
@@ -165,7 +165,7 @@ CustomApplicationsHandler.register('app.tetris', new CustomApplication({
    * (focused)
    */
 
-  focused: function() {
+  focused: () => {
     this.gameBoard.data('tetris').start();
   },
 
@@ -173,7 +173,7 @@ CustomApplicationsHandler.register('app.tetris', new CustomApplication({
    * (lost)
    */
 
-  lost: function() {
+  lost: () => {
     this.gameBoard.data('tetris').pause();
   },
 
@@ -196,7 +196,7 @@ CustomApplicationsHandler.register('app.tetris', new CustomApplication({
    *** Applicaton specific methods
    ***/
 
-  initializeGameBoard: function() {
+  initializeGameBoard: () => {
     this.gameBoard = $('<div/>').addClass('gameBoard').appendTo(this.canvas);
 
     $('<label/>').addClass('score').append('This Drive').appendTo(this.canvas);
@@ -211,7 +211,7 @@ CustomApplicationsHandler.register('app.tetris', new CustomApplication({
       tileSize: 20,
     }).on({
 
-      rowCompleted: function() {
+      rowCompleted: () => {
         this.__score++;
 
         this.score.html(this.__score);
@@ -225,24 +225,24 @@ CustomApplicationsHandler.register('app.tetris', new CustomApplication({
 
           this.set('highscore', this.__highscore);
         }
-      }.bind(this),
+      },
 
-      gameOver: function() {
+      gameOver: () => {
         this.gameBoard.data('tetris').pause();
 
         this.gamelabel.html('Game Over').fadeIn();
-      }.bind(this),
+      },
 
-      restartGame: function() {
+      restartGame: () => {
         this.__score = 0;
         this.score.html(this.__score);
         this.gamelabel.fadeOut();
-      }.bind(this),
+      },
     });
-    this.score.on('click', function() {
+    this.score.on('click', () => {
       this.gamelabel.html('Speed Restriction ' + (this.speedRestrict ? 'Disabled': 'Enabled')).fadeIn(100).delay(1000).fadeOut(1000);
       return this.speedRestrict = !this.speedRestrict;
-    }.bind(this));
+    });
   },
 
 

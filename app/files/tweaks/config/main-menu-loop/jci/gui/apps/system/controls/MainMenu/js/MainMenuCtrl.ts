@@ -75,7 +75,7 @@ function MainMenuCtrl(uiaId, parentDiv, controlId, properties) {
 }
 
 // This function creates the div classes of the Main Menu
-MainMenuCtrl.prototype.createStructure = function() {
+MainMenuCtrl.prototype.createStructure = () => {
   this.divElt = document.createElement('div');
   this.divElt.id = this.controlId;
   this.divElt.className = 'MainMenuCtrl';
@@ -128,7 +128,7 @@ MainMenuCtrl.prototype.createStructure = function() {
 };
 
 // This function will be used to set the default main menu icon (maybe not always com)
-MainMenuCtrl.prototype.init = function() {
+MainMenuCtrl.prototype.init = () => {
   // Record the hit test area for each normal and focus coin (can only be done after the divs are added to the DOM)
   for (let i = 0; i < this._coins.length; i++) {
     this._computeHitAreas(this._coins[i]);
@@ -320,7 +320,7 @@ MainMenuCtrl.prototype._setHighlightEnd = function(index, evt) {
 };
 
 // Return the index of the coin that currently has focus.
-MainMenuCtrl.prototype._getFocus = function() {
+MainMenuCtrl.prototype._getFocus = () => {
   for (let i = 0; i < this._coins.length; i++) {
     if (this._coins[i].hasFocus) {
       return i;
@@ -343,10 +343,10 @@ MainMenuCtrl.prototype._invokeSelectCallback = function(index) {
     // ** DO NOT **  block input indefinitely in case MMUI does not send a context change.
     if (this._allowInput) {
       this._allowInput = false;
-      this._allowInputTimerId = setTimeout(function() {
+      this._allowInputTimerId = setTimeout(() => {
         this._allowInput = true;
         this._allowInputTimerId = null;
-      }.bind(this), 1000);
+      }, 1000);
     }
 
     if (index === this._fullyHighlightedIndex) {
@@ -381,7 +381,7 @@ MainMenuCtrl.prototype._offsetFocus = function(direction) {
 };
 
 // Start a timer while the user holds tilt.
-MainMenuCtrl.prototype._startTiltHoldTimer = function() {
+MainMenuCtrl.prototype._startTiltHoldTimer = () => {
   this._cancelFastTilt();
 
   // Only start the fast tilt hold timer if fast-tilting would have any effect from the current focus position.
@@ -392,7 +392,7 @@ MainMenuCtrl.prototype._startTiltHoldTimer = function() {
 };
 
 // Invoked when the user holds tilt long enough to start fast tilting.
-MainMenuCtrl.prototype._startFastTiltInterval = function() {
+MainMenuCtrl.prototype._startFastTiltInterval = () => {
   framework.common.beep('Long', 'Multicontroller');
   this._tiltHoldTimerId = null;
   this._fastTiltStep();
@@ -400,7 +400,7 @@ MainMenuCtrl.prototype._startFastTiltInterval = function() {
 };
 
 // Cancels all fast-tilt or tilt-hold timers.
-MainMenuCtrl.prototype._cancelFastTilt = function() {
+MainMenuCtrl.prototype._cancelFastTilt = () => {
   clearTimeout(this._tiltHoldTimerId);
   clearInterval(this._fastTiltStepIntervalId);
 
@@ -409,7 +409,7 @@ MainMenuCtrl.prototype._cancelFastTilt = function() {
 };
 
 // Periodic interval invoked during fast tilting.
-MainMenuCtrl.prototype._fastTiltStep = function() {
+MainMenuCtrl.prototype._fastTiltStep = () => {
   this._offsetFocus(this._fastTiltDirection);
 };
 
@@ -512,7 +512,7 @@ MainMenuCtrl.prototype.handleControllerEvent = function(eventId) {
   return response;
 };
 
-MainMenuCtrl.prototype.startTransitionFrom = function() {
+MainMenuCtrl.prototype.startTransitionFrom = () => {
   if (this._hasInvokedSelectCallback) {
     const index = this._getFocus();
     switch (index) {
@@ -535,11 +535,11 @@ MainMenuCtrl.prototype.startTransitionFrom = function() {
   }
 };
 
-MainMenuCtrl.prototype.endTransitionTo = function() {
+MainMenuCtrl.prototype.endTransitionTo = () => {
   this._iconNameDiv.classList.add('Visible');
 };
 
-MainMenuCtrl.prototype.getContextCapture = function() {
+MainMenuCtrl.prototype.getContextCapture = () => {
   const capture = {};
   capture.focusedIcon = this._getFocus();
   log.debug('MainMenuCtrl.prototype.getContextCapture ' + capture.focusedIcon);
@@ -553,14 +553,14 @@ MainMenuCtrl.prototype.restoreContext = function(capture) {
   }
 };
 
-MainMenuCtrl.prototype.finishPartialActivity = function() {
+MainMenuCtrl.prototype.finishPartialActivity = () => {
   this._cancelFastTilt();
 
   // Null out the selectCallback to prevent any inadvertant callbacks while/after this template is destroyed.
   this.properties.selectCallback = null;
 };
 
-MainMenuCtrl.prototype.cleanUp = function() {
+MainMenuCtrl.prototype.cleanUp = () => {
   // delete obj reference
   delete this.properties;
 

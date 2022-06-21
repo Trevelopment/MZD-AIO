@@ -229,7 +229,7 @@ CustomApplicationsHandler.register('app.gpsspeed', new CustomApplication({
    * Add any content that will be static here
    */
 
-  created: function() {
+  created: () => {
     scale = this.scales['eu'];
 
     // create speedometer panel
@@ -352,9 +352,9 @@ CustomApplicationsHandler.register('app.gpsspeed', new CustomApplication({
     this.setRegion('eu'); // Peter-dk
 
     // start collection - originally in (focused)   Peter-dk: activated
-    this.collectorTimer = setInterval(function() {
+    this.collectorTimer = setInterval(() => {
       this.collectStatistics();
-    }.bind(this), 1000);
+    }, 1000);
 
     for (let i = 0; i < 24; i++) {
       this.statistics.km_buckets[i] = 0;
@@ -371,7 +371,7 @@ CustomApplicationsHandler.register('app.gpsspeed', new CustomApplication({
    * this method to run your logic.
    */
 
-  focused: function() {
+  focused: () => {
     // update graph    Peter-dk: activated
     this.updateSpeedoGraph();
   },
@@ -386,7 +386,7 @@ CustomApplicationsHandler.register('app.gpsspeed', new CustomApplication({
    * If you enabled terminateOnLost you may want to save the state of your app here.
    */
 
-  lost: function() {
+  lost: () => {
 
     // stop collection
     // clearInterval(this.collectorTimer);
@@ -394,7 +394,7 @@ CustomApplicationsHandler.register('app.gpsspeed', new CustomApplication({
   },
 
 
-  createButtonSections: function() {
+  createButtonSections: () => {
     [
       {top: 40, left: 730, title: '?'},
       {top: 270, left: 700, title: ''}, // Right button
@@ -513,7 +513,7 @@ CustomApplicationsHandler.register('app.gpsspeed', new CustomApplication({
     this.helpOpen = true;
     $('.gpsspeedMsg').show();
     const that = this;
-    this.helpTimeout = setTimeout(function() {
+    this.helpTimeout = setTimeout(() => {
       $('.gpsspeedMsg').hide();
       return that.helpOpen = false;
     }, seconds * 1000); // delay closing of window
@@ -538,7 +538,7 @@ CustomApplicationsHandler.register('app.gpsspeed', new CustomApplication({
    * (createGPSPanel)
    */
 
-  createGPSPanel: function() {
+  createGPSPanel: () => {
     this.gpsPanel = $('<div/>').attr('id', 'gps').appendTo(this.canvas);
     this.gpsCompass = $('<div/>').attr('id', 'gpscompass').appendTo(this.canvas);
 
@@ -574,7 +574,7 @@ CustomApplicationsHandler.register('app.gpsspeed', new CustomApplication({
    * (updateSpeedoGraph)
    */
 
-  updateSpeedoGraph: function() {
+  updateSpeedoGraph: () => {
     // prepare
     const region = this.getRegion();
     const scale = this.scales[region]; //  || this.scales.eu,
@@ -781,13 +781,13 @@ CustomApplicationsHandler.register('app.gpsspeed', new CustomApplication({
    * (updateSpeedoScale)
    */
 
-  updateSpeedoScale: function() {
+  updateSpeedoScale: () => {
     // hide old content
     if (this.hasSpeedoDialText) {
-      this.speedoDialText.fadeOut('fast', function() {
+      this.speedoDialText.fadeOut('fast', () => {
         this.hasSpeedoDialText = false;
         this.updateSpeedoScale();
-      }.bind(this));
+      });
       return;
     }
 
@@ -883,7 +883,7 @@ CustomApplicationsHandler.register('app.gpsspeed', new CustomApplication({
    *  It has to be adapted to local laws in other counties
    */
 
-  updateSetSpeedText: function() {
+  updateSetSpeedText: () => {
     let percent; let policeSpeed;
 
     if (this.setSpeed > 0) {
@@ -1201,7 +1201,7 @@ CustomApplicationsHandler.register('app.gpsspeed', new CustomApplication({
    * (collectStatistics) starts collecting statistics and redraws the graph
    */
 
-  collectStatistics: function() {
+  collectStatistics: () => {
     // return; Peter-dk removed
 
     this.statistics.speeds.push(this.__speed);

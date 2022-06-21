@@ -48,7 +48,7 @@ function saveBlob(blob, filename: string) {
 
     saveUrl(url, filename);
 
-    setTimeout(function() {
+    setTimeout(() => {
       window.URL.revokeObjectURL(url);
     }, 250);
   }
@@ -65,7 +65,7 @@ function saveUrl(url: string, filename: string) {
     // some browsers need it to be in the document
     document.body.appendChild(link);
     link.click();
-    setTimeout(function() {
+    setTimeout(() => {
       document.body.removeChild(link);
     }, 250);
   } else {

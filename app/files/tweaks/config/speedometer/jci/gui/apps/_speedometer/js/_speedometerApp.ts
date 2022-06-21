@@ -27,7 +27,7 @@ function _speedometerApp(uiaId) {
  * Called just after the app is instantiated by framework.
  * All variables local to this app should be declared in this function
  */
-_speedometerApp.prototype.appInit = function() {
+_speedometerApp.prototype.appInit = () => {
   log.debug('_speedometerApp appInit  called...');
   // Context table
   // @formatter:off
@@ -69,10 +69,10 @@ _speedometerApp.prototype.appInit = function() {
  * CONTEXT CALLBACKS
  * =========================
  */
-_speedometerApp.prototype._StartContextReady = function() {
+_speedometerApp.prototype._StartContextReady = () => {
   aioMagicRoute('_speedometer', barSpeedometerMod ? 'SpeedBar' : 'SpeedClassic');
 };
-_speedometerApp.prototype._SpeedoContextReady = function() {
+_speedometerApp.prototype._SpeedoContextReady = () => {
   framework.common.setSbDomainIcon('apps/_speedometer/IcnSbnSpeedometer.png');
   if (barSpeedometerMod) {
     LoadSpeedBarLayout();
@@ -83,13 +83,13 @@ _speedometerApp.prototype._SpeedoContextReady = function() {
     $('#SbSpeedo, #Sbfuel-bar-wrapper').fadeOut();
   }
 };
-_speedometerApp.prototype._SpeedCtxtInFunction = function() {
+_speedometerApp.prototype._SpeedCtxtInFunction = () => {
   barSpeedometerMod = false;
 };
-_speedometerApp.prototype._BarCtxtInFunction = function() {
+_speedometerApp.prototype._BarCtxtInFunction = () => {
   barSpeedometerMod = true;
 };
-_speedometerApp.prototype._BarCtxtOutFunction = function() {
+_speedometerApp.prototype._BarCtxtOutFunction = () => {
   // TODO: Save changed layout to load when bar speedometer is reopened
 };
 

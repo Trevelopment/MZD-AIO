@@ -171,14 +171,14 @@ CustomApplicationsHandler.register('app.android', new CustomApplication({
     elem.scrollTop = elem.scrollHeight;
   },
 
-  connect: function() {
+  connect: () => {
     this.ws = new WebSocket('ws://localhost:9002');
 
-    this.ws.onopen = function() {
+    this.ws.onopen = () => {
       // document.getElementById('log').innerHTML = "";
       this.enablerun();
       // this.start1();
-    }.bind(this);
+    };
 
     this.ws.onclose = function(event) {
       if (event.code === 1000) {
@@ -215,9 +215,9 @@ CustomApplicationsHandler.register('app.android', new CustomApplication({
         this.logdata('<font color="red">'+ reason + '</font>\n');
       }
 
-      setTimeout(function() {
+      setTimeout(() => {
         this.connect();
-      }.bind(this), 1000);
+      }, 1000);
     }.bind(this);
 
     this.ws.onerror = function(error) {
@@ -242,23 +242,23 @@ CustomApplicationsHandler.register('app.android', new CustomApplication({
     }.bind(this);
   },
 
-  enablerun: function() {
+  enablerun: () => {
     this.b1.prop('disabled', false);
     this.b2.prop('disabled', false);
     this.b3.prop('disabled', false);
     this.bx.prop('disabled', true);
     this.logdata('>_');
-    this.cursortimer = setInterval(function() {
+    this.cursortimer = setInterval(() => {
       const elem = this.logspot.get(0);
       c = '_';
       if (elem.innerHTML.substr(elem.innerHTML.length-1) === '_') {
         c = ' ';
       }
       elem.innerHTML = elem.innerHTML.slice(0, -1) + c;
-    }.bind(this), 500);
+    }, 500);
   },
 
-  disablerun: function() {
+  disablerun: () => {
     this.b1.prop('disabled', true);
     this.b2.prop('disabled', true);
     this.b3.prop('disabled', true);
@@ -280,26 +280,26 @@ CustomApplicationsHandler.register('app.android', new CustomApplication({
     }
   },
 
-  start1: function() {
+  start1: () => {
     this.run({'command': 'run', 'args': ['/bin/ls', '-ls'], 'id': 1});
   },
 
-  start2: function() {
+  start2: () => {
     this.run({'command': 'run', 'args': ['./test.sh'], 'id': 1});
   },
 
-  start3: function() {
+  start3: () => {
     this.run({'command': 'run', 'args': ['./test.sh'], 'id': 1});
   },
 
-  kill: function() {
+  kill: () => {
     if (this.ws.readyState !== this.ws.CLOSED) {
       this.ws.close();
     }
   },
 
 
-  created: function() {
+  created: () => {
     this.ws = null;
     this.cursortimer = null;
 
@@ -323,21 +323,21 @@ CustomApplicationsHandler.register('app.android', new CustomApplication({
 
 */
 
-    this.b1.get(0).onmousedown=function() {
+    this.b1.get(0).onmousedown=() => {
       this.start1();
-    }.bind(this);
+    };
 
-    this.b2.get(0).onmousedown=function() {
+    this.b2.get(0).onmousedown=() => {
       this.start2();
-    }.bind(this);
+    };
 
-    this.b3.get(0).onmousedown=function() {
+    this.b3.get(0).onmousedown=() => {
       this.start3();
-    }.bind(this);
+    };
 
-    this.bx.get(0).onmousedown=function() {
+    this.bx.get(0).onmousedown=() => {
       this.kill();
-    }.bind(this);
+    };
 
     this.connect();
   },
@@ -350,7 +350,7 @@ CustomApplicationsHandler.register('app.android', new CustomApplication({
      * this method to run your logic.
      */
 
-  focused: function() {
+  focused: () => {
 
 
   },
@@ -365,7 +365,7 @@ CustomApplicationsHandler.register('app.android', new CustomApplication({
      * If you enabled terminateOnLost you may want to save the state of your app here.
      */
 
-  lost: function() {
+  lost: () => {
 
   },
 

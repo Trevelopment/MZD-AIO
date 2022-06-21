@@ -57,12 +57,12 @@ function SbSpeedo() {
   } else {
     $('.speedUnit').text('km/h');
   }
-  $('.StatusBarCtrlClock, #SbSpeedo').click(function() {
+  $('.StatusBarCtrlClock, #SbSpeedo').click(() => {
     const sbVis = $('#SbSpeedo').is(':visible');
     $('#SbSpeedo, #Sbfuel-bar-wrapper').fadeToggle();
     sbVis ? $('#SbSpeedo').addClass('stayHidden') : $('#SbSpeedo').removeClass('stayHidden');
   });
-  setInterval(function() {
+  setInterval(() => {
     if (framework.getCurrentApp() === 'backupparking') {
       $('#SbSpeedo, #Sbfuel-bar-wrapper').addClass('parking');
       $('#SbSpeedo .SbVal1, #SbSpeedo .SbVal2').fadeIn();
@@ -72,8 +72,8 @@ function SbSpeedo() {
     }
   }, 1000);
 }
-setTimeout(function() {
-  utility.loadScript('apps/_speedometer/js/speedometer.js', null, function() {
+setTimeout(() => {
+  utility.loadScript('apps/_speedometer/js/speedometer.js', null, () => {
     LoadSpeedoTemplate();
     if (enableSmallSbSpeedo) {
       SbSpeedo();

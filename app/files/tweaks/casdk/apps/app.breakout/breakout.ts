@@ -32,7 +32,7 @@ export const breakoutboard = (_canvas, _scorechange) => {
   this.lives = 3;
   this.bricks = [];
 
-  this.buildbrick = function() {
+  this.buildbrick = () => {
     for (c = 0; c < this.brickColumnCount; c++) {
       this.bricks[c] = [];
       for (r = 0; r < this.brickRowCount; r++) {
@@ -41,7 +41,7 @@ export const breakoutboard = (_canvas, _scorechange) => {
     }
   };
 
-  this.collisionDetection = function() {
+  this.collisionDetection = () => {
     for (c = 0; c < this.brickColumnCount; c++) {
       for (r = 0; r < this.brickRowCount; r++) {
         const b = this.bricks[c][r];
@@ -68,21 +68,21 @@ export const breakoutboard = (_canvas, _scorechange) => {
     }
   };
 
-  this.drawBall = function() {
+  this.drawBall = () => {
     this.ctx.beginPath();
     this.ctx.arc(this.x, this.y, this.ballRadius, 0, Math.PI * 2);
     this.ctx.fillStyle = '#0095DD';
     this.ctx.fill();
     this.ctx.closePath();
   };
-  this.drawPaddle = function() {
+  this.drawPaddle = () => {
     this.ctx.beginPath();
     this.ctx.rect(this.paddleX, this.canvas.height - this.paddleHeight, this.paddleWidth, this.paddleHeight);
     this.ctx.fillStyle = '#0095DD';
     this.ctx.fill();
     this.ctx.closePath();
   };
-  this.drawBricks = function() {
+  this.drawBricks = () => {
     for (c = 0; c < this.brickColumnCount; c++) {
       for (r = 0; r < this.brickRowCount; r++) {
         if (this.bricks[c][r].status == 1) {
@@ -101,19 +101,19 @@ export const breakoutboard = (_canvas, _scorechange) => {
   };
 
 
-  this.drawScore = function() {
+  this.drawScore = () => {
     this.ctx.font = '16px Arial';
     this.ctx.fillStyle = '#0095DD';
     this.ctx.fillText('Score: ' + this.score, 8, 20);
   };
-  this.drawLives = function() {
+  this.drawLives = () => {
     this.ctx.font = '16px Arial';
     this.ctx.fillStyle = '#0095DD';
     this.ctx.fillText('Lives: ' + this.lives, this.canvas.width - 65, 20);
   };
 
 
-  this.draw = function() {
+  this.draw = () => {
     if (this.initdata()) {
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
       this.drawBricks();
@@ -157,7 +157,7 @@ export const breakoutboard = (_canvas, _scorechange) => {
   };
 
 
-  this.initdata = function() {
+  this.initdata = () => {
     if (this.ctx === undefined) {
       this.ctx = this.canvas.getContext('2d');
       this.x = this.canvas.width / 2;
@@ -169,22 +169,22 @@ export const breakoutboard = (_canvas, _scorechange) => {
     return this.ctx !== undefined;
   };
 
-  this.paint = function() {
+  this.paint = () => {
     if (this.initdata()) {
       this.draw();
     }
   };
 
-  this.pause = function() {
+  this.pause = () => {
     if (this.game_loop !== undefined) clearInterval(this.game_loop);
     this.game_loop = undefined;
   };
 
-  this.start = function() {
+  this.start = () => {
     if (this.game_loop === undefined) {
-      this.game_loop = setInterval(function() {
+      this.game_loop = setInterval(() => {
         this.paint();
-      }.bind(this), 30);
+      }, 30);
     }
   };
 

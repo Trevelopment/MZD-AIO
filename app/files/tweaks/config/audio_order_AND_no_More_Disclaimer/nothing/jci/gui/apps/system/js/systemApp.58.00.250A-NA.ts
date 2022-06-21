@@ -60,7 +60,7 @@ function systemApp(uiaId) {
 * Called just after the app is instantiated by framework.
 * App-specific variables should be declared here.
 */
-systemApp.prototype.appInit = function() {
+systemApp.prototype.appInit = () => {
   if (framework.debugMode) {
     utility.loadScript('apps/system/test/systemAppTest.js');
   }
@@ -553,7 +553,7 @@ systemApp.prototype.getWinkProperties = function(alert, params) {
 // /////////////////////////////////////////////////////////////////////////////
 // Initialize various menu data lists
 // /////////////////////////////////////////////////////////////////////////////
-systemApp.prototype._initEntertainmentDataList = function() {
+systemApp.prototype._initEntertainmentDataList = () => {
   const items = [];
   if (framework.localize.getRegion() === framework.localize.REGIONS.Japan) {
     // Traffic alert is Japan only. We do not get a separate StatusMenuVisible for this so we only
@@ -584,7 +584,7 @@ systemApp.prototype._initEntertainmentDataList = function() {
     items: items,
   };
 };
-systemApp.prototype._initApplicationsDataList = function() {
+systemApp.prototype._initApplicationsDataList = () => {
   const items = [];
   items.push(
       {appData: {appName: 'hdtrafficimage', isVisible: false, mmuiEvent: 'SelectHDTrafficImage'}, text1Id: 'HDTrafficItem', disabled: true, itemStyle: 'style01', hasCaret: false},
@@ -614,7 +614,7 @@ systemApp.prototype._initApplicationsDataList = function() {
     'VehicleStatusMonitor': ['warnguide', 'vsm', 'schedmaint'],
   };
 };
-systemApp.prototype._initCommunicationsDataList = function() {
+systemApp.prototype._initCommunicationsDataList = () => {
   const items = [];
   items.push(
       {appData: {appName: '', isVisible: false, mmuiEvent: 'SelectActiveCall'}, text1Id: 'ActiveCallItem', disabled: false, itemStyle: 'style01', hasCaret: false},
@@ -989,7 +989,7 @@ systemApp.prototype._StatusUpdateNotificationsHandler = function(msg) {
     }
   }
 };
-systemApp.prototype._ShowStateSBN_SiriActiveMsgHandler = function() {
+systemApp.prototype._ShowStateSBN_SiriActiveMsgHandler = () => {
   framework.common.endStateSbn(this.uiaId, 'SiriStatusNotification', 'vrStatus'); // End the SBN if displayed
   const params = {
     sbnStyle: 'Style02',
@@ -998,7 +998,7 @@ systemApp.prototype._ShowStateSBN_SiriActiveMsgHandler = function() {
   };
   framework.common.showStateSbn(this.uiaId, 'SiriStatusNotification', 'vrStatus', params);
 };
-systemApp.prototype._TimedSBN_SiriErrorMsgHandler = function() {
+systemApp.prototype._TimedSBN_SiriErrorMsgHandler = () => {
   framework.common.endStateSbn(this.uiaId, 'SiriStatusNotification', 'vrStatus');// End the SBN if displayed
   const params = {
     sbnStyle: 'Style01',
@@ -1006,7 +1006,7 @@ systemApp.prototype._TimedSBN_SiriErrorMsgHandler = function() {
   };
   framework.common.startTimedSbn(this.uiaId, 'SiriStatusNotification', 'vrStatus', params);
 };
-systemApp.prototype._TimedSBN_VoiceNotSupportedMsgHandler = function() {
+systemApp.prototype._TimedSBN_VoiceNotSupportedMsgHandler = () => {
   framework.common.endStateSbn(this.uiaId, 'SiriStatusNotification', 'vrStatus');// End the SBN if displayed
   const params = {
     sbnStyle: 'Style02',
@@ -1015,7 +1015,7 @@ systemApp.prototype._TimedSBN_VoiceNotSupportedMsgHandler = function() {
   };
   framework.common.startTimedSbn(this.uiaId, 'VoiceNotificationErr', 'vrStatus', params);
 };
-systemApp.prototype._RemoveStateSBN_SiriActiveMsgHandler = function() {
+systemApp.prototype._RemoveStateSBN_SiriActiveMsgHandler = () => {
   framework.common.endStateSbn(this.uiaId, 'SiriStatusNotification', 'vrStatus');
 };
 systemApp.prototype._TimedSBN_SourceNotAvailableMsgHandler = function(msg) {
@@ -1251,7 +1251,7 @@ systemApp.prototype._menuItemSelectCallback = function(listCtrlObj, appData, par
 // /////////////////////////////////////////////////////////////////////////////
 // Communication
 // /////////////////////////////////////////////////////////////////////////////
-systemApp.prototype._CommCtxtContextIn = function() {
+systemApp.prototype._CommCtxtContextIn = () => {
   let scrollTo = 0;
   // We cannot use the data list in the current context here, becuase it doesn't exist yet
   // so we use _buildCommunicationDataList() just like _readyCommunications() will
@@ -1275,7 +1275,7 @@ systemApp.prototype._CommCtxtContextIn = function() {
 // /////////////////////////////////////////////////////////////////////////////
 // Applications
 // /////////////////////////////////////////////////////////////////////////////
-systemApp.prototype._readyApplications = function() {
+systemApp.prototype._readyApplications = () => {
   // This context has dynamically visible items (see StatusMenuVisible message) so the list contents is rebuilt.
   if (this._currentContext && this._currentContextTemplate) {
     this._AtSpeedDisabled = framework.common.getAtSpeedValue();
@@ -1287,7 +1287,7 @@ systemApp.prototype._readyApplications = function() {
   }
 };
 // Build list data from this._masterApplicationDataList based on the currently visible items.
-systemApp.prototype._buildApplicationsDataList = function() {
+systemApp.prototype._buildApplicationsDataList = () => {
   const dataList = {
     itemCountKnown: true,
     itemCount: 0,
@@ -1310,7 +1310,7 @@ systemApp.prototype._buildApplicationsDataList = function() {
 // /////////////////////////////////////////////////////////////////////////////
 // Entertainment
 // /////////////////////////////////////////////////////////////////////////////
-systemApp.prototype._readyEntertainment = function() {
+systemApp.prototype._readyEntertainment = () => {
   // This context has dynamically visible items (see StatusMenuVisible message) so the list contents is rebuilt.
   if (this._currentContext && this._currentContextTemplate) {
     this._AtSpeedDisabled = framework.common.getAtSpeedValue();
@@ -1322,7 +1322,7 @@ systemApp.prototype._readyEntertainment = function() {
   }
 };
 // Build list data from this._masterEntertainmentDataList based on the currently visible items.
-systemApp.prototype._buildEntertainmentDataList = function() {
+systemApp.prototype._buildEntertainmentDataList = () => {
   const dataList = {
     itemCountKnown: true,
     itemCount: 0,
@@ -1340,7 +1340,7 @@ systemApp.prototype._buildEntertainmentDataList = function() {
 // /////////////////////////////////////////////////////////////////////////////
 // Communication - avalajh
 // /////////////////////////////////////////////////////////////////////////////
-systemApp.prototype._readyCommunication = function() {
+systemApp.prototype._readyCommunication = () => {
   // This context has dynamically visible items (see StatusMenuVisible message) so the list contents is rebuilt.
   if (this._currentContext && this._currentContextTemplate) {
     this._AtSpeedDisabled = framework.common.getAtSpeedValue();
@@ -1352,7 +1352,7 @@ systemApp.prototype._readyCommunication = function() {
   }
 };
 // Build list data from this._communicationsDataList based on the currently visible items.
-systemApp.prototype._buildCommunicationDataList = function() {
+systemApp.prototype._buildCommunicationDataList = () => {
   const dataList = {
     itemCountKnown: true,
     itemCount: 0,
@@ -1387,20 +1387,20 @@ systemApp.prototype._selectCallbackNoConnectionNotify = function(dialogBtnCtrlOb
 // /////////////////////////////////////////////////////////////////////////////
 //  NotifyDialog
 // /////////////////////////////////////////////////////////////////////////////
-systemApp.prototype._NotifyDialogCtxtTmpltReadyToDisplay = function() {
+systemApp.prototype._NotifyDialogCtxtTmpltReadyToDisplay = () => {
   if (this._currentContext.params && this._currentContext.params.payload && this._currentContext.params.payload.messageNotifyData) {
     this._currentContextTemplate.dialog3Ctrl.setText2(this._currentContext.params.payload.messageNotifyData.name);
   }
 };
-systemApp.prototype._NotifyDialogCtxtTmpltDisplayed = function() {
+systemApp.prototype._NotifyDialogCtxtTmpltDisplayed = () => {
   // Start timer to dismiss the notification if the user doesn't respond
   const self = this;
-  this._NotifyDialogTimeoutId = setTimeout(function() {
+  this._NotifyDialogTimeoutId = setTimeout(() => {
     this._NotifyDialogTimeoutId = null;
     framework.sendEventToMmui(self.uiaId, 'Timeout');
   }, 10000);
 };
-systemApp.prototype._NotifyDialogCtxtTmpltNoLongerDisplayed = function() {
+systemApp.prototype._NotifyDialogCtxtTmpltNoLongerDisplayed = () => {
   if (this._NotifyDialogTimeoutId !== null) {
     clearTimeout(this._NotifyDialogTimeoutId);
     this._NotifyDialogTimeoutId = null;
@@ -1476,7 +1476,7 @@ systemApp.prototype._readyNotificationList = function(readyParams) {
   };
   framework.sendRequestToAppsdk(this.uiaId, this._msgConnectCallback.bind(this), 'msg', 'Connect', params);
 };
-systemApp.prototype._noLongerDisplayedNotificationList = function() {
+systemApp.prototype._noLongerDisplayedNotificationList = () => {
   this._closeMsgApiConnection();
 };
 systemApp.prototype._msgConnectCallback = function(msg) {
@@ -1575,13 +1575,13 @@ systemApp.prototype._msgGetNewMessagesListCallback = function(msg) {
     this._closeMsgApiConnection();
   }
 };
-systemApp.prototype._closeMsgApiConnection = function() {
+systemApp.prototype._closeMsgApiConnection = () => {
   if (this._msgApiConnection) {
     const params = {
       'connection_in': this._msgApiConnection,
       'context_in': 0,
     };
-    framework.sendRequestToAppsdk(this.uiaId, function() {}, 'msg', 'Disconnect', params);
+    framework.sendRequestToAppsdk(this.uiaId, () => {}, 'msg', 'Disconnect', params);
     this._msgApiConnection = null;
   }
 };
@@ -1637,7 +1637,7 @@ systemApp.prototype._displayOffUserActivity = function(controlRef, appData, para
 // /////////////////////////////////////////////////////////////////////////////
 // Disclaimer
 // /////////////////////////////////////////////////////////////////////////////
-systemApp.prototype._displayedDisclaimer = function() {
+systemApp.prototype._displayedDisclaimer = () => {
   framework.sendEventToMmui('system', 'DisposeIntroVideo');
   if (this._disclaimerTime.reset) {
     this._disclaimerTime.reset = false;
@@ -1662,7 +1662,7 @@ systemApp.prototype._selectCallbackDisclaimer = function(controlRef, appData, pa
       break;
   }
 };
-systemApp.prototype._disclaimerTimedout = function() {
+systemApp.prototype._disclaimerTimedout = () => {
   this._disclaimerTime.timeoutId = null;
   this._disclaimerTime.reset = true;
   if (this._currentContext && this._currentContext.ctxtId === 'Disclaimer') {
@@ -1682,7 +1682,7 @@ systemApp.prototype._disclaimerTimedout = function() {
     this._disclaimerTime.timeoutId = setTimeout(this._disclaimerTimedout.bind(this), this._disclaimerTime.remaining);
   }
 };
-systemApp.prototype._noLongerDisplayedDisclaimer = function() {
+systemApp.prototype._noLongerDisplayedDisclaimer = () => {
   // Note: The template is transitioning away either because of a Timeout, the user hit OK or an interrupting context change.
   const elapsed = Date.now() - this._disclaimerTime.whenStarted;
   this._disclaimerTime.remaining = this._disclaimerTime.remaining - elapsed;
@@ -1724,7 +1724,7 @@ systemApp.prototype._selectCallbackRVRInstructions = function(controlRef, appDat
 // /////////////////////////////////////////////////////////////////////////////
 // SourceReconnect
 // /////////////////////////////////////////////////////////////////////////////
-systemApp.prototype._readySourceReconnect = function() {
+systemApp.prototype._readySourceReconnect = () => {
   if (this._currentContext.params &&
                   this._currentContext.params.payload &&
                   this._currentContextTemplate &&
@@ -1771,7 +1771,7 @@ systemApp.prototype._selectSourceReconnect = function(controlRef, appData, param
 // /////////////////////////////////////////////////////////////////////////////
 // SourceReconnectFailed
 // /////////////////////////////////////////////////////////////////////////////
-systemApp.prototype._readySourceReconnectFailed = function() {
+systemApp.prototype._readySourceReconnectFailed = () => {
   if (this._currentContext.params &&
                     this._currentContext.params.payload &&
                     this._currentContextTemplate &&
@@ -1803,7 +1803,7 @@ systemApp.prototype._readySourceReconnectFailed = function() {
   }
 };
 // Siri EnableRVR context ready to Display Function
-systemApp.prototype._readyEnableRVR = function() {
+systemApp.prototype._readyEnableRVR = () => {
   if (this._currentContext.params &&
                       this._currentContext.params.payload &&
                       this._currentContextTemplate &&
@@ -1814,7 +1814,7 @@ systemApp.prototype._readyEnableRVR = function() {
   }
 };
 // Siri SiriLaunchingError context ready to Display Function
-systemApp.prototype._readySiriLaunchingError = function() {
+systemApp.prototype._readySiriLaunchingError = () => {
   if (this._currentContext.params &&
                         this._currentContext.params.payload &&
                         this._currentContextTemplate &&

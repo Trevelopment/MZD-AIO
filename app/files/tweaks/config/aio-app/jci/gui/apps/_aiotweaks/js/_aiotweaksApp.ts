@@ -26,7 +26,7 @@ function _aiotweaksApp(uiaId) {
  * Called just after the app is instantiated by framework.
  * All variables local to this app should be declared in this function
  */
-_aiotweaksApp.prototype.appInit = function() {
+_aiotweaksApp.prototype.appInit = () => {
   log.debug('_aiotweaksApp appInit  called...');
 
   this.stopMsgTimeout = null;
@@ -84,7 +84,7 @@ _aiotweaksApp.prototype._NoSpeedMsgHandler = function(msg) {
   log.info('AIO Tweaks App Received NoSpeedMsg' + msg);
   framework.common.setSbName('AIO Tweaks - Stop!');
   clearTimeout(this.stopMsgTimeout);
-  this.stopMsgTimeout = setTimeout(function() {
+  this.stopMsgTimeout = setTimeout(() => {
     if (framework.getCurrentApp() === '_aiotweaks') {
       framework.common.setSbName('AIO Tweaks');
     }
@@ -121,11 +121,11 @@ _aiotweaksApp.prototype._NowPlayingDataMsgHandler = function(msg) {
   framework.instantiateControl('common', document.body, 'WinkCtrl', properties);
 };
 
-_aiotweaksApp.prototype._StartContextReady = function() {
+_aiotweaksApp.prototype._StartContextReady = () => {
   framework.common.setSbDomainIcon('apps/_aiotweaks/app.png');
 };
 
-_aiotweaksApp.prototype._StartContextOut = function() {
+_aiotweaksApp.prototype._StartContextOut = () => {
   const currTwks = document.getElementsByTagName('body')[0].className;
   if (currTwks.length > 0) {
     localStorage.setItem('aio.tweaks', currTwks);

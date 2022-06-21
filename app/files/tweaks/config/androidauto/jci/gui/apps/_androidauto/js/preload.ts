@@ -6,12 +6,12 @@ function AAInstallHook() {
   const showOperaSurface_orig = framework.showOperaSurface.bind(framework);
   const showTemplateSurfaces_orig = framework._showTemplateSurfaces.bind(framework);
   const hideTemplateSurfaces_orig = framework._hideTemplateSurfaces.bind(framework);
-  const hasAAVideoFocus = function() {
+  const hasAAVideoFocus = () => {
     let ret = false;
     try {
       let currentStatus = null;
       const xhttp = new XMLHttpRequest();
-      xhttp.onreadystatechange = function() {
+      xhttp.onreadystatechange = () => {
         if (xhttp.readyState == 4) {
           if (xhttp.status == 200) {
             currentStatus = JSON.parse(xhttp.responseText);
@@ -29,7 +29,7 @@ function AAInstallHook() {
     return ret;
   };
 
-  framework.showOperaSurface = function() {
+  framework.showOperaSurface = () => {
     if (!hasAAVideoFocus()) {
       showOperaSurface_orig();
     }

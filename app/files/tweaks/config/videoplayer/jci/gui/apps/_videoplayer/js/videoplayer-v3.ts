@@ -233,32 +233,32 @@ export const StartVideoPlayerApp = () => {
 
   /* reboot system
   ==================================================================================*/
-  $('#rebootBtnDiv').click(function() {
+  $('#rebootBtnDiv').click(() => {
     myRebootSystem();
   });
 
   /* retrieve video list
   ==================================================================================*/
-  $('#myVideoMovieBtn').click(function() {
+  $('#myVideoMovieBtn').click(() => {
     player.savedVideoList = null;
     myVideoListRequest();
   });
 
   /* scroll up video list
   ==================================================================================*/
-  $('#myVideoScrollUp').click(function() {
+  $('#myVideoScrollUp').click(() => {
     myVideoListScrollUpDown('up');
   });
 
   /* scroll down video list
   ==================================================================================*/
-  $('#myVideoScrollDown').click(function() {
+  $('#myVideoScrollDown').click(() => {
     myVideoListScrollUpDown('down');
   });
 
   /* play pause playback
   ==================================================================================*/
-  $('#myVideoPausePlayBtn, #videoPlayBtn').click(function() {
+  $('#myVideoPausePlayBtn, #videoPlayBtn').click(() => {
     if (BlackOut) {
       toggleBlackOut(VideoPaused);
     }
@@ -267,7 +267,7 @@ export const StartVideoPlayerApp = () => {
 
   /* stop playback
   ==================================================================================*/
-  $('#myVideoStopBtn, #videoStopBtn').click(function() {
+  $('#myVideoStopBtn, #videoStopBtn').click(() => {
     player.resumePlay = null;
     currentVideoTrack = null;
     CurrentVideoPlayTime = null;
@@ -277,32 +277,32 @@ export const StartVideoPlayerApp = () => {
 
   /* next track
   ==================================================================================*/
-  $('#myVideoNextBtn, #videoNextBtn').click(function() {
+  $('#myVideoNextBtn, #videoNextBtn').click(() => {
     myVideoNextRequest();
   });
 
   /* previous track
   ==================================================================================*/
-  $('#myVideoPreviousBtn, #videoPrevBtn').click(function() {
+  $('#myVideoPreviousBtn, #videoPrevBtn').click(() => {
     myVideoPreviousRequest();
   });
 
   /* FF
   ==================================================================================*/
-  $('#myVideoFF, #videoPlayFFBtn').click(function() {
+  $('#myVideoFF, #videoPlayFFBtn').click(() => {
     myVideoFFRequest();
   });
 
   /* RW
   ==================================================================================*/
-  $('#myVideoRW, #videoPlayRWBtn').click(function() {
+  $('#myVideoRW, #videoPlayRWBtn').click(() => {
     myVideoRWRequest();
   });
 
 
   /* FullScreen playback
   ==================================================================================*/
-  $('#myVideoFullScrBtn').click(function() {
+  $('#myVideoFullScrBtn').click(() => {
     FullScreen > 1 ? FullScreen = 0 : FullScreen++;
 
     $('#myVideoFullScrBtn').css('background-image', 'url(apps/_videoplayer/templates/VideoPlayer/images/myFullScreen' + FullScreen + '.png)');
@@ -317,7 +317,7 @@ export const StartVideoPlayerApp = () => {
 
   /* Repeat option (toggle none - looping single track - loop entire video list)
   ==================================================================================*/
-  $('#myVideoRepeatBtn, #videoReAllBtn').click(function() {
+  $('#myVideoRepeatBtn, #videoReAllBtn').click(() => {
     Repeat > 1 ? Repeat = 0 : Repeat++;
     $('#myVideoRepeatBtn').css('background-image', 'url(apps/_videoplayer/templates/VideoPlayer/images/myRepeat' + Repeat + '.png)');
     AIO_SBN('Repeat: ' + (Repeat ? (Repeat - 1 ? 'All' : '1') : 'None'), videoPlayerIcon);
@@ -327,7 +327,7 @@ export const StartVideoPlayerApp = () => {
 
   /* Shuffle option
   ==================================================================================*/
-  $('#myVideoShuffleBtn, #videoShuffleBtn').click(function() {
+  $('#myVideoShuffleBtn, #videoShuffleBtn').click(() => {
     Shuffle = !Shuffle;
     $('#myVideoShuffleBtn').css('background-image', 'url(apps/_videoplayer/templates/VideoPlayer/images/myShuffle' + (Shuffle ? '' : '0') + '.png)');
     recentlyPlayed = [];
@@ -337,7 +337,7 @@ export const StartVideoPlayerApp = () => {
 
   /* Music
   ==================================================================================*/
-  $('#myPlayMusicBtn').click(function() {
+  $('#myPlayMusicBtn').click(() => {
     PlayMusic = !PlayMusic;
     $('#myPlayMusicBtn').css({'background-image': (PlayMusic ? boxChecked : boxUncheck)});
     localStorage.setItem('videoplayer.playmusic', JSON.stringify(PlayMusic));
@@ -349,7 +349,7 @@ export const StartVideoPlayerApp = () => {
 
   /* Toggle Video Player Background Button
   ==================================================================================*/
-  $('#toggleBgBtn').click(function() {
+  $('#toggleBgBtn').click(() => {
     $('#myVideoContainer').toggleClass('noBg');
     AIO_SBN('Video Player Background: ' + ($('#myVideoContainer').hasClass('noBg') ? 'OFF' : 'ON'), videoPlayerIcon);
     localStorage.setItem('videoplayer.background', JSON.stringify($('#myVideoContainer').hasClass('noBg')));
@@ -357,7 +357,7 @@ export const StartVideoPlayerApp = () => {
 
   /* Show Title of Currently Playing in the Statusbar
   ==================================================================================*/
-  $('#optionStatusbarTitle').click(function() {
+  $('#optionStatusbarTitle').click(() => {
     statusbarTitleVideo = !statusbarTitleVideo;
     $('#optionStatusbarTitle').css({'background-image': (statusbarTitleVideo ? boxChecked : boxUncheck)});
     AIO_SBN('Title In Statusbar: ' + (statusbarTitleVideo ? 'ON' : 'OFF'), videoPlayerIcon);
@@ -371,7 +371,7 @@ export const StartVideoPlayerApp = () => {
 
   /* Black Out the Background when videos are not in FullScreen
   ==================================================================================*/
-  $('#optionBlackOut').click(function() {
+  $('#optionBlackOut').click(() => {
     BlackOut = !BlackOut;
     $('#optionBlackOut').css({'background-image': (BlackOut ? boxChecked : boxUncheck)});
     AIO_SBN('Black Out Background: ' + (BlackOut ? 'ON' : 'OFF'), videoPlayerIcon);
@@ -383,7 +383,7 @@ export const StartVideoPlayerApp = () => {
 
   /* Resume Last Playing Video Option
   ==================================================================================*/
-  $('#myResumePlay').click(function() {
+  $('#myResumePlay').click(() => {
     ResumePlay = !ResumePlay;
     $('#myResumePlay').css({'background-image': (ResumePlay ? boxChecked : boxUncheck)});
     player.resumeVideo = ResumePlay;
@@ -393,7 +393,7 @@ export const StartVideoPlayerApp = () => {
 
   /* Video information / options panel
   ==================================================================================*/
-  $('#myVideoInfo, #myVideoInfoClose').click(function() {
+  $('#myVideoInfo, #myVideoInfoClose').click(() => {
     $('#videoInfoPanel').toggleClass('showInfo');
     optionsPanelOpen = $('#videoInfoPanel').hasClass('showInfo');
     if (optionsPanelOpen) {
@@ -405,12 +405,12 @@ export const StartVideoPlayerApp = () => {
     }
   });
 
-  $('#popInfoTab').click(function() {
+  $('#popInfoTab').click(() => {
     $('#videoInfoPanel').removeClass('state');
     $('#popInfoTab').css('background', vphColor);
     $('#popOptionsTab').css('background', '');
   });
-  $('#popOptionsTab').click(function() {
+  $('#popOptionsTab').click(() => {
     $('#unmountMsg').html('');
     myVideoWs('cat /proc/meminfo | grep Swap', true);
     $('#videoInfoPanel').addClass('state');
@@ -434,14 +434,14 @@ export const StartVideoPlayerApp = () => {
   } else {
     $('#myVideoContainer').append('<div id="myVideoList">');
     // Initial List Request
-    setTimeout(function() {
+    setTimeout(() => {
       myVideoListRequest();
     }, 200);
   }
 
   /* start playback (had to move this after #myVideoList is created)
   ==================================================================================*/
-  $('#myVideoList').on('click', 'li', function() {
+  $('#myVideoList').on('click', 'li', () => {
     myVideoStartRequest($(this));
   });
 
@@ -451,12 +451,12 @@ export const StartVideoPlayerApp = () => {
   }
 
   // try to close the video if the videoplayer is not the current app
-  intervalVideoPlayer = setInterval(function() {
+  intervalVideoPlayer = setInterval(() => {
     if (framework.getCurrentApp() !== '_videoplayer') {
       CloseVideoFrame();
     }
   }, 10); // some performance issues ??
-  setTimeout(function() {
+  setTimeout(() => {
     myVideoWs('[ -e ' + folderPath + '/sd*/swapfile ] && echo VP_SWAP || echo VP_NOSWAP', true);
   }, 1000);
 };
@@ -729,7 +729,7 @@ function myVideoStartRequest(obj) {
 
     wsVideo = new WebSocket('ws://127.0.0.1:9998/');
 
-    wsVideo.onopen = function() {
+    wsVideo.onopen = () => {
       try {
         // if (PlayMusic)
         // {
@@ -737,7 +737,7 @@ function myVideoStartRequest(obj) {
         // }
         wsVideo.send(src);
         if (CurrentVideoPlayTime > 1) {
-          setTimeout(function() {
+          setTimeout(() => {
             wsVideo.send('e 0 t' + (CurrentVideoPlayTime--));
             wsVideo.send('h');
           }, 900);
@@ -930,7 +930,7 @@ function myVideoFFRequest() {
     waitingWS = false;
   }
   if (BlackOut && !statusbarTitleVideo) {
-    setTimeout(function() {
+    setTimeout(() => {
       $('#blackOutVideoStatus').addClass('out');
     }, 1000);
   }
@@ -957,7 +957,7 @@ function myVideoRWRequest() {
     waitingWS = false;
   }
   if (BlackOut && !statusbarTitleVideo) {
-    setTimeout(function() {
+    setTimeout(() => {
       $('#blackOutVideoStatus').addClass('out');
     }, 1000);
   }
@@ -1000,7 +1000,7 @@ function fullScreenRequest() {
       }
     } else {
       wsVideo.send('z 0 0 800 480');
-      setTimeout(function() {
+      setTimeout(() => {
         $('#myVideoControlDiv ul').css({'background-color': ''});
       }, 1000);
     }
@@ -1044,7 +1044,7 @@ function checkStatus(state) {
       toggleBlackOut(BlackOut);
     }
     if (CurrentVideoPlayTime > 1) {
-      setTimeout(function() {
+      setTimeout(() => {
         wsVideo.send('e 0 t' + CurrentVideoPlayTime--);
         wsVideo.send('h');
       }, 900);
@@ -1164,7 +1164,7 @@ function showMemErrorMessage(res) {
     $('.VPControlOverlay').append('<div id="memErrorMessage" class="memErrorMessage"><b>***************&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;VIDEO PLAYER ERROR.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;***************</b><br>' + (failedToPlay ? 'VIDEO PLAYER FAILED TO START... <br>' : 'MEMORY ERROR: ' + res.substring(res.indexOf('[ERR]')) + '<br>PLAYER WILL RETRY PLAYING VIDEO IN <span class="countdown-sec">10</span> SECONDS<br>TO AVOID THIS ERROR REMOVE NAV SD CARD BEFORE PLAYING VIDEOS.<br><br>IF ERRORS CONTINUE ') + 'TAP THIS MESSAGE TO REBOOT<br><br>BEST VIDEO FORMAT TO MINIMIZE MEMORY ERRORS: <br><div style="font-size:30px;font-weight:bold;">MP4 H264 AAC 360P</div><br><ul></ul></div>');
     if (!failedToPlay) {
       if (retryAttempts < 3) {
-        retryCountdown = setInterval(function() {
+        retryCountdown = setInterval(() => {
           if (sec < 0) {
             clearInterval(retryCountdown);
             retryCountdown = null;
@@ -1185,7 +1185,7 @@ function showMemErrorMessage(res) {
         clearInterval(retryCountdown);
       }
     }
-    $('.memErrorMessage').click(function() {
+    $('.memErrorMessage').click(() => {
       $('.memErrorMessage').html('<div style=\'font-size:40px\'>REBOOTING</div>');
       myRebootSystem();
     });
@@ -1196,7 +1196,7 @@ function showMemErrorMessage(res) {
 /* Control Playback
 ============================================================================================= */
 function startPlayTimeInterval() {
-  intervalPlaytime = setInterval(function() {
+  intervalPlaytime = setInterval(() => {
     if (!VideoPaused) {
       CurrentVideoPlayTime++;
       try {
@@ -1512,7 +1512,7 @@ function myVideoWs(action, waitMessage) {
     }
   };
 
-  ws.onopen = function() {
+  ws.onopen = () => {
     ws.send(action);
     if (!waitMessage) {
       ws.close();
@@ -1522,7 +1522,7 @@ function myVideoWs(action, waitMessage) {
 }
 
 /* function videoPlayerShutdown() {
-  vpWaitingForShutdown = setInterval(function() {
+  vpWaitingForShutdown = setInterval(() => {
     if (framework.getCurrCtxtId() === 'WaitForEnding' || framework.getCurrCtxtId() === 'PowerDownAnimation') {
       clearInterval(vpWaitingForShutdown);
       vpWaitingForShutdown = null;

@@ -137,19 +137,19 @@ function buildTweaksConfig(user: any, apps: any) {
             console.error(err.toString());
             aioLog(err, 'Error: Missing Blank Album Art');
           });
-          inStr2.on('open', function() {
+          inStr2.on('open', () => {
             addBlankAlbumArt(user, this);
           });
-          inStr2.on('close', function() {
+          inStr2.on('close', () => {
             aioLog('Missing Blank Album Art... Using Default');
             checkForColorScheme(user);
           });
         }, 3000);
       });
-      inStr.on('open', function() {
+      inStr.on('open', () => {
         addBlankAlbumArt(user, this);
       });
-      inStr.on('close', function() {
+      inStr.on('close', () => {
         aioLog('Blank Album Art Copy Successful!');
         checkForColorScheme(user);
       });

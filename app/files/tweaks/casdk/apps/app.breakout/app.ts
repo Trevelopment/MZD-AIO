@@ -138,7 +138,7 @@ CustomApplicationsHandler.register('app.breakout', new CustomApplication({
    * Add any content that will be static here
    */
 
-  created: function() {
+  created: () => {
     // speed restriction
     this.speedRestrict = true;
 
@@ -164,7 +164,7 @@ CustomApplicationsHandler.register('app.breakout', new CustomApplication({
    * (focused)
    */
 
-  focused: function() {
+  focused: () => {
     this.breakout.start();
   },
 
@@ -172,7 +172,7 @@ CustomApplicationsHandler.register('app.breakout', new CustomApplication({
    * (lost)
    */
 
-  lost: function() {
+  lost: () => {
     this.breakout.pause();
   },
 
@@ -195,7 +195,7 @@ CustomApplicationsHandler.register('app.breakout', new CustomApplication({
    *** Applicaton specific methods
    ***/
 
-  initializeGameBoard: function() {
+  initializeGameBoard: () => {
     this.gameBoard = $('<canvas/>').addClass('gameBoard').appendTo(this.canvas);
 
     $('<label/>').addClass('score').append('This Drive').appendTo(this.canvas);
@@ -223,10 +223,10 @@ CustomApplicationsHandler.register('app.breakout', new CustomApplication({
       }
     }.bind(this));
 
-    this.score.on('click', function() {
+    this.score.on('click', () => {
       this.gamelabel.html('Speed Restriction ' + (this.speedRestrict ? 'Disabled': 'Enabled')).fadeIn(100).delay(1000).fadeOut(1000);
       return this.speedRestrict = !this.speedRestrict;
-    }.bind(this));
+    });
   },
 
 

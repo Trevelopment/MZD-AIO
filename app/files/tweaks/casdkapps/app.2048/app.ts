@@ -137,7 +137,7 @@ CustomApplicationsHandler.register('app.2048', new CustomApplication({
      * Add any content that will be static here
      */
 
-  created: function() {
+  created: () => {
     // init 2048
     this.initializeGameBoard();
   },
@@ -146,7 +146,7 @@ CustomApplicationsHandler.register('app.2048', new CustomApplication({
      * (focused)
      */
 
-  focused: function() {
+  focused: () => {
 
 
   },
@@ -155,7 +155,7 @@ CustomApplicationsHandler.register('app.2048', new CustomApplication({
      * (lost)
      */
 
-  lost: function() {
+  lost: () => {
 
 
   },
@@ -179,7 +179,7 @@ CustomApplicationsHandler.register('app.2048', new CustomApplication({
      *** Applicaton specific methods
      ***/
 
-  initializeGameBoard: function() {
+  initializeGameBoard: () => {
     this.g2048 = $('<div/>').addClass('gameBoard').appendTo(this.canvas);
 
     this.g2048.html(

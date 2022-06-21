@@ -8,7 +8,7 @@ if (!window['YTConfig']) {
 }
 if (!YT.loading) {
   YT.loading = 1;
-  (function() {
+  (() => {
     const l = [];
     YT.ready = function(f) {
       if (YT.loaded) {
@@ -17,7 +17,7 @@ if (!YT.loading) {
         l.push(f);
       }
     };
-    window.onYTReady = function() {
+    window.onYTReady = () => {
       YT.loaded = 1; for (let i = 0; i < l.length; i++) {
         try {
           l[i]();

@@ -108,7 +108,7 @@ function StatusBarCtrl(uiaId, parentDiv, controlId, properties) {
 /*
  * Helper function to create all necessary DIVs for Status Bar
  */
-StatusBarCtrl.prototype._createStructure = function() {
+StatusBarCtrl.prototype._createStructure = () => {
   // Create the home button
   const homeBtnSelectCallback = this._homeBtnSelected.bind(this); // bind once
   // @formatter:off
@@ -231,7 +231,7 @@ StatusBarCtrl.prototype.setupCPAAMode = function(enable) {
  * Updates the display clock to match the system clock.
  *  TODO: this function's behavior might need to be removed after BLM clock is implemented
  */
-StatusBarCtrl.prototype._updateClock = function() {
+StatusBarCtrl.prototype._updateClock = () => {
   let currentTime = new Date();
 
   if (utility.toType(currentTime) == 'number') {
@@ -454,7 +454,7 @@ StatusBarCtrl.prototype.setSbnDisplayed = function(flag) {
  * for display format and application title.
  * MPP 08/29/2013  SW00127573
  */
-StatusBarCtrl.prototype._refresh = function() {
+StatusBarCtrl.prototype._refresh = () => {
   log.debug('_refresh() called...');
 
   // Get the current time (cached in common)
@@ -668,7 +668,7 @@ StatusBarCtrl.prototype.transitionVisible = function(delay, duration, mthd, sbVi
   }
 };
 
-StatusBarCtrl.prototype._onAnimationEnd = function() {
+StatusBarCtrl.prototype._onAnimationEnd = () => {
   log.debug('_onAnimationEnd()');
   if (this.divElt.classList.contains('StatusBarCtrl_Slide_In') ||
         this.divElt.classList.contains('StatusBarCtrl_Fade_In')) {
@@ -702,7 +702,7 @@ StatusBarCtrl.prototype.setVisible = function(mthd, sbVisible) {
   this.transitionVisible(0, 500, mthd, sbVisible);
 };
 
-StatusBarCtrl.prototype.isVisible = function() {
+StatusBarCtrl.prototype.isVisible = () => {
   return this._sbVisible;
 };
 
@@ -767,7 +767,7 @@ StatusBarCtrl.prototype.showRemoteUiButton = function(config) {
 };
 
 /* Called when carPlay or AndroidAuto is disabled  */
-StatusBarCtrl.prototype.hideRemoteUiButton = function() {
+StatusBarCtrl.prototype.hideRemoteUiButton = () => {
   if (this.remoteUiBtn) {
     framework.destroyControl(this.remoteUiBtn);
     this.remoteUiBtn = null;
@@ -790,7 +790,7 @@ StatusBarCtrl.prototype.handleControllerEvent = function(eventId) {
 /*
  * Clean Up function called by template
  */
-StatusBarCtrl.prototype.cleanUp = function() {
+StatusBarCtrl.prototype.cleanUp = () => {
   clearInterval(this.clockIntId);
   this.homeBtn.cleanUp();
 

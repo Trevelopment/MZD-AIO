@@ -28,7 +28,7 @@ function _androidautoApp(uiaId) {
  * Called just after the app is instantiated by framework.
  * All variables local to this app should be declared in this function
  */
-_androidautoApp.prototype.appInit = function() {
+_androidautoApp.prototype.appInit = () => {
   log.debug('_androidautoApp appInit  called...');
 
   // Context table
@@ -64,7 +64,7 @@ _androidautoApp.prototype.appInit = function() {
 
 function AAcallCommandServer(method, request, resultFunc) {
   const xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
+  xhttp.onreadystatechange = () => {
     if (xhttp.readyState == 4) {
       if (xhttp.status == 200) {
         resultFunc(JSON.parse(xhttp.responseText));
@@ -97,7 +97,7 @@ export const AAlogPoll = () => {
 
           if (currentStatus.logPath != null) {
             const xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function() {
+            xhttp.onreadystatechange = () => {
               try {
                 let debugTxt = null;
                 if (xhttp.readyState >= 3 && xhttp.status == 200) {
@@ -134,13 +134,13 @@ export const AAlogPoll = () => {
   }
 };
 
-_androidautoApp.prototype._StartContextReady = function() {
+_androidautoApp.prototype._StartContextReady = () => {
   framework.common.setSbDomainIcon('apps/_androidauto/aa.png');
   try {
     AAcallCommandServer('GET', 'status', function(currentStatus) {
       if (currentStatus != null) {
         if (!currentStatus.videoFocus && currentStatus.connected) {
-          const takeFocus = function() {
+          const takeFocus = () => {
             AAcallCommandServer('POST', 'takeVideoFocus', function(currentStatus) {});
           };
 
@@ -156,7 +156,7 @@ _androidautoApp.prototype._StartContextReady = function() {
   }
 };
 
-_androidautoApp.prototype._StartContextOut = function() {
+_androidautoApp.prototype._StartContextOut = () => {
   try {
     // nothing
   } catch (err) {

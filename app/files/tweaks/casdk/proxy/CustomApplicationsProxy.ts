@@ -88,7 +88,7 @@ const _addAppFilesOverwrite = function(uiaId, mmuiMsgObj) {
  * (GlobalError)
  */
 
-window.onerror = function() {
+window.onerror = () => {
   console.error(arguments);
 };
 
@@ -125,7 +125,7 @@ window.CustomApplicationsProxy = {
    * Bootstraps the JCI system
    */
 
-  bootstrap: function() {
+  bootstrap: () => {
     // verify that core objects are available
     if (typeof framework === 'object' && framework._currentAppUiaId === this.systemAppId && this.bootstrapped === false) {
       // retrieve system app
@@ -297,30 +297,30 @@ window.CustomApplicationsProxy = {
   /**
    * (prepareCustomApplications)
    */
-  prepareCustomApplications: function() {
+  prepareCustomApplications: () => {
     // load native apps & custom apps separately
     this.loadCount = 0;
-    setTimeout(function() {
+    setTimeout(() => {
       this.loadCustomApplications();
       this.initNativeApplicationsDataList();
-    }.bind(this), this.debug ? 500 : 5000); // first attempt wait 5s - the system might be booting still anyway
+    }, this.debug ? 500 : 5000); // first attempt wait 5s - the system might be booting still anyway
   },
 
   /**
    * (loadCustomApplications)
    */
-  loadCustomApplications: function() {
+  loadCustomApplications: () => {
     try {
       if (typeof(CustomApplicationsHandler) === 'undefined') {
         // clear
         clearTimeout(this.loadTimer);
         // try to load the runtime script
-        utility.loadScript('apps/custom/runtime/runtime.js', false, function() {
+        utility.loadScript('apps/custom/runtime/runtime.js', false, () => {
           clearTimeout(this.loadTimer);
           this.initCustomApplicationsDataList();
-        }.bind(this));
+        });
         // safety timer
-        this.loadTimer = setTimeout(function() {
+        this.loadTimer = setTimeout(() => {
           if (typeof(CustomApplicationsHandler) === 'undefined') {
             this.loadCount = this.loadCount + 1;
             // 20 attempts or we forget it - that's almost 3min
@@ -328,7 +328,7 @@ window.CustomApplicationsProxy = {
               this.loadCustomApplications();
             }
           }
-        }.bind(this), 10000);
+        }, 10000);
       }
     } catch (e) {
       // log.error('loadCustomApplications failed, we won\'t attempt again because there could be issues with the actual handler');
@@ -338,7 +338,7 @@ window.CustomApplicationsProxy = {
   /**
    * (initCustomApplicationsDataList)
    */
-  initCustomApplicationsDataList: function() {
+  initCustomApplicationsDataList: () => {
     // extend with custom applications
     try {
       if (typeof(CustomApplicationsHandler) !== 'undefined') {
@@ -362,7 +362,7 @@ window.CustomApplicationsProxy = {
   /**
    * (initNativeApplicationsDataList)
    */
-  initNativeApplicationsDataList: function() {
+  initNativeApplicationsDataList: () => {
     try {
       const systemApp = framework.getAppInstance(this.systemAppId);
       const category = 'Applications';

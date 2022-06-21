@@ -151,7 +151,7 @@ CustomApplicationsHandler.register('app.uitweaks', new CustomApplication({
      * Add any content that will be static here
      */
 
-  created: function() {
+  created: () => {
     // let's build our interface
 
     // 1) create our context aware sections
@@ -201,7 +201,7 @@ CustomApplicationsHandler.register('app.uitweaks', new CustomApplication({
      * This method registers all the sections we want to display
      */
 
-  createSections: function() {
+  createSections: () => {
     [
 
       {top: 20, left: 20, title: 'DefaultLayout'},

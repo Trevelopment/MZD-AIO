@@ -154,7 +154,7 @@ export class CustomApplication {
    * @returns {logger} The logger object exposing .debug, .info and .error
    */
 
-  __log = function() {
+  __log = () => {
     this.log = {
       __logId: this.getId(),
       __toArray: function(args) {
@@ -165,15 +165,15 @@ export class CustomApplication {
 
         return result;
       },
-      debug: function() {
+      debug: () => {
         CustomApplicationLog.debug(this.__toArray(arguments));
       },
       // info
-      info: function() {
+      info: () => {
         CustomApplicationLog.info(this.__toArray(arguments));
       },
       // error
-      error: function() {
+      error: () => {
         CustomApplicationLog.error(this.__toArray(arguments));
       },
     };
@@ -224,7 +224,7 @@ export class CustomApplication {
     this.__loaded = false;
 
     // execute loader
-    this.__load(function() {
+    this.__load(() => {
       // finalize
       this.__loaded = true;
 
@@ -235,7 +235,7 @@ export class CustomApplication {
       this.canvas = $('<div/>').addClass('CustomApplicationCanvas').attr('app', this.id);
 
       // assign default event for context fields
-      this.canvas.on('click touchend', '[contextIndex]', function() {
+      this.canvas.on('click touchend', '[contextIndex]', () => {
         that.__setCurrentContext($(this).attr('contextIndex'));
       });
 
@@ -252,7 +252,7 @@ export class CustomApplication {
       if (this.is.fn(next)) {
         next();
       }
-    }.bind(this));
+    });
   };
 
 
@@ -283,7 +283,7 @@ export class CustomApplication {
       // load javascripts
       if (this.require.js && !this.is.empty(this.require.js)) {
         toload++;
-        CustomApplicationResourceLoader.loadJavascript(this.require.js, this.location, function() {
+        CustomApplicationResourceLoader.loadJavascript(this.require.js, this.location, () => {
           loaded++;
           isFinished();
         });
@@ -292,7 +292,7 @@ export class CustomApplication {
       // load css
       if (this.require.css && !this.is.empty(this.require.css)) {
         toload++;
-        CustomApplicationResourceLoader.loadCSS(this.require.css, this.location, function() {
+        CustomApplicationResourceLoader.loadCSS(this.require.css, this.location, () => {
           loaded++;
           isFinished();
         });
@@ -328,9 +328,9 @@ export class CustomApplication {
 
   __wakeup = function(parent) {
     if (!this.__initialized) {
-      return this.__initialize(function() {
+      return this.__initialize(() => {
         this.__wakeup(parent);
-      }.bind(this));
+      });
     }
 
     // read storage
@@ -343,9 +343,9 @@ export class CustomApplication {
     this.canvas.appendTo(parent);
 
     // measure context
-    setTimeout(function() {
+    setTimeout(() => {
       this.__measureContext();
-    }.bind(this), 25);
+    }, 25);
   };
 
 
@@ -357,7 +357,7 @@ export class CustomApplication {
    * @return {void}
    */
 
-  __sleep = function() {
+  __sleep = () => {
     // clear canvas
     if (this.canvas) {
       this.canvas.detach();
@@ -384,7 +384,7 @@ export class CustomApplication {
    * @return {void}
    */
 
-  __terminate = function() {
+  __terminate = () => {
     this.__lifecycle('terminated');
 
     this.canvas.remove();
@@ -533,23 +533,23 @@ export class CustomApplication {
     return this.settings[name] ? this.settings[name] : (_default ? _default : false);
   };
 
-  getId = function() {
+  getId = () => {
     return this.id;
   };
 
-  getTitle = function() {
+  getTitle = () => {
     return this.getSetting('title');
   };
 
-  getStatusbar = function() {
+  getStatusbar = () => {
     return this.getSetting('statusbar');
   };
 
-  getStatusbarTitle = function() {
+  getStatusbarTitle = () => {
     return this.getSetting('statusbarTitle') || this.getTitle();
   };
 
-  getStatusbarIcon = function() {
+  getStatusbarIcon = () => {
     let icon = this.getSetting('statusbarIcon');
 
     if (icon === true) icon = this.location + 'app.png';
@@ -557,27 +557,27 @@ export class CustomApplication {
     return icon;
   };
 
-  getStatusbarHomeButton = function() {
+  getStatusbarHomeButton = () => {
     return this.getSetting('statusbarHideHomeButton') === true ? false : true;
   };
 
-  getHasLeftButton = function() {
+  getHasLeftButton = () => {
     return this.getSetting('hasLeftButton');
   };
 
-  getHasRightArc = function() {
+  getHasRightArc = () => {
     return this.getSetting('hasRightArc');
   };
 
-  getHasMenuCaret = function() {
+  getHasMenuCaret = () => {
     return this.getSetting('hasMenuCaret');
   };
 
-  getRegion = function() {
+  getRegion = () => {
     return this.__region || 'na';
   };
 
-  getStorage = function() {
+  getStorage = () => {
     return this.__storage;
   };
 
@@ -605,7 +605,7 @@ export class CustomApplication {
     return this.__storage && this.is.defined(this.__storage[name]) ? this.__storage[name] : _default;
   };
 
-  __getstorage = function() {
+  __getstorage = () => {
     try {
       this.__storage = JSON.parse(localStorage.getItem(this.getId()));
     } catch (e) {
@@ -619,7 +619,7 @@ export class CustomApplication {
     this.__setstorage();
   };
 
-  __setstorage = function() {
+  __setstorage = () => {
     try {
       // get default
       if (!this.__storage) this.__storage = {};
@@ -684,7 +684,7 @@ export class CustomApplication {
    * Removes all subscriptions
    */
 
-  removeSubscriptions = function() {
+  removeSubscriptions = () => {
     this.__subscriptions = {}; // clear all
   };
 
@@ -759,7 +759,7 @@ export class CustomApplication {
    * Internal function to measure all contextes
    */
 
-  __measureContext = function() {
+  __measureContext = () => {
     $.each(this.__contexts, function(index, context) {
       // get target
       const target = this.canvas.find(this.sprintr('[contextIndex={0}]', context.index));
@@ -952,7 +952,7 @@ export class CustomApplication {
    * @return void
    */
 
-  requireInternet = function() {
+  requireInternet = () => {
     /* from netmgmtApp.js
      *  SelectNetworkManagement
      */
@@ -1237,7 +1237,7 @@ const CustomApplicationDataHandler = {
    * (initialize) Initializes some of the core objects
    */
 
-  initialize: function() {
+  initialize: () => {
     this.initialized = true;
 
     this.next();
@@ -1338,11 +1338,11 @@ const CustomApplicationDataHandler = {
    * (pause)
    */
 
-  pause: function() {
+  pause: () => {
     this.paused = true;
   },
 
-  unpause: function() {
+  unpause: () => {
     this.paused = false;
 
     this.next();
@@ -1352,10 +1352,10 @@ const CustomApplicationDataHandler = {
    * (next)
    */
 
-  next: function() {
+  next: () => {
     clearTimeout(this.currentTimer);
 
-    this.currentTimer = setTimeout(function() {
+    this.currentTimer = setTimeout(() => {
       if (!this.paused) {
         if (CustomApplicationsHandler.currentApplicationId) {
           this.retrieve();
@@ -1363,7 +1363,7 @@ const CustomApplicationDataHandler = {
           this.next();
         }
       }
-    }.bind(this), this.refreshRate);
+    }, this.refreshRate);
   },
 
 
@@ -1377,7 +1377,7 @@ const CustomApplicationDataHandler = {
     // prepare
     let loaded = 0;
     let toload = 0;
-    const finish = function() {
+    const finish = () => {
       if (loaded >= toload) {
         // notify the callback
         if (CustomApplicationHelpers.is().fn(callback)) {
@@ -1387,7 +1387,7 @@ const CustomApplicationDataHandler = {
         // continue
         this.next();
       }
-    }.bind(this);
+    };
 
     // build to load list
     this.tables.map(function(table, tableIndex) {
@@ -1462,7 +1462,7 @@ const CustomApplicationDataHandler = {
               }.bind(this),
 
               // all done handler - timeouts will be handled here as well
-              complete: function() {
+              complete: () => {
                 // just continue
                 loaded++;
                 finish();
@@ -1670,62 +1670,62 @@ const CustomApplicationHelpers = {
    * (is) a implemention of the flyandi:is library
    */
 
-  is: function() {
+  is: () => {
     return {
 
       undefined: 'undefined',
 
-      __toString: function() {
+      __toString: () => {
         return Object.prototype.toString.call(arguments[0]);
       },
 
       /** (iterable) */
-      iterable: function() {
+      iterable: () => {
         return this.object(arguments[0]) || this.array(arguments[0]);
       },
 
       /** (fn) */
-      fn: function() {
+      fn: () => {
         return typeof(arguments[0]) == 'function';
       },
 
       /** (object) */
-      object: function() {
+      object: () => {
         return typeof(arguments[0]) == 'object';
       },
 
       /** (array) */
-      array: function() {
+      array: () => {
         return this.__toString(arguments[0]) === '[object Array]';
       },
 
       /** (date) */
-      date: function() {
+      date: () => {
         return this.__toString(arguments[0]) === '[object Date]';
       },
 
       /** (string) */
-      string: function() {
+      string: () => {
         return typeof(arguments[0]) == 'string';
       },
 
       /** (number) */
-      number: function() {
+      number: () => {
         return typeof(arguments[0]) == 'number';
       },
 
       /** (boolean) */
-      boolean: function() {
+      boolean: () => {
         return typeof(arguments[0]) == 'boolean';
       },
 
       /** (defined) */
-      defined: function() {
+      defined: () => {
         return typeof(arguments[0]) != this.undefined;
       },
 
       /** (element) */
-      element: function() {
+      element: () => {
         return typeof(HTMLElement) !== this.undefined ? (arguments[0] instanceof HTMLElement) : (arguments[0] && arguments[0].nodeType === 1);
       },
 
@@ -1777,7 +1777,7 @@ const CustomApplicationHelpers = {
    * (sprintr) (https://gist.github.com/flyandi/395816232c70de327801)
    */
 
-  sprintr: function() {
+  sprintr: () => {
     const
       args = Array.prototype.slice.call(arguments);
     let subject = arguments[0];
@@ -1856,7 +1856,7 @@ const CustomApplicationLog = {
    * (debug) debug message
    */
 
-  debug: function() {
+  debug: () => {
     this.__message(this.levels.debug, '#006600', arguments);
   },
 
@@ -1864,7 +1864,7 @@ const CustomApplicationLog = {
    * (error) error message
    */
 
-  error: function() {
+  error: () => {
     this.__message(this.levels.error, '#FF0000', arguments);
   },
 
@@ -1872,7 +1872,7 @@ const CustomApplicationLog = {
    * (info) info message
    */
 
-  info: function() {
+  info: () => {
     this.__message(this.levels.info, '#0000FF', arguments);
   },
 
@@ -2001,7 +2001,7 @@ const CustomApplicationResourceLoader = {
   loadImages: function(images: any, path: any, callback: any, options?: any, async?: any) {
     this.__loadInvoker(images, path, function(filename, next, id) {
       const img = document.createElement('img');
-      img.onload = function() {
+      img.onload = () => {
         if (async) {
           let result = false;
           if (id) {
@@ -2080,12 +2080,12 @@ const CustomApplicationResourceLoader = {
 
         if (!async && options.timeout) {
           clearTimeout(timeout);
-          timeout = setTimeout(function() {
+          timeout = setTimeout(() => {
             this.logger.error(this.__name, 'Timeout occured while loading resource', filename);
 
             // just do the next one
             next(true);
-          }.bind(this), options.timeout);
+          }, options.timeout);
         }
 
         build(filename, function(resource) {
@@ -2177,7 +2177,7 @@ export const CustomApplicationsHandler = {
    * (initialize) Initializes some of the core objects
    */
 
-  initialize: function() {
+  initialize: () => {
     this.initialized = true;
 
     this.loader = CustomApplicationResourceLoader;
@@ -2196,27 +2196,27 @@ export const CustomApplicationsHandler = {
       if (!this.initialized) this.initialize();
 
       // load libraries
-      this.loader.loadJavascript('jquery.js', this.paths.vendor, function() {
-        this.loader.loadCSS('runtime.css', this.paths.framework, function() {
-          this.loader.loadJavascript('apps.js', this.paths.applications, function() {
+      this.loader.loadJavascript('jquery.js', this.paths.vendor, () => {
+        this.loader.loadCSS('runtime.css', this.paths.framework, () => {
+          this.loader.loadJavascript('apps.js', this.paths.applications, () => {
             // this has been completed
             if (typeof(CustomApplications) != 'undefined') {
               // load applications
               this.loader.loadJavascript(
                   this.loader.fromFormatted('{0}/app.js', CustomApplications),
                   this.paths.applications,
-                  function() {
+                  () => {
                   // all applications are loaded, run data
                     CustomApplicationDataHandler.initialize();
 
                     // create menu items
                     callback(this.getMenuItems());
-                  }.bind(this),
+                  },
               );
             }
-          }.bind(this)); // apps.js
-        }.bind(this)); // bootstrap css
-      }.bind(this)); // jquery library
+          }); // apps.js
+        }); // bootstrap css
+      }); // jquery library
     } catch (e) {
       // error message
       this.log.error(this.__name, 'Error while retrieving applications', e);

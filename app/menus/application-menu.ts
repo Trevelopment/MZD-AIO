@@ -32,7 +32,7 @@ const template = [{
   },
 }, {
   label: 'AIO',
-  click: function() {
+  click: () => {
     bootbox.alert('Hi! ;-P');
   },
 }, {
@@ -57,7 +57,7 @@ const template = [{
   role: 'window',
   submenu: [{
     label: 'Toggle Full Screen',
-    accelerator: (function() {
+    accelerator: (() => {
       if (process.platform === 'darwin') {
         return 'Ctrl+Command+F';
       } else {
@@ -84,7 +84,7 @@ const template = [{
     accelerator: 'CmdOrCtrl+Shift+T',
     enabled: false,
     key: 'reopenMenuItem',
-    click: function() {
+    click: () => {
       app.emit('activate');
     },
   },
@@ -93,12 +93,12 @@ const template = [{
   role: 'help',
   submenu: [{
     label: 'Learn More',
-    click: function() {
+    click: () => {
       electron.shell.openExternal('http://electron.atom.io');
     },
   }, {
     label: 'MazdaTweaks.com',
-    click: function() {
+    click: () => {
       electron.shell.openExternal('http://link.trevelopment.com/mazdaatweaks');
     },
   }],
@@ -167,7 +167,7 @@ if (process.platform === 'darwin') {
     }, {
       label: 'Quit',
       accelerator: 'Command+Q',
-      click: function() {
+      click: () => {
         app.quit();
       },
     }],
@@ -189,19 +189,19 @@ if (process.platform === 'win32') {
   addUpdateMenuItems(helpMenu, 0);
 }
 
-app.on('ready', function() {
+app.on('ready', () => {
   const menu = Menu.buildFromTemplate(template);
   Menu.setApplicationMenu(menu);
 });
 
-app.on('browser-window-created', function() {
+app.on('browser-window-created', () => {
   const reopenMenuItem = findReopenMenuItem();
   if (reopenMenuItem) {
     reopenMenuItem.enabled = false;
   }
 });
 
-app.on('window-all-closed', function() {
+app.on('window-all-closed', () => {
   const reopenMenuItem = findReopenMenuItem();
   if (reopenMenuItem) {
     reopenMenuItem.enabled = true;

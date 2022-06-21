@@ -121,7 +121,7 @@ const egt_args = {
   },
 };
 
-$(document).ready(function() {
+$(document).ready(() => {
   // websocket : always on
   // --------------------------------------------------------------------------
 
@@ -198,13 +198,13 @@ $(document).ready(function() {
       updateIntakeAirTemp(res[17]);
       updateEngineTemp(res[18]);
     };
-    speedometerWsValue.onopen = function() {
+    speedometerWsValue.onopen = () => {
       speedometerWsValue.send(action);
     };
-    speedometerWsValue.onclose = function() {
+    speedometerWsValue.onclose = () => {
       proc_3_check = false;
     };
-    speedometerWsValue.onerror = function() {
+    speedometerWsValue.onerror = () => {
       proc_3_check = false;
     };
   }
@@ -223,13 +223,13 @@ $(document).ready(function() {
       updateSteering();
       updateParking();
     };
-    speedometerWsHS.onopen = function() {
+    speedometerWsHS.onopen = () => {
       speedometerWsHS.send(action);
     };
-    speedometerWsHS.onclose = function() {
+    speedometerWsHS.onclose = () => {
       proc_2_check = false;
     };
-    speedometerWsHS.onerror = function() {
+    speedometerWsHS.onerror = () => {
       proc_2_check = false;
     };
   }
@@ -246,13 +246,13 @@ $(document).ready(function() {
       updateEngineRPM(RPM);
       updateVehicleSpeed(speed);
     };
-    speedometerWsVih.onopen = function() {
+    speedometerWsVih.onopen = () => {
       speedometerWsVih.send(action);
     };
-    speedometerWsVih.onclose = function() {
+    speedometerWsVih.onclose = () => {
       proc_1_check = false;
     };
-    speedometerWsVih.onerror = function() {
+    speedometerWsVih.onerror = () => {
       proc_1_check = false;
     };
   }
@@ -261,9 +261,9 @@ $(document).ready(function() {
   // send command only, no wait for reponse from backend service
   function sendOneway(action) {
     const speedometerWssB = new WebSocket('ws://127.0.0.1:44944/'); /* do not use auto reconnect*/
-    speedometerWssB.onopen = function() {
+    speedometerWssB.onopen = () => {
       speedometerWssB.send(action);
-      setTimeout(function() {
+      setTimeout(() => {
         speedometerWssB.close();
       }, 15000);
     };
@@ -512,7 +512,7 @@ $(document).ready(function() {
   function updateAlarmLayout() {
     if (showAlarmLayer == 1 || egtAlarmFg == 1) {
       $('#mzdwheelSetBGDiv').removeClass('hidden');
-      setTimeout(function() {
+      setTimeout(() => {
         $('#mzdwheelSetBGDiv').removeClass('visuallyhidden');
       }, 10);
     } else {
@@ -823,7 +823,7 @@ $(document).ready(function() {
   // --------------------------------------------------------------------------
 
   // for Single action (oneway) to backend process
-  setInterval(function() {
+  setInterval(() => {
     if (bRefreshFuel) {
       sendOneway('refreshFuel='+gasType);
       bRefreshFuel = false;
@@ -867,7 +867,7 @@ $(document).ready(function() {
 
     if (!vehicleSpeedLock) {
       vehicleSpeedLock = true;
-      setTimeout(function() {
+      setTimeout(() => {
         $('#mzdMainDialBG .txtSpeed').css('font-size', '40px');
         showSpeed = true;
       }, 3000);
@@ -883,11 +883,11 @@ $(document).ready(function() {
 
   // ==================================================================================
 
-  setInterval(function() {
+  setInterval(() => {
     updateTripTime();
   }, 1000);
 
-  setInterval(function() {
+  setInterval(() => {
     if (speedCurrent == 0) {
       if (alreadyGetTimeFg) {
         totalIdleSeconds++;
@@ -899,7 +899,7 @@ $(document).ready(function() {
   }, 1000);
 
 
-  setInterval(function() {
+  setInterval(() => {
     if (rpmLimitFg) {
       $('#rpmLimitAlarmDiv').css('visibility', 'visible');
       $('#rpmLimitAlarmDiv2').css('visibility', 'visible');
@@ -933,7 +933,7 @@ $(document).ready(function() {
   }, 500);
 
 
-  setInterval(function() {
+  setInterval(() => {
     msgDebug = 'Daemon-status [ ';
     if (proc_1_check) {
       msgDebug += '1';
@@ -953,14 +953,14 @@ $(document).ready(function() {
     $('.monitorText').html(msgDebug);
   }, 2000);
 
-  setTimeout(function() {
+  setTimeout(() => {
     retrievedataVihicleSpeedAndRPM('speed_rpm');
     retrievedataHS('gear_stwhl');
     retrieveValueAll('all_value');
   }, 35000);
 
-  setTimeout(function() { // auto create connection again in case connection has closed (or connection has failed)
-    setInterval(function() {
+  setTimeout(() => { // auto create connection again in case connection has closed (or connection has failed)
+    setInterval(() => {
       if (!proc_1_check) {
         retrievedataVihicleSpeedAndRPM('speed_rpm');
       }

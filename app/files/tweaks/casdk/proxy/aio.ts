@@ -135,7 +135,7 @@ let UMswap: any;
 
 export const swapfileShutdownUnmount = () => {
   console.log('swapfileShutdownUnmount');
-  UMswap = setInterval(function() {
+  UMswap = setInterval(() => {
     if (typeof unmounmtSwap !== 'undefined' && (framework.getCurrCtxtId() === 'WaitForEnding' || framework.getCurrCtxtId() === 'PowerDownAnimation')) {
       clearInterval(UMswap);
       UMswap = null;

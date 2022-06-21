@@ -3,7 +3,7 @@ import remote, {ipcRenderer} from 'electron';
 let dll: any;
 
 ipc.on('update-not available', (event) => {
-  setTimeout(function() {
+  setTimeout(() => {
     $('#update-available a').addClass('w3-hide');
   }, 2000);
 });
@@ -11,7 +11,7 @@ ipc.on('update-not available', (event) => {
 ipc.on('update-available-alert', (event) => {
   $('#update-available, #update-available a').removeClass('w3-hide');
   let updots = 0;
-  dll = setInterval(function() {
+  dll = setInterval(() => {
     if (updots !== 5) {
       $('#update-available a').append('.');
       updots++;
@@ -32,7 +32,7 @@ ipc.on('update-err', (event) => {
 ipc.on('update-downloaded', (event) => {
   snackbarstay(`<span id="restart">An Update Is Available:  <a href="" class="w3-btn w3-deep-purple w3-hover-light-blue">UPDATE</a></span>`);
   $('#update-available').text('Update Available');
-  setTimeout(function() {
+  setTimeout(() => {
     document.getElementById('update-ready').className = '';
   }, 7500);
   // showNotification('Update', 'An updated application package will be installed on next restart, <a id="restart" href="">click here to update now</a>.', 30, function () { ipc.send('update-and-restart') })
@@ -77,7 +77,7 @@ const showNotification = (title, message, fadeouttime, callback?: any) => {
   notice.innerHTML = `<span class="w3-closebtn w3-display-topright" onclick="$(this).parent().hide((${fadeouttime}+1)*1000)">&times;</span><div class="w3-hover-text-indigo">${message}</div>`;
   document.getElementById('notices').appendChild(notice);
   if (fadeouttime !== 0) {
-    setTimeout(function() {
+    setTimeout(() => {
       $('#notices *').fadeOut(fadeouttime * 1000);
     }, 3000);
   }

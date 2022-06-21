@@ -47,29 +47,29 @@ module.exports = (logFileName) => {
   const logger = new console.Console(output, errorOutput);
 
   // Override default log utilities
-  console.log = function() {
+  console.log = () => {
     arguments[0] = new Date().toISOString() + ' - ' + arguments[0];
     logger.log.apply(null, arguments);
   };
 
-  console.debug = function() {
+  console.debug = () => {
     arguments[0] = new Date().toISOString() + ' - <Debug> ' + arguments[0];
     if (isDev || (global.appSettings && global.appSettings.debug)) {
       logger.log.apply(null, arguments);
     }
   };
 
-  console.info = function() {
+  console.info = () => {
     arguments[0] = new Date().toISOString() + ' - <Info> ' + arguments[0];
     logger.log.apply(null, arguments);
   };
 
-  console.warn = function() {
+  console.warn = () => {
     arguments[0] = new Date().toISOString() + ' - <Warning> ' + arguments[0];
     logger.log.apply(null, arguments);
   };
 
-  console.error = function() {
+  console.error = () => {
     arguments[0] = new Date().toISOString() + ' - <Error> ' + arguments[0];
     logger.log.apply(null, arguments);
   };

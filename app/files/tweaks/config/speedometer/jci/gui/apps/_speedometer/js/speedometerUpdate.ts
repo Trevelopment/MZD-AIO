@@ -12,22 +12,22 @@ export const updateSpeedoApp = () => {
     const rows = (typeof spdBottomRows === 'undefined') ? 3 : spdBottomRows;
     // Toggle Next Botom Row. Default: Select
     // --------------------------------------------------------------------------
-    $('.spdBtn0').click(function() {
+    $('.spdBtn0').click(() => {
       (currDataBar > rows - 1) ? currDataBar = 1: ++currDataBar;
       $('[class*="vehDataBar"]').removeClass('activeDataBar');
       $('.vehDataBar' + currDataBar).addClass('activeDataBar');
     });
     // Default: Up
-    $('.spdBtn2').click(function() {
+    $('.spdBtn2').click(() => {
       engineSpeedBar = !engineSpeedBar;
       AIO_SBN(SPDSBN_Speed_Bar + ': ' + (engineSpeedBar ? $('#engineSpeedFieldSet legend').text() : $('#speedCurrentFieldSet legend').text()), 'apps/_speedometer/IcnSbnSpeedometer.png');
     });
     $('.spdBtn5').click(ClearSpeedBarLayout);
-    $('.spdBtn6').click(function() {
+    $('.spdBtn6').click(() => {
       AIO_SBN(SPDSBN_Classic_Speedometer, 'apps/_speedometer/templates/SpeedoMeter/images/speed.png');
       aioMagicRoute('_speedometer', 'SpeedClassic');
     });
-    $('.spdBtn7').click(function() {
+    $('.spdBtn7').click(() => {
       $('[class^=speedBar]').toggle();
       AIO_SBN(($('.speedBar_5').css('display').indexOf('none') !== -1 ? SPDSBN_Hide_Speed_Bar : SPDSBN_Show_Speed_Bar), 'apps/_speedometer/IcnSbnSpeedometer.png');
     });
@@ -39,12 +39,12 @@ export const updateSpeedoApp = () => {
   } else if (speedMod) {
     // touch to pop top value
     // --------------------------------------------------------------------------
-    $('#valuetable fieldset:first-child').click(function() {
+    $('#valuetable fieldset:first-child').click(() => {
       $('.spdBtn5').click();
     });
     // touch to toggle Analog / Digital
     // --------------------------------------------------------------------------
-    $('.spdBtn0').click(function() {
+    $('.spdBtn0').click(() => {
       startAnalog = !$('#analog').is(':visible');
       if (startAnalog) {
         $('#digital').hide();
@@ -55,23 +55,23 @@ export const updateSpeedoApp = () => {
       }
       AIO_SBN((startAnalog ? SPDSBN_Speed_Analog : SPDSBN_Speed_Digital), 'apps/_speedometer/templates/SpeedoMeter/images/digital.png');
     });
-    $('#digital, #analog').click(function() {
+    $('#digital, #analog').click(() => {
       $('.spdBtn0').click();
     });
     // Hide Idle Values and enlarge the fonts of the other values
     // --------------------------------------------------------------------------
-    $('.spdBtn2').click(function() {
+    $('.spdBtn2').click(() => {
       $('#valuetable').toggleClass('alt1');
       spdLrgTxt = $('#valuetable').hasClass('alt1');
       AIO_SBN((spdLrgTxt ? SPDSBN_Text_Large : SPDSBN_Text_Regular), 'apps/_speedometer/templates/SpeedoMeter/images/digital.png');
     });
     // Pop Top Value
     // --------------------------------------------------------------------------
-    $('.spdBtn5').click(function() {
+    $('.spdBtn5').click(() => {
       const pop = $('#valuetable fieldset:first-child legend').text();
       $('#valuetable').append($('#valuetable fieldset:first-child'));
       $('#valuetable fieldset').off('click');
-      $('#valuetable fieldset:first-child').click(function() {
+      $('#valuetable fieldset:first-child').click(() => {
         $('.spdBtn5').click();
       });
       AIO_SBN(SPDSBN_Popped + ' ' + pop, 'apps/_speedometer/templates/SpeedoMeter/images/digital.png');
@@ -79,7 +79,7 @@ export const updateSpeedoApp = () => {
     });
     // Reset Values to 0  values are updated right away
     // --------------------------------------------------------------------------
-    $('.spdBtn6').click(function() {
+    $('.spdBtn6').click(() => {
       AIO_SBN(SPDSBN_Digital_Bar_Speedometer, 'apps/_speedometer/templates/SpeedoMeter/images/digital.png');
       aioMagicRoute('_speedometer', 'SpeedBar');
     });
@@ -92,13 +92,13 @@ export const updateSpeedoApp = () => {
     // --------------------------------------------------------------------------
     $('.spdBtn1').click(ToggleSpeedoType);
     $('.spdBtn4').click(toggleSpeedometerBackground);
-    $('.spdBtn3').click(function() {
+    $('.spdBtn3').click(() => {
       (isMPH) ? toggleTempUnit(): toggleFuelEffUnit();
       // speedAnimation = !speedAnimation;
     });
     // Reset Speeds & Times
     // --------------------------------------------------------------------------
-    $('.spdBtn8').click(function() {
+    $('.spdBtn8').click(() => {
       tripDistCurrent = 0;
       prevTripDist = 0;
       tripDistBkp = 0;
@@ -121,7 +121,7 @@ export const updateSpeedoApp = () => {
     });
     // Toggle StatusBar Speedo (No Default)
     // --------------------------------------------------------------------------
-    $('.spdBtn10').click(function() {
+    $('.spdBtn10').click(() => {
       $('.StatusBarCtrlClock').click();
     });
     $('.spdBtn11').click(cycleLanguages);

@@ -136,7 +136,7 @@ CustomApplicationsHandler.register('app.myapp', new CustomApplication({
      * @return {void}
      */
 
-  created: function() {
+  created: () => {
     this.aiopanel = $('</div>').attr('id', 'appPanel').appendTo(this.canvas);
     $('<div class="accordion aio-panel">    <ul>            <li>                <input type="radio" name="select" class="accordion-select" checked />                <div class="accordion-title">                    <span>Title</span>                </div>                <div class="accordion-content">                    Content                </div>                <div class="accordion-separator"></div>            </li>            <li>                <input type="radio" name="select" class="accordion-select" />                <div class="accordion-title">                    <span>Title</span>                </div>                <div class="accordion-content">                    Content                </div>                <div class="accordion-separator"></div>            </li>            <li>                <input type="radio" name="select" class="accordion-select" />                <div class="accordion-title">                    <span>Title</span>                </div>                <div class="accordion-content">                    Content                </div>                <div class="accordion-separator"></div>            </li>            <li>                <input type="radio" name="select" class="accordion-select" />                <div class="accordion-title">                    <span>Title</span>                </div>                <div class="accordion-content">                    Content                </div>                <div class="accordion-separator"></div>            </li>    </ul>    </div>').appendTo(this.aiopanel);
     this.button1 = $('<button onclick=\'$(\'.CommonBgImg\').toggleClass(\'toggler\');\'>Toggler<button/>').appendTo(this.aiopanel);
@@ -154,7 +154,7 @@ CustomApplicationsHandler.register('app.myapp', new CustomApplication({
      * @return {void}
      */
 
-  focused: function() {
+  focused: () => {
 
   },
 
@@ -171,7 +171,7 @@ CustomApplicationsHandler.register('app.myapp', new CustomApplication({
      * @return {void}
      */
 
-  lost: function() {
+  lost: () => {
 
   },
 
@@ -194,7 +194,7 @@ CustomApplicationsHandler.register('app.myapp', new CustomApplication({
      * @return {void}
      */
 
-  terminated: function() {
+  terminated: () => {
 
   },
 

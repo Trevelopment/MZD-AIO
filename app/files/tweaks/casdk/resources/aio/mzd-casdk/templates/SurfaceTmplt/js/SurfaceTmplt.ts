@@ -104,7 +104,7 @@ function SurfaceTmplt(uiaId, parentDiv, templateID, controlProperties) {
   this.application.__wakeup(this.divElt);
 
   // set framework specifics
-  setTimeout(function() {
+  setTimeout(() => {
     if (this.properties.statusBarVisible) {
       // execute statusbar handler
       framework.common.statusBar.setAppName(this.application.getStatusbarTitle());
@@ -117,7 +117,7 @@ function SurfaceTmplt(uiaId, parentDiv, templateID, controlProperties) {
       // adjust home button
       framework.common.statusBar.showHomeBtn(this.application.getStatusbarHomeButton());
     }
-  }.bind(this), 85);
+  }, 85);
 }
 
 
@@ -125,7 +125,7 @@ function SurfaceTmplt(uiaId, parentDiv, templateID, controlProperties) {
  * CleanUp
  */
 
-SurfaceTmplt.prototype.cleanUp = function() {
+SurfaceTmplt.prototype.cleanUp = () => {
   // kill application
   if (this.application) {
     CustomApplicationsHandler.sleep(this.application);

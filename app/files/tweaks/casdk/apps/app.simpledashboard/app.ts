@@ -179,7 +179,7 @@ CustomApplicationsHandler.register('app.simpledashboard', new CustomApplication(
      * Add any content that will be static here
      */
 
-  created: function() {
+  created: () => {
     // let's build our interface
 
     // 1) create a value label that shows the current value of the selected section
@@ -282,7 +282,7 @@ CustomApplicationsHandler.register('app.simpledashboard', new CustomApplication(
      * This method registers all the sections we want to display
      */
 
-  createSections: function() {
+  createSections: () => {
     // Here we define our sections
 
     this.sections = [

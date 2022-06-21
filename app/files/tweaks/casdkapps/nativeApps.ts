@@ -12,7 +12,7 @@ function getJSON(url, successHandler, errorHandler) {
   const xhr = new XMLHttpRequest();
   xhr.open('GET', url, false);
   xhr.timeout = 30000;
-  xhr.onload = function() {
+  xhr.onload = () => {
     const status = xhr.status;
     if (status == 0) {
       successHandler && successHandler(xhr.response);
@@ -20,7 +20,7 @@ function getJSON(url, successHandler, errorHandler) {
       errorHandler && errorHandler(status);
     }
   };
-  xhr.onerror = function() {
+  xhr.onerror = () => {
     // const status = xhr.status;
   };
   xhr.send();

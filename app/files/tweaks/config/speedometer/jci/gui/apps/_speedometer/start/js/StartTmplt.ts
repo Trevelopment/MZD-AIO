@@ -60,7 +60,7 @@ StartTmplt.prototype.handleControllerEvent = function(eventID) {
  * Called by the app during templateNoLongerDisplayed. Used to perform garbage collection procedures on the template and
  * its controls.
  */
-StartTmplt.prototype.cleanUp = function() {
+StartTmplt.prototype.cleanUp = () => {
 
 };
 

@@ -159,20 +159,20 @@ function AIOTweaksTmplt(uiaId, parentDiv, templateID, controlProperties) {
   // {Buttons:[{tag:'button',id:'twkOut',label:'Home',tab:'Tweaks',classes:"mainApps audioSources"},]}
   // }
   // Tabs
-  $('#Main').on('click', function() {
+  $('#Main').on('click', () => {
     AIOTabs('#MainMenu', '#Main');
   });
-  $('#Twk').on('click', function() {
+  $('#Twk').on('click', () => {
     AIOTabs('#Tweaks', '#Twk');
   });
-  $('#Opt').on('click', function() {
+  $('#Opt').on('click', () => {
     AIOTabs('#Options', '#Opt');
   });
-  $('#Shll').on('click', function() {
+  $('#Shll').on('click', () => {
     AIOTabs('#Shell', '#Shll');
     $('#devModeSecretBtn').show();
   });
-  $('#Tst').on('click', function() {
+  $('#Tst').on('click', () => {
     AIOTabs('#touchscreenPanel', '#Tst');
   });
   // Start from the last opened tab
@@ -210,7 +210,7 @@ AIOTweaksTmplt.prototype.longClick = function(clickFunction) {
     clickFunction = $(clickFunction);
   }
   const arg = arguments[1];
-  this.longholdTimeout = setTimeout(function() {
+  this.longholdTimeout = setTimeout(() => {
     AIOlonghold = true;
     (typeof clickFunction === 'function') ? clickFunction(arg): clickFunction.click();
   }, 1200);
@@ -349,7 +349,7 @@ AIOTweaksTmplt.prototype.handleControllerEvent = function(eventID) {
  * Called by the app during templateNoLongerDisplayed. Used to perform garbage collection procedures on the template and
  * its controls.
  */
-AIOTweaksTmplt.prototype.cleanUp = function() {
+AIOTweaksTmplt.prototype.cleanUp = () => {
   $('.AIOTweaksTmplt').remove();
   $('html').removeClass('showBg');
   $('body').css({'display': ''});

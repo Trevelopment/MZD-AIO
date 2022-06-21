@@ -18,7 +18,7 @@
   const tetris = $.fn.tetris = function(options) {
     options = extend($.fn.tetris.defaults, options);
 
-    return this.each(function() {
+    return this.each(() => {
       const $this = $(this);
       let instance;
       if (!$this.data('tetris')) {
@@ -91,11 +91,11 @@
         }
       }
     },
-    tick: function() {
+    tick: () => {
       this.down();
       this.$element.trigger('repaint');
     },
-    tileDrop: function() {
+    tileDrop: () => {
       const that = this;
 
       that.freeze(that.currentTile);
@@ -115,22 +115,22 @@
       const tileSize = that.tileSize;
 
       that.$element.find('.frozen')
-          .filter(function() {
+          .filter(() => {
             const index = $(this).data('index');
             return index - (index % cols) == rowStart;
           })
           .remove()
           .end()
-          .filter(function() {
+          .filter(() => {
             const index = $(this).data('index');
             if (index - (index % cols) < rowStart) {
               return index - (index % cols) < rowStart;
             }
           })
-          .css('top', function() {
+          .css('top', () => {
             return parseInt($(this).css('top')) + tileSize;
           })
-          .each(function() {
+          .each(() => {
             const t = $(this);
             t.data('index', t.data('index') + cols);
           });
@@ -189,7 +189,7 @@
         that.$element.trigger('repaint');
       }
     },
-    rotate: function() {
+    rotate: () => {
       const that = this;
       const currentTile = that.currentTile;
       let newLocation = currentTile.shape.slice();
@@ -214,7 +214,7 @@
 
       that.$element.trigger('repaint');
     },
-    down: function() {
+    down: () => {
       const that = this;
       const cols = that.cols;
       // const maxStageIndex = cols * that.rows;
@@ -367,7 +367,7 @@
         }
       }
     },
-    repaint: function() {
+    repaint: () => {
       const cols = this.cols;
       const tileSize = this.tileSize;
       const shape = this.currentTile.shape;
@@ -392,7 +392,7 @@
         });
       }
     },
-    start: function() {
+    start: () => {
       if (this.isStarted) return;
       this.isStarted = true;
       const $element = this.$element;
@@ -402,23 +402,23 @@
       }
 
       // / TODO: improve timer
-      this.timer = setInterval(function() {
+      this.timer = setInterval(() => {
         $element.trigger('tick');
       }, 600);
     },
-    pause: function() {
+    pause: () => {
       this.isStarted = false;
       if (this.timer) {
         window.clearInterval(this.timer);
         this.timer = null;
       }
     },
-    gameover: function() {
+    gameover: () => {
       this.isStarted = false;
       this.isGameOver = true;
       this.$element.trigger('gameOver');
     },
-    restartGame: function() {
+    restartGame: () => {
       this.$element.empty();
       this.$element.trigger('restartGame');
       this.isStarted = false;

@@ -38,16 +38,16 @@ framework.sendEventToMmui("system","SelectApplications");
 setTimeout(function(){aioMagicRoute("_speedometer","Start");}, 4000);
 }, 30000);
 */
-utility.loadScript('apps/_aiotweaks/js/mzd.js', null, function() {
+utility.loadScript('apps/_aiotweaks/js/mzd.js', null, () => {
   if (turnWifiOn) {
     framework.common._contextCategory._contextCategoryTable['netmgmt.*'] = 'Other';
-    setTimeout(function() {
+    setTimeout(() => {
       turnOnWifi();
     }, 3000); // 3 second delay to let everything load up
   }
   if (turnScreenOff) {
-    setTimeout(function() {
-      turnScreenOff = setInterval(function() {
+    setTimeout(() => {
+      turnScreenOff = setInterval(() => {
         if (framework.getCurrCtxtId() === 'DisplayOff') {
           clearInterval(turnScreenOff);
           turnScreenOff = null;
@@ -55,7 +55,7 @@ utility.loadScript('apps/_aiotweaks/js/mzd.js', null, function() {
           framework.sendEventToMmui('common', 'Global.IntentSettingsTab', {payload: {settingsTab: 'Display'}});
           framework.sendEventToMmui('common', 'Global.IntentHome');
         }
-        setTimeout(function() {
+        setTimeout(() => {
           framework.getCurrCtxtId() === 'DisplayOff' ? null : framework.sendEventToMmui('syssettings', 'SelectDisplayOff');
         }, 1000);
       }, 5000);

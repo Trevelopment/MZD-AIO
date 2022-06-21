@@ -72,7 +72,7 @@ Utility.prototype.loadScript = function(url, attributes, callback) {
       script[key] = attributes[key];
     }
   }
-  script.onload = function() {
+  script.onload = () => {
     const time = Date.now() - startTime;
     log.debug('Finished loadScript ' + url + ' time ' + time + 'ms');
     if (callback != null) {
@@ -108,7 +108,7 @@ Utility.prototype.loadCss = function(url) {
   cssNode.type = 'text/css';
   cssNode.rel = 'stylesheet';
   cssNode.href = url;
-  cssNode.onload = function() {
+  cssNode.onload = () => {
     const time = Date.now() - startTime;
     log.debug('Finished loadCss ' + url + ' time ' + time + 'ms');
   };
@@ -235,7 +235,7 @@ Utility.prototype.setRequiredSurfaces = function(surfaces, fadeOpera) {
  * send wayland request to hide all surfaces
  * @return void
  */
-Utility.prototype.hideAllSurfaces = function() {
+Utility.prototype.hideAllSurfaces = () => {
   log.warn('utility.hideAllSurfaces() FUNCTION DEPRECATED. GUI apps should set properties.visibleSurfaces in the context table instead.');
 };
 

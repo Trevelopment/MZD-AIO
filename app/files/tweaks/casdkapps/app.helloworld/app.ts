@@ -160,7 +160,7 @@ CustomApplicationsHandler.register('app.helloworld', new CustomApplication({
      * Add any content that will be static here
      */
 
-  created: function() {
+  created: () => {
     /**
          * HelloWorld Showcase
          */
@@ -261,7 +261,7 @@ CustomApplicationsHandler.register('app.helloworld', new CustomApplication({
      * this method to run your logic.
      */
 
-  focused: function() {
+  focused: () => {
 
 
   },
@@ -276,7 +276,7 @@ CustomApplicationsHandler.register('app.helloworld', new CustomApplication({
      * If you enabled terminateOnLost you may want to save the state of your app here.
      */
 
-  lost: function() {
+  lost: () => {
 
   },
 

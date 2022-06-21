@@ -94,7 +94,7 @@ CustomApplicationsHandler.register('app.background', new CustomApplication({
    * @event
    * @return {void}
    */
-  created: function() {
+  created: () => {
     this.select = 0;
     this.max = 0;
     this.position = 0;
@@ -122,7 +122,7 @@ CustomApplicationsHandler.register('app.background', new CustomApplication({
       }
     }
   },
-  updatepos: function() {
+  updatepos: () => {
     this.table[this.oldselect].elem.removeClass('selectimage');
     this.oldselect = this.select;
     this.table[this.select].elem.addClass('selectimage');
@@ -151,7 +151,7 @@ CustomApplicationsHandler.register('app.background', new CustomApplication({
    * @event
    * @return {void}
    */
-  focused: function() {
+  focused: () => {
   },
   /**
    * (lost)
@@ -164,7 +164,7 @@ CustomApplicationsHandler.register('app.background', new CustomApplication({
    * @event
    * @return {void}
    */
-  lost: function() {
+  lost: () => {
   },
   /**
    * (terminated)
@@ -183,7 +183,7 @@ CustomApplicationsHandler.register('app.background', new CustomApplication({
    * @event
    * @return {void}
    */
-  terminated: function() {
+  terminated: () => {
   },
   /** *
    *** Application Events

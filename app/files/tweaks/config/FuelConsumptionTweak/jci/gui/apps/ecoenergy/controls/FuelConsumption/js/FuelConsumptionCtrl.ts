@@ -238,7 +238,7 @@ function FuelConsumptionCtrl(uiaId, parentDiv, controlId, properties) {
 /* Private Methods */
 /** *****************/
 
-FuelConsumptionCtrl.prototype._init = function() {
+FuelConsumptionCtrl.prototype._init = () => {
 //    log.debug("FuelConsumptionCtrl: _init() called...");
 
   // Historical data displayed by CDFE graph
@@ -329,7 +329,7 @@ FuelConsumptionCtrl.prototype._next = function(count) {
   }
 };
 
-FuelConsumptionCtrl.prototype._preload = function() {
+FuelConsumptionCtrl.prototype._preload = () => {
   const images = [];
   const prefix = './apps/ecoenergy/controls/FuelConsumption/images/';
   for (let i = 0; i < this._preload.arguments.length; i++) {
@@ -339,7 +339,7 @@ FuelConsumptionCtrl.prototype._preload = function() {
   }
 };
 
-FuelConsumptionCtrl.prototype._createStructure = function() {
+FuelConsumptionCtrl.prototype._createStructure = () => {
 //    log.debug("FuelConsumptionCtrl: _createStructure() called...");
 
   // Create the div for control
@@ -925,7 +925,7 @@ FuelConsumptionCtrl.prototype._addCDFEGraphAxisLabels = function(xDiv, yDiv) {
 /*
  * Utility function to set the horizontal positions of the CDFE graph bars
  */
-FuelConsumptionCtrl.prototype._setCDFEGraphBarPositions = function() {
+FuelConsumptionCtrl.prototype._setCDFEGraphBarPositions = () => {
 //    log.debug("FuelConsumptionCtrl: _setCDFEGraphBarPositions() called...");
 
   const leftInc = this._CSSConstants['CDFEGraphBarWidth'] +
@@ -952,7 +952,7 @@ FuelConsumptionCtrl.prototype._setCDFEGraphBarPositions = function() {
 };
 /** ********************************New Defination of function**********************************/
 
-FuelConsumptionCtrl.prototype._setCDFEGraphBarPositionsRight = function() {
+FuelConsumptionCtrl.prototype._setCDFEGraphBarPositionsRight = () => {
 //    log.debug("FuelConsumptionCtrl: _setCDFEGraphBarPositions() called...");
 
   const leftIncRight = this._CSSConstants['CDFEGraphBarWidthRight'] +
@@ -1107,7 +1107,7 @@ FuelConsumptionCtrl.prototype._setCDFEGraphBarHeightRight = function(barIdx) {
 /*
  * Utility function to set the heights of all of the CDFE graph bars
  */
-FuelConsumptionCtrl.prototype._setCDFEGraphBarHeights = function() {
+FuelConsumptionCtrl.prototype._setCDFEGraphBarHeights = () => {
 //    log.debug("FuelConsumptionCtrl: _setCDFEGraphBarHeights() called...");
 
   // Cache reused values
@@ -1136,7 +1136,7 @@ FuelConsumptionCtrl.prototype._setCDFEGraphBarHeights = function() {
   }
 };
 
-FuelConsumptionCtrl.prototype._setCDFEGraphBarHeightsRight = function() {
+FuelConsumptionCtrl.prototype._setCDFEGraphBarHeightsRight = () => {
 //    log.debug("FuelConsumptionCtrl: _setCDFEGraphBarHeights() called...");
 
   // Cache reused values
@@ -1242,7 +1242,7 @@ FuelConsumptionCtrl.prototype._drawCDFELineGraphInterval = function(startIdx, en
 /*
  * Shortcut utility function to render the entire CDFE line graph
  */
-FuelConsumptionCtrl.prototype._drawCDFELineGraph = function() {
+FuelConsumptionCtrl.prototype._drawCDFELineGraph = () => {
 //    log.debug("FuelConsumptionCtrl: _drawCDFELineGraph() called...");
 
   this._drawCDFELineGraphInterval(0, this._newCDFEDataIdx, true);
@@ -1465,7 +1465,7 @@ FuelConsumptionCtrl.prototype._addCFERGraphAxisLabels = function(xDiv, yDiv) {
 /*
  * Utility function to set the horizontal positions of the CFER graph bars
  */
-FuelConsumptionCtrl.prototype._setCFERGraphBarPositions = function() {
+FuelConsumptionCtrl.prototype._setCFERGraphBarPositions = () => {
 //    log.debug("FuelConsumptionCtrl: _setCFERGraphBarPositions() called...");
 
   const leftInc = this._CSSConstants['CFERGraphBarWidth'] +
@@ -1546,7 +1546,7 @@ FuelConsumptionCtrl.prototype._setCFERGraphBarHeightNew = function(barIdx) {
 /*
  * Utility function to set the heights of all of the CFER graph bars
  */
-FuelConsumptionCtrl.prototype._setCFERGraphBarHeights = function() {
+FuelConsumptionCtrl.prototype._setCFERGraphBarHeights = () => {
 //    log.debug("FuelConsumptionCtrl: _setCFERGraphBarHeights() called...");
 
   // Cache reused values
@@ -2136,14 +2136,14 @@ FuelConsumptionCtrl.prototype.toggleUmpPanel = function(status) {
  * @return {object} - capture data
  */
 
-FuelConsumptionCtrl.prototype.getContextCapture = function() {
+FuelConsumptionCtrl.prototype.getContextCapture = () => {
   log.debug('FuelConsumptionCtrl: getContextCapture() called...');
   const controlContextCapture = this.umpCtrl.getContextCapture();
   return controlContextCapture;
 };
 
 
-FuelConsumptionCtrl.prototype.finishPartialActivity = function() {
+FuelConsumptionCtrl.prototype.finishPartialActivity = () => {
   log.debug('FuelConsumptionCtrl: finishPartialActivity() called...');
   this.umpCtrl.finishPartialActivity();
 };
@@ -2178,7 +2178,7 @@ FuelConsumptionCtrl.prototype.handleControllerEvent = function(eventId) {
   }
 };
 
-FuelConsumptionCtrl.prototype.cleanUp = function() {
+FuelConsumptionCtrl.prototype.cleanUp = () => {
   // Clean up the "Switch View" child button control
   if (this._switchViewButtonCtrl) {
     this._switchViewButtonCtrl.cleanUp();

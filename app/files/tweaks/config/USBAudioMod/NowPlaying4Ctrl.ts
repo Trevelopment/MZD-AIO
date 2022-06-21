@@ -472,12 +472,12 @@ function NowPlaying4Ctrl(uiaId, parentDiv, controlId, properties) {
   this._createStructure();
 }
 
-NowPlaying4Ctrl.prototype._init = function() {
+NowPlaying4Ctrl.prototype._init = () => {
   // Configure the control, based on the passed-in instantiation properties
   this.setNowPlayingConfig(this.properties);
 };
 
-NowPlaying4Ctrl.prototype._createStructure = function() {
+NowPlaying4Ctrl.prototype._createStructure = () => {
   // create the div for control
   this.divElt = document.createElement('div');
   this.divElt.className = 'NowPlaying4Ctrl';
@@ -679,7 +679,7 @@ NowPlaying4Ctrl.prototype._createStructure = function() {
   this._init();
 };
 
-NowPlaying4Ctrl.prototype._updateTrackDisplay = function() {
+NowPlaying4Ctrl.prototype._updateTrackDisplay = () => {
   let trackDisplayStr = '' + this.properties.currentTrackNum;
 
   if (this.properties.trackCount > 0) {
@@ -689,7 +689,7 @@ NowPlaying4Ctrl.prototype._updateTrackDisplay = function() {
   this._trackDisplay.innerText = trackDisplayStr;
 };
 
-NowPlaying4Ctrl.prototype._updateRatingMeter = function() {
+NowPlaying4Ctrl.prototype._updateRatingMeter = () => {
   let rmStarClassName;
 
   this._customRatingDiv.className = 'NowPlaying4CtrlHidden';
@@ -713,7 +713,7 @@ NowPlaying4Ctrl.prototype._updateRatingMeter = function() {
   }
 };
 
-NowPlaying4Ctrl.prototype._updateHdSubstationStyles = function() {
+NowPlaying4Ctrl.prototype._updateHdSubstationStyles = () => {
   if (this.properties.hdConfigObj) {
     // Scan all of the substation configurations
     for (let i = 1; i <= this._constants.MAX_HD_SUBSTATION_COUNT; i++) {
@@ -773,7 +773,7 @@ NowPlaying4Ctrl.prototype._updateHdSubstationStyles = function() {
 /* hides formatted text (song title, album name, artist name, genre name) to show unformatted text
  */
 
-NowPlaying4Ctrl.prototype._hideFormattedText = function() {
+NowPlaying4Ctrl.prototype._hideFormattedText = () => {
   this._audioTitleFrame.className = 'NowPlaying4CtrlHidden';
   this._detailLine1Frame.className = 'NowPlaying4CtrlHidden';
   this._detailLine2Frame.className = 'NowPlaying4CtrlHidden';
@@ -1503,7 +1503,7 @@ NowPlaying4Ctrl.prototype.setArtworkImagePath = function(imagePath) {
 // This API is a shortcut method for clearing the Artwork Image. If the control is in
 // a style supporting Now Artwork Image ("Style7", ONLY!), the image will be hidden
 // and the "info box" text will be extended over the vacated real estate.
-NowPlaying4Ctrl.prototype.clearArtworkImage = function() {
+NowPlaying4Ctrl.prototype.clearArtworkImage = () => {
   log.debug('clearArtworkImage() called...');
 
   // Remove any current branding image (all styles)
@@ -1590,7 +1590,7 @@ NowPlaying4Ctrl.prototype.setBrandImage = function(imagePath) {
 // This API is a shortcut method for clearing the control title icon.  If the control is in
 // a style supporting branding (e.g. "Style2", "Style4" or "Style5"), the image will be hidden
 // and the title text will be extended over the album artwork image.
-NowPlaying4Ctrl.prototype.clearBrandImage = function() {
+NowPlaying4Ctrl.prototype.clearBrandImage = () => {
   log.debug('clearBrandImage() called...');
 
   // Remove any current branding image (all styles)
@@ -1736,7 +1736,7 @@ NowPlaying4Ctrl.prototype.showBackgroundImage = function(flag) {
   }
 };
 
-NowPlaying4Ctrl.prototype.getNowPlayingConfig = function() {
+NowPlaying4Ctrl.prototype.getNowPlayingConfig = () => {
   // extract the text from the fields and remove the unnecessary html tags
   const config = {
     'ctrlTitle': this._ctrlTitle,
@@ -1759,7 +1759,7 @@ NowPlaying4Ctrl.prototype.handleControllerEvent = function(eventId) {
   }
 };
 
-NowPlaying4Ctrl.prototype.getContextCapture = function() {
+NowPlaying4Ctrl.prototype.getContextCapture = () => {
   log.debug('NowPlaying4Ctrl: getContextCapture() called...');
 
   const controlContextCapture = this.umpCtrl.getContextCapture();
@@ -1772,13 +1772,13 @@ NowPlaying4Ctrl.prototype.restoreContext = function(controlContextCapture) {
   this.umpCtrl.restoreContext(controlContextCapture);
 };
 
-NowPlaying4Ctrl.prototype.finishPartialActivity = function() {
+NowPlaying4Ctrl.prototype.finishPartialActivity = () => {
   log.debug('NowPlaying4Ctrl: finishPartialActivity() called...');
 
   this.umpCtrl.finishPartialActivity();
 };
 
-NowPlaying4Ctrl.prototype.cleanUp = function() {
+NowPlaying4Ctrl.prototype.cleanUp = () => {
   log.debug('NowPlaying4Ctrl: cleanUp() called...');
   // Now Playing currently has no cleanup
   if (this.umpCtrl) {

@@ -6,9 +6,9 @@ import {getBackground, settings, varDir, hasColorFiles, hasSpeedCamFiles} from '
 
 export const selectBgDir = $('.menuCheck.bg input');
 const selectColorsDL = $('.menuCheck.colors input');
-$(function() {
+$(() => {
   /* Attempt to download color scheme files if they don't exist */
-  selectColorsDL.on('click', function() {
+  selectColorsDL.on('click', () => {
     if (selectColorsDL.hasClass('ng-pristine') && !hasColorFiles) {
       bootbox.confirm({
         title: 'The Color Scheme Tweak Requires Additional Files.',
@@ -33,7 +33,7 @@ $(function() {
     }
   });
   /* Attempt to download speedcam patch files if they don't exist */
-  angular.element($('.install-check input#IN23')).on('click', function() {
+  angular.element($('.install-check input#IN23')).on('click', () => {
     if ($('.install-check input#IN23, .uninstall-check input#UN23').hasClass('ng-pristine') && !hasSpeedCamFiles) {
       bootbox.confirm({
         title: 'The Color Scheme Tweak Requires Additional Files.',
@@ -135,7 +135,7 @@ ipcRenderer.on('selected-album-art', function(event, filepath) {
   $('#blnk-albm-img').show();
   settings.set('blank-album-art', `${filepath}`);
   fs.writeFileSync(`${outFile}`, nativeImage.createFromPath(`${filepath}`).resize({'width': 146, 'height': 146}).toPNG());
-  setTimeout(function() {
+  setTimeout(() => {
     const bgNoCache = `<img src="${varDir}/no_artwork_icon.png?` + new Date().getTime() + `">`;
     $('#blnk-albm-img').html(`${bgNoCache}`);
     snackbar(`Blank Album Art: ${bgNoCache}`);
@@ -148,11 +148,11 @@ ipcRenderer.on('aio-info', function(event) {
 ipcRenderer.on('close-featherlight', function(event) {
   $.featherlight.current().close();
 });
-ipcRenderer.on('open-translator', function() {
+ipcRenderer.on('open-translator', () => {
   remote.BrowserWindow.fromId(1).focus();
   $('#openTranslator').click();
 });
-ipcRenderer.on('go-home', function() {
+ipcRenderer.on('go-home', () => {
   remote.BrowserWindow.fromId(1).focus();
   $('#goHome').click();
 });

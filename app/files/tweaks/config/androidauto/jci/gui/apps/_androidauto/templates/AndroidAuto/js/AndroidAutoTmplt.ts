@@ -38,7 +38,7 @@ AndroidAutoTmplt.prototype.handleControllerEvent = function(eventID) {
   return 'giveFocusLeft';
 };
 
-AndroidAutoTmplt.prototype.cleanUp = function() {
+AndroidAutoTmplt.prototype.cleanUp = () => {
 
 };
 

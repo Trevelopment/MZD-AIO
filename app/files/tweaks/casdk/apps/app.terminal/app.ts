@@ -187,7 +187,7 @@ CustomApplicationsHandler.register('app.terminal', new CustomApplication({
   //
   // Update the screen
   //
-  update: function() {
+  update: () => {
     this.screen.get(0).innerHTML = this.buffer + '>' + this.command;
     this.screen.get(0).scrollTop = this.screen.get(0).scrollHeight;
   },
@@ -214,7 +214,7 @@ CustomApplicationsHandler.register('app.terminal', new CustomApplication({
   //
   // Folder has maybe changed
   //
-  folderchange: function() {
+  folderchange: () => {
     /* let c;
     debug.innerHTML = path + "\n"
     for (c=0; c< fileslist.length; c++) {
@@ -222,7 +222,7 @@ CustomApplicationsHandler.register('app.terminal', new CustomApplication({
     } */
   },
 
-  help: function() {
+  help: () => {
     let command = 'echo "Example commands : "';
     this.ws.send(command);
     command = 'echo "df -h<br><br>Shortcuts:<br>m/ : mount -o rw,remount /<br>tweaks : sh /tmp/mnt/sd*/tweaks.sh"';
@@ -232,14 +232,14 @@ CustomApplicationsHandler.register('app.terminal', new CustomApplication({
   asklistnumber: 'TERMINAL84723423940147',
   askpwdnumber: 'TERMINAL2472323489823',
 
-  askiffolderchanged: function() {
+  askiffolderchanged: () => {
     let command = 'ls | awk \' BEGIN { ORS = \"\"; print \"' + this.asklistnumber + '[\"; } { print \"\\\/\\@\"$0\"\\\/\\@\"; } END { print \"]\"; }\' | sed \"s^\\\"^\\\\\\\\\\\"^g;s^\\\/\\@\\\/\\@^\\\", \\\"^g;s^\\\/\\@^\\\"^g\"';
     this.ws.send(command);
     let command = 'echo ' + this.askpwdnumber + '$(pwd)';
     this.ws.send(command);
   },
 
-  SetKeyboardButtonValue: function() {
+  SetKeyboardButtonValue: () => {
     let c;
     for (c = 0; c < this.buttonlist.length; c++) {
       if (!this.buttonlist[c].hasAttribute('function')) {
@@ -460,7 +460,7 @@ CustomApplicationsHandler.register('app.terminal', new CustomApplication({
   },
 
   LowLevelKeyboard: function(c) {
-    this.buttonlist[c].onmousedown = function() {
+    this.buttonlist[c].onmousedown = () => {
       if (this.buttonlist[c].hasAttribute('function')) {
         const f = this.buttonlist[c].getAttribute('function');
         switch (f) {
@@ -503,7 +503,7 @@ CustomApplicationsHandler.register('app.terminal', new CustomApplication({
           this.SetKeyboardButtonValue();
         }
       }
-    }.bind(this);
+    };
   },
 
 
@@ -515,7 +515,7 @@ CustomApplicationsHandler.register('app.terminal', new CustomApplication({
    * Add any content that will be static here
    */
 
-  created: function() {
+  created: () => {
     this.screen = this.element('pre', false, 'screen', false, '');
     this.keyboard = this.element('div', false, false, false, '' +
       '<div>' +
@@ -625,20 +625,20 @@ CustomApplicationsHandler.register('app.terminal', new CustomApplication({
 */
 
 
-    this.wsonopen = function() {
+    this.wsonopen = () => {
       this.AddText('[connect]\nhelp=Help');
       this.askiffolderchanged();
       this.ws.send('cd /tmp/root\n');
-    }.bind(this);
-    this.wsonclose = function() {
+    };
+    this.wsonclose = () => {
       this.AddText('[unconnect]');
-      window.setTimeout(function() {
+      window.setTimeout(() => {
         this.ws = new WebSocket('ws://localhost:9996');
         this.ws.onopen = this.wsonopen;
         this.ws.onclose = this.wsonclose;
         this.ws.onmessage = this.wsonmessage;
-      }.bind(this), 5000);
-    }.bind(this);
+      }, 5000);
+    };
     this.wsonmessage = function(event) {
       if (event.data.substr(0, this.asklistnumber.length) == this.asklistnumber) {
         this.fileslist = event.data.substr(this.asklistnumber.length);
@@ -668,7 +668,7 @@ CustomApplicationsHandler.register('app.terminal', new CustomApplication({
    * this method to run your logic.
    */
 
-  focused: function() {
+  focused: () => {
 
 
   },
@@ -683,7 +683,7 @@ CustomApplicationsHandler.register('app.terminal', new CustomApplication({
    * If you enabled terminateOnLost you may want to save the state of your app here.
    */
 
-  lost: function() {
+  lost: () => {
 
   },
 

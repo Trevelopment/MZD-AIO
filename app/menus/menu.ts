@@ -132,7 +132,7 @@ const template = [{
     },
   }, {
     label: 'Full Screen',
-    accelerator: (function() {
+    accelerator: (() => {
       if (process.platform === 'darwin') {
         return 'Ctrl+Command+F';
       } else {
@@ -182,13 +182,13 @@ const template = [{
   }, */
     {
       label: 'Learn More: MazdaTweaks.com',
-      click: function() {
+      click: () => {
         shell.openExternal('http://aio.trevelopment.win/mazdatweaks');
       },
     },
     {
       label: 'Forum: Mazda3Revolution.com',
-      click: function() {
+      click: () => {
         shell.openExternal('http://aio.trevelopment.win/mazda3revolution');
       },
     },
@@ -254,7 +254,7 @@ const template = [{
       {
         label: 'Quit',
         accelerator: 'Command+Q',
-        click: function() { app.quit(); }
+        click: () => { app.quit(); }
       },
     ]
   });
@@ -270,7 +270,7 @@ const template = [{
       });
     }
   } */
-app.on('ready', function() {
+app.on('ready', () => {
   const menu = Menu.buildFromTemplate(template);
   Menu.setApplicationMenu(menu);
   return template;

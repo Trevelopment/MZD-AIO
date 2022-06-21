@@ -72,7 +72,7 @@ TestCtrl.prototype._MOUSEUPEVENT = 'mouseup';
 TestCtrl.prototype._MOUSEOUTEVENT = 'mouseout';
 TestCtrl.prototype._CLICKEVENT = 'click';
 
-TestCtrl.prototype.init = function() {
+TestCtrl.prototype.init = () => {
   /* CREATE ELEMENTS */
   // create control's container
   this.divElt = document.createElement('div');
@@ -519,7 +519,7 @@ TestCtrl.prototype.handleControllerEvent = function(eventID) {
  * GARBAGE COLLECTION
  * =========================
  */
-TestCtrl.prototype.cleanUp = function() {
+TestCtrl.prototype.cleanUp = () => {
   // remove event listeners
   this.btnEnter.removeEventListener(TestCtrl.prototype._MOUSEDOWNEVENT, this.enterHandler, false);
   this.btnExit.removeEventListener(TestCtrl.prototype._MOUSEDOWNEVENT, this.exitHandler, false);
@@ -536,7 +536,7 @@ TestCtrl.prototype.cleanUp = function() {
   this._inputKeyPressed = false;
 };
 
-TestCtrl.prototype.deActivate = function() {
+TestCtrl.prototype.deActivate = () => {
   // remove event listeners
   this.btnEnter.className = 'enterDisable';
   // If the button lable is EXIT then only Deactivate - arsu
@@ -562,7 +562,7 @@ TestCtrl.prototype.deActivate = function() {
 };
 
 // Deprecated method..
-TestCtrl.prototype.activate = function() {
+TestCtrl.prototype.activate = () => {
   // add event listeners
   this.btnExit.innerText = this.properties.buttonValue;
   this.btnEnter.className = 'enter';
@@ -661,7 +661,7 @@ TestCtrl.prototype.activateDel = function(state) {
   this.properties.length = 0;
 };
 // To clear input
-TestCtrl.prototype._focusLastBtn = function() {
+TestCtrl.prototype._focusLastBtn = () => {
   const prevBtn = this._prevFocusedBtnDOM;
   this._removeFocused();
   if (prevBtn != null) {
@@ -807,7 +807,7 @@ TestCtrl.prototype._makeFocused = function(target) {
   return target;
 };
 
-TestCtrl.prototype._removeFocused = function() {
+TestCtrl.prototype._removeFocused = () => {
   if (this._currentFocusedBtnDOM != null) {
     this._currentFocusedBtnDOM.classList.remove('focused');
   }
@@ -816,7 +816,7 @@ TestCtrl.prototype._removeFocused = function() {
   this._currentFocusedBtnDOM = null;
 };
 
-TestCtrl.prototype._getFocused = function() {
+TestCtrl.prototype._getFocused = () => {
   if (this.properties.ctrlType != 'Dtmf') {
     this._makeFocused(this.btnContacts);
   } else {
@@ -824,7 +824,7 @@ TestCtrl.prototype._getFocused = function() {
   }
 };
 
-TestCtrl.prototype._getLeftBtn = function() {
+TestCtrl.prototype._getLeftBtn = () => {
   let returnValue = 'consumed';
   if (this._currentFocusedBtnDOM != null) {
     const value = this._currentFocusedBtnDOM.getAttribute('data-value');
@@ -891,7 +891,7 @@ TestCtrl.prototype._getLeftBtn = function() {
   return returnValue;
 };
 
-TestCtrl.prototype._getRightBtn = function() {
+TestCtrl.prototype._getRightBtn = () => {
   let returnValue = 'consumed';
   if (this._currentFocusedBtnDOM != null) {
     const value = this._currentFocusedBtnDOM.getAttribute('data-value');
@@ -958,7 +958,7 @@ TestCtrl.prototype._getRightBtn = function() {
   return returnValue;
 };
 
-TestCtrl.prototype._getUpBtn = function() {
+TestCtrl.prototype._getUpBtn = () => {
   let returnValue = 'consumed';
   if (this._currentFocusedBtnDOM != null) {
     const value = this._currentFocusedBtnDOM.getAttribute('data-value');
@@ -1008,7 +1008,7 @@ TestCtrl.prototype._getUpBtn = function() {
   return returnValue;
 };
 
-TestCtrl.prototype._getDownBtn = function() {
+TestCtrl.prototype._getDownBtn = () => {
   let returnValue = 'consumed';
   if (this._currentFocusedBtnDOM != null) {
     const value = this._currentFocusedBtnDOM.getAttribute('data-value');
@@ -1061,7 +1061,7 @@ TestCtrl.prototype._getDownBtn = function() {
   return returnValue;
 };
 
-TestCtrl.prototype._getNextBtn = function() {
+TestCtrl.prototype._getNextBtn = () => {
   if (this._currentFocusedBtnDOM != null) {
     const value = this._currentFocusedBtnDOM.getAttribute('data-value');
     switch (value) {
@@ -1128,7 +1128,7 @@ TestCtrl.prototype._getNextBtn = function() {
   }
 };
 
-TestCtrl.prototype._getPrevBtn = function() {
+TestCtrl.prototype._getPrevBtn = () => {
   if (this._currentFocusedBtnDOM != null) {
     const value = this._currentFocusedBtnDOM.getAttribute('data-value');
     switch (value) {
@@ -1192,7 +1192,7 @@ TestCtrl.prototype._getPrevBtn = function() {
 };
 
 
-TestCtrl.prototype._multicontrollerSelect = function() {
+TestCtrl.prototype._multicontrollerSelect = () => {
   const value = this._currentFocusedBtnDOM.getAttribute('data-value');
   // log.info("inside _multicontrollerSelect : value = "+value);
   switch (value) {
@@ -1216,7 +1216,7 @@ TestCtrl.prototype._multicontrollerSelect = function() {
       break;
   }
 };
-TestCtrl.prototype._getNextTestId = function() {
+TestCtrl.prototype._getNextTestId = () => {
   log.debug('_getNextTestId ');
   this._currentTestId = this.properties.value;
   // log.info("getNextTestId this._currentTestId "+this._currentTestId);
@@ -1239,7 +1239,7 @@ TestCtrl.prototype._getNextTestId = function() {
   this._timerStarted = null;
 };
 
-TestCtrl.prototype._getPreviousTestId = function() {
+TestCtrl.prototype._getPreviousTestId = () => {
   this._currentTestId = this.properties.value;
   // log.info("inside getPreviousTestId: this._currentTestId is "+this._currentTestId);
   const pre = this._getPreviousVal(parseInt(this._currentTestId), this._testIdsArray);

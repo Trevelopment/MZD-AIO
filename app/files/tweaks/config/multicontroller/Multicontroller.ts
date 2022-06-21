@@ -206,7 +206,7 @@ Multicontroller.prototype._checkMode = function(mode) {
  * (internal)
  * Gets the Multicontroller mode ("touchActive" or "controllerActive")
  */
-Multicontroller.prototype.getMode = function() {
+Multicontroller.prototype.getMode = () => {
   return this._mode;
 };
 

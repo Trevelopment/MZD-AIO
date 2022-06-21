@@ -31,7 +31,7 @@ if (!window.jQuery) {
  * All variables local to this app should be declared in this function
  */
 
-_videoplayerApp.prototype.appInit = function() {
+_videoplayerApp.prototype.appInit = () => {
   log.debug('_videoplayerApp appInit  called...');
   // These values need to persist through videoplayer instances
   this.hold = false;
@@ -70,15 +70,15 @@ _videoplayerApp.prototype.appInit = function() {
  * CONTEXT CALLBACKS
  * =========================
  */
-_videoplayerApp.prototype._StartContextReady = function() {
+_videoplayerApp.prototype._StartContextReady = () => {
   framework.common.setSbDomainIcon('apps/_videoplayer/templates/VideoPlayer/images/icon.png');
 };
-_videoplayerApp.prototype._StartContextOut = function() {
+_videoplayerApp.prototype._StartContextOut = () => {
   CloseVideoFrame();
   framework.common.setSbName('');
 };
 
-_videoplayerApp.prototype._noLongerDisplayed = function() {
+_videoplayerApp.prototype._noLongerDisplayed = () => {
   // Stop and close video frame
   CloseVideoFrame();
   // If we are in reverse then save CurrentVideoPlayTime to resume the video where we left of
@@ -89,7 +89,7 @@ _videoplayerApp.prototype._noLongerDisplayed = function() {
   }
   // If we press the 'Entertainment' button we will be running this in the 'usbaudio' context
   if (!this.musicIsPaused) {
-    setTimeout(function() {
+    setTimeout(() => {
       if (framework.getCurrentApp() === 'usbaudio') {
         framework.sendEventToMmui('Common', 'Global.Pause');
         framework.sendEventToMmui('Common', 'Global.GoBack');

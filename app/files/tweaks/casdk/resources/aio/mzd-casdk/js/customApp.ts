@@ -47,7 +47,7 @@ function customApp(uiaId) {
  * Default BaseApp implementions
  */
 
-customApp.prototype.appInit = function() {
+customApp.prototype.appInit = () => {
   log.debug('customApp appInit called');
 
   this._contextTable = {

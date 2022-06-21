@@ -138,7 +138,7 @@ CustomApplicationsHandler.register('app.devtools', new CustomApplication({
    * Add any content that will be static here
    */
 
-  created: function() {
+  created: () => {
     // create log buffer
     this.localLogBuffer = {
       INFO: [],
@@ -182,7 +182,7 @@ CustomApplicationsHandler.register('app.devtools', new CustomApplication({
     this.createInterface();
   },
 
-  focused: function() {
+  focused: () => {
     console.log(JSON.stringify(framework._sharedDataAttributes));
   },
 
@@ -258,7 +258,7 @@ CustomApplicationsHandler.register('app.devtools', new CustomApplication({
    * This method creates the interface
    */
 
-  createInterface: function() {
+  createInterface: () => {
     this.menu = $('<div/>').addClass('tabs').appendTo(this.canvas);
 
     // create tabs

@@ -203,7 +203,7 @@ CustomApplicationsHandler.register('app.multidash', new CustomApplication({
    * @return {void}
    */
 
-  created: function() {
+  created: () => {
     // load config and update where necessary
 
     // this.getDefaultConfig();
@@ -304,9 +304,9 @@ CustomApplicationsHandler.register('app.multidash', new CustomApplication({
     this.createSections();
 
     this.updateTripTime();
-    this.updateTripTimer = setInterval(function() {
+    this.updateTripTimer = setInterval(() => {
       this.updateTripTime();
-    }.bind(this), this.updateTripTimerInterval);
+    }, this.updateTripTimerInterval);
   },
 
   /**
@@ -321,12 +321,12 @@ CustomApplicationsHandler.register('app.multidash', new CustomApplication({
    * @return {void}
    */
 
-  focused: function() {
+  focused: () => {
     this.updateTripTime();
     clearInterval(this.updateTripTimer);
-    this.updateTripTimer = setInterval(function() {
+    this.updateTripTimer = setInterval(() => {
       this.updateTripTime();
-    }.bind(this), this.updateTripTimerInterval);
+    }, this.updateTripTimerInterval);
     // this.mainContainer.addClass('shown');
   },
 
@@ -343,7 +343,7 @@ CustomApplicationsHandler.register('app.multidash', new CustomApplication({
    * @return {void}
    */
 
-  lost: function() {
+  lost: () => {
     clearInterval(this.updateTripTimer);
     // this.mainContainer.removeClass('shown');
   },
@@ -367,7 +367,7 @@ CustomApplicationsHandler.register('app.multidash', new CustomApplication({
    * @return {void}
    */
 
-  terminated: function() {
+  terminated: () => {
 
   },
 
@@ -537,7 +537,7 @@ CustomApplicationsHandler.register('app.multidash', new CustomApplication({
   },
 
 
-  getDefaultConfig: function() {
+  getDefaultConfig: () => {
     const fs = require('fs');
     let string;
 
@@ -557,7 +557,7 @@ CustomApplicationsHandler.register('app.multidash', new CustomApplication({
   },
 
 
-  getConfig: function() {
+  getConfig: () => {
     const string = this.get('AppMultiDashConfig');
 
     if (string !== undefined) {
@@ -566,12 +566,12 @@ CustomApplicationsHandler.register('app.multidash', new CustomApplication({
   },
 
 
-  saveConfig: function() {
+  saveConfig: () => {
     this.set('AppMultiDashConfig', this.config);
   },
 
 
-  updateTripTime: function() {
+  updateTripTime: () => {
     const now = new Date(framework.common.getCurrentTime());
     const diff = now - this.tripStartTime;
     const diffH = Math.floor((diff % 86400000) / 3600000);
@@ -588,9 +588,9 @@ CustomApplicationsHandler.register('app.multidash', new CustomApplication({
         // after done displaying seconds, set the trip timer to only run every minute
         clearInterval(this.updateTripTimer);
         this.updateTripTimerInterval = 60000;
-        this.updateTripTimer = setInterval(function() {
+        this.updateTripTimer = setInterval(() => {
           this.updateTripTime();
-        }.bind(this), this.updateTripTimerInterval);
+        }, this.updateTripTimerInterval);
       }
 
       if (diffH > 0) {
@@ -647,7 +647,7 @@ CustomApplicationsHandler.register('app.multidash', new CustomApplication({
 
 
   /*
-  getFuelLevel: function() {
+  getFuelLevel: () => {
       let sum = this.fuelLevelQueue.reduce(function(a, b) { return a + b; }),
           avg = sum / this.fuelLevelQueue.length;
 
@@ -658,7 +658,7 @@ CustomApplicationsHandler.register('app.multidash', new CustomApplication({
   /*
    * http://stackoverflow.com/a/3783970/867676
    */
-  getFuelLevel: function() {
+  getFuelLevel: () => {
     const store = this.fuelLevelQueue.slice(); // clone the array
     const frequency = {}; // array of frequency.
     let max = 0; // holds the max frequency.
@@ -735,7 +735,7 @@ CustomApplicationsHandler.register('app.multidash', new CustomApplication({
    * This method registers all the sections we want to display
    */
 
-  createSections: function() {
+  createSections: () => {
     // Here we define our sections
 
     this.sections = [

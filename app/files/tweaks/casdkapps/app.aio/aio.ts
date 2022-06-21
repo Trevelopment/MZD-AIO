@@ -24,7 +24,7 @@ export const mzdWs = (action, waitMessage) => {
     ws.close();
   };
 
-  ws.onopen = function() {
+  ws.onopen = () => {
     ws.send(action);
     if (!waitMessage) {
       ws.close();

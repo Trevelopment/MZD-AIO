@@ -41,7 +41,7 @@ CustomApplicationsHandler.register('app.clock', new CustomApplication({
   /**
    * (created) Creates the UI
    */
-  created: function() {
+  created: () => {
     const div = document.createElement('div');
     div.setAttribute('id', 'liveclock');
     div.setAttribute('class', 'outer_face');
@@ -73,8 +73,8 @@ CustomApplicationsHandler.register('app.clock', new CustomApplication({
   /**
    * (focused) When application is put into focus
    */
-  focused: function() {
-    this.timerClock = setInterval(function() {
+  focused: () => {
+    this.timerClock = setInterval(() => {
       const hands = $('#liveclock div.hand');
       const curdate = new Date(framework.common.getCurrentTime());
       const hour_as_degree = (curdate.getHours() + curdate.getMinutes() / 60) / 12 * 360;
@@ -92,7 +92,7 @@ CustomApplicationsHandler.register('app.clock', new CustomApplication({
   /**
    * (lost) When application loses focus
    */
-  lost: function() {
+  lost: () => {
     clearInterval(this.timerClock);
   },
 

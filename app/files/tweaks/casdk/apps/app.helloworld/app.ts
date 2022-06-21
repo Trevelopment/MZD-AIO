@@ -161,7 +161,7 @@ CustomApplicationsHandler.register('app.helloworld', new CustomApplication({
    * Add any content that will be static here
    */
 
-  created: function() {
+  created: () => {
     const iframe = document.createElement('iframe');
     iframe.setAttribute('src', 'http://www.youtube.com/embed/M7lc1UVf-VE?enablejsapi=1');
     iframe.setAttribute('frameborder', '0');
@@ -216,8 +216,8 @@ CustomApplicationsHandler.register('app.helloworld', new CustomApplication({
    * this method to run your logic.
    */
 
-  focused: function() {
-    setTimeout(function() {
+  focused: () => {
+    setTimeout(() => {
       window.player = new YT.Player('player', {
         events: {
           'onReady': onPlayerReady,
@@ -238,7 +238,7 @@ CustomApplicationsHandler.register('app.helloworld', new CustomApplication({
    * If you enabled terminateOnLost you may want to save the state of your app here.
    */
 
-  lost: function() {
+  lost: () => {
 
   },
 

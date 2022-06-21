@@ -60,7 +60,7 @@ function usbaudioApp(uiaId) {
 /*
  * Called just after the app is instantiated by framework.
  */
-usbaudioApp.prototype.appInit = function() {
+usbaudioApp.prototype.appInit = () => {
   log.debug(' usbaudioApp appInit  called...');
 
   if (framework.debugMode) {
@@ -1522,7 +1522,7 @@ usbaudioApp.prototype.appInit = function() {
  * Context handlers
  **************************/
 // Songs Context
-usbaudioApp.prototype._SongsCtxtContextIn = function() {
+usbaudioApp.prototype._SongsCtxtContextIn = () => {
   this._presetContextConfig();
 };
 
@@ -1530,12 +1530,12 @@ usbaudioApp.prototype._SongsContextReady = function(captureData) {
   this._contextReadyAction(captureData);
 };
 
-usbaudioApp.prototype._SongsCtxtContextOut = function() {
+usbaudioApp.prototype._SongsCtxtContextOut = () => {
   this._saveIndex();
 };
 
 // Albums Context
-usbaudioApp.prototype._AlbumsCtxtContextIn = function() {
+usbaudioApp.prototype._AlbumsCtxtContextIn = () => {
   this._presetContextConfig();
 };
 
@@ -1543,12 +1543,12 @@ usbaudioApp.prototype._AlbumsContextReady = function(captureData) {
   this._contextReadyAction(captureData);
 };
 
-usbaudioApp.prototype._AlbumsCtxtContextOut = function() {
+usbaudioApp.prototype._AlbumsCtxtContextOut = () => {
   this._saveIndex();
 };
 
 // Artists Context
-usbaudioApp.prototype._ArtistsCtxtContextIn = function() {
+usbaudioApp.prototype._ArtistsCtxtContextIn = () => {
   this._presetContextConfig();
 };
 
@@ -1556,12 +1556,12 @@ usbaudioApp.prototype._ArtistsContextReady = function(captureData) {
   this._contextReadyAction(captureData);
 };
 
-usbaudioApp.prototype._ArtistsCtxtContextOut = function() {
+usbaudioApp.prototype._ArtistsCtxtContextOut = () => {
   this._saveIndex();
 };
 
 // Playlists Context
-usbaudioApp.prototype._PlaylistsCtxtContextIn = function() {
+usbaudioApp.prototype._PlaylistsCtxtContextIn = () => {
   this._presetContextConfig();
 };
 
@@ -1569,12 +1569,12 @@ usbaudioApp.prototype._PlaylistsContextReady = function(captureData) {
   this._contextReadyAction(captureData);
 };
 
-usbaudioApp.prototype._PlaylistsCtxtContextOut = function() {
+usbaudioApp.prototype._PlaylistsCtxtContextOut = () => {
   this._saveIndex();
 };
 
 // Genres Context
-usbaudioApp.prototype._GenresCtxtContextIn = function() {
+usbaudioApp.prototype._GenresCtxtContextIn = () => {
   this._presetContextConfig();
 };
 
@@ -1582,12 +1582,12 @@ usbaudioApp.prototype._GenresContextReady = function(captureData) {
   this._contextReadyAction(captureData);
 };
 
-usbaudioApp.prototype._GenresCtxtContextOut = function() {
+usbaudioApp.prototype._GenresCtxtContextOut = () => {
   this._saveIndex();
 };
 
 // Audiobooks Context
-usbaudioApp.prototype._AudiobooksCtxtContextIn = function() {
+usbaudioApp.prototype._AudiobooksCtxtContextIn = () => {
   this._presetContextConfig();
 };
 
@@ -1595,12 +1595,12 @@ usbaudioApp.prototype._AudiobooksContextReady = function(captureData) {
   this._contextReadyAction(captureData);
 };
 
-usbaudioApp.prototype._AudiobooksCtxtContextOut = function() {
+usbaudioApp.prototype._AudiobooksCtxtContextOut = () => {
   this._saveIndex();
 };
 
 // Podcasts Context
-usbaudioApp.prototype._PodcastsCtxtContextIn = function() {
+usbaudioApp.prototype._PodcastsCtxtContextIn = () => {
   this._presetContextConfig();
 };
 
@@ -1608,12 +1608,12 @@ usbaudioApp.prototype._PodcastsContextReady = function(captureData) {
   this._contextReadyAction(captureData);
 };
 
-usbaudioApp.prototype._PodcastsCtxtContextOut = function() {
+usbaudioApp.prototype._PodcastsCtxtContextOut = () => {
   this._saveIndex();
 };
 
 // Episodes Context
-usbaudioApp.prototype._EpisodesCtxtContextIn = function() {
+usbaudioApp.prototype._EpisodesCtxtContextIn = () => {
   this._presetContextConfig();
 };
 
@@ -1621,12 +1621,12 @@ usbaudioApp.prototype._EpisodesContextReady = function(captureData) {
   this._contextReadyAction(captureData);
 };
 
-usbaudioApp.prototype._EpisodesCtxtContextOut = function() {
+usbaudioApp.prototype._EpisodesCtxtContextOut = () => {
   this._saveIndex();
 };
 
 // Chapters Context
-usbaudioApp.prototype._ChaptersCtxtContextIn = function() {
+usbaudioApp.prototype._ChaptersCtxtContextIn = () => {
   this._presetContextConfig();
 };
 
@@ -1634,7 +1634,7 @@ usbaudioApp.prototype._ChaptersContextReady = function(captureData) {
   this._contextReadyAction(captureData);
 };
 
-usbaudioApp.prototype._ChaptersCtxtContextOut = function() {
+usbaudioApp.prototype._ChaptersCtxtContextOut = () => {
   this._saveIndex();
 };
 // ---MZDMOD---
@@ -1661,7 +1661,7 @@ usbaudioApp.prototype._FoldersContextReady = function(captureData) {
 };
 
 // USBAudio contxet
-usbaudioApp.prototype._USBAudioCtxtOut = function() {
+usbaudioApp.prototype._USBAudioCtxtOut = () => {
   if (this._outgoingContextTemplate) {
     this._contextTable['USBAudio'].controlProperties.List2Ctrl.scrollTo = this._outgoingContextTemplate.list2Ctrl.topItem;
     this._contextTable['USBAudio'].controlProperties.List2Ctrl.focussedItem = this._outgoingContextTemplate.list2Ctrl.focussedItem;
@@ -1669,7 +1669,7 @@ usbaudioApp.prototype._USBAudioCtxtOut = function() {
 };
 
 // NowPlaying Context
-usbaudioApp.prototype._NowPlayingCtxtReadyToDisplay = function() {
+usbaudioApp.prototype._NowPlayingCtxtReadyToDisplay = () => {
   log.debug('_NowPlayingCtxtReadyToDisplay called...');
   // Code logic for screenTitle now moved in _NowPlayingDataMsgHandler
 
@@ -1689,14 +1689,14 @@ usbaudioApp.prototype._NowPlayingCtxtReadyToDisplay = function() {
   this._setTotalElapsedTime();
 };
 
-usbaudioApp.prototype._NowPlayingCtxtContextOut = function() {
+usbaudioApp.prototype._NowPlayingCtxtContextOut = () => {
   log.debug('_NowPlayingCtxtContextOut called...');
   if (this._gracenoteTimeout != null) {
     this._removeGracenote();
   }
 };
 
-usbaudioApp.prototype._ErrorConditionCtxtIn = function() {
+usbaudioApp.prototype._ErrorConditionCtxtIn = () => {
   if (this._currentContext && this._currentContext.params.hasOwnProperty('payload') && this._currentContext.params.payload.hasOwnProperty('deviceId')) {
     let id = 0;
     let name = '';
@@ -1714,7 +1714,7 @@ usbaudioApp.prototype._ErrorConditionCtxtIn = function() {
 };
 
 // Error Context
-usbaudioApp.prototype._ErrorConditionCtxtReadyToDisplay = function() {
+usbaudioApp.prototype._ErrorConditionCtxtReadyToDisplay = () => {
   if (this._hasContextPayload() && this._currentContext.params.payload.hasOwnProperty('error')) {
     const error = this._getErrorId(this._currentContext.params.payload.error);
 
@@ -2920,7 +2920,7 @@ usbaudioApp.prototype._BODReady = function(isReady) {
   }
 };
 
-usbaudioApp.prototype._jumpToPosition = function() {
+usbaudioApp.prototype._jumpToPosition = () => {
   this._stopElapsedUpdate = false;
   this._umpElapseTime = parseInt(this._umpTotalTime * this._umpProgressValue);
   const percent = Math.round(this._umpProgressValue*100);
@@ -2944,7 +2944,7 @@ usbaudioApp.prototype._contextReadyAction = function(captureData) {
   }
 };
 
-usbaudioApp.prototype._presetContextConfig = function() {
+usbaudioApp.prototype._presetContextConfig = () => {
   if (this._hasContextPayload() &&
         this._currentContext.params.payload.hasOwnProperty('path') &&
         this._currentContext.params.payload.hasOwnProperty('metadata') &&
@@ -2962,7 +2962,7 @@ usbaudioApp.prototype._presetContextConfig = function() {
   }
 };
 
-usbaudioApp.prototype._setTopItem = function() {
+usbaudioApp.prototype._setTopItem = () => {
   const ctxtId = this._currentContext.ctxtId;
   this._currentContextId = this._currentContext.params.payload.path;
   if (this._payloadTable[this._currentContextId].checkValues == true &&
@@ -2977,13 +2977,13 @@ usbaudioApp.prototype._setTopItem = function() {
   }
 };
 
-usbaudioApp.prototype._setNumberedList = function() {
+usbaudioApp.prototype._setNumberedList = () => {
   if (this._currentContext && this._hasContextPayload()) {
     this._contextTable[this._currentContext.ctxtId].controlProperties.List2Ctrl.numberedList = this._payloadTable[this._currentContext.params.payload.path].hasLineNumbers;
   }
 };
 
-usbaudioApp.prototype._setLetterIndexing = function() {
+usbaudioApp.prototype._setLetterIndexing = () => {
   if (this._currentContext && this._hasContextPayload()) {
     this._contextTable[this._currentContext.ctxtId].controlProperties.List2Ctrl.hasLetterIndex = this._payloadTable[this._currentContext.params.payload.path].hasLetterIndexing;
   }
@@ -3593,7 +3593,7 @@ usbaudioApp.prototype._createMdInfoFromMsg = function(msg) {
   return mdInfoList;
 };
 
-usbaudioApp.prototype._createRequest = function() {
+usbaudioApp.prototype._createRequest = () => {
   // const ctxtId = this._currentContext.ctxtId;
   if (this._hasContextPayload()) {
     const mdTypeList = this._payloadTable[this._currentContextId].md_types;
@@ -3617,7 +3617,7 @@ usbaudioApp.prototype._createRequest = function() {
   }
 };
 
-usbaudioApp.prototype._setTitle = function() {
+usbaudioApp.prototype._setTitle = () => {
   if (this._currentContext &&
         this._currentContext.params.hasOwnProperty('payload') &&
         this._currentContext.params.payload.hasOwnProperty('path')) {
@@ -3739,7 +3739,7 @@ usbaudioApp.prototype._populateNowPlayingCtrl = function(tmplt, songDetails) {
   // tmplt.nowPlaying4Ctrl.umpCtrl.setButtonDisabled("GenerateMoreLikeThis", !this._connectedDevs.selectedDevCataloged);
 };
 
-usbaudioApp.prototype._setTotalElapsedTime = function() {
+usbaudioApp.prototype._setTotalElapsedTime = () => {
   this._currentContextTemplate.nowPlaying4Ctrl.umpCtrl.setElapsedTime(this._secondsToHHMMSS(this._umpElapseTime));
   this._currentContextTemplate.nowPlaying4Ctrl.umpCtrl.setTotalTime(this._secondsToHHMMSS(this._umpTotalTime));
 
@@ -3749,7 +3749,7 @@ usbaudioApp.prototype._setTotalElapsedTime = function() {
   }
 };
 
-usbaudioApp.prototype._removeGracenote = function() {
+usbaudioApp.prototype._removeGracenote = () => {
   clearTimeout(this._gracenoteTimeout);
   this._gracenoteTimeout = null;
   this._connectedDevs.showGracenote = false;
@@ -3764,7 +3764,7 @@ usbaudioApp.prototype._removeGracenote = function() {
     this._currentContextTemplate.nowPlaying4Ctrl.setDetailLine3({detailText: ''});
   }
 };
-usbaudioApp.prototype._removeGenre = function() {
+usbaudioApp.prototype._removeGenre = () => {
   clearTimeout(this._genreTimeout);
   this._genreTimeout = null;
 
@@ -3829,7 +3829,7 @@ usbaudioApp.prototype._requestMore = function(index) {
       this._currentContext.params.payload.path); // name of the context
 };
 
-usbaudioApp.prototype._saveIndex = function() {
+usbaudioApp.prototype._saveIndex = () => {
   if (this._outgoingContext &&
         this._outgoingContext.hasOwnProperty('params') &&
         this._outgoingContext.params.hasOwnProperty('payload') &&
@@ -3853,7 +3853,7 @@ usbaudioApp.prototype._saveIndex = function() {
   }
 };
 
-usbaudioApp.prototype._hasContextPayload = function() {
+usbaudioApp.prototype._hasContextPayload = () => {
   let returnValue = false;
   if (this._currentContext &&
         this._currentContext.hasOwnProperty('params') &&
@@ -3885,13 +3885,13 @@ usbaudioApp.prototype._clearMetadata = function(noCallBack) {
   }
 };
 
-usbaudioApp.prototype._clearTotalElapsedTime = function() {
+usbaudioApp.prototype._clearTotalElapsedTime = () => {
   this._umpElapseTime = 0;
   this._umpTotalTime = 0;
   this._stopElapsedUpdate = false;
 };
 
-usbaudioApp.prototype._clearUSBData = function() {
+usbaudioApp.prototype._clearUSBData = () => {
   const epmtyMD = {
     artistName: '',
     albumName: '',
@@ -3917,7 +3917,7 @@ usbaudioApp.prototype._clearUSBData = function() {
   }
 };
 
-usbaudioApp.prototype._clearSelectionId = function() {
+usbaudioApp.prototype._clearSelectionId = () => {
   if (this._selectionId.playing != null) {
     this._releaseSelection(this._selectionId.playing);
     this._selectionId.playing = null;
@@ -3929,7 +3929,7 @@ usbaudioApp.prototype._clearSelectionId = function() {
   }
 };
 
-usbaudioApp.prototype._disableUSBAudioMenus = function() {
+usbaudioApp.prototype._disableUSBAudioMenus = () => {
   if ((this._connectedDevs.deviceSelected == this._connectedDevs.A.deviceId && this._connectedDevs.A.type == 'UMASS') ||
         (this._connectedDevs.deviceSelected == this._connectedDevs.B.deviceId && this._connectedDevs.B.type == 'UMASS')) {
     // if the selected device type is UMASS "Podcasts" and "Audiobooks" should remain disabled
@@ -3943,20 +3943,20 @@ usbaudioApp.prototype._disableUSBAudioMenus = function() {
   }
 };
 
-usbaudioApp.prototype._disableUMASSMenu = function() {
+usbaudioApp.prototype._disableUMASSMenu = () => {
   for (let i = 0; i < this._usbaudioCtxtDataList.itemCount - 1; i++) {
     this._usbaudioCtxtDataList.items[i].disabled = true;
   }
   this._usbaudioCtxtDataList.items[this._usbaudioCtxtDataList.itemCount - 1].disabled = false;
 };
 
-usbaudioApp.prototype._disableiPodMenu = function() {
+usbaudioApp.prototype._disableiPodMenu = () => {
   for (let i = 0; i < this._usbaudioCtxtDataList.itemCount; i++) {
     this._usbaudioCtxtDataList.items[i].disabled = true;
   }
 };
 
-usbaudioApp.prototype._enableUSBAudioMenus = function() {
+usbaudioApp.prototype._enableUSBAudioMenus = () => {
   // already enabled is 1 because "Folders" item is always enabled
   let doNotEnable = 1;
   // check which device is selected and its type

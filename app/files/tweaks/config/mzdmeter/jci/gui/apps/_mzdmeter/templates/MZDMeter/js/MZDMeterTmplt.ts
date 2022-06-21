@@ -246,7 +246,7 @@ function MZDMeterTmplt(uiaId, parentDiv, templateID, controlProperties) {
 '    </div>'+
 '</div>'+
 
-'<script language="javascript" type="text/javascript">$(function(){setTimeout(function() {updateMZDApp();}, 1500);'+
+'<script language="javascript" type="text/javascript">$(function(){setTimeout(() => {updateMZDApp();}, 1500);'+
 ' $("#infoBtnDiv").click(function(){' +
 '              if (showInfo == 0) {'+
 '                    showInfo = 1;'+
@@ -653,7 +653,7 @@ MZDMeterTmplt.prototype.handleControllerEvent = function(eventID) {
  * Called by the app during templateNoLongerDisplayed. Used to perform garbage collection procedures on the template and
  * its controls.
  */
-MZDMeterTmplt.prototype.cleanUp = function() {
+MZDMeterTmplt.prototype.cleanUp = () => {
 
 };
 

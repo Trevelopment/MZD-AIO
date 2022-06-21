@@ -164,7 +164,7 @@ CustomApplicationsHandler.register('app.vdd', new CustomApplication({
    * Add any content that will be static here
    */
 
-  created: function() {
+  created: () => {
     this.createInterface();
   },
 
@@ -172,7 +172,7 @@ CustomApplicationsHandler.register('app.vdd', new CustomApplication({
    * (focused)
    */
 
-  focused: function() {
+  focused: () => {
 
     // this.update();
   },
@@ -262,7 +262,7 @@ CustomApplicationsHandler.register('app.vdd', new CustomApplication({
    * This method creates the interface
    */
 
-  createInterface: function() {
+  createInterface: () => {
     // create tabbed menu
     this.menu = $('<div/>').addClass('tabs').appendTo(this.canvas);
 

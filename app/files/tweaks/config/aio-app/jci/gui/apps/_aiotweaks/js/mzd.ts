@@ -25,11 +25,11 @@ export const StartAIOApp = () => {
   // *****************************
   // AIO info
   getAppListData();
-  $('button').on('click', function() {
+  $('button').on('click', () => {
     $('button').removeClass('selectedItem');
     $(this).addClass('selectedItem');
   });
-  $('#aioInfo').on('click', function() {
+  $('#aioInfo').on('click', () => {
     showAioInfo('<div class=\'infoMessage\'><h1>AIO Tweaks App v' + aioTweaksVer + ' </h1>This is an experimental app by Trezdog44 made to test the capabilities, functionalities, and limitations of apps in the MZD Infotainment System.<br>This app has some useful and fun functions although it is not guaranteed that everything works.  There may be non-functioning or experimental features.</div>');
   });
   $('#aioReboot').on('click', myRebootSystem);
@@ -81,44 +81,44 @@ export const StartAIOApp = () => {
   $('#showLocalStorage').on('click', showLocalStorage);
   $('#wifiToggle').on('click', turnOnWifi);
   $('#verBtn').on('click', showVersion);
-  $('#showWinkBtn').on('click', function() {
+  $('#showWinkBtn').on('click', () => {
     aioWink('Wink Test... It works!! :-)');
   });
-  $('#showBgBtn').on('click', function() {
+  $('#showBgBtn').on('click', () => {
     $('html').addClass('showBg');
   });
-  $('#twkOut').on('click', function() {
+  $('#twkOut').on('click', () => {
     framework.sendEventToMmui('common', 'Global.IntentHome');
   });
-  $('#usba').on('click', function() {
+  $('#usba').on('click', () => {
     framework.sendEventToMmui('system', 'SelectUSBA');
   });
-  $('#usbb').on('click', function() {
+  $('#usbb').on('click', () => {
     framework.sendEventToMmui('system', 'SelectUSBB');
   });
-  $('#pauseBtn').on('click', function() {
+  $('#pauseBtn').on('click', () => {
     localStorage.clear();
   });
   // $("#previousTrackBtn").on("click",function(){framework.sendEventToMmui("common", "Global.PreviousHoldStop")});
   // $("#nextTrackBtn").on("click",function(){framework.sendEventToMmui("common", "Global.NextHoldStop")});
-  $('#BluetoothAudio').on('click', function() {
+  $('#BluetoothAudio').on('click', () => {
     framework.sendEventToMmui('system', 'SelectBTAudio');
   });
-  $('#previousTrackBtn').on('click', function() {
+  $('#previousTrackBtn').on('click', () => {
     framework.sendEventToMmui('Common', 'Global.Previous');
   });
-  $('#nextTrackBtn').on('click', function() {
+  $('#nextTrackBtn').on('click', () => {
     framework.sendEventToMmui('Common', 'Global.Next');
   });
-  $('.mmLayout').on('click', function() {
+  $('.mmLayout').on('click', () => {
     changeLayout($(this).attr('id'));
     $('#MainMenuMsg').html($(this).text());
   });
-  $('.toggleTweaks').on('click', function() {
+  $('.toggleTweaks').on('click', () => {
     $('body').toggleClass($(this).attr('id'));
     $('#MainMenuMsg').html($(this).text());
   });
-  $('#clearTweaksBtn').on('click', function() {
+  $('#clearTweaksBtn').on('click', () => {
     $('body').attr('class', '');
     $('#MainMenuMsg').text('Main Menu Restored');
     localStorage.removeItem('aio.tweaks');
@@ -127,15 +127,15 @@ export const StartAIOApp = () => {
   $('#closeTouchPanel').on('click', closeTSPanel);
   // Tab select & localStrage save on each button press
   $('.toggleTweaks').on('click', saveTweaks);
-  $('.tablinks').on('click', function() {
+  $('.tablinks').on('click', () => {
     $('#MainMenuMsg').html('');
     localStorage.setItem('aio.prevtab', $(this).attr('tabindex'));
   });
-  $('#openNav').on('click', function() {
+  $('#openNav').on('click', () => {
     document.getElementById('mySidenav').style.width = '250px';
     document.getElementById('main').style.marginLeft = '250px';
   });
-  $('#closeNav').on('click', function() {
+  $('#closeNav').on('click', () => {
     document.getElementById('mySidenav').style.width = '0';
     document.getElementById('main').style.marginLeft = '0';
   });
@@ -181,7 +181,7 @@ function getAppListData() {
     showAioInfo('Error: Cannot retrieve AIO app list...  <br>' + e);
   }
 }
-/* this.unsetMainMenuLoop = function() {
+/* this.unsetMainMenuLoop = () => {
 this.offSetFocus = MainMenuCtrl.prototype._offsetFocus.toString();
 }*/
 const __MainMenuLoop = function(direction) {
@@ -212,7 +212,7 @@ const turnOnWifi = () => {
     framework.sendEventToMmui('syssettings', 'SelectNetworkManagement'); // this may not be needed
     framework.sendEventToMmui('common', 'Global.IntentHome'); // Jump back to home screen?
   }
-  setTimeout(function() {
+  setTimeout(() => {
     net = framework.getAppInstance('netmgmt');
     if (!net._onOffStatus) {
       framework.sendEventToMmui('netmgmt', 'SetWifiConnection', {payload: {offOn: wifiOn}});
@@ -255,7 +255,7 @@ function showEnvVar() {
 
 export const takeScreenshot = () => {
   showAioInfo('Screenshot in 10 Seconds');
-  setTimeout(function() {
+  setTimeout(() => {
     closeAioInfo(true);
     showSaveScreenshotBtn();
   }, 10000);
@@ -360,7 +360,7 @@ function aioWink(msg) {
     'text1': msg,
     'winkTimeout': 5000,
     'alertId': '',
-    'completeCallback': function() {
+    'completeCallback': () => {
       aioRemoveWink(wink);
     },
   };
@@ -607,14 +607,14 @@ function showErrLog() {
 
 function exeCmd(command, silent) {
   silent ? aioWs(command, 10) : aioWs(command + ' > /tmp/root/stdout', 0);
-  setTimeout(function() {
+  setTimeout(() => {
     silent ? null : showFile('/tmp/root/stdout', command);
   }, 2500);
 }
 
 function showFile(filepath, command) {
   showAioInfo(command ? '$ ' + command : 'Loading ' + filepath + ' ...');
-  setTimeout(function() {
+  setTimeout(() => {
     $.ajax({
       url: filepath,
       dataType: 'text',
@@ -763,25 +763,25 @@ function aioWs(action, waitMessage) {
     msgnum++;
     if (msgnum > waitMessage || res.indexOf('DONE') !== -1) {
       focusBtn.css({'background': '-o-linear-gradient(top,rgba(0,0,0,0.3),rgba(0,0,0,1))', 'color': '#ff0000'});
-      setTimeout(function() {
+      setTimeout(() => {
         closeWS();
         AArunning = false;
       }, 4000);
     }
   };
-  ws.onopen = function() {
+  ws.onopen = () => {
     ws.send(action);
     focusBtn.css({'background': '-o-linear-gradient(top,rgba(255,255,255,0.5),rgba(255,255,255,1))', 'color': '#000fff'});
     if (waitMessage < 1) {
-      setTimeout(function() {
+      setTimeout(() => {
         closeWS();
       }, 4000);
     }
   };
-  ws.onclose = function() {
+  ws.onclose = () => {
     closeWS();
   };
-  ws.onerror = function() {
+  ws.onerror = () => {
     closeWS();
   };
 }

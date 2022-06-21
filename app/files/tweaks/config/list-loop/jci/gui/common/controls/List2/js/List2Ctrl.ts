@@ -465,7 +465,7 @@ function List2Ctrl(uiaId, parentDiv, controlId, properties) {
      * ---------------------------------------
      */
   // focussedItem - the currently (or most recently) focussed item
-  this.__defineGetter__('focussedItem', function() {
+  this.__defineGetter__('focussedItem', () => {
     return this._getFocussedIndex();
   });
 
@@ -475,7 +475,7 @@ function List2Ctrl(uiaId, parentDiv, controlId, properties) {
   });
 
   // topItem - current list position expressed in item index
-  this.__defineGetter__('topItem', function() {
+  this.__defineGetter__('topItem', () => {
     return this._topItem;
   });
 
@@ -486,7 +486,7 @@ function List2Ctrl(uiaId, parentDiv, controlId, properties) {
 
   /* ====== scrollTo is a topItem alias ====== */
   // scrollTo - current list position expressed in item index
-  this.__defineGetter__('scrollTo', function() {
+  this.__defineGetter__('scrollTo', () => {
     return this.topItem;
   });
   // scrollTo - perform scroll to a new list position
@@ -496,7 +496,7 @@ function List2Ctrl(uiaId, parentDiv, controlId, properties) {
   /* ====== scrollTo is a topItem alias ====== */
 
   // inLoading - current loading state of the list
-  this.__defineGetter__('inLoading', function() {
+  this.__defineGetter__('inLoading', () => {
     return this._inLoading;
   });
 
@@ -539,7 +539,7 @@ List2Ctrl.prototype._EVENTS = {
  * =========================
  * @return {void}
  */
-List2Ctrl.prototype.init = function() {
+List2Ctrl.prototype.init = () => {
   /* CREATE ELEMENTS */
 
   // container
@@ -747,7 +747,7 @@ List2Ctrl.prototype.init = function() {
  * =========================
  * @return {void}
  */
-List2Ctrl.prototype._createPool = function() {
+List2Ctrl.prototype._createPool = () => {
   this.pool = {
     empty: [], // 'empty' is internal style
     draggable: [], // 'draggable' is internal style
@@ -3154,7 +3154,7 @@ List2Ctrl.prototype._putToScroller = function(li, index, operation) {
  * =========================
  * @return {void}
  */
-List2Ctrl.prototype._emptyScroller = function() {
+List2Ctrl.prototype._emptyScroller = () => {
   for (let i=0, l=this.items.length; i<l; i++) {
     const item = this.items.shift();
     this._returnListItem(item.domElt);
@@ -3170,7 +3170,7 @@ List2Ctrl.prototype._emptyScroller = function() {
  * =========================
  * @return {void}
  */
-List2Ctrl.prototype._setScrollerHeight = function() {
+List2Ctrl.prototype._setScrollerHeight = () => {
   const additionalSpace = this._getAdditionalSpace();
   this._scrollerHeight = this.dataList.itemCount * this.properties.itemHeight + additionalSpace;
   this.scroller.style.height = this._scrollerHeight + 'px';
@@ -3189,7 +3189,7 @@ List2Ctrl.prototype._setScrollerHeight = function() {
  * =========================
  * @return {void}
  */
-List2Ctrl.prototype._setScrollIndicatorHeight = function() {
+List2Ctrl.prototype._setScrollIndicatorHeight = () => {
   const indicatorSize = Math.round(this.mask.offsetHeight * (this.mask.offsetHeight / this._scrollerHeight));
   this._scrollIndicatorHeight = this.m.max(indicatorSize, this.properties.scrollIndicatorMinSize);
   this.scrollIndicator.style.height = this._scrollIndicatorHeight + 'px';
@@ -3203,7 +3203,7 @@ List2Ctrl.prototype._setScrollIndicatorHeight = function() {
  * =========================
  * @return {void}
  */
-List2Ctrl.prototype._updateRange = function() {
+List2Ctrl.prototype._updateRange = () => {
   const itemsBefore = this.properties.itemsBefore;
   const itemsAfter = this.properties.itemsAfter;
   const topItem = this._topItem;
@@ -3554,7 +3554,7 @@ List2Ctrl.prototype._fill = function(firstItem, lastItem) {
  * =========================
  * @return {boolean} - returns _isScrollable
  */
-List2Ctrl.prototype._checkScrollable = function() {
+List2Ctrl.prototype._checkScrollable = () => {
   if (this.dataList.items.length > this.properties.visibleItems) {
     this._isScrollable = true;
   } else {
@@ -3770,7 +3770,7 @@ List2Ctrl.prototype._prepareTitle = function(titleObj) {
  * =========================
  * @return {void}
  */
-List2Ctrl.prototype._scrollIndicatorReset = function() {
+List2Ctrl.prototype._scrollIndicatorReset = () => {
   // check for scroll indicator configuration
   if (!this.properties.showScrollIndicator) {
     return;
@@ -3859,7 +3859,7 @@ List2Ctrl.prototype._scrollIndicatorBuild = function(visible) {
  * =========================
  * @return {integer} scroll indicator position
  */
-List2Ctrl.prototype._dragUpdateScrollIndicator = function() {
+List2Ctrl.prototype._dragUpdateScrollIndicator = () => {
   // check for scroll indicator configuration
   if (!this.properties.showScrollIndicator) {
     return;
@@ -3917,7 +3917,7 @@ List2Ctrl.prototype._updateScrollIndicator = function(pos, time) {
 };
 
 
-List2Ctrl.prototype._fadeInScrollIndicator = function() {
+List2Ctrl.prototype._fadeInScrollIndicator = () => {
   // check whether scroll indicator needs to fade
   if (this.properties.scrollIndicatorFadeTimeout <= 0) {
     return;
@@ -3927,7 +3927,7 @@ List2Ctrl.prototype._fadeInScrollIndicator = function() {
   this.scrollIndicatorWrapper.style.opacity = 1;
 };
 
-List2Ctrl.prototype._fadeOutScrollIndicator = function() {
+List2Ctrl.prototype._fadeOutScrollIndicator = () => {
   // check whether scroll indicator needs to fade
   if (this.properties.scrollIndicatorFadeTimeout <= 0) {
     return;
@@ -3937,18 +3937,18 @@ List2Ctrl.prototype._fadeOutScrollIndicator = function() {
   clearTimeout(this._scrollIndicatorTimeoutId);
 
   // schedule hide
-  this._scrollIndicatorTimeoutId = setTimeout(function() {
+  this._scrollIndicatorTimeoutId = setTimeout(() => {
     this.scrollIndicatorWrapper.style[this._VENDOR + 'TransitionDuration'] = this.properties.scrollIndicatorFadeOutDuration + 'ms';
     this.scrollIndicatorWrapper.style.opacity = 0;
     this._scrollIndicatorTimeoutId = null;
-  }.bind(this), this.properties.scrollIndicatorFadeTimeout);
+  }, this.properties.scrollIndicatorFadeTimeout);
 };
 
-List2Ctrl.prototype._hideScrollIndicator = function() {
+List2Ctrl.prototype._hideScrollIndicator = () => {
   this.scrollIndicatorWrapper.style.opacity = 0;
 };
 
-List2Ctrl.prototype._showScrollIndicator = function() {
+List2Ctrl.prototype._showScrollIndicator = () => {
   this.scrollIndicatorWrapper.style.opacity = 1;
 };
 
@@ -4631,7 +4631,7 @@ List2Ctrl.prototype._touchSelectItem = function(e) {
  * =========================
  * @return {void}
  */
-List2Ctrl.prototype._itemRemoveHit = function() {
+List2Ctrl.prototype._itemRemoveHit = () => {
   const hitItems = this.scroller.querySelectorAll('.hit');
 
   if (hitItems.length) {
@@ -4713,7 +4713,7 @@ List2Ctrl.prototype._itemMakeHit = function(e) {
  * =========================
  * @return {void}
  */
-List2Ctrl.prototype._itemRemoveLongPress = function() {
+List2Ctrl.prototype._itemRemoveLongPress = () => {
   const longpressItems = this.scroller.querySelectorAll('.longpress');
 
   if (longpressItems.length) {
@@ -5670,7 +5670,7 @@ List2Ctrl.prototype.handleControllerEvent = function(eventID) {
           clearTimeout(this._tiltHoldTimeoutId); // clear any redundant timeouts
           this._tiltHoldTimeoutId = null;
           log.debug('Schedule autoscroll tier 1');
-          this._tiltHoldTimeoutId = setTimeout(function() { // schedule first autoscroll tier
+          this._tiltHoldTimeoutId = setTimeout(() => { // schedule first autoscroll tier
             this._beep('Long', 'Multicontroller'); // produce beep
             log.debug('Start autoscroll tier 1');
             this._handleMCDown(); // do the first scroll down
@@ -5679,15 +5679,15 @@ List2Ctrl.prototype.handleControllerEvent = function(eventID) {
             log.debug('Schedule autoscroll tier 2');
             this._tiltHoldIntervalId = setInterval(this._handleMCDown.bind(this), this.properties.autoscrollTier1Interval); // schedule auto scroll down for first tier
             if (!this._inLetterIndexMulticontroller) {
-              this._tiltHoldTimeoutId = setTimeout(function() { // schedule second autoscroll tier only if not in letter index multicontroller
+              this._tiltHoldTimeoutId = setTimeout(() => { // schedule second autoscroll tier only if not in letter index multicontroller
                 log.debug('Start autoscroll tier 2');
                 this._scrollDownPage(); // do the first scroll down
                 clearInterval(this._tiltHoldIntervalId); // clear any redundand intervals from the first tier
                 this._tiltHoldIntervalId = null;
                 this._tiltHoldIntervalId = setInterval(this._scrollDownPage.bind(this), this.properties.autoscrollTier2Interval); // schedule auto scroll down for second tier
-              }.bind(this), this.properties.autoscrollTier2Timeout);
+              }, this.properties.autoscrollTier2Timeout);
             }
-          }.bind(this), this.properties.autoscrollTier1Timeout);
+          }, this.properties.autoscrollTier1Timeout);
         }
 
         break;
@@ -5731,7 +5731,7 @@ List2Ctrl.prototype.handleControllerEvent = function(eventID) {
           clearTimeout(this._tiltHoldTimeoutId); // clear any redundant timeouts
           this._tiltHoldTimeoutId = null;
           log.debug('Schedule autoscroll tier 1');
-          this._tiltHoldTimeoutId = setTimeout(function() { // schedule first autoscroll tier
+          this._tiltHoldTimeoutId = setTimeout(() => { // schedule first autoscroll tier
             this._beep('Long', 'Multicontroller'); // produce beep
             log.debug('Start autoscroll tier 1');
             this._handleMCUp(); // do the first scroll up
@@ -5740,15 +5740,15 @@ List2Ctrl.prototype.handleControllerEvent = function(eventID) {
             log.debug('Schedule autoscroll tier 2');
             this._tiltHoldIntervalId = setInterval(this._handleMCUp.bind(this), this.properties.autoscrollTier1Interval); // schedule auto scroll up for first tier
             if (!this._inLetterIndexMulticontroller) {
-              this._tiltHoldTimeoutId = setTimeout(function() { // schedule second autoscroll tier only if not in letter index multicontroller
+              this._tiltHoldTimeoutId = setTimeout(() => { // schedule second autoscroll tier only if not in letter index multicontroller
                 log.debug('Start autoscroll tier 2');
                 this._scrollUpPage(); // do the first scroll up
                 clearInterval(this._tiltHoldIntervalId); // clear any redundand intervals from the first tier
                 this._tiltHoldIntervalId = null;
                 this._tiltHoldIntervalId = setInterval(this._scrollUpPage.bind(this), this.properties.autoscrollTier2Interval); // schedule auto scroll up for second tier
-              }.bind(this), this.properties.autoscrollTier2Timeout);
+              }, this.properties.autoscrollTier2Timeout);
             }
-          }.bind(this), this.properties.autoscrollTier1Timeout);
+          }, this.properties.autoscrollTier1Timeout);
         }
 
         break;
@@ -5979,7 +5979,7 @@ List2Ctrl.prototype.handleControllerEvent = function(eventID) {
  * =========================
  * @return {string} - event consumed status
  */
-List2Ctrl.prototype._handleMCCW = function() {
+List2Ctrl.prototype._handleMCCW = () => {
   // are we in letter index multicontroller mode?
   if (this._inLetterIndexMulticontroller) {
     // get relative focussed index before moving the focus
@@ -6072,7 +6072,7 @@ List2Ctrl.prototype._handleMCCW = function() {
  * =========================
  * @return {string} - event consumed status
  */
-List2Ctrl.prototype._handleMCCCW = function() {
+List2Ctrl.prototype._handleMCCCW = () => {
   // are we in letter index multicontroller mode?
   if (this._inLetterIndexMulticontroller) {
     // get relative focussed index before moving the focus
@@ -6160,7 +6160,7 @@ List2Ctrl.prototype._handleMCCCW = function() {
  * =========================
  * @return {string} - event consumed status
  */
-List2Ctrl.prototype._handleMCDown = function() {
+List2Ctrl.prototype._handleMCDown = () => {
   // are we in letter index multicontroller mode?
   if (this._inLetterIndexMulticontroller) {
     // get relative focussed index before moving the focus
@@ -6245,7 +6245,7 @@ List2Ctrl.prototype._handleMCDown = function() {
  * =========================
  * @return {string} - event consumed status
  */
-List2Ctrl.prototype._handleMCUp = function() {
+List2Ctrl.prototype._handleMCUp = () => {
   // are we in letter index multicontroller mode?
   if (this._inLetterIndexMulticontroller) {
     // get relative focussed index before moving the focus
@@ -6819,7 +6819,7 @@ List2Ctrl.prototype._firstFocusAnimationEndCallback = function(e) {
  * =========================
  * @return {void}
  */
-List2Ctrl.prototype._hideFocus = function() {
+List2Ctrl.prototype._hideFocus = () => {
   // Preserve focussed element
   this._lastItemWithFocus = this._getFocussedIndex();
 
@@ -6964,7 +6964,7 @@ List2Ctrl.prototype._canGainFocus = function(e) {
  * =========================
  * @return {integer}
  */
-List2Ctrl.prototype._getFocussedIndex = function() {
+List2Ctrl.prototype._getFocussedIndex = () => {
   let focussedIndex = this._lastItemWithFocus;
 
   for (let i=0; i<this.items.length; i++) {
@@ -6984,7 +6984,7 @@ List2Ctrl.prototype._getFocussedIndex = function() {
  * =========================
  * @return {integer}
  */
-List2Ctrl.prototype._getRelativeFocussedIndex = function() {
+List2Ctrl.prototype._getRelativeFocussedIndex = () => {
   let relativeIndex = null;
 
   // get real focussed index ...
@@ -7005,7 +7005,7 @@ List2Ctrl.prototype._getRelativeFocussedIndex = function() {
  * =========================
  * @return {HTML Element} - <LI>
  */
-List2Ctrl.prototype._getFocussedElement = function() {
+List2Ctrl.prototype._getFocussedElement = () => {
   let focussedElement = null;
   const focussedIndex = this._getFocussedIndex();
   for (let i=0; i<this.items.length; i++) {
@@ -7188,7 +7188,7 @@ List2Ctrl.prototype._scrollTo = function(index, duration) {
  * =========================
  * @return {integer} - new position of the scroller in px
  */
-List2Ctrl.prototype._scrollDownOne = function() {
+List2Ctrl.prototype._scrollDownOne = () => {
   let newPos = 0;
 
   // check whether we are in the bottom-most position
@@ -7224,7 +7224,7 @@ List2Ctrl.prototype._scrollDownOne = function() {
  * =========================
  * @return {integer} - new position of the scroller in px
  */
-List2Ctrl.prototype._scrollUpOne = function() {
+List2Ctrl.prototype._scrollUpOne = () => {
   let newPos = 0;
 
   // check whether we are in the top-most position
@@ -7257,7 +7257,7 @@ List2Ctrl.prototype._scrollUpOne = function() {
  * =========================
  * @return {string} - paged | atlimit | onepage
  */
-List2Ctrl.prototype._scrollDownPage = function() {
+List2Ctrl.prototype._scrollDownPage = () => {
   // get list position
   const listPosition = this._getListPosition();
 
@@ -7358,7 +7358,7 @@ List2Ctrl.prototype._scrollDownPage = function() {
  * =========================
  * @return {void}
  */
-List2Ctrl.prototype._scrollUpPage = function() {
+List2Ctrl.prototype._scrollUpPage = () => {
   // get list position
   const listPosition = this._getListPosition();
 
@@ -7459,7 +7459,7 @@ List2Ctrl.prototype._scrollUpPage = function() {
  * =========================
  * @return {void}
  */
-List2Ctrl.prototype._scrollTop = function() {
+List2Ctrl.prototype._scrollTop = () => {
   this._performScroll(0); // do the scroll
 };
 
@@ -7469,7 +7469,7 @@ List2Ctrl.prototype._scrollTop = function() {
  * =========================
  * @return {void}
  */
-List2Ctrl.prototype._scrollBottom = function() {
+List2Ctrl.prototype._scrollBottom = () => {
   this._performScroll(this._maxScrollY); // do the scroll
 };
 
@@ -7824,9 +7824,9 @@ List2Ctrl.prototype._scheduleLetterIndexSelect = function(letterIndex, clear) {
     }
 
     // set scroll timeout
-    this._indexSelectTimeoutId = setTimeout(function() {
+    this._indexSelectTimeoutId = setTimeout(() => {
       this._letterIndexSelect(letterIndex);
-    }.bind(this), this.properties.letterIndexSelectTimeout);
+    }, this.properties.letterIndexSelectTimeout);
   }
 };
 
@@ -7861,12 +7861,12 @@ List2Ctrl.prototype._scheduleBackgroundLetterIndexSelect = function(letterIndex,
     // activate the new index
     this._setCurrentLetterIndex(letterIndex);
     // set scroll timeout
-    this._indexSelectTimeoutId = setTimeout(function() {
+    this._indexSelectTimeoutId = setTimeout(() => {
       // set scroll nature
       this._scrollNature = 'letterIndex';
       // all seems fine -> scroll
       this._scrollTo(this.letterIndexData[letterIndex].itemIndex - 1);
-    }.bind(this), this.properties.letterIndexSelectTimeout);
+    }, this.properties.letterIndexSelectTimeout);
   }
 };
 /**
@@ -8004,7 +8004,7 @@ List2Ctrl.prototype._scrollToIndex = function(letter) {
  * =========================
  * @return {integer} - new position of the letter index in px
  */
-List2Ctrl.prototype._scrollDownOneIndex = function() {
+List2Ctrl.prototype._scrollDownOneIndex = () => {
   let newPos = 0;
 
   // check whether we are in the bottom-most position
@@ -8034,7 +8034,7 @@ List2Ctrl.prototype._scrollDownOneIndex = function() {
  * =========================
  * @return {integer} - new position of the letter index in px
  */
-List2Ctrl.prototype._scrollUpOneIndex = function() {
+List2Ctrl.prototype._scrollUpOneIndex = () => {
   let newPos = 0;
 
   // check whether we are in the top-most position
@@ -8140,7 +8140,7 @@ List2Ctrl.prototype._setCurrentLetterIndex = function(letter) {
  * =========================
  * @return {integer} - the currently active letter index
  */
-List2Ctrl.prototype._getCurrentLetterIndex = function() {
+List2Ctrl.prototype._getCurrentLetterIndex = () => {
   let activeLetterIndex = null;
 
   // remove any previously active letter index
@@ -8250,7 +8250,7 @@ List2Ctrl.prototype._showFocusLetterIndex = function(letter) {
  * =========================
  * @return {void}
  */
-List2Ctrl.prototype._hideFocusLetterIndex = function() {
+List2Ctrl.prototype._hideFocusLetterIndex = () => {
   for (let i=0, l=this.letterIndexData.length; i<l; i++) {
     this.letterIndexData[i].domElt.classList.remove('focus');
   }
@@ -8262,7 +8262,7 @@ List2Ctrl.prototype._hideFocusLetterIndex = function() {
  * =========================
  * @return {integer}
  */
-List2Ctrl.prototype._getFocussedLetterIndex = function() {
+List2Ctrl.prototype._getFocussedLetterIndex = () => {
   let focussedIndex = null;
   for (let i=0, l=this.letterIndexData.length; i<l; i++) {
     if (this.letterIndexData[i].domElt.classList.contains('focus')) {
@@ -8280,7 +8280,7 @@ List2Ctrl.prototype._getFocussedLetterIndex = function() {
  * =========================
  * @return {integer}
  */
-List2Ctrl.prototype._getRelativeFocussedLetterIndex = function() {
+List2Ctrl.prototype._getRelativeFocussedLetterIndex = () => {
   let relativeIndex = null;
 
   // get real focussed index ...
@@ -8328,7 +8328,7 @@ List2Ctrl.prototype._getNearestEnabledLetterByDirection = function(fromLetter, d
  * =========================
  * @return {void}
  */
-List2Ctrl.prototype._indexRemoveHit = function() {
+List2Ctrl.prototype._indexRemoveHit = () => {
   for (let i=0, l=this.letterIndexData.length; i<l; i++) {
     this.letterIndexData[i].domElt.classList.remove('hit');
   }
@@ -8388,7 +8388,7 @@ List2Ctrl.prototype._indexMakeHit = function(e) {
  * =========================
  * @return {void}
  */
-List2Ctrl.prototype._scrollerAnimationEnd = function() {
+List2Ctrl.prototype._scrollerAnimationEnd = () => {
   this.scroller.style[this._VENDOR + 'TransitionDuration'] = '0ms';
   this.scroller.removeEventListener(this._VENDOR + 'TransitionEnd', this.scrollerAnimationEndCallback, false);
   this.scrollerAnimationEndCallback = null;
@@ -8461,7 +8461,7 @@ List2Ctrl.prototype._scrollerAnimationEnd = function() {
  * =========================
  * @return {void}
  */
-List2Ctrl.prototype._restoreFocus = function() {
+List2Ctrl.prototype._restoreFocus = () => {
   // check if the top item is enabled
   if (!this.dataList.items[this._topItem].disabled) {
     this._showFocus(this._topItem, false, false, true);
@@ -8484,7 +8484,7 @@ List2Ctrl.prototype._restoreFocus = function() {
  * =========================
  * @return {void}
  */
-List2Ctrl.prototype._scrollIndicatorAnimationEnd = function() {
+List2Ctrl.prototype._scrollIndicatorAnimationEnd = () => {
   this.scrollIndicator.style[this._VENDOR + 'TransitionDuration'] = '0ms';
   this.scrollIndicator.removeEventListener(this._VENDOR + 'TransitionEnd', this.scrollIndicatorAnimationEndCallback, false);
   this.scrollIndicatorAnimationEndCallback = null;
@@ -8499,7 +8499,7 @@ List2Ctrl.prototype._scrollIndicatorAnimationEnd = function() {
  * =========================
  * @return {void}
  */
-List2Ctrl.prototype._letterIndexAnimationEnd = function() {
+List2Ctrl.prototype._letterIndexAnimationEnd = () => {
   // remove animation end callbacks
   this.letterIndex.style[this._VENDOR + 'TransitionDuration'] = '0ms';
   this.letterIndex.removeEventListener(this._VENDOR + 'TransitionEnd', this.letterIndexAnimationEndCallback, false);
@@ -8524,7 +8524,7 @@ List2Ctrl.prototype._letterIndexAnimationEnd = function() {
  * =========================
  * @return {void}
  */
-List2Ctrl.prototype._restoreLetterIndexFocus = function() {
+List2Ctrl.prototype._restoreLetterIndexFocus = () => {
   // check if the top letter index is enabled
   if (!this.letterIndexData[this._topLetterIndex].disabled) {
     // show focus on the top letter
@@ -8729,7 +8729,7 @@ List2Ctrl.prototype._slideEnd = function(e) {
   this._activeSlider = null;
 };
 
-List2Ctrl.prototype._slideCallback = function() {
+List2Ctrl.prototype._slideCallback = () => {
   // get item index from the first argument
   const itemIndex = arguments[0];
 
@@ -9859,7 +9859,7 @@ List2Ctrl.prototype._endReorder = function(e) {
  * =========================
  * @return {void}
  */
-List2Ctrl.prototype._bringReorderItem = function() {
+List2Ctrl.prototype._bringReorderItem = () => {
   if (this._trackedEvents.length && this._reorderTouchElt) {
     // get last event
     const lastEvent = this._trackedEvents[this._trackedEvents.length-1];
@@ -10009,7 +10009,7 @@ List2Ctrl.prototype._reorderItemUp = function(reorderCount) {
  * =========================
  * @return {void}
  */
-List2Ctrl.prototype._reorderGhostItemDown = function() {
+List2Ctrl.prototype._reorderGhostItemDown = () => {
   // ensure that we are in list reorder mode
   if (!this._inListReorder) {
     return;
@@ -10041,7 +10041,7 @@ List2Ctrl.prototype._reorderGhostItemDown = function() {
  * =========================
  * @return {void}
  */
-List2Ctrl.prototype._reorderGhostItemUp = function() {
+List2Ctrl.prototype._reorderGhostItemUp = () => {
   // ensure that we are in list reorder mode
   if (!this._inListReorder) {
     return;
@@ -10307,7 +10307,7 @@ List2Ctrl.prototype.setDataList = function(dataList) {
   }
 };
 
-List2Ctrl.prototype.hasDataList = function() {
+List2Ctrl.prototype.hasDataList = () => {
   if (this.dataList == null) {
     return false;
   }
@@ -10426,27 +10426,27 @@ List2Ctrl.prototype.updateItems = function(firstItem, lastItem) {
                  (this.m.abs(this.properties.focussedItem - this.properties.scrollTo) <= (this.properties.visibleItems - 1)) ) {
         log.debug('Focus is visible on screen');
         this._scrollTo(this.properties.scrollTo, 0);
-        setTimeout(function() {
+        setTimeout(() => {
           this._showFocus(this.properties.focussedItem);
-        }.bind(this), 0);
+        }, 0);
         this._initialScrollMode = 'config';
       } else if (this.properties.focussedItem >= 0) {
       // set initial focus to a particular item if this is set in the config
       // the list will be scrolled so that this item is visible
         log.debug('Focus is not visible and has priority');
-        setTimeout(function() {
+        setTimeout(() => {
           this._showFocus(this.properties.focussedItem);
-        }.bind(this), 0);
+        }, 0);
         this._initialScrollMode = 'config';
       } else if (this.properties.scrollTo >= 0) {
       // scroll (no animation) to a particular item if this is set in the config
       // the focus will be placed on the top item
         log.debug('Focus is 0 and scrollTo has priority');
         this._scrollTo(this.properties.scrollTo, 0);
-        setTimeout(function() {
+        setTimeout(() => {
           this._topItem = this._canGainFocus(this._topItem);
           this._showFocus(this._topItem);
-        }.bind(this), 0);
+        }, 0);
         this._initialScrollMode = 'config';
       }
     } else {
@@ -10749,7 +10749,7 @@ List2Ctrl.prototype.setLetterIndexData = function(data) {
  * =========================
  * @return {void}
  */
-List2Ctrl.prototype.setLineNumbers = function() {
+List2Ctrl.prototype.setLineNumbers = () => {
   // check if we need to show numbers
   if (!this.properties.numberedList) {
     return;
@@ -10877,7 +10877,7 @@ List2Ctrl.prototype.selectLine = function(lineNumber) {
  * =========================
  * @return {string} - 'paged', 'atLimit', 'onePage'
  */
-List2Ctrl.prototype.pageDown = function() {
+List2Ctrl.prototype.pageDown = () => {
   const status = this._scrollDownPage();
   return status;
 };
@@ -10889,7 +10889,7 @@ List2Ctrl.prototype.pageDown = function() {
  * =========================
  * @return {string} - 'paged', 'atLimit', 'onePage'
  */
-List2Ctrl.prototype.pageUp = function() {
+List2Ctrl.prototype.pageUp = () => {
   const status = this._scrollUpPage();
   return status;
 };
@@ -11217,7 +11217,7 @@ List2Ctrl.prototype._setTick = function(itemIndex, value) {
  * =========================
  * @return {integer} - Last focussed item
  */
-List2Ctrl.prototype.hideFocus = function() {
+List2Ctrl.prototype.hideFocus = () => {
   // hide the focus
   this._hideFocus();
   this._hasFocus = false;
@@ -11234,7 +11234,7 @@ List2Ctrl.prototype.hideFocus = function() {
  * =========================
  * @return {integer} - currently focussed item
  */
-List2Ctrl.prototype.restoreFocus = function() {
+List2Ctrl.prototype.restoreFocus = () => {
   // restore the focus to the last focussed element
   this._showFocus(this._lastItemWithFocus);
 
@@ -11253,7 +11253,7 @@ List2Ctrl.prototype.restoreFocus = function() {
  * =========================
  * @return {HTML Canvas element}
  */
-List2Ctrl.prototype.getTitleCanvas = function() {
+List2Ctrl.prototype.getTitleCanvas = () => {
   return this.titleCanvas;
 };
 
@@ -11310,7 +11310,7 @@ List2Ctrl.prototype.getItemsByType = function(itemType) {
  * =========================
  * @return {array} - Array([firstEmpty, lastEmpty], [firstEmpty, lastEmpty])
  */
-List2Ctrl.prototype.getEmptyRange = function() {
+List2Ctrl.prototype.getEmptyRange = () => {
   const ranges = [];
   const currentRange = [];
 
@@ -11360,7 +11360,7 @@ List2Ctrl.prototype.getEmptyRange = function() {
  * =========================
  * @return {array} - Array([firstFilled, lastFilled], [firstFilled, lastFilled])
  */
-List2Ctrl.prototype.getFilledRange = function() {
+List2Ctrl.prototype.getFilledRange = () => {
   const ranges = [];
   const currentRange = [];
 
@@ -11408,7 +11408,7 @@ List2Ctrl.prototype.getFilledRange = function() {
  * =========================
  * @return {string} - 'mainList' | 'letterIndex' | 'noFocus'
  */
-List2Ctrl.prototype.getFocusMode = function() {
+List2Ctrl.prototype.getFocusMode = () => {
   let currentFocusMode = 'mainList';
   if (!this._hasFocus) {
     currentFocusMode = 'noFocus';
@@ -11783,7 +11783,7 @@ List2Ctrl.prototype.setCountLabel = function(labelText) {
  * =========================
  * @return {object} - capture data
  */
-List2Ctrl.prototype.getContextCapture = function() {
+List2Ctrl.prototype.getContextCapture = () => {
   const obj = {
     hasFocus: this._hasFocus,
     topItem: this._topItem,
@@ -11867,7 +11867,7 @@ List2Ctrl.prototype.setListBackground = function(img, position) {
  * =========================
  * @return {void}
  */
-List2Ctrl.prototype.clearListBackground = function() {
+List2Ctrl.prototype.clearListBackground = () => {
   if (this.listBackground) {
     this.listBackground.parentElement.removeChild(this.listBackground);
     this.listBackground = null;
@@ -11886,7 +11886,7 @@ List2Ctrl.prototype.clearListBackground = function() {
   * =========================
   * @return The TabsCtrl instance.
   */
-List2Ctrl.prototype._createTabsControl = function() {
+List2Ctrl.prototype._createTabsControl = () => {
   log.debug('  Instantiating TabsCtrl');
   if (this.properties.tabsButtonConfig.tiltStartCallback) {
     log.warn('Lis2: the tabsButtonConfig.tiltStartCallback property was defined outside of the list control but should only be used by the list.');
@@ -11927,7 +11927,7 @@ List2Ctrl.prototype._trackEvent = function(e) {
  * =========================
  * @return {integer} - 1 for 'down', -1 for 'uo'
  */
-List2Ctrl.prototype._getMoveDirection = function() {
+List2Ctrl.prototype._getMoveDirection = () => {
   const trackedEvents = this._trackedEvents;
   const event0 = trackedEvents[0];
   const event1 = trackedEvents[1];
@@ -11985,7 +11985,7 @@ List2Ctrl.prototype._getListPosition = function(itemIndex) {
  * =========================
  * @return {integer}
  */
-List2Ctrl.prototype._getAdditionalSpace = function() {
+List2Ctrl.prototype._getAdditionalSpace = () => {
   // determine additional space
   let additionalSpace = 0;
   switch (this.properties.titleConfiguration) {
@@ -12029,7 +12029,7 @@ List2Ctrl.prototype._getAdditionalSpace = function() {
  * Return the first element in the DOM that doesn't
  * have data associated with it in the dataList
  */
-List2Ctrl.prototype._getEmptyDOMElement = function() {
+List2Ctrl.prototype._getEmptyDOMElement = () => {
   let emptyItem = null;
   const items = [];
 
@@ -12532,7 +12532,7 @@ List2Ctrl.prototype.m = {
  * Finish partial activity.
  * @return {void}
  */
-List2Ctrl.prototype.finishPartialActivity = function() {
+List2Ctrl.prototype.finishPartialActivity = () => {
   // route finish partial activity to sub controls
 
   // tabs ctrl
@@ -12581,7 +12581,7 @@ List2Ctrl.prototype.getStationAndRelay = function(stationName, RelayName) {
  * =========================
  * @return {void}
  */
-List2Ctrl.prototype.cleanUp = function() {
+List2Ctrl.prototype.cleanUp = () => {
   // remove event callbacks
   this.divElt.removeEventListener(this._USER_EVENT_START, this.touchHandler, false);
   document.removeEventListener(this._USER_EVENT_MOVE, this.touchHandler, false);
