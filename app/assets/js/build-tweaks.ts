@@ -19,7 +19,7 @@ import bootbox from 'bootbox';
 import copydir from 'copy-dir';
 import drivelist from 'drivelist';
 import extract from 'extract-zip'; // For Unzipping
-import {ipc} from 'electron';
+import {ipcRenderer} from 'electron';
 import introJs from 'intro.js';
 import crlf from 'crlf';
 import {buildEntList} from './audioSourceList';
@@ -74,13 +74,13 @@ export const buildTweakFile = (user: any, apps: any) => {
       aioLog(m, m);
       return;
     }
-    mkdirp(`${tmpdir}`, (err: any) => {
+    mkdirp(`${tmpdir}`, {on: (err: any) => {
       if (err) {
         aioLog(err, err);
         return;
       }
       buildTweaksConfig(user, apps);
-    });
+    }});
   });
 };
 
@@ -93,7 +93,7 @@ function buildTweaksConfig(user: any, apps: any) {
     }
     try {
       mkdirp.sync(`${tmpdir}/config/`);
-    } catch (e) {
+    } catch (e: any) {
       const m = `${e} - Error occured while creating '_copy_to_usb' folder. Try closing all other running programs and folders before compiling.`;
       aioLog(e.message, m);
       return;
@@ -130,7 +130,7 @@ function buildTweaksConfig(user: any, apps: any) {
       const inStr = fs.createReadStream(`${varDir}/no_artwork_icon.png`);
       inStr.on('error', function(err: any) {
         aioLog('ERROR: NO BLANK ALBUM ART CHOSEN');
-        ipc.send('default-blnk-art');
+        ipcRenderer.send('default-blnk-art');
         setTimeout(() => {
           const inStr2 = fs.createReadStream(`${varDir}/no_artwork_icon.png`);
           inStr2.on('error', function(err: any) {
@@ -1299,7 +1299,7 @@ function unzipSwapfile(dest: any) {
       } else {
         finishedMessage(dest);
       }
-    }},);
+    }});
   } else {
     if (nocopy) {
       noUsbDrive();
@@ -1473,7 +1473,7 @@ function fullSystemRestore(user: any) {
       } else {
         aioLog(`Red Color Scheme Added Successfully`);
       }
-    }},);
+    }});
   }
   copydir(`${builddir}config_org`, `${tmpdir}/config_org`, (err: any) => {
     if (err) {

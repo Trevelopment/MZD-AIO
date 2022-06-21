@@ -1,24 +1,26 @@
-const electron = require('electron');
-const ipc = electron.ipcRenderer;
-const webFrame = electron.webFrame;
+import {ipcRenderer as ipc, webFrame} from 'electron';
+import remote from 'electron';
+const {Menu} = remote;
 const maximumZoomLevel = 3;
 
-const {Menu} = electron.remote;
 
-let currentZoomLevel; let zoomMenuItems;
+let currentZoomLevel: number;
+let zoomMenuItems: any[] = [];
 
 function getZoomUI() {
-  const menu = Menu.getApplicationMenu();
-  const menuItems = [];
-  menu.items.forEach((item) => {
-    if (item.id === 'view') {
-      item.submenu.items.forEach((item) => {
-        if (item.id && item.id.match(/^zoom-.*/)) {
-          menuItems.push(item);
-        }
-      });
-    }
-  });
+  const menu = Menu.getApplicationMenu() || {};
+  const menuItems: any[] = [];
+  if (menu) {
+    menu.items.forEach((item) => {
+      if (item.id === 'view') {
+        item.submenu.items.forEach((item) => {
+          if (item.id && item.id.match(/^zoom-.*/)) {
+            menuItems.push(item);
+          }
+        });
+      }
+    });
+  }
   return menuItems;
 }
 
@@ -48,15 +50,18 @@ window.addEventListener('load', () => {
   enableZoomUI();
 });
 ipc.on('zoom-actual', (event) => {
-  currentZoomLevel = webFrame.setZoomLevel(0);
+  webFrame.setZoomLevel(0);
+  currentZoomLevel = webFrame.getZoomLevel();
 });
 ipc.on('zoom-in', (event) => {
   if (currentZoomLevel < maximumZoomLevel) {
-    currentZoomLevel = webFrame.setZoomLevel(currentZoomLevel + 1);
+    webFrame.setZoomLevel(currentZoomLevel + 1);
+    currentZoomLevel = webFrame.getZoomLevel();
   }
 });
 ipc.on('zoom-out', (event) => {
   if (currentZoomLevel > 0) {
-    currentZoomLevel = webFrame.setZoomLevel(currentZoomLevel - 1);
+    webFrame.setZoomLevel(currentZoomLevel - 1);
+    currentZoomLevel = webFrame.getZoomLevel();
   }
 });

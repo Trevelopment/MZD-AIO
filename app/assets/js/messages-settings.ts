@@ -1,9 +1,12 @@
-/* jshint esversion:6, -W117, -W116 */
-const xml2js = require('xml2js');
+import xml2js from 'xml2js';
+import rimraf from 'rimraf';
+import {varDir} from './index';
+
 // let settingsData = new Config({ 'name': 'msgSettings' })
-let data2edit; const msgLangs = [];
+let data2edit: any;
+const msgLangs = [];
 let currLangMsgs = [];
-let currMsgLang;
+// let currMsgLang: any;
 const parser = new xml2js.Parser();
 
 function getMsgLangs() {
@@ -24,11 +27,13 @@ function getMsgLangs() {
     });
   });
 }
-function resetMsgLang() {
+
+export const resetMsgLang = () => {
   rimraf.sync(`${varDir}/message_replies/`);
   getMsgLangs();
-}
-function getMsgsForLang(msgLang) {
+};
+
+export const getMsgsForLang = (msgLang) => {
   currLangMsgs = [];
   for (const x in data2edit.Node.Node[0].Node) {
     if (data2edit.Node.Node[0].Node[x].$.key === msgLang) {
@@ -38,10 +43,11 @@ function getMsgsForLang(msgLang) {
       }
     }
   }
-}
+};
+
 getMsgLangs();
 
-function rebuildMessageXml(msgLang, newMsgs) {
+export const rebuildMessageXml = (msgLang, newMsgs) => {
   const builder = new xml2js.Builder({headless: true});
   for (const x in data2edit.Node.Node[0].Node) {
     if (data2edit.Node.Node[0].Node[x].$.key === msgLang) {
@@ -53,4 +59,4 @@ function rebuildMessageXml(msgLang, newMsgs) {
   }
   const xml = builder.buildObject(data2edit);
   writePresetMessageFile(xml);
-}
+};

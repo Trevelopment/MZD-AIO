@@ -1,5 +1,6 @@
-/* jshint esversion:6, -W117 */
-function startTour(tourMsgs) {
+import introJs from 'intro.js';
+
+export const startTour = (tourMsgs: any[]) => {
   const tour = introJs().setOptions({'skipLabel': 'Skip Tour', 'doneLabel': 'Start!', 'tooltipClass': 'w3-pale-green w3-center', 'showStepNumbers': false, 'scrollToItem': true, 'exitOnOverlayClick': false, 'hideNext': true, 'hidePrev': true});
   tour.setOptions({
     steps: [{
@@ -50,9 +51,9 @@ function startTour(tourMsgs) {
     ],
   });
   tour.start();
-}
+};
 
-function AndroidAutoChoice() {
+export const AndroidAutoChoice = () => {
   const AAchoice = introJs().setOptions({'doneLabel': 'Got It!', 'tooltipClass': 'w3-pale-green w3-center', 'showStepNumbers': false, 'scrollToItem': true, 'exitOnOverlayClick': false, 'hideNext': true, 'hidePrev': true});
   AAchoice.setOptions({
     steps: [{
@@ -61,8 +62,9 @@ function AndroidAutoChoice() {
       position: 'auto',
     }],
   });
-}
-function casdkIntro() {
+};
+
+export const casdkIntro = () => {
   const casdkMsg = introJs().setOptions({'doneLabel': 'Got It!', 'tooltipClass': 'w3-pale-blue w3-center', 'showStepNumbers': false, 'scrollToItem': true, 'exitOnOverlayClick': true, 'hideNext': true, 'hidePrev': true});
   casdkMsg.setOptions({
     steps: [{
@@ -72,4 +74,4 @@ function casdkIntro() {
     }],
   });
   casdkMsg.start();
-}
+};

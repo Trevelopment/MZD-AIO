@@ -1,4 +1,4 @@
-const backgroundlist = [
+export const backgroundlist = [
   'background1.png',
   'background_001.png',
   'background_002.png',

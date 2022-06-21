@@ -1,4 +1,7 @@
-/* jshint esversion:6, -W117 */
+import {dialog} from 'electron';
+import Config from 'electron-store';
+import JSONEditor from 'jsoneditor';
+import {langObj} from './index';
 const translateData = new Config({'name': 'speedo-config'});
 
 // Hook up the Restore to Default button
@@ -131,9 +134,9 @@ const speedoSchema = {
   ],
 };
 
-function gotoTranslator() {
+export const gotoTranslator = () => {
   $(this).hide();
-}
+};
 // This is the starting value for the editor
 // We will use this to seed the initial editor
 // and to provide a "Restore to Default" button.
@@ -183,7 +186,7 @@ const editor = new JSONEditor(document.getElementById('editor_holder'), {
 // JSONEditor.defaults.editors..options.hidden = true
 // Hook up the submit button to log to the console
 document.getElementById('submit').addEventListener('click', function() {
-  fileName = document.getElementById('newFileName').value.toLowerCase();
+  const fileName = document.getElementById('newFileName').value.toLowerCase();
   // Get the value from the editor
   // console.log(JSON.stringify(editor.getValue()))
   console.log(fileName);
@@ -205,13 +208,13 @@ document.getElementById('import').addEventListener('click', function() {
     ],
   }, function(files) {
     if (files) {
-      jsonData = fs.readFileSync(files[0], {encoding: 'utf8'});
+      const jsonData = fs.readFileSync(files[0], {encoding: 'utf8'});
       editor.setValue(JSON.parse(jsonData));
     }
   });
 });
 // ipc.send('open-translate-file')
-ipc.on('translate-file', function(data) {
+ipc.on('translate-file', (data: any) => {
   if (data) {
     console.log(data[0]);
     console.log(data[0].toString());

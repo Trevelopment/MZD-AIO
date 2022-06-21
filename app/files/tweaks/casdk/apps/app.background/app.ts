@@ -1,3 +1,5 @@
+// import {CustomApplication, CustomApplicationsHandler} from '../../../resources/aio/mazda-casdk/runtime/runtime';
+import {CustomApplication, CustomApplicationsHandler} from '../../resources/aio';
 /**
  * [{APP_NAME}]
  *

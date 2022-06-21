@@ -1,11 +1,11 @@
 let SbOpsHTML = '';
 let spdCtrlHTML = '';
 const spdSbOptions = [];
-const spdColorOptions = [];
 const spdCtrlOptions = [];
 const spdBarCtrlOptions = [];
-const spdExtraOptions = [];
 let barColorFile = '';
+const spdColorOptions = [];
+const spdExtraOptions = [];
 const speedoOps = {
   lang: {id: null},
   xph: {id: 11},

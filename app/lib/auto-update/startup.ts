@@ -1,36 +1,36 @@
-'use strict'
+'use strict';
 
-const path = require('path')
-const cp = require('child_process')
-const app = require('electron').app
+const path = require('path');
+const cp = require('child_process');
+const app = require('electron').app;
 
 /**
  * Squirrel events management (windows)
  */
-function executeSquirrelCommand (args, done) {
-  var updateDotExe = path.resolve(path.dirname(process.execPath), '..', 'Update.exe')
-  var child = cp.spawn(updateDotExe, args, { detached: true })
-  child.on('close', function (code) {
-    done()
-  })
+function executeSquirrelCommand(args, done) {
+  const updateDotExe = path.resolve(path.dirname(process.execPath), '..', 'Update.exe');
+  const child = cp.spawn(updateDotExe, args, {detached: true});
+  child.on('close', function(code) {
+    done();
+  });
 }
 
-function install (done) {
-  var target = path.basename(process.execPath)
-  executeSquirrelCommand(['--createShortcut', target, ' --shortcut-locations=Desktop,StartMenu'], done)
+function install(done) {
+  const target = path.basename(process.execPath);
+  executeSquirrelCommand(['--createShortcut', target, ' --shortcut-locations=Desktop,StartMenu'], done);
 }
 
-function uninstall (done) {
-  var target = path.basename(process.execPath)
-  executeSquirrelCommand(['--removeShortcut', target], done)
+function uninstall(done) {
+  const target = path.basename(process.execPath);
+  executeSquirrelCommand(['--removeShortcut', target], done);
 }
 
 /**
  * Squirrel events (only windows). Used to manage squirrel events (if any).
  * Always quit after that.
  */
-function handleStartupEvent (callback) {
-  var squirrelCommand = process.argv[1]
+function handleStartupEvent(callback) {
+  const squirrelCommand = process.argv[1];
 
   switch (squirrelCommand) {
     case '--squirrel-install':
@@ -44,32 +44,32 @@ function handleStartupEvent (callback) {
       //   explorer context menus
 
       // Always quit when done
-      install(app.quit)
-      break
+      install(app.quit);
+      break;
 
     case '--squirrel-uninstall':
       // Undo anything you did in the --squirrel-install and
       // --squirrel-updated handlers
 
       // Always quit when done
-      uninstall(app.quit)
-      break
+      uninstall(app.quit);
+      break;
 
     case '--squirrel-obsolete':
       // This is called on the outgoing version of your app before
       // we update to the new version - it's the opposite of
       // --squirrel-updated
-      uninstall(app.quit)
-      break
+      uninstall(app.quit);
+      break;
 
     case '--squirrel-firstrun':
       // do something on windows first run
-      app.quit()
-      break
+      app.quit();
+      break;
 
     default:
-      callback()
+      callback();
   }
 }
 
-module.exports = handleStartupEvent
+module.exports = handleStartupEvent;

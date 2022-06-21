@@ -1,3 +1,4 @@
+import {CustomApplication, CustomApplicationsHandler} from '../../resources/aio';
 /**
  * Custom Applications SDK for Mazda Connect Infotainment System
  *

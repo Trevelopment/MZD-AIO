@@ -1,3 +1,4 @@
+import {CustomApplication, CustomApplicationsHandler} from '../../resources/aio';
 /**
  * [Custom clock for car]
  *

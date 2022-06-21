@@ -1,11 +1,13 @@
-/* jshint esversion:6, -W117 */
 // Display a notification message when a new version is ready for install
-let dll = null;
+import remote, {ipcRenderer} from 'electron';
+let dll: any;
+
 ipc.on('update-not available', (event) => {
   setTimeout(function() {
     $('#update-available a').addClass('w3-hide');
   }, 2000);
 });
+
 ipc.on('update-available-alert', (event) => {
   $('#update-available, #update-available a').removeClass('w3-hide');
   let updots = 0;
@@ -19,22 +21,27 @@ ipc.on('update-available-alert', (event) => {
     }
   }, 2000);
 });
+
 ipc.on('update-err', (event) => {
   clearInterval(dll);
   dll = null;
   $('#update-available').html('<a onclick="shell.openExternal(\'https://github.com/Trevelopment/MZD-AIO/releases\')" class="link">ERROR: CLICK HERE FOR UPDATE.</a>');
   snackbarstay(`<a onclick="shell.openExternal(\'https://github.com/Trevelopment/MZD-AIO/releases\')" class="link">UPDATE ERROR: CLICK HERE TO DOWNLOAD THE LATEST UPDATE.</a>`);
 });
+
 ipc.on('update-downloaded', (event) => {
   snackbarstay(`<span id="restart">An Update Is Available:  <a href="" class="w3-btn w3-deep-purple w3-hover-light-blue">UPDATE</a></span>`);
   $('#update-available').text('Update Available');
-  setTimeout(function() {document.getElementById('update-ready').className = '';}, 7500);
+  setTimeout(function() {
+    document.getElementById('update-ready').className = '';
+  }, 7500);
   // showNotification('Update', 'An updated application package will be installed on next restart, <a id="restart" href="">click here to update now</a>.', 30, function () { ipc.send('update-and-restart') })
   document.getElementById('restart').addEventListener('click', (e) => {
     e.preventDefault();
-    ipc.send('update-and-restart');
+    ipcRenderer.send('update-and-restart');
   });
 });
+
 ipc.on('dl-progress', (event, megaBytes, fileName, totalSize) => {
   if ((megaBytes / totalSize) < 1) {
     if ($('#progress').length) {
@@ -48,6 +55,7 @@ ipc.on('dl-progress', (event, megaBytes, fileName, totalSize) => {
     $('#progress').parent().fadeOut('1000');
   }
 });
+
 ipc.on('notif-progress', (event, message) => {
   if ($('#progress').length) {
     document.getElementById('dl-notif').innerHTML = message;
@@ -57,11 +65,12 @@ ipc.on('notif-progress', (event, message) => {
     showNotification('Download', `<div id="dl-notif">${message}</div>`, 10);
   }
 });
+
 ipc.on('notif-bg-saved', (event, message) => {
   showNotification('Background', `<div id="dl-notif">${message}</div>`, 10);
 });
 
-function showNotification(title, message, fadeouttime, callback) {
+const showNotification = (title, message, fadeouttime, callback?: any) => {
   $('#notices').show();
   const notice = document.createElement('div');
   notice.setAttribute('class', 'notice');
@@ -91,12 +100,13 @@ function showNotification(title, message, fadeouttime, callback) {
       console.log('Notification clicked: ' + myNotification.timestamp);
     };
   }
-}
+};
+
 ipc.on('snackbar-msg', (event, message) => {
   snackbar(message);
 });
 
-function snackbar(message, mtime) {
+const snackbar = (message: any, mtime?: any) => {
   /* $('#snackbar').append('body')
   let x = document.getElementById('snackbar')
   x.innerHTML = message
@@ -107,9 +117,9 @@ function snackbar(message, mtime) {
     text: message,
     time: mtime * 1000 || 5000,
   });
-}
+};
 
-function snackbarstay(message) {
+const snackbarstay = (message: any) => {
   // $('#snackbar').append('body')
   // let x = document.getElementById('snackbar')
   // x.innerHTML = message + '<div onclick="$(this).parent().removeClass(\'stay\')" class="w3-xxlarge w3-display-topright w3-close-btn w3-hover-text-red" style="margin-top:-15px;cursor:pointer;">&times;</div>'
@@ -119,4 +129,4 @@ function snackbarstay(message) {
     text: message,
     sticky: true,
   });
-}
+};

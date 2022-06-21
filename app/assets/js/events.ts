@@ -1,6 +1,10 @@
-/* jshint esversion:6, -W033, -W117, -W097, -W116 */
 /* Automatically Open Background Dialog, Color DL and Speedcam DL On First Checkbox Click Only */
-const selectBgDir = $('.menuCheck.bg input');
+import {ipcRenderer} from 'electron';
+import snackbar from 'snackbar';
+import {nativeImage, clipboard} from 'electron';
+import {getBackground, settings, varDir, hasColorFiles, hasSpeedCamFiles} from './index';
+
+export const selectBgDir = $('.menuCheck.bg input');
 const selectColorsDL = $('.menuCheck.colors input');
 $(function() {
   /* Attempt to download color scheme files if they don't exist */
@@ -19,7 +23,7 @@ $(function() {
         },
         callback: function(result) {
           if (result) {
-            ipc.send('download-aio-files', 'color-schemes.zip');
+            ipcRenderer.send('download-aio-files', 'color-schemes.zip');
           } else {
             angular.element(selectColorsDL).scope().checked = false;
             window.alert('You Must Download Color Files To Apply Color Scheme Tweak');
@@ -44,7 +48,7 @@ $(function() {
         },
         callback: function(result) {
           if (result) {
-            ipc.send('download-aio-files', 'speedcam-patch.zip');
+            ipcRenderer.send('download-aio-files', 'speedcam-patch.zip');
           } else {
             angular.element($('.install-check input#IN23')).scope().checked = false;
             window.alert('You Must Download Speedcam Patch Files To Apply Speedcam Tweak');
@@ -54,7 +58,7 @@ $(function() {
     }
   });
 });
-ipc.on('already-downloaded', function(event, filename) {
+ipcRenderer.on('already-downloaded', function(event, filename) {
   bootbox.confirm({
     message: 'You have already downloaded these files! Would you like to redownload and overwrite files?',
     buttons: {
@@ -69,16 +73,16 @@ ipc.on('already-downloaded', function(event, filename) {
     },
     callback: function(result) {
       if (result) {
-        ipc.send('resume-dl');
+        ipcRenderer.send('resume-dl');
       } else {
-        ipc.send('cancel-dl');
+        ipcRenderer.send('cancel-dl');
       }
     },
   });
 });
-ipc.on('selected-joined-bg', function(event, filepath) {
+ipcRenderer.on('selected-joined-bg', function(event, filepath) {
   if (filepath && filepath[0]) {
-    const outFile = `${getBackground}`;
+    // const outFile = `${getBackground}`;
     clipboard.writeImage(filepath[0]);
     joinedPhoto(filepath[0]);
     const bgNotification = new Notification('Background', {
@@ -90,10 +94,10 @@ ipc.on('selected-joined-bg', function(event, filepath) {
     // snackbar(`Your Infotainment Background Will Be Changed To: <img src="${filepath[0]}?` + new Date().getTime() + `" alt="${filepath[0]}">`)
   }
 });
-ipc.on('selected-bg', function(event, filepath) {
+ipcRenderer.on('selected-bg', function(event, filepath) {
   const outFile = `${getBackground}`;
   document.getElementById('selected-file').innerHTML = `Your Selected Background Image: ${filepath}`;
-  const warnMsg = '{{mainOps.retain.toolTip}}';
+  // const warnMsg = '{{mainOps.retain.toolTip}}';
   fs.writeFileSync(`${outFile}`, nativeImage.createFromPath(`${filepath}`).resize({'width': 800, 'height': 480}).toPNG());
   const bgNotification = new Notification('Background', {
     body: `Your Infotainment Background Will Be Changed To: ${filepath}`,
@@ -104,9 +108,9 @@ ipc.on('selected-bg', function(event, filepath) {
   bgNotification.onclick = () => {
     $('#imgframe').click();
   };
-  ipc.emit('set-bg');
+  ipcRenderer.emit('set-bg');
 });
-ipc.on('selected-offscreen-bg', function(event, filepath) {
+ipcRenderer.on('selected-offscreen-bg', function(event, filepath) {
   const outFile = `${varDir}/OffScreenBackground.png`;
   fs.writeFileSync(`${outFile}`, nativeImage.createFromPath(`${filepath}`).resize({'width': 800, 'height': 480}).toPNG());
   const bgNotification = new Notification('Background', {
@@ -117,15 +121,15 @@ ipc.on('selected-offscreen-bg', function(event, filepath) {
   bgNotification.onclick = () => {};
   snackbar(`Your Infotainment Off-Screen Background: <img src="${outFile}?` + new Date().getTime() + `" alt="${filepath}">`);
 });
-ipc.on('set-bg', (prev) => {
+ipcRenderer.on('set-bg', (prev) => {
   const bgNoCache = `${getBackground}?` + new Date().getTime();
   document.getElementById('imgframe').innerHTML = `<img src='${bgNoCache}' />`;
   document.getElementById('imgmodal').innerHTML = `<img src='${bgNoCache}' />`;
-  if (`${prev}` === true) {
+  if (prev) {
     $('#imgframe').click();
   }
 });
-ipc.on('selected-album-art', function(event, filepath) {
+ipcRenderer.on('selected-album-art', function(event, filepath) {
   const outFile = `${varDir}/no_artwork_icon.png`;
   $('.blnk-albm-art').hide();
   $('#blnk-albm-img').show();
@@ -137,18 +141,18 @@ ipc.on('selected-album-art', function(event, filepath) {
     snackbar(`Blank Album Art: ${bgNoCache}`);
   }, 2000);
 });
-ipc.on('aio-info', function(event) {
+ipcRenderer.on('aio-info', function(event) {
   $('#FW_VER').attr('data-content', `FW_VERSION: ${persistantData.get('FW')}`);
   $('#FW_VER').show();
 });
-ipc.on('close-featherlight', function(event) {
+ipcRenderer.on('close-featherlight', function(event) {
   $.featherlight.current().close();
 });
-ipc.on('open-translator', function() {
+ipcRenderer.on('open-translator', function() {
   remote.BrowserWindow.fromId(1).focus();
   $('#openTranslator').click();
 });
-ipc.on('go-home', function() {
+ipcRenderer.on('go-home', function() {
   remote.BrowserWindow.fromId(1).focus();
   $('#goHome').click();
 });

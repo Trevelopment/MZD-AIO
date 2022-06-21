@@ -2,7 +2,7 @@
 window.URL = window.URL || window.webkitURL || window.mozURL || window.msURL;
 window.saveAs = window.saveAs || window.webkitSaveAs || window.mozSaveAs || window.msSaveAs;
 
-function saveCanvas(canvas, filename, fileformat) {
+export const saveCanvas = (canvas, filename, fileformat) => {
   if (navigator.msSaveBlob || window.URL || window.saveAs) {
     if (canvas.toBlob) {
       canvas.toBlob(function(blob) {
@@ -14,9 +14,9 @@ function saveCanvas(canvas, filename, fileformat) {
   } else {
     saveUrl(canvas.toDataURL(fileformat), filename);
   }
-}
+};
 
-function dataURLToBlob(dataURL) {
+function dataURLToBlob(dataURL: string) {
   const index = dataURL.indexOf(',');
   const meta = dataURL.substring(0, index);
   let data = dataURL.substring(index + 1);
@@ -38,7 +38,7 @@ function dataURLToBlob(dataURL) {
   return new Blob([data], {type: contentType});
 }
 
-function saveBlob(blob, filename) {
+function saveBlob(blob, filename: string) {
   if (navigator.msSaveBlob) {
     navigator.msSaveBlob(blob, filename);
   } else if (window.saveAs) {
@@ -54,7 +54,7 @@ function saveBlob(blob, filename) {
   }
 }
 
-function saveUrl(url, filename) {
+function saveUrl(url: string, filename: string) {
   const link = document.createElement('a');
   if ('download' in link) {
     link.download = filename;

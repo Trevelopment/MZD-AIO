@@ -23,7 +23,8 @@
         "arrow-parens": "off",
         "camelcase": "off",
         "guard-for-in": "off",
-        "prefer-rest-params": "off"
+        "prefer-rest-params": "off",
+        "no-invalid-this": "off"
         // "max-len": [2, 140, 2]
     }
 }

@@ -10,7 +10,12 @@
 **                                                                            **
 ** ************************************************************************** **
 \* ************************************************************************** */
-const angular = require('@angular/core');
+import angular from '@angular/core';
+import snackbar from 'snackbar';
+import {lang, langObj, settings, speedoSave} from '../assets/js/index';
+import {entertainmentItems} from '../assets/js/audioSourceList';
+import {buildTweakFile} from '../assets/js/build-tweaks';
+
 (function() {
   'use strict';
   angular.module('AIO', ['checklist-model', 'ngSanitize', 'ngRoute']) // 'angular-electron'
@@ -277,8 +282,8 @@ const angular = require('@angular/core');
           rebuildMessageXml($scope.user.replyMsgLang, $scope.replyMsgs);
         };
         $scope.checkDuplicatePos = function(inputArray) {
-          let lastSeenDuplicate;
-          const seenDuplicate = [];
+          // let lastSeenDuplicate;
+          const seenDuplicate: any[] = [];
           const testObject = {};
           const propertyName = 'pos';
           const elmntName = 'elmnt';
@@ -293,7 +298,7 @@ const angular = require('@angular/core');
                 item.duplicate = true;
                 seenDuplicate.push(itemName, testObject[itemPosition].elmnt);
               } else {
-                lastSeenDuplicate = itemName;
+                // lastSeenDuplicate = itemName;
                 testObject[itemPosition] = item;
                 delete item.duplicate;
               }
@@ -768,7 +773,7 @@ const angular = require('@angular/core');
             return;
           }
           // check for downloaded files
-          const spfiles = fs.existsSync(`${app.getPath('userData')}/speedcam-patch/`);
+          // const spfiles = fs.existsSync(`${app.getPath('userData')}/speedcam-patch/`);
           const csfiles = fs.existsSync(`${app.getPath('userData')}/color-schemes/`);
           if ($scope.user.mainOps.includes(3)) {
             if (!csfiles) {
@@ -1047,7 +1052,8 @@ const angular = require('@angular/core');
     };
     $scope.compileCASDK = function(user, appsOnly) {
       if (user.casdk.inst && !appsOnly) {
-        const compileTweaksDialog = bootbox.confirm({
+        // const compileTweaksDialog = bootbox.confirm({
+        bootbox.confirm({
           title: `<center><h3 class="tweak-inst-title">*************** CASDK ***************</h3></center>`,
           message: 'Choose Region - Available Regions:<br><ul><li>North America - NA - mph, ft, °F</li><li>Europe - EU - Km/h, m, °C</li></ul>',
           className: 'confirmCompile',

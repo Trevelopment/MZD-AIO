@@ -1,6 +1,7 @@
-const Gritter = (function() {
+export const Gritter = (function() {
   $('#add-sticky').click(function() {
-    const unique_id = $.gritter.add({
+    // const unique_id = $.gritter.add({
+    $.gritter.add({
       // (string | mandatory) the heading of the notification
       title: 'This is a Sticky Notice!',
       // (string | mandatory) the text inside the notification

@@ -1,4 +1,6 @@
-/* jshint esversion:6, -W117 */
+import JSONEditor from 'jsoneditor';
+import {clipboard, dialog} from 'electron';
+
 const translateData = new Config({'name': 'aio-translate-save'});
 document.getElementById('submit').innerHTML = langObj.translatorWindow[14].label;
 
@@ -10,9 +12,10 @@ document.getElementById('restore').addEventListener('click', function() {
 document.getElementById('restore').innerHTML = langObj.translatorWindow[1].label + ` (${lang})`;
 document.getElementById('loadLang').innerHTML = `${lang}`;
 
-function gotoTranslator() {
+export const gotoTranslator = () => {
   $(this).hide();
-}
+};
+
 // This is the starting value for the editor
 // We will use this to seed the initial editor
 // and to provide a "Restore to Default" button.
@@ -62,7 +65,7 @@ JSONEditor.plugins.sceditor.resizeMaxWidth = '800';
 // JSONEditor.defaults.editors..options.hidden = true
 // Hook up the submit button to log to the console
 document.getElementById('submit').addEventListener('click', function() {
-  fileName = document.getElementById('newFileName').value.toLowerCase();
+  const fileName = document.getElementById('newFileName').value.toLowerCase();
   // Get the value from the editor
   // console.log(JSON.stringify(editor.getValue()))
   console.log(fileName);
@@ -74,7 +77,7 @@ document.getElementById('submit').addEventListener('click', function() {
   });
 });
 document.getElementById('import').addEventListener('click', function() {
-  // let jsonData
+  let jsonData;
   dialog.showOpenDialog({
     title: `MZD-AIO-TI | ${langObj.translatorWindow[11].label}.`,
     properties: ['openFile'],
@@ -90,7 +93,7 @@ document.getElementById('import').addEventListener('click', function() {
   });
 });
 // ipc.send('open-translate-file')
-ipc.on('translate-file', function(data) {
+ipc.on('translate-file', (data: any[]) => {
   if (data) {
     console.log(data[0]);
     console.log(data[0].toString());
@@ -102,12 +105,12 @@ ipc.on('translate-file', function(data) {
 
 document.getElementById('import').innerHTML = langObj.translatorWindow[9].label;
 
-function gotoTranslator() {
-  $(this).hide();
-}
 
 // Hook up the enable/disable button
 /* document.getElementById('enable_disable').addEventListener('click',function() {
+function gotoTranslator() {
+  $(this).hide();
+}
 if(!editor.isEnabled()) {
 editor.enable()
 }

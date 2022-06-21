@@ -1,17 +1,18 @@
-/* jshint esversion:6, -W117 */
 'use strict';
 
-const path = require('path');
-const cp = require('child_process');
-const remote = require('electron').remote;
-const app = remote.app;
+import remote from 'electron';
+import path from 'path';
+import cp from 'child_process';
+import isDev from 'electron-is-dev';
+import snackbar from 'snackbar';
+
+// const app = remote.app;
 const dialog = remote.dialog;
-const isDev = require('electron-is-dev');
 const adb = path.resolve((isDev ? path.resolve(`${__dirname}`, '../../') : path.dirname(process.execPath)), 'resources/adb/adb.exe');
 const apk = path.resolve((isDev ? path.resolve(`${__dirname}`, '../../') : path.dirname(process.execPath)), 'castscreenApp/castscreen-1.0.1.apk');
 
 // Install CastScreen App
-module.exports = function csInstaller() {
+export const csInstaller = () => {
   snackbar('Detecting Device Connection... ');
   let deviceConnected = false;
   const command = cp.spawn(adb, ['devices', '-l'], {detached: true});
@@ -45,9 +46,9 @@ function installAPK() {
   snackbar(`Device Found, Installing Castscreen App...`);
   const command = cp.spawn(adb, ['install', apk], {detached: true});
   command.stdout.on('data', (data) => {
-    // console.log(`stdout: ${data}`)
+    console.log(`stdout: ${data}`);
     if (data.indexOf('error:') > 0) {
-      // dialog.showErrorBox(`ERROR: CONNECT PHONE TO USB AND ENABLE ADB DEBUGGING`, `${data}`)
+      dialog.showErrorBox(`ERROR: CONNECT PHONE TO USB AND ENABLE ADB DEBUGGING`, `${data}`);
     }
   });
   command.stderr.on('data', (data) => {

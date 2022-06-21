@@ -1,114 +1,114 @@
-'use strict'
+'use strict';
 
-const isDev = (require('electron-is-dev') || global.appSettings.debug)
-const { app, BrowserWindow } = require('electron')
-const ipc = require('electron').ipcMain
+const isDev = (require('electron-is-dev') || global.appSettings.debug);
+const {app, BrowserWindow} = require('electron');
+const ipc = require('electron').ipcMain;
 
-function sendAction (action) {
-  const win = BrowserWindow.getFocusedWindow()
+function sendAction(action) {
+  const win = BrowserWindow.getFocusedWindow();
   if (process.platform === 'darwin') {
-    win.restore()
+    win.restore();
   }
-  win.webContents.send(action)
+  win.webContents.send(action);
 }
 
 const viewSubmenu = [
   {
     label: 'Back',
     accelerator: 'CmdOrCtrl+B',
-    click: function (item, focusedWindow) {
+    click: function(item, focusedWindow) {
       if (focusedWindow) {
-        focusedWindow.webContents.goBack()
+        focusedWindow.webContents.goBack();
       }
-    }
+    },
   },
   {
     label: 'Reload',
     accelerator: 'CmdOrCtrl+R',
-    click: function (item, focusedWindow) {
+    click: function(item, focusedWindow) {
       if (focusedWindow) {
-        focusedWindow.reload()
+        focusedWindow.reload();
       }
-    }
+    },
   },
   {
-    type: 'separator'
+    type: 'separator',
   },
   {
-    role: 'togglefullscreen'
+    role: 'togglefullscreen',
   },
   {
     label: 'Zoom In',
     id: 'zoom-in',
     accelerator: 'CmdOrCtrl+Plus',
     enabled: false,
-    click () {
-      sendAction('zoom-in')
-    }
+    click() {
+      sendAction('zoom-in');
+    },
   },
   {
     label: 'Zoom Out',
     id: 'zoom-out',
     accelerator: 'CmdOrCtrl+-',
     enabled: false,
-    click () {
-      sendAction('zoom-out')
-    }
+    click() {
+      sendAction('zoom-out');
+    },
   },
   {
     label: 'Reset Zoom',
     id: 'zoom-actual',
     accelerator: 'CmdOrCtrl+=',
     enabled: false,
-    click () {
-      sendAction('zoom-actual')
-    }
-  }
-]
+    click() {
+      sendAction('zoom-actual');
+    },
+  },
+];
 
-var menuTemplate = [
+const menuTemplate = [
   {
     label: 'Edit',
     submenu: [
       {
-        role: 'undo'
+        role: 'undo',
       },
       {
-        role: 'redo'
+        role: 'redo',
       },
       {
-        type: 'separator'
+        type: 'separator',
       },
       {
-        role: 'cut'
+        role: 'cut',
       },
       {
-        role: 'copy'
+        role: 'copy',
       },
       {
-        role: 'paste'
+        role: 'paste',
       },
       {
-        role: 'selectall'
-      }
-    ]
+        role: 'selectall',
+      },
+    ],
   },
   {
     label: 'View',
     id: 'view',
-    submenu: viewSubmenu
+    submenu: viewSubmenu,
   },
   {
     label: 'Window',
     role: 'window',
     submenu: [
       {
-        role: 'minimize'
+        role: 'minimize',
       },
       {
-        role: 'close'
-      }
-    ]
+        role: 'close',
+      },
+    ],
   },
   {
     label: 'Help',
@@ -117,75 +117,75 @@ var menuTemplate = [
       {
         label: 'Info',
         click: () => {
-          ipc.emit('open-info-window')
-        }
-      }
-    ]
-  }
-]
+          ipc.emit('open-info-window');
+        },
+      },
+    ],
+  },
+];
 
 // Show Dev Tools menu if running in development
 if (isDev) {
   menuTemplate[1].submenu.push({
-    type: 'separator'
-  })
+    type: 'separator',
+  });
   menuTemplate[1].submenu.push(
-    {
-      label: 'Toggle Developer Tools',
-      accelerator: process.platform === 'darwin' ? 'Alt+Command+I' : 'Ctrl+Shift+I',
-      click: function (item, focusedWindow) {
-        if (focusedWindow) {
-          focusedWindow.webContents.toggleDevTools()
-        }
-      }
-    }
-  )
+      {
+        label: 'Toggle Developer Tools',
+        accelerator: process.platform === 'darwin' ? 'Alt+Command+I' : 'Ctrl+Shift+I',
+        click: function(item, focusedWindow) {
+          if (focusedWindow) {
+            focusedWindow.webContents.toggleDevTools();
+          }
+        },
+      },
+  );
 }
 
 if (process.platform === 'darwin') {
-  var name = app.getName()
+  const name = app.getName();
   menuTemplate.unshift({
     label: name,
     submenu: [
       {
-        role: 'about'
+        role: 'about',
       },
       {
-        type: 'separator'
+        type: 'separator',
       },
       {
         role: 'services',
-        submenu: []
+        submenu: [],
       },
       {
-        type: 'separator'
+        type: 'separator',
       },
       {
-        role: 'hide'
+        role: 'hide',
       },
       {
-        role: 'hideothers'
+        role: 'hideothers',
       },
       {
-        role: 'unhide'
+        role: 'unhide',
       },
       {
-        type: 'separator'
+        type: 'separator',
       },
       {
-        role: 'quit'
-      }
-    ]
-  })
+        role: 'quit',
+      },
+    ],
+  });
   // Window menu.
   menuTemplate[3].submenu.push(
-    {
-      type: 'separator'
-    },
-    {
-      role: 'front'
-    }
-  )
+      {
+        type: 'separator',
+      },
+      {
+        role: 'front',
+      },
+  );
 }
 
-module.exports = menuTemplate
+module.exports = menuTemplate;

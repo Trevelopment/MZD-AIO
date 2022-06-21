@@ -66,7 +66,7 @@ process.on('uncaughtException', (e) => {
   dialog.showErrorBox('Caught unhandled exception: ' + (`${e}` || 'Unknown error message'), 'You can report this error to aio@mazdatweaks.com\nor open in issue in the repo https://github.com/Trevelopment/MZD-AIO');
   app.quit();
 });
-const lang = persistantData.get('lang', 'english');
+export const lang = persistantData.get('lang', 'english');
 if (window.location.pathname.includes('joiner')) {
   langPath = `../lang/${lang}.aio.json`;
   langDefault = '../lang/english.aio.json';
