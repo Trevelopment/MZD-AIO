@@ -46,7 +46,7 @@
     "pack:win": "electron-builder --dir --win --x64",
     "pack:linux": "electron-builder --dir --linux --x64",
     "pack": "electron-builder --dir",
-    "prebuild": "node build/target.js",
+    "prebuild": "node build/target.ts",
     "build:osx": "npm run prebuild && electron-builder --mac && npm run postbuild",
     "build:win": "npm run build:win32 && npm run build:win64",
     "build:win64": "npm run prebuild && electron-builder --win --x64 && npm run postbuild",
@@ -56,7 +56,7 @@
     "win32copy": " mv ./releases/MZD-AIO-TI_Setup_2.8.6.exe ./releases/MZD-AIO-TI_Setup_2.8.6_Win32.exe && mv ./releases/MZD-AIO-TI_Setup_2.8.6.exe.blockmap ./releases/MZD-AIO-TI_Setup_2.8.6_Win32.exe.blockmap",
     "build": "electron-builder",
     "release": "electron-builder",
-    "postbuild": "node build/target.js --clean",
+    "postbuild": "node build/target.ts --clean",
     "xinstall": "cd app && ncu -u --packageFile package.json && ncu -a --packageFile package.json && npm i && cd .. && ncu -u --packageFile package.json && ncu -a --packageFile package.json && npm i",
     "postinstall": "electron-builder install-app-deps && cd app && sh ../node_modules/.bin/electron-rebuild && cd .. && sh ./node_modules/.bin/electron-rebuild"
   },

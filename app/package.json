@@ -10,7 +10,7 @@
     "email": "Trez@mazdatweaks.com"
   },
   "license": "GPL-3.0",
-  "main": "main.js",
+  "main": "main.ts",
   "repository": {
     "type": "git",
     "url": "https://gitlab.com/Trezdog44/MZD-AIO-TI"
@@ -28,7 +28,10 @@
     "email": "aio@mazdatweaks.com"
   },
   "config": {
-    "url": "index.html"
+    "url": "index.html",
+    "debug": "false",
+    "nodeIntegration": "",
+    "update": {"url": ""}
   },
   "scripts": {
     "preinstall": "npx npm-force-resolutions",
@@ -66,6 +69,7 @@
     "@types/bootbox": "^5.2.3",
     "@types/intro.js": "^3.0.2",
     "@types/jsoneditor": "^9.5.1",
+    "@types/lodash": "^4.14.182",
     "@types/mkdirp": "^1.0.2",
     "@types/rimraf": "^3.0.2",
     "@typescript-eslint/eslint-plugin": "^5.29.0",
