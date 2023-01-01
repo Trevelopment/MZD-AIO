@@ -167,14 +167,14 @@
     "dependency-check": "^4.1.0",
     "devtron": "^1",
     "electron": "^6.1.9",
-    "electron-builder": "^21.2.0",
+    "electron-builder": "^23.6.0",
     "electron-debug": "^3.0.1",
     "electron-is-dev": "^1.2.0",
     "electron-rebuild": "^1.10.1",
     "mocha": "^6.2.3",
     "rimraf": "^3.0.2",
     "shelljs": "^0.8.3",
-    "spectron": "^8.0.0",
+    "spectron": "^19.0.0",
     "standard": "^13.1.0"
   },
   "dependencies": {
