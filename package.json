@@ -82,13 +82,7 @@
       "persistantData"
     ],
     "ignore": [
-      "/app/files/",
-      "/app/mzd/",
-      "/app/gui/",
-      "/app/views/Photojoiner_files/",
-      "vendor",
-      "old_tweak_files",
-      "scripts"
+
     ]
   },
   "jshintConfig": {
