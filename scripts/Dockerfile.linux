@@ -1,11 +1,25 @@
-FROM node:boron
-MAINTAINER Misha Nasledov <misha@nasledov.com>
+# Image Maintainers
+LABEL maintainer="Misha Nasledov <misha@nasledov.com>, Rohan Barar <rohan.barar@gmail.com>"
 
-RUN apt-get update \
-    && apt-get -y install graphicsmagick icnsutils \
-    && apt-get clean
+# Node.js Version 13 Base Image
+FROM node:13
 
+# Update sources list for apt package manager (base image contains outdated URLs)
+RUN sed -i s/deb.debian.org/archive.debian.org/g /etc/apt/sources.list
+RUN sed -i s/security.debian.org/archive.debian.org/g /etc/apt/sources.list
+RUN sed -i s/stretch-updates/stretch/g /etc/apt/sources.list
+
+# Update and install required packages
+RUN apt-get update
+RUN apt-get -y upgrade
+RUN apt-get -y install graphicsmagick icnsutils rpm
+RUN apt-get clean
+
+# Copy the contents of the current directory into the '/work' directory inside the container
 ADD . /work
 
-RUN cd /work \
-    && npm install
+# Set the working directory to '/work'
+WORKDIR /work
+
+# Install node.js packages and dependencies listed within 'package.json'
+RUN npm install
