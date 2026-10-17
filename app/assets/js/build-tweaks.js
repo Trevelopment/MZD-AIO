@@ -1517,18 +1517,23 @@ function buildAutorunInstaller (user) {
 function addWifiAP (user) {
   filesComplete = true
   opsComplete = true
+  const wifiAPdir = `${tmpdir}/02-start-wifiAP`
   if (user.autorun.autoADB || user.autorun.autoWIFI) {
     copydir(`${approot}/files/tweaks/cmu-autorun/sdcard/recovery-extra`, `${tmpdir}`, (err) => {
       if (err) {
         errFlag = true
         aioLog('ERROR COPYING AUTORUN FILES', err)
+        return
       }
       if (!user.autorun.autoADB) {
         rimraf.sync(`${tmpdir}/*-start-adb/`)
         rimraf.sync(`${tmpdir}/adb`)
       }
       if (!user.autorun.autoWIFI) {
-        rimraf.sync(`${tmpdir}/*-start-wifiAP/`)
+        rimraf.sync(wifiAPdir)
+        serialCheck(user)
+      } else {
+        promptWifiAP()
       }
     })
   }
@@ -1537,7 +1542,11 @@ function addWifiAP (user) {
       if (err) { errFlag = true }
     })
   }
-  if (user.autorun.autoWIFI) {
+  if (!user.autorun.autoADB && !user.autorun.autoWIFI) {
+    serialCheck(user)
+  }
+
+  function promptWifiAP () {
     bootbox.hideAll()
     var wificonfig = '# This is your wifiAP.config file\nexport NETWORK_WIFI_SSID=YourSSID\nexport NETWORK_WIFI_PASSWORD=YourSSIDpassword\n'
     bootbox.prompt({
@@ -1552,18 +1561,16 @@ function addWifiAP (user) {
             title: 'Values Were Not Changed',
             message: 'WiFi AP Will not be installed',
             callback: () => {
-              rimraf.sync(`${tmpdir}/*-start-wifiAP/`)
+              rimraf.sync(wifiAPdir)
               serialCheck(user)
             }
           })
         } else {
-          fs.writeFileSync(`${tmpdir}/*-start-wifiAP/wifiAP.config`, result + '\n')
+          fs.writeFileSync(`${wifiAPdir}/wifiAP.config`, result + '\n')
           serialCheck(user)
         }
       }
     })
-  } else {
-    serialCheck(user)
   }
 }
 
