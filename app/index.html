@@ -278,11 +278,16 @@
         })
 
       function googleTranslateElementInit() {
-        new google.translate.TranslateElement({
-          pageLanguage: 'en',
-          includedLanguages: 'ar,bg,cs,da,de,es,fa,fi,fr,ga,haw,hi,hu,id,is,it,iw,ja,jv,ko,ku,la,lo,lt,lv,mn,ms,mt,ne,nl,no,pa,pl,pt,ro,ru,sk,sl,sm,sr,sv,th,tl,tr,uk,vi,zh-CN,zh-TW',
-          layout: google.translate.TranslateElement.InlineLayout.SIMPLE
-        }, 'google_translate_element')
+        try {
+          new google.translate.TranslateElement({
+            pageLanguage: 'en',
+            includedLanguages: 'ar,bg,cs,da,de,es,fa,fi,fr,ga,haw,hi,hu,id,is,it,iw,ja,jv,ko,ku,la,lo,lt,lv,mn,ms,mt,ne,nl,no,pa,pl,pt,ro,ru,sk,sl,sm,sr,sv,th,tl,tr,uk,vi,zh-CN,zh-TW',
+            layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+          }, 'google_translate_element')
+        } catch (e) {
+          console.warn('Google Translate is unavailable:', e)
+          $('#google_translate_element').text('Translation unavailable')
+        }
       }
     } else {
       $(function(){setTimeout(()=>{$(".translator+div").html("<h4>Offline</h4>")},2000)})
