@@ -45,6 +45,7 @@
   <link rel="stylesheet" href="./assets/css/checkboxStyles.css">
   <link rel="stylesheet" href="./assets/css/contact.css">
   <link rel="stylesheet" href="./assets/css/help.css">
+  <link rel="stylesheet" href="./assets/css/modern.css">
   <script src="./assets/js/spdValues.js"></script>
   <script src="./assets/js/audioSourceList.js"></script>
   <script src="./assets/js/messages-settings.js"></script>
@@ -56,173 +57,85 @@
 </head>
 
 <body onload="" ng-controller="MainCtrl" ng-cloak>
-  <div style="height:10px;z-index:999998;" class="hideNavHover w3-top"></div>
-  <div class="w3-top hideNav" style="z-index:999999;">
-    <ul class="w3-navbar w3-light-grey topnavbar">
-      <li>
-        <a href="#/" id="goHome" ng-click="autorestore('home')">
-          <span style="font-size:26px" class="icon-home w3-margin"></span>
-        </a>
-      </li>
-      <li class="w3-dropdown-click"> <!-- File Menu -->
-        <a id="" onclick="dropDownMenu('file')">{{menu.file.label}} <span class="icon-caret-down"></span></a>
-        <div id="file" class="w3-dropdown-content w3-white w3-card-4">
-          <a ng-click="saveOps()"><i class="icon-save"></i>{{menu.save.label}}</a>
-          <a ng-click="loadOps()"><i class="icon-build"></i>{{menu.load.label}}</a>
-          <a ng-click="loadLast()"><i class="icon-lifebuoy2"></i>{{menu.load.label}} Last Compile</a>
-          <a onclick="window.close()"><i class="icon-close"></i>{{menu.close.label}}</a>
+  <header class="appbar" aria-label="Main navigation">
+    <button class="appbar-brand" id="goHome" type="button" ng-click="openWorkspace('home')" title="MZD-AIO home"><span class="appbar-mark">M</span><span>MZD-AIO <small>{{appVer}}</small></span></button>
+    <nav class="appbar-navigation" aria-label="Workspaces">
+      <button type="button" ng-click="openWorkspace('home')" ng-class="{'active': activeWorkspace === 'home'}">Tweaks</button>
+      <button type="button" ng-click="openWorkspace('autorun')" ng-class="{'active': activeWorkspace === 'autorun'}">Recovery</button>
+      <button type="button" ng-click="openWorkspace('CASDK')" ng-class="{'active': activeWorkspace === 'CASDK'}">CASDK</button>
+    </nav>
+    <div class="appbar-actions">
+      <button class="appbar-build" type="button" ng-click="startCompile()" ng-show="activeWorkspace === 'home'">Create USB files <span aria-hidden="true">↗</span></button>
+      <button class="appbar-build" type="button" ng-click="startAutorunCompile()" ng-show="activeWorkspace === 'autorun' || activeWorkspace === 'serial'">Compile Recovery <span aria-hidden="true">↗</span></button>
+      <details class="appbar-menu" id="app-actions">
+        <summary aria-label="Open tools and settings">Tools <span aria-hidden="true">⌄</span></summary>
+        <div class="appbar-menu-panel">
+          <div class="appbar-menu-group"><h3>Selection</h3>
+            <a id="instAll" href ng-click="instAll()" onclick="w3_close()">Install all tweaks</a>
+            <a id="uninstAll" href ng-click="uninstAll()" onclick="w3_close()">Remove all tweaks</a>
+            <a id="reset-ops-btn" href ng-click="uncheckAll()" onclick="w3_close()">Clear selection</a>
+          </div>
+          <div class="appbar-menu-group"><h3>Files</h3>
+            <a id="save-btn" href ng-click="saveOps()" onclick="w3_close()">Save selection</a>
+            <a id="load-btn" href ng-click="loadOps()" onclick="w3_close()">Load selection</a>
+            <a id="load-last-btn" href ng-click="loadLast()" onclick="w3_close()">Load last build</a>
+            <a href onclick="openCopyFolder();w3_close()">Open USB output folder</a>
+            <a id="opn-mzd-log" href="#" data-featherlight="../../MZD_LOG.htm" onclick="w3_close()">Last compile log</a>
+          </div>
+          <div class="appbar-menu-group"><h3>Utilities</h3>
+            <a id="fullrestoreBtn" href ng-click="openWorkspace('restore')">Full system restore</a>
+            <a id="serialBtn" href ng-click="openWorkspace('serial')">Serial connection</a>
+            <a href onclick="checkForUpdate();w3_close()">Check for updates</a>
+            <a href onclick="toggleFullScreen();w3_close()">Full screen</a>
+            <a href onclick="ipc.send('reset-window-size');w3_close()">Reset window size</a>
+            <a href onclick="location.reload()">Reload app</a>
+            <a href onclick="window.close()">Close app</a>
+          </div>
+          <div class="appbar-menu-group"><h3>Help</h3>
+            <a id="menuTour" href ng-click="startTour()" onclick="w3_close()">Product tour</a>
+            <a id="opn-changelog" href="#" data-featherlight="changelog.htm" onclick="w3_close()">Changelog</a>
+            <a href onclick="showCompatibility();w3_close()">Compatibility check</a>
+            <a href onclick="externalLink('mazdatweaks');w3_close()">MazdaTweaks.com</a>
+            <a href onclick="helpDropdown();w3_close()">Help panel</a>
+          </div>
         </div>
-      </li>
-      <li class="w3-dropdown-click"> <!-- Window Menu -->
-        <a id="" onclick="dropDownMenu('window')">{{menu.window.label}} <span class="icon-caret-down"></span></a>
-        <div id="window" class="w3-dropdown-content w3-white w3-card-4">
-          <a onclick="toggleFullScreen()"><i class="icon-fullscreen"></i>{{menu.fullscreen.label}}</a>
-          <a ng-click="uncheckAll()"><i class="icon-reload"></i>{{menu.resetoptions.label}}</a>
-          <a onclick="ipc.send('reset-window-size')"><i class="icon-new-window"></i>{{menu.centerwindow.label}}</a>
-          <a onclick="location.reload();"><i class="icon-spin"></i>{{menu.reloadapp.label}}</a>
+      </details>
+      <details class="appbar-menu" id="app-resources">
+        <summary aria-label="Open downloads and language options">Resources <span aria-hidden="true">⌄</span></summary>
+        <div class="appbar-menu-panel">
+          <div class="appbar-menu-group"><h3>Downloads</h3>
+            <a class="download" href onclick="ipc.send('download-aio-files','color-schemes');w3_close()">Color schemes (105 MB)</a>
+            <a href onclick="externalLink('nots');w3_close()">Disable touchscreen</a>
+            <a href onclick="externalLink('unwifi');w3_close()">Uninstall WiFi AP</a>
+            <a href onclick="externalLink('cmu-autorun');w3_close()">CMU-Autorun repository</a>
+            <a class="dev-menu-item" href onclick="openDlFolder();w3_close()">Downloaded files</a>
+          </div>
+          <div class="appbar-menu-group"><h3>Language</h3>
+            <a href="./index.html?lang=english">{{languages.en.lang}}</a>
+            <a href="./index.html?lang=french">{{languages.fr.lang}}</a>
+            <a href="./index.html?lang=magyar">{{languages.hu.lang}}</a>
+            <a href="./index.html?lang=german">{{languages.de.lang}}</a>
+            <a id="openTranslator" href="#/translate">{{menu.translator.label}}</a>
+          </div>
+          <div class="appbar-menu-group"><h3>Community</h3>
+            <a href onclick="externalLink('mazda3revolution');w3_close()">Mazda3Revolution forum</a>
+            <a href onclick="updateNotes();w3_close()">Update notes</a>
+            <a href onclick="showAnnouncement();w3_close()">Announcement</a>
+          </div>
         </div>
-      </li>
-      <li class="w3-dropdown-click"> <!-- Download Menu -->
-        <a id="" onclick="dropDownMenu('downloads')">{{menu.download.label}} <span class="icon-caret-down"></span></a>
-        <div id="downloads" class="w3-dropdown-content w3-white w3-card-4">
-          <a class="download" onclick="ipc.send('download-aio-files','color-schemes');$(this).hide();"><i class="icon-colorize"></i> {{menu.dlcolors.label}} (105MB)</a>
-          <a class="download" onclick="externalLink('nots');"><i class="icon-stop_screen_share"></i> Disable Touchscreen All The Time</a>
-          <a class="download" onclick="externalLink('unwifi');"><i class="icon-portable_wifi_off"></i> Uninstall WiFi AP</a>
-          <a class="download" onclick="externalLink('cmu-autorun');"><i class="icon-directions_run"></i> CMU-Autorun Repository</a>
-          <a class="download" onclick="checkForUpdate()" id="check4updates"><i class="icon-cloud-check"></i> Check For Update</a>
-          <a class="dev-menu-item" onclick="openDlFolder();"><i class="icon-download"></i> View Downloaded Files</a>
-        </div>
-      </li>
-      <li class="w3-dropdown-click"> <!-- Languages Menu -->
-        <a id="" onclick="dropDownMenu('language')">{{menu.languages.label}} <span class="icon-caret-down"></span></a>
-        <div id="language" class="w3-dropdown-content w3-white w3-card-4">
-          <a href="./index.html?lang=english" onclick=""><i class="icon-flask"></i> {{languages.en.lang}}</a>
-          <a href="./index.html?lang=french" onclick=""><i class="icon-star-half-full"></i> {{languages.fr.lang}}</a>
-          <a href="./index.html?lang=magyar" onclick=""><i class="icon-cake"></i> {{languages.hu.lang}}</a>
-          <a href="./index.html?lang=german" onclick=""><i class="icon-beaker"></i> {{languages.de.lang}}</a>
-          <a href="#/translate" onclick="" id="openTranslator"><i class="icon-language"></i> {{menu.translator.label}}</a>
-        </div>
-      </li>
-      <li class="w3-dropdown-click"> <!-- Help Menu -->
-        <a id="" onclick="dropDownMenu('help')">{{menu.help.label}} <span class="icon-caret-down"></span></a>
-        <div id="help" class="w3-dropdown-content w3-white w3-card-4">
-          <a onclick="showCompatibility()" id="compatibilityCheck"><i class="icon-laptop2"></i> Compatibility Check</a>
-          <a onclick="externalLink('mazdatweaks')"><i class="icon-diamond"></i> MazdaTweaks.com</a>
-          <a onclick="externalLink('mazda3revolution')"><i class="icon-bullhorn"></i> Mazda3Revolution Forum</a>
-          <a onclick="updateNotes()"><i class="icon-sticky-note"></i> Update Notes</a>
-          <a onclick="showAnnouncement()"><i class="icon-megaphone4"></i> Announcement</a>
-          <a onclick="helpDropdown()"><i class="icon-help"></i> {{menu.helppanel.label}}</a>
-          <a ng-click="autorestore('serial')" onclick="w3_close();$('#serial-window').show()"><i class="icon-power-cord"></i> Serial Connection Instructions</a>
-        </div>
-      </li>
-      <li id="update-available"> <!-- Update -->
-        <a href class="" onclick="externalLink('releases')">Update Available... Downloading Please Wait</a>
-      </li>
-      <!-- Top right menu icons -->
-      <li class="menu-icons menulock" style="width:50px;margin-right:0px;margin-left:-5px;padding-top:4px;padding-bottom: 4px;" data-toggle="tooltip" data-placement="bottom" title="Lock/Unlock Menu Bar" onclick="saveMenuLock()">
-        <span class="icon-lock w3-margin"></span>
-      </li>
-      <li class="menu-icons" style="margin: 0px 0px 0px 8px;padding-top: 5px;padding-bottom: 3px;" data-toggle="tooltip" data-placement="bottom" title="{{menu.fullscreen.label}}" onclick="toggleFullScreen()">
-        <span class="icon-fullscreen" style="padding: 8px;"></span>
-      </li>
-      <li id="resetWindowSize" class="menu-icons" style="border-radius:50px;padding:4px;" data-toggle="tooltip" data-placement="bottom" title="{{menu.centerwindow.toolTip}}" onclick="ipc.send('reset-window-size')">
-        <span class="icon-new-window" style="margin:6px"></span>
-      </li>
-      <li class="menu-icons w3-hover-spin" style="border-radius:50px;padding:4px" data-toggle="tooltip" data-placement="bottom" title="{{menu.reloadapp.label}}" onclick="location.reload()">
-        <span class="icon-refresh" style="margin:6px"></span>
-      </li>
-      <li id="FW_VER" class="menu-icons w3-hover-spin" style="border-radius:50px;padding:4px;display:none;" data-toggle="popover" title="Info" data-content="">
-        <span class="icon-info-with-circle" style="margin:6px"></span>
-      </li>
-    </ul>
-  </div>
-  <!-- Sidebar Pop-out Menu -->
-  <nav class="w3-sidenav w3-black w3-card-2 w3-animate-left w3-text-shadow w3-xlarge w3-card-2" style="display:none;z-index:99999999;position:fixed;" id="mySidenav">
-    <a href="javascript:void(0)" onclick="w3_close()" class="w3-hover-red w3-closenav w3-xxlarge">
-      <span class="icon-x"></span>
-    </a>
-    <a class="w3-hover-green w3-ripple" onclick="externalLink('mazdatweaks')">
-      <span class="icon-home"></span> MazdaTweaks.com</a>
-    <a class="w3-hover-green w3-ripple" title="{{menu.tour.toolTip}}" onclick="w3_close();" ng-click="startTour()" id="menuTour">
-      <span class="icon-bus"></span> {{menu.tour.label}}</a>
-    <a class="w3-hover-green w3-ripple" title="{{menu.installall.toolTip}}" onclick="w3_close();" ng-click="instAll()" id="instAll">
-      <span class="icon-list3"></span> {{menu.installall.label}}</a>
-    <a class="w3-hover-green w3-ripple" title="{{menu.uninstallall.toolTip}}" onclick="w3_close();" ng-click="uninstAll()" id="uninstAll">
-      <span class="icon-ungroup"></span> {{menu.uninstallall.label}}</a>
-    <a class="w3-hover-green w3-ripple" title="{{menu.lastcompilelog.toolTip}}" onclick="w3_close();" href="#" data-featherlight="../../MZD_LOG.htm" id="opn-mzd-log">
-      <span class="icon-document-alt-fill"></span> {{menu.lastcompilelog.label}}</a>
-    <a class="w3-hover-green w3-ripple" title="{{menu.changelog.label}}" onclick="w3_close();" href="#" data-featherlight="changelog.htm" id="opn-changelog">
-      <span class="icon-book"></span> {{menu.changelog.label}}</a>
-    <a class="w3-hover-green w3-ripple" title="{{menu.copytousb.toolTip}}" onclick="w3_close();openCopyFolder();">
-      <span class="icon-folder-open"></span> {{menu.copytousb.label}}</a>
-    <a class="w3-hover-green w3-ripple" title="{{menu.save.toolTip}}" onclick="w3_close();" ng-click="saveOps();" id="save-btn">
-      <span class="icon-save2"></span> {{menu.save.label}}</a>
-    <a class="w3-hover-green w3-ripple" title="{{menu.load.toolTip}}" onclick="w3_close();" ng-click="loadOps();" id="load-btn">
-      <span class="icon-build"></span> {{menu.load.label}}</a>
-    <a class="w3-hover-green w3-ripple" title="Load Last Compiled Options" onclick="w3_close();" ng-click="loadLast();" id="load-last-btn">
-      <span class="icon-cubes"></span> {{menu.load.label}} Last Compile</a>
-    <a class="w3-hover-green w3-ripple" title="{{menu.resetoptions.toolTip}}" onclick="w3_close();" ng-click="uncheckAll()" id="reset-ops-btn">
-      <span class="icon-undo"></span> {{menu.resetoptions.label}}</a>
-    <a class="w3-hover-green w3-ripple" title="{{menu.reloadapp.toolTip}}" onclick="location.reload();" id="refreshBtn">
-      <span class="icon-spin w3-spin"></span> {{menu.reloadapp.label}}</a>
-    <a class="w3-hover-green w3-ripple" title="Full Restore Script" onclick="w3_close();" ng-click="autorestore('restore')" id="fullrestoreBtn">
-      <span class="icon-hdd w3-spin"></span> Full System Restore</a>
-    <a class="w3-hover-green w3-ripple" title="CASDK" href="#/casdk" ng-click="autorestore('CASDK')" onclick="w3_close();" id="casdkBtn">
-      <span class="icon-trophy"></span> CASDK</a>
-    <a class="w3-hover-green w3-ripple" title="Serial" href="#/" ng-click="autorestore('serial')" onclick="w3_close();$('#serial-window').show()" id="serialBtn">
-      <span class="icon-socket2"></span> Serial Connection</a>
-  </nav>
-  <div class="w3-overlay w3-animate-opacity" onclick="w3_close();closeHelpDrop();" style="cursor:pointer" id="sidenavOverlay"></div>
+      </details>
+      <button id="helpDropBtn" class="appbar-help" type="button" onclick="helpDropdown()" aria-label="Help">?</button>
+    </div>
+    <div id="helpDrop" class="appbar-help-panel"><div ng-include="'views/help.htm'" id="helpDropMenu"></div></div>
+  </header>
+  <div id="sidenavOverlay" class="w3-overlay" onclick="closeHelpDrop()" style="display:none"></div>
   <ng-view ng-hide="user.restore.full" ng-cloak></ng-view>
   <!-- div id="snackbar" class="w3-card-12"></div -->
   <span ng-include="'views/fullRestore.htm'" ng-show="user.restore.full"></span>
   <span ng-include="'views/serial.html'" ng-show="user.autorun.serial"></span>
-  <div class="slide-out-div" style="display:none" ng-cloak>
-    <a class="handle" href="">Install Options</a>
-    <div id="bkupchks" class="w3-container" ng-cloak>
-      <input type="checkbox" id="buildRunsh" name="buildRunsh" class="w3-check w3-margin" ng-model="user.runsh" ng-value="user.runsh">
-      <label for="buildRunsh" class="w3-validate">Build "run.sh"</label>
-      <input id="dataDump" name="dataDump" type="checkbox" class="w3-check w3-margin" ng-model="user.dataDump" ng-value="user.dataDump">
-      <label for="dataDump" class="w3-validate">Retrieve CMU Data<br><small>(FW &lt; 59.00.502)</small></label>
-      <input id="skipConfirm" name="skipConfirm" type="checkbox" class="w3-check w3-margin" ng-model="user.backups.skipconfirm" ng-value="user.backups.skipconfirm">
-      <label for="skipConfirm" class="w3-validate">{{mainOps.retain.skipconfirm}}</label>
-      <input id="keepBackups" name="keepBackups" type="checkbox" class="w3-check w3-margin" ng-model="user.backups.org" ng-value="user.backups.org">
-      <label for="keepBackups" class="w3-validate">{{mainOps.retain.label}}</label>
-      <input type="checkbox" id="testBackups" name="testBackups" class="w3-check w3-margin" ng-model="user.backups.test" ng-value="user.backups.test">
-      <label for="testBackups" class="w3-validate">{{mainOps.retain.testlabel}}</label>
-      <input type="checkbox" id="apps2resources" name="apps2resources" class="w3-check w3-margin" ng-model="user.backups.apps2resources" ng-value="user.backups.apps2resources">
-      <label for="apps2resources" class="w3-validate">Apps To Resources</label>
-      <input type="checkbox" id="legacyAppInst" name="legacyAppInst" class="w3-check w3-margin" ng-model="user.mzdmeter.show" ng-value="user.mzdmeter.show" onclick="persistantData.set('showMeter', !persistantData.get('showMeter'))" ng-show="user.mzdmeter.check">
-      <label for="legacyAppInst" class="w3-validate" ng-show="user.mzdmeter.check">Show MZD Meter</label>
-      <input type="checkbox" id="advancedOptions" name="advancedOptions" class="w3-check w3-margin" ng-model="user.advancedOps" ng-value="user.advancedOps">
-      <label for="advancedOptions" class="w3-validate">FLAC Support</label>
-    </div>
-    <span class="icon-question w3-right slide-pop" data-toggle="popover" data-placement="right" title="{{mainOps.retain.label}}" data-content="{{mainOps.retain.toolTip}}<span class='flacmsg'>{{options[25].toolTip}}</span>" onclick="setTimeout(()=>{$('.slide-pop~.popover').off('click');$('.slide-pop~.popover').click(()=>{$('.slide-pop').click()})},500)"></span>
-  </div>
-  <footer>
-    <!--span class="test-panel-toggle"><a onclick="$('#TestPanel').toggleClass('w3-hide')">Test Panel</a></span-->
-    <span class="footer-secret">
-      <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="donatewin" class="ppdonate">
-        <span class="icon-money"></span>
-        <input type="hidden" name="cmd" value="_donations" />
-        <input type="hidden" name="business" value="T5K858D4C52CA" />
-        <input type="hidden" name="currency_code" value="USD" />
-        <input type="image" src="./assets/images/btn_donate_LG.gif" border="0" name="submit" title="Show Some Love!" alt="Donate with PayPal" />
-      </form>
-      <a onclick="secretMenu()">
-        <span class=""></span> . </a>
-    </span>
-    <span class="footer-donate" title="Make a donation from your browser.">
-      <a class="w3-small w3-btn w3-round-large" onclick="donate()">
-        Open in Browser </a>
-    </span>
-    <span class="copyright">
-      <span class="copyleft" title="Copyleft" onclick="externalLink('copyleft')" style="cursor:pointer">
-        <span class="symbol">&copy;</span>
-        <span id="copyleftyear"></span> <a onclick="externalLink('trevelopment')" title="Copyleft Trevelopment">Trevelopment.</a></span>
-    </span>
-    <span class="contact-form">
-      <span class="icon-contact_mail"></span><a href="views/contact.html" data-featherlight="ajax" data-featherlight-variant="contact" title="Contact The Developer" id="feedback" onclick="bootbox.hideAll()">Feedback</a></span>
+  <footer class="app-footer">
+    <span class="copyright"><span class="copyleft" title="Copyleft" onclick="externalLink('copyleft')" style="cursor:pointer">&copy; <span id="copyleftyear"></span> <a onclick="externalLink('trevelopment')">Trevelopment</a></span></span>
+    <span class="app-footer-links"><a href onclick="donate()">Support project</a><a href="views/contact.html" data-featherlight="ajax" data-featherlight-variant="contact" id="feedback" onclick="bootbox.hideAll()">Feedback</a></span>
   </footer>
 </body>
 <script src="./assets/vendor/angular-sanitize.min.js"></script>
@@ -246,18 +159,6 @@
 <script src="./assets/vendor/jsoneditor.min.js"></script>
 <script src="./assets/vendor/sceditor/minified/jquery.sceditor.min.js"></script>
 <script type="text/javascript">
-    $('.slide-out-div').tabSlideOut({
-      tabHandle: '.handle', // class of the element that will become your tab
-      // pathToTabImage: 'files/img/tab.png', //path to the image for the tab
-      imageHeight: '40px', // height of tab image
-      imageWidth: '90px', // width of tab image
-      tabLocation: 'left', // side of screen where tab lives, top, right, bottom, or left
-      speed: 300, // speed of animation
-      action: 'click', // options: 'click' or 'hover', action to trigger animation
-      topPos: '90px', // position from the top/ use if tabLocation is left or right
-      leftPos: '50px', // position from left/ use if tabLocation is bottom or top
-      fixedPosition: false // options: true makes it stick(fixed position) on scroll
-    })
     const alertOnlineStatus = () => {
       console.debug(navigator.onLine ? 'online' : 'offline')
     }
@@ -278,11 +179,16 @@
         })
 
       function googleTranslateElementInit() {
-        new google.translate.TranslateElement({
-          pageLanguage: 'en',
-          includedLanguages: 'ar,bg,cs,da,de,es,fa,fi,fr,ga,haw,hi,hu,id,is,it,iw,ja,jv,ko,ku,la,lo,lt,lv,mn,ms,mt,ne,nl,no,pa,pl,pt,ro,ru,sk,sl,sm,sr,sv,th,tl,tr,uk,vi,zh-CN,zh-TW',
-          layout: google.translate.TranslateElement.InlineLayout.SIMPLE
-        }, 'google_translate_element')
+        try {
+          new google.translate.TranslateElement({
+            pageLanguage: 'en',
+            includedLanguages: 'ar,bg,cs,da,de,es,fa,fi,fr,ga,haw,hi,hu,id,is,it,iw,ja,jv,ko,ku,la,lo,lt,lv,mn,ms,mt,ne,nl,no,pa,pl,pt,ro,ru,sk,sl,sm,sr,sv,th,tl,tr,uk,vi,zh-CN,zh-TW',
+            layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+          }, 'google_translate_element')
+        } catch (e) {
+          console.warn('Google Translate is unavailable:', e)
+          $('#google_translate_element').text('Translation unavailable')
+        }
       }
     } else {
       $(function(){setTimeout(()=>{$(".translator+div").html("<h4>Offline</h4>")},2000)})
@@ -291,9 +197,6 @@
       isDev ? $('.dev-menu-item').show() : $('.dev-menu-item').remove()
       $('.w3-dropdown-content a').click(function() {
         $(this).parent().removeClass('w3-show')
-      })
-      $('body').on('mouseenter', function() {
-        $('.slide-out-div').show()
       })
       $('#casdkBtn').removeClass('w3-hide')
       $('#copyleftyear').html(date().getFullYear())

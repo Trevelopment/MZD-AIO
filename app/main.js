@@ -270,7 +270,7 @@ function initialize () {
     }
     // Manage automatic updates
     try {
-      if (!process.execPath.includes('electron')) { // match(/[\\\/]electron/)) {
+      if (!process.execPath.includes('electron') && pjson.config.update && pjson.config.update.url) {
         require('./lib/auto-update/update.js')({
           url: (pjson.config.update) ? pjson.config.update.url || false : false,
           version: app.getVersion()
