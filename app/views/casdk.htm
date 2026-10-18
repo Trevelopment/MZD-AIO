@@ -13,18 +13,20 @@
   </div>
 </div>
 <div id="notices"></div>
-<header>
+<header class="legacy-spacer">
   <span id="openNav" class="w3-opennav w3-xxlarge w3-display-topleft w3-padding w3-text-black" onclick="w3_open()" style="position:fixed">&#9776;</span>
   <h1 id="mzd-title" class="mazda" style="visibility:hidden;">MZD-AIO-TI</h1>
   <span id="openSidePanel" class="w3-opennav w3-xxlarge w3-display-topright w3-padding w3-text-black w3-hide" onclick="w3_openright()" style="position:fixed">&#9776;</span>
 </header>
-<div class="w3-container w3-row ng-scope w3-center" id="casdkInstallBtns" ng-cloak>
+<main class="casdk-workspace" ng-cloak>
+  <div class="casdk-heading"><div><p class="casdk-eyebrow">CUSTOM APPLICATION SDK</p><h1>CASDK apps for Mazda</h1><p>Choose the framework action and the apps you want to include on your USB drive.</p></div></div>
+  <div class="w3-container w3-row ng-scope w3-center" id="casdkInstallBtns">
   <div class="btn-group btn-group-justified">
     <div class="btn-group">
-      <button type="button" id="in-submit" class="btn btn-theme03 w3-ripple w3-hover-green" style="letter-spacing:1.4px;" data-toggle="tooltip" data-placement="bottom" title="" ng-click="user.casdk={uninst:false,inst:true};" onclick="$(this).prop('disabled',true);$('#casdk-install-info').show();casdkInstBtn()">INSTALL CASDK!</button>
+      <button type="button" id="in-submit" class="btn btn-theme03" ng-click="user.casdk={uninst:false,inst:true};" onclick="$(this).prop('disabled',true);$('#casdk-install-info').show();casdkInstBtn()">Install CASDK <span>＋</span></button>
     </div>
     <div class="btn-group">
-      <button type="button" id="un-submit" class="btn btn-theme03 w3-ripple w3-hover-amber" style="letter-spacing:1.4px;" data-toggle="tooltip" data-placement="bottom" title="" ng-click="user.casdk={inst:false,uninst:true};" onclick="$(this).prop('disabled',true);$('#casdk-uninstall-info').show();">UNINSTALL CASDK!</button>
+      <button type="button" id="un-submit" class="btn btn-theme03" ng-click="user.casdk={inst:false,uninst:true};" onclick="$(this).prop('disabled',true);$('#casdk-uninstall-info').show();">Remove CASDK <span>−</span></button>
     </div>
     <div class="btn-group">
       <button type="button" class="btn btn-theme03 dropdown-toggle" data-toggle="dropdown">
@@ -40,17 +42,15 @@
     </div>
   </div>
 </div>
-<div class="w3-container w3-row w3-section" ng-cloak>
+<div class="w3-container w3-row w3-section casdk-content" ng-cloak>
   <nav id="sidePanel" class="sidePanel w3-card-4 w3-sidenav w3-white w3-animate-right w3-margin-top-64">
     <a href="javascript:void(0)" onclick="w3_closeright();" title="Hide Side Panel" class="w3-closebtn w3-closenav w3-large w3-hide-small w3-display-topright">&times;</a>
     <div class="row">
       <div class="col-lg-4 col-md-4 col-sm-4 mb">
         <div class="content-panel pn">
           <div id="" class="w3-center w3-header">
-            <h3>MZD-AIO-TI + CASDK</h3>
-            <br>
-            <h6>CASDK Written By: Flyandi</h6>
-            <h6>Integration Into AIO By: Trezdog44</h6>
+            <h3>Framework</h3>
+            <h6>CASDK by Flyandi · AIO integration by Trezdog44</h6>
           </div>
           <div class="content-panel pn">
             <div class="secretCodes w3-center">
@@ -84,6 +84,8 @@
       </div>
       <!-- /col-md-4-->
       <div class="col-lg-4 col-md-4 col-sm-4 mb casdk-apps">
+        <h3 class="casdk-apps-heading">Included apps</h3>
+        <p class="casdk-apps-description">Select the apps to add to your CASDK package.</p>
         <div class="steps pn">
           <input id='op3' name='op3' type='checkbox' ng-model="apps.simpledashboard" ng-value="apps.simpledashboard" />
           <label for='op3' ng-show="visibleApps.simpledashboard">Simple Dashboard</label>
@@ -117,6 +119,7 @@
 </div>
 </div>
 </nav>
+</main>
 <div id="casdk-install-info" class="w3-modal">
   <div class="w3-modal-content w3-card-4">
     <header class="w3-container w3-cyan">

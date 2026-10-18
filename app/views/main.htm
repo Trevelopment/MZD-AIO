@@ -1,4 +1,4 @@
-<div id="header" style="" class="w3-teal" ng-cloak>
+<div id="header" style="" class="w3-teal legacy-header" ng-cloak>
   <h1 id="mzd-title" class="mazda">MZD-AIO
     <small><i>v</i>{{appVer}}</small>
     <!-- Split button -->
@@ -38,10 +38,9 @@
   </div>
 </div>
 <div id="notices"></div>
-<header>
+<header class="legacy-spacer">
   <span id="openNav" class="w3-opennav w3-xxlarge w3-display-topleft w3-padding w3-text-black" onclick="w3_open()" style="position:fixed">&#9776;</span>
   <h1 id="mzd-title-hidden" class="mazda" style="visibility:hidden;">MZD-AIO-TI</h1>
-  <span id="openSidePanel" class="w3-opennav w3-xxlarge w3-display-topright w3-padding w3-text-black w3-hide" onclick="w3_openright()" style="position:fixed">&#9776;</span>
 </header>
 <label id="autorunCheck" for="checkAutorun" class="w3-label checkAutorun" ng-show="!user.autorun.installer"><input type="checkbox" id="checkAutorun" data-toggle="tooltip" data-placement="bottom" title="CMU-autorun - Scripts For Testing and Recovery"
     class="w3-check w3-padding" name="checkAutorun" ng-value="user.autorun.installer" ng-model="user.autorun.installer" /> Autorun &amp;<br>
@@ -51,7 +50,22 @@
 </div>
 <div class="w3-container mainContainer" ng-show="!user.autorun.installer">
   <section id="main" class="main" ng-class="{'alt-layout': user.altLayout}">
+    <div class="workspace-heading">
+      <div>
+        <h2>Prepare your Mazda USB</h2>
+        <p>Choose the changes you need and create the files for your drive.</p>
+      </div>
+      <div class="workflow-steps" aria-label="USB preparation steps">
+        <span><b>1</b> Choose</span>
+        <span><b>2</b> Review</span>
+        <span><b>3</b> Compile</span>
+      </div>
+    </div>
     <section id="mainOptions" class="options container w3-row">
+      <div class="section-heading">
+        <h3>Quick selections</h3>
+        <p>Common options for your build</p>
+      </div>
       <div id="step4" class="w3-container form-group1 col-md-3 col-sm-6 col-xs-12">
         <div class="menuCheck bg">
           <input type="checkbox" value="background-img" id="background" name="background" checklist-model="user.mainOps" checklist-value="mainOps.background.id" />
@@ -112,21 +126,41 @@
         <span class="sshLabel" style=""><span class="icon-podcast"></span> {{mainOps.sshbringback.label}}
         </span>
       </div>
-      <span class="twkfltr"><input id="twkfltr" type="text" ng-model="user.twkfltr" class="w3-input" placeholder="Tweak Filter" /></span>
+    </section>
+    <section class="install-settings" aria-labelledby="install-settings-title">
+      <div class="section-heading">
+        <h3 id="install-settings-title">Installation settings</h3>
+        <p>Control backups and optional build behavior.</p>
+      </div>
+      <div class="install-settings-grid">
+        <label><input type="checkbox" id="buildRunsh" ng-model="user.runsh"> Build "run.sh"</label>
+        <label><input type="checkbox" id="dataDump" ng-model="user.dataDump"> Retrieve CMU Data <small>(FW &lt; 59.00.502)</small></label>
+        <label><input type="checkbox" id="skipConfirm" ng-model="user.backups.skipconfirm"> {{mainOps.retain.skipconfirm}}</label>
+        <label><input type="checkbox" id="keepBackups" ng-model="user.backups.org"> {{mainOps.retain.label}}</label>
+        <label><input type="checkbox" id="testBackups" ng-model="user.backups.test"> {{mainOps.retain.testlabel}}</label>
+        <label><input type="checkbox" id="apps2resources" ng-model="user.backups.apps2resources"> Apps To Resources</label>
+        <label ng-show="user.mzdmeter.check"><input type="checkbox" id="legacyAppInst" ng-model="user.mzdmeter.show" onclick="persistantData.set('showMeter', !persistantData.get('showMeter'))"> Show MZD Meter</label>
+        <label><input type="checkbox" id="advancedOptions" ng-model="user.advancedOps"> FLAC Support</label>
+      </div>
     </section>
     <div class="w3-container w3-row w3-section">
       <div id="options">
+        <div class="section-heading tweak-list-heading">
+          <h3>Tweak catalog</h3>
+          <p>Choose what to install or uninstall with your USB drive.</p>
+        </div>
+        <span class="twkfltr"><input id="twkfltr" type="text" ng-model="user.twkfltr" class="w3-input" placeholder="Search tweaks" aria-label="Search tweaks" /></span>
         <table class="w3-table w3-bordered w3-card-4 w3-col">
           <!--tr id="twkOpsTitle" class="w3-row w3-col"> Tweak Options </tr-->
-          <tr ng-repeat="option in options | filter:user.twkfltr" class="w3-hover-pale-blue w3-tooltip w3-half" ng-class="{'advancedOp' : option.advancedOp}">
+          <tr ng-repeat="option in options | filter:user.twkfltr" class="w3-hover-pale-blue w3-tooltip w3-half" ng-class="{'advancedOp' : option.advancedOp, 'install-selected': user.options.includes(option.id), 'remove-selected': user.options.includes(option.id+100)}">
             <td>
               <div class="install-check">
                 <input id="IN{{option.id}}" type="checkbox" name="{{option.OpName}}" checklist-model="user.options" checklist-value="option.id" ng-disabled="user.options.includes({{option.id}}+100)">
-                <label for="IN{{option.id}}" data-toggle="tooltip" data-placement="auto left" title="{{menu.install.label}} {{option.OpName}}"></label>
+                <label for="IN{{option.id}}" data-toggle="tooltip" data-placement="auto left" title="Install {{option.OpName}}"><span class="action-symbol" aria-hidden="true">+</span> Install</label>
               </div>
               <div class="uninstall-check">
                 <input id="UN{{option.id}}" type="checkbox" name="{{option.OpName}}" checklist-model="user.options" checklist-value="option.id+100" ng-disabled="user.options.includes({{option.id}})">
-                <label for="UN{{option.id}}" data-toggle="tooltip" data-placement="auto right" title="{{menu.uninstall.label}} {{option.OpName}}"></label>
+                <label for="UN{{option.id}}" data-toggle="tooltip" data-placement="auto right" title="Remove {{option.OpName}}"><span class="action-symbol" aria-hidden="true">−</span> Remove</label>
               </div>
             </td>
             <td>
@@ -139,11 +173,11 @@
               <div class="install-check">
                 <input id="IN28" type="checkbox" name="MZD Meter" ng-value="user.mzdmeter.inst" onclick="persistantData.set('checkMeter', true);snackbarstay('Remember that this app is not 100% working.  Please contribute by fixing non-working features rather than reporting issues.')"
                   ng-click="user.twkfltr = ''; user.mzdmeter.show = true" ng-disabled="user.mzdmeter.uninst" ng-model="user.mzdmeter.inst">
-                <label for="IN28" data-toggle="tooltip" data-placement="auto left" title="Install MZD Meter"></label>
+                <label for="IN28" data-toggle="tooltip" data-placement="auto left" title="Install MZD Meter"><span class="action-symbol" aria-hidden="true">+</span> Install</label>
               </div>
               <div class="uninstall-check">
                 <input id="UN28" type="checkbox" name="MZD Meter" ng-value="user.mzdmeter.uninst" onclick="persistantData.set('checkMeter', true)" ng-disabled="user.mzdmeter.inst" ng-model="user.mzdmeter.uninst">
-                <label for="UN28" data-toggle="tooltip" data-placement="auto right" title="Uninstall MZD Meter"></label>
+                <label for="UN28" data-toggle="tooltip" data-placement="auto right" title="Remove MZD Meter"><span class="action-symbol" aria-hidden="true">−</span> Remove</label>
               </div>
             </td>
             <td>
@@ -182,10 +216,15 @@
           <br>
         </div>
       </div>
-      <div id="sidePanel" class="sidePanel w3-card-4 w3-sidenav w3-white w3-animate-right">
-        <a href="javascript:void(0)" onclick="w3_closeright();" title="Hide Side Panel" class="w3-closebtn w3-closenav w3-large w3-hide-small">&times;</a>
-        <span id="alltoggle" class="icon-minus-alt" onclick="toggleAllOps()" title="Toggle All Extra Options" style="cursor:pointer"></span>
-        <h3 id="sidePanelTitle">Selected Tweaks:</h3>
+      <div id="sidePanel" class="sidePanel w3-card-4 w3-white">
+        <div class="build-summary">
+          <h3>Ready to build</h3>
+          <p>Review the changes below, then create the installer files.</p>
+          <button type="button" class="btn btn-primary" ng-click="startCompile()">Create USB files <span aria-hidden="true">↗</span></button>
+          <small>Copy the finished <strong>_copy_to_usb</strong> folder contents to your USB drive.</small>
+        </div>
+        <div class="selection-heading"><h3 id="sidePanelTitle">Your selection</h3><button id="alltoggle" type="button" onclick="toggleAllOps()" title="Expand or collapse advanced options">Toggle details</button></div>
+        <p class="selection-empty" ng-show="!user.options.length && user.mainOps.length <= 1 && !user.mzdmeter.inst && !user.mzdmeter.uninst">Your choices will appear here. Pick a tweak from the catalog or use a quick selection.</p>
         <ul>
           <li class="extrasMessage mainmenu" ng-class="{'hide': !user.mainOps.includes(8)}">
             <div class="w3-tooltip" onclick="helpMessageFreeze(this)" title="{{menu.clickforhelp.label}}">{{mainOps.mainmenu.label}}
@@ -276,14 +315,14 @@
               </table>
             </div>
           </li>
-          <li class="uninstallMessage" ng-repeat="opt in options | filter:user.twkfltr" ng-class="{'hide': user.options.indexOf(opt.id+100) === -1}">
+          <li class="uninstallMessage" ng-repeat="opt in options" ng-class="{'hide': user.options.indexOf(opt.id+100) === -1}">
             <div class="w3-tooltip" onclick="helpMessageFreeze(this)" title="{{menu.clickforhelp.label}}">{{opt.DEINST}}
               <span id="un{{opt.id}}-msg" class="w3-tag w3-text w3-hlpmsg draggable ui-widget-content" title="{{menu.close.label}}" ng-class="{'w3-hide': user.menu.includes(9)}">
                 <span class="w3-closebtn">&times;</span><img ng-if="opt.img" ng-src="./files/screenshots/{{opt.img}}" /><span ng-bind-html="opt.toolTip"></span>
               </span>
             </div>
           </li>
-          <li class="installMessage" ng-repeat="opt in options | filter:user.twkfltr" ng-class="{'hide': user.options.indexOf(opt.id) === -1}">
+          <li class="installMessage" ng-repeat="opt in options" ng-class="{'hide': user.options.indexOf(opt.id) === -1}">
             <div class="w3-tooltip" onclick="helpMessageFreeze(this)" title="{{menu.clickforhelp.label}}">{{opt.INST}}
               <span id="in{{opt.id}}-msg" class="w3-tag w3-text w3-hlpmsg draggable ui-widget-content" title="{{menu.close.label}}" ng-class="{'w3-hide': user.menu.includes(9)}">
                 <span class="w3-closebtn">&times;</span><span class="sfty {{opt.safetylvl}}">{{opt.safetylvl}}</span><img ng-if="opt.img" ng-src="./files/screenshots/{{opt.img}}" /><span ng-bind-html="opt.toolTip"></span>

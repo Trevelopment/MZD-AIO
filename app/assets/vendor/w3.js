@@ -148,17 +148,16 @@ function w3Http(target, readyfunc, xml, method) {
     }
 }
 function w3_open() {
-    /*document.getElementById("main").style.marginLeft = "33%";*/
-    document.getElementById("mySidenav").style.width = "33%";
-    document.getElementById("mySidenav").style.display = "block";
-    document.getElementById("sidenavOverlay").style.display = "block";
-    document.getElementById("openNav").style.display = 'none';
+    var tools = document.getElementById('app-actions');
+    if (tools) tools.open = true;
 }
 function w3_close() {
-    /*document.getElementById("main").style.marginLeft = "0%";*/
-    document.getElementById("mySidenav").style.display = "none";
-    document.getElementById("sidenavOverlay").style.display = "none";
-    document.getElementById("openNav").style.display = "inline-block";
+    var tools = document.getElementById('app-actions');
+    if (tools) tools.open = false;
+    var resources = document.getElementById('app-resources');
+    if (resources) resources.open = false;
+    var overlay = document.getElementById('sidenavOverlay');
+    if (overlay) overlay.style.display = 'none';
 }
 function toggleMessage(idToShow) {
     var x = document.getElementById(idToShow);

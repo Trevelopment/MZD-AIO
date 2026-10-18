@@ -576,6 +576,13 @@
         $scope.user.autorun.serial = win === 'serial'
         $scope.user.autorun.installer = (win === 'autorun' || win === 'serial')
       }
+      $scope.activeWorkspace = 'home'
+      $scope.openWorkspace = function (view) {
+        $scope.activeWorkspace = view
+        $scope.autorestore(view)
+        $location.path(view === 'CASDK' ? '/casdk' : '/')
+        if (typeof w3_close === 'function') w3_close()
+      }
 
       $scope.instAll = function () {
         $scope.user.mainOps = [0, 2, 3, 4, 5, 7, 8, 9]
